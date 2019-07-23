@@ -1,0 +1,114 @@
+1T24_OXQ_A_417
+  RCSB PDB12061704033D
+Coordinates from PDB:1T24:A:417 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   25.9850   21.1590    2.3180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1160   20.7000    3.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9760   21.1150    3.1080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5580   19.5260    3.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0970   18.9910    5.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1830   19.5410    5.7810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4890   18.7250    3.3220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6610   17.7020    4.2530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7940   17.8990    5.3240   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O9
+A    2
+C6
+A    3
+O8
+A    4
+C2
+A    5
+C1
+A    6
+O7
+A    7
+N3
+A    8
+O4
+A    9
+N5
+M  END
+>  <InstanceId>
+1T24_OXQ_A_417
+
+>  <ChemCompId>
+OXQ
+
+>  <PdbId>
+1T24
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+417
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N2 O4
+
+>  <Name>
+4-HYDROXY-1,2,5-OXADIAZOLE-3-CARBOXYLIC ACID
+
+>  <SystematicName>
+4-hydroxy-1,2,5-oxadiazole-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H2 N2 O4
+
+>  <MolecularWeight>
+130.059
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H2N2O4/c6-2-1(3(7)8)4-9-5-2/h(H,5,6)(H,7,8)
+
+>  <InChIKey>
+IBRWUZLLHSXPKL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1(c(non1)O)C(=O)O
+
+$$$$

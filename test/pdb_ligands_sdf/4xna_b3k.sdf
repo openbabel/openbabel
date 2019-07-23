@@ -1,0 +1,121 @@
+4XNA_B3K_A_902
+  RCSB PDB12061716153D
+Coordinates from PDB:4XNA:A:902 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   56.8040  -19.9500   38.0510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5600  -20.1340   37.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4190  -19.2710   37.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.8600  -19.8040   39.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5020  -19.1910   39.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1510  -19.4780   40.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7740  -19.1700   41.2680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.6880  -19.8140   35.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.5140  -18.6080   35.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0600  -17.9580   36.3940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.6200  -18.2730   34.3060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+N
+A    2
+CB
+A    3
+CG
+A    4
+CD
+A    5
+CE
+A    6
+CF
+A    7
+NZ
+A    8
+CA
+A    9
+C
+A   10
+O
+A   11
+OXT
+M  END
+>  <InstanceId>
+4XNA_B3K_A_902
+
+>  <ChemCompId>
+B3K
+
+>  <PdbId>
+4XNA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O2
+
+>  <Name>
+(3S)-3,7-DIAMINOHEPTANOIC ACID
+
+>  <SystematicName>
+(3S)-3,7-diaminoheptanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C7 H16 N2 O2
+
+>  <MolecularWeight>
+160.214
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H16N2O2/c8-4-2-1-3-6(9)5-7(10)11/h6H,1-5,8-9H2,(H,10,11)/t6-/m0/s1
+
+>  <InChIKey>
+PJDINCOFOROBQW-LURJTMIESA-N
+
+>  <SMILES>
+C(CCN)C[C@@H](CC(=O)O)N
+
+$$$$

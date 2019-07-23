@@ -1,0 +1,150 @@
+2HX2_3HX_A_793
+  RCSB PDB12061705513D
+Coordinates from PDB:2HX2:A:793 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+    7.3350   10.9520   29.4250   N 0  3  0  0  0  0  0  0  0  0  0  0
+    8.1920   10.6400   28.5460   O 0  5  0  0  0  0  0  0  0  0  0  0
+    6.0970   10.7640   29.1920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8860   14.4140   35.6580   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5930   13.8000   34.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9270   13.3240   33.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7980   14.8810   33.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3010   14.5490   33.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0150   13.2830   32.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5200   13.0130   32.3910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9850   12.1550   31.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7860   11.4680   30.6290   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6240   11.9900   31.5630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0450   14.3070   33.5260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8770   15.5720   32.9280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0520   14.8530   35.6970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3710   13.8390   34.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4140   14.9540   34.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 16 18  1  0  0  0  0
+ 17 18  1  0  0  0  0
+M  CHG  2   1   1   2  -1
+A    1
+NO
+A    2
+O2
+A    3
+O3
+A    4
+N
+A    5
+CA
+A    6
+C
+A    7
+CB
+A    8
+CG
+A    9
+CD
+A   10
+NE
+A   11
+CZ
+A   12
+NH1
+A   13
+NH2
+A   14
+NA
+A   15
+O1'
+A   16
+NB
+A   17
+C1'
+A   18
+C2'
+M  END
+>  <InstanceId>
+2HX2_3HX_A_793
+
+>  <ChemCompId>
+3HX
+
+>  <PdbId>
+2HX2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+793
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N7 O3
+
+>  <Name>
+(4S)-N-{4-AMINO-5-[(2-AMINOETHYL)(HYDROXYAMINO]-PENTYL}-N'-NITROGUANIDINE
+
+>  <SystematicName>
+1-[(4S)-4-amino-5-(2-aminoethyl-hydroxy-amino)pentyl]-3-nitro-guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H21 N7 O3
+
+>  <MolecularWeight>
+263.297
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H21N7O3/c9-3-5-14(16)6-7(10)2-1-4-12-8(11)13-15(17)18/h7,16H,1-6,9-10H2,(H3,11,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+HUOGRSGQHCPAGO-ZETCQYMHSA-N
+
+>  <SMILES>
+[H]/N=C(/NCCC[C@@H](CN(CCN)O)N)\N[N+](=O)[O-]
+
+$$$$

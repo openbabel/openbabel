@@ -1,0 +1,133 @@
+3KT0_EMN_A_439
+  RCSB PDB12061709303D
+Coordinates from PDB:3KT0:A:439 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   30.5190   29.1130   22.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1730   32.0320   13.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0090   27.6990   15.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3700   33.5690   15.8000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2030   28.6960   20.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9540   29.5960   19.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3900   31.4110   16.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5310   29.0810   17.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8230   29.1360   16.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5220   28.8930   21.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0030   29.3730   18.6900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4640   30.4230   15.7820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5430   32.5290   15.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5890   28.2880   16.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8 11  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9 14  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+NAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+OAJ
+A   11
+OAK
+A   12
+OAL
+A   13
+CAM
+A   14
+CAN
+M  END
+>  <InstanceId>
+3KT0_EMN_A_439
+
+>  <ChemCompId>
+EMN
+
+>  <PdbId>
+3KT0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+439
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3
+
+>  <Name>
+(2S)-1-{[(2S)-3-(2-methoxyethoxy)-2-methylpropyl]oxy}propan-2-amine
+
+>  <SystematicName>
+(2S)-1-[(2S)-3-(2-methoxyethoxy)-2-methyl-propoxy]propan-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H23 N O3
+
+>  <MolecularWeight>
+205.295
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H23NO3/c1-9(6-13-5-4-12-3)7-14-8-10(2)11/h9-10H,4-8,11H2,1-3H3/t9-,10+/m1/s1
+
+>  <InChIKey>
+ZLTQYKCRSAAZMB-ZJUUUORDSA-N
+
+>  <SMILES>
+C[C@H](COCCOC)COC[C@H](C)N
+
+$$$$

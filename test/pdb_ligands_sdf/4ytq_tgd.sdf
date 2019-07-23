@@ -1,0 +1,121 @@
+4YTQ_TGD_A_402
+  RCSB PDB12061716303D
+Coordinates from PDB:4YTQ:A:402 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   13.2320  -22.6800   17.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1060  -21.3000   18.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3910  -20.2080   17.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1610  -19.8740   16.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3600  -21.1270   19.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2960  -19.0490   18.4850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5940  -21.0650   15.7540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2860  -19.0710   15.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8870  -19.0460   14.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1110  -17.6520   15.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9920  -17.0480   15.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  4  1  0  0  0  0
+  7  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  5  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+O2
+A    6
+O3
+A    7
+O4
+A    8
+C5
+A    9
+O5
+A   10
+C6
+A   11
+O6
+M  END
+>  <InstanceId>
+4YTQ_TGD_A_402
+
+>  <ChemCompId>
+TGD
+
+>  <PdbId>
+4YTQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+1-deoxy-D-tagatose
+
+>  <SystematicName>
+(3S,4S,5R)-3,4,5,6-tetrakis(oxidanyl)hexan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c1-3(8)5(10)6(11)4(9)2-7/h4-7,9-11H,2H2,1H3/t4-,5-,6+/m1/s1
+
+>  <InChIKey>
+IXDZFGATLNCIOI-PBXRRBTRSA-N
+
+>  <SMILES>
+CC(=O)[C@H]([C@H]([C@@H](CO)O)O)O
+
+$$$$

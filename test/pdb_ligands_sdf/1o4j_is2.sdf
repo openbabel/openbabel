@@ -1,0 +1,138 @@
+1O4J_IS2_A_300
+  RCSB PDB12061703303D
+Coordinates from PDB:1O4J:A:300 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   21.7570   32.4490   16.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6130   32.8340   17.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4720   31.9850   17.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5130   30.6620   16.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7170   30.2180   16.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8440   31.0750   15.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3580   29.8120   16.6040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1160   30.2680   17.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0760   31.1770   17.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9250   28.9850   17.2550   P 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3950   29.5520   16.7260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9300   28.5900   18.6860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3060   27.9070   16.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0150   33.2810   16.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6800   34.8080   16.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N11
+A    8
+C12
+A    9
+O13
+A   10
+P14
+A   11
+O15
+A   12
+O16
+A   13
+O17
+A   14
+C18
+A   15
+C19
+M  END
+>  <InstanceId>
+1O4J_IS2_A_300
+
+>  <ChemCompId>
+IS2
+
+>  <PdbId>
+1O4J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 P
+
+>  <Name>
+[(4-ETHYLPHENYL)AMINO]CARBONYLPHOSPHONIC ACID
+
+>  <SystematicName>
+(4-ethylphenyl)carbamoylphosphonic acid
+
+>  <Synonyms>
+ISO24
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N O4 P
+
+>  <MolecularWeight>
+229.17
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12NO4P/c1-2-7-3-5-8(6-4-7)10-9(11)15(12,13)14/h3-6H,2H2,1H3,(H,10,11)(H2,12,13,14)
+
+>  <InChIKey>
+KGNSYMGWPCEFDZ-UHFFFAOYSA-N
+
+>  <SMILES>
+CCc1ccc(cc1)NC(=O)P(=O)(O)O
+
+$$$$

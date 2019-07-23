@@ -1,0 +1,159 @@
+2E92_M0N_A_901
+  RCSB PDB12061705253D
+Coordinates from PDB:2E92:A:901 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+   29.1470   47.3490    5.5090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8910   45.9840    5.8550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4250   45.6760    7.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9430   46.6950    8.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4220   47.8990    8.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1220   48.4370    9.2960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4510   47.5920   10.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3720   47.6690   11.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8280   46.6130   12.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3630   45.4740   11.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4500   45.3820   10.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9910   46.4490    9.6680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8040   44.9070    4.6450   P 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4080   45.1920    3.2500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3750   45.1480    4.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5030   43.4110    5.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0700   45.6020    5.7100   P 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9010   44.0580    6.1380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7440   45.6520    4.1380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2220   46.5380    6.4800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2 17  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 13 16  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 17 19  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 20  1  0  0  0  0
+A    1
+O
+A    2
+C9
+A    3
+C8
+A    4
+C2
+A    5
+C1
+A    6
+N1
+A    7
+C7
+A    8
+C6
+A    9
+C5
+A   10
+C4
+A   11
+C3
+A   12
+N2
+A   13
+P1
+A   14
+O2
+A   15
+O3
+A   16
+O1
+A   17
+P2
+A   18
+O5
+A   19
+O6
+A   20
+O4
+M  END
+>  <InstanceId>
+2E92_M0N_A_901
+
+>  <ChemCompId>
+M0N
+
+>  <PdbId>
+2E92
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O7 P2
+
+>  <Name>
+(1-HYDROXY-2-IMIDAZO[1,2-A]PYRIDIN-3-YLETHANE-1,1-DIYL)BIS(PHOSPHONIC ACID)
+
+>  <SystematicName>
+(1-hydroxy-2-imidazo[3,2-a]pyridin-3-yl-1-phosphono-ethyl)phosphonic acid
+
+>  <Synonyms>
+MINODRONATE; 1-HYDROXY-2-(5,6,7,8-TETRAHYDROIMIDAZO[1,2-A]PYRIDIN-3-YL)ETHANE-1,1-DIYLDIPHOSPONIC ACID; (1-HYDROXY-2-IMIDAZO[1,2-A]PYRIDIN-3-YL-ETHYLIDENE)-1,1-BISPHOSPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O7 P2
+
+>  <MolecularWeight>
+322.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H12N2O7P2/c12-9(19(13,14)15,20(16,17)18)5-7-6-10-8-3-1-2-4-11(7)8/h1-4,6,12H,5H2,(H2,13,14,15)(H2,16,17,18)
+
+>  <InChIKey>
+VMMKGHQPQIEGSQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccn2c(c1)ncc2CC(O)(P(=O)(O)O)P(=O)(O)O
+
+$$$$

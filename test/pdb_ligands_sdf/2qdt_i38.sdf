@@ -1,0 +1,121 @@
+2QDT_I38_A_501
+  RCSB PDB12061706473D
+Coordinates from PDB:2QDT:A:501 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   12.9820   31.5080   31.6640   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5230   30.4940   30.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5450   29.3450   30.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4230   28.4640   31.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9710   27.4010   31.4110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7410   28.8910   32.5400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4840   28.1320   33.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9690   28.0440   33.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1340   28.7300   35.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5230   29.9380   34.9390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2670   28.0220   36.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+S
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+O3
+A    6
+N4
+A    7
+C5
+A    8
+C51
+A    9
+C6
+A   10
+O62
+A   11
+O61
+M  END
+>  <InstanceId>
+2QDT_I38_A_501
+
+>  <ChemCompId>
+I38
+
+>  <PdbId>
+2QDT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3 S
+
+>  <Name>
+N-(3-MERCAPTOPROPANOYL)-D-ALANINE
+
+>  <SystematicName>
+(2R)-2-(3-sulfanylpropanoylamino)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 N O3 S
+
+>  <MolecularWeight>
+177.221
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H11NO3S/c1-4(6(9)10)7-5(8)2-3-11/h4,11H,2-3H2,1H3,(H,7,8)(H,9,10)/t4-/m1/s1
+
+>  <InChIKey>
+JIAFOCJABIEPNM-SCSAIBSYSA-N
+
+>  <SMILES>
+C[C@H](C(=O)O)NC(=O)CCS
+
+$$$$

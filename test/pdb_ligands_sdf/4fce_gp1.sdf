@@ -1,0 +1,142 @@
+1FCP_GP1_A_902
+  RCSB PDB12061702283D
+Coordinates from PDB:1FCP:A:902 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   54.3870   73.7620   59.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3740   74.7820   59.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1240   74.0790   58.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5470   73.0190   57.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6160   72.0590   58.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1220   71.1030   57.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0470   75.8720   60.0910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.8550   73.1040   60.9250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2540   75.0440   58.0260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4000   72.2660   57.1900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7070   71.5470   55.8010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7290   72.7920   58.7410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3210   73.9420   62.6430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9490   72.7260   61.8820   P 0  0  0  0  0  0  0  0  0  0  0  0
+   56.1020   72.2070   61.0960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4080   71.6790   62.7830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 11  1  0  0  0  0
+  8 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+C1B
+A    2
+C2B
+A    3
+C3B
+A    4
+C4B
+A    5
+C5B
+A    6
+C6B
+A    7
+N2B
+A    8
+O1B
+A    9
+O3B
+A   10
+O4B
+A   11
+O5B
+A   12
+O6B
+A   13
+O7B
+A   14
+P4B
+A   15
+O8B
+A   16
+O9B
+M  END
+>  <InstanceId>
+1FCP_GP1_A_902
+
+>  <ChemCompId>
+GP1
+
+>  <PdbId>
+1FCP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O8 P
+
+>  <Name>
+GLUCOSAMINE 1-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3R,4R,5S,6R)-3-amino-4,5-dihydroxy-6-(hydroxymethyl)oxan-2-yl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H14 N O8 P
+
+>  <MolecularWeight>
+259.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14NO8P/c7-3-5(10)4(9)2(1-8)14-6(3)15-16(11,12)13/h2-6,8-10H,1,7H2,(H2,11,12,13)/t2-,3-,4-,5-,6-/m1/s1
+
+>  <InChIKey>
+YMJBYRVFGYXULK-QZABAPFNSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)OP(=O)(O)O)N)O)O)O
+
+$$$$

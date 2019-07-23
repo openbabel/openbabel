@@ -1,0 +1,142 @@
+1NF8_ISC_A_220
+  RCSB PDB12061703243D
+Coordinates from PDB:1NF8:A:220 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    6.0480   21.6670   76.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0430   20.8580   75.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2470   21.2140   77.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8600   21.4630   73.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8480   22.8860   76.3170   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2820   20.7470   72.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6730   22.1250   73.7890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1200   19.2830   72.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0980   18.6590   74.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1280   19.3940   75.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7890   20.2940   70.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9580   19.2460   69.5050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3640   20.4100   71.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9450   21.1680   69.8900   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7130   19.9490   71.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6690   20.9510   72.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 10  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 16  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  2  0  0  0  0
+ 13 15  2  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C
+A    2
+C1
+A    3
+O1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C1'
+A   12
+O1'
+A   13
+C2'
+A   14
+O2'
+A   15
+C3'
+A   16
+O3'
+M  END
+>  <InstanceId>
+1NF8_ISC_A_220
+
+>  <ChemCompId>
+ISC
+
+>  <PdbId>
+1NF8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+220
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O6
+
+>  <Name>
+(5S,6S)-5-[(1-carboxyethenyl)oxy]-6-hydroxycyclohexa-1,3-diene-1-carboxylic acid
+
+>  <SystematicName>
+(5S,6S)-6-oxidanyl-5-(3-oxidanyl-3-oxidanylidene-prop-1-en-2-yl)oxy-cyclohexa-1,3-diene-1-carboxylic acid
+
+>  <Synonyms>
+ISOCHORISMIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O6
+
+>  <MolecularWeight>
+226.183
+
+>  <ModifiedDate>
+2011-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O6/c1-5(9(12)13)16-7-4-2-3-6(8(7)11)10(14)15/h2-4,7-8,11H,1H2,(H,12,13)(H,14,15)/t7-,8-/m0/s1
+
+>  <InChIKey>
+NTGWPRCCOQCMGE-YUMQZZPRSA-N
+
+>  <SMILES>
+C=C(C(=O)O)O[C@H]1C=CC=C([C@@H]1O)C(=O)O
+
+$$$$

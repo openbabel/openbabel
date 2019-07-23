@@ -1,0 +1,139 @@
+2XP5_4FF_A_1165
+  RCSB PDB12061707283D
+Coordinates from PDB:2XP5:A:1165 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -37.4850   28.4410   27.3900   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.7380   28.1510   26.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.7680   28.5830   25.6820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8500   27.1730   25.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.1340   26.7090   24.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1190   25.8980   23.6800   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.2250   25.8500   24.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.6900   26.6570   25.7080   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.0100   25.1430   24.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.3370   24.7610   23.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.1150   24.0540   23.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5520   23.7450   24.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.1830   24.1480   26.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.4200   24.8350   26.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.3780   27.0810   23.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 15  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O14
+A    2
+C12
+A    3
+O13
+A    4
+C10
+A    5
+C9
+A    6
+N8
+A    7
+C7
+A    8
+N11
+A    9
+C6
+A   10
+C1
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+C5
+A   15
+C15
+M  END
+>  <InstanceId>
+2XP5_4FF_A_1165
+
+>  <ChemCompId>
+4FF
+
+>  <PdbId>
+2XP5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1165
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+5-METHYL-2-PHENYL-1H-IMIDAZOLE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+5-methyl-2-phenyl-1H-imidazole-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H10 N2 O2
+
+>  <MolecularWeight>
+202.209
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O2/c1-7-9(11(14)15)13-10(12-7)8-5-3-2-4-6-8/h2-6H,1H3,(H,12,13)(H,14,15)
+
+>  <InChIKey>
+NEDPOZZCAYIDNP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(nc([nH]1)c2ccccc2)C(=O)O
+
+$$$$

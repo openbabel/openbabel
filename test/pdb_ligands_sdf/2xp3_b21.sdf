@@ -1,0 +1,143 @@
+2Q93_B21_A_400
+  RCSB PDB12061706453D
+Coordinates from PDB:2Q93:A:400 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -6.7130    0.5580   10.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5430   -0.2640   10.3320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5330   -0.9980    9.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7030   -1.5420    8.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6890   -2.3080    7.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4820   -2.5300    6.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3140   -1.9880    7.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3260   -1.2260    8.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1240   -0.7230    9.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0230   -0.6610    8.2080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7990   -0.3240   10.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5040   -0.0070   10.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0270   -0.2130    9.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4210   -0.0290    8.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6760   -0.2470    7.3690   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2720    0.3200    9.4250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  8  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+CAL
+A    2
+OAP
+A    3
+CAH
+A    4
+CAK
+A    5
+CAI
+A    6
+CAJ
+A    7
+CAG
+A    8
+CAF
+A    9
+CAB
+A   10
+OAM
+A   11
+CAD
+A   12
+CAC
+A   13
+CAA
+A   14
+CAE
+A   15
+OAO
+A   16
+OAN
+M  END
+>  <InstanceId>
+2Q93_B21_A_400
+
+>  <ChemCompId>
+B21
+
+>  <PdbId>
+2Q93
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O4
+
+>  <Name>
+5-(2-METHOXYPHENYL)-2-FUROIC ACID
+
+>  <SystematicName>
+5-(2-methoxyphenyl)furan-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 O4
+
+>  <MolecularWeight>
+218.205
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C12H10O4/c1-15-9-5-3-2-4-8(9)10-6-7-11(16-10)12(13)14/h2-7H,1H3,(H,13,14)
+
+>  <InChIKey>
+CHWVDGYLKPLBES-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccccc1c2ccc(o2)C(=O)O
+
+$$$$

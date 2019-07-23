@@ -1,0 +1,133 @@
+4MR8_2BW_A_507
+  RCSB PDB12061713473D
+Coordinates from PDB:4MR8:A:507 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  -45.4450   20.0510  -26.1050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.5380   21.0130  -26.3660   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.0320   22.2100  -27.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.9090   20.1290  -27.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.9880   21.1290  -27.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.0040   20.4380  -28.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.8870   21.4370  -28.9930   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.2380   21.6890  -24.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.0640   20.7700  -23.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.0710   20.8370  -22.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.7700   19.7270  -21.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.7220   22.9820  -24.5030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.3390   22.9870  -24.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.7670   24.3690  -24.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  8  1  0  0  0  0
+  8 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O3
+A    2
+P
+A    3
+O4
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+N
+A    8
+C3
+A    9
+O2
+A   10
+C4
+A   11
+C5
+A   12
+O1
+A   13
+C2
+A   14
+C1
+M  END
+>  <InstanceId>
+4MR8_2BW_A_507
+
+>  <ChemCompId>
+2BW
+
+>  <PdbId>
+4MR8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+507
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4 P
+
+>  <Name>
+(S)-(3-aminopropyl)(diethoxymethyl)phosphinic acid
+
+>  <SystematicName>
+3-azanylpropyl(diethoxymethyl)phosphinic acid
+
+>  <Synonyms>
+CGP 35348
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H20 N O4 P
+
+>  <MolecularWeight>
+225.222
+
+>  <ModifiedDate>
+2013-12-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H20NO4P/c1-3-12-8(13-4-2)14(10,11)7-5-6-9/h8H,3-7,9H2,1-2H3,(H,10,11)
+
+>  <InChIKey>
+QIIVUOWTHWIXFO-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(OCC)P(=O)(CCCN)O
+
+$$$$

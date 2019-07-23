@@ -1,0 +1,110 @@
+4HM8_16R_A_1006
+  RCSB PDB12061712533D
+Coordinates from PDB:4HM8:A:1006 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   13.2090   53.1410   82.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3930   53.1120   80.5300   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9430   51.5800   80.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2570   50.6320   81.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0830   51.2760   78.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5360   50.0170   78.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8510   49.0730   79.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7140   49.3750   80.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  3  1  0  0  0  0
+  7  8  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  8  4  1  0  0  0  0
+A    1
+C8
+A    2
+S7
+A    3
+C4
+A    4
+C3
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C2
+M  END
+>  <InstanceId>
+4HM8_16R_A_1006
+
+>  <ChemCompId>
+16R
+
+>  <PdbId>
+4HM8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1006
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 S
+
+>  <Name>
+(methylsulfanyl)benzene
+
+>  <SystematicName>
+methylsulfanylbenzene
+
+>  <Synonyms>
+methyl phenyl sulfide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 S
+
+>  <MolecularWeight>
+124.203
+
+>  <ModifiedDate>
+2016-03-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8S/c1-8-7-5-3-2-4-6-7/h2-6H,1H3
+
+>  <InChIKey>
+HNKJADCVZUBCPG-UHFFFAOYSA-N
+
+>  <SMILES>
+CSc1ccccc1
+
+$$$$

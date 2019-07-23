@@ -1,0 +1,137 @@
+3SZL_H6P_A_998
+  RCSB PDB12061710483D
+Coordinates from PDB:3SZL:A:998 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -26.2900   -2.1380  -16.6280   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8700   -2.3210  -17.1550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2750   -3.1740  -16.9900   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9420   -0.6970  -16.9090   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2020    0.7250  -16.9060   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0610    0.8080  -15.8750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6950    0.8970  -18.3350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3230    1.7050  -16.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.1900   -1.1110  -14.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7220   -0.6960  -14.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1910   -2.0950  -14.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1150   -2.2160  -15.0100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.0030   -0.2630  -14.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3550    1.2390  -14.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8070    1.3920  -12.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  3  1  1  0  0  0  0
+  4  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  7  5  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 13 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+P13
+A    2
+O14
+A    3
+O15
+A    4
+O16
+A    5
+P17
+A    6
+O18
+A    7
+O19
+A    8
+O20
+A    9
+C21
+A   10
+C27
+A   11
+C28
+A   12
+O29
+A   13
+C30
+A   14
+C31
+A   15
+O33
+M  END
+>  <InstanceId>
+3SZL_H6P_A_998
+
+>  <ChemCompId>
+H6P
+
+>  <PdbId>
+3SZL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+998
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P2
+
+>  <Name>
+(2E)-4-hydroxy-3-methylbut-2-en-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+[(E)-3-methyl-4-oxidanyl-but-2-enyl] phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O8 P2
+
+>  <MolecularWeight>
+262.092
+
+>  <ModifiedDate>
+2011-11-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O8P2/c1-5(4-6)2-3-12-15(10,11)13-14(7,8)9/h2,6H,3-4H2,1H3,(H,10,11)(H2,7,8,9)/b5-2+
+
+>  <InChIKey>
+MDSIZRKJVDMQOQ-GORDUTHDSA-N
+
+>  <SMILES>
+C/C(=C\CO[P@@](=O)(O)OP(=O)(O)O)/CO
+
+$$$$

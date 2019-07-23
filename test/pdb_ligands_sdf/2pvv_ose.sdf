@@ -1,0 +1,121 @@
+2PVV_OSE_A_1768
+  RCSB PDB12061706413D
+Coordinates from PDB:2PVV:A:1768 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   16.1140   44.9720   43.0010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8500   44.7730   41.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4700   45.0540   41.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6210   46.5040   41.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8660   44.6740   40.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7540   45.5610   40.6870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9870   47.4220   40.1320   S 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4100   46.8740   38.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4670   48.7770   40.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5610   47.0900   40.2710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7890   43.8970   39.6750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+OG
+A    5
+C
+A    6
+O
+A    7
+S
+A    8
+O1S
+A    9
+O2S
+A   10
+O3S
+A   11
+OXT
+M  END
+>  <InstanceId>
+2PVV_OSE_A_1768
+
+>  <ChemCompId>
+OSE
+
+>  <PdbId>
+2PVV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1768
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O6 S
+
+>  <Name>
+O-SULFO-L-SERINE
+
+>  <SystematicName>
+(2S)-2-amino-3-sulfooxy-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C3 H7 N O6 S
+
+>  <MolecularWeight>
+185.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+SER
+
+>  <OneLetterCode>
+S
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7NO6S/c4-2(3(5)6)1-10-11(7,8)9/h2H,1,4H2,(H,5,6)(H,7,8,9)/t2-/m0/s1
+
+>  <InChIKey>
+LFZGUGJDVUUGLK-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)N)OS(=O)(=O)O
+
+$$$$

@@ -1,0 +1,143 @@
+1CJF_HOM_C_1
+  RCSB PDB12061702113D
+Coordinates from PDB:1CJF:C:1 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   86.1940   -5.8500   65.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6540   -5.8330   65.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.4280   -7.0280   63.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.6060   -7.6100   62.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.1670   -8.2080   61.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.5770   -8.2320   60.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.4210   -7.6540   61.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8540   -7.0480   63.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.7660   -6.4190   64.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.0540   -5.2170   66.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.1390   -3.6720   66.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.3120   -6.4540   63.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.1500   -5.3180   66.3350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   83.7680   -6.4190   64.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   83.2870   -8.7950   60.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.7010   -3.0250   65.3520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2 13  2  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 15  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 16  1  0  0  0  0
+A    1
+CA
+A    2
+CA2
+A    3
+CA3
+A    4
+CA4
+A    5
+CA5
+A    6
+CA6
+A    7
+CA7
+A    8
+CA8
+A    9
+CA9
+A   10
+CB
+A   11
+CB7
+A   12
+CB8
+A   13
+OA2
+A   14
+OA3
+A   15
+OA4
+A   16
+OA1
+M  END
+>  <InstanceId>
+1CJF_HOM_C_1
+
+>  <ChemCompId>
+HOM
+
+>  <PdbId>
+1CJF
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O4
+
+>  <Name>
+7-HYDROXY-4-METHYL-3-(2-HYDROXY-ETHYL)COUMARIN
+
+>  <SystematicName>
+7-hydroxy-3-(2-hydroxyethyl)-4-methyl-chromen-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 O4
+
+>  <MolecularWeight>
+220.221
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12O4/c1-7-9-3-2-8(14)6-11(9)16-12(15)10(7)4-5-13/h2-3,6,13-14H,4-5H2,1H3
+
+>  <InChIKey>
+VCGFYFKJZGIZMX-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(C(=O)Oc2c1ccc(c2)O)CCO
+
+$$$$

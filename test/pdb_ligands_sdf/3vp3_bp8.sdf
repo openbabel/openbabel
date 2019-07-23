@@ -1,0 +1,114 @@
+3VP3_BP8_A_601
+  RCSB PDB12061711153D
+Coordinates from PDB:3VP3:A:601 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    7.5220   -7.5220    0.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7470   -8.4990    0.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0360   -9.4950   -0.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5940   -9.9510   -0.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7990  -10.1750   -1.8910   S 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7040   -9.7850    0.6580   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5530   -9.8350    0.1730   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2700  -10.0230   -1.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0750  -10.0150   -1.7210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+C1
+A    2
+C32
+A    3
+C30
+A    4
+C33
+A    5
+S35
+A    6
+N26
+A    7
+N28
+A    8
+C31
+A    9
+N27
+M  END
+>  <InstanceId>
+3VP3_BP8_A_601
+
+>  <ChemCompId>
+BP8
+
+>  <PdbId>
+3VP3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+8
+
+>  <ObservedFormula>
+C5 N3 S
+
+>  <Name>
+5,5'-pentane-1,5-diylbis(1,3,4-thiadiazol-2-amine)
+
+>  <SystematicName>
+5-[5-(5-azanyl-1,3,4-thiadiazol-2-yl)pentyl]-1,3,4-thiadiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H14 N6 S2
+
+>  <MolecularWeight>
+270.378
+
+>  <ModifiedDate>
+2012-06-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14N6S2/c10-8-14-12-6(16-8)4-2-1-3-5-7-13-15-9(11)17-7/h1-5H2,(H2,10,14)(H2,11,15)
+
+>  <InChIKey>
+KEOUOMDZUGENOX-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCc1nnc(s1)N)CCc2nnc(s2)N
+
+$$$$

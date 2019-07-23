@@ -1,0 +1,118 @@
+1OL4_ACH_A_1207
+  RCSB PDB12061703343D
+Coordinates from PDB:1OL4:A:1207 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   34.1560   20.6350   28.2770   N 0  3  0  0  0  0  0  0  0  0  0  0
+   33.7520   21.2360   26.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5310   22.0890   27.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6840   22.0830   26.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6380   23.4550   25.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1750   24.4350   26.0740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2900   23.4260   24.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3690   19.7770   28.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4690   21.7320   29.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0320   19.7990   28.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+O4
+A    5
+C5
+A    6
+O7
+A    7
+C6
+A    8
+C8
+A    9
+C9
+A   10
+C10
+M  END
+>  <InstanceId>
+1OL4_ACH_A_1207
+
+>  <ChemCompId>
+ACH
+
+>  <PdbId>
+1OL4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1207
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+ACETYLCHOLINE
+
+>  <SystematicName>
+2-acetyloxyethyl-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H16 N O2
+
+>  <MolecularWeight>
+146.207
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H16NO2/c1-7(9)10-6-5-8(2,3)4/h5-6H2,1-4H3/q+1
+
+>  <InChIKey>
+OIPILFWXSMYKGL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)OCC[N+](C)(C)C
+
+$$$$

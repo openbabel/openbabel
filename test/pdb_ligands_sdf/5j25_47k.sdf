@@ -1,0 +1,138 @@
+4Y4C_47K_A_404
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4C:A:404 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   43.4470    5.6700   64.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0020    4.7400   63.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0160    6.9100   66.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7700    8.8810   66.6650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6690    8.3060   65.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3050   10.1590   66.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3620   12.2920   65.7530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0810   10.6850   66.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1770   12.0210   66.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0870   13.0450   66.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9770   12.6000   65.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2670    8.6760   64.8390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5280    6.0290   65.2750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3130    3.3680   63.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1200   11.0940   65.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2 14  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 13  1  0  0  0  0
+ 12  5  2  0  0  0  0
+ 13  3  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  7 15  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 15  6  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  4  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+C10
+A   10
+C11
+A   11
+C12
+A   12
+O
+A   13
+N
+A   14
+C1
+A   15
+O1
+M  END
+>  <InstanceId>
+4Y4C_47K_A_404
+
+>  <ChemCompId>
+47K
+
+>  <PdbId>
+4Y4C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+4
+
+>  <ObservedFormula>
+C10 N3 O2
+
+>  <Name>
+2-(4-methylpiperidin-1-yl)-N-[3-(propan-2-yl)-1,2-oxazol-5-yl]acetamide
+
+>  <SystematicName>
+2-(4-methylpiperidin-1-yl)-N-(3-propan-2-yl-1,2-oxazol-5-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H23 N3 O2
+
+>  <MolecularWeight>
+265.351
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H23N3O2/c1-10(2)12-8-14(19-16-12)15-13(18)9-17-6-4-11(3)5-7-17/h8,10-11H,4-7,9H2,1-3H3,(H,15,18)
+
+>  <InChIKey>
+RUCYUQYOHAXRGD-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1CCN(CC1)CC(=O)Nc2cc(no2)C(C)C
+
+$$$$

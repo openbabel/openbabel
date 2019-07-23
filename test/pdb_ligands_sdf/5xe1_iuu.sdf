@@ -1,0 +1,151 @@
+5XE1_IUU_A_502
+  RCSB PDB12061720143D
+Coordinates from PDB:5XE1:A:502 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   -8.8120   32.3180  -31.9150   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0670   31.9140  -32.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2980   30.5610  -32.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8990   29.4620  -31.9630  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0950   32.8380  -32.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4000   32.3740  -32.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6180   31.0170  -32.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5780   30.0920  -32.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8710   30.8300  -32.8490   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.5470   30.6630  -33.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8190   30.4690  -33.4480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2450   29.4970  -33.9420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9010   30.2250  -35.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9820   28.8310  -35.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7210   27.9080  -34.7830   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2920   28.5190  -36.5280   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7600   29.7180  -36.7900   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0590   30.7590  -35.9780   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 16  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 16 14  2  0  0  0  0
+ 18 13  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 13 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  7  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  3  2  0  0  0  0
+  5  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+FAR
+A    2
+CAL
+A    3
+CAM
+A    4
+CL
+A    5
+CAK
+A    6
+CAJ
+A    7
+CAI
+A    8
+CAN
+A    9
+NAH
+A   10
+CAG
+A   11
+NAO
+A   12
+OAP
+A   13
+CAA
+A   14
+CAB
+A   15
+NAF
+A   16
+NAC
+A   17
+OAD
+A   18
+NAE
+M  END
+>  <InstanceId>
+5XE1_IUU_A_502
+
+>  <ChemCompId>
+IUU
+
+>  <PdbId>
+5XE1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5 O2 F Cl
+
+>  <Name>
+4-Amino-N-(3-chloro-4-fluorophenyl)-N'-hydroxy-1,2,5-oxadiazole-3-carboxamidine
+
+>  <SystematicName>
+4-azanyl-~{N}-(3-chloranyl-4-fluoranyl-phenyl)-~{N}'-oxidanyl-1,2,5-oxadiazole-3-carboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Cl F N5 O2
+
+>  <MolecularWeight>
+271.636
+
+>  <ModifiedDate>
+2017-04-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7ClFN5O2/c10-5-3-4(1-2-6(5)11)13-9(14-17)7-8(12)16-18-15-7/h1-3,17H,(H2,12,16)(H,13,14)
+
+>  <InChIKey>
+HGXSLPIXNPASGZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1N/C(=N/O)/c2c(non2)N)Cl)F
+
+$$$$

@@ -1,0 +1,147 @@
+3IRM_1CY_A_601
+  RCSB PDB12061709063D
+Coordinates from PDB:3IRM:A:601 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   44.4230   -4.2540   33.8200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1940   -3.9680   33.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5490   -3.0040   34.1520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0790   -2.1570   34.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4280   -2.2660   35.2870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2440   -3.4020   34.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5230   -4.7740   32.7990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2720   -1.1810   35.3980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4790   -2.9430   33.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7130   -4.3650   35.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9350   -1.2470   36.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5850   -0.1690   35.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1090    0.8470   36.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9960    0.8150   37.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3470   -0.2420   38.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8160   -1.2750   37.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6780    2.1030   38.5280  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  1  0  0  0  0
+  2  1  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  3  2  0  0  0  0
+  8  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 11  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 16 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 17 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+N7
+A    8
+N8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+C16
+A   17
+CL17
+M  END
+>  <InstanceId>
+3IRM_1CY_A_601
+
+>  <ChemCompId>
+1CY
+
+>  <PdbId>
+3IRM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N5 Cl
+
+>  <Name>
+1-(4-chlorophenyl)-6,6-dimethyl-1,6-dihydro-1,3,5-triazine-2,4-diamine
+
+>  <SystematicName>
+1-(4-chlorophenyl)-6,6-dimethyl-1,3,5-triazine-2,4-diamine
+
+>  <Synonyms>
+Cycloguanil
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 Cl N5
+
+>  <MolecularWeight>
+251.715
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14ClN5/c1-11(2)16-9(13)15-10(14)17(11)8-5-3-7(12)4-6-8/h3-6H,1-2H3,(H4,13,14,15,16)
+
+>  <InChIKey>
+QMNFFXRFOJIOKZ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(N=C(N=C(N1c2ccc(cc2)Cl)N)N)C
+
+$$$$

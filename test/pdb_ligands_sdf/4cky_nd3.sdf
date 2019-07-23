@@ -1,0 +1,138 @@
+4CKY_ND3_A_1148
+  RCSB PDB12061712033D
+Coordinates from PDB:4CKY:A:1148 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -25.5580   -0.2900   11.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6460   -1.5220   11.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6820   -2.2170   11.1690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3810   -2.3090   11.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5290   -3.6950   11.2890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1200   -1.6810   11.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8770   -2.4800   11.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6640   -1.8130   11.0790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7620   -2.6210   13.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6330   -3.5060   13.3370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0200   -3.0590   13.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0120   -3.9490   14.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2450   -2.3650   13.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1980   -0.9240   13.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4980   -3.1080   13.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+OAC
+A    2
+CAJ
+A    3
+OAE
+A    4
+CAO
+A    5
+OAH
+A    6
+CAI
+A    7
+CAL
+A    8
+OAF
+A    9
+CAM
+A   10
+OAG
+A   11
+CAK
+A   12
+OAD
+A   13
+CAN
+A   14
+CAB
+A   15
+CAA
+M  END
+>  <InstanceId>
+4CKY_ND3_A_1148
+
+>  <ChemCompId>
+ND3
+
+>  <PdbId>
+4CKY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1148
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O6
+
+>  <Name>
+2,2-dimethyl-3-dehydroquinic acid
+
+>  <SystematicName>
+(1R,4S,5R)-2,2-dimethyl-1,4,5-tris(oxidanyl)-3-oxidanylidene-cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H14 O6
+
+>  <MolecularWeight>
+218.204
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14O6/c1-8(2)6(12)5(11)4(10)3-9(8,15)7(13)14/h4-5,10-11,15H,3H2,1-2H3,(H,13,14)/t4-,5+,9+/m1/s1
+
+>  <InChIKey>
+FWOMLGVRVSLROK-YZNMAWMESA-N
+
+>  <SMILES>
+CC1(C(=O)[C@H]([C@@H](C[C@@]1(C(=O)O)O)O)O)C
+
+$$$$

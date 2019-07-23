@@ -1,0 +1,122 @@
+3JUT_GTQ_A_131
+  RCSB PDB12061709203D
+Coordinates from PDB:3JUT:A:131 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   56.2770  -31.6280   10.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.7880  -31.0060    8.2280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0240  -25.9780   10.1330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0110  -31.0550   10.7820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3300  -27.4370   10.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.8510  -28.7260   11.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3020  -28.3430    9.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.6950  -30.8640    9.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.5640  -27.2420   10.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5700  -29.8360   10.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8220  -29.6590    9.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  1  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  9  1  0  0  0  0
+ 10  4  1  0  0  0  0
+  9  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 10  6  2  0  0  0  0
+  7 11  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3JUT_GTQ_A_131
+
+>  <ChemCompId>
+GTQ
+
+>  <PdbId>
+3JUT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+131
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O4
+
+>  <Name>
+2,5-dihydroxybenzoic acid
+
+>  <SystematicName>
+2,5-dihydroxybenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O4
+
+>  <MolecularWeight>
+154.12
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O4/c8-4-1-2-6(9)5(3-4)7(10)11/h1-3,8-9H,(H,10,11)
+
+>  <InChIKey>
+WXTMDXOMEHJXQO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)C(=O)O)O
+
+$$$$

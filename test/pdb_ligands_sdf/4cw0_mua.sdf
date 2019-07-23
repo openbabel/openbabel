@@ -1,0 +1,131 @@
+4CW0_MUA_A_1303
+  RCSB PDB12061712063D
+Coordinates from PDB:4CW0:A:1303 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   30.0900   27.3250   36.3690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3280   27.0290   37.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1520   27.4020   37.5390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8880   26.3140   38.5410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1420   25.9450   38.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9810   26.1970   37.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4030   26.9470   36.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9720   27.2570   35.0820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2440   25.6890   37.3580   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2610   25.0660   38.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9390   25.2530   39.2460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5460   24.6990   40.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1700   24.4590   39.1910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+O6
+A    9
+N7
+A   10
+C8
+A   11
+N9
+A   12
+C10
+A   13
+O8
+M  END
+>  <InstanceId>
+4CW0_MUA_A_1303
+
+>  <ChemCompId>
+MUA
+
+>  <PdbId>
+4CW0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O3
+
+>  <Name>
+9-METHYL URIC ACID
+
+>  <SystematicName>
+9-methyl-3,7-dihydropurine-2,6,8-trione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N4 O3
+
+>  <MolecularWeight>
+182.137
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N4O3/c1-10-3-2(7-6(10)13)4(11)9-5(12)8-3/h1H3,(H,7,13)(H2,8,9,11,12)
+
+>  <InChIKey>
+XJEJWDFDVPDMAS-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1C2=C(C(=O)NC(=O)N2)NC1=O
+
+$$$$

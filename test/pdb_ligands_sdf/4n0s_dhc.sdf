@@ -1,0 +1,126 @@
+1KOU_DHC_A_201
+  RCSB PDB12061703063D
+Coordinates from PDB:1KOU:A:201 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    8.2700    9.1310   -7.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2050    9.3590   -8.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5400    8.9150   -6.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6430    8.6270   -7.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0020    8.6250   -6.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0900    8.2610   -7.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3960    8.2370   -6.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6360    8.6690   -5.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5370    9.0290   -4.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2490    8.9090   -5.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7850    8.7000   -4.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3660    8.0910   -7.6150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C1'
+A    6
+C2'
+A    7
+C3'
+A    8
+C4'
+A    9
+C5'
+A   10
+C6'
+A   11
+O4'
+A   12
+O3'
+M  END
+>  <InstanceId>
+1KOU_DHC_A_201
+
+>  <ChemCompId>
+DHC
+
+>  <PdbId>
+1KOU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+CAFFEIC ACID
+
+>  <SystematicName>
+(E)-3-(3,4-dihydroxyphenyl)prop-2-enoic acid
+
+>  <Synonyms>
+3,4-DIHYDROXYCINNAMIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O4
+
+>  <MolecularWeight>
+180.157
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O4/c10-7-3-1-6(5-8(7)11)2-4-9(12)13/h1-5,10-11H,(H,12,13)/b4-2+
+
+>  <InChIKey>
+QAIPRVGONGVQAS-DUXPYHPUSA-N
+
+>  <SMILES>
+c1cc(c(cc1\C=C\C(=O)O)O)O
+
+$$$$

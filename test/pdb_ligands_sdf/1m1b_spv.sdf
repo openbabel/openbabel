@@ -1,0 +1,117 @@
+1M1B_SPV_A_996
+  RCSB PDB12061703143D
+Coordinates from PDB:1M1B:A:996 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   30.3110   69.4470   73.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8240   68.4790   72.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9770   70.3480   73.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7920   69.3220   73.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0660   68.2870   73.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1120   70.3400   72.9260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4660   67.9240   75.5260   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2630   69.1270   76.2210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8230   67.4780   75.5040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5120   67.0010   75.9560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2'
+A    4
+C2
+A    5
+C3
+A    6
+O2
+A    7
+S
+A    8
+O1S
+A    9
+O2S
+A   10
+O3S
+M  END
+>  <InstanceId>
+1M1B_SPV_A_996
+
+>  <ChemCompId>
+SPV
+
+>  <PdbId>
+1M1B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+996
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 S
+
+>  <Name>
+SULFOPYRUVATE
+
+>  <SystematicName>
+2-oxo-3-sulfo-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H4 O6 S
+
+>  <MolecularWeight>
+168.125
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H4O6S/c4-2(3(5)6)1-10(7,8)9/h1H2,(H,5,6)(H,7,8,9)
+
+>  <InChIKey>
+BUTHMSUEBYPMKJ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)C(=O)O)S(=O)(=O)O
+
+$$$$

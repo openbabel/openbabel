@@ -1,0 +1,121 @@
+1DXM_RED_A_163
+  RCSB PDB12061702193D
+Coordinates from PDB:1DXM:A:163 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   21.4780   -9.1140    8.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6170   -7.9790    8.3860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4740   -9.6060    9.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9000   -9.1320    9.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5280   -9.9200    8.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9760   -9.5110    8.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8240  -10.5950    7.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8390  -11.8760    8.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8010  -12.9260    7.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6520  -14.5290    8.6190   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4670  -10.0710    7.0120   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+S8
+A   11
+S6
+M  END
+>  <InstanceId>
+1DXM_RED_A_163
+
+>  <ChemCompId>
+RED
+
+>  <PdbId>
+1DXM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+163
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 O S2
+
+>  <Name>
+DIHYDROLIPOIC ACID
+
+>  <SystematicName>
+(6R)-6,8-bis-sulfanyloctanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 O2 S2
+
+>  <MolecularWeight>
+208.341
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16O2S2/c9-8(10)4-2-1-3-7(12)5-6-11/h7,11-12H,1-6H2,(H,9,10)/t7-/m1/s1
+
+>  <InChIKey>
+IZFHEQBZOYJLPK-SSDOTTSWSA-N
+
+>  <SMILES>
+C(CCC(=O)O)C[C@H](CCS)S
+
+$$$$

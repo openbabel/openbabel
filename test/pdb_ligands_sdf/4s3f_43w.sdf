@@ -1,0 +1,129 @@
+4S3F_43W_A_902
+  RCSB PDB12061714443D
+Coordinates from PDB:4S3F:A:902 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -13.4180   23.1790   15.7170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6060   22.1440   15.0000   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0840   21.0630   16.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3600   21.4780   13.7690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2270   22.8070   14.5450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0730   24.1620   13.7250   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6360   24.2990   13.4000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0150   24.1590   12.4590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4750   25.3660   14.6870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7220   25.5320   15.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4570   26.5770   16.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8840   26.3290   16.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1340   26.1130   16.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  9  1  0  0  0  0
+  4  2  2  0  0  0  0
+  5  2  1  0  0  0  0
+  9 10  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  3  0  0  0  0
+A    1
+O6
+A    2
+P
+A    3
+O
+A    4
+O5
+A    5
+O1
+A    6
+P1
+A    7
+O4
+A    8
+O3
+A    9
+O2
+A   10
+C
+A   11
+C1
+A   12
+C2
+A   13
+C3
+M  END
+>  <InstanceId>
+4S3F_43W_A_902
+
+>  <ChemCompId>
+43W
+
+>  <PdbId>
+4S3F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O7 P2
+
+>  <Name>
+but-3-yn-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+but-3-ynyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O7 P2
+
+>  <MolecularWeight>
+230.05
+
+>  <ModifiedDate>
+2015-04-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O7P2/c1-2-3-4-10-13(8,9)11-12(5,6)7/h1H,3-4H2,(H,8,9)(H2,5,6,7)
+
+>  <InChIKey>
+GYFWQGOZWDTPGX-UHFFFAOYSA-N
+
+>  <SMILES>
+C#CCCOP(=O)(O)OP(=O)(O)O
+
+$$$$

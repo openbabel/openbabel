@@ -1,0 +1,129 @@
+1IX1_MHA_A_401
+  RCSB PDB12061702533D
+Coordinates from PDB:1IX1:A:401 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   62.5040   96.3450   11.8690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   61.3520   95.6670   11.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.9460   95.9900   11.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3930   97.0640   11.4620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3330   95.0530   12.4060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4190   97.0710   10.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1960   97.2820    9.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.1630   97.3640    8.6720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.9760   97.5760    9.0550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3220   97.0400   13.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3150   98.5660   13.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.9020   99.3360   12.5100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7770   99.0100   14.5400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+O1
+A    5
+O2
+A    6
+C3
+A    7
+C4
+A    8
+O3
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O5
+A   13
+N2
+M  END
+>  <InstanceId>
+1IX1_MHA_A_401
+
+>  <ChemCompId>
+MHA
+
+>  <PdbId>
+1IX1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O5
+
+>  <Name>
+(CARBAMOYLMETHYL-CARBOXYMETHYL-AMINO)-ACETIC ACID
+
+>  <SystematicName>
+2-[(2-amino-2-oxo-ethyl)-(carboxymethyl)amino]ethanoic acid
+
+>  <Synonyms>
+N-(2-ACETAMIDO)IMINODIACETIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N2 O5
+
+>  <MolecularWeight>
+190.154
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10N2O5/c7-4(9)1-8(2-5(10)11)3-6(12)13/h1-3H2,(H2,7,9)(H,10,11)(H,12,13)
+
+>  <InChIKey>
+QZTKDVCDBIDYMD-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)N)N(CC(=O)O)CC(=O)O
+
+$$$$

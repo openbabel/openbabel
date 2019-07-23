@@ -1,0 +1,123 @@
+1AKD_CAM_A_420
+  RCSB PDB12061701593D
+Coordinates from PDB:1AKD:A:420 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   17.7020   23.6980    7.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4620   23.9710    8.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5710   23.8500    8.7350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2000   24.0710    9.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9310   23.7690    8.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0350   22.2830    8.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2750   22.2100    7.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3960   24.4330    7.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5400   25.9500    7.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4610   24.1240    5.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5730   23.9580    5.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+M  END
+>  <InstanceId>
+1AKD_CAM_A_420
+
+>  <ChemCompId>
+CAM
+
+>  <PdbId>
+1AKD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+420
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+CAMPHOR
+
+>  <SystematicName>
+(1R,4R)-1,7,7-trimethylbicyclo[2.2.1]heptan-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 O
+
+>  <MolecularWeight>
+152.233
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16O/c1-9(2)7-4-5-10(9,3)8(11)6-7/h7H,4-6H2,1-3H3/t7-,10+/m1/s1
+
+>  <InChIKey>
+DSSYKIVIOFKYAU-XCBNKYQSSA-N
+
+>  <SMILES>
+CC1([C@@H]2CC[C@]1(C(=O)C2)C)C
+
+$$$$

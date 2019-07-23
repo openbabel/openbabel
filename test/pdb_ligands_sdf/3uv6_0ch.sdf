@@ -1,0 +1,133 @@
+3UV6_0CH_A_318
+  RCSB PDB12061711073D
+Coordinates from PDB:3UV6:A:318 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  -25.5210    1.1680  -18.0010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8180    0.9120  -16.5080   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6170    0.8620  -15.6340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8670    1.9210  -16.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6450   -0.4550  -16.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0310   -1.9210  -16.2860   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6850   -2.1480  -16.7900   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1190   -2.8490  -16.8860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8460   -2.2700  -14.7270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0050   -2.4980  -13.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.9100   -1.2440  -13.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3850   -1.5750  -14.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.2670   -0.4150  -13.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4770    0.4660  -12.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  8  6  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O20
+A    2
+P17
+A    3
+O19
+A    4
+O18
+A    5
+O16
+A    6
+P13
+A    7
+O15
+A    8
+O14
+A    9
+O29
+A   10
+C28
+A   11
+C27
+A   12
+C30
+A   13
+C13
+A   14
+O33
+M  END
+>  <InstanceId>
+3UV6_0CH_A_318
+
+>  <ChemCompId>
+0CH
+
+>  <PdbId>
+3UV6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+318
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O8 P2
+
+>  <Name>
+4-hydroxybutyl trihydrogen diphosphate
+
+>  <SystematicName>
+4-oxidanylbutyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H12 O8 P2
+
+>  <MolecularWeight>
+250.081
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H12O8P2/c5-3-1-2-4-11-14(9,10)12-13(6,7)8/h5H,1-4H2,(H,9,10)(H2,6,7,8)
+
+>  <InChIKey>
+OLLDOFHGCGXIPA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCOP(=O)(O)OP(=O)(O)O)CO
+
+$$$$

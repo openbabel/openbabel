@@ -1,0 +1,117 @@
+3CJQ_2MM_B_1
+  RCSB PDB12061708113D
+Coordinates from PDB:3CJQ:B:1 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   24.1360   34.4830  -47.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5780   33.2380  -48.8340   S 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9800   32.6220  -49.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0990   31.1250  -49.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8330   30.3820  -50.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0870   31.3060  -50.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4680   31.4740  -52.1640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1090   29.0110  -50.6860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6320   28.9640  -52.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8900   28.1850  -50.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  5  1  0  0  0  0
+  7  6  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  8  1  0  0  0  0
+A    1
+CE
+A    2
+SD
+A    3
+CG
+A    4
+CB
+A    5
+CA
+A    6
+C
+A    7
+O
+A    8
+N
+A    9
+CN2
+A   10
+CN1
+M  END
+>  <InstanceId>
+3CJQ_2MM_B_1
+
+>  <ChemCompId>
+2MM
+
+>  <PdbId>
+3CJQ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 N O S
+
+>  <Name>
+N,N-dimethyl-L-methionine
+
+>  <SystematicName>
+(2S)-2-dimethylamino-4-methylsulfanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 N O2 S
+
+>  <MolecularWeight>
+177.264
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO2S/c1-8(2)6(7(9)10)4-5-11-3/h6H,4-5H2,1-3H3,(H,9,10)/t6-/m0/s1
+
+>  <InChIKey>
+FLEXUHXAXRFRAU-LURJTMIESA-N
+
+>  <SMILES>
+CN(C)[C@@H](CCSC)C(=O)O
+
+$$$$

@@ -1,0 +1,97 @@
+1M19_BAL_I_1970
+  RCSB PDB12061703143D
+Coordinates from PDB:1M19:I:1970 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   22.6960   37.1070   86.1020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3380   37.6900   84.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8250   37.6760   84.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3680   38.2030   83.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6910   39.2330   83.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+A    1
+N
+A    2
+CB
+A    3
+CA
+A    4
+C
+A    5
+O
+M  END
+>  <InstanceId>
+1M19_BAL_I_1970
+
+>  <ChemCompId>
+BAL
+
+>  <PdbId>
+1M19
+
+>  <ChainId>
+I
+
+>  <ResidueNumber>
+1970
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C3 N O
+
+>  <Name>
+BETA-ALANINE
+
+>  <SystematicName>
+3-azanylpropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C3 H7 N O2
+
+>  <MolecularWeight>
+89.093
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7NO2/c4-2-1-3(5)6/h1-2,4H2,(H,5,6)
+
+>  <InChIKey>
+UCMIRNVEIXFBKS-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CN)C(=O)O
+
+$$$$

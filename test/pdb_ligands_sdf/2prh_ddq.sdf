@@ -1,0 +1,134 @@
+1D3G_DDQ_A_700
+  RCSB PDB12061702143D
+Coordinates from PDB:1D3G:A:700 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   61.5390   53.9220   -1.0810   N 0  3  0  0  0  0  0  0  0  0  0  0
+   60.7600   54.7220   -0.6140   O 0  5  0  0  0  0  0  0  0  0  0  0
+   62.7980   54.5540   -1.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0330   53.0960   -0.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.1050   53.2520   -2.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0980   52.1180   -2.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.2860   50.9820   -3.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.9320   50.7760   -3.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5460   49.3210   -3.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5900   49.0840   -5.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2120   47.6220   -5.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2440   47.0880   -4.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.6190   45.6240   -4.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0690   44.9510   -3.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+M  CHG  2   1   1   2  -1
+A    1
+N1
+A    2
+O1
+A    3
+CM1
+A    4
+CM2
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+A   12
+C8
+A   13
+C9
+A   14
+C10
+M  END
+>  <InstanceId>
+1D3G_DDQ_A_700
+
+>  <ChemCompId>
+DDQ
+
+>  <PdbId>
+1D3G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O
+
+>  <Name>
+DECYLAMINE-N,N-DIMETHYL-N-OXIDE
+
+>  <SystematicName>
+N,N-dimethyldecan-1-amine oxide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H27 N O
+
+>  <MolecularWeight>
+201.349
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H27NO/c1-4-5-6-7-8-9-10-11-12-13(2,3)14/h4-12H2,1-3H3
+
+>  <InChIKey>
+ZRKZFNZPJKEWPC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCC[N+](C)(C)[O-]
+
+$$$$

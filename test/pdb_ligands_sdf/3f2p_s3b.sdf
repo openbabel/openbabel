@@ -1,0 +1,138 @@
+3F2P_S3B_A_3000
+  RCSB PDB12061708323D
+Coordinates from PDB:3F2P:A:3000 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -10.5700   39.7600    3.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6990   38.6000    2.5540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6600   37.7730    2.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9900   36.5890    1.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7310   35.8070    1.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5740   37.9510    2.9460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4800   40.9620    2.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4860   40.8910    0.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3900   42.1910    3.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3900   42.2030    4.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4850   41.0060    5.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5770   39.7730    4.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6230   38.4890    5.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2960   37.5050    5.0540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9660   38.3980    6.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  2  0  0  0  0
+  2  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+O2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+3F2P_S3B_A_3000
+
+>  <ChemCompId>
+S3B
+
+>  <PdbId>
+3F2P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4
+
+>  <Name>
+3-methyl-2-(propanoyloxy)benzoic acid
+
+>  <SystematicName>
+3-methyl-2-propanoyloxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 O4
+
+>  <MolecularWeight>
+208.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12O4/c1-3-9(12)15-10-7(2)5-4-6-8(10)11(13)14/h4-6H,3H2,1-2H3,(H,13,14)
+
+>  <InChIKey>
+NFOCQVCAZPKUKW-UHFFFAOYSA-N
+
+>  <SMILES>
+CCC(=O)Oc1c(cccc1C(=O)O)C
+
+$$$$

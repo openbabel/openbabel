@@ -1,0 +1,117 @@
+2F6X_1GP_A_3001
+  RCSB PDB12061705313D
+Coordinates from PDB:2F6X:A:3001 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   21.1310  -28.4620   -4.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7540  -28.5360   -2.7160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6620  -28.6870   -4.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3150  -27.1750   -5.3450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1650  -30.1410   -4.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2130  -31.1450   -4.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7260  -33.2850   -4.6450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6260  -32.7680   -6.0770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0230  -33.6010   -3.8410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1140  -32.7390   -4.6850   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C3
+A    2
+O3
+A    3
+C2
+A    4
+O2
+A    5
+C1
+A    6
+O1P
+A    7
+O2P
+A    8
+O3P
+A    9
+O4P
+A   10
+P
+M  END
+>  <InstanceId>
+2F6X_1GP_A_3001
+
+>  <ChemCompId>
+1GP
+
+>  <PdbId>
+2F6X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+SN-GLYCEROL-1-PHOSPHATE
+
+>  <SystematicName>
+[(2S)-2,3-dihydroxypropyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H9 O6 P
+
+>  <MolecularWeight>
+172.074
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H9O6P/c4-1-3(5)2-9-10(6,7)8/h3-5H,1-2H2,(H2,6,7,8)/t3-/m0/s1
+
+>  <InChIKey>
+AWUCVROLDVIAJX-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@@H](COP(=O)(O)O)O)O
+
+$$$$

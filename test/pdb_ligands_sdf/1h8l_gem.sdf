@@ -1,0 +1,137 @@
+1H8L_GEM_A_801
+  RCSB PDB12061702423D
+Coordinates from PDB:1H8L:A:801 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+    7.0100   32.2560   20.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5360   33.2220   19.3330   S 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3180   33.2250   19.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9740   32.2230   18.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1420   30.9160   19.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2990   29.7810   18.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2990   29.7750   17.2320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4840   28.6500   19.2140   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5250   31.9020   20.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9870   31.7710   19.5460   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8890   31.7880   21.7140   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2940   32.9380   22.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3480   34.0760   22.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8520   35.1110   22.8660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1100   33.9240   22.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C8
+A    2
+S7
+A    3
+C6
+A    4
+C5
+A    5
+N3
+A    6
+C1
+A    7
+N4
+A    8
+N2
+A    9
+C9
+A   10
+O14
+A   11
+O15
+A   12
+C10
+A   13
+C11
+A   14
+O12
+A   15
+O13
+M  END
+>  <InstanceId>
+1H8L_GEM_A_801
+
+>  <ChemCompId>
+GEM
+
+>  <PdbId>
+1H8L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O4 S
+
+>  <Name>
+(2-GUANIDINOETHYLMERCAPTO)SUCCINIC ACID
+
+>  <SystematicName>
+(2S)-2-(2-carbamimidamidoethylsulfanyl)butanedioic acid
+
+>  <Synonyms>
+2-GUANIDINOETHYLTHIO)SUCCINIC ACID; GUANIDINOETHYL MERCAPTOSUCCINIC ACID; GEMSA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N3 O4 S
+
+>  <MolecularWeight>
+235.261
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13N3O4S/c8-7(9)10-1-2-15-4(6(13)14)3-5(11)12/h4H,1-3H2,(H,11,12)(H,13,14)(H4,8,9,10)/t4-/m0/s1
+
+>  <InChIKey>
+VKVCLXDFOQQABP-BYPYZUCNSA-N
+
+>  <SMILES>
+C(CS[C@@H](CC(=O)O)C(=O)O)NC(=N)N
+
+$$$$

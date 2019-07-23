@@ -1,0 +1,139 @@
+3VQE_FMQ_A_1006
+  RCSB PDB12061711153D
+Coordinates from PDB:3VQE:A:1006 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -2.0590   19.0660    4.4740   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3410   18.3730    5.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6880   19.0400    6.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0560   18.3200    7.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2440   16.9890    5.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4910   16.2840    6.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1790   16.9260    7.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9110   16.2670    8.1350   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5620   16.1030    9.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7050   16.5410   10.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1500   15.7540    7.7890   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6380   15.1820    8.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7240   15.3480    9.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8870   14.8580   11.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3600   15.9460   12.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 13  9  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  8 11  1  0  0  0  0
+  8  7  1  0  0  0  0
+  4  7  2  0  0  0  0
+  4  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  3  2  2  0  0  0  0
+  6  5  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+F12
+A    2
+C9
+A    3
+C8
+A    4
+C7
+A    5
+C10
+A    6
+C11
+A    7
+C6
+A    8
+N3
+A    9
+C2
+A   10
+C13
+A   11
+N4
+A   12
+C5
+A   13
+C1
+A   14
+C14
+A   15
+O15
+M  END
+>  <InstanceId>
+3VQE_FMQ_A_1006
+
+>  <ChemCompId>
+FMQ
+
+>  <PdbId>
+3VQE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1006
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O F
+
+>  <Name>
+[1-(4-fluorophenyl)-5-methyl-1H-pyrazol-4-yl]methanol
+
+>  <SystematicName>
+[1-(4-fluorophenyl)-5-methyl-pyrazol-4-yl]methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 F N2 O
+
+>  <MolecularWeight>
+206.216
+
+>  <ModifiedDate>
+2013-01-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11FN2O/c1-8-9(7-15)6-13-14(8)11-4-2-10(12)3-5-11/h2-6,15H,7H2,1H3
+
+>  <InChIKey>
+QJPGMVFNIWHOIY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(cnn1c2ccc(cc2)F)CO
+
+$$$$

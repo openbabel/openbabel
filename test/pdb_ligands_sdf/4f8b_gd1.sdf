@@ -1,0 +1,131 @@
+4F8B_GD1_B_201
+  RCSB PDB12061712303D
+Coordinates from PDB:4F8B:B:201 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    1.8300   49.8300   20.7170   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0990   51.0850   21.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4120   52.2480   20.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3400   52.7100   19.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6110   51.9850   18.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4940   50.7650   18.7970   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1030   51.1680   22.0230   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5220   52.3360   22.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5630   52.3460   23.4030   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8970   53.4670   22.1640   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8760   53.4330   21.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1800   54.5210   20.7870   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2170   54.1000   19.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4 13  2  0  0  0  0
+  4  3  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  2  7  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+C5
+A    4
+C7
+A    5
+C77
+A    6
+N77
+A    7
+N1
+A    8
+C2
+A    9
+N2
+A   10
+N3
+A   11
+C4
+A   12
+N9
+A   13
+C8
+M  END
+>  <InstanceId>
+4F8B_GD1_B_201
+
+>  <ChemCompId>
+GD1
+
+>  <PdbId>
+4F8B
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O
+
+>  <Name>
+2-amino-5-[(Z)-iminomethyl]-3,7-dihydro-4H-pyrrolo[2,3-d]pyrimidin-4-one
+
+>  <SystematicName>
+2-azanyl-5-(iminomethyl)-3,7-dihydropyrrolo[2,3-d]pyrimidin-4-one
+
+>  <Synonyms>
+7-cyano-7-deazaguanine, bound form
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N5 O
+
+>  <MolecularWeight>
+177.163
+
+>  <ModifiedDate>
+2012-07-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N5O/c8-1-3-2-10-5-4(3)6(13)12-7(9)11-5/h1-2,8H,(H4,9,10,11,12,13)/b8-1-
+
+>  <InChIKey>
+BETPBINTBSWYLZ-QPIMQUGISA-N
+
+>  <SMILES>
+[H]/N=C\c1c[nH]c2c1C(=O)NC(=N2)N
+
+$$$$

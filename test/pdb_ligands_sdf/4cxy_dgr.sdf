@@ -1,0 +1,146 @@
+4CXY_DGR_A_1503
+  RCSB PDB12061712073D
+Coordinates from PDB:4CXY:A:1503 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+  -24.6080  -25.6570    5.4120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4950  -25.9400    5.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1840  -26.6080    6.8130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2860  -25.3250    5.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5600  -24.9360    3.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3210  -24.4230    2.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3000  -25.0260    2.8610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3710  -23.1070    2.3770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3460  -22.4370    1.6950   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.7000  -21.8680    0.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7880  -21.9910   -0.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6880  -21.1050   -0.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4310  -21.4810   -1.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5010  -20.7680   -2.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8510  -19.6600   -1.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0950  -19.2440   -0.6480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9910  -19.9590    0.0810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 17  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+OAA
+A    2
+CAN
+A    3
+OAD
+A    4
+CAE
+A    5
+CAF
+A    6
+CAO
+A    7
+OAB
+A    8
+NAL
+A    9
+NAM
+A   10
+CAP
+A   11
+OAC
+A   12
+CAQ
+A   13
+CAI
+A   14
+CAG
+A   15
+CAH
+A   16
+NAK
+A   17
+CAJ
+M  END
+>  <InstanceId>
+4CXY_DGR_A_1503
+
+>  <ChemCompId>
+DGR
+
+>  <PdbId>
+4CXY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O4
+
+>  <Name>
+(E)-4-(2-Nicotinoylhydrazinyl)-4-oxobut-2-enoic acid
+
+>  <SystematicName>
+(E)-4-oxidanylidene-4-(2-pyridin-3-ylcarbonylhydrazinyl)but-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H9 N3 O4
+
+>  <MolecularWeight>
+235.196
+
+>  <ModifiedDate>
+2014-10-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9N3O4/c14-8(3-4-9(15)16)12-13-10(17)7-2-1-5-11-6-7/h1-6H,(H,12,14)(H,13,17)(H,15,16)/b4-3+
+
+>  <InChIKey>
+PMTJSWVYLYQGEU-ONEGZZNKSA-N
+
+>  <SMILES>
+c1cc(cnc1)C(=O)NNC(=O)/C=C/C(=O)O
+
+$$$$

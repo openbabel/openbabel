@@ -1,0 +1,151 @@
+4FUG_9UP_A_301
+  RCSB PDB12061712363D
+Coordinates from PDB:4FUG:A:301 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+  -24.2190  -19.9870   -2.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0900  -19.9160   -4.0200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.6230  -18.7290   -4.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.7000  -17.7130   -3.8280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0660  -18.7680   -5.7580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5830  -17.7010   -6.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2600  -17.6800   -6.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3850  -18.7510   -6.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4450  -16.6380   -6.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0000  -15.5540   -7.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7030  -15.5610   -8.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8220  -16.6000   -7.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5230  -16.6080   -8.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6480  -17.6560   -7.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0680  -18.7400   -7.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1610  -19.7610   -6.8400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5400  -20.9460   -6.3370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8610  -19.5560   -6.9640   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12  7  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15  8  2  0  0  0  0
+ 18 16  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  2  0  0  0  0
+ 16 17  1  0  0  0  0
+  9  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAA
+A    2
+OAL
+A    3
+CAN
+A    4
+OAD
+A    5
+N1
+A    6
+CAP
+A    7
+CAR
+A    8
+CAJ
+A    9
+CAF
+A   10
+CAE
+A   11
+CAH
+A   12
+CAQ
+A   13
+CAI
+A   14
+CAG
+A   15
+CAO
+A   16
+CAM
+A   17
+N2
+A   18
+N3
+M  END
+>  <InstanceId>
+4FUG_9UP_A_301
+
+>  <ChemCompId>
+9UP
+
+>  <PdbId>
+4FUG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N3 O2
+
+>  <Name>
+methyl (7-carbamimidoylnaphthalen-1-yl)carbamate
+
+>  <SystematicName>
+methyl N-(7-carbamimidoylnaphthalen-1-yl)carbamate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H13 N3 O2
+
+>  <MolecularWeight>
+243.261
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13N3O2/c1-18-13(17)16-11-4-2-3-8-5-6-9(12(14)15)7-10(8)11/h2-7H,1H3,(H3,14,15)(H,16,17)
+
+>  <InChIKey>
+QRWVPIXNCDJOGY-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\c1ccc2cccc(c2c1)NC(=O)OC)/N
+
+$$$$

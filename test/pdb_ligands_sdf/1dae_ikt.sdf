@@ -1,0 +1,141 @@
+1DAE_IKT_A_225
+  RCSB PDB12061702153D
+Coordinates from PDB:1DAE:A:225 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   -2.4110   24.4300   15.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3920   24.6600   14.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4160   24.4130   16.3230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7030   24.1810   14.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6070   24.2230   12.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6430   25.2450   12.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7760   25.4520   10.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7770   26.5600   10.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8960   26.7940    9.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8410   27.9490    8.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8400   28.1400    7.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5530   27.4390    6.4180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0800   28.9730    6.6510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8270   22.8440   12.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0400   22.1520   12.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6530   22.0320   12.3500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+O3
+A   13
+O4
+A   14
+C1'
+A   15
+C2'
+A   16
+N1'
+M  END
+>  <InstanceId>
+1DAE_IKT_A_225
+
+>  <ChemCompId>
+IKT
+
+>  <PdbId>
+1DAE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+225
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O4
+
+>  <Name>
+3-(1-AMINOETHYL)NONANEDIOIC ACID
+
+>  <SystematicName>
+(3S)-3-[(1S)-1-aminoethyl]nonanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H21 N O4
+
+>  <MolecularWeight>
+231.289
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H21NO4/c1-8(12)9(7-11(15)16)5-3-2-4-6-10(13)14/h8-9H,2-7,12H2,1H3,(H,13,14)(H,15,16)/t8-,9-/m0/s1
+
+>  <InChIKey>
+NHQUUILSXUJSSP-IUCAKERBSA-N
+
+>  <SMILES>
+C[C@@H]([C@@H](CCCCCC(=O)O)CC(=O)O)N
+
+$$$$

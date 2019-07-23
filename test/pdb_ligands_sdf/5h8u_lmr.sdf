@@ -1,0 +1,113 @@
+1CSC_LMR_A_702
+  RCSB PDB12061702123D
+Coordinates from PDB:1CSC:A:702 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   15.3980   -6.1690   -1.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6050   -5.4410   -2.7080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3120   -6.7860   -1.1670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1130   -5.8940   -1.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0510   -5.6030   -2.0910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7020   -6.9030    0.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1860   -8.2220   -0.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6190   -8.9580    0.4060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5990   -8.6630   -1.5580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+A    1
+C1
+A    2
+O1A
+A    3
+O1B
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+C4
+A    8
+O4A
+A    9
+O4B
+M  END
+>  <InstanceId>
+1CSC_LMR_A_702
+
+>  <ChemCompId>
+LMR
+
+>  <PdbId>
+1CSC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+702
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O5
+
+>  <Name>
+(2S)-2-hydroxybutanedioic acid
+
+>  <SystematicName>
+(2S)-2-hydroxybutanedioic acid
+
+>  <Synonyms>
+L-Malate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O5
+
+>  <MolecularWeight>
+134.087
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O5/c5-2(4(8)9)1-3(6)7/h2,5H,1H2,(H,6,7)(H,8,9)/t2-/m0/s1
+
+>  <InChIKey>
+BJEPYKJPYRNKOW-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)O)C(=O)O
+
+$$$$

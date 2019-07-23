@@ -1,0 +1,132 @@
+4MSN_2ZQ_A_900
+  RCSB PDB12061713473D
+Coordinates from PDB:4MSN:A:900 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    3.8080  -27.7220  -34.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2670  -28.7340  -34.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9700  -27.8490  -36.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8850  -29.8740  -34.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5930  -28.9970  -36.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0480  -30.0030  -36.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0390  -26.4750  -33.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4790  -27.4590  -32.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2080  -26.6220  -34.4750   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0980  -28.6010  -32.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5390  -26.8930  -37.2200   N 0  3  0  0  0  0  0  0  0  0  0  0
+    2.8230  -27.1890  -38.1660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8440  -25.7190  -37.0770   O 0  5  0  0  0  0  0  0  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11  3  1  0  0  0  0
+  5  3  2  0  0  0  0
+  5  6  1  0  0  0  0
+  3  1  1  0  0  0  0
+  6  4  2  0  0  0  0
+  1  9  2  0  0  0  0
+  1  2  1  0  0  0  0
+  4  2  1  0  0  0  0
+  9  7  1  0  0  0  0
+  2 10  2  0  0  0  0
+  7  8  2  0  0  0  0
+ 10  8  1  0  0  0  0
+M  CHG  2  11   1  13  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N9
+A   10
+C10
+A   11
+N11
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+4MSN_2ZQ_A_900
+
+>  <ChemCompId>
+2ZQ
+
+>  <PdbId>
+4MSN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+8-nitroquinoline
+
+>  <SystematicName>
+8-nitroquinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 N2 O2
+
+>  <MolecularWeight>
+174.156
+
+>  <ModifiedDate>
+2014-05-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6N2O2/c12-11(13)8-5-1-3-7-4-2-6-10-9(7)8/h1-6H
+
+>  <InChIKey>
+OQHHSGRZCKGLCY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cccnc2c(c1)[N+](=O)[O-]
+
+$$$$

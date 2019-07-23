@@ -1,0 +1,123 @@
+1A95_GUN_B_304
+  RCSB PDB12061701583D
+Coordinates from PDB:1A95:B:304 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   21.9410  136.5310   25.8780   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0440  137.5460   26.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4980  137.5410   27.2460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0690  136.4670   27.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9160  136.0380   29.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2090  136.5140   30.1390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7290  134.9460   29.5000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5950  134.3650   28.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3440  133.3550   29.0140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7350  134.7750   27.3290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9490  135.8330   27.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+N9
+A    2
+C8
+A    3
+N7
+A    4
+C5
+A    5
+C6
+A    6
+O6
+A    7
+N1
+A    8
+C2
+A    9
+N2
+A   10
+N3
+A   11
+C4
+M  END
+>  <InstanceId>
+1A95_GUN_B_304
+
+>  <ChemCompId>
+GUN
+
+>  <PdbId>
+1A95
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 O
+
+>  <Name>
+GUANINE
+
+>  <SystematicName>
+2-amino-1,9-dihydropurin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N5 O
+
+>  <MolecularWeight>
+151.126
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5N5O/c6-5-9-3-2(4(11)10-5)7-1-8-3/h1H,(H4,6,7,8,9,10,11)
+
+>  <InChIKey>
+UYTPUPDQBNUYGX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)C(=O)NC(=N2)N
+
+$$$$

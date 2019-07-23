@@ -1,0 +1,118 @@
+2Q88_4CS_A_501
+  RCSB PDB12061706453D
+Coordinates from PDB:2Q88:A:501 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   24.0780   41.6350   73.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5290   40.8460   72.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0220   40.6220   71.5010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2270   40.1680   73.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2010   39.7480   74.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8430   39.1210   74.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5780   37.9940   73.8750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1280   37.9710   72.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8530   36.7870   71.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9620   39.0090   72.1470   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+CB
+A    6
+CAD
+A    7
+NAG
+A    8
+CAI
+A    9
+CAA
+A   10
+N
+M  END
+>  <InstanceId>
+2Q88_4CS_A_501
+
+>  <ChemCompId>
+4CS
+
+>  <PdbId>
+2Q88
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2
+
+>  <Name>
+(4S)-2-METHYL-1,4,5,6-TETRAHYDROPYRIMIDINE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+(4S)-2-methyl-1,4,5,6-tetrahydropyrimidine-4-carboxylic acid
+
+>  <Synonyms>
+ECTOINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N2 O2
+
+>  <MolecularWeight>
+142.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H10N2O2/c1-4-7-3-2-5(8-4)6(9)10/h5H,2-3H2,1H3,(H,7,8)(H,9,10)/t5-/m0/s1
+
+>  <InChIKey>
+WQXNXVUDBPYKBA-YFKPBYRVSA-N
+
+>  <SMILES>
+CC1=N[C@@H](CCN1)C(=O)O
+
+$$$$

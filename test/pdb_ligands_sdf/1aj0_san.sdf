@@ -1,0 +1,122 @@
+1AJ0_SAN_A_561
+  RCSB PDB12061701593D
+Coordinates from PDB:1AJ0:A:561 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   43.2220    7.0140    2.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2960    6.1460    2.5490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0800    7.7190    1.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9860    8.5740    0.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1100    8.6700    2.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2110    7.9590    3.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3100    7.1490    3.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7490    9.7160    1.9990   S 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6150    8.7020    1.9710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7780   10.7560    3.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6720   10.5370    0.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  2  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+S
+A    9
+N2
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+1AJ0_SAN_A_561
+
+>  <ChemCompId>
+SAN
+
+>  <PdbId>
+1AJ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+561
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2 S
+
+>  <Name>
+SULFANILAMIDE
+
+>  <SystematicName>
+4-aminobenzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 N2 O2 S
+
+>  <MolecularWeight>
+172.205
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8N2O2S/c7-5-1-3-6(4-2-5)11(8,9)10/h1-4H,7H2,(H2,8,9,10)
+
+>  <InChIKey>
+FDDDEECHVMSUSB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1N)S(=O)(=O)N
+
+$$$$

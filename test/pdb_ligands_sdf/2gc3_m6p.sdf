@@ -1,0 +1,142 @@
+1M6P_M6P_A_200
+  RCSB PDB12061703153D
+Coordinates from PDB:1M6P:A:200 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   43.8370   40.2820   18.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2570   38.8530   18.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8730   38.8680   17.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9070   39.7590   18.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.5450   41.1750   18.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9650   42.0600   19.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3220   40.7840   16.9750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1120   38.2700   19.3780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3590   37.5470   17.3230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6420   39.7260   17.5060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8430   41.1460   18.7970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9010   42.6990   20.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1700   43.9170   20.9980   P 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8790   44.8470   20.1760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8830   44.2850   21.5100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1130   43.4740   22.2080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1M6P_M6P_A_200
+
+>  <ChemCompId>
+M6P
+
+>  <PdbId>
+1M6P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O9 P
+
+>  <Name>
+ALPHA-D-MANNOSE-6-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4S,5S,6S)-3,4,5,6-tetrahydroxyoxan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C6 H13 O9 P
+
+>  <MolecularWeight>
+260.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13O9P/c7-3-2(1-14-16(11,12)13)15-6(10)5(9)4(3)8/h2-10H,1H2,(H2,11,12,13)/t2-,3-,4+,5+,6+/m1/s1
+
+>  <InChIKey>
+NBSCHQHZLSJFNQ-PQMKYFCFSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@@H]([C@H](O1)O)O)O)O)OP(=O)(O)O
+
+$$$$

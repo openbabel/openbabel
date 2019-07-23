@@ -1,0 +1,146 @@
+4IE1_1EC_A_401
+  RCSB PDB12061713003D
+Coordinates from PDB:4IE1:A:401 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+   19.3200   15.5570   12.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0240   16.0550   11.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9130   15.6230   10.6100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0450   17.1620   12.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9260   17.4390   13.5120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7760   18.4430   11.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4100   19.0270   11.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0560   20.2060   10.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8410   20.8070   11.2460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4600   16.7100   11.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7910   15.2830   12.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2320   14.8380   11.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4340   13.3380   12.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9030   12.9040   12.6070   B 0  5  0  0  0  0  0  0  0  0  0  0
+   26.7460   13.2950   11.4170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6060   13.5860   13.7260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2610   11.4390   12.6720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 14 16  1  0  0  0  0
+M  CHG  1  14  -1
+A    1
+O3
+A    2
+C1
+A    3
+O2
+A    4
+C5
+A    5
+N16
+A    6
+C15
+A    7
+C19
+A    8
+C20
+A    9
+O21
+A   10
+C6
+A   11
+C7
+A   12
+C8
+A   13
+C9
+A   14
+B10
+A   15
+O23
+A   16
+O13
+A   17
+O11
+M  END
+>  <InstanceId>
+4IE1_1EC_A_401
+
+>  <ChemCompId>
+1EC
+
+>  <PdbId>
+4IE1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O6 B
+
+>  <Name>
+[(5R)-5-amino-5-carboxy-8-hydroxyoctyl](trihydroxy)borate(1-)
+
+>  <SystematicName>
+[(5R)-5-azanyl-5-carboxy-8-oxidanyl-octyl]-tris(oxidanyl)boranuide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H21 B N O6
+
+>  <MolecularWeight>
+250.077
+
+>  <ModifiedDate>
+2013-03-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H21BNO6/c11-9(8(13)14,5-3-7-12)4-1-2-6-10(15,16)17/h12,15-17H,1-7,11H2,(H,13,14)/q-1/t9-/m1/s1
+
+>  <InChIKey>
+NLSMSWJRKXBPCL-SECBINFHSA-N
+
+>  <SMILES>
+[B-](CCCC[C@@](CCCO)(C(=O)O)N)(O)(O)O
+
+$$$$

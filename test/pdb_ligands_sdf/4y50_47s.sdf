@@ -1,0 +1,130 @@
+4Y50_47S_A_401
+  RCSB PDB12061716213D
+Coordinates from PDB:4Y50:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -15.0190    9.8000   58.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0510    8.4260   58.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6020    7.8530   59.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2710    5.6370   58.9410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1290    8.6690   60.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6430    6.3700   59.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3270    4.2260   58.9590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0170    5.8640   61.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5360   10.6170   59.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1000   10.0600   60.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6140   10.8600   61.6610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8860   10.3310   62.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5900   12.3070   61.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  6  1  0  0  0  0
+  9 10  2  0  0  0  0
+  3  6  1  0  0  0  0
+  3  5  2  0  0  0  0
+  6  8  2  0  0  0  0
+ 10  5  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+O
+A    9
+C3
+A   10
+C2
+A   11
+N
+A   12
+C1
+A   13
+C
+M  END
+>  <InstanceId>
+4Y50_47S_A_401
+
+>  <ChemCompId>
+47S
+
+>  <PdbId>
+4Y50
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O
+
+>  <Name>
+3-(dimethylamino)benzohydrazide
+
+>  <SystematicName>
+3-(dimethylamino)benzohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N3 O
+
+>  <MolecularWeight>
+179.219
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N3O/c1-12(2)8-5-3-4-7(6-8)9(13)11-10/h3-6H,10H2,1-2H3,(H,11,13)
+
+>  <InChIKey>
+UBSSYVLPIDYZJC-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)c1cccc(c1)C(=O)NN
+
+$$$$

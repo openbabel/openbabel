@@ -1,0 +1,138 @@
+1HT8_34C_A_1701
+  RCSB PDB12061702453D
+Coordinates from PDB:1HT8:A:1701 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   71.8370   22.1000  188.9530  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   70.1820   21.9710  189.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.8450   21.0600  190.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5020   20.9140  190.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.5260   21.7190  190.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.8360   22.6420  189.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.1850   22.8020  188.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1410   19.9540  191.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1100   20.5190  193.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.6340   24.5410  187.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2870   25.4030  186.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.9660   26.6380  185.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.6130   23.6850  187.8120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   67.1680   20.9490  193.8240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   69.1940   20.5460  193.9540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 14  2  0  0  0  0
+  9 15  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CL1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+O1
+A   14
+O2
+A   15
+O3
+M  END
+>  <InstanceId>
+1HT8_34C_A_1701
+
+>  <ChemCompId>
+34C
+
+>  <PdbId>
+1HT8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O3 Cl
+
+>  <Name>
+(3-CHLORO-4-PROPOXY-PHENYL)-ACETIC ACID
+
+>  <SystematicName>
+2-(3-chloro-4-propoxy-phenyl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H13 Cl O3
+
+>  <MolecularWeight>
+228.672
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H13ClO3/c1-2-5-15-10-4-3-8(6-9(10)12)7-11(13)14/h3-4,6H,2,5,7H2,1H3,(H,13,14)
+
+>  <InChIKey>
+QEJHPAGTOOIBFT-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCOc1ccc(cc1Cl)CC(=O)O
+
+$$$$

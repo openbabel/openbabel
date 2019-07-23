@@ -1,0 +1,122 @@
+2AFW_AHN_A_1501
+  RCSB PDB12061705003D
+Coordinates from PDB:2AFW:A:1501 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -10.6340    3.7040   22.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4450    3.2680   22.3360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9250    5.0500   21.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7100    3.0280   22.6420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0590    3.5540   22.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9840    2.5390   21.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4400    2.8980   21.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0610    4.0820   22.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4430    1.9670   21.7190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6210    2.5610   21.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4180    3.8480   22.0270   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C
+A    2
+O
+A    3
+CT
+A    4
+N
+A    5
+CA
+A    6
+CB
+A    7
+CG
+A    8
+CD2
+A    9
+ND1
+A   10
+CE1
+A   11
+NE2
+M  END
+>  <InstanceId>
+2AFW_AHN_A_1501
+
+>  <ChemCompId>
+AHN
+
+>  <PdbId>
+2AFW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O
+
+>  <Name>
+N-[2-(1H-IMIDAZOL-4-YL)ETHYL]ACETAMIDE
+
+>  <SystematicName>
+N-[2-(1H-imidazol-4-yl)ethyl]ethanamide
+
+>  <Synonyms>
+N-ACETYLHISTAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N3 O
+
+>  <MolecularWeight>
+153.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11N3O/c1-6(11)9-3-2-7-4-8-5-10-7/h4-5H,2-3H2,1H3,(H,8,10)(H,9,11)
+
+>  <InChIKey>
+XJWPISBUKWZALE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCc1c[nH]cn1
+
+$$$$

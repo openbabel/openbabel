@@ -1,0 +1,133 @@
+1FWW_A5P_A_1269
+  RCSB PDB12061702323D
+Coordinates from PDB:1FWW:A:1269 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   35.7300   51.3450   18.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2660   50.4760   17.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2320   52.7610   17.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8920   52.8540   18.4370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5910   53.4450   18.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2330   53.6080   19.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4380   54.7960   17.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2890   55.4240   16.8610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0830   54.4850   16.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4580   54.6750   16.3910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4090   55.6040   15.5360   P 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7430   55.4100   16.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2870   55.0840   14.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9200   56.9980   15.6840   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+A   11
+P
+A   12
+O1P
+A   13
+O2P
+A   14
+O3P
+M  END
+>  <InstanceId>
+1FWW_A5P_A_1269
+
+>  <ChemCompId>
+A5P
+
+>  <PdbId>
+1FWW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1269
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P
+
+>  <Name>
+ARABINOSE-5-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4R)-2,3,4,5-tetrahydroxypentyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H13 O8 P
+
+>  <MolecularWeight>
+232.126
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H13O8P/c6-1-3(7)5(9)4(8)2-13-14(10,11)12/h3-9H,1-2H2,(H2,10,11,12)/t3-,4-,5+/m1/s1
+
+>  <InChIKey>
+VJDOAZKNBQCAGE-WDCZJNDASA-N
+
+>  <SMILES>
+C([C@H]([C@@H]([C@@H](COP(=O)(O)O)O)O)O)O
+
+$$$$

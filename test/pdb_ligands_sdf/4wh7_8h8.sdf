@@ -1,0 +1,118 @@
+4WH7_8H8_A_607
+  RCSB PDB12061715583D
+Coordinates from PDB:4WH7:A:607 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   18.1310   -7.8960   -4.8580   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8970   -8.4290   -4.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6790   -9.6100   -4.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3910  -10.1340   -3.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1740  -11.2880   -3.2900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3250   -9.4790   -4.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5480   -8.2960   -5.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8380   -7.7760   -5.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0640   -6.6870   -6.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2870   -5.7130   -6.5960   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  3  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  6  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+FAG
+A    2
+CAF
+A    3
+CAI
+A    4
+CAH
+A    5
+OAJ
+A    6
+CAE
+A    7
+CAA
+A    8
+CAB
+A    9
+CAC
+A   10
+NAD
+M  END
+>  <InstanceId>
+4WH7_8H8_A_607
+
+>  <ChemCompId>
+8H8
+
+>  <PdbId>
+4WH7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+607
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O F
+
+>  <Name>
+2-fluoro-4-hydroxybenzonitrile
+
+>  <SystematicName>
+2-fluoranyl-4-oxidanyl-benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 F N O
+
+>  <MolecularWeight>
+137.111
+
+>  <ModifiedDate>
+2014-12-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4FNO/c8-7-3-6(10)2-1-5(7)4-9/h1-3,10H
+
+>  <InChIKey>
+REIVHYDACHXPNH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)F)C#N
+
+$$$$

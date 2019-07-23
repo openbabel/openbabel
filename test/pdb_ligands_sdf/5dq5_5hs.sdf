@@ -1,0 +1,106 @@
+5DQ5_5HS_A_405
+  RCSB PDB12061717213D
+Coordinates from PDB:5DQ5:A:405 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   -0.9700    1.9400   11.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3900    3.2860    9.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0760    4.4560    8.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7090    3.5550    9.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0070    2.4950   10.5760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3080    2.1430   11.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6730    2.9600   10.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  1  0  0  0  0
+  4  2  2  0  0  0  0
+  4  7  1  0  0  0  0
+  2  5  1  0  0  0  0
+  7  6  2  0  0  0  0
+  5  1  2  0  0  0  0
+  6  1  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C
+A    4
+C1
+A    5
+N
+A    6
+C3
+A    7
+C2
+M  END
+>  <InstanceId>
+5DQ5_5HS_A_405
+
+>  <ChemCompId>
+5HS
+
+>  <PdbId>
+5DQ5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+7
+
+>  <ObservedFormula>
+C6 N
+
+>  <Name>
+3-[2-(4-methyl-1,2-oxazol-3-yl)ethyl]pyridine
+
+>  <SystematicName>
+4-methyl-3-(2-pyridin-3-ylethyl)-1,2-oxazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N2 O
+
+>  <MolecularWeight>
+188.226
+
+>  <ModifiedDate>
+2016-09-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2O/c1-9-8-14-13-11(9)5-4-10-3-2-6-12-7-10/h2-3,6-8H,4-5H2,1H3
+
+>  <InChIKey>
+ZUKCCHMCKBWNOY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1conc1CCc2cccnc2
+
+$$$$

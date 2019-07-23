@@ -1,0 +1,109 @@
+1AD2_MRD_A_700
+  RCSB PDB12061701583D
+Coordinates from PDB:1AD2:A:700 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   10.3930   20.7820   34.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0560   21.8470   33.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2240   22.6490   33.1020   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9580   22.7350   33.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6380   21.1790   31.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1920   21.1220   31.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5640   22.4110   31.4570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3290   20.1430   32.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+CM
+A    5
+C3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+M  END
+>  <InstanceId>
+1AD2_MRD_A_700
+
+>  <ChemCompId>
+MRD
+
+>  <PdbId>
+1AD2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2
+
+>  <Name>
+(4R)-2-METHYLPENTANE-2,4-DIOL
+
+>  <SystematicName>
+(4R)-2-methylpentane-2,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O2
+
+>  <MolecularWeight>
+118.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O2/c1-5(7)4-6(2,3)8/h5,7-8H,4H2,1-3H3/t5-/m1/s1
+
+>  <InChIKey>
+SVTBMSDMJJWYQN-RXMQYKEDSA-N
+
+>  <SMILES>
+C[C@H](CC(C)(C)O)O
+
+$$$$

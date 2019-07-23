@@ -1,0 +1,121 @@
+1KI0_BCN_A_335
+  RCSB PDB12061703053D
+Coordinates from PDB:1KI0:A:335 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   34.6320   18.3540   53.5950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1920   18.9350   52.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4350   18.1970   51.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0990   18.6600   51.0170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7620   17.1550   52.5630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1750   18.4770   53.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5080   17.1680   53.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4400   17.4520   54.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2130   19.1190   54.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3520   19.2040   55.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3290   20.1410   55.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+O21
+A    5
+O22
+A    6
+C3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+C6
+A   11
+O6
+M  END
+>  <InstanceId>
+1KI0_BCN_A_335
+
+>  <ChemCompId>
+BCN
+
+>  <PdbId>
+1KI0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+335
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+BICINE
+
+>  <SystematicName>
+2-(bis(2-hydroxyethyl)amino)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4
+
+>  <MolecularWeight>
+163.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO4/c8-3-1-7(2-4-9)5-6(10)11/h8-9H,1-5H2,(H,10,11)
+
+>  <InChIKey>
+FSVCELGFZIQNCK-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CO)N(CCO)CC(=O)O
+
+$$$$

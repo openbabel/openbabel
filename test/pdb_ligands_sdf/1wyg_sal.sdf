@@ -1,0 +1,118 @@
+1FIQ_SAL_C_1335
+  RCSB PDB12061702293D
+Coordinates from PDB:1FIQ:C:1335 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   27.4390    9.3380  112.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9670    8.2690  112.3630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6160    9.6980  110.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6820   10.1210  112.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4540    9.7500  114.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7080   10.5450  115.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1700   11.7510  114.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3490   12.1860  113.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1050   11.3600  112.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9460    8.6000  114.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O2
+M  END
+>  <InstanceId>
+1FIQ_SAL_C_1335
+
+>  <ChemCompId>
+SAL
+
+>  <PdbId>
+1FIQ
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1335
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3
+
+>  <Name>
+2-HYDROXYBENZOIC ACID
+
+>  <SystematicName>
+2-hydroxybenzoic acid
+
+>  <Synonyms>
+SALICYLIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O3
+
+>  <MolecularWeight>
+138.121
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O3/c8-6-4-2-1-3-5(6)7(9)10/h1-4,8H,(H,9,10)
+
+>  <InChIKey>
+YGSDEFSMJLZEOE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)O
+
+$$$$

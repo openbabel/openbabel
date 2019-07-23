@@ -1,0 +1,135 @@
+1G0N_PHH_A_402
+  RCSB PDB12061702333D
+Coordinates from PDB:1G0N:A:402 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   98.7240   71.7550   -5.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.5010   71.6280   -4.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.4480   72.2420   -3.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.6080   71.8170   -2.4480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   98.7710   70.9060   -2.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.3060   70.8210   -3.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.3750   70.1350   -4.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.3580   69.1430   -3.3460  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  100.6330   70.2520   -5.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.0030   69.3730   -6.3580  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   99.8100   71.0540   -6.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.1090   71.2010   -8.2380  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   97.6590   72.7690   -6.8610  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   99.2560   70.2640   -1.3940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 11  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+CL7
+A    9
+C8
+A   10
+CL8
+A   11
+C9
+A   12
+CL9
+A   13
+CL10
+A   14
+O11
+M  END
+>  <InstanceId>
+1G0N_PHH_A_402
+
+>  <ChemCompId>
+PHH
+
+>  <PdbId>
+1G0N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O2 Cl4
+
+>  <Name>
+4,5,6,7-TETRACHLORO-PHTHALIDE
+
+>  <SystematicName>
+4,5,6,7-tetrachloro-3H-2-benzofuran-1-one
+
+>  <Synonyms>
+4,5,6,7-TETRACHLORO-3H-ISOBENZOFURAN-1-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H2 Cl4 O2
+
+>  <MolecularWeight>
+271.912
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H2Cl4O2/c9-4-2-1-14-8(13)3(2)5(10)7(12)6(4)11/h1H2
+
+>  <InChIKey>
+NMWKWBPNKPGATC-UHFFFAOYSA-N
+
+>  <SMILES>
+C1c2c(c(c(c(c2Cl)Cl)Cl)Cl)C(=O)O1
+
+$$$$

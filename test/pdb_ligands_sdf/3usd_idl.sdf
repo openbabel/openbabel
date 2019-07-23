@@ -1,0 +1,131 @@
+3USD_IDL_A_5
+  RCSB PDB12061711063D
+Coordinates from PDB:3USD:A:5 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    7.3270   18.0280   18.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7260   18.3110   19.9080   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2940   18.2180   16.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4050   18.3880   17.7950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0470   21.3390   18.8720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1440   17.6570   15.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2620   20.9940   20.0050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1190   17.2880   16.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1960   17.4780   18.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4660   18.9390   18.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9530   18.8530   19.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8080   19.4870   18.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0570   20.6800   19.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5 13  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C
+A    2
+N1
+A    3
+C2
+A    4
+N2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+C5
+A   10
+C7
+A   11
+C8
+A   12
+C17
+A   13
+C18
+M  END
+>  <InstanceId>
+3USD_IDL_A_5
+
+>  <ChemCompId>
+IDL
+
+>  <PdbId>
+3USD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+imidazo[1,2-a]pyridin-3-ylacetic acid
+
+>  <SystematicName>
+2-imidazo[1,2-a]pyridin-3-ylethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2 O2
+
+>  <MolecularWeight>
+176.172
+
+>  <ModifiedDate>
+2011-12-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2O2/c12-9(13)5-7-6-10-8-3-1-2-4-11(7)8/h1-4,6H,5H2,(H,12,13)
+
+>  <InChIKey>
+ZVBVKRNOISRONE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccn2c(c1)ncc2CC(=O)O
+
+$$$$

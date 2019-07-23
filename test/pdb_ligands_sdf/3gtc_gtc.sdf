@@ -1,0 +1,139 @@
+3GTC_GTC_A_362
+  RCSB PDB12061708473D
+Coordinates from PDB:3GTC:A:362 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   21.2240    4.0880   11.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6620    4.6150   11.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1460    5.6220   11.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1070    6.1300   10.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6190    2.1690    9.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1490    5.9570    9.9930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7450    6.1510   11.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2200    6.7880   12.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5410    5.8760   10.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6380    3.5700   11.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2660    3.3940   10.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1930    3.3820    9.0980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1030    2.5740    8.7200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2820    2.6300   10.9610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2270    1.1000   10.1730   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  2  9  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  7  1  0  0  0  0
+  9  4  1  0  0  0  0
+ 13  5  1  0  0  0  0
+ 14  5  1  0  0  0  0
+  5 15  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C6
+A    2
+C2
+A    3
+C5
+A    4
+C4
+A    5
+C10
+A    6
+O13
+A    7
+C12
+A    8
+O14
+A    9
+C3
+A   10
+C1
+A   11
+C7
+A   12
+N8
+A   13
+N9
+A   14
+N11
+A   15
+S15
+M  END
+>  <InstanceId>
+3GTC_GTC_A_362
+
+>  <ChemCompId>
+GTC
+
+>  <PdbId>
+3GTC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+362
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O2 S
+
+>  <Name>
+(1R,2S)-2-(5-thioxo-4,5-dihydro-1H-1,2,4-triazol-3-yl)cyclohexanecarboxylic acid
+
+>  <SystematicName>
+(1R,2S)-2-(5-sulfanylidene-1,4-dihydro-1,2,4-triazol-3-yl)cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N3 O2 S
+
+>  <MolecularWeight>
+227.283
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N3O2S/c13-8(14)6-4-2-1-3-5(6)7-10-9(15)12-11-7/h5-6H,1-4H2,(H,13,14)(H2,10,11,12,15)/t5-,6+/m0/s1
+
+>  <InChIKey>
+DYLXWYPNDHPRPQ-NTSWFWBYSA-N
+
+>  <SMILES>
+C1CC[C@H]([C@H](C1)C2=NNC(=S)N2)C(=O)O
+
+$$$$

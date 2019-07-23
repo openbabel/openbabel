@@ -1,0 +1,136 @@
+2X0U_X0U_B_1291
+  RCSB PDB12061707213D
+Coordinates from PDB:2X0U:B:1291 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+  124.5560  103.8070  -43.2960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  125.2370  104.4360  -41.1420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  124.3780  101.5030  -46.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.2400  100.4770  -45.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.7790   99.1900  -47.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.4250  100.5270  -48.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.1290  102.6660  -45.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.7230  102.7650  -44.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.5560  101.7110  -43.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.8530  100.5670  -44.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.2430  103.5850  -42.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.7540  101.4330  -47.4650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  125.5360   99.3420  -46.4880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  126.1220  102.0910  -42.1610   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  1 11  2  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  3 12  1  0  0  0  0
+  4 10  2  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+N1
+A    2
+N2
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+O1
+A   13
+O2
+A   14
+S
+M  END
+>  <InstanceId>
+2X0U_X0U_B_1291
+
+>  <ChemCompId>
+X0U
+
+>  <PdbId>
+2X0U
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1291
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2 S
+
+>  <Name>
+6,7-DIHYDRO[1,4]DIOXINO[2,3-F][1,3]BENZOTHIAZOL-2-AMINE
+
+>  <SystematicName>
+6,7-dihydro-[1,4]dioxino[2,3-f][1,3]benzothiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H8 N2 O2 S
+
+>  <MolecularWeight>
+208.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2O2S/c10-9-11-5-3-6-7(4-8(5)14-9)13-2-1-12-6/h3-4H,1-2H2,(H2,10,11)
+
+>  <InChIKey>
+IURPFIBKOPUBIT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c(cc3c1OCCO3)sc(n2)N
+
+$$$$

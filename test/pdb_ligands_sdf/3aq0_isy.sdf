@@ -1,0 +1,133 @@
+3AQ0_ISY_A_1003
+  RCSB PDB12061707553D
+Coordinates from PDB:3AQ0:A:1003 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  -39.0990   35.5070    1.6470   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.5190   35.7220    0.9340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6000   34.5770    0.7090   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.3270   36.7380    1.0100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1720   35.5960    3.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.3380   34.2230    1.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.0360   33.2240    0.8550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.3710   34.9370   -0.5040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.5920   34.8720    2.0500   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.0140   35.8180    1.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.2210   35.2140    1.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.3630   35.7850    2.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.5360   37.2920    2.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.5120   34.8740    2.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  7  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+A    1
+P1
+A    2
+O2
+A    3
+P3
+A    4
+O4
+A    5
+O5
+A    6
+O6
+A    7
+O7
+A    8
+O8
+A    9
+S9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+3AQ0_ISY_A_1003
+
+>  <ChemCompId>
+ISY
+
+>  <PdbId>
+3AQ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O6 P2 S
+
+>  <Name>
+3-methylbut-3-enylsulfanyl(phosphonooxy)phosphinic acid
+
+>  <SystematicName>
+3-methylbut-3-enylsulfanyl(phosphonooxy)phosphinic acid
+
+>  <Synonyms>
+Isopentyl S-Thiolodiphosphate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O6 P2 S
+
+>  <MolecularWeight>
+262.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O6P2S/c1-5(2)3-4-14-13(9,10)11-12(6,7)8/h1,3-4H2,2H3,(H,9,10)(H2,6,7,8)
+
+>  <InChIKey>
+YLTQZUVQWVAPNP-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=C)CCS[P@@](=O)(O)OP(=O)(O)O
+
+$$$$

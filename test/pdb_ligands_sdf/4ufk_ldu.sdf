@@ -1,0 +1,114 @@
+4UFK_LDU_A_1001
+  RCSB PDB12061715063D
+Coordinates from PDB:4UFK:A:1001 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   78.5400   87.5190   20.6000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9420   88.8540   20.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.7740   89.8070   20.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1250   89.5860   21.8130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.8690   89.4770   19.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.8170   89.1570   18.2860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   79.1780   89.0940   18.8550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.9930   88.0010   18.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.4390   88.4160   16.9140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O2
+A    2
+C4
+A    3
+C3
+A    4
+O1
+A    5
+C2
+A    6
+N
+A    7
+C5
+A    8
+C6
+A    9
+O
+M  END
+>  <InstanceId>
+4UFK_LDU_A_1001
+
+>  <ChemCompId>
+LDU
+
+>  <PdbId>
+4UFK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O3
+
+>  <Name>
+DIDEOXY-IMINO-LYXITOL
+
+>  <SystematicName>
+(2R,3S,4R)-2-(hydroxymethyl)pyrrolidine-3,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H11 N O3
+
+>  <MolecularWeight>
+133.146
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO3/c7-2-3-5(9)4(8)1-6-3/h3-9H,1-2H2/t3-,4-,5+/m1/s1
+
+>  <InChIKey>
+OQEBIHBLFRADNM-WDCZJNDASA-N
+
+>  <SMILES>
+C1[C@H]([C@H]([C@H](N1)CO)O)O
+
+$$$$

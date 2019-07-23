@@ -1,0 +1,133 @@
+2JBJ_G88_A_1768
+  RCSB PDB12061706013D
+Coordinates from PDB:2JBJ:A:1768 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   14.0590   48.8280   40.8700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0690   47.5920   40.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0740   47.0850   39.9020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1990   46.7460   41.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8500   45.2630   41.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1270   44.4920   41.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1280   44.6370   40.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0480   45.4570   40.8370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0190   43.8850   39.7410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6240   45.1230   43.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5950   43.9790   44.2300   P 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4420   43.0150   43.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7910   44.6540   45.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6370   43.1010   45.0740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+O7
+A    4
+C5
+A    5
+C4
+A    6
+C2
+A    7
+C3
+A    8
+O5
+A    9
+O4
+A   10
+C1
+A   11
+P1
+A   12
+O2
+A   13
+O3
+A   14
+O1
+M  END
+>  <InstanceId>
+2JBJ_G88_A_1768
+
+>  <ChemCompId>
+G88
+
+>  <PdbId>
+2JBJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1768
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7 P
+
+>  <Name>
+(2S)-2-(PHOSPHONOMETHYL)PENTANEDIOIC ACID
+
+>  <SystematicName>
+(2S)-2-(phosphonomethyl)pentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 O7 P
+
+>  <MolecularWeight>
+226.121
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H11O7P/c7-5(8)2-1-4(6(9)10)3-14(11,12)13/h4H,1-3H2,(H,7,8)(H,9,10)(H2,11,12,13)/t4-/m1/s1
+
+>  <InChIKey>
+ISEYJGQFXSTPMQ-SCSAIBSYSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@H](CP(=O)(O)O)C(=O)O
+
+$$$$

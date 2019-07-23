@@ -1,0 +1,123 @@
+3UXD_0CU_A_291
+  RCSB PDB12061711073D
+Coordinates from PDB:3UXD:A:291 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    8.5550   -0.9930    9.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5340   -1.4190    8.2540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6120   -1.0900    8.7570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4700   -0.4670    9.8150   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1830   -0.3480   10.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4560    0.2500   11.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0940    0.1330   10.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1480    0.8410   12.1700  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4240   -0.4970    9.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1750   -1.0790    8.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3910   -1.8970    7.6300  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 10  1  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  9  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+CAK
+A    2
+NAG
+A    3
+NAE
+A    4
+NAF
+A    5
+CAJ
+A    6
+CAD
+A    7
+CAH
+A    8
+CLA
+A    9
+CAC
+A   10
+CAI
+A   11
+CLB
+M  END
+>  <InstanceId>
+3UXD_0CU_A_291
+
+>  <ChemCompId>
+0CU
+
+>  <PdbId>
+3UXD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+291
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 Cl2
+
+>  <Name>
+5,7-dichloro-1H-benzotriazole
+
+>  <SystematicName>
+5,7-bis(chloranyl)-1H-benzotriazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H3 Cl2 N3
+
+>  <MolecularWeight>
+188.014
+
+>  <ModifiedDate>
+2012-06-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H3Cl2N3/c7-3-1-4(8)6-5(2-3)9-11-10-6/h1-2H,(H,9,10,11)
+
+>  <InChIKey>
+JIEIAVACOCLACU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c2c1nn[nH]2)Cl)Cl
+
+$$$$

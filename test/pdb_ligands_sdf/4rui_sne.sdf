@@ -1,0 +1,119 @@
+4RQL_SNE_A_505
+  RCSB PDB12061714413D
+Coordinates from PDB:4RQL:A:505 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+    4.4040   35.3360   24.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0410   36.3850   24.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9310   36.3300   25.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7810   37.2370   25.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7150   37.7270   24.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9640   38.6180   25.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8600   37.7700   26.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5070   37.9430   27.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4490   37.1370   28.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0540   37.5650   28.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  5  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  3  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C6
+A    2
+C1
+A    3
+C7
+A    4
+C9
+A    5
+C4
+A    6
+C3
+A    7
+C8
+A    8
+C2
+A    9
+C
+A   10
+C5
+M  END
+>  <InstanceId>
+4RQL_SNE_A_505
+
+>  <ChemCompId>
+SNE
+
+>  <PdbId>
+4RQL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+505
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+Sabinene
+
+>  <SystematicName>
+(1S,5S)-2-methylidene-5-propan-2-yl-bicyclo[3.1.0]hexane
+
+>  <Synonyms>
+(1S,5S)-4-methylidene-1-(propan-2-yl)bicyclo[3.1.0]hexane
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16
+
+>  <MolecularWeight>
+136.234
+
+>  <ModifiedDate>
+2015-01-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16/c1-7(2)10-5-4-8(3)9(10)6-10/h7,9H,3-6H2,1-2H3/t9-,10-/m0/s1
+
+>  <InChIKey>
+NDVASEGYNIMXJL-UWVGGRQHSA-N
+
+>  <SMILES>
+CC(C)[C@@]12CCC(=C)[C@@H]1C2
+
+$$$$

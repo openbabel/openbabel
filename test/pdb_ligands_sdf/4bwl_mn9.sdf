@@ -1,0 +1,137 @@
+4BWL_MN9_C_1297
+  RCSB PDB12061711553D
+Coordinates from PDB:4BWL:C:1297 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+    4.3200  -10.2010    8.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5100   -9.2530    7.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1390   -8.3460    9.0740   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7580   -7.2120    9.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2290   -9.7400    7.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3680   -6.5020   10.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0130   -6.8300    8.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1650  -10.4950    8.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2360  -11.5740    7.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5550  -10.1140    9.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2050   -9.4280    8.0220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4320  -11.3050    9.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4700  -10.7790   10.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8700  -10.4920   11.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6650  -12.3200   10.0830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  4  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  8  1  0  0  0  0
+  5  1  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+N2
+A    4
+C7
+A    5
+C
+A    6
+O7
+A    7
+C8
+A    8
+C3
+A    9
+O3
+A   10
+C4
+A   11
+O4
+A   12
+C5
+A   13
+C6
+A   14
+O6
+A   15
+O5
+M  END
+>  <InstanceId>
+4BWL_MN9_C_1297
+
+>  <ChemCompId>
+MN9
+
+>  <PdbId>
+4BWL
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1297
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O6
+
+>  <Name>
+2-(ACETYLAMINO)-2-DEOXY-D-MANNOSE
+
+>  <SystematicName>
+N-[(2S,3R,4S,5R)-3,4,5,6-tetrahydroxy-1-oxo-hexan-2-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H15 N O6
+
+>  <MolecularWeight>
+221.208
+
+>  <ModifiedDate>
+2014-02-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO6/c1-4(12)9-5(2-10)7(14)8(15)6(13)3-11/h2,5-8,11,13-15H,3H2,1H3,(H,9,12)/t5-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+MBLBDJOUHNCFQT-WCTZXXKLSA-N
+
+>  <SMILES>
+CC(=O)N[C@H](C=O)[C@H]([C@@H]([C@@H](CO)O)O)O
+
+$$$$

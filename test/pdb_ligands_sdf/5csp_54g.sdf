@@ -1,0 +1,122 @@
+5CSP_54G_A_401
+  RCSB PDB12061717093D
+Coordinates from PDB:5CSP:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   93.0240   16.1560  131.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.7400   13.8610  130.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.3560   12.1020  132.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.6180   13.5150  132.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.7390   14.5270  133.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.9240   15.8430  132.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.3440   11.7790  133.8720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   92.1640   11.2640  131.7240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   92.6180   14.2750  134.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   92.9520   15.1730  130.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   93.1770   15.5060  129.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  2  2  0  0  0  0
+ 10  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  1  6  2  0  0  0  0
+  8  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  3  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C2
+A    2
+C7
+A    3
+C6
+A    4
+C5
+A    5
+C4
+A    6
+C3
+A    7
+O1
+A    8
+O2
+A    9
+O
+A   10
+C1
+A   11
+C
+M  END
+>  <InstanceId>
+5CSP_54G_A_401
+
+>  <ChemCompId>
+54G
+
+>  <PdbId>
+5CSP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+2-hydroxy-5-methylbenzoic acid
+
+>  <SystematicName>
+5-methyl-2-oxidanyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2016-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O3/c1-5-2-3-7(9)6(4-5)8(10)11/h2-4,9H,1H3,(H,10,11)
+
+>  <InChIKey>
+DLGBEGBHXSAQOC-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1)C(=O)O)O
+
+$$$$

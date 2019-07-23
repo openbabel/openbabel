@@ -1,0 +1,130 @@
+3IJJ_EN1_A_900
+  RCSB PDB12061709053D
+Coordinates from PDB:3IJJ:A:900 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   30.0490   13.4060   28.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9730   13.8280   29.0560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3140   14.2520   28.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1710   12.3210   27.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3510   15.6440   28.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2710   19.3900   28.8840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2900   16.5450   28.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4870   13.5820   28.8940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9580   16.1530   28.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9440   17.1030   28.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2590   18.4570   28.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5860   18.8600   28.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5910   17.9020   28.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  8  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+A   12
+C8
+A   13
+C9
+M  END
+>  <InstanceId>
+3IJJ_EN1_A_900
+
+>  <ChemCompId>
+EN1
+
+>  <PdbId>
+3IJJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+(2E)-2-hydroxy-3-(4-hydroxyphenyl)prop-2-enoic acid
+
+>  <SystematicName>
+(E)-2-hydroxy-3-(4-hydroxyphenyl)prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O4
+
+>  <MolecularWeight>
+180.157
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O4/c10-7-3-1-6(2-4-7)5-8(11)9(12)13/h1-5,10-11H,(H,12,13)/b8-5+
+
+>  <InChIKey>
+GQYBCIHRWMPOOF-VMPITWQZSA-N
+
+>  <SMILES>
+c1cc(ccc1/C=C(\C(=O)O)/O)O
+
+$$$$

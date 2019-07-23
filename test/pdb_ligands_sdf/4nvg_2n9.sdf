@@ -1,0 +1,143 @@
+4NVG_2N9_B_302
+  RCSB PDB12061713573D
+Coordinates from PDB:4NVG:B:302 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   22.5960    5.3980   -3.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7220    0.4060   -0.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9170    0.5090   -0.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6140    0.9510   -2.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0060    1.1560   -0.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6790    2.7880   -4.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1780    5.7620   -3.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9710    3.5500   -4.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9660    2.3510   -2.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8830    2.9020   -3.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7020    1.5990   -2.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8950    1.7000   -1.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1100    2.4510   -1.7950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5960    2.1260   -3.8150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0690    3.0000   -4.3810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7190    4.8070   -4.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16  8  1  0  0  0  0
+ 16  7  1  0  0  0  0
+  6 14  2  0  0  0  0
+  6 10  1  0  0  0  0
+ 15  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 14 11  1  0  0  0  0
+  7  1  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 11  4  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9 13  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 12  5  2  0  0  0  0
+  2  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+A    1
+CAA
+A    2
+CAD
+A    3
+CAE
+A    4
+CAF
+A    5
+CAG
+A    6
+CAH
+A    7
+CAI
+A    8
+CAL
+A    9
+CAM
+A   10
+CAN
+A   11
+CAO
+A   12
+CAP
+A   13
+NAB
+A   14
+NAJ
+A   15
+OAC
+A   16
+OAK
+M  END
+>  <InstanceId>
+4NVG_2N9_B_302
+
+>  <ChemCompId>
+2N9
+
+>  <PdbId>
+4NVG
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2
+
+>  <Name>
+ethyl 4-aminoquinoline-3-carboxylate
+
+>  <SystematicName>
+ethyl 4-azanylquinoline-3-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N2 O2
+
+>  <MolecularWeight>
+216.236
+
+>  <ModifiedDate>
+2013-12-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2O2/c1-2-16-12(15)9-7-14-10-6-4-3-5-8(10)11(9)13/h3-7H,2H2,1H3,(H2,13,14)
+
+>  <InChIKey>
+IEJDBXDYSPBDTO-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1cnc2ccccc2c1N
+
+$$$$

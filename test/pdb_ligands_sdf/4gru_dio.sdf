@@ -1,0 +1,102 @@
+1AF4_DIO_A_342
+  RCSB PDB12061701593D
+Coordinates from PDB:1AF4:A:342 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   11.1570   23.4230   -9.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0680   25.4800   -9.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8780   23.4410  -11.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8450   25.5200  -10.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9070   24.1380   -8.9580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0800   24.7930  -11.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C1'
+A    4
+C2'
+A    5
+O1
+A    6
+O1'
+M  END
+>  <InstanceId>
+1AF4_DIO_A_342
+
+>  <ChemCompId>
+DIO
+
+>  <PdbId>
+1AF4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+342
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2
+
+>  <Name>
+1,4-DIETHYLENE DIOXIDE
+
+>  <SystematicName>
+1,4-dioxane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O2
+
+>  <MolecularWeight>
+88.105
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O2/c1-2-6-4-3-5-1/h1-4H2
+
+>  <InChIKey>
+RYHBNJHYFVUHQT-UHFFFAOYSA-N
+
+>  <SMILES>
+C1COCCO1
+
+$$$$

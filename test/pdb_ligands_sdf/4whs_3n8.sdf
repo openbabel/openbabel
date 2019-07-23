@@ -1,0 +1,114 @@
+4WHQ_3N8_A_302
+  RCSB PDB12061715583D
+Coordinates from PDB:4WHQ:A:302 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -16.8420  -51.4300  -33.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2090  -51.2670  -33.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7490  -50.6320  -34.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8800  -50.1390  -35.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5030  -50.3060  -35.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9780  -50.9450  -34.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3860  -52.0550  -32.4880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9960  -51.7610  -32.7940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3730  -49.5210  -36.8920   F 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  8  2  1  0  0  0  0
+  6  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  5  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+A    9
+F9
+M  END
+>  <InstanceId>
+4WHQ_3N8_A_302
+
+>  <ChemCompId>
+3N8
+
+>  <PdbId>
+4WHQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2 F
+
+>  <Name>
+4-fluorobenzene-1,2-diol
+
+>  <SystematicName>
+4-fluoranylbenzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 F O2
+
+>  <MolecularWeight>
+128.101
+
+>  <ModifiedDate>
+2014-12-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5FO2/c7-4-1-2-5(8)6(9)3-4/h1-3,8-9H
+
+>  <InChIKey>
+NFWGQJUHSAGJBE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1F)O)O
+
+$$$$

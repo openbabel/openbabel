@@ -1,0 +1,94 @@
+1OW3_MGF_B_682
+  RCSB PDB12061703363D
+Coordinates from PDB:1OW3:B:682 Model:1 without hydrogens
+  4  3  0  0  0  0            999 V2000
+   23.4610    1.0540    5.2710   F 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2760    0.2110    6.7840  Mg 0  5  0  0  0  0  0  0  0  0  0  0
+   25.4530   -1.2130    6.7280   F 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7360    1.1740    8.3760   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+M  CHG  1   2  -1
+A    1
+F1
+A    2
+MG
+A    3
+F2
+A    4
+F3
+M  END
+>  <InstanceId>
+1OW3_MGF_B_682
+
+>  <ChemCompId>
+MGF
+
+>  <PdbId>
+1OW3
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+682
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+F3 Mg
+
+>  <Name>
+TRIFLUOROMAGNESATE
+
+>  <SystematicName>
+trifluoromagnesium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+F3 Mg
+
+>  <MolecularWeight>
+81.3
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/3FH.Mg/h3*1H;/q;;;+2/p-3
+
+>  <InChIKey>
+GJOMWUHGUQLOAC-UHFFFAOYSA-K
+
+>  <SMILES>
+F[Mg-](F)F
+
+$$$$

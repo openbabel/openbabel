@@ -1,0 +1,113 @@
+1J06_AE3_A_902
+  RCSB PDB12061702543D
+Coordinates from PDB:1J06:A:902 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   39.9540   27.2670    8.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9340   26.3680    7.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1370   25.8260    8.7450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0390   24.8770    8.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3150   24.2070    9.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3420   23.3830    8.6390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9570   23.4070    9.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0180   22.4000    8.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6520   22.2200    9.2760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+C4
+A    6
+O3
+A    7
+C5
+A    8
+C6
+A    9
+O4
+M  END
+>  <InstanceId>
+1J06_AE3_A_902
+
+>  <ChemCompId>
+AE3
+
+>  <PdbId>
+1J06
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+2-(2-ETHOXYETHOXY)ETHANOL
+
+>  <SystematicName>
+2-(2-ethoxyethoxy)ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O3
+
+>  <MolecularWeight>
+134.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O3/c1-2-8-5-6-9-4-3-7/h7H,2-6H2,1H3
+
+>  <InChIKey>
+XXJWXESWEXIICW-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOCCOCCO
+
+$$$$

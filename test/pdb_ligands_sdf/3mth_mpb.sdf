@@ -1,0 +1,122 @@
+2VK0_MPB_C_1022
+  RCSB PDB12061707063D
+Coordinates from PDB:2VK0:C:1022 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    3.7020   20.5500   -0.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8020   21.3360    0.2540   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3820   20.2910   -1.2290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3730   19.6870   -0.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9130   19.8630   -1.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8460   19.2850   -2.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9620   18.6480   -3.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1500   18.5860   -2.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2210   19.1620   -1.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1060   19.7990   -0.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2400   17.9630   -2.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+O2
+A    4
+CM
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+O4
+M  END
+>  <InstanceId>
+2VK0_MPB_C_1022
+
+>  <ChemCompId>
+MPB
+
+>  <PdbId>
+2VK0
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1022
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+4-HYDROXY-BENZOIC ACID METHYL ESTER
+
+>  <SystematicName>
+methyl 4-hydroxybenzoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O3/c1-11-8(10)6-2-4-7(9)5-3-6/h2-5,9H,1H3
+
+>  <InChIKey>
+LXCFILQKKLGQFO-UHFFFAOYSA-N
+
+>  <SMILES>
+COC(=O)c1ccc(cc1)O
+
+$$$$

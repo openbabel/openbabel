@@ -1,0 +1,121 @@
+1E7E_DKA_A_1001
+  RCSB PDB12061702213D
+Coordinates from PDB:1E7E:A:1001 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   29.7330   13.1170   36.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4140   12.6240   37.2400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1880   12.9990   35.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0200   14.2020   36.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2850   14.1510   35.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3400   15.1550   35.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0050   15.9260   34.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3190   15.3030   34.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2660   16.3520   33.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4490   15.7080   32.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9080   13.6890   35.4050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+O2
+M  END
+>  <InstanceId>
+1E7E_DKA_A_1001
+
+>  <ChemCompId>
+DKA
+
+>  <PdbId>
+1E7E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+DECANOIC ACID
+
+>  <SystematicName>
+decanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H20 O2
+
+>  <MolecularWeight>
+172.265
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20O2/c1-2-3-4-5-6-7-8-9-10(11)12/h2-9H2,1H3,(H,11,12)
+
+>  <InChIKey>
+GHVNFZFCNZKVNT-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCC(=O)O
+
+$$$$

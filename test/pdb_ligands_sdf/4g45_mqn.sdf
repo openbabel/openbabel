@@ -1,0 +1,127 @@
+4G45_MQN_A_407
+  RCSB PDB12061712393D
+Coordinates from PDB:4G45:A:407 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   14.8530   -0.6190   -6.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0730    0.6270   -6.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0270    1.1710   -7.6080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2930    2.3460   -7.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2940    2.8550   -9.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5940    4.0250   -9.5350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8770    4.6650   -8.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2410    5.7950   -8.9260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8790    4.1630   -7.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6340    3.0160   -6.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6570    2.4500   -5.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4100    1.2620   -5.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  4 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CAA
+A    2
+CAI
+A    3
+NAH
+A    4
+CAL
+A    5
+CAF
+A    6
+CAD
+A    7
+CAJ
+A    8
+NAB
+A    9
+CAG
+A   10
+CAK
+A   11
+CAE
+A   12
+CAC
+M  END
+>  <InstanceId>
+4G45_MQN_A_407
+
+>  <ChemCompId>
+MQN
+
+>  <PdbId>
+4G45
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+407
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2
+
+>  <Name>
+2-methylquinolin-6-amine
+
+>  <SystematicName>
+2-methylquinolin-6-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2
+
+>  <MolecularWeight>
+158.2
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2/c1-7-2-3-8-6-9(11)4-5-10(8)12-7/h2-6H,11H2,1H3
+
+>  <InChIKey>
+TYJFYUVDUUACKX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2cc(ccc2n1)N
+
+$$$$

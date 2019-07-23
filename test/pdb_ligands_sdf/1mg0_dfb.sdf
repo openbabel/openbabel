@@ -1,0 +1,118 @@
+1MG0_DFB_A_378
+  RCSB PDB12061703173D
+Coordinates from PDB:1MG0:A:378 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   20.6340    0.1640    9.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4150    0.2490   10.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6970    0.5490   11.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7230    1.9400   11.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5060    3.0240   11.2340   F 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9470   -0.4930   12.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2050   -0.2430   13.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2440    1.0510   14.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0120    2.1570   13.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0320    3.4240   13.8740   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+C7
+A    3
+C1
+A    4
+C2
+A    5
+F2
+A    6
+C6
+A    7
+C5
+A    8
+C4
+A    9
+C3
+A   10
+F3
+M  END
+>  <InstanceId>
+1MG0_DFB_A_378
+
+>  <ChemCompId>
+DFB
+
+>  <PdbId>
+1MG0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+378
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O F2
+
+>  <Name>
+2,3-DIFLUOROBENZYL ALCOHOL
+
+>  <SystematicName>
+(2,3-difluorophenyl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 F2 O
+
+>  <MolecularWeight>
+144.119
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6F2O/c8-6-3-1-2-5(4-10)7(6)9/h1-3,10H,4H2
+
+>  <InChIKey>
+JSFGDUIJQWWBGY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)F)F)CO
+
+$$$$

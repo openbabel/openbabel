@@ -1,0 +1,110 @@
+1W19_D1D_E_1166
+  RCSB PDB12061704283D
+Coordinates from PDB:1W19:E:1166 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+    8.4630  -27.9180   35.0550   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6840  -29.2450   36.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7550  -30.4430   36.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0440  -30.4150   37.2730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6530  -30.6520   34.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0420  -31.8240   34.2730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2040  -29.7070   33.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0250  -28.1870   33.6980   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+S1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+S4
+M  END
+>  <InstanceId>
+1W19_D1D_E_1166
+
+>  <ChemCompId>
+D1D
+
+>  <PdbId>
+1W19
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+1166
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2 S2
+
+>  <Name>
+(4S,5S)-1,2-DITHIANE-4,5-DIOL
+
+>  <SystematicName>
+(4S,5S)-1,2-dithiane-4,5-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O2 S2
+
+>  <MolecularWeight>
+152.235
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O2S2/c5-3-1-7-8-2-4(3)6/h3-6H,1-2H2/t3-,4-/m1/s1
+
+>  <InChIKey>
+YPGMOWHXEQDBBV-QWWZWVQMSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](CSS1)O)O
+
+$$$$

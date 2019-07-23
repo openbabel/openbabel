@@ -1,0 +1,127 @@
+1HWW_SWA_A_1103
+  RCSB PDB12061702473D
+Coordinates from PDB:1HWW:A:1103 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   31.0850   66.8500    6.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6160   67.9930    5.4120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2910   67.0030    7.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7310   65.8070    8.3070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2560   65.6700    8.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9520   65.4970    6.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5540   66.6860    5.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2840   65.7130    9.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6480   66.4480    9.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7150   65.5340    9.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7550   67.0820    8.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6410   66.3140    7.3190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+C2
+A    8
+C9
+A    9
+C8
+A   10
+O13
+A   11
+C7
+A   12
+O11
+M  END
+>  <InstanceId>
+1HWW_SWA_A_1103
+
+>  <ChemCompId>
+SWA
+
+>  <PdbId>
+1HWW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1103
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+1S-8AB-OCTAHYDRO-INDOLIZIDINE-1A,2A,8B-TRIOL
+
+>  <SystematicName>
+(1S,2R,4R,8R,8aR)-1,2,3,5,6,7,8,8a-octahydroindolizine-1,2,8-triol
+
+>  <Synonyms>
+SWAINSONINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 N O3
+
+>  <MolecularWeight>
+173.21
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO3/c10-5-2-1-3-9-4-6(11)8(12)7(5)9/h5-8,10-12H,1-4H2/t5-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+FXUAIOOAOAVCGD-WCTZXXKLSA-N
+
+>  <SMILES>
+C1C[C@H]([C@@H]2[C@@H]([C@@H](C[N@]2C1)O)O)O
+
+$$$$

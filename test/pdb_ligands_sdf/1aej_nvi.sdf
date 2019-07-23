@@ -1,0 +1,107 @@
+1AEJ_NVI_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEJ:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   31.5580   93.5970   47.8900   N 0  3  0  0  0  0  0  0  0  0  0  0
+   32.1730   93.4270   49.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3610   92.8600   48.8360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5180   92.6440   47.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3830   93.1050   46.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2630   94.1820   47.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6220   94.1190   46.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  2  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+M  END
+>  <InstanceId>
+1AEJ_NVI_A_296
+
+>  <ChemCompId>
+NVI
+
+>  <PdbId>
+1AEJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2
+
+>  <Name>
+1-VINYLIMIDAZOLE
+
+>  <SystematicName>
+1-ethenyl-3H-imidazol-1-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N2
+
+>  <MolecularWeight>
+95.122
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2/c1-2-7-4-3-6-5-7/h2-5H,1H2/p+1
+
+>  <InChIKey>
+OSSNTDFYBPYIEC-UHFFFAOYSA-O
+
+>  <SMILES>
+C=C[n+]1cc[nH]c1
+
+$$$$

@@ -1,0 +1,121 @@
+3L7G_M44_A_518
+  RCSB PDB12061709343D
+Coordinates from PDB:3L7G:A:518 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   17.2560   32.4750    7.6090   P 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1320   33.1470    6.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0490   32.0450    6.5060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0300   31.7010    8.8590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9430   32.9730    7.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7990   32.1350    6.9920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1850   33.9430    7.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6670   33.0990    4.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1280   32.9400    5.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9160   32.1040    4.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5830   33.3700    5.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  1  0  0  0  0
+  6  1  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  4  1  0  0  0  0
+  8  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  9  6  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+P
+A    2
+C1
+A    3
+N1
+A    4
+O1
+A    5
+C2
+A    6
+N2
+A    7
+O2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C6
+M  END
+>  <InstanceId>
+3L7G_M44_A_518
+
+>  <ChemCompId>
+M44
+
+>  <PdbId>
+3L7G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+518
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2 P
+
+>  <Name>
+N,N'-bis(1-methylethyl)phosphorodiamidic acid
+
+>  <SystematicName>
+bis(propan-2-ylamino)phosphinic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H17 N2 O2 P
+
+>  <MolecularWeight>
+180.185
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H17N2O2P/c1-5(2)7-11(9,10)8-6(3)4/h5-6H,1-4H3,(H3,7,8,9,10)
+
+>  <InChIKey>
+CAMCMEOOLQEXTO-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)NP(=O)(NC(C)C)O
+
+$$$$

@@ -1,0 +1,114 @@
+3QN7_ZBR_B_18
+  RCSB PDB12061710263D
+Coordinates from PDB:3QN7:B:18 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -44.8110   20.2300   -0.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.6780   18.8630   -0.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.8450   18.3580    0.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.1370   19.2320    1.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.2660   20.6010    1.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.1020   21.1060    0.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.6210   20.7630   -2.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.7320   16.9820    1.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.5660   21.5280    2.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+M  END
+>  <InstanceId>
+3QN7_ZBR_B_18
+
+>  <ChemCompId>
+ZBR
+
+>  <PdbId>
+3QN7
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+18
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+3
+
+>  <ObservedFormula>
+C9
+
+>  <Name>
+1,3,5-tris(bromomethyl)benzene
+
+>  <SystematicName>
+1,3,5-tris(bromomethyl)benzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 Br3
+
+>  <MolecularWeight>
+356.88
+
+>  <ModifiedDate>
+2012-02-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9Br3/c10-4-7-1-8(5-11)3-9(2-7)6-12/h1-3H,4-6H2
+
+>  <InChIKey>
+GHITVUOBZBZMND-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(cc1CBr)CBr)CBr
+
+$$$$

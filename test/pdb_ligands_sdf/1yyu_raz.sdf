@@ -1,0 +1,139 @@
+1YYU_RAZ_A_710
+  RCSB PDB12061704493D
+Coordinates from PDB:1YYU:A:710 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -8.9900   93.2040   37.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3660   94.0020   38.5350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9210   92.3620   36.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9540   94.5820   38.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4630   92.5910   36.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0950   92.4250   37.8440   N 0  3  0  0  0  0  0  0  0  0  0  0
+   -7.9640   90.2720   39.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4390   90.5210   39.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9190   90.9870   38.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0620   90.8470   40.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3510   91.8890   41.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6110   90.4790   40.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3290   92.5410   37.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0110   93.5840   37.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5430   93.7660   37.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4 14  2  0  0  0  0
+  5 14  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+M  CHG  1   6   1
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C05
+A    5
+C07
+A    6
+N08
+A    7
+C09
+A    8
+C10
+A    9
+C11
+A   10
+C14
+A   11
+C17
+A   12
+C18
+A   13
+C19
+A   14
+C31
+A   15
+C32
+M  END
+>  <InstanceId>
+1YYU_RAZ_A_710
+
+>  <ChemCompId>
+RAZ
+
+>  <PdbId>
+1YYU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N
+
+>  <Name>
+(1R)-N,4-DIMETHYL-N-(4-METHYLPENT-3-ENYL)CYCLOHEX-3-ENAMINIUM
+
+>  <SystematicName>
+(R)-methyl-[(1S)-4-methyl-1-cyclohex-3-enyl]-(4-methylpent-3-enyl)azanium
+
+>  <Synonyms>
+(4R)-7-AZABISABOLENE; R-AZABISABOLENE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H26 N
+
+>  <MolecularWeight>
+208.363
+
+>  <ModifiedDate>
+2012-01-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H25N/c1-12(2)6-5-11-15(4)14-9-7-13(3)8-10-14/h6-7,14H,5,8-11H2,1-4H3/p+1/t14-/m1/s1
+
+>  <InChIKey>
+GGPFTSMJRHEOJG-CQSZACIVSA-O
+
+>  <SMILES>
+CC1=CC[C@H](CC1)[NH+](C)CCC=C(C)C
+
+$$$$

@@ -1,0 +1,118 @@
+1ABE_ARA_A_307
+  RCSB PDB12061701583D
+Coordinates from PDB:1ABE:A:307 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   14.3120   56.5670   55.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8970   57.0410   54.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3320   56.2800   53.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2800   56.3730   52.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6610   55.8770   52.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7660   57.3640   56.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0600   56.8900   56.0760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0560   56.7750   53.3360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3190   57.7020   51.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1210   56.7460   54.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O1
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O5
+M  END
+>  <InstanceId>
+1ABE_ARA_A_307
+
+>  <ChemCompId>
+ARA
+
+>  <PdbId>
+1ABE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+307
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+ALPHA-L-ARABINOSE
+
+>  <SystematicName>
+(2R,3R,4S,5S)-oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-2-1-10-5(9)4(8)3(2)7/h2-9H,1H2/t2-,3-,4+,5+/m0/s1
+
+>  <InChIKey>
+SRBFZHDQGSBBOR-QMKXCQHVSA-N
+
+>  <SMILES>
+C1[C@@H]([C@@H]([C@H]([C@@H](O1)O)O)O)O
+
+$$$$

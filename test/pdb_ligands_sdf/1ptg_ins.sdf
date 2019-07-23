@@ -1,0 +1,126 @@
+1AOD_INS_A_296
+  RCSB PDB12061702003D
+Coordinates from PDB:1AOD:A:296 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   31.3490   24.1020   29.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8340   25.4460   28.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8330   25.6590   27.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4610   25.3540   26.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1550   23.9050   26.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0900   23.6990   28.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2570   23.9540   30.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0750   26.4660   29.4060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1930   27.0080   26.8670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4350   25.5910   25.2310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9050   23.5790   26.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7670   22.3340   28.7660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+1AOD_INS_A_296
+
+>  <ChemCompId>
+INS
+
+>  <PdbId>
+1AOD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+1,2,3,4,5,6-HEXAHYDROXY-CYCLOHEXANE
+
+>  <SystematicName>
+cyclohexane-1,2,3,4,5,6-hexol
+
+>  <Synonyms>
+MYO-INOSITOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O6
+
+>  <MolecularWeight>
+180.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O6/c7-1-2(8)4(10)6(12)5(11)3(1)9/h1-12H/t1-,2-,3-,4+,5-,6-
+
+>  <InChIKey>
+CDAISMWEOUEBRE-GPIVLXJGSA-N
+
+>  <SMILES>
+C1(C(C(C(C(C1O)O)O)O)O)O
+
+$$$$

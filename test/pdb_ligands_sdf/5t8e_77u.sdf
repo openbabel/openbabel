@@ -1,0 +1,147 @@
+5T8E_77U_A_1003
+  RCSB PDB12061719323D
+Coordinates from PDB:5T8E:A:1003 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   28.8940   -0.3170    3.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5090   -0.9340    3.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6140    0.3120    3.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6520    2.4860    4.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7560    5.1260    4.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1250    0.9990    5.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6110    1.0100    4.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6900   -1.2430    4.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1220    1.1670    4.3170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5530    3.5410    4.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1220    4.8470    3.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3030    6.4840    4.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0360    7.5900    3.9820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8390    4.0750    4.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1400    4.3970    4.5220  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2820    2.7690    4.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2580    1.6860    4.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  3  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  7  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11  5  1  0  0  0  0
+ 13 12  3  0  0  0  0
+ 10  4  1  0  0  0  0
+ 12  5  1  0  0  0  0
+  5 14  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4 16  2  0  0  0  0
+  9  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+C4
+A    2
+C7
+A    3
+C8
+A    4
+C10
+A    5
+C13
+A    6
+C1
+A    7
+C2
+A    8
+O6
+A    9
+N9
+A   10
+C11
+A   11
+C12
+A   12
+C14
+A   13
+N15
+A   14
+C16
+A   15
+CL1
+A   16
+C18
+A   17
+C19
+M  END
+>  <InstanceId>
+5T8E_77U_A_1003
+
+>  <ChemCompId>
+77U
+
+>  <PdbId>
+5T8E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O Cl
+
+>  <Name>
+2-chloro-4-[(2S,3S)-3-hydroxy-2-methylpyrrolidin-1-yl]-3-methylbenzonitrile
+
+>  <SystematicName>
+2-chloranyl-3-methyl-4-[(2~{S},3~{S})-2-methyl-3-oxidanyl-pyrrolidin-1-yl]benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H15 Cl N2 O
+
+>  <MolecularWeight>
+250.724
+
+>  <ModifiedDate>
+2017-04-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H15ClN2O/c1-8-11(4-3-10(7-15)13(8)14)16-6-5-12(17)9(16)2/h3-4,9,12,17H,5-6H2,1-2H3/t9-,12-/m0/s1
+
+>  <InChIKey>
+SSTNLJGXVPIZND-CABZTGNLSA-N
+
+>  <SMILES>
+Cc1c(ccc(c1Cl)C#N)N2CC[C@@H]([C@@H]2C)O
+
+$$$$

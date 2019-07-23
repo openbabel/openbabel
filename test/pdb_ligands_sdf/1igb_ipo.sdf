@@ -1,0 +1,134 @@
+1IGB_IPO_A_520
+  RCSB PDB12061702503D
+Coordinates from PDB:1IGB:A:520 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   32.0400   -1.0400   41.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9490    0.1310   40.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9780    1.0910   41.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1200    0.8810   42.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6600    2.2710   42.8460   I 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2280   -0.2730   43.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1920   -1.2360   42.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0340   -2.0850   41.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3980   -1.7800   41.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4790   -2.2080   43.2730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4320   -2.5040   41.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7660   -3.7210   41.3970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9410   -1.9720   39.9310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4420   -2.9070   38.9770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+I4
+A    6
+C5
+A    7
+C6
+A    8
+C1'
+A    9
+C2'
+A   10
+N2'
+A   11
+C3'
+A   12
+O3'
+A   13
+N4'
+A   14
+O4'
+M  END
+>  <InstanceId>
+1IGB_IPO_A_520
+
+>  <ChemCompId>
+IPO
+
+>  <PdbId>
+1IGB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+520
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2 I
+
+>  <Name>
+PARA-IODO-D-PHENYLALANINE HYDROXAMIC ACID
+
+>  <SystematicName>
+(2R)-2-amino-N-hydroxy-3-(4-iodophenyl)propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 I N2 O2
+
+>  <MolecularWeight>
+306.1
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11IN2O2/c10-7-3-1-6(2-4-7)5-8(11)9(13)12-14/h1-4,8,14H,5,11H2,(H,12,13)/t8-/m1/s1
+
+>  <InChIKey>
+AJEPKWPHKPETBM-MRVPVSSYSA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@H](C(=O)NO)N)I
+
+$$$$

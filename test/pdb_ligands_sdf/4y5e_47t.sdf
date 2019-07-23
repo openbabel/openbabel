@@ -1,0 +1,139 @@
+4Y5E_47T_A_404
+  RCSB PDB12061716213D
+Coordinates from PDB:4Y5E:A:404 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    2.9860    8.5120   13.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3730    7.4600   14.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6080    8.0710   16.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8420    8.1740   11.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9360    7.5740   10.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6110    7.5900    9.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8320    8.5730    8.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1750    9.1940    8.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8680    8.8550   11.8890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9090    8.2590    9.3770   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8580    7.9160   12.3990   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0070    9.6350   13.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2430   10.2230   15.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6610    9.1620   16.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9270    9.7480   17.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  9  2  0  0  0  0
+  4 11  1  0  0  0  0
+ 11  1  1  0  0  0  0
+ 12  1  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14  3  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+C11
+A    9
+O
+A   10
+O1
+A   11
+N
+A   12
+C3
+A   13
+C2
+A   14
+C1
+A   15
+C
+M  END
+>  <InstanceId>
+4Y5E_47T_A_404
+
+>  <ChemCompId>
+47T
+
+>  <PdbId>
+4Y5E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2
+
+>  <Name>
+(2R)-N-(trans-4-methylcyclohexyl)tetrahydrofuran-2-carboxamide
+
+>  <SystematicName>
+(2R)-N-(4-methylcyclohexyl)oxolane-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H21 N O2
+
+>  <MolecularWeight>
+211.301
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H21NO2/c1-9-4-6-10(7-5-9)13-12(14)11-3-2-8-15-11/h9-11H,2-8H2,1H3,(H,13,14)/t9-,10-,11-/m1/s1
+
+>  <InChIKey>
+CVLLQLWAZQCIEJ-GMTAPVOTSA-N
+
+>  <SMILES>
+CC1CCC(CC1)NC(=O)[C@H]2CCCO2
+
+$$$$

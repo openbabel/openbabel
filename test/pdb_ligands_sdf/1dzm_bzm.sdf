@@ -1,0 +1,143 @@
+1DZM_BZM_A_600
+  RCSB PDB12061702193D
+Coordinates from PDB:1DZM:A:600 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    0.5310   26.5430   13.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3670   27.4410   13.0120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9880   26.8410   11.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9730   27.3650   11.4550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4600   25.5900   11.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1290   25.0460   10.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3250   25.0120   11.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6400   23.8820    9.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1430   23.8500   11.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5220   23.2930   10.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9560   26.7620   13.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8470   25.7220   13.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4350   28.0440   13.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2050   25.9830   13.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7960   28.3050   13.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6880   27.2660   13.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 14 16  2  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C8
+A    2
+O8
+A    3
+C7
+A    4
+O7
+A    5
+C6
+A    6
+C1
+A    7
+C5
+A    8
+C2
+A    9
+C4
+A   10
+C3
+A   11
+C9
+A   12
+C14
+A   13
+C10
+A   14
+C13
+A   15
+C11
+A   16
+C12
+M  END
+>  <InstanceId>
+1DZM_BZM_A_600
+
+>  <ChemCompId>
+BZM
+
+>  <PdbId>
+1DZM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O2
+
+>  <Name>
+BENZOIC ACID PHENYLMETHYLESTER
+
+>  <SystematicName>
+phenylmethyl benzoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H12 O2
+
+>  <MolecularWeight>
+212.244
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H12O2/c15-14(13-9-5-2-6-10-13)16-11-12-7-3-1-4-8-12/h1-10H,11H2
+
+>  <InChIKey>
+SESFRYSPDFLNCH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)COC(=O)c2ccccc2
+
+$$$$

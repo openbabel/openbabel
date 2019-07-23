@@ -1,0 +1,118 @@
+1W3J_OXZ_A_1447
+  RCSB PDB12061704293D
+Coordinates from PDB:1W3J:A:1447 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -3.1290    9.5980    8.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1270   10.7340    8.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9830   10.7330    7.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0710   11.9460    8.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5250   11.8380    9.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5250    8.3170    8.9190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5250   10.5350   10.2500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4550   10.7730    6.6030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9780   12.1350    7.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5220   11.5910   10.6400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C6
+A    2
+C5
+A    3
+C4
+A    4
+C3
+A    5
+C2
+A    6
+O6
+A    7
+O5
+A    8
+O4
+A    9
+O3
+A   10
+N1
+M  END
+>  <InstanceId>
+1W3J_OXZ_A_1447
+
+>  <ChemCompId>
+OXZ
+
+>  <PdbId>
+1W3J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1447
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4
+
+>  <Name>
+TETRAHYDROOXAZINE
+
+>  <SystematicName>
+(4R,5S,6R)-6-(hydroxymethyl)-1,2-oxazinane-4,5-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 N O4
+
+>  <MolecularWeight>
+149.145
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO4/c7-2-4-5(9)3(8)1-6-10-4/h3-9H,1-2H2/t3-,4-,5+/m1/s1
+
+>  <InChIKey>
+KHVCOYGKHDJPBZ-WDCZJNDASA-N
+
+>  <SMILES>
+C1[C@H]([C@@H]([C@H](ON1)CO)O)O
+
+$$$$

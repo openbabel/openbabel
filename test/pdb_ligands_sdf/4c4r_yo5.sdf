@@ -1,0 +1,142 @@
+4C4R_YO5_A_1220
+  RCSB PDB12061711583D
+Coordinates from PDB:4C4R:A:1220 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+  -13.7870   -9.5820  -13.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3240   -9.4560  -12.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8040   -8.0650  -12.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6980   -7.0350  -12.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6060   -8.4420  -12.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2410   -5.6170  -12.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0190   -8.3420  -12.9790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3250  -10.8250  -12.6160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5460  -10.4430  -13.2520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4880   -7.9170  -12.4650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9920   -7.1900  -12.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0050   -4.6410  -11.7760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2940   -9.0820  -11.8860   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6720   -8.7070  -12.4850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1110   -8.5750  -10.4680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0540  -10.5810  -11.9690   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13  7  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5 11  1  0  0  0  0
+  5  1  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6 12  1  0  0  0  0
+  3 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1  8  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C1
+A    6
+C6
+A    7
+C7
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O2P
+A   15
+O3P
+A   16
+O1P
+M  END
+>  <InstanceId>
+4C4R_YO5_A_1220
+
+>  <ChemCompId>
+YO5
+
+>  <PdbId>
+4C4R
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1220
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O8 P
+
+>  <Name>
+Beta-1 phosphonomethylene-D-glucopyranose
+
+>  <SystematicName>
+[(2R,3R,4S,5S,6R)-6-(hydroxymethyl)-3,4,5-tris(oxidanyl)oxan-2-yl]methylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C7 H15 O8 P
+
+>  <MolecularWeight>
+258.163
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15O8P/c8-1-3-5(9)7(11)6(10)4(15-3)2-16(12,13)14/h3-11H,1-2H2,(H2,12,13,14)/t3-,4+,5-,6+,7+/m1/s1
+
+>  <InChIKey>
+XRMRHVWWWWFMKR-UOYQFSTFSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@@H](O1)CP(=O)(O)O)O)O)O)O
+
+$$$$

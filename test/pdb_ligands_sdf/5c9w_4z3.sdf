@@ -1,0 +1,130 @@
+5C9W_4Z3_A_804
+  RCSB PDB12061717033D
+Coordinates from PDB:5C9W:A:804 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   30.3020   74.8240   61.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7460   80.7960   61.5020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7720   79.8190   61.6460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3590   79.5320   62.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1510   78.5940   62.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5130   78.6130   63.9130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6150   77.9780   61.6930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5400   76.9710   61.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4980   77.0520   60.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3830   75.9960   60.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3530   74.7290   62.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4710   75.7820   62.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7920   75.5940   64.0990  Br 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10  1  1  0  0  0  0
+  9  8  1  0  0  0  0
+  1 11  2  0  0  0  0
+  2  3  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 12  2  0  0  0  0
+  7  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C10
+A    2
+O01
+A    3
+N02
+A    4
+C03
+A    5
+C04
+A    6
+O05
+A    7
+N06
+A    8
+C07
+A    9
+C08
+A   10
+C09
+A   11
+C11
+A   12
+C12
+A   13
+BR13
+M  END
+>  <InstanceId>
+5C9W_4Z3_A_804
+
+>  <ChemCompId>
+4Z3
+
+>  <PdbId>
+5C9W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+804
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 Br
+
+>  <Name>
+(2E)-N-(2-bromophenyl)-2-(hydroxyimino)acetamide
+
+>  <SystematicName>
+N-(2-bromophenyl)-2-hydroxyimino-ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 Br N2 O2
+
+>  <MolecularWeight>
+243.057
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7BrN2O2/c9-6-3-1-2-4-7(6)11-8(12)5-10-13/h1-5,13H,(H,11,12)/b10-5+
+
+>  <InChIKey>
+KRUQMJREXXFSBT-BJMVGYQFSA-N
+
+>  <SMILES>
+c1ccc(c(c1)NC(=O)C=NO)Br
+
+$$$$

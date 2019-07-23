@@ -1,0 +1,159 @@
+4IIZ_LUR_A_201
+  RCSB PDB12061713013D
+Coordinates from PDB:4IIZ:A:201 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+   21.4920    2.0240  -31.7160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7470    1.2760  -30.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7700    1.3720  -30.0400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7640    0.0780  -30.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5660    0.4120  -29.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4080    0.9860  -30.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3050    1.3050  -29.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0440    1.9510  -29.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3220    1.0620  -27.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4440    0.4980  -27.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5390    0.1760  -28.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5600   -0.3860  -27.4990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0420   -0.0720  -26.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3160    0.4780  -26.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1430    0.7740  -27.8100  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9150    0.7970  -25.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2460    0.5520  -23.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9830   -0.0010  -23.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3810   -0.3290  -25.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1550   -0.8700  -25.0120   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  5 11  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 13 19  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 19 20  1  0  0  0  0
+ 19 18  2  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+OAB
+A    2
+CAN
+A    3
+OAC
+A    4
+CAL
+A    5
+CAR
+A    6
+CAK
+A    7
+CAO
+A    8
+CAA
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAS
+A   12
+NAM
+A   13
+CAT
+A   14
+CAQ
+A   15
+CLE
+A   16
+CAH
+A   17
+CAF
+A   18
+CAG
+A   19
+CAP
+A   20
+FAD
+M  END
+>  <InstanceId>
+4IIZ_LUR_A_201
+
+>  <ChemCompId>
+LUR
+
+>  <PdbId>
+4IIZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N O2 F Cl
+
+>  <Name>
+{2-[(2-chloro-6-fluorophenyl)amino]-5-methylphenyl}acetic acid
+
+>  <SystematicName>
+2-[2-[(2-chloranyl-6-fluoranyl-phenyl)amino]-5-methyl-phenyl]ethanoic acid
+
+>  <Synonyms>
+Lumiracoxib
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H13 Cl F N O2
+
+>  <MolecularWeight>
+293.721
+
+>  <ModifiedDate>
+2013-01-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H13ClFNO2/c1-9-5-6-13(10(7-9)8-14(19)20)18-15-11(16)3-2-4-12(15)17/h2-7,18H,8H2,1H3,(H,19,20)
+
+>  <InChIKey>
+KHPKQFYUPIUARC-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1)CC(=O)O)Nc2c(cccc2Cl)F
+
+$$$$

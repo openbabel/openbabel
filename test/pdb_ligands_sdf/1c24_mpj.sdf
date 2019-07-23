@@ -1,0 +1,113 @@
+1C24_MPJ_A_300
+  RCSB PDB12061702083D
+Coordinates from PDB:1C24:A:300 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   20.3050  -15.3700    9.2990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8710  -14.0240    8.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2820  -14.0740    8.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3200  -14.5520    9.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9070  -14.4680    8.5270   S 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0260  -14.4000    9.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3100  -13.0500    8.4950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9430  -13.5630    6.4120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8500  -13.0080    7.9380   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+SD
+A    6
+CE
+A    7
+O1
+A    8
+O2
+A    9
+P
+M  END
+>  <InstanceId>
+1C24_MPJ_A_300
+
+>  <ChemCompId>
+MPJ
+
+>  <PdbId>
+1C24
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O2 P S
+
+>  <Name>
+(1-AMINO-3-METHYLSULFANYL-PROPYL)-PHOSPHINIC ACID
+
+>  <SystematicName>
+[(1R)-1-amino-3-methylsulfanyl-propyl]phosphinic acid
+
+>  <Synonyms>
+METHIONINE PHOSPHINATE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H12 N O2 P S
+
+>  <MolecularWeight>
+169.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H12NO2PS/c1-9-3-2-4(5)8(6)7/h4,8H,2-3,5H2,1H3,(H,6,7)/t4-/m1/s1
+
+>  <InChIKey>
+CZRBNMUARBZMHQ-SCSAIBSYSA-N
+
+>  <SMILES>
+CSCC[C@H](N)[P@H](=O)O
+
+$$$$

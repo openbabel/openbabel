@@ -1,0 +1,130 @@
+1D3V_ABH_A_551
+  RCSB PDB12061702143D
+Coordinates from PDB:1D3V:A:551 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   23.0800   12.3040   -3.9240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9300   12.2520   -5.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8930   13.3440   -5.9190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1780   13.5660   -7.0630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3900   14.0690   -4.8950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4730   12.6040   -5.7980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9930   13.9780   -5.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4760   14.1420   -5.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0450   15.6080   -5.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5050   15.9030   -5.1250   B 0  5  0  0  0  0  0  0  0  0  0  0
+   17.3020   17.3120   -4.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0110   15.1980   -3.9540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6620   15.5370   -6.2480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+M  CHG  1  10  -1
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OT
+A    6
+CB
+A    7
+CG
+A    8
+CD
+A    9
+CE
+A   10
+B
+A   11
+O2
+A   12
+O1
+A   13
+O3
+M  END
+>  <InstanceId>
+1D3V_ABH_A_551
+
+>  <ChemCompId>
+ABH
+
+>  <PdbId>
+1D3V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+551
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O5 B
+
+>  <Name>
+2(S)-AMINO-6-BORONOHEXANOIC ACID
+
+>  <SystematicName>
+[(5S)-5-amino-6-hydroxy-6-oxo-hexyl]-trihydroxy-boron
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H15 B N O5
+
+>  <MolecularWeight>
+191.998
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H15BNO5/c8-5(6(9)10)3-1-2-4-7(11,12)13/h5,11-13H,1-4,8H2,(H,9,10)/q-1/t5-/m0/s1
+
+>  <InChIKey>
+BLVGFZFOWWBCCZ-YFKPBYRVSA-N
+
+>  <SMILES>
+[B-](CCCC[C@@H](C(=O)O)N)(O)(O)O
+
+$$$$

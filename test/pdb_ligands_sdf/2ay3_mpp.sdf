@@ -1,0 +1,138 @@
+2AY3_MPP_A_414
+  RCSB PDB12061705033D
+Coordinates from PDB:2AY3:A:414 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   92.0080   16.8320   -4.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.1300   15.3500   -3.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.2610   14.7920   -3.2330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   93.1080   14.7260   -4.3990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   93.3610   17.5360   -4.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.0380   17.7460   -2.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   93.9850   18.9910   -2.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.7680   16.7190   -2.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.6760   19.2180   -1.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.6880   20.4440   -0.4440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   93.9380   21.3280   -1.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   95.4350   16.9250   -1.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   95.3980   18.1790   -0.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.0770   18.4080    0.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   97.3640   18.2390    0.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+OT1
+A    4
+OT2
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CD2
+A    9
+CE1
+A   10
+OEA
+A   11
+CEA
+A   12
+CE2
+A   13
+CZ
+A   14
+OZA
+A   15
+CZA
+M  END
+>  <InstanceId>
+2AY3_MPP_A_414
+
+>  <ChemCompId>
+MPP
+
+>  <PdbId>
+2AY3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4
+
+>  <Name>
+3-(3,4-DIMETHOXYPHENYL)PROPIONIC ACID
+
+>  <SystematicName>
+3-(3,4-dimethoxyphenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 O4
+
+>  <MolecularWeight>
+210.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14O4/c1-14-9-5-3-8(4-6-11(12)13)7-10(9)15-2/h3,5,7H,4,6H2,1-2H3,(H,12,13)
+
+>  <InChIKey>
+LHHKQWQTBCTDQM-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1OC)CCC(=O)O
+
+$$$$

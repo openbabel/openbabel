@@ -1,0 +1,110 @@
+2HD8_TYS_?_417
+  RCSB PDB12061705473D
+Coordinates from PDB:2HD8:?:417 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   44.4000   49.9700   35.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5700   49.1600   36.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7300   49.1100   37.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1200   48.4500   38.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5400   49.8200   37.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3400   48.4200   39.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7700   49.8200   38.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1200   49.1000   39.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+CG
+A    4
+CD1
+A    5
+CD2
+A    6
+CE1
+A    7
+CE2
+A    8
+CZ
+M  END
+>  <InstanceId>
+2HD8_TYS_?_417
+
+>  <ChemCompId>
+TYS
+
+>  <PdbId>
+2HD8
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+417
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+9
+
+>  <ObservedFormula>
+C8
+
+>  <Name>
+O-SULFO-L-TYROSINE
+
+>  <SystematicName>
+(2S)-2-azanyl-3-(4-sulfooxyphenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H11 N O6 S
+
+>  <MolecularWeight>
+261.252
+
+>  <ModifiedDate>
+2012-11-26
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+Y
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11NO6S/c10-8(9(11)12)5-6-1-3-7(4-2-6)16-17(13,14)15/h1-4,8H,5,10H2,(H,11,12)(H,13,14,15)/t8-/m0/s1
+
+>  <InChIKey>
+CIQHWLTYGMYQQR-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@@H](C(=O)O)N)OS(=O)(=O)O
+
+$$$$

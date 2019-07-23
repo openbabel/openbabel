@@ -1,0 +1,113 @@
+3ATR_DD9_A_502
+  RCSB PDB12061707553D
+Coordinates from PDB:3ATR:A:502 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   23.0430   25.1220   23.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9090   25.1760   22.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6140   23.7610   22.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5220   23.7670   21.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2040   23.3200   21.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4980   22.4050   20.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2340   21.7370   21.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0960   22.3460   20.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9250   21.4790   20.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+M  END
+>  <InstanceId>
+3ATR_DD9_A_502
+
+>  <ChemCompId>
+DD9
+
+>  <PdbId>
+3ATR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9
+
+>  <Name>
+nonane
+
+>  <SystematicName>
+nonane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20
+
+>  <MolecularWeight>
+128.255
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20/c1-3-5-7-9-8-6-4-2/h3-9H2,1-2H3
+
+>  <InChIKey>
+BKIMMITUMNQMOS-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCC
+
+$$$$

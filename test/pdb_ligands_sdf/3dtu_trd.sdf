@@ -1,0 +1,129 @@
+1CWQ_TRD_A_612
+  RCSB PDB12061702123D
+Coordinates from PDB:1CWQ:A:612 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -33.9120   36.7810   -1.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5160   36.2900   -3.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.1720   34.8800   -3.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.2130   34.7410   -5.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.8960   33.3970   -5.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.9340   33.3600   -7.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.4690   32.0870   -7.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.5570   32.1940   -9.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.9140   30.9280  -10.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.9890   31.1210  -11.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3970   31.1600  -12.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.4290   31.3420  -13.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.7840   31.5220  -14.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+M  END
+>  <InstanceId>
+1CWQ_TRD_A_612
+
+>  <ChemCompId>
+TRD
+
+>  <PdbId>
+1CWQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+612
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13
+
+>  <Name>
+TRIDECANE
+
+>  <SystematicName>
+tridecane
+
+>  <Synonyms>
+LIPID FRAGMENT
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H28
+
+>  <MolecularWeight>
+184.361
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H28/c1-3-5-7-9-11-13-12-10-8-6-4-2/h3-13H2,1-2H3
+
+>  <InChIKey>
+IIYFAKIEWZDVMP-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCC
+
+$$$$

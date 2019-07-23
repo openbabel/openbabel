@@ -1,0 +1,143 @@
+4F8H_RKE_A_401
+  RCSB PDB12061712303D
+Coordinates from PDB:4F8H:A:401 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   18.9420  -14.7160   22.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2480  -16.0430   22.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3510  -14.3100   23.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9590  -16.9600   23.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0410  -15.2350   24.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3710  -16.5810   24.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6390  -13.3660   25.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2190  -13.5020   25.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3820  -14.3170   26.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9370  -15.7550   26.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4330  -15.7540   26.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3780  -14.7130   26.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1340  -14.1240   28.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4440  -14.4290   26.9600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1450  -12.2810   25.9970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0480  -17.9030   25.6710  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  4  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 16  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7 15  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+NAN
+A   15
+OAO
+A   16
+CLAP
+M  END
+>  <InstanceId>
+4F8H_RKE_A_401
+
+>  <ChemCompId>
+RKE
+
+>  <PdbId>
+4F8H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O Cl
+
+>  <Name>
+(R)-ketamine
+
+>  <SystematicName>
+(2R)-2-(2-chlorophenyl)-2-(methylamino)cyclohexan-1-one
+
+>  <Synonyms>
+(2R)-2-(2-chlorophenyl)-2-(methylamino)cyclohexanone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H16 Cl N O
+
+>  <MolecularWeight>
+237.725
+
+>  <ModifiedDate>
+2012-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H16ClNO/c1-15-13(9-5-4-8-12(13)16)10-6-2-3-7-11(10)14/h2-3,6-7,15H,4-5,8-9H2,1H3/t13-/m1/s1
+
+>  <InChIKey>
+YQEZLKZALYSWHR-CYBMUJFWSA-N
+
+>  <SMILES>
+CN[C@]1(CCCCC1=O)c2ccccc2Cl
+
+$$$$

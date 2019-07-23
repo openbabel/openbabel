@@ -1,0 +1,110 @@
+4HGF_SYN_A_502
+  RCSB PDB12061712513D
+Coordinates from PDB:4HGF:A:502 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   24.4790   -0.9370   13.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6530   -1.4930   12.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9460   -1.7610   12.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0560   -1.4400   12.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8520   -0.8680   14.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5870   -0.6300   14.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3750   -0.0510   15.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3430    1.1270   15.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+  5  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+CAF
+A    2
+CAD
+A    3
+CAC
+A    4
+CAE
+A    5
+CAG
+A    6
+CAH
+A    7
+CAB
+A    8
+CAA
+M  END
+>  <InstanceId>
+4HGF_SYN_A_502
+
+>  <ChemCompId>
+SYN
+
+>  <PdbId>
+4HGF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8
+
+>  <Name>
+ethenylbenzene
+
+>  <SystematicName>
+ethenylbenzene
+
+>  <Synonyms>
+styrene
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8
+
+>  <MolecularWeight>
+104.149
+
+>  <ModifiedDate>
+2013-04-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8/c1-2-8-6-4-3-5-7-8/h2-7H,1H2
+
+>  <InChIKey>
+PPBRXRYQALVLMV-UHFFFAOYSA-N
+
+>  <SMILES>
+C=Cc1ccccc1
+
+$$$$

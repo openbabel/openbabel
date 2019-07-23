@@ -1,0 +1,126 @@
+1BW9_PPY_A_361
+  RCSB PDB12061702073D
+Coordinates from PDB:1BW9:A:361 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   15.2820   40.7500  -14.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7310   41.5060  -13.4760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7870   39.6330  -14.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9920   41.0010  -15.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9590   40.5610  -16.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0650   41.9860  -14.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1690   40.9530  -14.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6500   40.1900  -12.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8980   39.1840  -12.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6400   38.9620  -12.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1380   39.7070  -14.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9280   40.6940  -14.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+O3
+A    6
+C3
+A    7
+C1'
+A    8
+C2'
+A    9
+C3'
+A   10
+C4'
+A   11
+C5'
+A   12
+C6'
+M  END
+>  <InstanceId>
+1BW9_PPY_A_361
+
+>  <ChemCompId>
+PPY
+
+>  <PdbId>
+1BW9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+361
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+3-PHENYLPYRUVIC ACID
+
+>  <SystematicName>
+2-oxo-3-phenyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O3
+
+>  <MolecularWeight>
+164.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O3/c10-8(9(11)12)6-7-4-2-1-3-5-7/h1-5H,6H2,(H,11,12)
+
+>  <InChIKey>
+BTNMPGBKDVTSJY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CC(=O)C(=O)O
+
+$$$$

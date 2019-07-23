@@ -1,0 +1,133 @@
+2BES_RES_A_200
+  RCSB PDB12061705073D
+Coordinates from PDB:2BES:A:200 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   30.5130  -11.4690   16.4630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2420  -12.2410   16.2280   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8470  -13.1710   17.3450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1700  -12.8640   14.8550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0880  -11.1230   16.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0510  -10.1170   15.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6670   -9.4860   15.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4600   -8.7970   16.4440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4800   -8.5020   14.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8220   -9.1040   12.8270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0430   -8.0730   14.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1510   -8.9040   13.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8010   -6.7720   14.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4690   -6.3490   14.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O7
+A    2
+P
+A    3
+O5
+A    4
+O6
+A    5
+O4
+A    6
+C4
+A    7
+C3
+A    8
+O3
+A    9
+C2
+A   10
+O2
+A   11
+C1
+A   12
+O1
+A   13
+N
+A   14
+ON
+M  END
+>  <InstanceId>
+2BES_RES_A_200
+
+>  <ChemCompId>
+RES
+
+>  <PdbId>
+2BES
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O8 P
+
+>  <Name>
+4-PHOSPHO-D-ERYTHRONOHYDROXAMIC ACID
+
+>  <SystematicName>
+[(2R,3R)-2,3-dihydroxy-4-(hydroxyamino)-4-oxo-butyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 N O8 P
+
+>  <MolecularWeight>
+231.098
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10NO8P/c6-2(1-13-14(10,11)12)3(7)4(8)5-9/h2-3,6-7,9H,1H2,(H,5,8)(H2,10,11,12)/t2-,3-/m1/s1
+
+>  <InChIKey>
+JJQQOJRGUHNREK-PWNYCUMCSA-N
+
+>  <SMILES>
+C([C@H]([C@H](C(=O)NO)O)O)OP(=O)(O)O
+
+$$$$

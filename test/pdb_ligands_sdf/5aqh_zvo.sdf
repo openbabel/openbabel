@@ -1,0 +1,136 @@
+5AQH_ZVO_A_1382
+  RCSB PDB12061716523D
+Coordinates from PDB:5AQH:A:1382 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+    0.9930    8.6380   33.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0710    7.7980   33.0480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0390    6.4250   33.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2760    3.6570   33.3060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1120    5.7660   32.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8990    5.6660   33.8330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2080    4.3660   32.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3860    4.0390   32.0010   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7160    4.3650   33.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0860    8.4700   32.3750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9910    5.2350   31.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1020    8.4720   31.2020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2070    6.3120   31.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1080    7.7630   31.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  6  1  0  0  0  0
+  4  7  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 10 14  2  0  0  0  0
+ 11 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+C1
+A    4
+N1
+A    5
+C2
+A    6
+N2
+A    7
+C3
+A    8
+N3
+A    9
+C4
+A   10
+N4
+A   11
+C5
+A   12
+N5
+A   13
+C6
+A   14
+C7
+M  END
+>  <InstanceId>
+5AQH_ZVO_A_1382
+
+>  <ChemCompId>
+ZVO
+
+>  <PdbId>
+5AQH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1382
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N6
+
+>  <Name>
+5-methyl-1,5-dihydro-1,4,5,6,8-pentaazaacenaphthylen-3-amine
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N6
+
+>  <MolecularWeight>
+188.189
+
+>  <ModifiedDate>
+2016-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N6/c1-14-8-5-4(6(9)13-14)2-10-7(5)11-3-12-8/h2-3H,1H3,(H2,9,13)(H,10,11,12)
+
+>  <InChIKey>
+AJJBAXSCYXENBJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1c2c3c(c[nH]c3ncn2)C(=N1)N
+
+$$$$

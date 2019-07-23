@@ -1,0 +1,167 @@
+1D7S_DCS_A_500
+  RCSB PDB12061702143D
+Coordinates from PDB:1D7S:A:500 Model:1 without hydrogens
+ 22 23  0  0  0  0            999 V2000
+   17.4530   53.4820   13.8040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3790   53.7240   14.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2950   54.6640   14.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3660   53.1250   15.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3000   53.4610   16.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4090   52.3030   16.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4390   51.6430   17.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4520   52.0600   15.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4750   52.6540   14.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6440   51.1690   15.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3320   49.7710   15.8800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2330   48.7410   16.7350   P 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0770   49.1190   18.1480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7040   47.3200   16.4530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5880   48.8630   16.1980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4000   51.5830   18.3800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4350   51.9720   19.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2410   51.8860   20.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0670   52.4010   20.3220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4220   51.0830   21.3750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7650   50.6040   21.3120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4050   51.1750   20.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 16  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 22  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 18 20  1  0  0  0  0
+ 20 21  1  0  0  0  0
+ 21 22  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C2A
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+C4A
+A    8
+C5
+A    9
+C6
+A   10
+C5A
+A   11
+O4P
+A   12
+P
+A   13
+O1P
+A   14
+O2P
+A   15
+O3P
+A   16
+N
+A   17
+CA
+A   18
+C
+A   19
+O
+A   20
+ND
+A   21
+OG
+A   22
+CB
+M  END
+>  <InstanceId>
+1D7S_DCS_A_500
+
+>  <ChemCompId>
+DCS
+
+>  <PdbId>
+1D7S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O7 P
+
+>  <Name>
+D-[3-HYDROXY-2-METHYL-5-PHOSPHONOOXYMETHYL-PYRIDIN-4-YLMETHYL]-N,O-CYCLOSERYLAMIDE
+
+>  <SystematicName>
+[5-hydroxy-6-methyl-4-[[[(4R)-3-oxo-1,2-oxazolidin-4-yl]amino]methyl]pyridin-3-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+D-PYRIDOXYL-N,O-CYCLOSERYLAMIDE-5-MONOPHOSPHATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N3 O7 P
+
+>  <MolecularWeight>
+333.234
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N3O7P/c1-6-10(15)8(3-13-9-5-20-14-11(9)16)7(2-12-6)4-21-22(17,18)19/h2,9,13,15H,3-5H2,1H3,(H,14,16)(H2,17,18,19)/t9-/m1/s1
+
+>  <InChIKey>
+NNRZSZJOQKAGTO-SECBINFHSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)COP(=O)(O)O)CN[C@@H]2CONC2=O)O
+
+$$$$

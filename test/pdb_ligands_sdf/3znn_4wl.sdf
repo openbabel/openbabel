@@ -1,0 +1,123 @@
+3ZNN_4WL_A_360
+  RCSB PDB12061711313D
+Coordinates from PDB:3ZNN:A:360 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    3.4800    0.5720   36.2970   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1660    0.6390   37.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2790    1.4180   37.9190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8490   -0.2640   38.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5640   -0.3310   39.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4230   -1.3300   40.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1770   -1.7830   39.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8410   -1.1440   38.1200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8610   -2.0390   41.7250   S 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0720   -3.0600   40.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1140   -2.7830   39.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+O2
+A    2
+C1
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+S11
+A   10
+C10
+A   11
+C9
+M  END
+>  <InstanceId>
+3ZNN_4WL_A_360
+
+>  <ChemCompId>
+4WL
+
+>  <PdbId>
+3ZNN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+360
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2 S
+
+>  <Name>
+4H-THIENO[3,2-B]PYROLE-5-CARBOXYLIC ACID
+
+>  <SystematicName>
+4H-thieno[3,2-b]pyrrole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H5 N O2 S
+
+>  <MolecularWeight>
+167.185
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5NO2S/c9-7(10)5-3-6-4(8-5)1-2-11-6/h1-3,8H,(H,9,10)
+
+>  <InChIKey>
+PMHDSACGRKBACK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1csc2c1[nH]c(c2)C(=O)O
+
+$$$$

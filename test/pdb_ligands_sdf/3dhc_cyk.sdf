@@ -1,0 +1,137 @@
+3DHC_CYK_A_253
+  RCSB PDB12061708193D
+Coordinates from PDB:3DHC:A:253 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   11.0580   34.4530   28.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9690   34.6570   24.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6410   33.1920   26.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1060   35.0510   24.2990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6720   34.3660   25.9100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6660   34.3530   26.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6400   33.1540   27.4590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4060   32.2580   26.2090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7400   35.5700   29.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1400   35.5560   30.8790   S 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8410   34.4350   23.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9830   33.0310   23.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3450   31.9210   23.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1120   30.4930   23.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8960   30.4740   21.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  1  0  0  0  0
+  1  9  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  4  2  2  0  0  0  0
+  2  5  1  0  0  0  0
+  8  3  2  0  0  0  0
+  3  6  1  0  0  0  0
+  3  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 14  1  0  0  0  0
+A    1
+C2
+A    2
+C5
+A    3
+C4
+A    4
+O3
+A    5
+N1
+A    6
+C3
+A    7
+O2
+A    8
+O1
+A    9
+C1
+A   10
+S
+A   11
+C6
+A   12
+C7
+A   13
+C8
+A   14
+C9
+A   15
+C10
+M  END
+>  <InstanceId>
+3DHC_CYK_A_253
+
+>  <ChemCompId>
+CYK
+
+>  <PdbId>
+3DHC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+253
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3 S
+
+>  <Name>
+N-hexanoyl-L-homocysteine
+
+>  <SystematicName>
+(2S)-2-(hexanoylamino)-4-sulfanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H19 N O3 S
+
+>  <MolecularWeight>
+233.328
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H19NO3S/c1-2-3-4-5-9(12)11-8(6-7-15)10(13)14/h8,15H,2-7H2,1H3,(H,11,12)(H,13,14)/t8-/m0/s1
+
+>  <InChIKey>
+HAUWXQBEWNVHPD-QMMMGPOBSA-N
+
+>  <SMILES>
+CCCCCC(=O)N[C@@H](CCS)C(=O)O
+
+$$$$

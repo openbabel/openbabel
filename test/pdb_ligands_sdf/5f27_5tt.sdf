@@ -1,0 +1,139 @@
+5F27_5TT_A_301
+  RCSB PDB12061717353D
+Coordinates from PDB:5F27:A:301 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   28.1900   78.5650    8.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2460   79.6950    7.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2880   79.1190    5.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5510   78.2670    5.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5020   77.1380    6.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3850   77.7140    8.0700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9950   77.0820    9.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3790   77.1290   10.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9440   76.4340   11.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1210   76.2900    8.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7080   75.6450   10.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1260   75.7120   11.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7930   74.9510   12.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3110   75.3750   13.7760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0700   74.5900   14.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  1  1  0  0  0  0
+  6  1  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10  7  2  0  0  0  0
+ 10 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 12  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 12  9  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAI
+A    2
+CAG
+A    3
+CAF
+A    4
+CAH
+A    5
+CAJ
+A    6
+NAO
+A    7
+CAN
+A    8
+CAE
+A    9
+CAC
+A   10
+CAD
+A   11
+CAB
+A   12
+CAM
+A   13
+CAK
+A   14
+NAL
+A   15
+CAA
+M  END
+>  <InstanceId>
+5F27_5TT_A_301
+
+>  <ChemCompId>
+5TT
+
+>  <PdbId>
+5F27
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2
+
+>  <Name>
+~{N}-methyl-1-(4-piperidin-1-ylphenyl)methanamine
+
+>  <SystematicName>
+~{N}-methyl-1-(4-piperidin-1-ylphenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H20 N2
+
+>  <MolecularWeight>
+204.311
+
+>  <ModifiedDate>
+2016-01-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H20N2/c1-14-11-12-5-7-13(8-6-12)15-9-3-2-4-10-15/h5-8,14H,2-4,9-11H2,1H3
+
+>  <InChIKey>
+ABHBNGLDUNAXSR-UHFFFAOYSA-N
+
+>  <SMILES>
+CNCc1ccc(cc1)N2CCCCC2
+
+$$$$

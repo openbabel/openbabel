@@ -1,0 +1,92 @@
+2GYE_5A3_?_25
+  RCSB PDB12061705443D
+Coordinates from PDB:2GYE:?:25 Model:1 without hydrogens
+  4  2  0  0  0  0            999 V2000
+   20.0820   29.3370   27.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1350   29.1410   28.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5540   28.4100   29.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8030   29.6130   28.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+C2
+A    2
+C4
+A    3
+C5
+A    4
+C6
+M  END
+>  <InstanceId>
+2GYE_5A3_?_25
+
+>  <ChemCompId>
+5A3
+
+>  <PdbId>
+2GYE
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+36
+
+>  <ObservedFormula>
+C4
+
+>  <Name>
+Methylenebisphosphonate inositol pentakisphosphate
+
+>  <SystematicName>
+[oxidanyl-[(2S,3R,5S,6R)-2,3,4,5,6-pentaphosphonooxycyclohexyl]oxy-phosphoryl]methylphosphonic acid
+
+>  <Synonyms>
+{[(R)-hydroxy{[(1s,2R,3S,4s,5R,6S)-2,3,4,5,6-pentakis(phosphonooxy)cyclohexyl]oxy}phosphoryl]methyl}phosphonic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H21 O26 P7
+
+>  <MolecularWeight>
+738.042
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H21O26P7/c8-34(9,10)1-35(11,12)28-2-3(29-36(13,14)15)5(31-38(19,20)21)7(33-40(25,26)27)6(32-39(22,23)24)4(2)30-37(16,17)18/h2-7H,1H2,(H,11,12)(H2,8,9,10)(H2,13,14,15)(H2,16,17,18)(H2,19,20,21)(H2,22,23,24)(H2,25,26,27)/t2-,3-,4+,5+,6-,7+
+
+>  <InChIKey>
+IZNCMXVIYGYGJI-AQWRHFAGSA-N
+
+>  <SMILES>
+C(P(=O)(O)O)P(=O)(O)OC1[C@@H]([C@H](C([C@H]([C@@H]1OP(=O)(O)O)OP(=O)(O)O)OP(=O)(O)O)OP(=O)(O)O)OP(=O)(O)O
+
+$$$$

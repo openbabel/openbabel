@@ -1,0 +1,135 @@
+3NHY_A7B_A_233
+  RCSB PDB12061709553D
+Coordinates from PDB:3NHY:A:233 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -1.8040   -6.5990  -17.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6380   -7.5120  -16.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7410   -7.0250  -15.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8990   -5.5820  -15.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9970   -4.7320  -16.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0020   -5.2300  -17.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5140   -8.9830  -16.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4700   -9.8020  -16.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4910   -9.2390  -15.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5820   -7.8920  -15.1280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9150   -5.1400  -14.8080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3570   -9.9880  -14.5690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4070   -9.6000  -17.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2370   -3.7480  -14.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  6  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+ 10  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+ 11  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  7  2  0  0  0  0
+  7 13  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 14 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+N10
+A   11
+O11
+A   12
+O12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+3NHY_A7B_A_233
+
+>  <ChemCompId>
+A7B
+
+>  <PdbId>
+3NHY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+233
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+8-methoxy-4-methylquinolin-2(1H)-one
+
+>  <SystematicName>
+8-methoxy-4-methyl-1H-quinolin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O2
+
+>  <MolecularWeight>
+189.211
+
+>  <ModifiedDate>
+2012-01-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO2/c1-7-6-10(13)12-11-8(7)4-3-5-9(11)14-2/h3-6H,1-2H3,(H,12,13)
+
+>  <InChIKey>
+WHZDFFGNQINQSU-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CC(=O)Nc2c1cccc2OC
+
+$$$$

@@ -1,0 +1,117 @@
+1V3V_5OP_A_1360
+  RCSB PDB12061704173D
+Coordinates from PDB:1V3V:A:1360 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  -21.0100   65.6310   -2.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6750   65.4140   -3.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5530   65.0300   -2.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2780   64.8410   -3.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0340   64.4130   -2.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2240   63.0660   -2.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9690   62.6620   -1.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1210   61.3210   -0.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8580   60.9360    0.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2400   65.0310   -4.8500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C3
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C13
+A    9
+C14
+A   10
+O4
+M  END
+>  <InstanceId>
+1V3V_5OP_A_1360
+
+>  <ChemCompId>
+5OP
+
+>  <PdbId>
+1V3V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1360
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+15
+
+>  <ObservedFormula>
+C9 O
+
+>  <Name>
+(5E,13E)-11-HYDROXY-9,15-DIOXOPROSTA-5,13-DIEN-1-OIC ACID
+
+>  <SystematicName>
+7-[(1S,2S,3R)-3-hydroxy-5-oxo-2-[(E)-3-oxooct-1-enyl]cyclopentyl]hept-5-enoic acid
+
+>  <Synonyms>
+15-OXO-PGE2
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C20 H30 O5
+
+>  <MolecularWeight>
+350.449
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C20H30O5/c1-2-3-6-9-15(21)12-13-17-16(18(22)14-19(17)23)10-7-4-5-8-11-20(24)25/h4,7,12-13,16-17,19,23H,2-3,5-6,8-11,14H2,1H3,(H,24,25)/b7-4?,13-12+
+
+>  <InChIKey>
+YRTJDWROBKPZNV-SFTOQRQMSA-N
+
+>  <SMILES>
+CCCCCC(=O)\C=C\[C@@H]1[C@@H](CC(=O)[C@H]1CC=CCCCC(=O)O)O
+
+$$$$

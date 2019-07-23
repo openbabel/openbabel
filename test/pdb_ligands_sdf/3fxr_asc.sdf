@@ -1,0 +1,126 @@
+1E71_ASC_M_995
+  RCSB PDB12061702213D
+Coordinates from PDB:1E71:M:995 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   44.4100  119.2850   46.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7460  118.3570   47.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4580  118.9510   48.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7240  120.2920   48.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5620  121.6110   48.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8240  122.8500   49.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6660  119.3470   46.1840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2320  117.4070   46.5690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5140  118.6230   49.2040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5750  120.3300   47.8810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1170  121.7820   47.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.7070  123.9400   49.2860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+1E71_ASC_M_995
+
+>  <ChemCompId>
+ASC
+
+>  <PdbId>
+1E71
+
+>  <ChainId>
+M
+
+>  <ResidueNumber>
+995
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+ASCORBIC ACID
+
+>  <SystematicName>
+(5R)-5-[(1S)-1,2-dihydroxyethyl]-3,4-dihydroxy-5H-furan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 O6
+
+>  <MolecularWeight>
+176.124
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8O6/c7-1-2(8)5-3(9)4(10)6(11)12-5/h2,5,7-10H,1H2/t2-,5+/m0/s1
+
+>  <InChIKey>
+CIWBSHSKHKDKBQ-JLAZNSOCSA-N
+
+>  <SMILES>
+C([C@@H]([C@@H]1C(=C(C(=O)O1)O)O)O)O
+
+$$$$

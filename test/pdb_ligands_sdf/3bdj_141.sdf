@@ -1,0 +1,123 @@
+1JRP_141_B_4000
+  RCSB PDB12061702593D
+Coordinates from PDB:1JRP:B:4000 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   15.2540    9.8940   24.1480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4790   10.5100   24.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0120   11.3650   23.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6000   11.9680   21.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5310   12.6830   21.2100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5760   12.5580   22.0640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3100   11.7790   23.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1900   11.4880   24.1570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3940   10.3810   26.0640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6880   10.7200   25.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4010   10.2610   25.0200   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  2  0  0  0  0
+  6  7  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3  2  1  0  0  0  0
+  7  8  2  0  0  0  0
+  2  1  2  0  0  0  0
+  2 11  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  2  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+C5
+A    4
+C7
+A    5
+N8
+A    6
+N9
+A    7
+C4
+A    8
+N3
+A    9
+O2
+A   10
+C2
+A   11
+N1
+M  END
+>  <InstanceId>
+1JRP_141_B_4000
+
+>  <ChemCompId>
+141
+
+>  <PdbId>
+1JRP
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+4000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O2
+
+>  <Name>
+Oxypurinol
+
+>  <SystematicName>
+1,2-dihydropyrazolo[3,4-d]pyrimidine-4,6-dione
+
+>  <Synonyms>
+Alloxanthine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N4 O2
+
+>  <MolecularWeight>
+152.111
+
+>  <ModifiedDate>
+2014-09-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4O2/c10-4-2-1-6-9-3(2)7-5(11)8-4/h1H,(H3,6,7,8,9,10,11)
+
+>  <InChIKey>
+HXNFUBHNUDHIGC-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C2C(=NC(=O)NC2=O)NN1
+
+$$$$

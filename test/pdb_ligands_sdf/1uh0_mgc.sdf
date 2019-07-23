@@ -1,0 +1,142 @@
+1UGX_MGC_A_135
+  RCSB PDB12061704133D
+Coordinates from PDB:1UGX:A:135 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   32.0040   32.6350   26.5090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8500   33.0820   27.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2970   32.5870   27.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3580   31.0970   27.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7100   30.4760   26.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3570   30.4950   28.2390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7250   29.7650   29.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5020   31.2500   25.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7340   30.5590   25.8660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4030   30.2170   24.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8600   30.1380   23.6130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8880   29.9270   24.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5490   32.7350   26.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2990   33.3920   25.2820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1040   33.3520   26.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5370   33.0940   24.9530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 15  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+C5
+A    4
+O5
+A    5
+C1
+A    6
+O1
+A    7
+CM
+A    8
+C2
+A    9
+N2
+A   10
+C7
+A   11
+O7
+A   12
+C8
+A   13
+C3
+A   14
+O3
+A   15
+C4
+A   16
+O4
+M  END
+>  <InstanceId>
+1UGX_MGC_A_135
+
+>  <ChemCompId>
+MGC
+
+>  <PdbId>
+1UGX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+135
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O6
+
+>  <Name>
+ALPHA-METHYL-N-ACETYL-D-GALACTOSAMINE
+
+>  <SystematicName>
+N-[(2S,3R,4R,5R,6R)-4,5-dihydroxy-6-(hydroxymethyl)-2-methoxy-oxan-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O6
+
+>  <MolecularWeight>
+235.234
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO6/c1-4(12)10-6-8(14)7(13)5(3-11)16-9(6)15-2/h5-9,11,13-14H,3H2,1-2H3,(H,10,12)/t5-,6-,7+,8-,9+/m1/s1
+
+>  <InChIKey>
+ZEVOCXOZYFLVKN-ZEBDFXRSSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H]([C@H]([C@H](O[C@@H]1OC)CO)O)O
+
+$$$$

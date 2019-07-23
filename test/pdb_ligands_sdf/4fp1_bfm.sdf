@@ -1,0 +1,129 @@
+4FP1_BFM_A_402
+  RCSB PDB12061712343D
+Coordinates from PDB:4FP1:A:402 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -22.6890  -23.2120  -24.6290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9370  -22.8240  -23.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7450  -22.0510  -22.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0530  -21.1940  -21.7870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.7020  -22.4240  -23.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0850  -21.9620  -23.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5850  -21.6890  -22.0900   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0780  -22.5340  -24.0690   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.7200  -20.8190  -23.8960   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4870  -23.9780  -22.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3790  -25.1590  -22.8330   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7940  -23.9420  -22.0640   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8860  -23.9180  -21.1630   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  8  6  1  0  0  0  0
+  9  6  1  0  0  0  0
+  6  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  5  3  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+O04
+A    5
+O05
+A    6
+C06
+A    7
+F07
+A    8
+F08
+A    9
+F09
+A   10
+C10
+A   11
+F11
+A   12
+F12
+A   13
+F13
+M  END
+>  <InstanceId>
+4FP1_BFM_A_402
+
+>  <ChemCompId>
+BFM
+
+>  <PdbId>
+4FP1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O3 F6
+
+>  <Name>
+3,3,3-trifluoro-2-hydroxy-2-(trifluoromethyl)propanoic acid
+
+>  <SystematicName>
+3,3,3-tris(fluoranyl)-2-oxidanyl-2-(trifluoromethyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H2 F6 O3
+
+>  <MolecularWeight>
+212.047
+
+>  <ModifiedDate>
+2013-06-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H2F6O3/c5-3(6,7)2(13,1(11)12)4(8,9)10/h13H,(H,11,12)
+
+>  <InChIKey>
+CMQUGOHGJUTDGZ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(=O)(C(C(F)(F)F)(C(F)(F)F)O)O
+
+$$$$

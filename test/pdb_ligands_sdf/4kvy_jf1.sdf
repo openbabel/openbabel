@@ -1,0 +1,140 @@
+4KVY_JF1_A_405
+  RCSB PDB12061713263D
+Coordinates from PDB:4KVY:A:405 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   48.4880  -38.5020  -24.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6810  -39.6770  -24.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4130  -41.0030  -24.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4660  -39.3440  -26.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7810  -39.6270  -27.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2580  -40.0430  -27.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0620  -40.0620  -26.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4450  -40.6010  -24.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4570  -39.7030  -24.1440   N 0  3  0  0  0  0  0  0  0  0  0  0
+   46.8470  -40.1370  -22.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5960  -39.0060  -22.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7510  -38.4760  -22.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9180  -37.0200  -22.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.5740  -36.2220  -23.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3320  -36.4610  -21.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  6  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+  4  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  1 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 15  1  0  0  0  0
+M  CHG  1   9   1
+A    1
+CAJ
+A    2
+CAO
+A    3
+CAD
+A    4
+CAM
+A    5
+CAC
+A    6
+CAF
+A    7
+CAE
+A    8
+CAH
+A    9
+NAN
+A   10
+CAI
+A   11
+CAG
+A   12
+CAL
+A   13
+CAK
+A   14
+CAB
+A   15
+CAA
+M  END
+>  <InstanceId>
+4KVY_JF1_A_405
+
+>  <ChemCompId>
+JF1
+
+>  <PdbId>
+4KVY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N
+
+>  <Name>
+(1S,5S,8S,9aR)-1,9a-dimethyl-8-(prop-1-en-2-yl)octahydro-2H-quinolizinium
+
+>  <SystematicName>
+(1S,8S,9aR)-1,9a-dimethyl-8-prop-1-en-2-yl-2,3,4,5,6,7,8,9-octahydro-1H-quinolizin-5-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H26 N
+
+>  <MolecularWeight>
+208.363
+
+>  <ModifiedDate>
+2013-08-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H25N/c1-11(2)13-7-9-15-8-5-6-12(3)14(15,4)10-13/h12-13H,1,5-10H2,2-4H3/p+1/t12-,13-,14+/m0/s1
+
+>  <InChIKey>
+XJMHVRNRJICXTC-MELADBBJSA-O
+
+>  <SMILES>
+C[C@H]1CCC[NH+]2[C@@]1(C[C@H](CC2)C(=C)C)C
+
+$$$$

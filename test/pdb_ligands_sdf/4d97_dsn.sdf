@@ -1,0 +1,105 @@
+1PB8_DSN_A_901
+  RCSB PDB12061703383D
+Coordinates from PDB:1PB8:A:901 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   21.1060   41.7630   40.4690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2850   40.3230   40.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6950   40.0630   39.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9860   38.8950   39.3030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4230   41.0790   39.4360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9860   39.4720   41.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7150   39.8780   42.5080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OXT
+A    6
+CB
+A    7
+OG
+M  END
+>  <InstanceId>
+1PB8_DSN_A_901
+
+>  <ChemCompId>
+DSN
+
+>  <PdbId>
+1PB8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O3
+
+>  <Name>
+D-SERINE
+
+>  <SystematicName>
+(2R)-2-amino-3-hydroxy-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+D-PEPTIDE LINKING
+
+>  <Formula>
+C3 H7 N O3
+
+>  <MolecularWeight>
+105.093
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+S
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7NO3/c4-2(1-5)3(6)7/h2,5H,1,4H2,(H,6,7)/t2-/m1/s1
+
+>  <InChIKey>
+MTCFGRXMJLQNBG-UWTATZPHSA-N
+
+>  <SMILES>
+C([C@H](C(=O)O)N)O
+
+$$$$

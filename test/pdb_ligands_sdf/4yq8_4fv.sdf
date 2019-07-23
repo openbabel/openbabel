@@ -1,0 +1,139 @@
+4YQ8_4FV_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YQ8:A:301 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -20.9210   41.2590   -7.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7690   41.9570   -6.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5360   41.6080   -8.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6230   42.2730  -10.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3180   41.9190  -11.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0350   40.0260  -10.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6730   41.3150   -9.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0120   40.4640  -11.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6350   40.2400   -8.3420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9650   41.2910   -6.8560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4070   43.0470   -6.1580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0500   41.0360   -9.3370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8800   42.3550   -7.4710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8340   40.2710   -7.7500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1700   39.6740  -12.5210   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15  8  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 12  1  0  0  0  0
+ 12  3  1  0  0  0  0
+  9  1  2  0  0  0  0
+  9 14  1  0  0  0  0
+  3  1  1  0  0  0  0
+  3 13  2  0  0  0  0
+  1  2  1  0  0  0  0
+ 14 10  1  0  0  0  0
+  2 10  2  0  0  0  0
+  2 11  1  0  0  0  0
+A    1
+C1
+A    2
+C
+A    3
+C2
+A    4
+C4
+A    5
+C5
+A    6
+C7
+A    7
+C3
+A    8
+C6
+A    9
+N2
+A   10
+N1
+A   11
+N
+A   12
+N3
+A   13
+O1
+A   14
+O
+A   15
+O2
+M  END
+>  <InstanceId>
+4YQ8_4FV_A_301
+
+>  <ChemCompId>
+4FV
+
+>  <PdbId>
+4YQ8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O3
+
+>  <Name>
+4-amino-N-[(1R,3S)-3-hydroxycyclopentyl]-1,2,5-oxadiazole-3-carboxamide
+
+>  <SystematicName>
+4-azanyl-N-[(1R,3S)-3-oxidanylcyclopentyl]-1,2,5-oxadiazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 N4 O3
+
+>  <MolecularWeight>
+212.206
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12N4O3/c9-7-6(11-15-12-7)8(14)10-4-1-2-5(13)3-4/h4-5,13H,1-3H2,(H2,9,12)(H,10,14)/t4-,5+/m1/s1
+
+>  <InChIKey>
+UDKGUOUTPCVPOO-UHNVWZDZSA-N
+
+>  <SMILES>
+C1C[C@@H](C[C@@H]1NC(=O)c2c(non2)N)O
+
+$$$$

@@ -1,0 +1,122 @@
+3T78_5RG_A_273
+  RCSB PDB12061710503D
+Coordinates from PDB:3T78:A:273 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -16.8130    3.0770   -9.5180   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3690    3.2150  -10.3220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1930    2.1450  -12.1980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3680   -1.1300  -13.7890   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4380    1.1090  -10.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3250   -0.0080  -11.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7480    0.7820  -12.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0960    2.8100  -11.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7010    2.0520  -10.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4690   -0.1700  -12.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8580    1.8760  -11.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+NAA
+A    2
+OAB
+A    3
+OAC
+A    4
+FAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3T78_5RG_A_273
+
+>  <ChemCompId>
+5RG
+
+>  <PdbId>
+3T78
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+273
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2 F
+
+>  <Name>
+2-amino-5-fluorobenzoic acid
+
+>  <SystematicName>
+2-azanyl-5-fluoranyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 F N O2
+
+>  <MolecularWeight>
+155.126
+
+>  <ModifiedDate>
+2012-08-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6FNO2/c8-4-1-2-6(9)5(3-4)7(10)11/h1-3H,9H2,(H,10,11)
+
+>  <InChIKey>
+FPQMGQZTBWIHDN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1F)C(=O)O)N
+
+$$$$

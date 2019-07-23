@@ -1,0 +1,147 @@
+2QZZ_EMF_A_601
+  RCSB PDB12061706523D
+Coordinates from PDB:2QZZ:A:601 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   17.0340   -8.1250   18.6020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8430   -7.7500   19.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2970   -8.5860   20.8650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0960   -9.7570   20.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4880   -9.3550   20.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1430   -6.4510   20.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0240   -6.4870   21.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3750   -5.8330   21.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4850   -4.3180   21.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5110   -3.6430   22.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6430   -2.2140   21.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6110   -1.5120   22.6690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0370   -1.8700   23.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5830   -3.5550   20.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6870   -2.1490   20.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6870   -1.4490   21.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7950   -0.0900   21.0250   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 16 15  2  0  0  0  0
+  9  8  1  0  0  0  0
+  9 14  2  0  0  0  0
+  8  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  1  2  0  0  0  0
+  6  7  1  0  0  0  0
+ 15 14  1  0  0  0  0
+A    1
+O9
+A    2
+C9
+A    3
+O10
+A    4
+C11
+A    5
+C12
+A    6
+C8
+A    7
+C14
+A    8
+C7
+A    9
+C1
+A   10
+C2
+A   11
+C3
+A   12
+O3
+A   13
+C13
+A   14
+C6
+A   15
+C5
+A   16
+C4
+A   17
+O4
+M  END
+>  <InstanceId>
+2QZZ_EMF_A_601
+
+>  <ChemCompId>
+EMF
+
+>  <PdbId>
+2QZZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O4
+
+>  <Name>
+ethyl (1S,2S)-2-(4-hydroxy-3-methoxyphenyl)cyclopropanecarboxylate
+
+>  <SystematicName>
+ethyl (1S,2S)-2-(4-hydroxy-3-methoxy-phenyl)cyclopropane-1-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H16 O4
+
+>  <MolecularWeight>
+236.264
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C13H16O4/c1-3-17-13(15)10-7-9(10)8-4-5-11(14)12(6-8)16-2/h4-6,9-10,14H,3,7H2,1-2H3/t9-,10+/m1/s1
+
+>  <InChIKey>
+QZLUEKVALMNAEZ-ZJUUUORDSA-N
+
+>  <SMILES>
+CCOC(=O)[C@H]1C[C@@H]1c2ccc(c(c2)OC)O
+
+$$$$

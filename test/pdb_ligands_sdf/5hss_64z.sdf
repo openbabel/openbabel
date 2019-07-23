@@ -1,0 +1,121 @@
+5G1U_64Z_A_1366
+  RCSB PDB12061717473D
+Coordinates from PDB:5G1U:A:1366 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   26.7580  -55.7030  -97.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5950  -56.9780  -97.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8230  -57.0650  -98.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5250  -58.4380  -98.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9830  -58.3400  -98.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3890  -57.5140 -100.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8430  -57.3170 -100.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9740  -59.1170  -98.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1480  -54.5540  -98.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0600  -56.1620 -101.4810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5730  -55.5700  -96.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  1  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+ 10  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O
+A   11
+C
+M  END
+>  <InstanceId>
+5G1U_64Z_A_1366
+
+>  <ChemCompId>
+64Z
+
+>  <PdbId>
+5G1U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1366
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+Geraniol
+
+>  <SystematicName>
+(2~{E})-3,7-dimethylocta-2,6-dien-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 O
+
+>  <MolecularWeight>
+154.249
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18O/c1-9(2)5-4-6-10(3)7-8-11/h5,7,11H,4,6,8H2,1-3H3/b10-7+
+
+>  <InChIKey>
+GLZPCOQZEFWAFX-JXMROGBWSA-N
+
+>  <SMILES>
+CC(=CCC/C(=C/CO)/C)C
+
+$$$$

@@ -1,0 +1,144 @@
+5F6D_5VJ_A_201
+  RCSB PDB12061717363D
+Coordinates from PDB:5F6D:A:201 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+  -12.7290   14.5510  -24.5010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7190   14.5470  -23.3800   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4040   15.1500  -22.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3530   12.9450  -23.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3750   12.0540  -22.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0730   10.7290  -22.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7530   10.2830  -22.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7410   11.1560  -22.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0480   12.5020  -23.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9670   13.5120  -23.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6700   13.0130  -23.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5970   13.8780  -23.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8590   15.2880  -24.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1900   15.8000  -24.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2370   14.9710  -23.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5860   15.4910  -23.7930   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 10  2  0  0  0  0
+ 16  2  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  9  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+A    1
+OAA
+A    2
+SAP
+A    3
+OAB
+A    4
+CAO
+A    5
+CAJ
+A    6
+CAF
+A    7
+CAE
+A    8
+CAI
+A    9
+CAN
+A   10
+CAM
+A   11
+CAH
+A   12
+CAD
+A   13
+CAC
+A   14
+CAG
+A   15
+CAL
+A   16
+NAK
+M  END
+>  <InstanceId>
+5F6D_5VJ_A_201
+
+>  <ChemCompId>
+5VJ
+
+>  <PdbId>
+5F6D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2 S
+
+>  <Name>
+6~{H}-benzo[c][1,2]benzothiazine 5,5-dioxide
+
+>  <SystematicName>
+6~{H}-benzo[c][1,2]benzothiazine 5,5-dioxide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H9 N O2 S
+
+>  <MolecularWeight>
+231.27
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9NO2S/c14-16(15)12-8-4-2-6-10(12)9-5-1-3-7-11(9)13-16/h1-8,13H
+
+>  <InChIKey>
+HXNJMXAYTVQMJT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)-c3ccccc3S(=O)(=O)N2
+
+$$$$

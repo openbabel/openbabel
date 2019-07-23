@@ -1,0 +1,116 @@
+1AEM_MPI_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEM:A:296 Model:1 without hydrogens
+  9 10  0  0  0  0            999 V2000
+   31.8230   93.3410   47.2160   N 0  3  0  0  0  0  0  0  0  0  0  0
+   32.3280   93.2570   48.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5980   93.7290   49.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3570   94.2770   49.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8500   94.3590   48.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5870   93.8890   46.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5500   92.6740   48.3870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8170   92.3940   47.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7520   92.8020   46.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+C9
+M  END
+>  <InstanceId>
+1AEM_MPI_A_296
+
+>  <ChemCompId>
+MPI
+
+>  <PdbId>
+1AEM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2
+
+>  <Name>
+IMIDAZO[1,2-A]PYRIDINE
+
+>  <SystematicName>
+1H-imidazo[1,2-a]pyridin-4-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N2
+
+>  <MolecularWeight>
+119.144
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6N2/c1-2-5-9-6-4-8-7(9)3-1/h1-6H/p+1
+
+>  <InChIKey>
+UTCSSFWDNNEEBH-UHFFFAOYSA-O
+
+>  <SMILES>
+c1cc[n+]2cc[nH]c2c1
+
+$$$$

@@ -1,0 +1,135 @@
+3JS2_VM1_A_801
+  RCSB PDB12061709203D
+Coordinates from PDB:3JS2:A:801 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    8.9650    6.0140   22.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4870    4.9670   23.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7900    4.5130   24.2750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3630    5.8310   18.3510   S 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6000    5.5760   16.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9940    4.3930   16.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4690    4.1940   22.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1060    4.6640   21.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1890    3.9320   20.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8430    4.3490   19.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1180    3.7360   18.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9060    3.0150   22.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0340    2.3460   22.0540   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6680    2.7640   20.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  7  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6 11  1  0  0  0  0
+  8  7  2  0  0  0  0
+ 12  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 14  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+O1A
+A    2
+C1B
+A    3
+O1C
+A    4
+S1D
+A    5
+C1E
+A    6
+C1F
+A    7
+C1G
+A    8
+C1H
+A    9
+C1I
+A   10
+C1J
+A   11
+C1K
+A   12
+C1L
+A   13
+N1M
+A   14
+C1N
+M  END
+>  <InstanceId>
+3JS2_VM1_A_801
+
+>  <ChemCompId>
+VM1
+
+>  <PdbId>
+3JS2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2 S
+
+>  <Name>
+5-(2-thienyl)nicotinic acid
+
+>  <SystematicName>
+5-thiophen-2-ylpyridine-3-carboxylic acid
+
+>  <Synonyms>
+5-thiophen-2-ylpyridine-3-carboxylic acid, 5-(thien-2-yl)nicotinic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 N O2 S
+
+>  <MolecularWeight>
+205.233
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7NO2S/c12-10(13)8-4-7(5-11-6-8)9-2-1-3-14-9/h1-6H,(H,12,13)
+
+>  <InChIKey>
+DFWKRZGYBOVSKW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1)c2cc(cnc2)C(=O)O
+
+$$$$

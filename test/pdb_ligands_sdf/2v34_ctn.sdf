@@ -1,0 +1,147 @@
+1UEJ_CTN_A_301
+  RCSB PDB12061704133D
+Coordinates from PDB:1UEJ:A:301 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   12.1490   38.7200   31.9590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3660   37.3640   31.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4370   36.5980   32.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4450   36.8890   33.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2000   35.7270   34.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9230   35.8820   35.4220   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7630   36.3050   34.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5300   36.4740   35.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5120   36.1870   36.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6610   35.7640   37.4550   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8310   35.6200   36.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8080   35.2360   37.4740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3900   36.3090   37.4840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1710   34.6280   33.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6000   33.3820   34.1820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0440   35.1960   32.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2790   34.5380   32.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 16  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O5'
+A    2
+C5'
+A    3
+C4'
+A    4
+O4'
+A    5
+C1'
+A    6
+N1
+A    7
+C6
+A    8
+C5
+A    9
+C4
+A   10
+N3
+A   11
+C2
+A   12
+O2
+A   13
+N4
+A   14
+C2'
+A   15
+O2'
+A   16
+C3'
+A   17
+O3'
+M  END
+>  <InstanceId>
+1UEJ_CTN_A_301
+
+>  <ChemCompId>
+CTN
+
+>  <PdbId>
+1UEJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O5
+
+>  <Name>
+4-AMINO-1-BETA-D-RIBOFURANOSYL-2(1H)-PYRIMIDINONE
+
+>  <SystematicName>
+4-amino-1-[(2R,3R,4S,5R)-3,4-dihydroxy-5-(hydroxymethyl)oxolan-2-yl]pyrimidin-2-one
+
+>  <Synonyms>
+CYTIDINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N3 O5
+
+>  <MolecularWeight>
+243.217
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N3O5/c10-5-1-2-12(9(16)11-5)8-7(15)6(14)4(3-13)17-8/h1-2,4,6-8,13-15H,3H2,(H2,10,11,16)/t4-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+UHDGCWIWMRVCDJ-XVFCMESISA-N
+
+>  <SMILES>
+C1=CN(C(=O)N=C1N)[C@H]2[C@@H]([C@@H]([C@H](O2)CO)O)O
+
+$$$$

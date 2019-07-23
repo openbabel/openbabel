@@ -1,0 +1,135 @@
+5F1J_5TO_A_301
+  RCSB PDB12061717343D
+Coordinates from PDB:5F1J:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   33.9190   70.2760   11.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8840   69.3960   12.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8880   70.0790   13.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4760   71.3960   12.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5720   71.6340   11.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1290   72.4950   10.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5030   73.8190   10.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3550   74.8500    9.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7840   74.6100    8.6930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6610   75.9380   10.0910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3180   77.0000    9.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5100   78.1030    9.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7000   77.7640   11.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0830   76.2890   11.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  5  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+A    1
+CAG
+A    2
+CAB
+A    3
+CAC
+A    4
+CAH
+A    5
+CAM
+A    6
+CAI
+A    7
+CAF
+A    8
+CAL
+A    9
+OAA
+A   10
+NAN
+A   11
+CAJ
+A   12
+CAD
+A   13
+CAE
+A   14
+CAK
+M  END
+>  <InstanceId>
+5F1J_5TO_A_301
+
+>  <ChemCompId>
+5TO
+
+>  <PdbId>
+5F1J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O
+
+>  <Name>
+3-cyclopentyl-1-pyrrolidin-1-yl-propan-1-one
+
+>  <SystematicName>
+3-cyclopentyl-1-pyrrolidin-1-yl-propan-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H21 N O
+
+>  <MolecularWeight>
+195.301
+
+>  <ModifiedDate>
+2016-01-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H21NO/c14-12(13-9-3-4-10-13)8-7-11-5-1-2-6-11/h11H,1-10H2
+
+>  <InChIKey>
+QNSQANVPHXTUQU-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(C1)CCC(=O)N2CCCC2
+
+$$$$

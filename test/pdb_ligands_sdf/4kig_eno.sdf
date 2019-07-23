@@ -1,0 +1,130 @@
+1CA7_ENO_A_501
+  RCSB PDB12061702093D
+Coordinates from PDB:1CA7:A:501 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   32.3190  -13.5990   59.5040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0180  -18.1600   59.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2430  -19.2980   58.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8910  -19.1770   58.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3020  -17.9170   58.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0830  -16.7770   58.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4550  -16.8850   59.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1400  -20.2960   58.4530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3250  -15.6370   59.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1830  -14.3050   59.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0530  -13.3360   58.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2660  -12.1090   58.9040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9300  -13.7820   58.5460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+O4
+A    2
+C9
+A    3
+C8
+A    4
+C7
+A    5
+C6
+A    6
+C5
+A    7
+C4
+A    8
+O3
+A    9
+C3
+A   10
+C2
+A   11
+C1
+A   12
+O2
+A   13
+O1
+M  END
+>  <InstanceId>
+1CA7_ENO_A_501
+
+>  <ChemCompId>
+ENO
+
+>  <PdbId>
+1CA7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+3-(4-HYDROXY-PHENYL)PYRUVIC ACID
+
+>  <SystematicName>
+3-(4-hydroxyphenyl)-2-oxo-propanoic acid
+
+>  <Synonyms>
+HPP
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O4
+
+>  <MolecularWeight>
+180.157
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O4/c10-7-3-1-6(2-4-7)5-8(11)9(12)13/h1-4,10H,5H2,(H,12,13)
+
+>  <InChIKey>
+KKADPXVIOXHVKN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CC(=O)C(=O)O)O
+
+$$$$

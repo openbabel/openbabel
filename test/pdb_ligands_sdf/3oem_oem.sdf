@@ -1,0 +1,117 @@
+3OEM_OEM_A_287
+  RCSB PDB12061710043D
+Coordinates from PDB:3OEM:A:287 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    7.7790   36.7190    9.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3920   38.4950    9.6280   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2690   36.1260    8.9460   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0340   38.1980   10.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6810   38.7740   11.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5980   38.2500   12.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8390   39.8570    9.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7530   37.9140   12.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1710   38.1700   13.6940   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0800   36.1420   10.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  1  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  2  1  0  0  0  0
+  8  6  2  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+CA
+A    5
+CB
+A    6
+CG
+A    7
+CAA
+A    8
+OD1
+A    9
+OD2
+A   10
+OXT
+M  END
+>  <InstanceId>
+3OEM_OEM_A_287
+
+>  <ChemCompId>
+OEM
+
+>  <PdbId>
+3OEM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+287
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4
+
+>  <Name>
+N-methyl-D-aspartic acid
+
+>  <SystematicName>
+(2R)-2-(methylamino)butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+D-peptide linking
+
+>  <Formula>
+C5 H9 N O4
+
+>  <MolecularWeight>
+147.129
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO4/c1-6-3(5(9)10)2-4(7)8/h3,6H,2H2,1H3,(H,7,8)(H,9,10)/t3-/m1/s1
+
+>  <InChIKey>
+HOKKHZGPKSLGJE-GSVOUGTGSA-N
+
+>  <SMILES>
+CN[C@H](CC(=O)O)C(=O)O
+
+$$$$

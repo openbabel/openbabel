@@ -1,0 +1,126 @@
+3W1N_IRO_A_403
+  RCSB PDB12061711183D
+Coordinates from PDB:3W1N:A:403 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    4.6880   52.3340   75.3300   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8840   52.0400   75.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6930   52.9730   75.5050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2100   50.6840   75.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0510   50.1540   74.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9910   51.4470   73.1300   I 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2900   48.7930   74.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0280   48.3400   73.5860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6790   47.9540   75.3830   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8370   48.4860   76.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3000   47.7250   77.1280   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5950   49.8510   76.4370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  5  1  0  0  0  0
+  7  9  1  0  0  0  0
+  5  4  2  0  0  0  0
+  1  2  2  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4 12  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+OAA
+A    2
+CAH
+A    3
+OAD
+A    4
+CAI
+A    5
+CAJ
+A    6
+I
+A    7
+CAL
+A    8
+OAC
+A    9
+NAG
+A   10
+CAK
+A   11
+OAB
+A   12
+NAF
+M  END
+>  <InstanceId>
+3W1N_IRO_A_403
+
+>  <ChemCompId>
+IRO
+
+>  <PdbId>
+3W1N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O4 I
+
+>  <Name>
+5-iodo-2,6-dioxo-1,2,3,6-tetrahydropyrimidine-4-carboxylic acid
+
+>  <SystematicName>
+5-iodanyl-2,4-bis(oxidanylidene)-1H-pyrimidine-6-carboxylic acid
+
+>  <Synonyms>
+5-iodoorotic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H3 I N2 O4
+
+>  <MolecularWeight>
+281.993
+
+>  <ModifiedDate>
+2013-11-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H3IN2O4/c6-1-2(4(10)11)7-5(12)8-3(1)9/h(H,10,11)(H2,7,8,9,12)
+
+>  <InChIKey>
+NWVVOUXUHGRCGE-UHFFFAOYSA-N
+
+>  <SMILES>
+C1(=C(NC(=O)NC1=O)C(=O)O)I
+
+$$$$

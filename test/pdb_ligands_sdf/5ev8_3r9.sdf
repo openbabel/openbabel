@@ -1,0 +1,131 @@
+4NQ6_3R9_A_304
+  RCSB PDB12061713563D
+Coordinates from PDB:4NQ6:A:304 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   12.1550    7.9590   27.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1020    9.4700   25.3840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5700    8.0510   26.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2970    7.0690   26.1200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1080    9.5150   26.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2920   10.4830   26.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0210   10.9990   24.4770   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3430   10.4450   24.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4500   11.6490   24.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9980   11.4610   26.0980   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7830    9.7060   25.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6620    9.2880   25.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1460    7.6810   24.3760   S 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  2  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  2 11  1  0  0  0  0
+  2  5  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  4  3  2  0  0  0  0
+  6  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  1  1  0  0  0  0
+A    1
+O
+A    2
+N
+A    3
+C
+A    4
+OXT
+A    5
+CA
+A    6
+CB
+A    7
+SAH
+A    8
+CAM
+A    9
+CAF
+A   10
+SAG
+A   11
+CAJ
+A   12
+CAD
+A   13
+SAC
+M  END
+>  <InstanceId>
+4NQ6_3R9_A_304
+
+>  <ChemCompId>
+3R9
+
+>  <PdbId>
+4NQ6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2 S3
+
+>  <Name>
+(3S,5S,7aR)-5-(sulfanylmethyl)tetrahydro[1,3]thiazolo[4,3-b][1,3]thiazole-3-carboxylic acid
+
+>  <SystematicName>
+(3S,5S,7aR)-5-(sulfanylmethyl)-3,5,7,7a-tetrahydro-2H-[1,3]thiazolo[3,2-c][1,3]thiazole-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N O2 S3
+
+>  <MolecularWeight>
+237.363
+
+>  <ModifiedDate>
+2014-11-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO2S3/c9-7(10)4-2-12-6-3-13-5(1-11)8(4)6/h4-6,11H,1-3H2,(H,9,10)/t4-,5+,6-/m1/s1
+
+>  <InChIKey>
+ZTWVMVSSSBGFHH-NGJCXOISSA-N
+
+>  <SMILES>
+C1[C@@H](N2[C@H](S1)CS[C@H]2CS)C(=O)O
+
+$$$$

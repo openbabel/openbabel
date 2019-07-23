@@ -1,0 +1,136 @@
+1LIH_PHN_A_1
+  RCSB PDB12061703113D
+Coordinates from PDB:1LIH:A:1 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+   -1.6810   45.8820  169.2930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2010   44.8420  170.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5610   44.9810  170.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2820   46.0900  170.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7210   47.0600  169.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4820   48.1000  168.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9210   49.0700  168.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6010   49.0010  167.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0410   49.9710  166.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7200   49.9020  166.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000   48.7930  166.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5600   47.8230  167.7370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8010   47.8920  168.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4410   46.9220  168.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C4A
+A    6
+C5
+A    7
+C6
+A    8
+C6A
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+N10
+A   13
+C10
+A   14
+C1A
+M  END
+>  <InstanceId>
+1LIH_PHN_A_1
+
+>  <ChemCompId>
+PHN
+
+>  <PdbId>
+1LIH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+1,10-PHENANTHROLINE
+
+>  <SystematicName>
+1,10-phenanthroline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H8 N2
+
+>  <MolecularWeight>
+180.205
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H8N2/c1-3-9-5-6-10-4-2-8-14-12(10)11(9)13-7-1/h1-8H
+
+>  <InChIKey>
+DGEZNRSVGBDHLK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2ccc3cccnc3c2nc1
+
+$$$$

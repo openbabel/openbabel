@@ -1,0 +1,143 @@
+2MAS_PIR_A_400
+  RCSB PDB12061706183D
+Coordinates from PDB:2MAS:A:400 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  107.1160   36.4820   81.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  106.5220   35.2020   82.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  107.0330   34.1130   81.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  107.8940   34.3480   80.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.4400   35.6460   80.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.2770   35.8850   78.9900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  108.1240   36.6860   80.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.3330   35.0040   82.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.1370   36.1330   83.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.3650   35.6820   85.2530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  103.6700   36.5690   83.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.8450   35.9830   84.7620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  103.2690   36.0990   82.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  104.0380   34.8720   82.2770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  103.5970   37.0450   81.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  103.7070   36.3140   80.0080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+N5
+A    7
+C6
+A    8
+C1'
+A    9
+C2'
+A   10
+O2'
+A   11
+C3'
+A   12
+O3'
+A   13
+C4'
+A   14
+N4'
+A   15
+C5'
+A   16
+O5'
+M  END
+>  <InstanceId>
+2MAS_PIR_A_400
+
+>  <ChemCompId>
+PIR
+
+>  <PdbId>
+2MAS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O3
+
+>  <Name>
+2-(4-AMINO-PHENYL)-5-HYDROXYMETHYL-PYRROLIDINE-3,4-DIOL
+
+>  <SystematicName>
+(2S,3S,4R,5R)-2-(4-aminophenyl)-5-(hydroxymethyl)pyrrolidine-3,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N2 O3
+
+>  <MolecularWeight>
+224.256
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N2O3/c12-7-3-1-6(2-4-7)9-11(16)10(15)8(5-14)13-9/h1-4,8-11,13-16H,5,12H2/t8-,9+,10-,11+/m1/s1
+
+>  <InChIKey>
+SQENVZNKXLCDLF-YTWAJWBKSA-N
+
+>  <SMILES>
+c1cc(ccc1[C@H]2[C@@H]([C@@H]([C@H](N2)CO)O)O)N
+
+$$$$

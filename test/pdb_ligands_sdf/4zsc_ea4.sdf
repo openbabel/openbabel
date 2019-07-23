@@ -1,0 +1,150 @@
+3RDC_EA4_A_1
+  RCSB PDB12061710333D
+Coordinates from PDB:3RDC:A:1 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+    5.2940   20.4930   18.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0520   19.7550   17.7250   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0530   20.0520   19.4410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2610   20.3830   17.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6450   21.8410   18.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9070   14.8470   23.4340   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5580   17.7110   16.9520   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0290   16.0260   21.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0680   14.9410   21.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1000   16.4680   20.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0100   15.3950   19.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5360   20.8870   18.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1800   16.6580   18.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6480   18.0460   18.1260   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4660   21.1180   18.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7930   18.4610   17.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9510   15.2600   22.1710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0840   16.1530   19.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1 15  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 16  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 17  1  0  0  0  0
+  7 16  2  0  0  0  0
+  8 10  2  0  0  0  0
+  8 17  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 17  2  0  0  0  0
+ 10 18  1  0  0  0  0
+ 11 18  2  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 18  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+CA
+A    5
+CAA
+A    6
+NAB
+A    7
+OAC
+A    8
+CAE
+A    9
+CAF
+A   10
+CAG
+A   11
+CAH
+A   12
+CAI
+A   13
+CAK
+A   14
+NAM
+A   15
+OAN
+A   16
+CAO
+A   17
+CAQ
+A   18
+CAR
+M  END
+>  <InstanceId>
+3RDC_EA4_A_1
+
+>  <ChemCompId>
+EA4
+
+>  <PdbId>
+3RDC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O3
+
+>  <Name>
+ethyl N-[(4-aminobenzyl)carbamoyl]glycinate
+
+>  <SystematicName>
+ethyl 2-[(4-aminophenyl)methylcarbamoylamino]ethanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H17 N3 O3
+
+>  <MolecularWeight>
+251.282
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H17N3O3/c1-2-18-11(16)8-15-12(17)14-7-9-3-5-10(13)6-4-9/h3-6H,2,7-8,13H2,1H3,(H2,14,15,17)
+
+>  <InChIKey>
+UCMPTJMHPJQEED-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)CNC(=O)NCc1ccc(cc1)N
+
+$$$$

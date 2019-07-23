@@ -1,0 +1,82 @@
+1K7L_YT3_C_469
+  RCSB PDB12061703033D
+Coordinates from PDB:1K7L:C:469 Model:1 without hydrogens
+  1  0  0  0  0  0            999 V2000
+   24.2900  -31.0120    1.3730   Y 0  1  0  0  0  0  0  0  0  0  0  0
+M  CHG  1   1   3
+A    1
+Y
+M  END
+>  <InstanceId>
+1K7L_YT3_C_469
+
+>  <ChemCompId>
+YT3
+
+>  <PdbId>
+1K7L
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+469
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+Y
+
+>  <Name>
+YTTRIUM (III) ION
+
+>  <SystematicName>
+yttrium(+3) cation
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+Y
+
+>  <MolecularWeight>
+88.906
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/Y/q+3
+
+>  <InChIKey>
+GRTBAGCGDOYUBE-UHFFFAOYSA-N
+
+>  <SMILES>
+[Y+3]
+
+$$$$

@@ -1,0 +1,118 @@
+1BE6_TCA_A_276
+  RCSB PDB12061702043D
+Coordinates from PDB:1BE6:A:276 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    3.5880   10.5520    3.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6080    9.4440    3.5180   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0520   11.1160    2.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8350   11.8600    1.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6190   12.3100    0.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5110   13.0620   -0.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3940   13.2850   -1.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3590   12.7710   -2.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3700   12.0880   -2.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5040   11.8250   -0.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C1
+A    2
+O
+A    3
+C2
+A    4
+C3
+A    5
+C31
+A    6
+C32
+A    7
+C33
+A    8
+C34
+A    9
+C35
+A   10
+C36
+M  END
+>  <InstanceId>
+1BE6_TCA_A_276
+
+>  <ChemCompId>
+TCA
+
+>  <PdbId>
+1BE6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+276
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 O
+
+>  <Name>
+PHENYLETHYLENECARBOXYLIC ACID
+
+>  <SystematicName>
+(E)-3-phenylprop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O2
+
+>  <MolecularWeight>
+148.159
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O2/c10-9(11)7-6-8-4-2-1-3-5-8/h1-7H,(H,10,11)/b7-6+
+
+>  <InChIKey>
+WBYWAXJHAXSJNI-VOTSOKGWSA-N
+
+>  <SMILES>
+c1ccc(cc1)\C=C\C(=O)O
+
+$$$$

@@ -1,0 +1,151 @@
+1YDS_IQS_E_351
+  RCSB PDB12061704443D
+Coordinates from PDB:1YDS:E:351 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+    6.9860   10.1780    2.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1340   10.1760    1.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0160   10.0210    0.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7310    9.8660    1.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5640    9.8650    2.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2910    9.7100    3.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1280    9.7070    4.5750   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1840    9.8510    5.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4830   10.0090    4.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6870   10.0190    3.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4470   10.3740    3.9930   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1500   11.4220    4.9350   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5850   10.4810    3.1000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4810    9.0070    4.8510   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0040    7.7420    4.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9790    7.9390    3.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1750    7.0990    3.3810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3100    7.9960    3.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+S
+A   12
+O1
+A   13
+O2
+A   14
+N1'
+A   15
+C2'
+A   16
+C3'
+A   17
+N4'
+A   18
+C5'
+M  END
+>  <InstanceId>
+1YDS_IQS_E_351
+
+>  <ChemCompId>
+IQS
+
+>  <PdbId>
+1YDS
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O2 S
+
+>  <Name>
+N-[2-(METHYLAMINO)ETHYL]-5-ISOQUINOLINESULFONAMIDE
+
+>  <SystematicName>
+N-(2-methylaminoethyl)isoquinoline-5-sulfonamide
+
+>  <Synonyms>
+H-8
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H15 N3 O2 S
+
+>  <MolecularWeight>
+265.331
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H15N3O2S/c1-13-7-8-15-18(16,17)12-4-2-3-10-9-14-6-5-11(10)12/h2-6,9,13,15H,7-8H2,1H3
+
+>  <InChIKey>
+PJWUXKNZVMEPPH-UHFFFAOYSA-N
+
+>  <SMILES>
+CNCCNS(=O)(=O)c1cccc2c1ccnc2
+
+$$$$

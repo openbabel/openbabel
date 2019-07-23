@@ -1,0 +1,102 @@
+1A49_OXL_A_533
+  RCSB PDB12061701573D
+Coordinates from PDB:1A49:A:533 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   10.1680   68.4520   11.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5460   69.0650   11.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6400   68.0500   10.8310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1750   69.5410   12.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6720   68.4150   13.0120   O 0  5  0  0  0  0  0  0  0  0  0  0
+   11.9050   69.0470   10.4360   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  6  1  0  0  0  0
+M  CHG  2   5  -1   6  -1
+A    1
+C1
+A    2
+C2
+A    3
+O1
+A    4
+O2
+A    5
+O3
+A    6
+O4
+M  END
+>  <InstanceId>
+1A49_OXL_A_533
+
+>  <ChemCompId>
+OXL
+
+>  <PdbId>
+1A49
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+533
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O4
+
+>  <Name>
+OXALATE ION
+
+>  <SystematicName>
+ethanedioate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 O4
+
+>  <MolecularWeight>
+88.019
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H2O4/c3-1(4)2(5)6/h(H,3,4)(H,5,6)/p-2
+
+>  <InChIKey>
+MUBZPKHOEPUJKR-UHFFFAOYSA-L
+
+>  <SMILES>
+C(=O)(C(=O)[O-])[O-]
+
+$$$$

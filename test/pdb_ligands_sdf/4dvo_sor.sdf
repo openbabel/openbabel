@@ -1,0 +1,125 @@
+1D8C_SOR_A_4000
+  RCSB PDB12061702143D
+Coordinates from PDB:1D8C:A:4000 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   -1.4800  -15.7990  -25.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8460  -15.0450  -26.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7710  -15.9980  -27.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3110  -16.3730  -28.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2040  -16.9780  -29.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2090  -17.5230  -29.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4690  -14.8890  -24.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1810  -14.5680  -26.5980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4210  -15.4190  -28.9990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5850  -15.2770  -27.9620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1560  -18.0320  -29.6330   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4750  -17.6530  -31.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+1D8C_SOR_A_4000
+
+>  <ChemCompId>
+SOR
+
+>  <PdbId>
+1D8C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+D-SORBITOL
+
+>  <SystematicName>
+(2S,3R,4R,5R)-hexane-1,2,3,4,5,6-hexol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O6
+
+>  <MolecularWeight>
+182.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3-12H,1-2H2/t3-,4+,5-,6-/m1/s1
+
+>  <InChIKey>
+FBPFZTCFMRRESA-JGWLITMVSA-N
+
+>  <SMILES>
+C([C@@H]([C@H]([C@@H]([C@@H](CO)O)O)O)O)O
+
+$$$$

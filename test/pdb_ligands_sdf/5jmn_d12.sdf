@@ -1,0 +1,125 @@
+1GKA_D12_A_1183
+  RCSB PDB12061702363D
+Coordinates from PDB:1GKA:A:1183 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   34.3750   76.4690   21.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8620   75.4590   20.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3320   75.7070   20.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7810   75.5670   18.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3080   75.9230   18.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8810   75.8500   17.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6240   77.1010   16.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1420   77.3220   16.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7800   78.3640   15.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2600   78.4780   15.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7820   79.5530   14.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2590   79.7160   14.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+1GKA_D12_A_1183
+
+>  <ChemCompId>
+D12
+
+>  <PdbId>
+1GKA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1183
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12
+
+>  <Name>
+DODECANE
+
+>  <SystematicName>
+dodecane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H26
+
+>  <MolecularWeight>
+170.335
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H26/c1-3-5-7-9-11-12-10-8-6-4-2/h3-12H2,1-2H3
+
+>  <InChIKey>
+SNRUBQQJIBEYMU-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCC
+
+$$$$

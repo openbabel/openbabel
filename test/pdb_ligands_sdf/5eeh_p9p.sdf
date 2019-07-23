@@ -1,0 +1,123 @@
+5EEH_P9P_A_402
+  RCSB PDB12061717273D
+Coordinates from PDB:5EEH:A:402 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   74.3310   23.0880  115.8380  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6700   24.7790  115.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.3470   25.4270  114.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6210   26.7790  114.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.3030   27.4560  113.2310   N 0  3  0  0  0  0  0  0  0  0  0  0
+   74.3390   28.8060  113.2460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.9950   26.8210  112.2330   O 0  5  0  0  0  0  0  0  0  0  0  0
+   75.1880   27.4820  115.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.5080   26.8170  116.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.2340   25.4610  116.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.5450   24.7690  117.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  8  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  9  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+M  CHG  2   5   1   7  -1
+A    1
+CL1
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+N05
+A    6
+O06
+A    7
+O07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+O11
+M  END
+>  <InstanceId>
+5EEH_P9P_A_402
+
+>  <ChemCompId>
+P9P
+
+>  <PdbId>
+5EEH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3 Cl
+
+>  <Name>
+2-chloranyl-4-nitro-phenol
+
+>  <SystematicName>
+2-chloranyl-4-nitro-phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H4 Cl N O3
+
+>  <MolecularWeight>
+173.554
+
+>  <ModifiedDate>
+2015-12-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4ClNO3/c7-5-3-4(8(10)11)1-2-6(5)9/h1-3,9H
+
+>  <InChIKey>
+BOFRXDMCQRTGII-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1N(=O)=O)Cl)O
+
+$$$$

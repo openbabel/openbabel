@@ -1,0 +1,110 @@
+1EVR_RCO_A_306
+  RCSB PDB12061702253D
+Coordinates from PDB:1EVR:A:306 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   23.5130   -6.7310   11.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3210   -6.2400   11.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4550   -5.4720   10.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7710   -5.1830    9.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9740   -5.6650    8.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8540   -6.4480    9.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3510   -7.5090   11.8430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2830   -4.9970   11.3460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O3
+M  END
+>  <InstanceId>
+1EVR_RCO_A_306
+
+>  <ChemCompId>
+RCO
+
+>  <PdbId>
+1EVR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+306
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2
+
+>  <Name>
+RESORCINOL
+
+>  <SystematicName>
+benzene-1,3-diol
+
+>  <Synonyms>
+1,3-BENZENEDIOL; 1,3-DIHYDROXYBENZENE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O2
+
+>  <MolecularWeight>
+110.111
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O2/c7-5-2-1-3-6(8)4-5/h1-4,7-8H
+
+>  <InChIKey>
+GHMLBKRAJCXXBS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)O)O
+
+$$$$

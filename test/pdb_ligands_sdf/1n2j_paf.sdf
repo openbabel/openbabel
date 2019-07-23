@@ -1,0 +1,118 @@
+1N2B_PAF_A_1001
+  RCSB PDB12061703213D
+Coordinates from PDB:1N2B:A:1001 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   33.0240   33.1610   45.0820   O 0  5  0  0  0  0  0  0  0  0  0  0
+   33.3180   34.1050   45.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6230   35.2750   45.5420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3020   33.7640   47.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9820   32.5080   47.6350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8690   33.6700   48.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1030   35.0020   47.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0770   32.5020   47.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1060   33.4170   49.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8550   34.4840   50.0700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  CHG  1   1  -1
+A    1
+O1
+A    2
+C1
+A    3
+O2
+A    4
+C2
+A    5
+O3
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O4
+M  END
+>  <InstanceId>
+1N2B_PAF_A_1001
+
+>  <ChemCompId>
+PAF
+
+>  <PdbId>
+1N2B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O4
+
+>  <Name>
+PANTOATE
+
+>  <SystematicName>
+(2R)-2,4-dihydroxy-3,3-dimethyl-butanoate
+
+>  <Synonyms>
+2,4-DIHYDROXY-3,3-DIMETHYL-BUTYRATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 O4
+
+>  <MolecularWeight>
+147.149
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O4/c1-6(2,3-7)4(8)5(9)10/h4,7-8H,3H2,1-2H3,(H,9,10)/p-1/t4-/m0/s1
+
+>  <InChIKey>
+OTOIIPJYVQJATP-BYPYZUCNSA-M
+
+>  <SMILES>
+CC(C)(CO)[C@H](C(=O)[O-])O
+
+$$$$

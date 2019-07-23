@@ -1,0 +1,118 @@
+2DKH_3HB_A_641
+  RCSB PDB12061705213D
+Coordinates from PDB:2DKH:A:641 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   25.5160   43.4890   29.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9270   44.5970   29.8180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7520   43.4390   29.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6740   42.2340   29.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3660   42.2310   30.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5640   41.0770   30.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0470   39.9170   29.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3630   39.9140   28.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1730   41.0570   29.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3260   41.1330   30.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O3
+M  END
+>  <InstanceId>
+2DKH_3HB_A_641
+
+>  <ChemCompId>
+3HB
+
+>  <PdbId>
+2DKH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+641
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3
+
+>  <Name>
+3-HYDROXYBENZOIC ACID
+
+>  <SystematicName>
+3-oxidanylbenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O3
+
+>  <MolecularWeight>
+138.121
+
+>  <ModifiedDate>
+2011-06-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O3/c8-6-3-1-2-5(4-6)7(9)10/h1-4,8H,(H,9,10)
+
+>  <InChIKey>
+IJFXRHURBJZNAO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)O)C(=O)O
+
+$$$$

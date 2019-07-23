@@ -1,0 +1,128 @@
+4MSA_2ZM_A_900
+  RCSB PDB12061713473D
+Coordinates from PDB:4MSA:A:900 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    4.3230  -28.0040  -29.5820   O 0  5  0  0  0  0  0  0  0  0  0  0
+    4.4260  -28.7140  -30.5750   N 0  3  0  0  0  0  0  0  0  0  0  0
+    4.7490  -29.8880  -30.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1990  -28.1950  -31.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5090  -26.9820  -31.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2530  -26.3850  -33.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7240  -27.0680  -34.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6270  -26.7620  -35.5670   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2320  -27.7480  -36.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7160  -28.6800  -35.4210   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4080  -28.2860  -34.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6710  -28.8830  -32.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  7 11  2  0  0  0  0
+  7  6  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 12  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+M  CHG  2   1  -1   2   1
+A    1
+O1
+A    2
+N2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+C9
+A   10
+N10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+4MSA_2ZM_A_900
+
+>  <ChemCompId>
+2ZM
+
+>  <PdbId>
+4MSA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O2
+
+>  <Name>
+5-nitro-1H-benzimidazole
+
+>  <SystematicName>
+5-nitro-1H-benzimidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N3 O2
+
+>  <MolecularWeight>
+163.133
+
+>  <ModifiedDate>
+2014-02-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5N3O2/c11-10(12)5-1-2-6-7(3-5)9-4-8-6/h1-4H,(H,8,9)
+
+>  <InChIKey>
+XPAZGLFMMUODDK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1[N+](=O)[O-])nc[nH]2
+
+$$$$

@@ -1,0 +1,126 @@
+4BGM_DLT_A_401
+  RCSB PDB12061711503D
+Coordinates from PDB:4BGM:A:401 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   23.1820   32.6440   88.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3140   32.9770   89.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4220   32.6370   86.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5440   31.6020   86.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0390   30.5750   88.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5920   29.5590   87.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7460   28.4390   87.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5620   27.2810   88.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5040   31.8550   87.4960   N 0  3  0  0  0  0  0  0  0  0  0  0
+   22.8130   27.2700   88.1180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3140   31.9350   90.6400   F 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8920   26.3210   88.5070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 12  2  0  0  0  0
+  8 10  1  0  0  0  0
+M  CHG  1   9   1
+A    1
+CAF
+A    2
+CAE
+A    3
+CAA
+A    4
+CAH
+A    5
+CAJ
+A    6
+CAK
+A    7
+CAL
+A    8
+CAM
+A    9
+N3
+A   10
+OAC
+A   11
+F26
+A   12
+OAB
+M  END
+>  <InstanceId>
+4BGM_DLT_A_401
+
+>  <ChemCompId>
+DLT
+
+>  <PdbId>
+4BGM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2 F
+
+>  <Name>
+3-Carboxy-N-(2-fluoroethyl)-N,N-dimethylpropan-1-aminium
+
+>  <SystematicName>
+2-fluoranylethyl-dimethyl-(4-oxidanyl-4-oxidanylidene-butyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H17 F N O2
+
+>  <MolecularWeight>
+178.224
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16FNO2/c1-10(2,7-5-9)6-3-4-8(11)12/h3-7H2,1-2H3/p+1
+
+>  <InChIKey>
+QDYMCFLCMGVGMD-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(CCCC(=O)O)CCF
+
+$$$$

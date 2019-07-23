@@ -1,0 +1,119 @@
+4MRF_2CK_A_203
+  RCSB PDB12061713473D
+Coordinates from PDB:4MRF:A:203 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+    9.9300   -6.4600    0.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1740   -5.6590   -0.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0040   -4.7680   -0.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4230   -4.0700   -1.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1550   -3.1700   -2.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5080   -2.9530   -2.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1180   -3.6630   -1.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3680   -4.5660   -0.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9980   -5.2760    0.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0540   -5.7150    1.4520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+  4  3  2  0  0  0  0
+  7  8  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+  9 10  1  0  0  0  0
+  1 10  1  0  0  0  0
+A    1
+CAE
+A    2
+CAF
+A    3
+CAI
+A    4
+CAC
+A    5
+CAA
+A    6
+CAB
+A    7
+CAD
+A    8
+CAJ
+A    9
+CAG
+A   10
+NAH
+M  END
+>  <InstanceId>
+4MRF_2CK_A_203
+
+>  <ChemCompId>
+2CK
+
+>  <PdbId>
+4MRF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N
+
+>  <Name>
+1,2,3,4-tetrahydroisoquinoline
+
+>  <SystematicName>
+1,2,3,4-tetrahydroisoquinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N
+
+>  <MolecularWeight>
+133.19
+
+>  <ModifiedDate>
+2014-04-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11N/c1-2-4-9-7-10-6-5-8(9)3-1/h1-4,10H,5-7H2
+
+>  <InChIKey>
+UWYZHKAOTLEWKK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)CCNC2
+
+$$$$

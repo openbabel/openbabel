@@ -1,0 +1,158 @@
+4POW_OP1_A_303
+  RCSB PDB12061714163D
+Coordinates from PDB:4POW:A:303 Model:1 without hydrogens
+ 20 20  0  0  0  0            999 V2000
+    3.6270   18.2040    2.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3030   17.5440    3.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3190   16.5140    4.0120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2630   18.8010    4.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3640   19.6380    4.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0440   20.1050    6.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2780   21.2540    6.7290   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6790   21.8850    7.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9350   22.9470    8.2860   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6850   21.4410    8.6750   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4440   19.1650    1.8200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8300   20.5530    1.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1700   20.9910    0.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9710   19.7560   -0.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8980   18.6940    0.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8840   17.3690    0.2630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2910   20.6450    1.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9990   19.6060    1.2410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8640   21.7570    1.4910   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2100   18.0940    2.9220   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 15  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 15 11  1  0  0  0  0
+ 18 17  2  0  0  0  0
+ 17 19  1  0  0  0  0
+ 17 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+ 20  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+CB
+A    5
+CG
+A    6
+CD
+A    7
+NE
+A    8
+CZ
+A    9
+NH2
+A   10
+NH1
+A   11
+N
+A   12
+CAU
+A   13
+CAM
+A   14
+CAK
+A   15
+CAQ
+A   16
+OAM
+A   17
+CAS
+A   18
+OAH
+A   19
+OAE
+A   20
+OXT
+M  END
+>  <InstanceId>
+4POW_OP1_A_303
+
+>  <ChemCompId>
+OP1
+
+>  <PdbId>
+4POW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O5
+
+>  <Name>
+1-[(1S)-4-carbamimidamido-1-carboxybutyl]-5-oxo-D-proline
+
+>  <SystematicName>
+(2R)-1-[(2S)-5-carbamimidamido-1-oxidanyl-1-oxidanylidene-pentan-2-yl]-5-oxidanylidene-pyrrolidine-2-carboxylic acid
+
+>  <Synonyms>
+Pyronopaline
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H18 N4 O5
+
+>  <MolecularWeight>
+286.284
+
+>  <ModifiedDate>
+2014-10-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H18N4O5/c12-11(13)14-5-1-2-6(9(17)18)15-7(10(19)20)3-4-8(15)16/h6-7H,1-5H2,(H,17,18)(H,19,20)(H4,12,13,14)/t6-,7+/m0/s1
+
+>  <InChIKey>
+GTRMYGUJZGMZEF-NKWVEPMBSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/NCCC[C@@H](C(=O)O)N1[C@H](CCC1=O)C(=O)O
+
+$$$$

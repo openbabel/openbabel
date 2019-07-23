@@ -1,0 +1,122 @@
+1DIE_NOJ_A_400
+  RCSB PDB12061702163D
+Coordinates from PDB:1DIE:A:400 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   24.4870   75.5390   10.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4570   74.5480    9.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8610   73.3490    9.4030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6490   74.3760   10.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4850   73.3950   10.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2630   75.7410   10.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1750   75.7010   11.9560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2670   76.8150   11.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1350   76.7210   10.5080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9210   78.1820   10.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1190   78.7930    9.7960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+N5
+A   10
+C6
+A   11
+O6
+M  END
+>  <InstanceId>
+1DIE_NOJ_A_400
+
+>  <ChemCompId>
+NOJ
+
+>  <PdbId>
+1DIE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+1-DEOXYNOJIRIMYCIN
+
+>  <SystematicName>
+(2R,3R,4R,5S)-2-(hydroxymethyl)piperidine-3,4,5-triol
+
+>  <Synonyms>
+MORANOLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4
+
+>  <MolecularWeight>
+163.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO4/c8-2-3-5(10)6(11)4(9)1-7-3/h3-11H,1-2H2/t3-,4+,5-,6-/m1/s1
+
+>  <InChIKey>
+LXBIFEVIBLOUGU-JGWLITMVSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H](N1)CO)O)O)O
+
+$$$$

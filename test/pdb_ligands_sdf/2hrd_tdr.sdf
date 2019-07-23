@@ -1,0 +1,114 @@
+1IQU_TDR_A_500
+  RCSB PDB12061702523D
+Coordinates from PDB:1IQU:A:500 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   28.1860   24.0100   46.4920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8890   22.6520   46.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7600   22.2290   46.7200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9860   21.7990   46.4280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3190   22.1850   46.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2050   21.3330   46.1360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5270   23.6270   46.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9170   24.1220   45.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4800   24.4810   46.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+CM5
+A    9
+C6
+M  END
+>  <InstanceId>
+1IQU_TDR_A_500
+
+>  <ChemCompId>
+TDR
+
+>  <PdbId>
+1IQU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O2
+
+>  <Name>
+THYMINE
+
+>  <SystematicName>
+5-methyl-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 N2 O2
+
+>  <MolecularWeight>
+126.113
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2O2/c1-3-2-6-5(9)7-4(3)8/h2H,1H3,(H2,6,7,8,9)
+
+>  <InChIKey>
+RWQNBRDOKXIBIV-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CNC(=O)NC1=O
+
+$$$$

@@ -1,0 +1,148 @@
+1ZOH_K44_A_501
+  RCSB PDB12061704543D
+Coordinates from PDB:1ZOH:A:501 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+   22.7090    8.0550   18.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6850    8.6710   18.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3850    8.1850   20.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4120    6.9930   18.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6510    5.4830   20.5310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0910    6.5160   19.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1160    7.1290   20.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0990    6.4450   21.7640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9740    5.4850   21.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0490    4.7180   22.7770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6130    3.3820   22.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3670    6.4730   22.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8950    5.0660   23.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7840    6.1340   17.6550  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1670    8.7410   16.4070  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7440   10.1060   18.0180  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0340    9.0390   21.1120  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1 15  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 16  1  0  0  0  0
+  3  7  2  0  0  0  0
+  3 17  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+C9
+A   10
+N10
+A   11
+C11
+A   12
+C12
+A   13
+C14
+A   14
+BR10
+A   15
+BR11
+A   16
+BR12
+A   17
+BR13
+M  END
+>  <InstanceId>
+1ZOH_K44_A_501
+
+>  <ChemCompId>
+K44
+
+>  <PdbId>
+1ZOH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 Br4
+
+>  <Name>
+5,6,7,8-TETRABROMO-1-METHYL-2,3-DIHYDRO-1H-IMIDAZO[1,2-A]BENZIMIDAZOLE
+
+>  <SystematicName>
+(3R)-5,6,7,8-tetrabromo-3-methyl-1,2-dihydroimidazo[1,2-a]benzimidazole
+
+>  <Synonyms>
+N1,N2-ETHYLENE-2-METHYLAMINO-4,5,6,7-TETRABROMO-BENZIMIDAZOLE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 Br4 N3
+
+>  <MolecularWeight>
+488.799
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7Br4N3/c1-16-2-3-17-9-7(14)5(12)4(11)6(13)8(9)15-10(16)17/h2-3H2,1H3
+
+>  <InChIKey>
+QHCZROILDUNGRT-UHFFFAOYSA-N
+
+>  <SMILES>
+C[N@@]1CCn2c1nc3c2c(c(c(c3Br)Br)Br)Br
+
+$$$$

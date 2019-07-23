@@ -1,0 +1,142 @@
+4HZM_1BW_A_400
+  RCSB PDB12061712563D
+Coordinates from PDB:4HZM:A:400 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   21.1660   48.0700   52.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9890   47.8580   51.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8150   47.8090   52.5360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6090   48.4010   52.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4900   48.2390   53.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4560   48.9950   51.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1240   46.6230   50.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9790   46.4220   49.9680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3940   46.6210   50.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5070   45.4170   49.3280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5930   46.8260   50.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8840   46.9050   50.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0350   48.0970   49.4750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4440   48.0340   51.8050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7250   49.4930   53.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5460   50.6600   54.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  2  1  0  0  0  0
+ 11 14  1  0  0  0  0
+  6  4  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 14  1  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N2
+A    4
+C7
+A    5
+C8
+A    6
+O7
+A    7
+C3
+A    8
+O3
+A    9
+C4
+A   10
+O4
+A   11
+C5
+A   12
+C6
+A   13
+O6
+A   14
+N5
+A   15
+C9
+A   16
+C10
+M  END
+>  <InstanceId>
+4HZM_1BW_A_400
+
+>  <ChemCompId>
+1BW
+
+>  <PdbId>
+4HZM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4
+
+>  <Name>
+N-[(3S,4R,5R,6R)-4,5-dihydroxy-6-(hydroxymethyl)piperidin-3-yl]butanamide
+
+>  <SystematicName>
+N-[(3S,4R,5R,6R)-6-(hydroxymethyl)-4,5-bis(oxidanyl)piperidin-3-yl]butanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C10 H20 N2 O4
+
+>  <MolecularWeight>
+232.277
+
+>  <ModifiedDate>
+2013-06-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20N2O4/c1-2-3-8(14)12-6-4-11-7(5-13)10(16)9(6)15/h6-7,9-11,13,15-16H,2-5H2,1H3,(H,12,14)/t6-,7+,9+,10+/m0/s1
+
+>  <InChIKey>
+VBNOVDONOYTBSV-MVHNUAHISA-N
+
+>  <SMILES>
+CCCC(=O)N[C@H]1CN[C@@H]([C@H]([C@@H]1O)O)CO
+
+$$$$

@@ -1,0 +1,141 @@
+1ACM_PAL_A_311
+  RCSB PDB12061701583D
+Coordinates from PDB:1ACM:A:311 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   46.2800   29.4470   15.9250   P 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0980   30.1730   17.2950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3790   28.3160   15.8980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5750   30.5510   14.8660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7000   28.6050   15.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5140   29.5120   15.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2480   30.4700   15.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8040   29.2420   16.8690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6680   30.0370   17.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9850   31.4340   17.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0640   32.1840   18.1300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1480   31.7810   17.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9170   29.2080   18.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6340   28.8680   19.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7570   29.3220   19.9010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0420   28.1400   20.4400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+P
+A    2
+O1P
+A    3
+O2P
+A    4
+O3P
+A    5
+C1P
+A    6
+C1
+A    7
+O1
+A    8
+N2
+A    9
+C2
+A   10
+C4
+A   11
+O2
+A   12
+O3
+A   13
+C3
+A   14
+C5
+A   15
+O4
+A   16
+O5
+M  END
+>  <InstanceId>
+1ACM_PAL_A_311
+
+>  <ChemCompId>
+PAL
+
+>  <PdbId>
+1ACM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O8 P
+
+>  <Name>
+N-(PHOSPHONACETYL)-L-ASPARTIC ACID
+
+>  <SystematicName>
+(2S)-2-(2-phosphonoethanoylamino)butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N O8 P
+
+>  <MolecularWeight>
+255.119
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10NO8P/c8-4(2-16(13,14)15)7-3(6(11)12)1-5(9)10/h3H,1-2H2,(H,7,8)(H,9,10)(H,11,12)(H2,13,14,15)/t3-/m0/s1
+
+>  <InChIKey>
+ZZKNRXZVGOYGJT-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)NC(=O)CP(=O)(O)O)C(=O)O
+
+$$$$

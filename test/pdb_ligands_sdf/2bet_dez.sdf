@@ -1,0 +1,129 @@
+2BET_DEZ_A_200
+  RCSB PDB12061705073D
+Coordinates from PDB:2BET:A:200 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   24.1070   -8.3050   13.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0340   -7.6120   14.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8490   -6.4650   14.4670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4250   -8.1840   14.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7170   -8.7520   12.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5450   -9.2500   15.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3880   -8.6390   16.3760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8900   -9.9740   15.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0860  -10.7870   16.1950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0650  -12.0680   16.1970   P 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4360  -11.5360   16.5150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9700  -12.6380   14.8070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4780  -12.9540   17.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+OH2
+A    2
+C1
+A    3
+OH1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+P
+A   11
+O1P
+A   12
+O2P
+A   13
+O3P
+M  END
+>  <InstanceId>
+2BET_DEZ_A_200
+
+>  <ChemCompId>
+DEZ
+
+>  <PdbId>
+2BET
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O8 P
+
+>  <Name>
+4-PHOSPHO-D-ERYTHRONATE
+
+>  <SystematicName>
+(2R,3R)-2,3-dihydroxy-4-phosphonooxy-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H9 O8 P
+
+>  <MolecularWeight>
+216.083
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H9O8P/c5-2(3(6)4(7)8)1-12-13(9,10)11/h2-3,5-6H,1H2,(H,7,8)(H2,9,10,11)/t2-,3-/m1/s1
+
+>  <InChIKey>
+ZCZXOHUILRHRQJ-PWNYCUMCSA-N
+
+>  <SMILES>
+C([C@H]([C@H](C(=O)O)O)O)OP(=O)(O)O
+
+$$$$

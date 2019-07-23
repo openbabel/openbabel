@@ -1,0 +1,122 @@
+1RG1_OTS_A_997
+  RCSB PDB12061703533D
+Coordinates from PDB:1RG1:A:997 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    8.8030   53.8110   -3.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2470   53.7250   -2.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9600   53.2330   -2.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4270   53.1590   -0.8880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2280   52.8150   -3.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7900   52.9030   -4.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0770   53.4000   -4.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7030   53.4880   -6.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8480   52.6340   -6.1330   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1800   54.9170   -6.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1050   55.7010   -6.9620   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+O4
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C7
+A    9
+O7
+A   10
+C8
+A   11
+N8
+M  END
+>  <InstanceId>
+1RG1_OTS_A_997
+
+>  <ChemCompId>
+OTS
+
+>  <PdbId>
+1RG1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+997
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+4-(2S-AMINO-1-HYDROXYETHYL)PHENOL
+
+>  <SystematicName>
+4-[(1S)-2-amino-1-hydroxy-ethyl]phenol
+
+>  <Synonyms>
+S-OCTOPAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O2
+
+>  <MolecularWeight>
+153.178
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO2/c9-5-8(11)6-1-3-7(10)4-2-6/h1-4,8,10-11H,5,9H2/t8-/m1/s1
+
+>  <InChIKey>
+QHGUCRYDKWKLMG-MRVPVSSYSA-N
+
+>  <SMILES>
+c1cc(ccc1[C@@H](CN)O)O
+
+$$$$

@@ -1,0 +1,123 @@
+5IH7_OMI_A_604
+  RCSB PDB12061718103D
+Coordinates from PDB:5IH7:A:604 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -50.8790   27.7250  -39.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.9480   28.5310  -39.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.4700   28.9760  -38.1870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.3840   28.6700  -40.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.4000   29.3310  -40.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.6350   29.3020  -42.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.8120   28.5670  -43.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.7720   27.9130  -42.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.5840   27.9730  -41.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.6300   27.4320  -40.5510   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.4670   28.2330  -40.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  3  2  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  2  4  1  0  0  0  0
+  9  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+CAI
+A    5
+CAE
+A    6
+CAC
+A    7
+CAD
+A    8
+CAF
+A    9
+CAJ
+A   10
+N
+A   11
+CAA
+M  END
+>  <InstanceId>
+5IH7_OMI_A_604
+
+>  <ChemCompId>
+OMI
+
+>  <PdbId>
+5IH7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+604
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O
+
+>  <Name>
+1-methyl-1,2-dihydro-3H-indol-3-one
+
+>  <SystematicName>
+1-methyl-2~{H}-indol-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O
+
+>  <MolecularWeight>
+147.174
+
+>  <ModifiedDate>
+2017-03-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO/c1-10-6-9(11)7-4-2-3-5-8(7)10/h2-5H,6H2,1H3
+
+>  <InChIKey>
+DYPFVQQCYZKNMK-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1CC(=O)c2c1cccc2
+
+$$$$

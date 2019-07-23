@@ -1,0 +1,118 @@
+3SJQ_PHU_A_2001
+  RCSB PDB12061710443D
+Coordinates from PDB:3SJQ:A:2001 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -1.0710   49.4480   -3.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8170   51.8410   -4.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5240   51.6550   -5.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2340   53.0620   -3.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3630   54.1110   -4.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6550   52.7050   -6.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0750   53.9270   -5.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6610   50.7810   -3.2080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8820   48.5500   -2.5770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5790   49.1410   -4.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  1  2  0  0  0  0
+  1  9  1  0  0  0  0
+  1  8  1  0  0  0  0
+  3  2  2  0  0  0  0
+  8  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N1
+A    9
+N2
+A   10
+O1
+M  END
+>  <InstanceId>
+3SJQ_PHU_A_2001
+
+>  <ChemCompId>
+PHU
+
+>  <PdbId>
+3SJQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O
+
+>  <Name>
+1-phenylurea
+
+>  <SystematicName>
+1-phenylurea
+
+>  <Synonyms>
+Phenylurea
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N2 O
+
+>  <MolecularWeight>
+136.151
+
+>  <ModifiedDate>
+2011-10-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O/c8-7(10)9-6-4-2-1-3-5-6/h1-5H,(H3,8,9,10)
+
+>  <InChIKey>
+LUBJCRLGQSPQNN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)NC(=O)N
+
+$$$$

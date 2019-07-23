@@ -1,0 +1,109 @@
+1I1M_4MV_A_414
+  RCSB PDB12061702473D
+Coordinates from PDB:1I1M:A:414 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   20.3240   15.6410   17.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5380   16.3070   15.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4250   15.4420   15.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5150   16.2990   14.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0280   14.3040   14.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5380   15.4950   18.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0880   16.5200   18.8790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4000   14.3550   18.8160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+CG
+A    4
+CD1
+A    5
+CD2
+A    6
+C
+A    7
+O
+A    8
+OXT
+M  END
+>  <InstanceId>
+1I1M_4MV_A_414
+
+>  <ChemCompId>
+4MV
+
+>  <PdbId>
+1I1M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2
+
+>  <Name>
+4-METHYL VALERIC ACID
+
+>  <SystematicName>
+4-methylpentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O2
+
+>  <MolecularWeight>
+116.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O2/c1-5(2)3-4-6(7)8/h5H,3-4H2,1-2H3,(H,7,8)
+
+>  <InChIKey>
+FGKJLKRYENPLQH-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)CCC(=O)O
+
+$$$$

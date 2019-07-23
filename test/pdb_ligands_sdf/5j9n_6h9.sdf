@@ -1,0 +1,139 @@
+5J9N_6H9_A_405
+  RCSB PDB12061718233D
+Coordinates from PDB:5J9N:A:405 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   17.6980   18.3130   17.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6270   17.5550   19.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7240   16.9690   20.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9990   17.0010   21.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1600   17.6080   21.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3910   17.7100   23.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4570   18.1200   23.8960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3700   17.3490   24.2240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4510   17.3800   25.6320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0770   18.1720   21.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7950   18.1390   19.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5810   17.6820   17.8520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4660   18.6110   18.6180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0660   18.6400   16.3090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2730   18.3380   15.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+  1 13  2  0  0  0  0
+ 12  2  1  0  0  0  0
+ 13 11  1  0  0  0  0
+  2 11  2  0  0  0  0
+  2  3  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 10  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O
+A    8
+N2
+A    9
+N3
+A   10
+C7
+A   11
+C8
+A   12
+N1
+A   13
+N4
+A   14
+N
+A   15
+C
+M  END
+>  <InstanceId>
+5J9N_6H9_A_405
+
+>  <ChemCompId>
+6H9
+
+>  <PdbId>
+5J9N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5 O
+
+>  <Name>
+2-(methylamino)-1H-benzimidazole-5-carbohydrazide
+
+>  <SystematicName>
+2-(methylamino)-1~{H}-benzimidazole-5-carbohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N5 O
+
+>  <MolecularWeight>
+205.217
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11N5O/c1-11-9-12-6-3-2-5(8(15)14-10)4-7(6)13-9/h2-4H,10H2,1H3,(H,14,15)(H2,11,12,13)
+
+>  <InChIKey>
+UAYYHYYNSIPFPB-UHFFFAOYSA-N
+
+>  <SMILES>
+CNc1[nH]c2ccc(cc2n1)C(=O)NN
+
+$$$$

@@ -1,0 +1,135 @@
+4X8E_AVJ_A_501
+  RCSB PDB12061716103D
+Coordinates from PDB:4X8E:A:501 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   25.2580   66.5260   40.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1420   65.5080   41.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6960   67.0180   43.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3870   64.4640   44.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2920   63.6560   44.0010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1220   61.2740   42.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8330   63.6490   41.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5090   62.8400   42.1490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9080   60.7270   42.6830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2060   64.2930   43.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8450   62.5810   41.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9260   61.6570   42.6070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8500   64.8050   42.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7260   65.9380   42.0390   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1 14  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4 10  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7 11  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8 11  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+M  CHG  1  14   1
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+OAH
+A    5
+OAL
+A    6
+CAM
+A    7
+CAP
+A    8
+NAR
+A    9
+NAT
+A   10
+CAX
+A   11
+CAY
+A   12
+CAZ
+A   13
+CBC
+A   14
+NBE
+M  END
+>  <InstanceId>
+4X8E_AVJ_A_501
+
+>  <ChemCompId>
+AVJ
+
+>  <PdbId>
+4X8E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O2
+
+>  <Name>
+N,N,N-trimethyl-histidine
+
+>  <SystematicName>
+[(2S)-3-(1H-imidazol-5-yl)-1-oxidanyl-1-oxidanylidene-propan-2-yl]-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N3 O2
+
+>  <MolecularWeight>
+198.242
+
+>  <ModifiedDate>
+2015-01-23
+
+>  <Parent>
+HIS
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15N3O2/c1-12(2,3)8(9(13)14)4-7-5-10-6-11-7/h5-6,8H,4H2,1-3H3,(H-,10,11,13,14)/p+1/t8-/m0/s1
+
+>  <InChIKey>
+GPPYTCRVKHULJH-QMMMGPOBSA-O
+
+>  <SMILES>
+C[N+](C)(C)[C@@H](Cc1cnc[nH]1)C(=O)O
+
+$$$$

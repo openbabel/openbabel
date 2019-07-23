@@ -1,0 +1,142 @@
+4MUX_2E4_A_402
+  RCSB PDB12061713473D
+Coordinates from PDB:4MUX:A:402 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   -4.4790   -0.1430   14.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0230    0.9850   13.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7050    1.6370   16.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9030    0.7650   16.8810   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1400    0.8760   16.0630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1400    1.0810   18.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0880   -0.6330   16.8700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7890   -2.1010   16.5620   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6640   -2.9790   16.9850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2610   -2.1860   16.9400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8720   -2.1240   14.9420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6290   -2.3320   14.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6630   -1.1660   14.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3290   -1.2150   14.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1250   -0.0240   13.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3150    1.0110   13.1720   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  2  0  0  0  0
+ 16  2  1  0  0  0  0
+ 15 13  1  0  0  0  0
+  2  1  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  2  0  0  0  0
+  1 14  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  5  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  7  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O14
+A    4
+P13
+A    5
+O15
+A    6
+O16
+A    7
+O12
+A    8
+P9
+A    9
+O10
+A   10
+O11
+A   11
+O8
+A   12
+C7
+A   13
+C5
+A   14
+C6
+A   15
+C4
+A   16
+N3
+M  END
+>  <InstanceId>
+4MUX_2E4_A_402
+
+>  <ChemCompId>
+2E4
+
+>  <PdbId>
+4MUX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O7 P2
+
+>  <Name>
+pyridin-3-ylmethyl trihydrogen diphosphate
+
+>  <SystematicName>
+phosphono pyridin-3-ylmethyl hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 N O7 P2
+
+>  <MolecularWeight>
+269.086
+
+>  <ModifiedDate>
+2014-06-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9NO7P2/c8-15(9,10)14-16(11,12)13-5-6-2-1-3-7-4-6/h1-4H,5H2,(H,11,12)(H2,8,9,10)
+
+>  <InChIKey>
+ZGCXLEIPHNIRMO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)COP(=O)(O)OP(=O)(O)O
+
+$$$$

@@ -1,0 +1,122 @@
+4C5A_DS0_A_311
+  RCSB PDB12061711583D
+Coordinates from PDB:4C5A:A:311 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    8.4530   29.6520   61.8030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1870   31.0900   62.2440   P 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6500   31.2580   63.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2790   32.0300   61.7800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8650   31.5320   61.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7460   31.3530   59.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6100   31.4530   59.3140   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8910   31.2970   58.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1500   30.7310   57.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8740   31.0070   59.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7420   32.1830   58.9660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O11
+A    2
+P8
+A    3
+O9
+A    4
+O10
+A    5
+O7
+A    6
+C3
+A    7
+N2
+A    8
+O1
+A    9
+C5
+A   10
+C4
+A   11
+N6
+M  END
+>  <InstanceId>
+4C5A_DS0_A_311
+
+>  <ChemCompId>
+DS0
+
+>  <PdbId>
+4C5A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N2 O5 P
+
+>  <Name>
+[(4R)-4-azanyl-4,5-dihydro-1,2-oxazol-3-yl] dihydrogen phosphate
+
+>  <SystematicName>
+[(4R)-4-azanyl-4,5-dihydro-1,2-oxazol-3-yl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C3 H7 N2 O5 P
+
+>  <MolecularWeight>
+182.072
+
+>  <ModifiedDate>
+2015-01-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7N2O5P/c4-2-1-9-5-3(2)10-11(6,7)8/h2H,1,4H2,(H2,6,7,8)/t2-/m1/s1
+
+>  <InChIKey>
+SFMNESRSKJTEMJ-UWTATZPHSA-N
+
+>  <SMILES>
+C1[C@H](C(=NO1)OP(=O)(O)O)N
+
+$$$$

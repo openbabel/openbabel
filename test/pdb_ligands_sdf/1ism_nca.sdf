@@ -1,0 +1,114 @@
+1DMA_NCA_A_700
+  RCSB PDB12061702173D
+Coordinates from PDB:1DMA:A:700 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   58.4870   70.4460   10.5820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4540   69.8840   11.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7960   68.7050   10.9990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2380   68.1490    9.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2280   68.7070    9.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8670   69.8370    9.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5150   68.1590   11.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0450   67.1290   11.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0280   68.7310   12.7550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O7
+A    9
+N7
+M  END
+>  <InstanceId>
+1DMA_NCA_A_700
+
+>  <ChemCompId>
+NCA
+
+>  <PdbId>
+1DMA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O
+
+>  <Name>
+NICOTINAMIDE
+
+>  <SystematicName>
+pyridine-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N2 O
+
+>  <MolecularWeight>
+122.125
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N2O/c7-6(9)5-2-1-3-8-4-5/h1-4H,(H2,7,9)
+
+>  <InChIKey>
+DFPAKSUCGFBDDF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)C(=O)N
+
+$$$$

@@ -1,0 +1,129 @@
+5FY8_N81_A_1354
+  RCSB PDB12061717463D
+Coordinates from PDB:5FY8:A:1354 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -28.2670  -22.6720  -21.9720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1290  -21.3950  -22.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6520  -21.3040  -22.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9190  -20.5950  -21.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4230  -20.7110  -21.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9690  -21.3490  -22.8800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.6460  -20.1720  -21.0330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4030  -20.6460  -24.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0000  -19.5470  -24.3990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6330  -21.2230  -25.0080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1790  -21.1930  -23.6070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.2960  -20.7200  -23.2740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9940  -21.4790  -24.8190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  2  0  0  0  0
+  5  7  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 13 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+O06
+A    7
+O07
+A    8
+C08
+A    9
+O09
+A   10
+O10
+A   11
+C11
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+5FY8_N81_A_1354
+
+>  <ChemCompId>
+N81
+
+>  <PdbId>
+5FY8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1354
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7
+
+>  <Name>
+3-carboxy-2,3-dideoxy-D-erythro-pentaric acid
+
+>  <SystematicName>
+(1S,2S)-1-oxidanylpropane-1,2,3-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 O7
+
+>  <MolecularWeight>
+192.124
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8O7/c7-3(8)1-2(5(10)11)4(9)6(12)13/h2,4,9H,1H2,(H,7,8)(H,10,11)(H,12,13)/t2-,4-/m0/s1
+
+>  <InChIKey>
+ODBLHEXUDAPZAU-OKKQSCSOSA-N
+
+>  <SMILES>
+C([C@@H]([C@@H](C(=O)O)O)C(=O)O)C(=O)O
+
+$$$$

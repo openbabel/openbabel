@@ -1,0 +1,130 @@
+1SZO_CAX_A_5001
+  RCSB PDB12061704033D
+Coordinates from PDB:1SZO:A:5001 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   17.3840  -18.1870   42.9930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0670  -17.7220   42.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7670  -16.7050   42.1530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1010  -18.4150   40.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0070  -19.6640   40.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4650  -19.5620   41.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2030  -18.2760   40.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2480  -20.7290   40.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3370  -19.7560   42.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5220  -20.2640   43.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0000  -20.4850   42.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8780  -21.5510   43.7960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3850  -20.7480   41.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+O3
+A    2
+C10
+A    3
+O2
+A    4
+C9
+A    5
+C1
+A    6
+C2
+A    7
+C8
+A    8
+C7
+A    9
+C3
+A   10
+C6
+A   11
+C4
+A   12
+O1
+A   13
+C5
+M  END
+>  <InstanceId>
+1SZO_CAX_A_5001
+
+>  <ChemCompId>
+CAX
+
+>  <PdbId>
+1SZO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O3
+
+>  <Name>
+(2S,4S)-4-(2,2-DIHYDROXYETHYL)-2,3,3-TRIMETHYLCYCLOPENTANONE
+
+>  <SystematicName>
+(2S,4R)-4-(2,2-dihydroxyethyl)-2,3,3-trimethyl-cyclopentan-1-one
+
+>  <Synonyms>
+(2S,4S)-ALPHA-CAMPHOLINIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 O3
+
+>  <MolecularWeight>
+186.248
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18O3/c1-6-8(11)4-7(5-9(12)13)10(6,2)3/h6-7,9,12-13H,4-5H2,1-3H3/t6-,7+/m1/s1
+
+>  <InChIKey>
+KAXFPJKKGITBPU-RQJHMYQMSA-N
+
+>  <SMILES>
+C[C@@H]1C(=O)C[C@H](C1(C)C)CC(O)O
+
+$$$$

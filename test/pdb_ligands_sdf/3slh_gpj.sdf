@@ -1,0 +1,118 @@
+1G6S_GPJ_A_701
+  RCSB PDB12061702343D
+Coordinates from PDB:1G6S:A:701 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   60.3840    8.8390   26.8870   P 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4240   10.2600   27.2710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3150    8.4940   25.9520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7380    8.3410   26.3930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.1290    9.9490   31.6540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4020    8.4080   33.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.9270    7.8940   28.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0230    7.9670   30.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.5670    8.8430   31.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3860    8.5590   29.4990   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  7  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+M  CHG  1  10   1
+A    1
+P1
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+A    6
+O5
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+N1
+M  END
+>  <InstanceId>
+1G6S_GPJ_A_701
+
+>  <ChemCompId>
+GPJ
+
+>  <PdbId>
+1G6S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O5 P
+
+>  <Name>
+GLYPHOSATE
+
+>  <SystematicName>
+carboxymethyl-(phosphonomethyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H9 N O5 P
+
+>  <MolecularWeight>
+170.081
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H8NO5P/c5-3(6)1-4-2-10(7,8)9/h4H,1-2H2,(H,5,6)(H2,7,8,9)/p+1
+
+>  <InChIKey>
+XDDAORKBJWWYJS-UHFFFAOYSA-O
+
+>  <SMILES>
+C(C(=O)O)[NH2+]CP(=O)(O)O
+
+$$$$

@@ -1,0 +1,130 @@
+3KBO_NDB_A_314
+  RCSB PDB12061709243D
+Coordinates from PDB:3KBO:A:314 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    6.5740   -1.6940  -28.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5610   -1.3170  -27.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4680   -5.8190  -25.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5270   -7.7550  -27.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4160   -0.2590  -24.9930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4700   -5.9500  -28.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9990   -1.1070  -26.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2360   -3.8580  -27.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5630   -0.7470  -26.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0870   -3.0940  -26.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1020   -5.3920  -27.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9580   -1.7330  -27.3320   N 0  3  0  0  0  0  0  0  0  0  0  0
+    8.7070   -6.2650  -27.2020   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3 13  2  0  0  0  0
+  4 13  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 13  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+M  CHG  1  12   1
+A    1
+CAA
+A    2
+CAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+OAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+NAL
+A   13
+SAM
+M  END
+>  <InstanceId>
+3KBO_NDB_A_314
+
+>  <ChemCompId>
+NDB
+
+>  <PdbId>
+3KBO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+314
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4 S
+
+>  <Name>
+N-(2-hydroxyethyl)-N,N-dimethyl-3-sulfopropan-1-aminium
+
+>  <SystematicName>
+2-hydroxyethyl-dimethyl-(3-sulfopropyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H18 N O4 S
+
+>  <MolecularWeight>
+212.287
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H17NO4S/c1-8(2,5-6-9)4-3-7-13(10,11)12/h9H,3-7H2,1-2H3/p+1
+
+>  <InChIKey>
+CNXPCGBLGHKAIL-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(CCCS(=O)(=O)O)CCO
+
+$$$$

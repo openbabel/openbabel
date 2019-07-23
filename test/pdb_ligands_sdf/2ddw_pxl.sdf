@@ -1,0 +1,126 @@
+1TD2_PXL_A_288
+  RCSB PDB12061704063D
+Coordinates from PDB:1TD2:A:288 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   16.0850   -1.0290   31.4250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3190   -2.4180   31.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0780   -3.2410   31.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7310   -3.3920   29.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5910   -4.1550   29.5330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8020   -4.7610   30.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1120   -4.6190   31.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2750   -3.8500   32.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6900   -3.6940   33.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5260   -3.6210   34.5790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2710   -5.2370   32.8550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5850   -5.5970   30.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+OP4
+A    2
+C5A
+A    3
+C5
+A    4
+C6
+A    5
+N1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C4A
+A   10
+O4A
+A   11
+O3
+A   12
+C2A
+M  END
+>  <InstanceId>
+1TD2_PXL_A_288
+
+>  <ChemCompId>
+PXL
+
+>  <PdbId>
+1TD2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+288
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+3-HYDROXY-5-(HYDROXYMETHYL)-2-METHYLISONICOTINALDEHYDE
+
+>  <SystematicName>
+3-hydroxy-5-(hydroxymethyl)-2-methyl-pyridine-4-carbaldehyde
+
+>  <Synonyms>
+PYRIDOXAL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O3
+
+>  <MolecularWeight>
+167.162
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO3/c1-5-8(12)7(4-11)6(3-10)2-9-5/h2,4,10,12H,3H2,1H3
+
+>  <InChIKey>
+RADKZDMFGJYCBB-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)CO)C=O)O
+
+$$$$

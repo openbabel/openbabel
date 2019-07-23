@@ -1,0 +1,125 @@
+1XBX_HMS_A_501
+  RCSB PDB12061704373D
+Coordinates from PDB:1XBX:A:501 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   65.3170   24.2810   22.9420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1650   23.2700   24.0500   P 0  0  0  0  0  0  0  0  0  0  0  0
+   66.3650   23.0060   24.9370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.9010   23.5480   24.8020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.8780   21.8870   23.2420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.7160   20.6280   23.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2370   20.2960   23.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5480   21.1870   24.8500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.6050   20.3440   22.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2790   19.4590   21.6880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.1650   19.8750   22.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1080   20.7620   22.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O1
+A    2
+P1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+A    6
+C1
+A    7
+C2
+A    8
+O5
+A    9
+C3
+A   10
+O6
+A   11
+C4
+A   12
+C5
+M  END
+>  <InstanceId>
+1XBX_HMS_A_501
+
+>  <ChemCompId>
+HMS
+
+>  <PdbId>
+1XBX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C5 O6 P
+
+>  <Name>
+5-O-phosphono-L-ribulose
+
+>  <SystematicName>
+[(2S,3S)-2,3,5-trihydroxy-4-oxo-pentyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H11 O8 P
+
+>  <MolecularWeight>
+230.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11O8P/c6-1-3(7)5(9)4(8)2-13-14(10,11)12/h4-6,8-9H,1-2H2,(H2,10,11,12)/t4-,5+/m0/s1
+
+>  <InChIKey>
+FNZLKVNUWIIPSJ-CRCLSJGQSA-N
+
+>  <SMILES>
+C([C@@H]([C@@H](C(=O)CO)O)O)OP(=O)(O)O
+
+$$$$

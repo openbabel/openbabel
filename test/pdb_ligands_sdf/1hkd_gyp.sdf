@@ -1,0 +1,130 @@
+1GIC_GYP_A_238
+  RCSB PDB12061702363D
+Coordinates from PDB:1GIC:A:238 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   33.0240  128.9640  117.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7090  127.4790  117.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9100  126.6200  117.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5200  127.0200  116.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8310  128.5210  116.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2960  128.9570  114.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6450  130.3540  119.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9000  129.3240  118.9890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3020  127.1820  119.2900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4920  125.2820  117.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6980  126.2870  116.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6550  129.2780  116.6320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2070  128.9410  114.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1GIC_GYP_A_238
+
+>  <ChemCompId>
+GYP
+
+>  <PdbId>
+1GIC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+238
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O6
+
+>  <Name>
+METHYL-ALPHA-D-GLUCOPYRANOSIDE
+
+>  <SystematicName>
+(2R,3S,4S,5R,6S)-2-(hydroxymethyl)-6-methoxy-oxane-3,4,5-triol
+
+>  <Synonyms>
+ALPHA-METHYL-D-GLUCOPYRANOSIDE
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C7 H14 O6
+
+>  <MolecularWeight>
+194.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O6/c1-12-7-6(11)5(10)4(9)3(2-8)13-7/h3-11H,2H2,1H3/t3-,4-,5+,6-,7+/m1/s1
+
+>  <InChIKey>
+HOVAGTYPODGVJG-ZFYZTMLRSA-N
+
+>  <SMILES>
+CO[C@@H]1[C@@H]([C@H]([C@@H]([C@H](O1)CO)O)O)O
+
+$$$$

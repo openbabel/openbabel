@@ -1,0 +1,130 @@
+1RRY_204_A_1001
+  RCSB PDB12061703553D
+Coordinates from PDB:1RRY:A:1001 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   51.3450   47.2590   71.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0950   47.8670   72.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7930   47.1800   73.3110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6980   47.5250   74.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9600   48.4380   73.6740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4060   46.7720   75.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2530   45.7290   75.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9870   45.0360   76.8640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9040   45.3210   77.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6520   44.5870   78.7770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0600   46.3070   77.2340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2720   47.0460   76.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3850   48.0410   75.7740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+O5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+C9
+A   10
+N10
+A   11
+N11
+A   12
+C12
+A   13
+O13
+M  END
+>  <InstanceId>
+1RRY_204_A_1001
+
+>  <ChemCompId>
+204
+
+>  <PdbId>
+1RRY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O3
+
+>  <Name>
+2-AMINO-4-HYDROXYPYRIMIDINE-5-CARBOXYLIC ACID ETHYL ESTER
+
+>  <SystematicName>
+ethyl 2-amino-4-hydroxy-pyrimidine-5-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N3 O3
+
+>  <MolecularWeight>
+183.165
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N3O3/c1-2-13-6(12)4-3-9-7(8)10-5(4)11/h3H,2H2,1H3,(H3,8,9,10,11)
+
+>  <InChIKey>
+HRRHGLKNOJHIGY-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1cnc(nc1O)N
+
+$$$$

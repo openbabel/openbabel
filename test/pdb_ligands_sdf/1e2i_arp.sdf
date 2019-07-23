@@ -1,0 +1,135 @@
+1E2I_ARP_A_502
+  RCSB PDB12061702203D
+Coordinates from PDB:1E2I:A:502 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   48.5390   33.9890   -0.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7640   33.5990    0.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.4690   34.7920    0.7770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6550   32.5850   -0.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1120   33.2980    0.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2110   33.7440    1.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.9260   33.1560    1.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6110   32.1840    0.3940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5380   31.8050   -0.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9710   33.5250    2.2410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2820   34.0540    0.4030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8350   34.7510    1.9920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0630   34.9300    1.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7770   32.3130   -0.6780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C7
+A    2
+C8
+A    3
+O1
+A    4
+C9
+A    5
+C4
+A    6
+C3
+A    7
+C2
+A    8
+N2
+A    9
+C1
+A   10
+N5
+A   11
+N4
+A   12
+N3
+A   13
+C6
+A   14
+N1
+M  END
+>  <InstanceId>
+1E2I_ARP_A_502
+
+>  <ChemCompId>
+ARP
+
+>  <PdbId>
+1E2I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N5 O
+
+>  <Name>
+9-HYDROXYPROPYLADENINE, R-ISOMER
+
+>  <SystematicName>
+(2R)-1-(6-aminopurin-9-yl)propan-2-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N5 O
+
+>  <MolecularWeight>
+193.206
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N5O/c1-5(14)2-13-4-12-6-7(9)10-3-11-8(6)13/h3-5,14H,2H2,1H3,(H2,9,10,11)/t5-/m1/s1
+
+>  <InChIKey>
+MJZYTEBKXLVLMY-RXMQYKEDSA-N
+
+>  <SMILES>
+C[C@H](Cn1cnc2c1ncnc2N)O
+
+$$$$

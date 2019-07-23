@@ -1,0 +1,137 @@
+4Y13_480_A_303
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y13:A:303 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   20.5510   63.5360   45.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0520   63.8530   50.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1050   64.2360   44.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9550   63.2930   43.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9250   62.6340   44.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8430   63.6750   45.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5460   63.8920   46.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9270   65.2340   46.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5680   65.2930   49.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6940   65.9260   47.8550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8060   64.6730   50.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1970   67.0120   47.6060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9830   62.8940   51.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7430   63.8730   50.9060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2460   65.1400   48.8410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 12 10  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 15  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+  2 11  1  0  0  0  0
+  2 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+C8
+A    2
+C24
+A    3
+C7
+A    4
+C6
+A    5
+C5
+A    6
+C4
+A    7
+C3
+A    8
+C2
+A    9
+C21
+A   10
+C1
+A   11
+C22
+A   12
+O19
+A   13
+O25
+A   14
+O23
+A   15
+O20
+M  END
+>  <InstanceId>
+4Y13_480_A_303
+
+>  <ChemCompId>
+480
+
+>  <PdbId>
+4Y13
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4
+
+>  <Name>
+(2S)-2,3-dihydroxypropyl octanoate
+
+>  <SystematicName>
+[(2S)-2,3-bis(oxidanyl)propyl] octanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H22 O4
+
+>  <MolecularWeight>
+218.29
+
+>  <ModifiedDate>
+2015-04-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H22O4/c1-2-3-4-5-6-7-11(14)15-9-10(13)8-12/h10,12-13H,2-9H2,1H3/t10-/m0/s1
+
+>  <InChIKey>
+GHBFNMLVSPCDGN-JTQLQIEISA-N
+
+>  <SMILES>
+CCCCCCCC(=O)OC[C@H](CO)O
+
+$$$$

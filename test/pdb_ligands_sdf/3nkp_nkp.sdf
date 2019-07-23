@@ -1,0 +1,101 @@
+3NKM_NKP_A_1007
+  RCSB PDB12061709553D
+Coordinates from PDB:3NKM:A:1007 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+    7.7170   49.1380    7.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3630   48.1110    8.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7510   48.6980    9.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3630   47.5730   10.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8270   48.0440   11.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4170   46.8590   12.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+CAW
+A    2
+CAX
+A    3
+CAY
+A    4
+CAZ
+A    5
+CBA
+A    6
+CBB
+M  END
+>  <InstanceId>
+3NKM_NKP_A_1007
+
+>  <ChemCompId>
+NKP
+
+>  <PdbId>
+3NKM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1007
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+23
+
+>  <ObservedFormula>
+C6
+
+>  <Name>
+(2R)-2-hydroxy-3-(phosphonooxy)propyl (9E)-octadec-9-enoate
+
+>  <SystematicName>
+[(2R)-2-hydroxy-3-phosphonooxy-propyl] (E)-octadec-9-enoate
+
+>  <Synonyms>
+18:1 LPA, oleoyl lysophosphatidic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C21 H41 O7 P
+
+>  <MolecularWeight>
+436.52
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C21H41O7P/c1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-21(23)27-18-20(22)19-28-29(24,25)26/h9-10,20,22H,2-8,11-19H2,1H3,(H2,24,25,26)/b10-9+/t20-/m1/s1
+
+>  <InChIKey>
+WRGQSWVCFNIUNZ-SQUSKLHYSA-N
+
+>  <SMILES>
+CCCCCCCC/C=C/CCCCCCCC(=O)OC[C@H](COP(=O)(O)O)O
+
+$$$$

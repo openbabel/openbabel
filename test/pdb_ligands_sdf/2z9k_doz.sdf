@@ -1,0 +1,97 @@
+2Z9K_DOZ_A_901
+  RCSB PDB12061707423D
+Coordinates from PDB:2Z9K:A:901 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   33.6030  -26.9580   -8.1870  Zn 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3460  -25.1550   -7.9180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1830  -27.6300   -6.4490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7300  -24.5710   -9.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5200  -25.2400   -7.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+A    1
+ZN
+A    2
+N2
+A    3
+O4
+A    4
+C6
+A    5
+C8
+M  END
+>  <InstanceId>
+2Z9K_DOZ_A_901
+
+>  <ChemCompId>
+DOZ
+
+>  <PdbId>
+2Z9K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O Zn
+
+>  <Name>
+(dimethylamino)(hydroxy)zinc'
+
+>  <SystematicName>
+dimethylamino-hydroxy-zinc
+
+>  <Synonyms>
+zinc hydroxide dimethylazanide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H7 N O Zn
+
+>  <MolecularWeight>
+126.492
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H6N.H2O.Zn/c1-3-2;;/h1-2H3;1H2;/q-1;;+2/p-1
+
+>  <InChIKey>
+CDZLGJBBWRJQTP-UHFFFAOYSA-M
+
+>  <SMILES>
+CN(C)[Zn]O
+
+$$$$

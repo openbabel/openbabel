@@ -1,0 +1,106 @@
+3MB3_MB3_A_1
+  RCSB PDB12061709433D
+Coordinates from PDB:3MB3:A:1 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   19.9000   44.5410   -1.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7830   46.4020    0.3970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6460   43.6080   -0.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1590   44.6970    0.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9190   43.1760   -0.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3350   45.2830    0.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7520   44.4000   -0.8190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  6  2  2  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  6  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+NAG
+M  END
+>  <InstanceId>
+3MB3_MB3_A_1
+
+>  <ChemCompId>
+MB3
+
+>  <PdbId>
+3MB3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O
+
+>  <Name>
+1-methylpyrrolidin-2-one
+
+>  <SystematicName>
+1-methylpyrrolidin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N O
+
+>  <MolecularWeight>
+99.131
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO/c1-6-4-2-3-5(6)7/h2-4H2,1H3
+
+>  <InChIKey>
+SECXISVLQFMRJM-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1CCCC1=O
+
+$$$$

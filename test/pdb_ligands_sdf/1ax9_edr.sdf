@@ -1,0 +1,127 @@
+1AX9_EDR_A_999
+  RCSB PDB12061702023D
+Coordinates from PDB:1AX9:A:999 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    3.4050   66.7340   64.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3300   67.2790   63.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1850   66.3830   62.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1290   65.0050   62.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1920   64.4850   63.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3270   65.3540   64.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9810   64.1490   62.3510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4660   68.7310   63.1190   N 0  3  0  0  0  0  0  0  0  0  0  0
+    5.2730   69.0150   61.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0320   69.2890   62.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1620   69.4040   64.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4990   68.7780   64.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+M  CHG  1   8   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O4
+A    8
+N2
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+C10
+M  END
+>  <InstanceId>
+1AX9_EDR_A_999
+
+>  <ChemCompId>
+EDR
+
+>  <PdbId>
+1AX9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+EDROPHONIUM ION
+
+>  <SystematicName>
+ethyl-(3-hydroxyphenyl)-dimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N O
+
+>  <MolecularWeight>
+166.24
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15NO/c1-4-11(2,3)9-6-5-7-10(12)8-9/h5-8H,4H2,1-3H3/p+1
+
+>  <InChIKey>
+VWLHWLSRQJQWRG-UHFFFAOYSA-O
+
+>  <SMILES>
+CC[N+](C)(C)c1cccc(c1)O
+
+$$$$

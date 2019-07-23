@@ -1,0 +1,126 @@
+5C9X_4Z4_A_804
+  RCSB PDB12061717033D
+Coordinates from PDB:5C9X:A:804 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   32.1160   76.2480   62.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9740   80.0210   61.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4570   79.3540   62.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8020   79.4520   63.6080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3390   78.3360   62.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5430   78.6360   60.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5090   77.7550   60.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7260   78.0270   59.4990   F 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3180   76.5620   61.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0250   75.5410   60.7400  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1390   77.1630   62.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1560   76.7580   64.1360  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+  9  1  2  0  0  0  0
+  2  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+  5 11  2  0  0  0  0
+  1 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C10
+A    2
+O01
+A    3
+C02
+A    4
+O03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+F07
+A    9
+C08
+A   10
+CL09
+A   11
+C11
+A   12
+CL12
+M  END
+>  <InstanceId>
+5C9X_4Z4_A_804
+
+>  <ChemCompId>
+4Z4
+
+>  <PdbId>
+5C9X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+804
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2 F Cl2
+
+>  <Name>
+2,4-dichloro-5-fluorobenzoic acid
+
+>  <SystematicName>
+2,4-bis(chloranyl)-5-fluoranyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H3 Cl2 F O2
+
+>  <MolecularWeight>
+209.002
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H3Cl2FO2/c8-4-2-5(9)6(10)1-3(4)7(11)12/h1-2H,(H,11,12)
+
+>  <InChIKey>
+KZCWJHUTTSVCRO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c(cc(c1F)Cl)Cl)C(=O)O
+
+$$$$

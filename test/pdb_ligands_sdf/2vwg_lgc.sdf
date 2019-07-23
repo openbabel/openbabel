@@ -1,0 +1,126 @@
+1E6X_LGC_M_999
+  RCSB PDB12061702213D
+Coordinates from PDB:1E6X:M:999 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   46.8450  119.6320   53.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7220  119.0440   54.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6620  120.9760   52.8900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9180  118.9640   52.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2030  117.9340   54.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.2300  120.1420   55.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4110  119.6120   55.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5780  121.3400   54.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2110  122.3980   54.9600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2150  121.9670   53.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1790  123.2290   52.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0140  123.0290   51.6750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O5
+A    4
+O1
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O6
+M  END
+>  <InstanceId>
+1E6X_LGC_M_999
+
+>  <ChemCompId>
+LGC
+
+>  <PdbId>
+1E6X
+
+>  <ChainId>
+M
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+(3S,4R,5R,6S)-3,4,5-TRIHYDROXY-6-(HYDROXYMETHYL)TETRAHYDRO-2H-PYRAN-2-ONE
+
+>  <SystematicName>
+(3R,4S,5S,6R)-3,4,5-trihydroxy-6-(hydroxymethyl)oxan-2-one
+
+>  <Synonyms>
+GLUCONOLACTONE
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H10 O6
+
+>  <MolecularWeight>
+178.14
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-5,7-10H,1H2/t2-,3-,4+,5-/m1/s1
+
+>  <InChIKey>
+PHOQVHQSTUBQQK-SQOUGZDYSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H](C(=O)O1)O)O)O)O
+
+$$$$

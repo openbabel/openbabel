@@ -1,0 +1,140 @@
+4B6F_20L_A_1722
+  RCSB PDB12061711473D
+Coordinates from PDB:4B6F:A:1722 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -0.1500   14.8320  -43.5070   N 0  3  0  0  0  0  0  0  0  0  0  0
+   -0.0610   14.5840  -42.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4920   13.5410  -37.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9870   14.3760  -38.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1440   15.2470  -39.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7990   15.3030  -39.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2980   14.4360  -38.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1500   13.5750  -37.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2700   14.9940  -41.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5460   16.3330  -41.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7720   16.7120  -40.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7240   15.7560  -40.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4750   14.4230  -40.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2530   14.0430  -41.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9590   16.1520  -39.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  3  2  0  0  0  0
+  7  6  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6 15  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N13
+A    2
+C15
+A    3
+C22
+A    4
+C21
+A    5
+C20
+A    6
+C19
+A    7
+C18
+A    8
+C17
+A    9
+C23
+A   10
+C24
+A   11
+C25
+A   12
+C26
+A   13
+C27
+A   14
+C28
+A   15
+O10
+M  END
+>  <InstanceId>
+4B6F_20L_A_1722
+
+>  <ChemCompId>
+20L
+
+>  <PdbId>
+4B6F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1722
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O
+
+>  <Name>
+(4-phenoxyphenyl)methylazanium
+
+>  <SystematicName>
+(4-phenoxyphenyl)methylazanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C13 H14 N O
+
+>  <MolecularWeight>
+200.256
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13NO/c14-10-11-6-8-13(9-7-11)15-12-4-2-1-3-5-12/h1-9H,10,14H2/p+1
+
+>  <InChIKey>
+CCAZAGUSBMVSAR-UHFFFAOYSA-O
+
+>  <SMILES>
+c1ccc(cc1)Oc2ccc(cc2)C[NH3+]
+
+$$$$

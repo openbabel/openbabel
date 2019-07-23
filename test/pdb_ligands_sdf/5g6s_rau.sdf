@@ -1,0 +1,131 @@
+5G6S_RAU_A_400
+  RCSB PDB12061717493D
+Coordinates from PDB:5G6S:A:400 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -34.6050    0.4680   10.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.9920    0.7950   12.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.0260    0.6460   12.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.9640    0.2850   14.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1450    0.1820   15.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3450    0.4590   14.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3420    0.8220   13.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1870    0.9110   12.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.8810    1.2670   11.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.9230    0.9470   10.0940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.9360    1.9730    9.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.2400    1.3440    9.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.2320    0.8330    9.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  3  0  0  0  0
+A    1
+CAH
+A    2
+CAG
+A    3
+CAE
+A    4
+CAD
+A    5
+CAC
+A    6
+CAB
+A    7
+CAA
+A    8
+CAF
+A    9
+CAI
+A   10
+NAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+M  END
+>  <InstanceId>
+5G6S_RAU_A_400
+
+>  <ChemCompId>
+RAU
+
+>  <PdbId>
+5G6S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N
+
+>  <Name>
+RASAGILINE
+
+>  <SystematicName>
+(1R)-N-prop-2-ynyl-2,3-dihydro-1H-inden-1-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H13 N
+
+>  <MolecularWeight>
+171.238
+
+>  <ModifiedDate>
+2017-05-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13N/c1-2-9-13-12-8-7-10-5-3-4-6-11(10)12/h1,3-6,12-13H,7-9H2/t12-/m1/s1
+
+>  <InChIKey>
+RUOKEQAAGRXIBM-GFCCVEGCSA-N
+
+>  <SMILES>
+C#CCN[C@@H]1CCc2c1cccc2
+
+$$$$

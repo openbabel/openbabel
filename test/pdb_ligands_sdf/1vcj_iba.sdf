@@ -1,0 +1,113 @@
+1UJA_IBA_?_1
+  RCSB PDB12061704133D
+Coordinates from PDB:1UJA:?:1 Model:1 without hydrogens
+ 10  5  0  0  0  0            999 V2000
+   34.1040  -10.6170   65.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0130  -11.4650   65.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7220  -11.0950   65.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5040   -9.8770   64.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6210   -9.0360   64.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9140   -9.4170   64.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2040  -12.7410   66.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0320  -10.2580   64.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9150   -9.3170   64.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7160  -10.8760   62.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C6
+A    2
+C5
+A    3
+C4
+A    4
+C3
+A    5
+C2
+A    6
+C1
+A    7
+C10
+A    8
+C15
+A    9
+C18
+A   10
+C17
+M  END
+>  <InstanceId>
+1UJA_IBA_?_1
+
+>  <ChemCompId>
+IBA
+
+>  <PdbId>
+1UJA
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+15
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+4-[(2R)-2-(AMINOMETHYL)-2-(HYDROXYMETHYL)-5-OXOPYRROLIDIN-1-YL]-3-[(1-ETHYLPROPYL)AMINO]BENZOIC ACID
+
+>  <SystematicName>
+4-[(2R)-2-(aminomethyl)-2-(hydroxymethyl)-5-oxo-pyrrolidin-1-yl]-3-(pentan-3-ylamino)benzoic acid
+
+>  <Synonyms>
+1-(4-CARBOXY-2-(3-PENTYLAMINO)PHENYL)-5-AMINOMETHYL-5-HYDROXYMETHYL-PYRROLIDIN-2-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C18 H27 N3 O4
+
+>  <MolecularWeight>
+349.425
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C18H27N3O4/c1-3-13(4-2)20-14-9-12(17(24)25)5-6-15(14)21-16(23)7-8-18(21,10-19)11-22/h5-6,9,13,20,22H,3-4,7-8,10-11,19H2,1-2H3,(H,24,25)/t18-/m1/s1
+
+>  <InChIKey>
+ZEZFFRWWHKSMEB-GOSISDBHSA-N
+
+>  <SMILES>
+CCC(CC)Nc1cc(ccc1N2C(=O)CC[C@@]2(CN)CO)C(=O)O
+
+$$$$

@@ -1,0 +1,136 @@
+4JMB_1LW_A_302
+  RCSB PDB12061713113D
+Coordinates from PDB:4JMB:A:302 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+   31.6540   90.7990   48.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5090   91.4790   48.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4100   91.3960   47.0870   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4960   90.4360   46.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6720   90.1750   46.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6820   89.3830   46.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4730   88.8640   45.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3010   89.1550   44.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2930   89.9180   44.9360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0070   88.6420   42.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7640   87.3550   42.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2330   87.4260   43.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5150   88.0390   44.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7940   89.1010   47.0250   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 10  8  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 13  7  1  0  0  0  0
+  9  4  1  0  0  0  0
+  7  6  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6 14  1  0  0  0  0
+  5  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+S03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+N09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+N14
+M  END
+>  <InstanceId>
+4JMB_1LW_A_302
+
+>  <ChemCompId>
+1LW
+
+>  <PdbId>
+4JMB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 S
+
+>  <Name>
+5,6,7,8-tetrahydrothieno[2,3-b]quinolin-4-amine
+
+>  <SystematicName>
+5,6,7,8-tetrahydrothieno[2,3-b]quinolin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N2 S
+
+>  <MolecularWeight>
+204.291
+
+>  <ModifiedDate>
+2013-04-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2S/c12-10-7-3-1-2-4-9(7)13-11-8(10)5-6-14-11/h5-6H,1-4H2,(H2,12,13)
+
+>  <InChIKey>
+PMWMMNQYOBSEDT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1csc2c1c(c3c(n2)CCCC3)N
+
+$$$$

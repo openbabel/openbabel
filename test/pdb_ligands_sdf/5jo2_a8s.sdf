@@ -1,0 +1,154 @@
+3JRQ_A8S_B_1
+  RCSB PDB12061709203D
+Coordinates from PDB:3JRQ:B:1 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+  -10.1320  -28.9000    2.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2500  -29.4720    3.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9250  -29.6790    4.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2660  -28.3400    4.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9700  -28.3480    5.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1380  -30.6220    5.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0680  -27.1680    5.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2960  -26.1480    4.6020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3680  -26.4670    6.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6510  -27.0500    7.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5740  -27.7400    7.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9900  -27.9190    9.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1420  -28.3290    6.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9720  -29.2470    1.5840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5740  -27.6480    5.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2240  -28.0720    2.1950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3430  -25.3040    6.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5420  -26.5320    5.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3780  -28.6190    4.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  1  1  0  0  0  0
+ 16  1  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7 15  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 17  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 15 13  1  0  0  0  0
+ 19 15  1  0  0  0  0
+ 18 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+O10
+A   13
+C11
+A   14
+O11
+A   15
+C12
+A   16
+O12
+A   17
+C13
+A   18
+C14
+A   19
+C15
+M  END
+>  <InstanceId>
+3JRQ_A8S_B_1
+
+>  <ChemCompId>
+A8S
+
+>  <PdbId>
+3JRQ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 O4
+
+>  <Name>
+(2Z,4E)-5-[(1S)-1-hydroxy-2,6,6-trimethyl-4-oxocyclohex-2-en-1-yl]-3-methylpenta-2,4-dienoic acid
+
+>  <SystematicName>
+(4E)-5-[(1S)-1-hydroxy-2,6,6-trimethyl-4-oxo-cyclohex-2-en-1-yl]-3-methyl-penta-2,4-dienoic acid
+
+>  <Synonyms>
+(+)-abscisic acid,  (2Z,4E)-5-[(1S)-1-hydroxy-2,6,6-trimethyl-4-oxo-2-cyclohexen-1-yl]-3-methyl-2,4-pentadienoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H20 O4
+
+>  <MolecularWeight>
+264.317
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H20O4/c1-10(7-13(17)18)5-6-15(19)11(2)8-12(16)9-14(15,3)4/h5-8,19H,9H2,1-4H3,(H,17,18)/b6-5+,10-7-/t15-/m1/s1
+
+>  <InChIKey>
+JLIDBLDQVAYHNE-YKALOCIXSA-N
+
+>  <SMILES>
+CC1=CC(=O)CC([C@]1(/C=C/C(=CC(=O)O)C)O)(C)C
+
+$$$$

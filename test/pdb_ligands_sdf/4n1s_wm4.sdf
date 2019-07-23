@@ -1,0 +1,118 @@
+4N1S_WM4_A_201
+  RCSB PDB12061713493D
+Coordinates from PDB:4N1S:A:201 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    0.8040  -13.6450    3.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3150  -12.3440    3.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6690  -11.2040    4.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4990  -11.3850    4.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0420  -12.6330    5.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4160  -13.7480    4.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0670  -15.1150    4.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2760  -15.2180    4.6570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2380  -16.1100    5.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7560  -17.4100    5.2910   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CAE
+A    2
+CAH
+A    3
+CAI
+A    4
+CAJ
+A    5
+CAG
+A    6
+CAF
+A    7
+CAB
+A    8
+OAA
+A    9
+NAC
+A   10
+NAD
+M  END
+>  <InstanceId>
+4N1S_WM4_A_201
+
+>  <ChemCompId>
+WM4
+
+>  <PdbId>
+4N1S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O
+
+>  <Name>
+benzohydrazide
+
+>  <SystematicName>
+benzohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N2 O
+
+>  <MolecularWeight>
+136.151
+
+>  <ModifiedDate>
+2015-08-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O/c8-9-7(10)6-4-2-1-3-5-6/h1-5H,8H2,(H,9,10)
+
+>  <InChIKey>
+WARCRYXKINZHGQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C(=O)NN
+
+$$$$

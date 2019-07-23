@@ -1,0 +1,130 @@
+2H23_M3L_A_501
+  RCSB PDB12061705453D
+Coordinates from PDB:2H23:A:501 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   67.8170  134.0680   65.0630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   68.9750  134.9320   64.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.0890  135.2000   63.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.3500  133.9130   62.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.4830  134.1940   61.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1550  134.6490   60.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2680  134.9620   58.9610   N 0  3  0  0  0  0  0  0  0  0  0  0
+   68.8220  136.2620   65.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.7390  136.8470   65.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   69.5920  136.8830   66.1970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.8470  133.8390   58.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.9170  135.2090   58.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.0780  136.1720   58.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+M  CHG  1   7   1
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+CE
+A    7
+NZ
+A    8
+C
+A    9
+O
+A   10
+OXT
+A   11
+CM1
+A   12
+CM2
+A   13
+CM3
+M  END
+>  <InstanceId>
+2H23_M3L_A_501
+
+>  <ChemCompId>
+M3L
+
+>  <PdbId>
+2H23
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+N-TRIMETHYLLYSINE
+
+>  <SystematicName>
+[(5S)-5-amino-6-hydroxy-6-oxo-hexyl]-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H21 N2 O2
+
+>  <MolecularWeight>
+189.275
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20N2O2/c1-11(2,3)7-5-4-6-8(10)9(12)13/h8H,4-7,10H2,1-3H3/p+1/t8-/m0/s1
+
+>  <InChIKey>
+MXNRLFUSFKVQSK-QMMMGPOBSA-O
+
+>  <SMILES>
+C[N+](C)(C)CCCC[C@@H](C(=O)O)N
+
+$$$$

@@ -1,0 +1,131 @@
+3QOA_3QO_A_501
+  RCSB PDB12061710273D
+Coordinates from PDB:3QOA:A:501 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -41.2930   17.1390  -25.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.2980   15.9520  -25.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.4610   17.1490  -23.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.2180   13.5600  -21.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -43.7730   13.2090  -20.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.4880   14.7610  -25.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6180   15.9590  -23.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.2030   13.6000  -22.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.7120   13.2720  -20.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.7970   13.4910  -23.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.9680   13.3630  -20.5640   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6490   14.7840  -23.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.9440   13.4610  -22.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  1  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  7  2  0  0  0  0
+  8  4  2  0  0  0  0
+  4 11  1  0  0  0  0
+  9  5  1  0  0  0  0
+ 11  5  2  0  0  0  0
+  6 12  2  0  0  0  0
+ 12  7  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 13  9  2  0  0  0  0
+ 12 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+NAK
+A   12
+CAL
+A   13
+CAM
+M  END
+>  <InstanceId>
+3QOA_3QO_A_501
+
+>  <ChemCompId>
+3QO
+
+>  <PdbId>
+3QOA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N
+
+>  <Name>
+4-benzylpyridine
+
+>  <SystematicName>
+4-(phenylmethyl)pyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H11 N
+
+>  <MolecularWeight>
+169.222
+
+>  <ModifiedDate>
+2011-09-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11N/c1-2-4-11(5-3-1)10-12-6-8-13-9-7-12/h1-9H,10H2
+
+>  <InChIKey>
+DBOLXXRVIFGDTI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)Cc2ccncc2
+
+$$$$

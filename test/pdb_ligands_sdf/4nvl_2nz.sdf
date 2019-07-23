@@ -1,0 +1,131 @@
+4NVL_2NZ_A_302
+  RCSB PDB12061713573D
+Coordinates from PDB:4NVL:A:302 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -29.2910  -67.0950   -4.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6360  -67.8330   -4.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5840  -67.1940   -5.1290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6820  -69.2810   -4.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.0840  -69.9110   -4.4020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.7350  -70.7120   -3.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.4200  -71.0950   -2.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.2910  -71.8950   -1.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5120  -72.2380   -2.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.8190  -71.8200   -3.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.9540  -71.0330   -4.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.0110  -70.4180   -5.2430   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.8880  -69.7790   -5.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  2  0  0  0  0
+ 13  5  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 11  6  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+CAA
+A    2
+C
+A    3
+O
+A    4
+CA
+A    5
+N
+A    6
+CAL
+A    7
+CAF
+A    8
+CAD
+A    9
+CAC
+A   10
+CAE
+A   11
+CAK
+A   12
+NAI
+A   13
+CAG
+M  END
+>  <InstanceId>
+4NVL_2NZ_A_302
+
+>  <ChemCompId>
+2NZ
+
+>  <PdbId>
+4NVL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O
+
+>  <Name>
+1-(1H-benzimidazol-1-yl)propan-2-one
+
+>  <SystematicName>
+1-(benzimidazol-1-yl)propan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O
+
+>  <MolecularWeight>
+174.199
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O/c1-8(13)6-12-7-11-9-4-2-3-5-10(9)12/h2-5,7H,6H2,1H3
+
+>  <InChIKey>
+LKIVJBZMVMCCCL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Cn1cnc2c1cccc2
+
+$$$$

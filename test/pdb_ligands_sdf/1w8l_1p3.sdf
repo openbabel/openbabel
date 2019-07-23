@@ -1,0 +1,118 @@
+1W8L_1P3_A_1166
+  RCSB PDB12061704303D
+Coordinates from PDB:1W8L:A:1166 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    1.4880   58.6170   54.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4200   57.4550   54.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8500   57.9340   54.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1810   56.8540   55.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1800   55.7490   56.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7750   56.8440   54.7510   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6170   56.2190   56.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7530   57.0940   52.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7070   56.4400   53.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4980   55.5320   54.1010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C20
+A    4
+C4
+A    5
+C5
+A    6
+N1
+A    7
+C6
+A    8
+C7
+A    9
+C10
+A   10
+O11
+M  END
+>  <InstanceId>
+1W8L_1P3_A_1166
+
+>  <ChemCompId>
+1P3
+
+>  <PdbId>
+1W8L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1166
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O
+
+>  <Name>
+(3R)-1-ACETYL-3-METHYLPIPERIDINE
+
+>  <SystematicName>
+1-[(3R)-3-methylpiperidin-1-yl]ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 N O
+
+>  <MolecularWeight>
+141.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO/c1-7-4-3-5-9(6-7)8(2)10/h7H,3-6H2,1-2H3/t7-/m1/s1
+
+>  <InChIKey>
+XKFPNHDGLSYZRC-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@@H]1CCCN(C1)C(=O)C
+
+$$$$

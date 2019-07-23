@@ -1,0 +1,117 @@
+1H2K_OGA_A_1351
+  RCSB PDB12061702403D
+Coordinates from PDB:1H2K:A:1351 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   22.0910   25.1730   27.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0660   25.8290   28.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7560   25.7140   29.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4150   25.2410   28.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9090   24.0610   27.0900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2190   25.6580   27.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1920   26.9590   28.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4160   25.6620   29.0550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8860   25.2030   28.2280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3320   24.4750   27.5370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4 10  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C4
+A    4
+C5
+A    5
+O1
+A    6
+O2
+A    7
+O2'
+A    8
+O3
+A    9
+N1
+A   10
+O4
+M  END
+>  <InstanceId>
+1H2K_OGA_A_1351
+
+>  <ChemCompId>
+OGA
+
+>  <PdbId>
+1H2K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O5
+
+>  <Name>
+N-OXALYLGLYCINE
+
+>  <SystematicName>
+2-(carboxymethylamino)-2-oxo-ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H5 N O5
+
+>  <MolecularWeight>
+147.086
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H5NO5/c6-2(7)1-5-3(8)4(9)10/h1H2,(H,5,8)(H,6,7)(H,9,10)
+
+>  <InChIKey>
+BIMZLRFONYSTPT-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)NC(=O)C(=O)O
+
+$$$$

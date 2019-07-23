@@ -1,0 +1,142 @@
+1E51_PBG_A_500
+  RCSB PDB12061702203D
+Coordinates from PDB:1E51:A:500 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   33.3900   74.1730   60.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9630   73.5700   59.4150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4330   74.3730   58.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2420   73.3700   57.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5890   71.9770   57.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0150   72.1440   59.0700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0050   75.8770   58.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1380   76.7950   58.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3790   76.2310   58.6570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0210   78.1530   58.5030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7330   73.7210   55.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8340   72.6160   55.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7540   73.1540   54.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5740   74.4950   53.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8210   72.3280   53.6270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8410   73.0960   61.6420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+CHA
+A    2
+C1A
+A    3
+C2A
+A    4
+C3A
+A    5
+C4A
+A    6
+NA
+A    7
+C5A
+A    8
+C6A
+A    9
+O1A
+A   10
+O2A
+A   11
+C7A
+A   12
+C8A
+A   13
+C9A
+A   14
+O3A
+A   15
+O4A
+A   16
+N1
+M  END
+>  <InstanceId>
+1E51_PBG_A_500
+
+>  <ChemCompId>
+PBG
+
+>  <PdbId>
+1E51
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4
+
+>  <Name>
+3-[5-(AMINOMETHYL)-4-(CARBOXYMETHYL)-1H-PYRROL-3-YL]PROPANOIC ACID
+
+>  <SystematicName>
+3-[5-(aminomethyl)-4-(carboxymethyl)-1H-pyrrol-3-yl]propanoic acid
+
+>  <Synonyms>
+2-AMINOMETHYLPYRROL-3-ACETIC ACID 4-PROPIONIC ACID; PORPHOBILINOGEN; 5-(AMINOMETHYL)-4-(CARBOXYMETHYL)-1H-PYRROLE-3-PROPANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2 O4
+
+>  <MolecularWeight>
+226.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2O4/c11-4-8-7(3-10(15)16)6(5-12-8)1-2-9(13)14/h5,12H,1-4,11H2,(H,13,14)(H,15,16)
+
+>  <InChIKey>
+QSHWIQZFGQKFMA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c(c([nH]1)CN)CC(=O)O)CCC(=O)O
+
+$$$$

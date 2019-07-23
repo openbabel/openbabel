@@ -1,0 +1,131 @@
+1R4P_1PS_B_1002
+  RCSB PDB12061703513D
+Coordinates from PDB:1R4P:B:1002 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   27.0180   29.1730  -16.4740   N 0  3  0  0  0  0  0  0  0  0  0  0
+   28.1330   29.5890  -15.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4140   29.4680  -16.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1590   28.6400  -17.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4280   28.5130  -18.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5570   28.9260  -17.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6510   29.2930  -15.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1560   28.0140  -15.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9580   27.6800  -13.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6160   26.0720  -13.3170   S 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4630   25.9350  -12.1130   O 0  5  0  0  0  0  0  0  0  0  0  0
+   25.9890   25.1120  -14.3700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1790   26.0580  -13.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 10 13  2  0  0  0  0
+M  CHG  2   1   1  11  -1
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+S1
+A   11
+O1
+A   12
+O2
+A   13
+O3
+M  END
+>  <InstanceId>
+1R4P_1PS_B_1002
+
+>  <ChemCompId>
+1PS
+
+>  <PdbId>
+1R4P
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S
+
+>  <Name>
+3-PYRIDINIUM-1-YLPROPANE-1-SULFONATE
+
+>  <SystematicName>
+3-pyridin-1-ium-1-ylpropane-1-sulfonate
+
+>  <Synonyms>
+1-(3-SULFOPROPYL) PYRIDINIUM, PPS
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O3 S
+
+>  <MolecularWeight>
+201.243
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO3S/c10-13(11,12)8-4-7-9-5-2-1-3-6-9/h1-3,5-6H,4,7-8H2
+
+>  <InChIKey>
+REEBJQTUIJTGAL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc[n+](cc1)CCCS(=O)(=O)[O-]
+
+$$$$

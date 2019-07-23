@@ -1,0 +1,119 @@
+3GN1_AX7_A_271
+  RCSB PDB12061708463D
+Coordinates from PDB:3GN1:A:271 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+    7.3600  -11.5560   14.5220   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2590  -12.2810   14.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9640  -13.6360   14.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6960  -14.1320   14.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7390  -13.2690   15.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0340  -11.9100   15.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2960  -11.4200   15.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8410  -10.2110   15.3760   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0910  -10.3040   14.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9520   -9.2830   14.8610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+NAF
+A    2
+CAI
+A    3
+CAD
+A    4
+CAB
+A    5
+CAC
+A    6
+CAE
+A    7
+CAJ
+A    8
+NAG
+A    9
+CAH
+A   10
+NAA
+M  END
+>  <InstanceId>
+3GN1_AX7_A_271
+
+>  <ChemCompId>
+AX7
+
+>  <PdbId>
+3GN1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+271
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3
+
+>  <Name>
+1H-benzimidazol-2-amine
+
+>  <SystematicName>
+1H-benzimidazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N3
+
+>  <MolecularWeight>
+133.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N3/c8-7-9-5-3-1-2-4-6(5)10-7/h1-4H,(H3,8,9,10)
+
+>  <InChIKey>
+JWYUFVNJZUSCSM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)[nH]c(n2)N
+
+$$$$

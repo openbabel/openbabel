@@ -1,0 +1,137 @@
+1YH1_OLN_A_345
+  RCSB PDB12061704453D
+Coordinates from PDB:1YH1:A:345 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  109.3050   42.4240   82.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.3590   43.1440   80.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.2920   43.6310   80.5370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  110.4540   43.2240   80.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  108.7070   43.3830   83.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.4710   42.7710   84.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  107.2770   43.4280   85.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  107.5850   44.7040   86.0000   N 0  0  0  0  0  0  0  0  0  0  0  0
+  106.6740   45.4460   86.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.4720   45.1410   86.6480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  107.1440   46.5270   87.2380   N 0  0  0  0  0  0  0  0  0  0  0  0
+  110.6080   41.8880   82.7190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  111.1570   40.7430   82.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.5590   39.9480   81.5970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  112.5700   40.5160   82.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+OXT
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+NE
+A    9
+CZ
+A   10
+O2
+A   11
+NH2
+A   12
+N1
+A   13
+C1
+A   14
+O1
+A   15
+C2
+M  END
+>  <InstanceId>
+1YH1_OLN_A_345
+
+>  <ChemCompId>
+OLN
+
+>  <PdbId>
+1YH1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+345
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O4
+
+>  <Name>
+(S)-2-ACETAMIDO-5-UREIDOPENTANOIC ACID
+
+>  <SystematicName>
+(2S)-2-acetamido-5-(aminocarbonylamino)pentanoic acid
+
+>  <Synonyms>
+N-ACETYL-L-CITRULLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 N3 O4
+
+>  <MolecularWeight>
+217.222
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15N3O4/c1-5(12)11-6(7(13)14)3-2-4-10-8(9)15/h6H,2-4H2,1H3,(H,11,12)(H,13,14)(H3,9,10,15)/t6-/m0/s1
+
+>  <InChIKey>
+WMQMIOYQXNRROC-LURJTMIESA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CCCNC(=O)N)C(=O)O
+
+$$$$

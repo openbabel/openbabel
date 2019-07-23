@@ -1,0 +1,135 @@
+4D13_IUP_A_1297
+  RCSB PDB12061712083D
+Coordinates from PDB:4D13:A:1297 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   30.0700   27.2790   36.1970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3330   27.0750   37.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4000   27.0050   36.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8570   26.4260   38.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1650   27.4770   37.3860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1450   26.1630   38.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0780   26.6700   37.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9000   25.3640   39.1500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9670   27.0830   34.9480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2580   25.8790   37.3740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1420   25.2040   38.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0430   24.5500   39.0930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2940   28.1190   37.7190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8750   28.3430   39.0470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  7  1  0  0  0  0
+  3  9  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C6
+A    4
+N3
+A    5
+O11
+A    6
+C4
+A    7
+C5
+A    8
+N9
+A    9
+O13
+A   10
+N7
+A   11
+C8
+A   12
+O24
+A   13
+O2
+A   14
+O3
+M  END
+>  <InstanceId>
+4D13_IUP_A_1297
+
+>  <ChemCompId>
+IUP
+
+>  <PdbId>
+4D13
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1297
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O5
+
+>  <Name>
+5-(HYDRO)PEROXOISOURATE
+
+>  <SystematicName>
+(5S)-5-(dioxidanyl)-3,7-dihydropurine-2,6,8-trione
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H4 N4 O5
+
+>  <MolecularWeight>
+200.109
+
+>  <ModifiedDate>
+2014-10-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4O5/c10-2-5(14-13)1(6-3(11)8-2)7-4(12)9-5/h13H,(H3,6,7,8,9,10,11,12)/t5-/m0/s1
+
+>  <InChIKey>
+XHKXPKDICPOLRC-YFKPBYRVSA-N
+
+>  <SMILES>
+C12=NC(=O)N[C@]1(C(=O)NC(=O)N2)OO
+
+$$$$

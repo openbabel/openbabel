@@ -1,0 +1,98 @@
+101M_SO4_A_157
+  RCSB PDB12061701563D
+Coordinates from PDB:101M:A:157 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   30.7460   18.7060   28.8960   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6970   20.0770   28.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1040   18.0210   27.7250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4680   18.1790   29.3310   O 0  5  0  0  0  0  0  0  0  0  0  0
+   31.7220   18.5780   29.8810   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+M  CHG  2   4  -1   5  -1
+A    1
+S
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+M  END
+>  <InstanceId>
+101M_SO4_A_157
+
+>  <ChemCompId>
+SO4
+
+>  <PdbId>
+101M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+157
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+O4 S
+
+>  <Name>
+SULFATE ION
+
+>  <SystematicName>
+sulfate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+O4 S
+
+>  <MolecularWeight>
+96.063
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)/p-2
+
+>  <InChIKey>
+QAOWNCQODCNURD-UHFFFAOYSA-L
+
+>  <SMILES>
+[O-]S(=O)(=O)[O-]
+
+$$$$

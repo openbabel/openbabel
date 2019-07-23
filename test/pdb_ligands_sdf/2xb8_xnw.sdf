@@ -1,0 +1,167 @@
+2XB8_XNW_A_1144
+  RCSB PDB12061707243D
+Coordinates from PDB:2XB8:A:1144 Model:1 without hydrogens
+ 22 23  0  0  0  0            999 V2000
+   20.2440    1.6680   36.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1300    1.4710   35.9620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9740    2.0160   36.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8010    1.6940   35.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5680    2.1550   36.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8850    2.8580   37.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6240    3.3330   38.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4490    2.9840   37.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0320    3.4540   37.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3690    2.7050   38.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7620    3.3750   40.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5280    4.3410   40.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1820    2.8490   41.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4440    3.8120   42.5080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6670    2.7290   41.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1380    2.0430   42.4370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2430    2.0270   39.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8430    2.6660   38.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4610    1.8070   37.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5010    0.5520   37.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0610    2.4200   36.4670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2760    3.9950   38.5400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 18  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 18 22  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 19 21  2  0  0  0  0
+A    1
+CAA
+A    2
+OAN
+A    3
+CAR
+A    4
+CAK
+A    5
+CAI
+A    6
+CAJ
+A    7
+CAH
+A    8
+CAQ
+A    9
+CAL
+A   10
+CAU
+A   11
+CAP
+A   12
+OAC
+A   13
+CAT
+A   14
+OAF
+A   15
+CAS
+A   16
+OAE
+A   17
+CAM
+A   18
+CAV
+A   19
+CAO
+A   20
+OAD
+A   21
+OAB
+A   22
+OAG
+M  END
+>  <InstanceId>
+2XB8_XNW_A_1144
+
+>  <ChemCompId>
+XNW
+
+>  <PdbId>
+2XB8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1144
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 O7
+
+>  <Name>
+(1R,2R,4S,5R)-1,4,5-TRIHYDROXY-2-(4-METHOXYBENZYL)-3-OXOCYCLOHEXANECARBOXYLIC ACID
+
+>  <SystematicName>
+(1R,2R,4S,5R)-1,4,5-trihydroxy-2-[(4-methoxyphenyl)methyl]-3-oxo-cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+(2R)-2-METHOXYBENZYL-3-DEHYDROQUINIC ACID
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C15 H18 O7
+
+>  <MolecularWeight>
+310.299
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H18O7/c1-22-9-4-2-8(3-5-9)6-10-12(17)13(18)11(16)7-15(10,21)14(19)20/h2-5,10-11,13,16,18,21H,6-7H2,1H3,(H,19,20)/t10-,11+,13-,15+/m0/s1
+
+>  <InChIKey>
+KDOXKRDIRCHNDT-YODMDTAWSA-N
+
+>  <SMILES>
+COc1ccc(cc1)C[C@H]2C(=O)[C@H]([C@@H](C[C@@]2(C(=O)O)O)O)O
+
+$$$$

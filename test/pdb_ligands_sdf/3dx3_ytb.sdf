@@ -1,0 +1,118 @@
+3DX3_YTB_A_1050
+  RCSB PDB12061708223D
+Coordinates from PDB:3DX3:A:1050 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   29.4900   66.1080    7.0040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8790   66.0110    7.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6160   67.2730    6.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6710   67.5460    5.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9770   67.0720    7.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7270   66.1020    6.8880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1590   65.9730    8.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0030   64.6330    9.4250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5940   66.4880    9.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4960   65.4580    9.4720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  9  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O6
+A    2
+C5
+A    3
+C4
+A    4
+O4
+A    5
+C3
+A    6
+O3
+A    7
+C1
+A    8
+N1
+A    9
+C2
+A   10
+O2
+M  END
+>  <InstanceId>
+3DX3_YTB_A_1050
+
+>  <ChemCompId>
+YTB
+
+>  <PdbId>
+3DX3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1050
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4
+
+>  <Name>
+(1R,2R,3S,4R,5R)-5-aminocyclopentane-1,2,3,4-tetrol
+
+>  <SystematicName>
+(1R,2S,3R,4R)-5-aminocyclopentane-1,2,3,4-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 N O4
+
+>  <MolecularWeight>
+149.145
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO4/c6-1-2(7)4(9)5(10)3(1)8/h1-5,7-10H,6H2/t1-,2-,3-,4+,5-/m1/s1
+
+>  <InChIKey>
+LZCRRHQKPAEPKL-PTSYSAGVSA-N
+
+>  <SMILES>
+C1([C@H]([C@@H]([C@@H]([C@@H]1O)O)O)O)N
+
+$$$$

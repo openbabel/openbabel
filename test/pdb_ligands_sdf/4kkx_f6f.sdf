@@ -1,0 +1,162 @@
+2CLE_F6F_A_1268
+  RCSB PDB12061705163D
+Coordinates from PDB:2CLE:A:1268 Model:1 without hydrogens
+ 21 21  0  0  0  0            999 V2000
+   51.7200   23.8780   14.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.4650   23.6580   15.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4940   24.7100   15.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7460   26.0110   14.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0070   26.2460   13.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.9940   25.1730   13.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7120   22.9250   14.3270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5400   21.9660   13.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4150   21.2770   13.4470   F 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5420   21.1010   13.3040   F 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5060   22.5380   12.1010   F 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6630   27.0920   14.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4310   27.5240   13.4460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6640   26.7460   15.3430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2740   28.4610   13.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9120   28.9840   11.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6020   28.4260   10.9790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9130   29.5930    9.8780   P 0  0  0  0  0  0  0  0  0  0  0  0
+   48.2130   28.9380    8.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.1300   30.2750   10.4310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6000   30.3370    9.7450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 18 20  2  0  0  0  0
+ 18 21  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+C8
+A    9
+F9
+A   10
+F10
+A   11
+F11
+A   12
+C12
+A   13
+N13
+A   14
+O14
+A   15
+C15
+A   16
+C16
+A   17
+O17
+A   18
+P18
+A   19
+O19
+A   20
+O20
+A   21
+O21
+M  END
+>  <InstanceId>
+2CLE_F6F_A_1268
+
+>  <ChemCompId>
+F6F
+
+>  <PdbId>
+2CLE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1268
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O6 P F3
+
+>  <Name>
+2-{[4-(TRIFLUOROMETHOXY)BENZOYL]AMINO}ETHYL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+2-[[4-(trifluoromethoxy)phenyl]carbonylamino]ethyl dihydrogen phosphate
+
+>  <Synonyms>
+N-(4'-TRIFLUOROMETHOXYBENZOYL)-2-AMINO-1-ETHYLPHOSPHATE, F6
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 F3 N O6 P
+
+>  <MolecularWeight>
+329.166
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11F3NO6P/c11-10(12,13)20-8-3-1-7(2-4-8)9(15)14-5-6-19-21(16,17)18/h1-4H,5-6H2,(H,14,15)(H2,16,17,18)
+
+>  <InChIKey>
+YAHFSBJEYPSDPU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)NCCOP(=O)(O)O)OC(F)(F)F
+
+$$$$

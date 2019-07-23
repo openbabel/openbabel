@@ -1,0 +1,130 @@
+1XQX_PCS_A_300
+  RCSB PDB12061704403D
+Coordinates from PDB:1XQX:A:300 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   15.1170    9.2400    9.5640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5130    8.0570    8.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6940    6.7840    9.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1460    7.8840    7.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7860    6.2190    9.6700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5560    7.5530    8.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5790    8.3030    7.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9440    9.4830    6.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2690    9.9140    6.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2440    9.1550    7.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8860    7.9760    8.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4230    6.9880   10.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7910    6.3500   10.2290  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3 12  1  0  0  0  0
+  4  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+CB
+A    5
+O
+A    6
+CD1
+A    7
+CG
+A    8
+CD2
+A    9
+CE2
+A   10
+CZ
+A   11
+CE1
+A   12
+CT
+A   13
+CL1
+M  END
+>  <InstanceId>
+1XQX_PCS_A_300
+
+>  <ChemCompId>
+PCS
+
+>  <PdbId>
+1XQX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O Cl
+
+>  <Name>
+PHENYLALANYLMETHYLCHLORIDE
+
+>  <SystematicName>
+(3S)-3-amino-1-chloro-4-phenyl-butan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C10 H12 Cl N O
+
+>  <MolecularWeight>
+197.661
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+PHE
+
+>  <OneLetterCode>
+F
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12ClNO/c11-7-10(13)9(12)6-8-4-2-1-3-5-8/h1-5,9H,6-7,12H2/t9-/m0/s1
+
+>  <InChIKey>
+CNNSBPMDYXZFTQ-VIFPVBQESA-N
+
+>  <SMILES>
+c1ccc(cc1)C[C@@H](C(=O)CCl)N
+
+$$$$

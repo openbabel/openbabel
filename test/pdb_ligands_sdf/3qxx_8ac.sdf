@@ -1,0 +1,121 @@
+3MLE_8AC_A_225
+  RCSB PDB12061709463D
+Coordinates from PDB:3MLE:A:225 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   -0.8110   -4.4070  -42.5750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0270   -0.1700  -39.1570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7470   -0.2670  -37.2510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4650   -3.4850  -41.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9780   -3.6910  -41.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4320   -4.3090  -40.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9640   -3.1800  -39.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3610   -2.7150  -39.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9990   -1.8960  -38.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5200   -1.9760  -38.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1580   -0.6800  -38.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  2 11  2  0  0  0  0
+ 11  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+NAA
+A    2
+OAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3MLE_8AC_A_225
+
+>  <ChemCompId>
+8AC
+
+>  <PdbId>
+3MLE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+225
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+8-aminooctanoic acid
+
+>  <SystematicName>
+8-azanyloctanoic acid
+
+>  <Synonyms>
+8-aminocaprylic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O2
+
+>  <MolecularWeight>
+159.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO2/c9-7-5-3-1-2-4-6-8(10)11/h1-7,9H2,(H,10,11)
+
+>  <InChIKey>
+UQXNEWQGGVUVQA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCCC(=O)O)CCCN
+
+$$$$

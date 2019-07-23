@@ -1,0 +1,117 @@
+3VSD_OAS_A_402
+  RCSB PDB12061711163D
+Coordinates from PDB:3VSD:A:402 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   42.5280   -1.2040    0.1160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7930   -1.3610   -1.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7610   -1.7230   -2.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5050   -2.9530   -1.9640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7760   -2.4610   -0.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4270   -3.1660   -1.7650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4590   -4.3250   -2.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6000   -3.0450   -2.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9490   -2.1350   -3.5520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3980   -2.5650    0.3060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+OG
+A    5
+C
+A    6
+O
+A    7
+C2A
+A    8
+C1A
+A    9
+OAC
+A   10
+OXT
+M  END
+>  <InstanceId>
+3VSD_OAS_A_402
+
+>  <ChemCompId>
+OAS
+
+>  <PdbId>
+3VSD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4
+
+>  <Name>
+O-ACETYLSERINE
+
+>  <SystematicName>
+(2S)-3-acetyloxy-2-amino-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C5 H9 N O4
+
+>  <MolecularWeight>
+147.129
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+SER
+
+>  <OneLetterCode>
+S
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO4/c1-3(7)10-2-4(6)5(8)9/h4H,2,6H2,1H3,(H,8,9)/t4-/m0/s1
+
+>  <InChIKey>
+VZXPDPZARILFQX-BYPYZUCNSA-N
+
+>  <SMILES>
+CC(=O)OC[C@@H](C(=O)O)N
+
+$$$$

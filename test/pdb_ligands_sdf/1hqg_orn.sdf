@@ -1,0 +1,113 @@
+1A9X_ORN_A_1920
+  RCSB PDB12061701583D
+Coordinates from PDB:1A9X:A:1920 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   30.7130   13.5510   52.3820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4620   14.6950   51.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8810   14.5180   52.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3780   15.4470   53.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7360   15.9500   53.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9370   15.2730   53.6170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5000   14.5300   50.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2430   13.6330   49.8990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0770   15.4460   49.6420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+NE
+A    7
+C
+A    8
+O
+A    9
+OXT
+M  END
+>  <InstanceId>
+1A9X_ORN_A_1920
+
+>  <ChemCompId>
+ORN
+
+>  <PdbId>
+1A9X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1920
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O2
+
+>  <Name>
+L-ornithine
+
+>  <SystematicName>
+(2S)-2,5-bis(azanyl)pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C5 H12 N2 O2
+
+>  <MolecularWeight>
+132.161
+
+>  <ModifiedDate>
+2012-03-14
+
+>  <Parent>
+ALA
+
+>  <OneLetterCode>
+A
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N2O2/c6-3-1-2-4(7)5(8)9/h4H,1-3,6-7H2,(H,8,9)/t4-/m0/s1
+
+>  <InChIKey>
+AHLPHDHHMVZTML-BYPYZUCNSA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)N)CN
+
+$$$$

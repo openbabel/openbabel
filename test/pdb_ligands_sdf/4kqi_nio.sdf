@@ -1,0 +1,114 @@
+1D0V_NIO_A_991
+  RCSB PDB12061702133D
+Coordinates from PDB:1D0V:A:991 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   54.2720   40.2030    8.2750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0520   39.7210    8.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0440   39.9250    7.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3560   40.5910    6.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6520   41.0240    6.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.5880   40.8200    7.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6750   39.4110    7.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7930   39.5990    6.8350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.3800   38.7770    8.8030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+O1
+A    9
+O2
+M  END
+>  <InstanceId>
+1D0V_NIO_A_991
+
+>  <ChemCompId>
+NIO
+
+>  <PdbId>
+1D0V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+991
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2
+
+>  <Name>
+NICOTINIC ACID
+
+>  <SystematicName>
+pyridine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 N O2
+
+>  <MolecularWeight>
+123.109
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5NO2/c8-6(9)5-2-1-3-7-4-5/h1-4H,(H,8,9)
+
+>  <InChIKey>
+PVNIIMVLHYAWGP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)C(=O)O
+
+$$$$

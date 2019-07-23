@@ -1,0 +1,135 @@
+1AHF_IOP_A_411
+  RCSB PDB12061701593D
+Coordinates from PDB:1AHF:A:411 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -11.4020   56.0820   23.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6840   56.4010   24.8810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6990   56.1830   23.9780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6470   55.4950   22.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4660   54.2850   22.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0390   51.9750   25.1700   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4820   52.9160   24.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4570   53.2900   23.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3130   52.5660   23.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0030   52.5420   23.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0930   51.7180   24.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4680   50.9220   25.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7630   50.9320   25.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6950   51.7570   24.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+C1'
+A    2
+O1
+A    3
+O2
+A    4
+C2'
+A    5
+C3'
+A    6
+N1
+A    7
+C2
+A    8
+C3
+A    9
+C3A
+A   10
+C4
+A   11
+C5
+A   12
+C6
+A   13
+C7
+A   14
+C7A
+M  END
+>  <InstanceId>
+1AHF_IOP_A_411
+
+>  <ChemCompId>
+IOP
+
+>  <PdbId>
+1AHF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+411
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+INDOLYLPROPIONIC ACID
+
+>  <SystematicName>
+3-(1H-indol-3-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O2
+
+>  <MolecularWeight>
+189.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO2/c13-11(14)6-5-8-7-12-10-4-2-1-3-9(8)10/h1-4,7,12H,5-6H2,(H,13,14)
+
+>  <InChIKey>
+GOLXRNDWAUTYKT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)CCC(=O)O
+
+$$$$

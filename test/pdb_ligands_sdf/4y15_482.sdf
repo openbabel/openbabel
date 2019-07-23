@@ -1,0 +1,138 @@
+4Y15_482_A_302
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y15:A:302 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -5.6470   21.5890  -27.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7100   20.6290  -26.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3320   20.6750  -27.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3650   20.1210  -28.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9260   20.7380  -29.6300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6940   18.8030  -29.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6760   17.6700  -28.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6600   17.5830  -29.5770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4500   16.7080  -27.8500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3640   15.6680  -27.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6330   14.3560  -27.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9480   13.7970  -26.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0150   15.8080  -26.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9010   16.5920  -26.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4050   14.8310  -25.4510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  8  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  4  1  0  0  0  0
+  7  9  1  0  0  0  0
+  4  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 12 15  1  0  0  0  0
+A    1
+C15
+A    2
+C14
+A    3
+C13
+A    4
+C11
+A    5
+O12
+A    6
+C10
+A    7
+C8
+A    8
+O9
+A    9
+N7
+A   10
+C1
+A   11
+C5
+A   12
+C4
+A   13
+C2
+A   14
+O6
+A   15
+OAP
+M  END
+>  <InstanceId>
+4Y15_482_A_302
+
+>  <ChemCompId>
+482
+
+>  <PdbId>
+4Y15
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4
+
+>  <Name>
+3-oxo-N-[(3S)-2-oxotetrahydrofuran-3-yl]hexanamide
+
+>  <SystematicName>
+3-oxidanylidene-N-[(3S)-2-oxidanylideneoxolan-3-yl]hexanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N O4
+
+>  <MolecularWeight>
+213.23
+
+>  <ModifiedDate>
+2015-04-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15NO4/c1-2-3-7(12)6-9(13)11-8-4-5-15-10(8)14/h8H,2-6H2,1H3,(H,11,13)/t8-/m0/s1
+
+>  <InChIKey>
+YRYOXRMDHALAFL-QMMMGPOBSA-N
+
+>  <SMILES>
+CCCC(=O)CC(=O)N[C@H]1CCOC1=O
+
+$$$$

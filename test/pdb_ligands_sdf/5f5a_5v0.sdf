@@ -1,0 +1,147 @@
+5F5A_5V0_A_403
+  RCSB PDB12061717353D
+Coordinates from PDB:5F5A:A:403 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    6.9580   -5.4290   21.5430   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3230   -2.0790   18.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2930   -2.9760   18.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2660   -1.3090   20.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2170   -4.3360   22.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1620   -4.3490   23.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7140   -4.4090   25.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3690   -1.7380   20.3930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0010   -0.0410   19.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1230   -2.2230   19.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8660   -3.2670   20.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0510   -4.0050   19.4250   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8050   -4.1290   20.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4110   -5.2510   21.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3120   -4.0920   24.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0110   -4.1560   25.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1610   -4.5410   24.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  3 12  1  0  0  0  0
+  2 10  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  9  4  2  0  0  0  0
+  4  8  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14  1  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 15  1  0  0  0  0
+  6 17  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 17  7  1  0  0  0  0
+ 16  7  2  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C10
+A    8
+O1
+A    9
+O
+A   10
+C3
+A   11
+C2
+A   12
+N
+A   13
+C1
+A   14
+C
+A   15
+O2
+A   16
+C11
+A   17
+C9
+M  END
+>  <InstanceId>
+5F5A_5V0_A_403
+
+>  <ChemCompId>
+5V0
+
+>  <PdbId>
+5F5A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O3
+
+>  <Name>
+2-[(furan-2-ylmethylamino)methyl]pyridine-4-carboxylic acid
+
+>  <SystematicName>
+2-[(furan-2-ylmethylamino)methyl]pyridine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N2 O3
+
+>  <MolecularWeight>
+232.235
+
+>  <ModifiedDate>
+2015-12-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2O3/c15-12(16)9-3-4-14-10(6-9)7-13-8-11-2-1-5-17-11/h1-6,13H,7-8H2,(H,15,16)
+
+>  <InChIKey>
+WAXTXDDUSDCZNA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1)CNCc2cc(ccn2)C(=O)O
+
+$$$$

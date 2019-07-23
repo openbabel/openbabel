@@ -1,0 +1,152 @@
+4EPW_0QV_A_203
+  RCSB PDB12061712253D
+Coordinates from PDB:4EPW:A:203 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+  -25.4780   -2.6130  -12.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7290   -2.4530  -13.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7020   -2.0890  -15.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6110   -3.2110  -15.2520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5480   -0.7780  -14.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1000   -0.8610  -13.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0650   -1.2380  -12.4650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7440   -0.4040  -11.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4550    1.2110  -11.4730   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8860   -0.7440  -10.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8800    0.1040   -9.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4230    1.4050   -9.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3960    1.9610   -9.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8240    1.2500   -8.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3020   -0.0260   -7.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3280   -0.6120   -8.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0110   -1.7900   -8.5680   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8990   -1.8680   -9.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  1  1  0  0  0  0
+  6  7  1  0  0  0  0
+  1  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 18  2  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 15  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAJ
+A    2
+CAH
+A    3
+CAQ
+A    4
+OAA
+A    5
+CAI
+A    6
+CAK
+A    7
+NAR
+A    8
+CAM
+A    9
+SAB
+A   10
+CAN
+A   11
+CAP
+A   12
+CAF
+A   13
+CAD
+A   14
+CAC
+A   15
+CAE
+A   16
+CAO
+A   17
+NAL
+A   18
+CAG
+M  END
+>  <InstanceId>
+4EPW_0QV_A_203
+
+>  <ChemCompId>
+0QV
+
+>  <PdbId>
+4EPW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O S
+
+>  <Name>
+(4-hydroxypiperidin-1-yl)(1H-indol-3-yl)methanethione
+
+>  <SystematicName>
+1H-indol-3-yl-(4-oxidanylpiperidin-1-yl)methanethione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H16 N2 O S
+
+>  <MolecularWeight>
+260.355
+
+>  <ModifiedDate>
+2012-05-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H16N2OS/c17-10-5-7-16(8-6-10)14(18)12-9-15-13-4-2-1-3-11(12)13/h1-4,9-10,15,17H,5-8H2
+
+>  <InChIKey>
+VTQVMVULAOZKHG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)C(=S)N3CCC(CC3)O
+
+$$$$

@@ -1,0 +1,114 @@
+1CEL_IBZ_A_436
+  RCSB PDB12061702103D
+Coordinates from PDB:1CEL:A:436 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   22.7760   55.1410   66.0780   S 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9840   55.4500   66.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1750   54.2160   65.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4150   54.0820   64.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8160   52.8890   64.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9840   51.8210   65.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7470   51.9640   66.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3350   53.1510   66.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1990   55.7080   63.3670   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+S
+A    2
+C
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+I
+M  END
+>  <InstanceId>
+1CEL_IBZ_A_436
+
+>  <ChemCompId>
+IBZ
+
+>  <PdbId>
+1CEL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+436
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 S I
+
+>  <Name>
+2-IODOBENZYLTHIO GROUP
+
+>  <SystematicName>
+(2-iodophenyl)methanethiol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 I S
+
+>  <MolecularWeight>
+250.1
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7IS/c8-7-4-2-1-3-6(7)5-9/h1-4,9H,5H2
+
+>  <InChIKey>
+KVYARXTXGITUCU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)CS)I
+
+$$$$

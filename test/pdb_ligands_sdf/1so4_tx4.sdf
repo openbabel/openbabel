@@ -1,0 +1,133 @@
+1Q6L_TX4_A_5301
+  RCSB PDB12061703443D
+Coordinates from PDB:1Q6L:A:5301 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   63.9530   23.5270   24.9150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.2280   23.2800   24.1210   P 0  0  0  0  0  0  0  0  0  0  0  0
+   65.3550   24.2820   23.0080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4450   23.0510   25.0100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.9270   21.9190   23.2790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.8240   20.6850   23.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.3450   20.3180   24.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2440   19.0330   24.6920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7070   20.3450   22.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.3110   19.4270   21.6920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.2680   19.9640   22.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9450   18.6930   22.5290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3980   20.8320   22.9180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0860   20.3070   22.9850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O7
+A    2
+P
+A    3
+O5
+A    4
+O6
+A    5
+O4
+A    6
+C4
+A    7
+C3
+A    8
+O3
+A    9
+C2
+A   10
+O2
+A   11
+C1
+A   12
+O1
+A   13
+N
+A   14
+ON
+M  END
+>  <InstanceId>
+1Q6L_TX4_A_5301
+
+>  <ChemCompId>
+TX4
+
+>  <PdbId>
+1Q6L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O8 P
+
+>  <Name>
+L-THREONOHYDROXAMATE 4-PHOSPHATE
+
+>  <SystematicName>
+[(2S,3R)-2,3,4-trihydroxy-4-(hydroxyamino)butyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H12 N O8 P
+
+>  <MolecularWeight>
+233.114
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H12NO8P/c6-2(1-13-14(10,11)12)3(7)4(8)5-9/h2-9H,1H2,(H2,10,11,12)/t2-,3+,4-/m0/s1
+
+>  <InChIKey>
+CSVKNYIFCYRDJM-NUNKFHFFSA-N
+
+>  <SMILES>
+C([C@@H]([C@H](C(NO)O)O)O)OP(=O)(O)O
+
+$$$$

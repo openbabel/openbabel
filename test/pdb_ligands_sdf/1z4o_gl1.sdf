@@ -1,0 +1,142 @@
+1Z4N_GL1_A_1220
+  RCSB PDB12061704503D
+Coordinates from PDB:1Z4N:A:1220 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    5.3660   -5.0040   12.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1770   -4.0390   12.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3350   -3.0040   11.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6880   -2.2170   12.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8150   -3.2490   12.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1570   -2.5360   12.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4440   -5.7050   11.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9240   -4.7720   12.8030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2360   -2.1080   11.8970   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6200   -1.4030   13.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6050   -4.2260   13.1260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5430   -2.1310   10.9990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8800   -7.2420   11.5720   P 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3460   -7.8810   10.2060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4980   -7.9990   12.8190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2940   -7.3390   11.6960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1Z4N_GL1_A_1220
+
+>  <ChemCompId>
+GL1
+
+>  <PdbId>
+1Z4N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1220
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O9 P
+
+>  <Name>
+1-O-phosphono-alpha-D-galactopyranose
+
+>  <SystematicName>
+[(2R,3R,4S,5R,6R)-3,4,5-trihydroxy-6-(hydroxymethyl)oxan-2-yl] dihydrogen phosphate
+
+>  <Synonyms>
+ALPHA-D-GALACTOSE-1-PHOSPHATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 O9 P
+
+>  <MolecularWeight>
+260.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13O9P/c7-1-2-3(8)4(9)5(10)6(14-2)15-16(11,12)13/h2-10H,1H2,(H2,11,12,13)/t2-,3+,4+,5-,6-/m1/s1
+
+>  <InChIKey>
+HXXFSFRBOHSIMQ-FPRJBGLDSA-N
+
+>  <SMILES>
+C([C@@H]1[C@@H]([C@@H]([C@H]([C@H](O1)OP(=O)(O)O)O)O)O)O
+
+$$$$

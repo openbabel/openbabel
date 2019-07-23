@@ -1,0 +1,143 @@
+4XND_HT7_A_902
+  RCSB PDB12061716153D
+Coordinates from PDB:4XND:A:902 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   46.1620  -39.5670  -38.0710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5090  -38.3060  -37.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6960  -37.6610  -38.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3630  -36.1920  -38.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6700  -35.4430  -39.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1970  -35.7520  -40.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5600  -34.7370  -41.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4110  -33.4450  -41.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9170  -33.1280  -39.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5710  -34.1350  -39.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1780  -34.1020  -37.8540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6350  -35.3300  -37.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5770  -38.5450  -36.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8170  -39.9200  -35.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2210  -41.0090  -36.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7220  -40.2060  -35.0410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+N
+A    2
+CB
+A    3
+CG
+A    4
+CD
+A    5
+CE2
+A    6
+CZ3
+A    7
+CH3
+A    8
+CT2
+A    9
+CH2
+A   10
+CZ2
+A   11
+NZ1
+A   12
+CE1
+A   13
+CA
+A   14
+C
+A   15
+O
+A   16
+OXT
+M  END
+>  <InstanceId>
+4XND_HT7_A_902
+
+>  <ChemCompId>
+HT7
+
+>  <PdbId>
+4XND
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2
+
+>  <Name>
+(3S)-3-AMINO-4-(1H-INDOL-3-YL)BUTANOIC ACID
+
+>  <SystematicName>
+(3S)-3-azanyl-4-(1H-indol-3-yl)butanoic acid
+
+>  <Synonyms>
+BETA-HOMOTRYPTOPHAN
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C12 H14 N2 O2
+
+>  <MolecularWeight>
+218.252
+
+>  <ModifiedDate>
+2011-10-07
+
+>  <Parent>
+TRP
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O2/c13-9(6-12(15)16)5-8-7-14-11-4-2-1-3-10(8)11/h1-4,7,9,14H,5-6,13H2,(H,15,16)/t9-/m0/s1
+
+>  <InChIKey>
+DUVVFMLAHWNDJD-VIFPVBQESA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)C[C@@H](CC(=O)O)N
+
+$$$$

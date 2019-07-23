@@ -1,0 +1,137 @@
+1SQ5_PAU_A_6001
+  RCSB PDB12061704013D
+Coordinates from PDB:1SQ5:A:6001 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   56.4220    4.6030    8.5350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.2700    4.0680    7.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.4240    3.6040    8.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9570    4.6000    6.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.4530    2.8270    7.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3530    5.3320    7.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1660    6.5480    8.0040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0560    5.6780    7.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1710    6.5550    6.1200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9080    5.0760    7.3850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6790    5.2500    6.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5740    6.0540    7.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.1200    7.3540    7.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6170    7.3980    9.1700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0410    8.4140    7.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+O2
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+O5'
+A    8
+C6
+A    9
+O6'
+A   10
+N
+A   11
+C8
+A   12
+C9
+A   13
+C
+A   14
+OXT
+A   15
+O
+M  END
+>  <InstanceId>
+1SQ5_PAU_A_6001
+
+>  <ChemCompId>
+PAU
+
+>  <PdbId>
+1SQ5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+6001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O5
+
+>  <Name>
+PANTOTHENOIC ACID
+
+>  <SystematicName>
+3-[[(2R)-3,3-dimethyl-2,4-bis(oxidanyl)butanoyl]amino]propanoic acid
+
+>  <Synonyms>
+N-[(2R)-2,4-DIHYDROXY-3,3-DIMETHYLBUTANOYL]-BETA-ALANINE
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C9 H17 N O5
+
+>  <MolecularWeight>
+219.235
+
+>  <ModifiedDate>
+2011-08-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+A
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO5/c1-9(2,5-11)7(14)8(15)10-4-3-6(12)13/h7,11,14H,3-5H2,1-2H3,(H,10,15)(H,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+GHOKWGTUZJEAQD-ZETCQYMHSA-N
+
+>  <SMILES>
+CC(C)(CO)[C@H](C(=O)NCCC(=O)O)O
+
+$$$$

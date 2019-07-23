@@ -1,0 +1,150 @@
+2WLS_X13_A_1543
+  RCSB PDB12061707163D
+Coordinates from PDB:2WLS:A:1543 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   37.2270   25.7540    8.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1810   24.8600    8.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2690   24.1780    9.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4140   23.1190    8.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0750   22.9010    9.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1380   22.0420    8.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7930   21.8400    9.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7580   20.5000    9.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3790   20.1470   10.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5450   19.2760   11.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2900   18.4560   11.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1650   18.1620   13.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7130   17.9100   13.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3910   18.8040   14.9530   N 0  3  0  0  0  0  0  0  0  0  0  0
+   24.9740   18.6740   15.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6580   25.9440    7.9350   S 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6520   20.2010   14.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2120   18.4240   16.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 14 18  1  0  0  0  0
+ 14 15  1  0  0  0  0
+M  CHG  1  14   1
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+C11
+A    9
+C12
+A   10
+C13
+A   11
+C14
+A   12
+C15
+A   13
+C16
+A   14
+N1
+A   15
+C19
+A   16
+S18
+A   17
+C17
+A   18
+C18
+M  END
+>  <InstanceId>
+2WLS_X13_A_1543
+
+>  <ChemCompId>
+X13
+
+>  <PdbId>
+2WLS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1543
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+4
+
+>  <ObservedFormula>
+C16 N S
+
+>  <Name>
+N,N,N-trimethyl-13-[(methylsulfonyl)sulfanyl]tridecan-1-aminium
+
+>  <SystematicName>
+trimethyl-(13-methylsulfonylsulfanyltridecyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C17 H38 N O2 S2
+
+>  <MolecularWeight>
+352.619
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C17H38NO2S2/c1-18(2,3)16-14-12-10-8-6-5-7-9-11-13-15-17-21-22(4,19)20/h5-17H2,1-4H3/q+1
+
+>  <InChIKey>
+HCQJSWUFRMNETG-UHFFFAOYSA-N
+
+>  <SMILES>
+C[N+](C)(C)CCCCCCCCCCCCCSS(=O)(=O)C
+
+$$$$

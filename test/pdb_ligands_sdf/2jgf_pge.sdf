@@ -1,0 +1,117 @@
+1A9Z_PGE_A_410
+  RCSB PDB12061701583D
+Coordinates from PDB:1A9Z:A:410 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   17.4260  -18.9830   34.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4940  -20.0910   34.4690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4140  -19.3950   35.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1150  -19.2070   37.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1550  -19.5930   37.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0110  -20.9900   38.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7990  -25.6880   37.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2490  -24.5280   38.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1060  -23.5320   38.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4850  -22.1450   37.9000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+C4
+A    7
+O4
+A    8
+C6
+A    9
+C5
+A   10
+O3
+M  END
+>  <InstanceId>
+1A9Z_PGE_A_410
+
+>  <ChemCompId>
+PGE
+
+>  <PdbId>
+1A9Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+410
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O4
+
+>  <Name>
+TRIETHYLENE GLYCOL
+
+>  <SystematicName>
+2-[2-(2-hydroxyethoxy)ethoxy]ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O4
+
+>  <MolecularWeight>
+150.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O4/c7-1-3-9-5-6-10-4-2-8/h7-8H,1-6H2
+
+>  <InChIKey>
+ZIBGPFATKBEMQZ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COCCOCCO)O
+
+$$$$

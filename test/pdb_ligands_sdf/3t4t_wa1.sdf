@@ -1,0 +1,139 @@
+3T4T_WA1_A_400
+  RCSB PDB12061710503D
+Coordinates from PDB:3T4T:A:400 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    4.3530   22.7500   24.7570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9320   19.6120   20.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3020   20.7390   21.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9400   19.0320   21.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6590   21.3270   22.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2800   19.5960   22.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7970   24.3860   27.8260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1320   25.3600   28.4080   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7860   25.3940   28.0950   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1180   21.3130   24.2110   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3860   22.7620   25.9790   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3810   24.3500   26.9000   S 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5150   22.3370   24.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6560   20.7180   23.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0460   23.7520   26.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 13  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5 14  2  0  0  0  0
+  6 14  1  0  0  0  0
+ 15  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 12  9  1  0  0  0  0
+ 14 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 15 12  1  0  0  0  0
+A    1
+OAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+NAI
+A   10
+NAJ
+A   11
+NAK
+A   12
+SAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+M  END
+>  <InstanceId>
+3T4T_WA1_A_400
+
+>  <ChemCompId>
+WA1
+
+>  <PdbId>
+3T4T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O S
+
+>  <Name>
+1-phenyl-3-(1,2,3-thiadiazol-5-yl)urea
+
+>  <SystematicName>
+1-phenyl-3-(1,2,3-thiadiazol-5-yl)urea
+
+>  <Synonyms>
+THIDIAZURON
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N4 O S
+
+>  <MolecularWeight>
+220.251
+
+>  <ModifiedDate>
+2011-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N4OS/c14-9(12-8-6-10-13-15-8)11-7-4-2-1-3-5-7/h1-6H,(H2,11,12,14)
+
+>  <InChIKey>
+HFCYZXMHUIHAQI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)NC(=O)Nc2cnns2
+
+$$$$

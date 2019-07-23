@@ -1,0 +1,126 @@
+2A1H_GBN_A_502
+  RCSB PDB12061704563D
+Coordinates from PDB:2A1H:A:502 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    6.9890    5.5830   10.3960   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5980    5.0570    9.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6890    7.3080    8.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9050    5.7940    8.8550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9870    5.4280    9.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4040    3.9560    9.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8790    3.6050    8.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7900    3.9350    7.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3940    5.4110    7.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5320    7.8190    8.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6700    7.9450    6.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4560    8.1060    8.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C1R
+A    5
+C2R
+A    6
+C3R
+A    7
+C4R
+A    8
+C5R
+A    9
+C6R
+A   10
+C
+A   11
+OA
+A   12
+OB
+M  END
+>  <InstanceId>
+2A1H_GBN_A_502
+
+>  <ChemCompId>
+GBN
+
+>  <PdbId>
+2A1H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2
+
+>  <Name>
+[1-(AMINOMETHYL)CYCLOHEXYL]ACETIC ACID
+
+>  <SystematicName>
+2-[1-(aminomethyl)cyclohexyl]ethanoic acid
+
+>  <Synonyms>
+GABAPENTIN
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O2
+
+>  <MolecularWeight>
+171.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO2/c10-7-9(6-8(11)12)4-2-1-3-5-9/h1-7,10H2,(H,11,12)
+
+>  <InChIKey>
+UGJMXCAKCUNAIE-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(CC1)(CC(=O)O)CN
+
+$$$$

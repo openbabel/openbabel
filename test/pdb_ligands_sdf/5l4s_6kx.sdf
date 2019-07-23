@@ -1,0 +1,122 @@
+5L4S_6KX_A_401
+  RCSB PDB12061718433D
+Coordinates from PDB:5L4S:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -11.7310  -15.2790   10.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8250  -14.4320   11.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3720  -14.2990    9.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8760  -14.6730    9.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3870  -14.7070    8.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4700  -13.7870    7.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1030  -14.0390    7.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5510  -13.6550    8.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5380  -16.1490    7.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8020  -14.1130    8.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3110  -16.4720   10.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9  5  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1 11  2  0  0  0  0
+A    1
+C10
+A    2
+C01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+C08
+A   10
+C09
+A   11
+O11
+M  END
+>  <InstanceId>
+5L4S_6KX_A_401
+
+>  <ChemCompId>
+6KX
+
+>  <PdbId>
+5L4S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+beta-cyclocitral
+
+>  <SystematicName>
+2,6,6-trimethylcyclohexene-1-carbaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 O
+
+>  <MolecularWeight>
+152.233
+
+>  <ModifiedDate>
+2016-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16O/c1-8-5-4-6-10(2,3)9(8)7-11/h7H,4-6H2,1-3H3
+
+>  <InChIKey>
+MOQGCGNUWBPGTQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(C(CCC1)(C)C)C=O
+
+$$$$

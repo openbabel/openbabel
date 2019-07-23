@@ -1,0 +1,137 @@
+2WYC_3LA_B_1551
+  RCSB PDB12061707203D
+Coordinates from PDB:2WYC:B:1551 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   33.9960   54.9250   52.1720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0400   55.7520   52.0970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0430   55.3200   52.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1010   55.2990   54.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8160   53.9370   54.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4730   53.8680   56.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2380   52.4390   56.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5740   51.7810   57.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7170   50.4910   56.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3370   49.3350   57.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3480   48.2140   57.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8860   47.0550   57.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5750   45.7750   57.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9910   44.6140   58.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8730   52.9150   54.1800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 15  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O21
+A    2
+O22
+A    3
+C21
+A    4
+C22
+A    5
+C23
+A    6
+C24
+A    7
+C25
+A    8
+C26
+A    9
+C27
+A   10
+C28
+A   11
+C29
+A   12
+C30
+A   13
+C31
+A   14
+C32
+A   15
+O15
+M  END
+>  <InstanceId>
+2WYC_3LA_B_1551
+
+>  <ChemCompId>
+3LA
+
+>  <PdbId>
+2WYC
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1551
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O3
+
+>  <Name>
+3-OXODODECANOIC ACID
+
+>  <SystematicName>
+3-oxododecanoic acid
+
+>  <Synonyms>
+3-OXO-LAURIC ACID
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H22 O3
+
+>  <MolecularWeight>
+214.301
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H22O3/c1-2-3-4-5-6-7-8-9-11(13)10-12(14)15/h2-10H2,1H3,(H,14,15)
+
+>  <InChIKey>
+DZHSPYMHDVROSM-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCC(=O)CC(=O)O
+
+$$$$

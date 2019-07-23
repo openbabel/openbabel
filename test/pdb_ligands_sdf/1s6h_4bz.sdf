@@ -1,0 +1,122 @@
+1S6H_4BZ_A_1
+  RCSB PDB12061703583D
+Coordinates from PDB:1S6H:A:1 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   35.3900   24.0600   11.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1910   25.3470   11.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2840   26.1760   11.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9980   25.8980   13.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6350   27.2430   11.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0000   26.6110   13.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6590   27.9740   11.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3010   27.6490   13.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3440   28.3990   13.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7230   27.9090   15.0390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0640   29.6380   13.5860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+OA
+A    2
+CB
+A    3
+CG
+A    4
+CD1
+A    5
+CD2
+A    6
+CE1
+A    7
+CE2
+A    8
+CZ
+A    9
+CH
+A   10
+NQ1
+A   11
+NQ2
+M  END
+>  <InstanceId>
+1S6H_4BZ_A_1
+
+>  <ChemCompId>
+4BZ
+
+>  <PdbId>
+1S6H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+4-(HYDROXYMETHYL)BENZAMIDINE
+
+>  <SystematicName>
+4-(hydroxymethyl)benzenecarboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N2 O
+
+>  <MolecularWeight>
+150.178
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N2O/c9-8(10)7-3-1-6(5-11)2-4-7/h1-4,11H,5H2,(H3,9,10)
+
+>  <InChIKey>
+WHMKAFNJMLEDSN-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\c1ccc(cc1)CO)/N
+
+$$$$

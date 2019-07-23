@@ -1,0 +1,126 @@
+1AF6_FRU_A_423
+  RCSB PDB12061701593D
+Coordinates from PDB:1AF6:A:423 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   11.4430   40.9520   87.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8040   41.2550   87.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9170   41.7790   88.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8430   42.4840   87.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7690   43.2140   86.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2040   43.6460   84.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9650   42.0370   88.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2970   40.0420   86.5380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5930   40.6720   88.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7700   43.3640   87.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6650   42.2850   86.1410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2820   44.6090   84.4310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+1AF6_FRU_A_423
+
+>  <ChemCompId>
+FRU
+
+>  <PdbId>
+1AF6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+423
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+FRUCTOSE
+
+>  <SystematicName>
+(2R,3S,4S,5R)-2,5-bis(hydroxymethyl)oxolane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H12 O6
+
+>  <MolecularWeight>
+180.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O6/c7-1-3-4(9)5(10)6(11,2-8)12-3/h3-5,7-11H,1-2H2/t3-,4-,5+,6-/m1/s1
+
+>  <InChIKey>
+RFSUNEUAIZKAJO-ARQDHWQXSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@](O1)(CO)O)O)O)O
+
+$$$$

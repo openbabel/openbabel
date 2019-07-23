@@ -1,0 +1,142 @@
+2XM2_LOG_A_1000
+  RCSB PDB12061707273D
+Coordinates from PDB:2XM2:A:1000 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    7.9720  -11.4390    3.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6310  -10.4130    2.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7430  -11.0690    1.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4150  -11.4700    2.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3770  -11.9510    1.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2440  -10.3550    5.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5830   -9.7100    7.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2890  -10.8740    5.0780   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1760  -14.2900    4.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8850   -9.9820    2.0660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4840  -10.1060    0.5570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6660  -12.5560    3.1250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9300  -13.1380    0.5510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8870  -12.4630    3.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0670  -10.4030    5.4490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1250  -13.3280    4.7710   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 15  2  0  0  0  0
+  9 16  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 16  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+N2
+A    9
+O1
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+A   14
+C1
+A   15
+O7
+A   16
+N1
+M  END
+>  <InstanceId>
+2XM2_LOG_A_1000
+
+>  <ChemCompId>
+LOG
+
+>  <PdbId>
+2XM2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O6
+
+>  <Name>
+LOGNAC
+
+>  <SystematicName>
+N-[(2Z,3R,4R,5S,6R)-4,5-dihydroxy-2-hydroxyimino-6-(hydroxymethyl)oxan-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C8 H14 N2 O6
+
+>  <MolecularWeight>
+234.207
+
+>  <ModifiedDate>
+2011-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H14N2O6/c1-3(12)9-5-7(14)6(13)4(2-11)16-8(5)10-15/h4-7,11,13-15H,2H2,1H3,(H,9,12)/b10-8-/t4-,5-,6-,7-/m1/s1
+
+>  <InChIKey>
+NJBKCLCEXIDHDR-OANDGCGGSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]\1[C@H]([C@@H]([C@H](O/C1=N\O)CO)O)O
+
+$$$$

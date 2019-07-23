@@ -1,0 +1,151 @@
+1GFY_COL_A_301
+  RCSB PDB12061702353D
+Coordinates from PDB:1GFY:A:301 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   14.1940   45.0590   17.0060   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9580   45.5700   18.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4990   45.5480   18.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4490   45.2640   18.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4060   44.6490   16.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7610   43.9420   16.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9960   46.2350   20.4790   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4010   46.0440   20.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1660   45.5560   18.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7290   45.4290   18.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7380   45.4230   18.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6670   45.3550   17.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3080   46.5050   20.8510   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4980   47.2040   21.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1590   47.6450   22.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1580   46.7170   22.4000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9420   48.5860   23.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5690   47.2680   22.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 18  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  2  0  0  0  0
+A    1
+S1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+S13
+A    8
+C14
+A    9
+C15
+A   10
+C16
+A   11
+O17
+A   12
+O18
+A   13
+N19
+A   14
+C20
+A   15
+C21
+A   16
+O22
+A   17
+O23
+A   18
+O24
+M  END
+>  <InstanceId>
+1GFY_COL_A_301
+
+>  <ChemCompId>
+COL
+
+>  <PdbId>
+1GFY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O5 S2
+
+>  <Name>
+2-(OXALYL-AMINO)-4,7-DIHYDRO-5H-THIENO[2,3-C]THIOPYRAN-3-CARBOXYLIC ACID
+
+>  <SystematicName>
+2-(carboxycarbonylamino)-5,7-dihydro-4H-thieno[5,4-c]thiopyran-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N O5 S2
+
+>  <MolecularWeight>
+287.312
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO5S2/c12-7(10(15)16)11-8-6(9(13)14)4-1-2-17-3-5(4)18-8/h1-3H2,(H,11,12)(H,13,14)(H,15,16)
+
+>  <InChIKey>
+ZPDVRWNOCOREGF-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CSCc2c1c(c(s2)NC(=O)C(=O)O)C(=O)O
+
+$$$$

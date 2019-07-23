@@ -1,0 +1,148 @@
+2J7F_GI3_A_1446
+  RCSB PDB12061706003D
+Coordinates from PDB:2J7F:A:1446 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   34.1380   24.1570   38.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0250   23.1910   38.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2280   23.0440   38.8040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3170   23.7160   36.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9540   25.9430   39.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6440   22.5790   35.8160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1310   24.6110   36.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7460   25.3550   38.2580   N 0  3  0  0  0  0  0  0  0  0  0  0
+   34.0640   24.9460   34.7060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1140   25.8840   36.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0860   26.9090   36.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7510   26.4240   36.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5970   23.9810   39.9400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8710   25.0760   40.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1390   25.3010   41.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1390   25.9920   41.5040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6270   24.7710   42.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5 14  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  2  0  0  0  0
+M  CHG  1   8   1
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+C80
+A    6
+O3
+A    7
+C4
+A    8
+N10
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O6
+A   13
+N1
+A   14
+C7
+A   15
+C8
+A   16
+O8
+A   17
+O9
+M  END
+>  <InstanceId>
+2J7F_GI3_A_1446
+
+>  <ChemCompId>
+GI3
+
+>  <PdbId>
+2J7F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1446
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O6
+
+>  <Name>
+CARBOXYLATE-SUBSTITUTED GLUCOIMIDAZOLE
+
+>  <SystematicName>
+(5R,6R,7S,8S)-6,7,8-trihydroxy-5-(hydroxymethyl)-5,6,7,8-tetrahydro-1H-imidazo[1,2-a]pyridin-4-ium-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N2 O6
+
+>  <MolecularWeight>
+245.209
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H12N2O6/c12-2-4-5(13)6(14)7(15)8-10-3(9(16)17)1-11(4)8/h1,4-7,12-15H,2H2,(H,16,17)/p+1/t4-,5-,6+,7-/m1/s1
+
+>  <InChIKey>
+RYZHANTZYYFSGC-MVIOUDGNSA-O
+
+>  <SMILES>
+c1c([nH]c2[n+]1[C@@H]([C@H]([C@@H]([C@H]2O)O)O)CO)C(=O)O
+
+$$$$

@@ -1,0 +1,150 @@
+2ANO_817_A_400
+  RCSB PDB12061705013D
+Coordinates from PDB:2ANO:A:400 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   32.1120   38.6720   11.6190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0650   40.4740   11.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6550   36.8840   11.8620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8610   39.1310   11.9720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1880   43.3350    9.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6010   43.5040    7.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2800   44.5530    8.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6540   46.1360   10.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8660   44.3860   10.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9010   38.2390   11.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1540   41.3440   12.0680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5510   41.0140   10.9460   S 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0490   42.6690   10.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5560   42.8930    8.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9140   44.9930    9.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0230   46.0030   10.0130   F 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1970   47.3480    9.7270   F 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4250   46.1210   11.6410   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2 11  2  0  0  0  0
+  2 12  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5 13  1  0  0  0  0
+  5 14  2  0  0  0  0
+  6  7  2  0  0  0  0
+  6 14  1  0  0  0  0
+  7 15  1  0  0  0  0
+  8 15  1  0  0  0  0
+  8 16  1  0  0  0  0
+  8 17  1  0  0  0  0
+  8 18  1  0  0  0  0
+  9 15  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N2
+A    4
+N3
+A    5
+C4
+A    6
+C6
+A    7
+C7
+A    8
+C9
+A    9
+C10
+A   10
+C1
+A   11
+N4
+A   12
+S1
+A   13
+C3
+A   14
+C5
+A   15
+C8
+A   16
+F1
+A   17
+F2
+A   18
+F3
+M  END
+>  <InstanceId>
+2ANO_817_A_400
+
+>  <ChemCompId>
+817
+
+>  <PdbId>
+2ANO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 S F3
+
+>  <Name>
+1-{[N-(1-IMINO-GUANIDINO-METHYL)]SULFANYLMETHYL}-3-TRIFLUOROMETHYL-BENZENE
+
+>  <SystematicName>
+N-carbamimidoyl-1-[[3-(trifluoromethyl)phenyl]methylsulfanyl]methanimidamide
+
+>  <Synonyms>
+3-(TRIFLUOROMETHYL)BENZYL N-[(E)-AMINO(IMINO)METHYL]IMIDOTHIOCARBAMATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 F3 N4 S
+
+>  <MolecularWeight>
+276.281
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11F3N4S/c11-10(12,13)7-3-1-2-6(4-7)5-18-9(16)17-8(14)15/h1-4H,5H2,(H5,14,15,16,17)
+
+>  <InChIKey>
+DWJNPCRXBNWCJC-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/N/C(=N/[H])/SCc1cccc(c1)C(F)(F)F
+
+$$$$

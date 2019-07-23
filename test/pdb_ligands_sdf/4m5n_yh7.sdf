@@ -1,0 +1,123 @@
+4M5N_YH7_A_504
+  RCSB PDB12061713413D
+Coordinates from PDB:4M5N:A:504 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   44.5010  -15.6910   -8.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4460  -16.0060   -7.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1390  -16.3300   -8.1340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9830  -16.2990   -9.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0730  -15.9640  -10.3950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3240  -15.6640   -9.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5720  -15.4430   -7.5280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1740  -15.6130   -6.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8540  -15.9560   -6.2390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4010  -15.3370  -10.7090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5210  -16.6420  -10.2270   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  1  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  6  1  0  0  0  0
+ 11  4  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+N03
+A    4
+C04
+A    5
+N05
+A    6
+C06
+A    7
+N07
+A    8
+C08
+A    9
+N09
+A   10
+N10
+A   11
+S11
+M  END
+>  <InstanceId>
+4M5N_YH7_A_504
+
+>  <ChemCompId>
+YH7
+
+>  <PdbId>
+4M5N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+504
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 S
+
+>  <Name>
+6-amino-1,9-dihydro-2H-purine-2-thione
+
+>  <SystematicName>
+6-azanyl-1,9-dihydropurine-2-thione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N5 S
+
+>  <MolecularWeight>
+167.192
+
+>  <ModifiedDate>
+2014-06-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5N5S/c6-3-2-4(8-1-7-2)10-5(11)9-3/h1H,(H4,6,7,8,9,10,11)
+
+>  <InChIKey>
+LQJZZLRZEPKRRQ-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=NC2=C(NC(=S)N=C2N1)N
+
+$$$$

@@ -1,0 +1,140 @@
+2G70_HNT_A_5001
+  RCSB PDB12061705393D
+Coordinates from PDB:2G70:A:5001 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   28.1360   45.6050   18.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7780   44.8180   19.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3510   41.2810   13.7810   O 0  5  0  0  0  0  0  0  0  0  0  0
+   27.6300   42.6390   18.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0770   42.7130   16.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9060   43.3660   14.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1300   44.7380   14.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5270   45.4440   15.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6070   45.0230   21.9680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2660   45.5540   20.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7000   44.7860   17.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5910   42.6800   13.7180   N 0  3  0  0  0  0  0  0  0  0  0  0
+   26.4880   43.3420   12.4650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4730   43.4150   17.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3270   43.4550   19.4880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2 10  1  0  0  0  0
+  2 15  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4 14  1  0  0  0  0
+  4 15  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  2  0  0  0  0
+  6  7  2  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  2  0  0  0  0
+M  CHG  2   3  -1  12   1
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+O22
+A   10
+C22
+A   11
+C8A
+A   12
+N1
+A   13
+O3
+A   14
+C4A
+A   15
+N41
+M  END
+>  <InstanceId>
+2G70_HNT_A_5001
+
+>  <ChemCompId>
+HNT
+
+>  <PdbId>
+2G70
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3
+
+>  <Name>
+[(3R)-7-NITRO-1,2,3,4-TETRAHYDROISOQUINOLIN-3-YL]METHANOL
+
+>  <SystematicName>
+[(3R)-7-nitro-1,2,3,4-tetrahydroisoquinolin-3-yl]methanol
+
+>  <Synonyms>
+3(R)-HYDROXYMETHYL 7-NITRO 1,2,3,4-TETRAHYDROISOQUINOLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 N2 O3
+
+>  <MolecularWeight>
+208.214
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12N2O3/c13-6-9-3-7-1-2-10(12(14)15)4-8(7)5-11-9/h1-2,4,9,11,13H,3,5-6H2/t9-/m1/s1
+
+>  <InChIKey>
+RNUCRXHRBPLYTA-SECBINFHSA-N
+
+>  <SMILES>
+c1cc2c(cc1[N+](=O)[O-])CN[C@H](C2)CO
+
+$$$$

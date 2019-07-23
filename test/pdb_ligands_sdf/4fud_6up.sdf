@@ -1,0 +1,135 @@
+4FUD_6UP_A_301
+  RCSB PDB12061712363D
+Coordinates from PDB:4FUD:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -20.3710  -18.7890   -6.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2630  -17.7350   -6.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5690  -17.7200   -6.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9640  -18.7490   -5.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4460  -16.6660   -6.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0080  -15.6150   -7.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7250  -15.6230   -8.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8430  -16.6720   -7.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5510  -16.6540   -8.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6780  -17.7170   -8.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0850  -18.7970   -7.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1930  -19.8320   -6.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6710  -20.9670   -6.4000   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8870  -19.5860   -6.9780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9 10  2  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  8  2  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11  1  2  0  0  0  0
+ 14 12  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+ 12 13  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+CAI
+A    2
+CAN
+A    3
+CAL
+A    4
+N1
+A    5
+CAE
+A    6
+CAD
+A    7
+CAG
+A    8
+CAM
+A    9
+CAH
+A   10
+CAF
+A   11
+CAK
+A   12
+CAJ
+A   13
+N2
+A   14
+N3
+M  END
+>  <InstanceId>
+4FUD_6UP_A_301
+
+>  <ChemCompId>
+6UP
+
+>  <PdbId>
+4FUD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3
+
+>  <Name>
+8-aminonaphthalene-2-carboximidamide
+
+>  <SystematicName>
+8-azanylnaphthalene-2-carboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N3
+
+>  <MolecularWeight>
+185.225
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11N3/c12-10-3-1-2-7-4-5-8(11(13)14)6-9(7)10/h1-6H,12H2,(H3,13,14)
+
+>  <InChIKey>
+JXOUQPJAWDJHOP-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\c1ccc2cccc(c2c1)N)/N
+
+$$$$

@@ -1,0 +1,106 @@
+1GVM_CHT_A_401
+  RCSB PDB12061702393D
+Coordinates from PDB:1GVM:A:401 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   18.4680  -16.6560   30.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6180  -15.5810   30.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8470  -14.2370   29.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4490  -14.3540   28.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5370  -13.1410   30.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9930  -17.9010   31.0570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6190  -14.3440   29.9200   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+M  CHG  1   7   1
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+O6
+A    7
+N1
+M  END
+>  <InstanceId>
+1GVM_CHT_A_401
+
+>  <ChemCompId>
+CHT
+
+>  <PdbId>
+1GVM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O
+
+>  <Name>
+CHOLINE ION
+
+>  <SystematicName>
+2-hydroxyethyl-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H14 N O
+
+>  <MolecularWeight>
+104.171
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H14NO/c1-6(2,3)4-5-7/h7H,4-5H2,1-3H3/q+1
+
+>  <InChIKey>
+OEYIOHPDSNJKLS-UHFFFAOYSA-N
+
+>  <SMILES>
+C[N+](C)(C)CCO
+
+$$$$

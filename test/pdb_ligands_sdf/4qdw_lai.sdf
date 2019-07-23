@@ -1,0 +1,117 @@
+3LBC_LAI_A_1550
+  RCSB PDB12061709353D
+Coordinates from PDB:3LBC:A:1550 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  -31.5350  -77.5620  -34.7890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.5270  -76.9780  -33.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.8350  -76.3600  -32.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.8640  -75.7190  -31.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.1260  -75.1060  -30.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.0820  -74.4500  -29.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1340  -77.3850  -32.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.5740  -74.6890  -32.5030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1500  -74.1310  -30.9890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.1870  -73.2200  -29.7740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6 10  2  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C4
+A    4
+C6
+A    5
+C8
+A    6
+C10
+A    7
+O14
+A    8
+O16
+A    9
+O18
+A   10
+O20
+M  END
+>  <InstanceId>
+3LBC_LAI_A_1550
+
+>  <ChemCompId>
+LAI
+
+>  <PdbId>
+3LBC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1550
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+L-arabinose
+
+>  <SystematicName>
+(2R,3S,4S)-2,3,4,5-tetrahydroxypentanal
+
+>  <Synonyms>
+
+
+>  <Type>
+L-saccharide
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-1-3(8)5(10)4(9)2-7/h1,3-5,7-10H,2H2/t3-,4-,5+/m0/s1
+
+>  <InChIKey>
+PYMYPHUHKUWMLA-VAYJURFESA-N
+
+>  <SMILES>
+C([C@@H]([C@@H]([C@H](C=O)O)O)O)O
+
+$$$$

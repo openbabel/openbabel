@@ -1,0 +1,137 @@
+1AL2_MYR_4_1
+  RCSB PDB12061702003D
+Coordinates from PDB:1AL2:4:1 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+    7.7080   53.5040   88.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7920   54.0020   89.8000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6840   53.9790   87.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3020   54.0730   88.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0820   55.3300   89.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9980   55.0150   90.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5240   56.2500   90.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6610   56.8860   91.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0650   57.4520   93.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7290   58.7350   93.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2570   58.6470   93.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7450   60.0880   93.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2230   60.2300   93.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9910   60.0100   94.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0790   61.0970   94.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+C12
+A   14
+C13
+A   15
+C14
+M  END
+>  <InstanceId>
+1AL2_MYR_4_1
+
+>  <ChemCompId>
+MYR
+
+>  <PdbId>
+1AL2
+
+>  <ChainId>
+4
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C14 O
+
+>  <Name>
+MYRISTIC ACID
+
+>  <SystematicName>
+tetradecanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H28 O2
+
+>  <MolecularWeight>
+228.371
+
+>  <ModifiedDate>
+2014-04-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H28O2/c1-2-3-4-5-6-7-8-9-10-11-12-13-14(15)16/h2-13H2,1H3,(H,15,16)
+
+>  <InChIKey>
+TUNFSRHWOTWDNC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCCC(=O)O
+
+$$$$

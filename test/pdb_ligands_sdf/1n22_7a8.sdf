@@ -1,0 +1,118 @@
+1N22_7A8_A_801
+  RCSB PDB12061703213D
+Coordinates from PDB:1N22:A:801 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   44.3660   46.8750   47.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8420   45.5560   48.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7850   44.9510   47.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2910   45.6720   46.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8860   47.1560   46.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1940   47.8950   47.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9690   48.7840   48.6000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0700   43.7060   48.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4610   48.3100   49.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2260   49.9400   48.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C5
+A    2
+C6
+A    3
+C7
+A    4
+C8
+A    5
+C9
+A    6
+C10
+A    7
+N12
+A    8
+C13
+A    9
+C14
+A   10
+C15
+M  END
+>  <InstanceId>
+1N22_7A8_A_801
+
+>  <ChemCompId>
+7A8
+
+>  <PdbId>
+1N22
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N
+
+>  <Name>
+(1R)-DIMETHYL-(4-METHYL-CYCLOHEX-3-ENYL)-AMINE
+
+>  <SystematicName>
+(1R)-N,N,4-trimethylcyclohex-3-en-1-amine
+
+>  <Synonyms>
+(4R)-7AZA-7,8-DIHYDROLIMONENE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N
+
+>  <MolecularWeight>
+139.238
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17N/c1-8-4-6-9(7-5-8)10(2)3/h4,9H,5-7H2,1-3H3/t9-/m0/s1
+
+>  <InChIKey>
+LDFVYCXKPXXSNO-VIFPVBQESA-N
+
+>  <SMILES>
+CC1=CC[C@@H](CC1)N(C)C
+
+$$$$

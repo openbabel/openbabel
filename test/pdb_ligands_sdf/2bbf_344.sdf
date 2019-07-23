@@ -1,0 +1,140 @@
+2BBF_344_A_900
+  RCSB PDB12061705063D
+Coordinates from PDB:2BBF:A:900 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+   18.9510   17.8630   18.0720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1470   17.5960   17.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9410   17.1950   17.4920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9490   17.2020   18.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9660   16.8760   19.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3530   17.0150   21.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4620   16.7360   22.1690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7420   16.8460   23.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8610   16.5790   24.3410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9370   17.2440   23.8590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9340   17.5560   23.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0290   17.9210   23.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6760   17.4550   21.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6590   17.7720   20.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2420   17.6270   19.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 15  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 15  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+N4
+A    2
+C9
+A    3
+N5
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+N3
+A    8
+C8
+A    9
+N2
+A   10
+N1
+A   11
+C7
+A   12
+O1
+A   13
+C4
+A   14
+C5
+A   15
+C6
+M  END
+>  <InstanceId>
+2BBF_344_A_900
+
+>  <ChemCompId>
+344
+
+>  <PdbId>
+2BBF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5 O
+
+>  <Name>
+6-AMINO-3,7-DIHYDRO-IMIDAZO[4,5-G]QUINAZOLIN-8-ONE
+
+>  <SystematicName>
+6-amino-3,7-dihydroimidazo[4,5-g]quinazolin-8-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N5 O
+
+>  <MolecularWeight>
+201.185
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7N5O/c10-9-13-5-2-7-6(11-3-12-7)1-4(5)8(15)14-9/h1-3H,(H,11,12)(H3,10,13,14,15)
+
+>  <InChIKey>
+VQSMWFVKBKMHTO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c(cc3c1nc[nH]3)N=C(NC2=O)N
+
+$$$$

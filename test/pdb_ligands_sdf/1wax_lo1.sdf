@@ -1,0 +1,134 @@
+1WAX_LO1_A_1300
+  RCSB PDB12061704313D
+Coordinates from PDB:1WAX:A:1300 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   42.4890   16.7100   64.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6980   17.1380   64.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4680   17.3540   63.6650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2500   15.3770   64.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7020   14.5610   63.9600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6030   14.0600   66.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5000   13.9710   67.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4860   12.8690   68.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5770   11.8590   68.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6690   11.9400   67.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6730   13.0350   66.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5730   10.6750   69.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.5260   10.9510   70.3490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6730   15.2070   65.9650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 14  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+OXT
+A    4
+C2
+A    5
+O2
+A    6
+C1'
+A    7
+C2'
+A    8
+C3'
+A    9
+C4'
+A   10
+C5'
+A   11
+C6'
+A   12
+C
+A   13
+N1
+A   14
+N7
+M  END
+>  <InstanceId>
+1WAX_LO1_A_1300
+
+>  <ChemCompId>
+LO1
+
+>  <PdbId>
+1WAX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O3
+
+>  <Name>
+[[4-(AMINOMETHYL)PHENYL]AMINO]OXO-ACETIC ACID,
+
+>  <SystematicName>
+2-[[4-(aminomethyl)phenyl]amino]-2-oxo-ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 N2 O3
+
+>  <MolecularWeight>
+194.187
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N2O3/c10-5-6-1-3-7(4-2-6)11-8(12)9(13)14/h1-4H,5,10H2,(H,11,12)(H,13,14)
+
+>  <InChIKey>
+RKILOCCSAVHHJT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CN)NC(=O)C(=O)O
+
+$$$$

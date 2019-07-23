@@ -1,0 +1,129 @@
+1AI3_ICT_A_418
+  RCSB PDB12061701593D
+Coordinates from PDB:1AI3:A:418 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -83.7780  -65.3300    3.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -84.2850  -64.3660    4.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -83.4750  -66.4080    4.1000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -83.4690  -65.1300    2.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -82.7520  -66.2410    1.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -82.7370  -63.8800    1.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -83.0070  -63.4410    0.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -83.1610  -61.9450    0.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -84.1990  -61.4430    0.1080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -82.2990  -61.2370    1.0520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -81.2030  -64.0860    2.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -80.8130  -64.0160    3.4430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -80.4490  -64.2260    1.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+O7
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+O3
+A   10
+O4
+A   11
+C6
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1AI3_ICT_A_418
+
+>  <ChemCompId>
+ICT
+
+>  <PdbId>
+1AI3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+418
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7
+
+>  <Name>
+ISOCITRIC ACID
+
+>  <SystematicName>
+(1R,2S)-1-hydroxypropane-1,2,3-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 O7
+
+>  <MolecularWeight>
+192.124
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8O7/c7-3(8)1-2(5(10)11)4(9)6(12)13/h2,4,9H,1H2,(H,7,8)(H,10,11)(H,12,13)/t2-,4+/m0/s1
+
+>  <InChIKey>
+ODBLHEXUDAPZAU-ZAFYKAAXSA-N
+
+>  <SMILES>
+C([C@@H]([C@H](C(=O)O)O)C(=O)O)C(=O)O
+
+$$$$

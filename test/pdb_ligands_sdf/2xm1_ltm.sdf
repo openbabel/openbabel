@@ -1,0 +1,138 @@
+2XM1_LTM_A_1717
+  RCSB PDB12061707273D
+Coordinates from PDB:2XM1:A:1717 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    5.9420  -10.4730    5.4930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1150  -10.4680    5.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5160   -9.8270    7.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1280  -11.0390    5.0690   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7660  -11.6390    3.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4820  -10.5630    2.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7770  -10.1620    2.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6220  -11.1530    1.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4500  -10.1830    0.5500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2830  -11.5340    2.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2260  -11.9730    1.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8060  -13.0800    0.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5380  -12.7060    3.0850   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6570  -12.6630    3.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7530  -13.5270    4.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+O7
+A    2
+C7
+A    3
+C8
+A    4
+N2
+A    5
+C2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O6
+A   13
+N5
+A   14
+C1
+A   15
+O1
+M  END
+>  <InstanceId>
+2XM1_LTM_A_1717
+
+>  <ChemCompId>
+LTM
+
+>  <PdbId>
+2XM1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1717
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O5
+
+>  <Name>
+N-ACETYL GLUCONOLACTAM
+
+>  <SystematicName>
+N-[(3R,4R,5R,6R)-4,5-dihydroxy-6-(hydroxymethyl)-2-oxo-piperidin-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C8 H14 N2 O5
+
+>  <MolecularWeight>
+218.207
+
+>  <ModifiedDate>
+2011-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H14N2O5/c1-3(12)9-5-7(14)6(13)4(2-11)10-8(5)15/h4-7,11,13-14H,2H2,1H3,(H,9,12)(H,10,15)/t4-,5-,6-,7-/m1/s1
+
+>  <InChIKey>
+DLGBPZFGIMUEIM-DBRKOABJSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H]([C@@H]([C@H](NC1=O)CO)O)O
+
+$$$$

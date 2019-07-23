@@ -1,0 +1,135 @@
+4UCS_9MJ_A_1319
+  RCSB PDB12061715053D
+Coordinates from PDB:4UCS:A:1319 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   18.1970   94.0110   14.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0990   93.8310   15.4280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0210   93.5820   14.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9300   95.7290   12.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6590   94.6840   13.3370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0120   96.9220   10.2270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9360   95.0350   12.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9510   95.1450   13.2090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1170   96.3460   11.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7270   95.6750   11.3380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2620   97.4130    9.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6480   94.7550   12.0350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1070   97.1820   10.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3830   96.4580   11.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7 10  2  0  0  0  0
+  7 12  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 11 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+C1
+A    5
+N1
+A    6
+O1
+A    7
+C2
+A    8
+N2
+A    9
+C3
+A   10
+N3
+A   11
+C4
+A   12
+N4
+A   13
+C5
+A   14
+C6
+M  END
+>  <InstanceId>
+4UCS_9MJ_A_1319
+
+>  <ChemCompId>
+9MJ
+
+>  <PdbId>
+4UCS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1319
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O2
+
+>  <Name>
+5-amino-3-(furan-2-yl)-1H-1,2,4-triazole-1-carboxamide
+
+>  <SystematicName>
+5-azanyl-3-(furan-2-yl)-1,2,4-triazole-1-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N5 O2
+
+>  <MolecularWeight>
+193.163
+
+>  <ModifiedDate>
+2015-10-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N5O2/c8-6-10-5(4-2-1-3-14-4)11-12(6)7(9)13/h1-3H,(H2,9,13)(H2,8,10,11)
+
+>  <InChIKey>
+NBDYCQJTOKDLCM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1)c2nc(n(n2)C(=O)N)N
+
+$$$$

@@ -1,0 +1,144 @@
+5HRV_64C_A_801
+  RCSB PDB12061718033D
+Coordinates from PDB:5HRV:A:801 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   21.4280   30.0940   10.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8430   28.8380   10.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3180   27.6860   11.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6860   26.4330   11.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5530   26.2850   10.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0590   27.3700    9.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6730   28.6500    9.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1820   29.7790    8.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1780   29.7380    8.2710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7850   30.9890    9.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8660   31.1350    9.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5610   32.2270    9.9520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6260   31.9660   10.8290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5430   30.6710   11.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5630   30.0540   12.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4820   31.1600   12.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  2  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11  1  2  0  0  0  0
+ 12 13  1  0  0  0  0
+  5  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+  1 14  1  0  0  0  0
+ 13 14  2  0  0  0  0
+  4  3  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+CAG
+A    2
+CAD
+A    3
+CAC
+A    4
+CAB
+A    5
+CAA
+A    6
+CAF
+A    7
+CAE
+A    8
+CAJ
+A    9
+OAK
+A   10
+OAI
+A   11
+CAH
+A   12
+NAN
+A   13
+NAM
+A   14
+CAL
+A   15
+CAO
+A   16
+CAP
+M  END
+>  <InstanceId>
+5HRV_64C_A_801
+
+>  <ChemCompId>
+64C
+
+>  <PdbId>
+5HRV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2
+
+>  <Name>
+1-ethylisochromeno[3,4-c]pyrazol-5(3H)-one
+
+>  <SystematicName>
+1-ethyl-3~{H}-isochromeno[3,4-c]pyrazol-5-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 N2 O2
+
+>  <MolecularWeight>
+214.22
+
+>  <ModifiedDate>
+2016-10-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10N2O2/c1-2-9-10-7-5-3-4-6-8(7)12(15)16-11(10)14-13-9/h3-6H,2H2,1H3,(H,13,14)
+
+>  <InChIKey>
+MKAQORNERCMQLJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CCc1c-2c([nH]n1)OC(=O)c3c2cccc3
+
+$$$$

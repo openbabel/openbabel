@@ -1,0 +1,135 @@
+5A4L_ZC3_A_1481
+  RCSB PDB12061716453D
+Coordinates from PDB:5A4L:A:1481 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -5.0250  -16.2530  -44.3890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9500  -15.7720  -45.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8730  -16.4560  -45.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7580  -15.8110  -46.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7280  -16.5310  -47.5030   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6680  -14.4380  -46.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6980  -13.7640  -46.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8770  -14.4320  -45.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6570  -13.8890  -44.4390   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2390  -15.3150  -43.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2470  -15.5110  -42.9940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8290  -16.7680  -42.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9120  -17.0690  -42.0390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5840  -17.8390  -43.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+NAG
+A    2
+CAM
+A    3
+CAF
+A    4
+CAK
+A    5
+FAC
+A    6
+CAD
+A    7
+CAE
+A    8
+CAN
+A    9
+SAI
+A   10
+CAL
+A   11
+NAH
+A   12
+CAJ
+A   13
+OAB
+A   14
+CAA
+M  END
+>  <InstanceId>
+5A4L_ZC3_A_1481
+
+>  <ChemCompId>
+ZC3
+
+>  <PdbId>
+5A4L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1481
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O S F
+
+>  <Name>
+N-(5-FLUORANYL-1,3-BENZOTHIAZOL-2-YL)ETHANAMIDE
+
+>  <SystematicName>
+N-(5-fluoranyl-1,3-benzothiazol-2-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H7 F N2 O S
+
+>  <MolecularWeight>
+210.228
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7FN2OS/c1-5(13)11-9-12-7-4-6(10)2-3-8(7)14-9/h2-4H,1H3,(H,11,12,13)
+
+>  <InChIKey>
+DPZGAHUPXGKUDW-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1nc2cc(ccc2s1)F
+
+$$$$

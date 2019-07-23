@@ -1,0 +1,138 @@
+4AJE_2B4_A_1332
+  RCSB PDB12061711413D
+Coordinates from PDB:4AJE:A:1332 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   14.9060  -15.3250    9.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9110  -14.3790    8.9990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6810  -14.5750    9.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6820  -13.6340    8.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5280  -15.2260    9.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0650  -13.7460    8.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9480  -18.0520    9.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8740  -17.8390   11.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9700  -17.3300   11.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1170  -17.7870    8.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9350  -18.9170   12.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9000  -18.9200    9.6030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8800  -17.0160   12.0710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7120  -15.9270   10.7650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1290  -12.7180    7.0080  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  2  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6 15  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 14  1  0  0  0  0
+A    1
+C1
+A    2
+C5
+A    3
+C2
+A    4
+C4
+A    5
+C6
+A    6
+C3
+A    7
+C9
+A    8
+C12
+A    9
+C8
+A   10
+O10
+A   11
+O13
+A   12
+O11
+A   13
+O14
+A   14
+O7
+A   15
+BR1
+M  END
+>  <InstanceId>
+4AJE_2B4_A_1332
+
+>  <ChemCompId>
+2B4
+
+>  <PdbId>
+4AJE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1332
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O5 Br
+
+>  <Name>
+2-(4-BROMANYLPHENOXY)PROPANEDIOIC ACID
+
+>  <SystematicName>
+2-(4-bromanylphenoxy)propanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Br O5
+
+>  <MolecularWeight>
+275.053
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7BrO5/c10-5-1-3-6(4-2-5)15-7(8(11)12)9(13)14/h1-4,7H,(H,11,12)(H,13,14)
+
+>  <InChIKey>
+GZMFZHIPGZSUHI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1OC(C(=O)O)C(=O)O)Br
+
+$$$$

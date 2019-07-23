@@ -1,0 +1,113 @@
+5G5J_MF8_A_600
+  RCSB PDB12061717483D
+Coordinates from PDB:5G5J:A:600 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   19.3800  -17.4900   12.2190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5160  -18.4740   11.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0120  -18.2750   10.1980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1990  -19.7060   11.8570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6460  -20.7310    8.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3290  -19.4990    8.3110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6660  -17.3520    8.6680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3130  -18.3670    9.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0370  -19.6170    7.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  8  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+N08
+A    2
+C07
+A    3
+N06
+A    4
+N09
+A    5
+C01
+A    6
+N02
+A    7
+N05
+A    8
+C04
+A    9
+C03
+M  END
+>  <InstanceId>
+5G5J_MF8_A_600
+
+>  <ChemCompId>
+MF8
+
+>  <PdbId>
+5G5J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N5
+
+>  <Name>
+Metformin
+
+>  <SystematicName>
+3-carbamimidoyl-1,1-dimethyl-guanidine
+
+>  <Synonyms>
+N,N-Dimethylimidodicarbonimidic diamide
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C4 H11 N5
+
+>  <MolecularWeight>
+129.164
+
+>  <ModifiedDate>
+2017-06-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H11N5/c1-9(2)4(7)8-3(5)6/h1-2H3,(H5,5,6,7,8)
+
+>  <InChIKey>
+XZWYZXLIPXDOLR-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\N/C(=N\[H])/N(C)C
+
+$$$$

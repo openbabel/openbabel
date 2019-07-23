@@ -1,0 +1,157 @@
+1N3I_DIH_A_401
+  RCSB PDB12061703223D
+Coordinates from PDB:1N3I:A:401 Model:1 without hydrogens
+ 19 21  0  0  0  0            999 V2000
+   54.7860   13.5760   44.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9630   14.9140   44.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2460   15.6180   44.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0460   15.6340   43.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0710   17.0320   45.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.9050   17.4660   46.2280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2120   17.6320   43.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3550   17.0200   43.2100   N 0  3  0  0  0  0  0  0  0  0  0  0
+   57.5110   17.2290   41.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.6420   16.7970   40.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7440   15.6870   39.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.8070   15.5800   38.9250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9980   16.6890   39.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7860   17.1310   38.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.2380   16.5700   37.4840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.2170   18.3510   38.9360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7530   19.1040   40.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9020   18.6860   40.6950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.4900   17.4660   40.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 19  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 19  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  2  0  0  0  0
+ 18 19  1  0  0  0  0
+M  CHG  1   8   1
+A    1
+O5'
+A    2
+C5'
+A    3
+C4'
+A    4
+C6'
+A    5
+C3'
+A    6
+O3'
+A    7
+C2'
+A    8
+N1'
+A    9
+C10
+A   10
+C9
+A   11
+C8
+A   12
+N7
+A   13
+C5
+A   14
+C6
+A   15
+O6
+A   16
+N1
+A   17
+C2
+A   18
+N3
+A   19
+C4
+M  END
+>  <InstanceId>
+1N3I_DIH_A_401
+
+>  <ChemCompId>
+DIH
+
+>  <PdbId>
+1N3I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N4 O3
+
+>  <Name>
+3-HYDROXY-4-HYDROXYMETHYL-1-(4-OXO-4,4A,5,7A-TETRAHYDRO-3H-PYRROLO[3,2-D]PYRIMIDIN-7-YLMETHYL)-PYRROLIDINIUM
+
+>  <SystematicName>
+7-[[(1S,3R,4R)-3-hydroxy-4-(hydroxymethyl)pyrrolidin-1-ium-1-yl]methyl]-3,4a,5,7a-tetrahydropyrrolo[2,3-e]pyrimidin-4-one
+
+>  <Synonyms>
+4'-DEAZA-1'-AZA-2'-DEOXY-1'-(9-METHYLENE)-IMMUCILLIN-H, (3R,4R)-N-[9-DEAZAHYPOXANTHIN-9-YL)METHYL]-4-HYDROXYMETHYL-PYRROLIDIN-3-OL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H19 N4 O3
+
+>  <MolecularWeight>
+267.304
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18N4O3/c17-5-8-3-16(4-9(8)18)2-7-1-13-11-10(7)14-6-15-12(11)19/h1,6,8-11,13,17-18H,2-5H2,(H,14,15,19)/p+1/t8-,9+,10?,11?/m1/s1
+
+>  <InChIKey>
+WFVGWLHAOKEIOJ-MFQSTILNSA-O
+
+>  <SMILES>
+C1[C@@H]([C@H](C[N@@H+]1CC2=CNC3C2N=CNC3=O)O)CO
+
+$$$$

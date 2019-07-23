@@ -1,0 +1,171 @@
+3M5E_JDR_A_264
+  RCSB PDB12061709423D
+Coordinates from PDB:3M5E:A:264 Model:1 without hydrogens
+ 23 24  0  0  0  0            999 V2000
+   -3.9920   10.3070   12.0910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1700    9.6420   12.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3250    8.3480   13.1610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3410    7.6760   12.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2300    8.3340   11.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0160    9.6860   11.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5230    6.2790   12.9080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3930    4.4640   14.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7580    4.4460   14.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2990    3.3530   15.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4550    2.3000   15.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1020    2.3320   15.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5710    3.4190   14.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0500    0.9100   16.8020   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5290    0.9820   18.2150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5630    0.8980   16.6340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3950   -0.4920   16.0580   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3720    7.6330   11.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8100    6.5920   11.6350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0670   10.5930   10.4990  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8240   10.4710   13.6590   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1030    9.4600   14.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6940    5.5650   13.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 21  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 18  1  0  0  0  0
+  6 20  1  0  0  0  0
+  7 23  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  8 23  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  2  0  0  0  0
+ 14 17  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 21 22  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+S14
+A   15
+O15
+A   16
+O16
+A   17
+N17
+A   18
+C18
+A   19
+O19
+A   20
+CL20
+A   21
+S21
+A   22
+C22
+A   23
+C23
+M  END
+>  <InstanceId>
+3M5E_JDR_A_264
+
+>  <ChemCompId>
+JDR
+
+>  <PdbId>
+3M5E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+264
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N4 O3 S2 Cl
+
+>  <Name>
+4-({[6-chloro-5-formyl-2-(methylsulfanyl)pyrimidin-4-yl]amino}methyl)benzenesulfonamide
+
+>  <SystematicName>
+4-[[(6-chloro-5-methanoyl-2-methylsulfanyl-pyrimidin-4-yl)amino]methyl]benzenesulfonamide
+
+>  <Synonyms>
+4-{[N-(6-chloro-5-formyl-2-methylthiopyrimidin-4-yl)amino]methyl}benzenesulfonamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H13 Cl N4 O3 S2
+
+>  <MolecularWeight>
+372.85
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13ClN4O3S2/c1-22-13-17-11(14)10(7-19)12(18-13)16-6-8-2-4-9(5-3-8)23(15,20)21/h2-5,7H,6H2,1H3,(H2,15,20,21)(H,16,17,18)
+
+>  <InChIKey>
+NPWLBLGDDVPXFE-UHFFFAOYSA-N
+
+>  <SMILES>
+CSc1nc(c(c(n1)Cl)C=O)NCc2ccc(cc2)S(=O)(=O)N
+
+$$$$

@@ -1,0 +1,131 @@
+3KCE_4BY_A_165
+  RCSB PDB12061709243D
+Coordinates from PDB:3KCE:A:165 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    4.6570   44.5260   11.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3070   43.5550   10.7230   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0860   44.0210   12.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0100   42.6880   12.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5220   42.3910   11.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5490   46.0040   11.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3230   41.6450   13.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9740   46.2840   10.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3650   41.0640   10.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0260   46.8500   12.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1470   40.3080   13.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6680   40.0180   11.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4800   39.1640   14.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  6  1  1  0  0  0  0
+  1  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  9  5  1  0  0  0  0
+  8  6  2  0  0  0  0
+  6 10  1  0  0  0  0
+ 11  7  2  0  0  0  0
+  9 12  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O8
+A    9
+C9
+A   10
+O10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+M  END
+>  <InstanceId>
+3KCE_4BY_A_165
+
+>  <ChemCompId>
+4BY
+
+>  <PdbId>
+3KCE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+165
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+5-methyl-1H-indole-2-carboxylic acid
+
+>  <SystematicName>
+5-methyl-1H-indole-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N O2
+
+>  <MolecularWeight>
+175.184
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO2/c1-6-2-3-8-7(4-6)5-9(11-8)10(12)13/h2-5,11H,1H3,(H,12,13)
+
+>  <InChIKey>
+DAITVOCMWPNFTL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2c(c1)cc([nH]2)C(=O)O
+
+$$$$

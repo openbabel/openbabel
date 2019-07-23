@@ -1,0 +1,118 @@
+1BEN_HBD_C_101
+  RCSB PDB12061702043D
+Coordinates from PDB:1BEN:C:101 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -8.9280    3.2300    6.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0580    3.6570    7.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5540    4.2730    9.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9460    4.4720    9.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8030    4.0690    8.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3220    3.4440    7.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3800    2.5680    5.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1910    2.6630    5.4400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1040    1.8240    4.9210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4180    5.1020   10.3630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1'
+A    8
+O1'
+A    9
+N1'
+A   10
+O4
+M  END
+>  <InstanceId>
+1BEN_HBD_C_101
+
+>  <ChemCompId>
+HBD
+
+>  <PdbId>
+1BEN
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+4-HYDROXYBENZAMIDE
+
+>  <SystematicName>
+4-hydroxybenzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O2
+
+>  <MolecularWeight>
+137.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO2/c8-7(10)5-1-3-6(9)4-2-5/h1-4,9H,(H2,8,10)
+
+>  <InChIKey>
+QXSAKPUBHTZHKW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)N)O
+
+$$$$

@@ -1,0 +1,113 @@
+1EBG_PAH_A_440
+  RCSB PDB12061702223D
+Coordinates from PDB:1EBG:A:440 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   19.0210    5.9830   20.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7620    5.8330   19.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3630    4.6280   19.1280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2540    4.6250   18.3140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0760    6.8690   19.1150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5520    4.6090   22.6930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4850    6.8780   22.4460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9640    6.6900   22.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7340    6.0360   22.1400   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+O3
+A    5
+O2
+A    6
+O1P
+A    7
+O2P
+A    8
+O3P
+A    9
+P
+M  END
+>  <InstanceId>
+1EBG_PAH_A_440
+
+>  <ChemCompId>
+PAH
+
+>  <PdbId>
+1EBG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+440
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O5 P
+
+>  <Name>
+PHOSPHONOACETOHYDROXAMIC ACID
+
+>  <SystematicName>
+[2-(hydroxyamino)-2-oxo-ethyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H6 N O5 P
+
+>  <MolecularWeight>
+155.047
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H6NO5P/c4-2(3-5)1-9(6,7)8/h5H,1H2,(H,3,4)(H2,6,7,8)
+
+>  <InChIKey>
+LDKRAXXVBWHMRH-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)NO)P(=O)(O)O
+
+$$$$

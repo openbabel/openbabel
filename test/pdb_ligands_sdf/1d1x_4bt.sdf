@@ -1,0 +1,150 @@
+1D1X_4BT_A_830
+  RCSB PDB12061702133D
+Coordinates from PDB:1D1X:A:830 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+    7.6840   10.2910   30.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8440   11.1970   29.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9180   13.7750   32.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4040   14.3450   31.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0540   13.5070   30.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2190   12.0990   30.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7180   11.5360   31.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0710   12.3590   33.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3010   14.6500   34.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5410   15.1850   34.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3280   13.5440   33.6840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2720   14.3390   33.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8820   14.0920   34.5460   S 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2300   15.2660   32.5420   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4230   12.0020   31.8160   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6740   11.7950   31.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0420   10.9990   29.9840   S 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6500   12.1760   32.3080   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 17  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  2  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C1
+A    7
+C2
+A    8
+C3
+A    9
+CD
+A   10
+CC
+A   11
+N1'
+A   12
+C'
+A   13
+S'
+A   14
+N2'
+A   15
+N1
+A   16
+C
+A   17
+S
+A   18
+N2
+M  END
+>  <InstanceId>
+1D1X_4BT_A_830
+
+>  <ChemCompId>
+4BT
+
+>  <PdbId>
+1D1X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+830
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N4 S2
+
+>  <Name>
+2-{2-[4-(2-CARBAMIMIDOYLSULFANYL-ETHYL)-PHENYL]-ETHYL}-ISOTHIOUREA
+
+>  <SystematicName>
+2-[4-(2-carbamimidoylsulfanylethyl)phenyl]ethylsulfanylmethanimidamide
+
+>  <Synonyms>
+S,S'-(1,4-PHENYLENE-BIS(1,2-ETHANEDIYL))BIS-ISOTHIOUREA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H18 N4 S2
+
+>  <MolecularWeight>
+282.428
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18N4S2/c13-11(14)17-7-5-9-1-2-10(4-3-9)6-8-18-12(15)16/h1-4H,5-8H2,(H3,13,14)(H3,15,16)
+
+>  <InChIKey>
+FZWGDUUJDZCYJR-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\SCCc1ccc(cc1)CCSC(=N)N
+
+$$$$

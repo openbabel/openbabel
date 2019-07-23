@@ -1,0 +1,125 @@
+1KGQ_NPI_A_301
+  RCSB PDB12061703053D
+Coordinates from PDB:1KGQ:A:301 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   61.2550   87.6300    1.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.3200   88.7690    0.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7620   88.3180   -1.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0330   89.4570   -2.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3110   88.9600   -3.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5660   86.8210    1.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.5550   87.2330    2.0590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7270   85.7930    0.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9520   88.0980    2.6390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   62.4070   90.0200   -4.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3310   89.7340   -5.7980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5870   91.2800   -4.3340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C
+A    7
+O
+A    8
+OXT
+A    9
+N
+A   10
+C7
+A   11
+O71
+A   12
+O72
+M  END
+>  <InstanceId>
+1KGQ_NPI_A_301
+
+>  <ChemCompId>
+NPI
+
+>  <PdbId>
+1KGQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4
+
+>  <Name>
+(2S)-2-aminoheptanedioic acid
+
+>  <SystematicName>
+(2S)-2-azanylheptanedioic acid
+
+>  <Synonyms>
+L-2-AMINOPIMELIC ACID
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C7 H13 N O4
+
+>  <MolecularWeight>
+175.182
+
+>  <ModifiedDate>
+2011-07-08
+
+>  <Parent>
+ALA
+
+>  <OneLetterCode>
+A
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13NO4/c8-5(7(11)12)3-1-2-4-6(9)10/h5H,1-4,8H2,(H,9,10)(H,11,12)/t5-/m0/s1
+
+>  <InChIKey>
+JUQLUIFNNFIIKC-YFKPBYRVSA-N
+
+>  <SMILES>
+C(CCC(=O)O)C[C@@H](C(=O)O)N
+
+$$$$

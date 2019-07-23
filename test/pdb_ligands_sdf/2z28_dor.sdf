@@ -1,0 +1,122 @@
+1XGE_DOR_A_1410
+  RCSB PDB12061704383D
+Coordinates from PDB:1XGE:A:1410 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   24.9080   37.3920   72.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6880   38.3340   72.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2210   39.5770   72.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0050   38.1320   72.5030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8820   39.1010   72.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0800   38.8910   71.8900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3820   40.5310   71.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1050   40.7070   72.7980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4200   41.9610   72.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0130   43.0460   72.4880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2740   41.8500   71.8910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+O2
+A    2
+C2
+A    3
+N1
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+O72
+A   11
+O71
+M  END
+>  <InstanceId>
+1XGE_DOR_A_1410
+
+>  <ChemCompId>
+DOR
+
+>  <PdbId>
+1XGE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1410
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O4
+
+>  <Name>
+(4S)-2,6-DIOXOHEXAHYDROPYRIMIDINE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+(4S)-2,6-dioxo-1,3-diazinane-4-carboxylic acid
+
+>  <Synonyms>
+DIHYDROOROTIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 N2 O4
+
+>  <MolecularWeight>
+158.112
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2O4/c8-3-1-2(4(9)10)6-5(11)7-3/h2H,1H2,(H,9,10)(H2,6,7,8,11)/t2-/m0/s1
+
+>  <InChIKey>
+UFIVEPVSAGBUSI-REOHCLBHSA-N
+
+>  <SMILES>
+C1[C@H](NC(=O)NC1=O)C(=O)O
+
+$$$$

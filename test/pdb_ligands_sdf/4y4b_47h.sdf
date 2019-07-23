@@ -1,0 +1,123 @@
+4Y4B_47H_A_406
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4B:A:406 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   -4.4680    1.2900   10.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0140   -0.0290   10.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6500   -0.2700   10.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7850    0.8020   10.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2330    2.0820   10.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5680    2.3580   10.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0140    2.1640   10.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8180    1.5090   10.9000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1820    2.9680   10.4060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4170    0.7970   10.1280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0220   -1.0700   10.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  7  1  0  0  0  0
+ 10  4  1  0  0  0  0
+  7  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  5  2  0  0  0  0
+  9  5  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  1  2  0  0  0  0
+  1  8  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N
+A    9
+O
+A   10
+O1
+A   11
+C1
+M  END
+>  <InstanceId>
+4Y4B_47H_A_406
+
+>  <ChemCompId>
+47H
+
+>  <PdbId>
+4Y4B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+406
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+5
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+6,6,8-trimethyl-5,6-dihydro[1,3]dioxolo[4,5-g]quinoline
+
+>  <SystematicName>
+6,6,8-trimethyl-5H-[1,3]dioxolo[4,5-g]quinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H15 N O2
+
+>  <MolecularWeight>
+217.264
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H15NO2/c1-8-6-13(2,3)14-10-5-12-11(4-9(8)10)15-7-16-12/h4-6,14H,7H2,1-3H3
+
+>  <InChIKey>
+JAMOHNXWLCCTQU-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CC(Nc2c1cc3c(c2)OCO3)(C)C
+
+$$$$

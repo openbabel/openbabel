@@ -1,0 +1,122 @@
+1HPC_LPA_B_132
+  RCSB PDB12061702453D
+Coordinates from PDB:1HPC:B:132 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   13.7700   -8.6870    9.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3500   -8.1470    9.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3320   -9.1310    8.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7810   -7.5070    8.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7940   -5.9920    8.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4340   -5.3190    7.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6830   -4.0870    6.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1150   -3.4290    4.9410   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1850   -3.9860    6.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7470   -2.6730    6.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2680   -2.6070    4.5770   S 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  1  3  2  0  0  0  0
+  4  2  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+S6
+A    9
+C7
+A   10
+C8
+A   11
+S8
+M  END
+>  <InstanceId>
+1HPC_LPA_B_132
+
+>  <ChemCompId>
+LPA
+
+>  <PdbId>
+1HPC
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+132
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 O S2
+
+>  <Name>
+LIPOIC ACID
+
+>  <SystematicName>
+5-[(3R)-1,2-dithiolan-3-yl]pentanoic acid
+
+>  <Synonyms>
+5-[(3R)-1,2-dithiolan-3-yl]pentanoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H14 O2 S2
+
+>  <MolecularWeight>
+206.326
+
+>  <ModifiedDate>
+2011-09-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H14O2S2/c9-8(10)4-2-1-3-7-5-6-11-12-7/h7H,1-6H2,(H,9,10)/t7-/m1/s1
+
+>  <InChIKey>
+AGBQKNBQESQNJD-SSDOTTSWSA-N
+
+>  <SMILES>
+C1CSS[C@@H]1CCCCC(=O)O
+
+$$$$

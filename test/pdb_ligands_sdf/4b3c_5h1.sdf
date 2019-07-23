@@ -1,0 +1,119 @@
+3FUH_5H1_A_710
+  RCSB PDB12061708393D
+Coordinates from PDB:3FUH:A:710 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   27.0100   86.7500    0.3160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1960   86.8480   -0.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3050   87.9610   -1.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4650   88.0660   -2.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5400   87.0550   -2.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6070   86.8500   -3.9570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2550   85.8390   -1.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4270   85.9560   -2.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4190   85.0500   -2.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9370   85.6760   -3.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  7  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 10  1  0  0  0  0
+  8  7  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  2  0  0  0  0
+A    1
+O10
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+N1
+A    7
+C4
+A    8
+C9
+A    9
+C3
+A   10
+C2
+M  END
+>  <InstanceId>
+3FUH_5H1_A_710
+
+>  <ChemCompId>
+5H1
+
+>  <PdbId>
+3FUH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O
+
+>  <Name>
+1H-indol-5-ol
+
+>  <SystematicName>
+1H-indol-5-ol
+
+>  <Synonyms>
+5-hydroxyindole
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O
+
+>  <MolecularWeight>
+133.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO/c10-7-1-2-8-6(5-7)3-4-9-8/h1-5,9-10H
+
+>  <InChIKey>
+LMIQERWZRIFWNZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc[nH]2)cc1O
+
+$$$$

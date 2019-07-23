@@ -1,0 +1,122 @@
+3S5Y_DGJ_A_801
+  RCSB PDB12061710403D
+Coordinates from PDB:3S5Y:A:801 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   39.1650   16.0310   31.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9530   16.1960   30.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0940   17.0270   30.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0140   16.7460   28.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7440   17.0680   27.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9450   15.7000   28.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5840   14.5650   28.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1990   15.2780   29.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1340   15.0600   31.0690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3920   14.0070   29.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4890   13.8040   30.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  1  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+N5
+A   10
+C6
+A   11
+O6
+M  END
+>  <InstanceId>
+3S5Y_DGJ_A_801
+
+>  <ChemCompId>
+DGJ
+
+>  <PdbId>
+3S5Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+(2R,3S,4R,5S)-2-(hydroxymethyl)piperidine-3,4,5-triol
+
+>  <SystematicName>
+(2R,3S,4R,5S)-2-(hydroxymethyl)piperidine-3,4,5-triol
+
+>  <Synonyms>
+1-deoxygalactonojirimycin
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4
+
+>  <MolecularWeight>
+163.172
+
+>  <ModifiedDate>
+2011-12-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO4/c8-2-3-5(10)6(11)4(9)1-7-3/h3-11H,1-2H2/t3-,4+,5+,6-/m1/s1
+
+>  <InChIKey>
+LXBIFEVIBLOUGU-DPYQTVNSSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@H]([C@H](N1)CO)O)O)O
+
+$$$$

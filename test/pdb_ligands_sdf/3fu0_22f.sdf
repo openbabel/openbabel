@@ -1,0 +1,139 @@
+3FU0_22F_A_710
+  RCSB PDB12061708393D
+Coordinates from PDB:3FU0:A:710 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   29.6910   -0.7530    1.3560   F 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5660   -0.6370    0.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5360   -0.0180   -0.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3520    0.0850   -1.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3950   -1.1530    1.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2330   -1.0510    0.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1810   -0.4690   -0.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8210   -0.4170   -1.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0040    0.2620   -0.9700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2950   -1.1060   -2.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9340   -2.4480   -2.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4180   -3.0300   -3.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2340   -2.3150   -5.0910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5400   -1.0170   -5.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0580   -0.3890   -3.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  7  2  0  0  0  0
+  6  5  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 15 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+F15
+A    2
+C12
+A    3
+C11
+A    4
+C10
+A    5
+C13
+A    6
+C14
+A    7
+C9
+A    8
+C7
+A    9
+O8
+A   10
+C1
+A   11
+C6
+A   12
+C5
+A   13
+N4
+A   14
+C3
+A   15
+C2
+M  END
+>  <InstanceId>
+3FU0_22F_A_710
+
+>  <ChemCompId>
+22F
+
+>  <PdbId>
+3FU0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O F
+
+>  <Name>
+(4-fluorophenyl)(pyridin-4-yl)methanone
+
+>  <SystematicName>
+(4-fluorophenyl)-pyridin-4-yl-methanone
+
+>  <Synonyms>
+4-(4-fluorobenzoyl)pyridine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H8 F N O
+
+>  <MolecularWeight>
+201.196
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H8FNO/c13-11-3-1-9(2-4-11)12(15)10-5-7-14-8-6-10/h1-8H
+
+>  <InChIKey>
+WTRWBYGUMQEFFI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)c2ccncc2)F
+
+$$$$

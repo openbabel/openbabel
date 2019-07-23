@@ -1,0 +1,126 @@
+3FU9_KIB_A_1001
+  RCSB PDB12061708393D
+Coordinates from PDB:3FU9:A:1001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -16.4060   31.3170   21.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1610   31.2550   21.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3080   31.2340   22.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9470   31.2640   23.5710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2430   31.0900   24.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9240   31.1580   22.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.5260   31.2150   19.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3420   31.2390   18.6990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8550   31.0010   17.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1510   31.1580   19.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3560   31.1090   20.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0880   31.0420   20.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  7  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6 11  2  0  0  0  0
+ 10  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C6
+A    4
+O3
+A    5
+C7
+A    6
+C5
+A    7
+C2
+A    8
+O4
+A    9
+C8
+A   10
+C3
+A   11
+C4
+A   12
+O2
+M  END
+>  <InstanceId>
+3FU9_KIB_A_1001
+
+>  <ChemCompId>
+KIB
+
+>  <PdbId>
+3FU9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O4
+
+>  <Name>
+2,6-dimethoxybenzene-1,4-diol
+
+>  <SystematicName>
+2,6-dimethoxybenzene-1,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 O4
+
+>  <MolecularWeight>
+170.163
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10O4/c1-11-6-3-5(9)4-7(12-2)8(6)10/h3-4,9-10H,1-2H3
+
+>  <InChIKey>
+GXAVBFNRWXCOPY-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(cc(c1O)OC)O
+
+$$$$

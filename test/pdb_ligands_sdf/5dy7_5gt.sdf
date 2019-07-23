@@ -1,0 +1,139 @@
+5DY7_5GT_A_801
+  RCSB PDB12061717223D
+Coordinates from PDB:5DY7:A:801 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   11.6090    2.9120   -1.5260   F 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2800    2.8350   -2.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6310    3.9350   -3.1410   F 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5040    1.7990   -2.9710   F 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4320    2.7200   -3.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4230    2.0000   -4.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5860    1.9200   -5.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6260    1.1940   -6.7550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7540    1.2390   -7.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7730    0.5580   -8.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8420    2.0670   -7.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9190    2.4560   -5.8660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7490    2.5380   -5.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7570    3.2560   -3.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5960    3.3470   -3.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  7 13  2  0  0  0  0
+  7  6  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 14 15  2  0  0  0  0
+  5 15  1  0  0  0  0
+  5  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+FAB
+A    2
+CAO
+A    3
+FAC
+A    4
+FAD
+A    5
+CAL
+A    6
+CAG
+A    7
+CAN
+A    8
+NAJ
+A    9
+C
+A   10
+O
+A   11
+CA
+A   12
+N
+A   13
+CAM
+A   14
+CAF
+A   15
+CAE
+M  END
+>  <InstanceId>
+5DY7_5GT_A_801
+
+>  <ChemCompId>
+5GT
+
+>  <PdbId>
+5DY7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O F3
+
+>  <Name>
+7-(trifluoromethyl)-3,4-dihydroquinoxalin-2(1H)-one
+
+>  <SystematicName>
+7-(trifluoromethyl)-3,4-dihydro-1H-quinoxalin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 F3 N2 O
+
+>  <MolecularWeight>
+216.16
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7F3N2O/c10-9(11,12)5-1-2-6-7(3-5)14-8(15)4-13-6/h1-3,13H,4H2,(H,14,15)
+
+>  <InChIKey>
+DYBIQELZTJXUKA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1C(F)(F)F)NC(=O)CN2
+
+$$$$

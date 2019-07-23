@@ -1,0 +1,118 @@
+3V0R_0FU_A_209
+  RCSB PDB12061711093D
+Coordinates from PDB:3V0R:A:209 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   34.7670   -0.6640   18.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6560   -0.8430   16.9730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9610    0.1420   16.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8300   -0.1000   14.7710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3960    1.3530   16.4950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5240    1.5880   17.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9440    2.7600   18.2490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2120    0.5820   18.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3310    0.7690   20.1310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4560   -1.6400   19.2400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  2  0  0  0  0
+  2  1  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  1 10  1  0  0  0  0
+A    1
+C4
+A    2
+N3
+A    3
+C2
+A    4
+NAA
+A    5
+N1
+A    6
+C6
+A    7
+NAB
+A    8
+C5
+A    9
+NAC
+A   10
+O4
+M  END
+>  <InstanceId>
+3V0R_0FU_A_209
+
+>  <ChemCompId>
+0FU
+
+>  <PdbId>
+3V0R
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+209
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N5 O
+
+>  <Name>
+2,5,6-triaminopyrimidin-4-ol
+
+>  <SystematicName>
+2,5,6-tris(azanyl)pyrimidin-4-ol
+
+>  <Synonyms>
+4-hydroxy-2,5,6-triaminopyrimidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H7 N5 O
+
+>  <MolecularWeight>
+141.131
+
+>  <ModifiedDate>
+2012-06-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H7N5O/c5-1-2(6)8-4(7)9-3(1)10/h5H2,(H5,6,7,8,9,10)
+
+>  <InChIKey>
+SYEYEGBZVSWYPK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1(c(nc(nc1O)N)N)N
+
+$$$$

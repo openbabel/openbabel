@@ -1,0 +1,139 @@
+5X4N_7ZL_A_801
+  RCSB PDB12061720133D
+Coordinates from PDB:5X4N:A:801 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   39.7760   -6.7790  -14.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7180   -8.8500  -15.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4070   -8.8730   -9.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2590   -8.0640  -14.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3080   -8.9780  -11.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4380   -7.9120  -10.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4310   -7.9620  -11.5160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1820   -7.0850  -16.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7280   -6.3010  -15.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.6670   -8.3610  -16.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3470   -8.4960  -12.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4700   -8.3360   -9.3530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5620   -7.3620   -9.6000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2880   -8.5570  -13.4910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8940   -9.6940  -11.9840  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  8  2  0  0  0  0
+ 10  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+  2  4  2  0  0  0  0
+  9  1  2  0  0  0  0
+  4  1  1  0  0  0  0
+  4 14  1  0  0  0  0
+ 14 11  1  0  0  0  0
+ 11  7  2  0  0  0  0
+ 11  5  1  0  0  0  0
+ 15  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  5  3  2  0  0  0  0
+  6 13  1  0  0  0  0
+  6 12  2  0  0  0  0
+  3 12  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+N12
+A    8
+C1
+A    9
+C2
+A   10
+C3
+A   11
+C9
+A   12
+N11
+A   13
+N13
+A   14
+N14
+A   15
+CL1
+M  END
+>  <InstanceId>
+5X4N_7ZL_A_801
+
+>  <ChemCompId>
+7ZL
+
+>  <PdbId>
+5X4N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 Cl
+
+>  <Name>
+5-chloro-N4-phenylpyrimidine-2,4-diamine
+
+>  <SystematicName>
+5-chloranyl-~{N}4-phenyl-pyrimidine-2,4-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 Cl N4
+
+>  <MolecularWeight>
+220.658
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9ClN4/c11-8-6-13-10(12)15-9(8)14-7-4-2-1-3-5-7/h1-6H,(H3,12,13,14,15)
+
+>  <InChIKey>
+FRISIUXBSNAYFR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)Nc2c(cnc(n2)N)Cl
+
+$$$$

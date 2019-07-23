@@ -1,0 +1,130 @@
+2AI7_SB7_A_300
+  RCSB PDB12061705003D
+Coordinates from PDB:2AI7:A:300 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   24.9800   -6.1100    9.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4060   -5.5820    7.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1080   -4.3380    7.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3980   -3.5910    9.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0080   -4.0490   10.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2430   -5.4080   10.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5490   -3.7940    6.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4790   -4.7550    5.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9380   -4.1720    4.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3020   -3.6480    4.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4010   -4.4770    4.3780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4600   -2.3460    4.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7080   -1.7010    5.1310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C11
+A   10
+N14
+A   11
+O22
+A   12
+C24
+A   13
+O25
+M  END
+>  <InstanceId>
+2AI7_SB7_A_300
+
+>  <ChemCompId>
+SB7
+
+>  <PdbId>
+2AI7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+[HYDROXY(3-PHENYLPROPYL)AMINO]METHANOL
+
+>  <SystematicName>
+(hydroxy-(3-phenylpropyl)amino)methanol
+
+>  <Synonyms>
+SB-485345
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N O2
+
+>  <MolecularWeight>
+181.232
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15NO2/c12-9-11(13)8-4-7-10-5-2-1-3-6-10/h1-3,5-6,12-13H,4,7-9H2
+
+>  <InChIKey>
+GELOPWXSYZDPJT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CCCN(CO)O
+
+$$$$

@@ -1,0 +1,137 @@
+2HZY_DHJ_A_1102
+  RCSB PDB12061705513D
+Coordinates from PDB:2HZY:A:1102 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   44.8640   38.0060   56.8800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8400   38.1750   58.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5620   37.2370   58.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1590   39.4850   58.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5090   40.5690   58.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9190   42.1320   58.8410   P 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4810   43.1620   57.8250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4760   42.3090   60.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7410   42.1150   58.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.2450   43.2450   59.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3430   44.4150   59.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6590   42.9130   61.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9130   43.7600   62.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8810   45.0080   62.0050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3650   43.1660   63.1360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  9  1  0  0  0  0
+  6  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+O2
+A    2
+C3
+A    3
+O4
+A    4
+C1
+A    5
+C7
+A    6
+P1
+A    7
+O6
+A    8
+O7
+A    9
+C6
+A   10
+C5
+A   11
+O5
+A   12
+C4
+A   13
+C2
+A   14
+O1
+A   15
+O3
+M  END
+>  <InstanceId>
+2HZY_DHJ_A_1102
+
+>  <ChemCompId>
+DHJ
+
+>  <PdbId>
+2HZY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1102
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7 P
+
+>  <Name>
+4-(2-CARBOXYETHYL)(HYDROXY)PHOSPHORYL]-3-OXOBUTANOIC ACID
+
+>  <SystematicName>
+4-(2-carboxyethyl-hydroxy-phosphoryl)-3-oxo-butanoic acid
+
+>  <Synonyms>
+4-[(2-CARBOXYETHYL)HYDROXYPHOSPHINYL] 3-OXOBUTYRIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 O7 P
+
+>  <MolecularWeight>
+238.132
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H11O7P/c8-5(3-7(11)12)4-15(13,14)2-1-6(9)10/h1-4H2,(H,9,10)(H,11,12)(H,13,14)
+
+>  <InChIKey>
+YKFFQOHPUCXFLE-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C[P@](=O)(CC(=O)CC(=O)O)O)C(=O)O
+
+$$$$

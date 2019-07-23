@@ -1,0 +1,117 @@
+1DC4_G3P_A_350
+  RCSB PDB12061702153D
+Coordinates from PDB:1DC4:A:350 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   60.5770   40.9240  -14.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9700   42.2180  -14.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4420   42.4280  -13.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0340   43.7880  -12.8940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.4970   42.1240  -11.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7750   40.7120  -11.6700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.0750   40.8180  -10.3960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.0550   40.1160  -12.7510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1150   38.5930  -10.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2550   40.0690  -11.4550   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O1P
+A    7
+O4P
+A    8
+O2P
+A    9
+O3P
+A   10
+P
+M  END
+>  <InstanceId>
+1DC4_G3P_A_350
+
+>  <ChemCompId>
+G3P
+
+>  <PdbId>
+1DC4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+350
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+SN-GLYCEROL-3-PHOSPHATE
+
+>  <SystematicName>
+[(2R)-2,3-bis(oxidanyl)propyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H9 O6 P
+
+>  <MolecularWeight>
+172.074
+
+>  <ModifiedDate>
+2016-02-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H9O6P/c4-1-3(5)2-9-10(6,7)8/h3-5H,1-2H2,(H2,6,7,8)/t3-/m1/s1
+
+>  <InChIKey>
+AWUCVROLDVIAJX-GSVOUGTGSA-N
+
+>  <SMILES>
+C([C@H](COP(=O)(O)O)O)O
+
+$$$$

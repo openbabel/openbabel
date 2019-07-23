@@ -1,0 +1,122 @@
+1Z5N_SR1_A_233
+  RCSB PDB12061704503D
+Coordinates from PDB:1Z5N:A:233 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   56.7250   68.9460   22.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0820   70.5720   23.2390   S 0  0  0  0  0  0  0  0  0  0  0  0
+   56.9650   71.5930   22.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3910   71.8730   22.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.1430   72.3320   21.3170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.4050   73.7200   21.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7940   73.9190   21.7750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5130   74.2070   22.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0230   75.3900   23.1370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5500   72.9950   23.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.8120   72.8700   24.1600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+CS
+A    2
+S
+A    3
+C5'
+A    4
+C4'
+A    5
+O4'
+A    6
+C1'
+A    7
+O1'
+A    8
+C2'
+A    9
+O2'
+A   10
+C3'
+A   11
+O3'
+M  END
+>  <InstanceId>
+1Z5N_SR1_A_233
+
+>  <ChemCompId>
+SR1
+
+>  <PdbId>
+1Z5N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+233
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O4 S
+
+>  <Name>
+5-S-METHYL-5-THIO-ALPHA-D-RIBOFURANOSE
+
+>  <SystematicName>
+(2S,3R,4S,5S)-5-(methylsulfanylmethyl)oxolane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O4 S
+
+>  <MolecularWeight>
+180.222
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O4S/c1-11-2-3-4(7)5(8)6(9)10-3/h3-9H,2H2,1H3/t3-,4-,5-,6+/m1/s1
+
+>  <InChIKey>
+OLVVOVIFTBSBBH-KAZBKCHUSA-N
+
+>  <SMILES>
+CSC[C@@H]1[C@H]([C@H]([C@H](O1)O)O)O
+
+$$$$

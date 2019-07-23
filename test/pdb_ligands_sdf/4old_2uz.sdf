@@ -1,0 +1,134 @@
+4OLD_2UZ_A_401
+  RCSB PDB12061714043D
+Coordinates from PDB:4OLD:A:401 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   23.6970    7.0070   15.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4610    6.8400   15.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8130    7.4530   16.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6410    5.7810   14.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2190    5.9210   14.9460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0070    5.8030   12.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9240    5.1840   11.9980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6310    5.1910   12.2890   S 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4730    5.4950   10.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3150    4.9200    9.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1210    4.8120   10.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0800    4.0780   10.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1410    3.8050    8.8650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1810    3.5600   10.8520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  6  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11  7  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 12  2  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+NAH
+A    8
+SAI
+A    9
+CAG
+A   10
+CAF
+A   11
+CAL
+A   12
+CAJ
+A   13
+OAD
+A   14
+OAB
+M  END
+>  <InstanceId>
+4OLD_2UZ_A_401
+
+>  <ChemCompId>
+2UZ
+
+>  <PdbId>
+4OLD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O4 S
+
+>  <Name>
+(2R)-2-[(R)-amino(carboxy)methyl]-3,6-dihydro-2H-1,3-thiazine-4-carboxylic acid
+
+>  <SystematicName>
+2-(1-azanyl-2-oxidanyl-2-oxidanylidene-ethyl)-3,6-dihydro-2H-1,3-thiazine-4-carboxylic acid
+
+>  <Synonyms>
+(6R,7R)-7-amino-8-oxo-5-thia-1-azabicyclo[4.2.0]oct-2-ene-2-carboxylic acid, hydrolyzed form
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N2 O4 S
+
+>  <MolecularWeight>
+218.23
+
+>  <ModifiedDate>
+2014-05-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10N2O4S/c8-4(7(12)13)5-9-3(6(10)11)1-2-14-5/h1,4-5,9H,2,8H2,(H,10,11)(H,12,13)/t4-,5+/m0/s1
+
+>  <InChIKey>
+ILCKCFSUIJSDAX-CRCLSJGQSA-N
+
+>  <SMILES>
+C1C=C(NC(S1)C(C(=O)O)N)C(=O)O
+
+$$$$

@@ -1,0 +1,127 @@
+5DYC_5GU_A_802
+  RCSB PDB12061717223D
+Coordinates from PDB:5DYC:A:802 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   14.8850    0.5680   -8.8520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9280    1.2370   -7.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0550    2.0080   -7.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1490    2.4220   -6.1070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9880    2.5390   -5.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0000    3.2440   -4.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8250    3.3550   -3.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6540    2.7560   -3.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0620    2.8890   -2.8910  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6460    2.0510   -5.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8130    1.9530   -5.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8110    1.2370   -6.9880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 11  5  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  6  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+CA
+A    4
+N
+A    5
+CAK
+A    6
+CAD
+A    7
+CAC
+A    8
+CAJ
+A    9
+BR
+A   10
+CAE
+A   11
+CAL
+A   12
+NAH
+M  END
+>  <InstanceId>
+5DYC_5GU_A_802
+
+>  <ChemCompId>
+5GU
+
+>  <PdbId>
+5DYC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O Br
+
+>  <Name>
+7-bromo-3,4-dihydroquinoxalin-2(1H)-one
+
+>  <SystematicName>
+7-bromanyl-3,4-dihydro-1H-quinoxalin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 Br N2 O
+
+>  <MolecularWeight>
+227.058
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7BrN2O/c9-5-1-2-6-7(3-5)11-8(12)4-10-6/h1-3,10H,4H2,(H,11,12)
+
+>  <InChIKey>
+ZITQQDFTRWZLSH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Br)NC(=O)CN2
+
+$$$$

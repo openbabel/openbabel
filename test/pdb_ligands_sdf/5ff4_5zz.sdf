@@ -1,0 +1,134 @@
+5FF4_5ZZ_A_409
+  RCSB PDB12061717403D
+Coordinates from PDB:5FF4:A:409 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   44.8840    5.6660   11.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6780    6.7890   12.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3080    5.8670   13.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8150    4.9850   13.3200   S 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9610    6.6430   12.0490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1290    7.2210   12.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3860    8.1580   13.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2320    6.1710   11.4350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8790    6.8010   11.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6270    4.5900   10.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4430    4.3230   10.3180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5760    3.8990   10.2570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0000    6.6180   15.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4570    4.8360   14.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  8  1  1  0  0  0  0
+  8  2  1  0  0  0  0
+  9  1  1  0  0  0  0
+  1  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  7  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3 14  1  0  0  0  0
+  3 13  1  0  0  0  0
+A    1
+C2
+A    2
+C4
+A    3
+C5
+A    4
+S1
+A    5
+O42
+A    6
+C4A
+A    7
+O41
+A    8
+N3
+A    9
+C2B
+A   10
+C2A
+A   11
+O21
+A   12
+O22
+A   13
+C5A
+A   14
+C5B
+M  END
+>  <InstanceId>
+5FF4_5ZZ_A_409
+
+>  <ChemCompId>
+5ZZ
+
+>  <PdbId>
+5FF4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4 S
+
+>  <Name>
+(2~{R},4~{R})-2,5,5-trimethyl-1,3-thiazolidine-2,4-dicarboxylic acid
+
+>  <SystematicName>
+(2~{R},4~{R})-2,5,5-trimethyl-1,3-thiazolidine-2,4-dicarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N O4 S
+
+>  <MolecularWeight>
+219.258
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13NO4S/c1-7(2)4(5(10)11)9-8(3,14-7)6(12)13/h4,9H,1-3H3,(H,10,11)(H,12,13)/t4-,8-/m1/s1
+
+>  <InChIKey>
+VYZKCSMVPAWSBH-SPGJFGJESA-N
+
+>  <SMILES>
+C[C@]1(N[C@@H](C(S1)(C)C)C(=O)O)C(=O)O
+
+$$$$

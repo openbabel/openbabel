@@ -1,0 +1,135 @@
+4ZX2_4TE_A_503
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZX2:A:503 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    4.0890   -0.3320   -9.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3200    0.4350  -10.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1780    0.6850   -9.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7690   -0.7890   -8.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0770   -1.4320  -10.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6390   -1.6940   -9.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0190   -2.7030  -10.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8760   -3.1720  -10.5390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6610   -3.0470  -11.8200   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0290   -0.4490  -11.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5560    1.1840   -7.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0530   -0.1320  -11.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9710    0.4570  -10.8250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3070   -0.5660  -12.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 12  2  0  0  0  0
+  9  7  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12  1  1  0  0  0  0
+ 10  2  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+O08
+A    9
+O09
+A   10
+O10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+A   14
+O14
+M  END
+>  <InstanceId>
+4ZX2_4TE_A_503
+
+>  <ChemCompId>
+4TE
+
+>  <PdbId>
+4ZX2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O5
+
+>  <Name>
+(1S,2R,3S,4R,5S)-5-methyl-7-oxabicyclo[2.2.1]heptane-2,3-dicarboxylic acid
+
+>  <SystematicName>
+(1S,2R,3S,4R,5S)-5-methyl-7-oxabicyclo[2.2.1]heptane-2,3-dicarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 O5
+
+>  <MolecularWeight>
+200.189
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12O5/c1-3-2-4-5(8(10)11)6(9(12)13)7(3)14-4/h3-7H,2H2,1H3,(H,10,11)(H,12,13)/t3-,4-,5-,6-,7+/m0/s1
+
+>  <InChIKey>
+YSNMFFYDVUEGJH-AZEWMMITSA-N
+
+>  <SMILES>
+C[C@H]1C[C@H]2[C@@H]([C@@H]([C@@H]1O2)C(=O)O)C(=O)O
+
+$$$$

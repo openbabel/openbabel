@@ -1,0 +1,134 @@
+1ZN7_HSX_A_506
+  RCSB PDB12061704533D
+Coordinates from PDB:1ZN7:A:506 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   32.4540    9.9940   -1.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5210   11.3960   -0.7880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2670    9.2790    0.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6660    7.9910    0.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2670   10.2110    0.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9410    9.9080    0.4820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6680   11.5800    0.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4320   12.3100    1.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7870   13.6130    0.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3880   14.9160    1.8570   P 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4230   15.9210    1.5540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3710   14.4720    3.4010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9260   15.3350    1.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3160    9.7520   -1.9250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  1 14  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 13 10  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+C2'
+A    4
+O2'
+A    5
+C3'
+A    6
+O3'
+A    7
+C4'
+A    8
+C5'
+A    9
+O5'
+A   10
+P'
+A   11
+O1X
+A   12
+O2X
+A   13
+O3X
+A   14
+O1
+M  END
+>  <InstanceId>
+1ZN7_HSX_A_506
+
+>  <ChemCompId>
+HSX
+
+>  <PdbId>
+1ZN7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+506
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P
+
+>  <Name>
+5-O-phosphono-alpha-D-ribofuranose
+
+>  <SystematicName>
+[(2R,3S,4R,5S)-3,4,5-trihydroxyoxolan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H11 O8 P
+
+>  <MolecularWeight>
+230.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11O8P/c6-3-2(1-12-14(9,10)11)13-5(8)4(3)7/h2-8H,1H2,(H2,9,10,11)/t2-,3-,4-,5+/m1/s1
+
+>  <InChIKey>
+KTVPXOYAKDPRHY-AIHAYLRMSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@H]([C@H](O1)O)O)O)OP(=O)(O)O
+
+$$$$

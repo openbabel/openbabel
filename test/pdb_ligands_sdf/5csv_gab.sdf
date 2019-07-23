@@ -1,0 +1,118 @@
+1GBN_GAB_A_440
+  RCSB PDB12061702353D
+Coordinates from PDB:1GBN:A:440 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   55.7690   50.1960   10.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8490   49.3600   10.0380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2110   50.8250    9.2210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0290   50.7350   11.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3060   49.8680   12.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4060   50.3680   13.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2920   51.7400   14.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0090   52.6000   13.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.8680   52.0980   11.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.5120   49.4420   15.1080   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+N3
+M  END
+>  <InstanceId>
+1GBN_GAB_A_440
+
+>  <ChemCompId>
+GAB
+
+>  <PdbId>
+1GBN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+440
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+3-AMINOBENZOIC ACID
+
+>  <SystematicName>
+3-aminobenzoic acid
+
+>  <Synonyms>
+GABACULINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O2
+
+>  <MolecularWeight>
+137.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO2/c8-6-3-1-2-5(4-6)7(9)10/h1-4H,8H2,(H,9,10)
+
+>  <InChIKey>
+XFDUHJPVQKIXHO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)N)C(=O)O
+
+$$$$

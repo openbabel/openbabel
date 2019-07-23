@@ -1,0 +1,153 @@
+1D6F_B3P_A_391
+  RCSB PDB12061702143D
+Coordinates from PDB:1D6F:A:391 Model:1 without hydrogens
+ 19 18  0  0  0  0            999 V2000
+   13.2590   55.4320   51.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7640   55.2400   52.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7170   55.1850   50.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2590   55.1260   50.6090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7250   55.3920   49.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6600   54.3900   48.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9170   55.3280   48.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1270   56.7780   49.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2070   55.4910   53.4170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6500   55.6440   53.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9990   57.0720   53.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2270   55.2170   52.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2190   54.7520   54.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7730   57.9850   52.7840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5800   54.9810   52.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5470   53.4960   53.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8090   53.9680   47.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9650   54.4400   46.8560   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0070   56.7680   48.3510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 17  1  0  0  0  0
+  7 18  1  0  0  0  0
+  8 19  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N1
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+N2
+A   10
+C8
+A   11
+C9
+A   12
+C10
+A   13
+C11
+A   14
+O1
+A   15
+O2
+A   16
+O3
+A   17
+O4
+A   18
+O5
+A   19
+O6
+M  END
+>  <InstanceId>
+1D6F_B3P_A_391
+
+>  <ChemCompId>
+B3P
+
+>  <PdbId>
+1D6F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+391
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O6
+
+>  <Name>
+2-[3-(2-HYDROXY-1,1-DIHYDROXYMETHYL-ETHYLAMINO)-PROPYLAMINO]-2-HYDROXYMETHYL-PROPANE-1,3-DIOL
+
+>  <SystematicName>
+2-[3-[[1,3-dihydroxy-2-(hydroxymethyl)propan-2-yl]amino]propylamino]-2-(hydroxymethyl)propane-1,3-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H26 N2 O6
+
+>  <MolecularWeight>
+282.334
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H26N2O6/c14-4-10(5-15,6-16)12-2-1-3-13-11(7-17,8-18)9-19/h12-19H,1-9H2
+
+>  <InChIKey>
+HHKZCCWKTZRCCL-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CNC(CO)(CO)CO)CNC(CO)(CO)CO
+
+$$$$

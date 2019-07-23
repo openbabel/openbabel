@@ -1,0 +1,151 @@
+4XWK_4C8_A_1301
+  RCSB PDB12061716183D
+Coordinates from PDB:4XWK:A:1301 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   76.9980   -1.1880   -7.2550  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   77.7860   -0.7270   -5.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.8020    0.5910   -5.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.3950    0.9410   -3.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.4020    2.7460   -3.3070  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9400   -0.0370   -3.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9240   -1.3850   -3.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.6920   -2.7750   -2.3350  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   78.3450   -1.7340   -4.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.3230   -3.0840   -5.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.5970   -3.5300   -5.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.8950   -4.8900   -5.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.6300   -6.1380   -4.9340  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   81.1440   -5.3580   -6.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.0320   -4.4960   -6.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.6950   -5.1250   -7.1810  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   81.7320   -3.1050   -6.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.5120   -2.6490   -6.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 17 15  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 18 11  2  0  0  0  0
+ 14 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  9  7  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+BR2
+A    2
+CAF
+A    3
+CAE
+A    4
+CAD
+A    5
+BR1
+A    6
+CAC
+A    7
+CAB
+A    8
+BR3
+A    9
+CAA
+A   10
+OAJ
+A   11
+CAK
+A   12
+CAP
+A   13
+BR4
+A   14
+CAO
+A   15
+CAN
+A   16
+BR5
+A   17
+CAM
+A   18
+CAL
+M  END
+>  <InstanceId>
+4XWK_4C8_A_1301
+
+>  <ChemCompId>
+4C8
+
+>  <PdbId>
+4XWK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O Br5
+
+>  <Name>
+2,4-dibromophenyl 2,4,6-tribromophenyl ether
+
+>  <SystematicName>
+2-[2,4-bis(bromanyl)phenoxy]-1,3,5-tris(bromanyl)benzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H5 Br5 O
+
+>  <MolecularWeight>
+564.687
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H5Br5O/c13-6-1-2-11(8(15)3-6)18-12-9(16)4-7(14)5-10(12)17/h1-5H
+
+>  <InChIKey>
+NSKIRYMHNFTRLR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Br)Br)Oc2c(cc(cc2Br)Br)Br
+
+$$$$

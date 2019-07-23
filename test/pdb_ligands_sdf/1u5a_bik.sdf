@@ -1,0 +1,139 @@
+1U5A_BIK_A_1001
+  RCSB PDB12061704113D
+Coordinates from PDB:1U5A:A:1001 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   20.8230   15.9260    7.5870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8680   16.2480    6.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9920   15.4180    6.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1360   15.7130    6.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2000   16.8600    5.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0980   17.7150    5.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9430   17.4100    6.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1890   18.8710    4.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3670   17.1500    4.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4590   18.2980    3.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5210   18.5090    3.0820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3460   19.1600    3.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3940   20.4120    2.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4070   21.2010    2.8010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4260   20.6360    2.2040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+C7
+A    4
+C8
+A    5
+C8A
+A    6
+C4A
+A    7
+C5
+A    8
+C4
+A    9
+C1
+A   10
+C2
+A   11
+O2
+A   12
+C3
+A   13
+C31
+A   14
+O32
+A   15
+O31
+M  END
+>  <InstanceId>
+1U5A_BIK_A_1001
+
+>  <ChemCompId>
+BIK
+
+>  <PdbId>
+1U5A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4
+
+>  <Name>
+3,7-DIHYDROXY-2-NAPHTHOIC ACID
+
+>  <SystematicName>
+3,7-dihydroxynaphthalene-2-carboxylic acid
+
+>  <Synonyms>
+3,7-DIHYDROXYNAPHTHALENE-2-CARBOXYLIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H8 O4
+
+>  <MolecularWeight>
+204.179
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H8O4/c12-8-2-1-6-5-10(13)9(11(14)15)4-7(6)3-8/h1-5,12-13H,(H,14,15)
+
+>  <InChIKey>
+QMWOUSYSNFCKAZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc2c1cc(c(c2)C(=O)O)O)O
+
+$$$$

@@ -1,0 +1,130 @@
+4KIB_56D_A_402
+  RCSB PDB12061713223D
+Coordinates from PDB:4KIB:A:402 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   41.3170   50.9220   54.3360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7310   49.8640   54.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0980   49.8010   52.9540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8020   48.6510   54.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4480   48.6990   56.0150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9520   47.4440   54.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4980   47.8650   54.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0940   46.2440   55.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9480   45.0500   54.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0590   43.8270   55.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3020   43.7690   56.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4210   44.9590   57.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3060   46.1850   56.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  4  1  0  0  0  0
+  6  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  2  0  0  0  0
+ 10 11  1  0  0  0  0
+  8 13  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13 12  1  0  0  0  0
+A    1
+OAL
+A    2
+CAI
+A    3
+OAM
+A    4
+CAH
+A    5
+OAK
+A    6
+CAG
+A    7
+CAJ
+A    8
+CAD
+A    9
+CAC
+A   10
+CAB
+A   11
+CAA
+A   12
+CAF
+A   13
+CAE
+M  END
+>  <InstanceId>
+4KIB_56D_A_402
+
+>  <ChemCompId>
+56D
+
+>  <PdbId>
+4KIB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O3
+
+>  <Name>
+(3R)-2-oxo-3-phenylbutanoic acid
+
+>  <SystematicName>
+(3R)-2-oxidanylidene-3-phenyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O3
+
+>  <MolecularWeight>
+178.185
+
+>  <ModifiedDate>
+2014-05-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O3/c1-7(9(11)10(12)13)8-5-3-2-4-6-8/h2-7H,1H3,(H,12,13)/t7-/m1/s1
+
+>  <InChIKey>
+AXLLOSUYAVXOIN-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@H](c1ccccc1)C(=O)C(=O)O
+
+$$$$

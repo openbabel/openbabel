@@ -1,0 +1,125 @@
+1YNS_HPO_A_1261
+  RCSB PDB12061704473D
+Coordinates from PDB:1YNS:A:1261 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   36.3540   12.8200  -11.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4100   12.3590  -12.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6660   10.9980  -12.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2520    9.9120  -11.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4990    8.6520  -12.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8340    8.3670  -12.4150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2090    8.5220  -12.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8570    7.3790  -11.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3080    7.9490  -12.5020   P 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4810    8.9650  -12.6300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6760    6.7810  -13.4150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5340    7.3000  -10.9080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+P1
+A   10
+O2
+A   11
+O3
+A   12
+O4
+M  END
+>  <InstanceId>
+1YNS_HPO_A_1261
+
+>  <ChemCompId>
+HPO
+
+>  <PdbId>
+1YNS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1261
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O4 P
+
+>  <Name>
+2-OXOHEPTYLPHOSPHONIC ACID
+
+>  <SystematicName>
+2-oxoheptylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 O4 P
+
+>  <MolecularWeight>
+194.165
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15O4P/c1-2-3-4-5-7(8)6-12(9,10)11/h2-6H2,1H3,(H2,9,10,11)
+
+>  <InChIKey>
+ACMQFLCUSWMWKH-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCC(=O)CP(=O)(O)O
+
+$$$$

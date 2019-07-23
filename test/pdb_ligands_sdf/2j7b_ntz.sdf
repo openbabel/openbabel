@@ -1,0 +1,135 @@
+1E6Q_NTZ_M_999
+  RCSB PDB12061702213D
+Coordinates from PDB:1E6Q:M:999 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   47.2990  119.6880   52.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9890  119.0190   53.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3800  120.1170   54.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7990  121.3860   53.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4990  122.0130   53.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5630  123.3470   52.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0410  121.0280   52.3800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4490  121.2260   51.1460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3030  119.9280   50.5630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8560  119.1080   51.3610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2650  117.9570   54.4010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4810  119.5720   55.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.3720  122.3640   54.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4570  123.1810   51.3730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N1
+A    8
+N17
+A    9
+N18
+A   10
+N21
+A   11
+O2
+A   12
+O3
+A   13
+O4
+A   14
+O6
+M  END
+>  <InstanceId>
+1E6Q_NTZ_M_999
+
+>  <ChemCompId>
+NTZ
+
+>  <PdbId>
+1E6Q
+
+>  <ChainId>
+M
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O4
+
+>  <Name>
+NOJIRIMYCINE TETRAZOLE
+
+>  <SystematicName>
+(5R,6R,7S,8S)-5-(hydroxymethyl)-5,6,7,8-tetrahydro-[1,2,3,4]tetrazolo[5,1-f]pyridine-6,7,8-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N4 O4
+
+>  <MolecularWeight>
+202.168
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10N4O4/c11-1-2-3(12)4(13)5(14)6-7-8-9-10(2)6/h2-5,11-14H,1H2/t2-,3-,4+,5-/m1/s1
+
+>  <InChIKey>
+UCJXQRFJERKPOZ-SQOUGZDYSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H](c2n1nnn2)O)O)O)O
+
+$$$$

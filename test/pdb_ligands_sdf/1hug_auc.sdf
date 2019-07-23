@@ -1,0 +1,97 @@
+1E3U_AUC_A_301
+  RCSB PDB12061702203D
+Coordinates from PDB:1E3U:A:301 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   18.1650    9.0000   32.2040  Au 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1760    7.2700   32.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4610    6.1590   32.3570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7900   10.6770   31.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8610   11.8330   32.0250   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  3  0  0  0  0
+  4  5  3  0  0  0  0
+A    1
+AU
+A    2
+C1
+A    3
+N1
+A    4
+C2
+A    5
+N2
+M  END
+>  <InstanceId>
+1E3U_AUC_A_301
+
+>  <ChemCompId>
+AUC
+
+>  <PdbId>
+1E3U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N2 Au
+
+>  <Name>
+GOLD (I) CYANIDE ION
+
+>  <SystematicName>
+dicyanogold
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 Au N2
+
+>  <MolecularWeight>
+249.001
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/2CN.Au/c2*1-2;
+
+>  <InChIKey>
+DGOHFTDNMSZWDQ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(#N)[Au]C#N
+
+$$$$

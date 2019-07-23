@@ -1,0 +1,113 @@
+2R1L_DPJ_A_1
+  RCSB PDB12061706523D
+Coordinates from PDB:2R1L:A:1 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   30.3040   20.0490   -2.7160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2610   20.0780   -1.5020   P 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7420   19.4560   -2.3350   S 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6300   19.1450   -0.2680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7160   19.4940    0.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2210   18.2330    1.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2130   21.5240   -0.9320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6620   22.0040    0.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0860   23.4690    0.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O4
+A    2
+P2
+A    3
+S1
+A    4
+O3
+A    5
+C7
+A    6
+C9
+A    7
+O5
+A    8
+C6
+A    9
+C8
+M  END
+>  <InstanceId>
+2R1L_DPJ_A_1
+
+>  <ChemCompId>
+DPJ
+
+>  <PdbId>
+2R1L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O3 P S
+
+>  <Name>
+O,O-DIETHYL HYDROGEN THIOPHOSPHATE
+
+>  <SystematicName>
+diethoxy-hydroxy-sulfanylidene-phosphorane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H11 O3 P S
+
+>  <MolecularWeight>
+170.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C4H11O3PS/c1-3-6-8(5,9)7-4-2/h3-4H2,1-2H3,(H,5,9)
+
+>  <InChIKey>
+PKUWKAXTAVNIJR-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOP(=S)(O)OCC
+
+$$$$

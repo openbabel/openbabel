@@ -1,0 +1,135 @@
+4UMP_5QM_A_1334
+  RCSB PDB12061715163D
+Coordinates from PDB:4UMP:A:1334 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    3.0860    1.8110   -5.4820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1150    1.9730   -6.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3980    0.8920   -7.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8180    0.0190   -8.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1170   -1.0380   -8.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1180   -0.7330   -9.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5660   -1.7400  -10.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2540   -3.0990  -10.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9340   -4.1770  -10.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5570   -5.4700  -10.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4070   -5.7700   -9.6150   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0390   -4.7720   -8.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7610   -3.4130   -9.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4180   -2.3740   -8.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  3  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+4UMP_5QM_A_1334
+
+>  <ChemCompId>
+5QM
+
+>  <PdbId>
+4UMP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1334
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O
+
+>  <Name>
+3-(isoquinolin-7-yl)prop-2-yn-1-ol
+
+>  <SystematicName>
+3-isoquinolin-7-ylprop-2-yn-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H9 N O
+
+>  <MolecularWeight>
+183.206
+
+>  <ModifiedDate>
+2014-10-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9NO/c14-7-1-2-10-3-4-11-5-6-13-9-12(11)8-10/h3-6,8-9,14H,7H2
+
+>  <InChIKey>
+WXHANIFKRWTEBS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc2c1ccnc2)C#CCO
+
+$$$$

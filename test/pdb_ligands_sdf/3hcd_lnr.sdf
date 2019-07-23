@@ -1,0 +1,126 @@
+2QEO_LNR_A_200
+  RCSB PDB12061706473D
+Coordinates from PDB:2QEO:A:200 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   41.8950  -20.2470   -4.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5960  -20.6600   -4.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2970  -21.9330   -3.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5190  -19.8200   -4.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7170  -18.5650   -5.2120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2330  -20.2710   -4.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0150  -21.4640   -3.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9680  -22.3060   -3.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6620  -23.6710   -3.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2250  -24.5890   -4.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6540  -23.6510   -2.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6990  -24.8690   -1.2240   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  8  3  1  0  0  0  0
+  6  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 11  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+OAC
+A    2
+CAJ
+A    3
+CAG
+A    4
+CAI
+A    5
+OAB
+A    6
+CAE
+A    7
+CAF
+A    8
+CAK
+A    9
+CAL
+A   10
+OAD
+A   11
+CAH
+A   12
+NAA
+M  END
+>  <InstanceId>
+2QEO_LNR_A_200
+
+>  <ChemCompId>
+LNR
+
+>  <PdbId>
+2QEO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+L-NOREPINEPHRINE
+
+>  <SystematicName>
+4-[(1R)-2-azanyl-1-oxidanyl-ethyl]benzene-1,2-diol
+
+>  <Synonyms>
+NORADRENALINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O3
+
+>  <MolecularWeight>
+169.178
+
+>  <ModifiedDate>
+2012-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO3/c9-4-8(12)5-1-2-6(10)7(11)3-5/h1-3,8,10-12H,4,9H2/t8-/m0/s1
+
+>  <InChIKey>
+SFLSHLFXELFNJZ-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(c(cc1[C@H](CN)O)O)O
+
+$$$$

@@ -1,0 +1,123 @@
+2OHL_2AQ_A_390
+  RCSB PDB12061706303D
+Coordinates from PDB:2OHL:A:390 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   65.9390   48.6290    6.0130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   66.6300   48.6680    7.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.9230   47.5020    7.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.6720   47.5720    8.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1000   48.8100    9.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.8550   48.9590   10.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2520   50.2120   10.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.9030   51.3310   10.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1580   51.2020    9.0600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.7480   49.9540    8.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.0270   49.8790    7.5020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2 11  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+M  END
+>  <InstanceId>
+2OHL_2AQ_A_390
+
+>  <ChemCompId>
+2AQ
+
+>  <PdbId>
+2OHL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+390
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+QUINOLIN-2-AMINE
+
+>  <SystematicName>
+quinolin-2-amine
+
+>  <Synonyms>
+2-AMINOQUINOLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2
+
+>  <MolecularWeight>
+144.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H8N2/c10-9-6-5-7-3-1-2-4-8(7)11-9/h1-6H,(H2,10,11)
+
+>  <InChIKey>
+GCMNJUJAKQGROZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ccc(n2)N
+
+$$$$

@@ -1,0 +1,125 @@
+2HXU_LFC_A_501
+  RCSB PDB12061705513D
+Coordinates from PDB:2HXU:A:501 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+  -20.7900   69.6220   30.5530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3630   69.1820   29.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4580   69.7010   28.7820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0080   67.8820   28.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2290   67.5990   29.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2910   67.9720   27.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2970   68.9610   27.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7780   66.6240   26.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9900   65.5180   27.2820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7580   66.6110   25.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4770   65.4110   24.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3980   66.6350   24.8280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+O1A
+A    2
+C1
+A    3
+O1B
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O5
+M  END
+>  <InstanceId>
+2HXU_LFC_A_501
+
+>  <ChemCompId>
+LFC
+
+>  <PdbId>
+2HXU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+6-DEOXY-L-GALACTONIC ACID
+
+>  <SystematicName>
+(2S,3R,4R,5S)-2,3,4,5-tetrahydroxyhexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O6
+
+>  <MolecularWeight>
+180.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H12O6/c1-2(7)3(8)4(9)5(10)6(11)12/h2-5,7-10H,1H3,(H,11,12)/t2-,3+,4+,5-/m0/s1
+
+>  <InChIKey>
+NBFWIISVIFCMDK-RSJOWCBRSA-N
+
+>  <SMILES>
+C[C@@H]([C@H]([C@H]([C@@H](C(=O)O)O)O)O)O
+
+$$$$

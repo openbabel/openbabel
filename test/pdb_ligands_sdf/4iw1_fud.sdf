@@ -1,0 +1,125 @@
+2HK1_FUD_A_1300
+  RCSB PDB12061705483D
+Coordinates from PDB:2HK1:A:1300 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   48.1260   36.5740  102.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0490   36.3890  101.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5600   36.8210  101.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9510   35.8300  102.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4730   36.2360  103.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9120   35.2570  104.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0150   35.4770  102.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3550   35.9120  100.1700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7760   36.7930  100.3580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9550   34.4930  102.1380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4790   37.5840  103.5820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7710   33.9490  103.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+2HK1_FUD_A_1300
+
+>  <ChemCompId>
+FUD
+
+>  <PdbId>
+2HK1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+D-fructose
+
+>  <SystematicName>
+(3S,4R,5R)-1,3,4,5,6-pentahydroxyhexan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+D-saccharide
+
+>  <Formula>
+C6 H12 O6
+
+>  <MolecularWeight>
+180.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H12O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3,5-9,11-12H,1-2H2/t3-,5-,6-/m1/s1
+
+>  <InChIKey>
+BJHIKXHVCXFQLS-UYFOZJQFSA-N
+
+>  <SMILES>
+C([C@H]([C@H]([C@@H](C(=O)CO)O)O)O)O
+
+$$$$

@@ -1,0 +1,115 @@
+1KXM_BZI_A_2
+  RCSB PDB12061703083D
+Coordinates from PDB:1KXM:A:2 Model:1 without hydrogens
+  9 10  0  0  0  0            999 V2000
+   33.2960   89.3420   47.4050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5460   88.7640   46.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5340   89.1120   45.3220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6390   89.9150   45.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4600   90.5000   45.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7580   91.2690   46.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2070   91.4590   47.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3730   90.8740   48.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1250   90.0780   47.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C3A
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C7A
+M  END
+>  <InstanceId>
+1KXM_BZI_A_2
+
+>  <ChemCompId>
+BZI
+
+>  <PdbId>
+1KXM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2
+
+>  <Name>
+BENZIMIDAZOLE
+
+>  <SystematicName>
+1H-benzimidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 N2
+
+>  <MolecularWeight>
+118.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6N2/c1-2-4-7-6(3-1)8-5-9-7/h1-5H,(H,8,9)
+
+>  <InChIKey>
+HYZJCKYKOHLVJF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)[nH]cn2
+
+$$$$

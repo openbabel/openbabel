@@ -1,0 +1,118 @@
+1GW9_LXC_A_1389
+  RCSB PDB12061702393D
+Coordinates from PDB:1GW9:A:1389 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   57.7910   23.1260   72.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2860   23.9930   73.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3040   25.1320   73.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8190   25.9910   74.9420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.9700   24.5030   74.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9430   25.5120   74.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.4630   23.5250   73.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.2120   22.8870   73.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.5680   22.4650   73.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0970   21.5640   71.9910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C5
+A    2
+O5
+A    3
+C1
+A    4
+O1
+A    5
+C2
+A    6
+O2
+A    7
+C3
+A    8
+O3
+A    9
+C4
+A   10
+O4
+M  END
+>  <InstanceId>
+1GW9_LXC_A_1389
+
+>  <ChemCompId>
+LXC
+
+>  <PdbId>
+1GW9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1389
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+BETA-L-XYLOPYRANOSE
+
+>  <SystematicName>
+(2S,3S,4R,5S)-oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+L-XYLOSE (CYCLIC FORM)
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-2-1-10-5(9)4(8)3(2)7/h2-9H,1H2/t2-,3+,4-,5-/m0/s1
+
+>  <InChIKey>
+SRBFZHDQGSBBOR-QTBDOELSSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H](O1)O)O)O)O
+
+$$$$

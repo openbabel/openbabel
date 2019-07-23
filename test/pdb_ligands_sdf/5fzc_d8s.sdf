@@ -1,0 +1,144 @@
+5FZC_D8S_A_1771
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZC:A:1771 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   86.6230   87.5720    8.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.5710   88.5870    8.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.4370   89.4780    9.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.4760   90.4790    9.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.5260   91.2080   11.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.6010   92.3570   11.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.4040   92.4480   11.0110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   83.9980   93.2410   12.4290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8520   90.5380   12.0750   S 0  0  0  0  0  0  0  0  0  0  0  0
+   86.3290   89.3330   10.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.3790   88.3060   10.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.2300   88.2010   12.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.2240   87.2520   12.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.3870   86.3820   10.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.5440   86.4910    9.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.5380   87.4490    9.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 16  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+O07
+A    8
+O08
+A    9
+S09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+C16
+M  END
+>  <InstanceId>
+5FZC_D8S_A_1771
+
+>  <ChemCompId>
+D8S
+
+>  <PdbId>
+5FZC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1771
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O2 S
+
+>  <Name>
+benzo[g][1]benzothiole-2-carboxylic acid
+
+>  <SystematicName>
+benzo[g][1]benzothiole-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C13 H8 O2 S
+
+>  <MolecularWeight>
+228.266
+
+>  <ModifiedDate>
+2016-03-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H8O2S/c14-13(15)11-7-9-6-5-8-3-1-2-4-10(8)12(9)16-11/h1-7H,(H,14,15)
+
+>  <InChIKey>
+KRSFUJUZIQCOHU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ccc3c2sc(c3)C(=O)O
+
+$$$$

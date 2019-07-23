@@ -1,0 +1,150 @@
+1C4S_ASG_A_2
+  RCSB PDB12061702083D
+Coordinates from PDB:1C4S:A:2 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+    8.9400    4.5920    3.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6600    3.5440    4.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2090    3.9920    5.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6800    4.3650    5.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8750    5.3630    4.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3320    5.6860    4.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7290    2.0160    4.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2260    1.9190    4.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5430    4.0830    1.8830   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2030    3.3030    4.2620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4660    3.2040    5.1370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3480    4.8290    3.0390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7910    5.1380    2.7750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4500    1.0510    3.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4710    2.9700    7.6180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1350    1.8280    6.3750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8890    1.0840    6.3130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7470    2.2500    6.3890   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7 14  2  0  0  0  0
+ 11 18  1  0  0  0  0
+ 15 18  1  0  0  0  0
+ 16 18  2  0  0  0  0
+ 17 18  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+O1
+A   10
+N
+A   11
+O4
+A   12
+O5
+A   13
+O6
+A   14
+O7
+A   15
+OSA
+A   16
+OSB
+A   17
+OSC
+A   18
+S
+M  END
+>  <InstanceId>
+1C4S_ASG_A_2
+
+>  <ChemCompId>
+ASG
+
+>  <PdbId>
+1C4S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 N O8 S
+
+>  <Name>
+2-DEOXY-2-ACETAMIDO-BETA-D-GALACTOSE-4-SULFATE
+
+>  <SystematicName>
+[(2R,3R,4R,5R,6R)-5-acetamido-4,6-dihydroxy-2-(hydroxymethyl)oxan-3-yl] hydrogen sulfate
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C8 H15 N O9 S
+
+>  <MolecularWeight>
+301.271
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO9S/c1-3(11)9-5-6(12)7(18-19(14,15)16)4(2-10)17-8(5)13/h4-8,10,12-13H,2H2,1H3,(H,9,11)(H,14,15,16)/t4-,5-,6-,7+,8-/m1/s1
+
+>  <InChIKey>
+WHCJUIFHMJFEFZ-UIAUGNHASA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H]([C@H]([C@H](O[C@H]1O)CO)OS(=O)(=O)O)O
+
+$$$$

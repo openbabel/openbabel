@@ -1,0 +1,135 @@
+4J9Z_1KP_R_201
+  RCSB PDB12061713083D
+Coordinates from PDB:4J9Z:R:201 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   32.6800   49.3810   51.7710  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6820   50.7260   51.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3400   52.0310   51.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1460   53.0960   51.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8150   50.4770   50.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2510   48.9050   50.0400  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6440   51.5670   50.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3260   52.8310   50.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8340   51.5560   49.2410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2660   52.8290   49.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4060   53.2300   48.3420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3960   53.6740   49.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5030   55.1140   49.7290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4210   55.8460   49.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 12  1  0  0  0  0
+  9  7  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  4  1  0  0  0  0
+  5  2  2  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CL1
+A    2
+C4
+A    3
+C3
+A    4
+C2
+A    5
+C5
+A    6
+CL
+A    7
+C6
+A    8
+C1
+A    9
+N1
+A   10
+C7
+A   11
+O1
+A   12
+C
+A   13
+N
+A   14
+O
+M  END
+>  <InstanceId>
+4J9Z_1KP_R_201
+
+>  <ChemCompId>
+1KP
+
+>  <PdbId>
+4J9Z
+
+>  <ChainId>
+R
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 Cl2
+
+>  <Name>
+(3E)-6,7-dichloro-3-(hydroxyimino)-1,3-dihydro-2H-indol-2-one
+
+>  <SystematicName>
+6,7-bis(chloranyl)-3-hydroxyimino-1H-indol-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H4 Cl2 N2 O2
+
+>  <MolecularWeight>
+231.036
+
+>  <ModifiedDate>
+2013-03-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H4Cl2N2O2/c9-4-2-1-3-6(5(4)10)11-8(13)7(3)12-14/h1-2,14H,(H,11,12,13)
+
+>  <InChIKey>
+CVOUSAVHMDXCKG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c2c1C(=NO)C(=O)N2)Cl)Cl
+
+$$$$

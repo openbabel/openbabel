@@ -1,0 +1,114 @@
+1A8U_BEZ_A_295
+  RCSB PDB12061701583D
+Coordinates from PDB:1A8U:A:295 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    9.8410   37.1410   33.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6830   37.7610   34.0370   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9330   37.1070   32.0550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7530   36.3960   33.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1590   36.8560   35.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1110   36.1640   35.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7070   34.9730   35.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2830   34.4820   34.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3030   35.1750   33.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+O2
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+1A8U_BEZ_A_295
+
+>  <ChemCompId>
+BEZ
+
+>  <PdbId>
+1A8U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+295
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2
+
+>  <Name>
+BENZOIC ACID
+
+>  <SystematicName>
+benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O2
+
+>  <MolecularWeight>
+122.121
+
+>  <ModifiedDate>
+2011-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O2/c8-7(9)6-4-2-1-3-5-6/h1-5H,(H,8,9)
+
+>  <InChIKey>
+WPYMKLBDIGXBTP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C(=O)O
+
+$$$$

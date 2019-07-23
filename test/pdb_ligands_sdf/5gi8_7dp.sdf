@@ -1,0 +1,134 @@
+5GI8_7DP_A_302
+  RCSB PDB12061717503D
+Coordinates from PDB:5GI8:A:302 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   49.5110   74.5370   15.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8990   78.8220   16.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2990   75.6520   14.7090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5120   74.3850   16.2020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6760   75.1670   17.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2450   75.5520   16.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.4680   76.4490   17.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5760   77.2620   18.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.0650   76.8450   15.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3120   78.4350   17.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7900   78.0120   15.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7720   73.3160   14.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5900   80.0010   16.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4810   79.2810   19.0630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  2  0  0  0  0
+ 12  1  1  0  0  0  0
+  1  4  1  0  0  0  0
+ 11  9  2  0  0  0  0
+ 11  2  1  0  0  0  0
+  9  7  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 13  2  1  0  0  0  0
+  2 10  2  0  0  0  0
+  7  5  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 10  8  1  0  0  0  0
+ 10 14  1  0  0  0  0
+A    1
+C10
+A    2
+C11
+A    3
+O01
+A    4
+N02
+A    5
+C03
+A    6
+C04
+A    7
+C05
+A    8
+C06
+A    9
+C07
+A   10
+C08
+A   11
+C09
+A   12
+C12
+A   13
+O13
+A   14
+O14
+M  END
+>  <InstanceId>
+5GI8_7DP_A_302
+
+>  <ChemCompId>
+7DP
+
+>  <PdbId>
+5GI8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3
+
+>  <Name>
+~{N}-[2-[3,4-bis(oxidanyl)phenyl]ethyl]ethanamide
+
+>  <SystematicName>
+~{N}-[2-[3,4-bis(oxidanyl)phenyl]ethyl]ethanamide
+
+>  <Synonyms>
+N-acetyldopamine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O3
+
+>  <MolecularWeight>
+195.215
+
+>  <ModifiedDate>
+2017-06-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO3/c1-7(12)11-5-4-8-2-3-9(13)10(14)6-8/h2-3,6,13-14H,4-5H2,1H3,(H,11,12)
+
+>  <InChIKey>
+OFSAJYZMIPNPHE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCc1ccc(c(c1)O)O
+
+$$$$

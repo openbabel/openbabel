@@ -1,0 +1,137 @@
+1LT8_CBH_A_601
+  RCSB PDB12061703133D
+Coordinates from PDB:1LT8:A:601 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   25.2290    9.9420   -8.1580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3000   11.1010   -7.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0540   12.0090   -8.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3630   11.4460   -6.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3610   10.3820   -6.3490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1460   11.6090   -5.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0490   12.8420   -5.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8990   13.1910   -3.6470   S 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7880   14.6950   -4.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4570   15.4440   -3.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8720   16.8390   -3.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3560   17.6710   -2.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3990   19.1470   -2.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3370   19.7910   -2.5930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4840   19.5990   -3.1210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+O11
+A    2
+C12
+A    3
+O13
+A    4
+C14
+A    5
+N15
+A    6
+C16
+A    7
+C17
+A    8
+S18
+A    9
+C19
+A   10
+C20
+A   11
+C21
+A   12
+C22
+A   13
+C23
+A   14
+O25
+A   15
+O24
+M  END
+>  <InstanceId>
+1LT8_CBH_A_601
+
+>  <ChemCompId>
+CBH
+
+>  <PdbId>
+1LT8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 S
+
+>  <Name>
+S-(D-CARBOXYBUTYL)-L-HOMOCYSTEINE
+
+>  <SystematicName>
+5-[(3S)-3-amino-4-hydroxy-4-oxo-butyl]sulfanylpentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O4 S
+
+>  <MolecularWeight>
+235.301
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO4S/c10-7(9(13)14)4-6-15-5-2-1-3-8(11)12/h7H,1-6,10H2,(H,11,12)(H,13,14)/t7-/m0/s1
+
+>  <InChIKey>
+BMONDXDFXRPNKQ-ZETCQYMHSA-N
+
+>  <SMILES>
+C(CCSCC[C@@H](C(=O)O)N)CC(=O)O
+
+$$$$

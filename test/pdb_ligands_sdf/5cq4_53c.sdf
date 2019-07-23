@@ -1,0 +1,118 @@
+5CQ4_53C_A_2002
+  RCSB PDB12061717083D
+Coordinates from PDB:5CQ4:A:2002 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   15.8360   37.5410   29.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6410   39.0010   29.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2670   39.6010   29.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2070   38.8030   29.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9320   39.3370   29.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7250   40.6720   29.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7870   41.4630   29.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0680   40.9320   30.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5670   42.8080   30.2880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5840   39.6790   30.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  6  7  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  8  2  0  0  0  0
+  2 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+O09
+A   10
+O10
+M  END
+>  <InstanceId>
+5CQ4_53C_A_2002
+
+>  <ChemCompId>
+53C
+
+>  <PdbId>
+5CQ4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O2
+
+>  <Name>
+1-(3-hydroxyphenyl)ethanone
+
+>  <SystematicName>
+1-(3-hydroxyphenyl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O2
+
+>  <MolecularWeight>
+136.148
+
+>  <ModifiedDate>
+2015-09-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O2/c1-6(9)7-3-2-4-8(10)5-7/h2-5,10H,1H3
+
+>  <InChIKey>
+LUJMEECXHPYQOF-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)c1cccc(c1)O
+
+$$$$

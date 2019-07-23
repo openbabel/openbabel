@@ -1,0 +1,98 @@
+117E_PO4_A_3001
+  RCSB PDB12061701563D
+Coordinates from PDB:117E:A:3001 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   50.1590  -19.5550  -46.2970   P 0  0  0  0  0  0  0  0  0  0  0  0
+   49.1700  -18.8870  -47.2310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4030  -19.9230  -47.0750   O 0  5  0  0  0  0  0  0  0  0  0  0
+   49.4880  -20.7570  -45.6820   O 0  5  0  0  0  0  0  0  0  0  0  0
+   50.5950  -18.6140  -45.1870   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+M  CHG  3   3  -1   4  -1   5  -1
+A    1
+P
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+M  END
+>  <InstanceId>
+117E_PO4_A_3001
+
+>  <ChemCompId>
+PO4
+
+>  <PdbId>
+117E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+O4 P
+
+>  <Name>
+PHOSPHATE ION
+
+>  <SystematicName>
+phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+O4 P
+
+>  <MolecularWeight>
+94.971
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/H3O4P/c1-5(2,3)4/h(H3,1,2,3,4)/p-3
+
+>  <InChIKey>
+NBIIXXVUZAFLBC-UHFFFAOYSA-K
+
+>  <SMILES>
+[O-]P(=O)([O-])[O-]
+
+$$$$

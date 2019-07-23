@@ -1,0 +1,118 @@
+2WEJ_FB2_A_1263
+  RCSB PDB12061707143D
+Coordinates from PDB:2WEJ:A:1263 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   16.9660    6.1980   14.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6260    6.1370   14.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1200    5.0450   15.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9460    3.9510   16.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2910    4.0420   15.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8090    5.1360   14.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3720    2.6770   16.9350   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9220    2.7460   16.8880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9570    2.8350   18.2300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8610    1.2980   16.3110   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+S07
+A    8
+O09
+A    9
+O08
+A   10
+NP0
+M  END
+>  <InstanceId>
+2WEJ_FB2_A_1263
+
+>  <ChemCompId>
+FB2
+
+>  <PdbId>
+2WEJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1263
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2 S
+
+>  <Name>
+benzenesulfonamide
+
+>  <SystematicName>
+benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H7 N O2 S
+
+>  <MolecularWeight>
+157.19
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7NO2S/c7-10(8,9)6-4-2-1-3-5-6/h1-5H,(H2,7,8,9)
+
+>  <InChIKey>
+KHBQMWCZKVMBLN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)S(=O)(=O)N
+
+$$$$

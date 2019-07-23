@@ -1,0 +1,117 @@
+1KR6_DGL_A_1317
+  RCSB PDB12061703073D
+Coordinates from PDB:1KR6:A:1317 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   34.9210   39.1910   61.4640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4120   38.7690   60.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3310   37.9470   59.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4690   37.4750   58.3190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7700   40.0190   59.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8030   41.2010   59.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4320   42.5850   59.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8470   43.6080   59.4070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7010   42.5170   58.8040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1950   37.8400   60.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+OE1
+A    9
+OE2
+A   10
+OXT
+M  END
+>  <InstanceId>
+1KR6_DGL_A_1317
+
+>  <ChemCompId>
+DGL
+
+>  <PdbId>
+1KR6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1317
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4
+
+>  <Name>
+D-GLUTAMIC ACID
+
+>  <SystematicName>
+(2R)-2-azanylpentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+D-PEPTIDE LINKING
+
+>  <Formula>
+C5 H9 N O4
+
+>  <MolecularWeight>
+147.129
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+E
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO4/c6-3(5(9)10)1-2-4(7)8/h3H,1-2,6H2,(H,7,8)(H,9,10)/t3-/m1/s1
+
+>  <InChIKey>
+WHUUTDBJXJRKMK-GSVOUGTGSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@H](C(=O)O)N
+
+$$$$

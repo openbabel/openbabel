@@ -1,0 +1,101 @@
+1C0K_LAC_A_1364
+  RCSB PDB12061702073D
+Coordinates from PDB:1C0K:A:1364 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   34.6500  125.7350   23.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8120  124.8410   22.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4680  125.2810   21.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7970  125.9580   22.8720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5330  124.6900   23.3670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4470  125.9500   24.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O1
+A    5
+O2
+A    6
+OXT
+M  END
+>  <InstanceId>
+1C0K_LAC_A_1364
+
+>  <ChemCompId>
+LAC
+
+>  <PdbId>
+1C0K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1364
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O3
+
+>  <Name>
+LACTIC ACID
+
+>  <SystematicName>
+(2R)-2-hydroxypropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H6 O3
+
+>  <MolecularWeight>
+90.078
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H6O3/c1-2(4)3(5)6/h2,4H,1H3,(H,5,6)/t2-/m1/s1
+
+>  <InChIKey>
+JVTAAEKCZFNVCJ-UWTATZPHSA-N
+
+>  <SMILES>
+C[C@H](C(=O)O)O
+
+$$$$

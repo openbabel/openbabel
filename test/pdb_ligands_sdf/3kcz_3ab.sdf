@@ -1,0 +1,118 @@
+3GOY_3AB_A_1
+  RCSB PDB12061708463D
+Coordinates from PDB:3GOY:A:1 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   30.9490    2.5650   38.7360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7330    2.4430   38.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1180    1.2300   38.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0670    3.5780   37.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7870    3.5370   37.4150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1900    2.3270   37.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8490    1.1960   37.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1260   -0.0750   37.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1990   -0.1700   36.6610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5900   -1.0580   38.1290   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  4  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  7  3  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+N3
+A    2
+C3
+A    3
+C2
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C1'
+A    9
+O1'
+A   10
+N1'
+M  END
+>  <InstanceId>
+3GOY_3AB_A_1
+
+>  <ChemCompId>
+3AB
+
+>  <PdbId>
+3GOY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O
+
+>  <Name>
+3-aminobenzamide
+
+>  <SystematicName>
+3-aminobenzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N2 O
+
+>  <MolecularWeight>
+136.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O/c8-6-3-1-2-5(4-6)7(9)10/h1-4H,8H2,(H2,9,10)
+
+>  <InChIKey>
+GSCPDZHWVNUUFI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)N)C(=O)N
+
+$$$$

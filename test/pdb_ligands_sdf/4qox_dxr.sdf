@@ -1,0 +1,143 @@
+3MA6_DXR_A_299
+  RCSB PDB12061709433D
+Coordinates from PDB:3MA6:A:299 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -3.0080   22.9880   14.2960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7940   23.4940   14.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8200   23.4360   14.9700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0410   22.8570   16.1710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2990   22.3050   16.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2810   22.3740   15.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0700   22.8200   17.0790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8950   21.6420   17.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1500   21.3620   17.1370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3640   21.7730   15.9850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6780   21.5990   15.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4330   20.7020   14.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1970   22.9670   14.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7200   20.9370   16.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2650   21.3040   18.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3150   22.5390   19.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  1  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  7  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6 10  1  0  0  0  0
+ 15  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+NAG
+A    8
+CAH
+A    9
+NAI
+A   10
+NAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+M  END
+>  <InstanceId>
+3MA6_DXR_A_299
+
+>  <ChemCompId>
+DXR
+
+>  <PdbId>
+3MA6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+299
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+6
+
+>  <ObservedFormula>
+C11 N5
+
+>  <Name>
+3-(3-bromobenzyl)-1-tert-butyl-1H-pyrazolo[3,4-d]pyrimidin-4-amine
+
+>  <SystematicName>
+3-[(3-bromophenyl)methyl]-1-tert-butyl-pyrazolo[3,4-d]pyrimidin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H18 Br N5
+
+>  <MolecularWeight>
+360.252
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H18BrN5/c1-16(2,3)22-15-13(14(18)19-9-20-15)12(21-22)8-10-5-4-6-11(17)7-10/h4-7,9H,8H2,1-3H3,(H2,18,19,20)
+
+>  <InChIKey>
+FTICVONBLRGQJW-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)n1c2c(c(n1)Cc3cccc(c3)Br)c(ncn2)N
+
+$$$$

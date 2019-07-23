@@ -1,0 +1,123 @@
+3R49_Q8A_A_301
+  RCSB PDB12061710303D
+Coordinates from PDB:3R49:A:301 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    0.7780   15.2940   22.8210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9980   15.3630   18.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4130   16.7960   19.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1680   14.9160   19.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1890   16.3280   21.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7890   15.9540   18.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4210   16.6740   18.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2070   15.0460   20.8970   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9720   15.7350   21.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2060   16.0820   19.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0240   15.6130   20.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  2  0  0  0  0
+  6 10  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+NAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3R49_Q8A_A_301
+
+>  <ChemCompId>
+Q8A
+
+>  <PdbId>
+3R49
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+quinolin-8-amine
+
+>  <SystematicName>
+quinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2
+
+>  <MolecularWeight>
+144.173
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2/c10-8-5-1-3-7-4-2-6-11-9(7)8/h1-6H,10H2
+
+>  <InChIKey>
+WREVVZMUNPAPOV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cccnc2c(c1)N
+
+$$$$

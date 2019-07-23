@@ -1,0 +1,109 @@
+3UK4_XXD_A_677
+  RCSB PDB12061711043D
+Coordinates from PDB:3UK4:A:677 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+  -23.3830   18.3730   20.2590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0960   16.1350   15.0780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3090   16.4840   18.1810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4850   17.5340   14.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4720   18.4990   19.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2290   17.4620   18.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0650   18.1450   16.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6150   18.0560   16.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+O1
+A    2
+O5
+A    3
+O7
+A    4
+C10
+A    5
+C11
+A    6
+C13
+A    7
+C14
+A    8
+C15
+M  END
+>  <InstanceId>
+3UK4_XXD_A_677
+
+>  <ChemCompId>
+XXD
+
+>  <PdbId>
+3UK4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+677
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O3
+
+>  <Name>
+(2S)-pentane-1,2,5-triol
+
+>  <SystematicName>
+(2S)-pentane-1,2,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O3
+
+>  <MolecularWeight>
+120.147
+
+>  <ModifiedDate>
+2011-11-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O3/c6-3-1-2-5(8)4-7/h5-8H,1-4H2/t5-/m0/s1
+
+>  <InChIKey>
+WEAYWASEBDOLRG-YFKPBYRVSA-N
+
+>  <SMILES>
+C(C[C@@H](CO)O)CO
+
+$$$$

@@ -1,0 +1,114 @@
+4UE7_MRZ_H_1258
+  RCSB PDB12061715063D
+Coordinates from PDB:4UE7:H:1258 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   70.3680  -11.3700   91.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.7720  -12.5790   92.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.1240  -12.5570   93.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.6670  -11.2740   94.2610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   70.3570  -10.1120   93.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.9510  -10.0680   92.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.6280  -11.1850   95.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.9420  -12.2880   95.4490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2270  -10.0260   95.6330   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  1  1  0  0  0  0
+  7  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+C1
+A    2
+C6
+A    3
+C5
+A    4
+N4
+A    5
+C3
+A    6
+C2
+A    7
+C7
+A    8
+N8
+A    9
+N9
+M  END
+>  <InstanceId>
+4UE7_MRZ_H_1258
+
+>  <ChemCompId>
+MRZ
+
+>  <PdbId>
+4UE7
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+1258
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3
+
+>  <Name>
+piperidine-1-carboximidamide
+
+>  <SystematicName>
+piperidine-1-carboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N3
+
+>  <MolecularWeight>
+127.188
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13N3/c7-6(8)9-4-2-1-3-5-9/h1-5H2,(H3,7,8)
+
+>  <InChIKey>
+QUUYRYYUKNNNNS-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/N1CCCCC1
+
+$$$$

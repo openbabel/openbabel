@@ -1,0 +1,126 @@
+3GAL_1GN_A_998
+  RCSB PDB12061708433D
+Coordinates from PDB:3GAL:A:998 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    6.6130    7.7580   32.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9290    7.4380   31.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6290    7.3120   30.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5290    8.7890   31.9650   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7610    9.0190   32.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4720    9.3420   33.9820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8250    7.9510   33.4060   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6410    6.2200   31.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9260    6.1460   30.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7580    8.5600   30.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4020    8.4690   29.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7670    9.7310   29.8970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  9  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+O5
+A    5
+C1
+A    6
+O1
+A    7
+N2
+A    8
+O3
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O6
+M  END
+>  <InstanceId>
+3GAL_1GN_A_998
+
+>  <ChemCompId>
+1GN
+
+>  <PdbId>
+3GAL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+998
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O5
+
+>  <Name>
+2-DEOXY-2-AMINOGALACTOSE
+
+>  <SystematicName>
+(2R,3R,4R,5R,6R)-3-amino-6-(hydroxymethyl)oxane-2,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H13 N O5
+
+>  <MolecularWeight>
+179.171
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO5/c7-3-5(10)4(9)2(1-8)12-6(3)11/h2-6,8-11H,1,7H2/t2-,3-,4+,5-,6-/m1/s1
+
+>  <InChIKey>
+MSWZFWKMSRAUBD-VFUOTHLCSA-N
+
+>  <SMILES>
+C([C@@H]1[C@@H]([C@@H]([C@H]([C@@H](O1)O)N)O)O)O
+
+$$$$

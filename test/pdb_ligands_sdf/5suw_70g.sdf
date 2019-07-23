@@ -1,0 +1,143 @@
+5SUW_70G_A_301
+  RCSB PDB12061719273D
+Coordinates from PDB:5SUW:A:301 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    4.1260   -8.0720  -19.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0030   -9.5400  -19.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8790   -5.5990  -24.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1870   -4.4450  -24.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1510   -4.5000  -20.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7760   -4.9370  -22.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4960   -6.1300  -22.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0530   -6.4580  -23.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8570   -7.7570  -23.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0280   -8.6890  -22.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8920   -7.9310  -21.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6950   -7.0630  -21.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5130   -7.9590  -21.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6270   -9.9610  -18.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3610  -10.3110  -19.7380   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6130   -4.0950  -23.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4 16  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  2  0  0  0  0
+ 16  6  2  0  0  0  0
+ 10 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7 12  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13  1  1  0  0  0  0
+ 15  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2 14  1  0  0  0  0
+A    1
+C10
+A    2
+C11
+A    3
+C14
+A    4
+C15
+A    5
+C01
+A    6
+C02
+A    7
+C03
+A    8
+C04
+A    9
+C05
+A   10
+C06
+A   11
+C07
+A   12
+C08
+A   13
+C09
+A   14
+O12
+A   15
+O13
+A   16
+C16
+M  END
+>  <InstanceId>
+5SUW_70G_A_301
+
+>  <ChemCompId>
+70G
+
+>  <PdbId>
+5SUW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O2
+
+>  <Name>
+3-[(1R)-8-methyl-1,2,3,4-tetrahydronaphthalen-1-yl]propanoic acid
+
+>  <SystematicName>
+3-[(1~{R})-8-methyl-1,2,3,4-tetrahydronaphthalen-1-yl]propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H18 O2
+
+>  <MolecularWeight>
+218.292
+
+>  <ModifiedDate>
+2017-04-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H18O2/c1-10-4-2-5-11-6-3-7-12(14(10)11)8-9-13(15)16/h2,4-5,12H,3,6-9H2,1H3,(H,15,16)/t12-/m1/s1
+
+>  <InChIKey>
+IAGVZFLDKNPTAP-GFCCVEGCSA-N
+
+>  <SMILES>
+Cc1cccc2c1[C@H](CCC2)CCC(=O)O
+
+$$$$

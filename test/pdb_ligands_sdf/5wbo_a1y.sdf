@@ -1,0 +1,143 @@
+5WBO_A1Y_A_301
+  RCSB PDB12061720083D
+Coordinates from PDB:5WBO:A:301 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -3.0610   -0.6750   17.9170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6940   -0.2000   20.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1940   -4.1770   19.4840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9330   -3.3010   19.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9020   -2.2560   19.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2950   -1.2120   15.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2230   -1.5960   16.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0960   -3.8530   21.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9370   -2.4870   20.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8290   -1.4450   20.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7670    0.0400   19.3650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8380   -0.9480   18.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5450    0.1120   15.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2460    1.0080   16.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1040    0.7620   17.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6090    0.9370   20.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  6  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  7  1  1  0  0  0  0
+ 15  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12  5  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  3  4  3  0  0  0  0
+  4  5  1  0  0  0  0
+  5  9  2  0  0  0  0
+  2 16  1  0  0  0  0
+  2 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+N3
+A    2
+C4
+A    3
+N2
+A    4
+C7
+A    5
+C6
+A    6
+C9
+A    7
+C8
+A    8
+C1
+A    9
+C2
+A   10
+C3
+A   11
+N1
+A   12
+C5
+A   13
+O1
+A   14
+C10
+A   15
+C11
+A   16
+C12
+M  END
+>  <InstanceId>
+5WBO_A1Y_A_301
+
+>  <ChemCompId>
+A1Y
+
+>  <PdbId>
+5WBO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O
+
+>  <Name>
+4,6-dimethyl-2-(morpholin-4-yl)pyridine-3-carbonitrile
+
+>  <SystematicName>
+4,6-dimethyl-2-morpholin-4-yl-pyridine-3-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H15 N3 O
+
+>  <MolecularWeight>
+217.267
+
+>  <ModifiedDate>
+2017-09-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H15N3O/c1-9-7-10(2)14-12(11(9)8-13)15-3-5-16-6-4-15/h7H,3-6H2,1-2H3
+
+>  <InChIKey>
+LUTZBWBXBMVIOV-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc(c1C#N)N2CCOCC2)C
+
+$$$$

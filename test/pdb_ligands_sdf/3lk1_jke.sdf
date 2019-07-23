@@ -1,0 +1,118 @@
+3LK1_JKE_A_93
+  RCSB PDB12061709373D
+Coordinates from PDB:3LK1:A:93 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -14.4790    9.4680   -9.1930   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3500    9.6020   -9.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0090   10.5540   -8.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0480   11.4490   -7.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5380    9.7380  -10.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8520   12.3420   -6.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6300    8.6940   -9.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4850   10.5490   -8.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2390   11.4600   -7.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2340   12.3360   -6.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  8  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4 10  2  0  0  0  0
+  6  9  2  0  0  0  0
+  6 10  1  0  0  0  0
+A    1
+SD
+A    2
+CG
+A    3
+CZ
+A    4
+CD1
+A    5
+OD1
+A    6
+CD2
+A    7
+OD2
+A    8
+CE1
+A    9
+CE2
+A   10
+CG1
+M  END
+>  <InstanceId>
+3LK1_JKE_A_93
+
+>  <ChemCompId>
+JKE
+
+>  <PdbId>
+3LK1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+93
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2 S
+
+>  <Name>
+2-sulfanylbenzoic acid
+
+>  <SystematicName>
+2-sulfanylbenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O2 S
+
+>  <MolecularWeight>
+154.186
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O2S/c8-7(9)5-3-1-2-4-6(5)10/h1-4,10H,(H,8,9)
+
+>  <InChIKey>
+NBOMNTLFRHMDEZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)S
+
+$$$$

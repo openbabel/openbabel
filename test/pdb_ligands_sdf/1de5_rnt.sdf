@@ -1,0 +1,121 @@
+1DE5_RNT_A_1460
+  RCSB PDB12061702153D
+Coordinates from PDB:1DE5:A:1460 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   30.7900   25.3080   62.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1410   25.9180   62.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9560   25.9920   63.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3470   25.1140   65.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2570   25.0520   66.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6830   24.2580   67.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9350   26.0490   61.9690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8850   25.2470   61.7210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3250   25.6240   63.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2530   23.7570   64.5650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6900   26.3870   66.6850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+M  END
+>  <InstanceId>
+1DE5_RNT_A_1460
+
+>  <ChemCompId>
+RNT
+
+>  <PdbId>
+1DE5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1460
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+L-RHAMNITOL
+
+>  <SystematicName>
+(2S,3S,4S,5S)-hexane-1,2,3,4,5-pentol
+
+>  <Synonyms>
+
+
+>  <Type>
+L-SACCHARIDE
+
+>  <Formula>
+C6 H14 O5
+
+>  <MolecularWeight>
+166.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O5/c1-3(8)5(10)6(11)4(9)2-7/h3-11H,2H2,1H3/t3-,4-,5-,6-/m0/s1
+
+>  <InChIKey>
+SKCKOFZKJLZSFA-BXKVDMCESA-N
+
+>  <SMILES>
+C[C@@H]([C@@H]([C@H]([C@H](CO)O)O)O)O
+
+$$$$

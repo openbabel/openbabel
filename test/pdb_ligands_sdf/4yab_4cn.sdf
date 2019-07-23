@@ -1,0 +1,148 @@
+4YAB_4CN_A_1103
+  RCSB PDB12061716243D
+Coordinates from PDB:4YAB:A:1103 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+   51.1820    2.4930  152.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9420    2.2950  151.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9270    2.0110  150.2820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5300    2.4340  152.1500   S 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7050    2.0890  150.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6980    1.8750  149.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5480    1.6350  148.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3160    1.3890  147.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2370    1.1830  146.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2080    0.9130  145.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.7440    0.7600  144.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1660    0.5330  143.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0420    0.9240  144.3510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9850    0.8690  143.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3810    1.1600  145.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.5690    1.4000  146.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6940    1.6100  147.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15  9  1  0  0  0  0
+ 16 17  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 17  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  3  1  0  0  0  0
+  6  5  2  0  0  0  0
+  3  2  2  0  0  0  0
+  5  4  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAA
+A    2
+CAL
+A    3
+NAI
+A    4
+SAJ
+A    5
+CAF
+A    6
+CAO
+A    7
+CAM
+A    8
+CAG
+A    9
+CAN
+A   10
+CAH
+A   11
+CAK
+A   12
+OAC
+A   13
+NAQ
+A   14
+CAB
+A   15
+CAP
+A   16
+CAE
+A   17
+CAD
+M  END
+>  <InstanceId>
+4YAB_4CN_A_1103
+
+>  <ChemCompId>
+4CN
+
+>  <PdbId>
+4YAB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1103
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O S
+
+>  <Name>
+1-methyl-5-(2-methyl-1,3-thiazol-4-yl)-1,3-dihydro-2H-indol-2-one
+
+>  <SystematicName>
+1-methyl-5-(2-methyl-1,3-thiazol-4-yl)-3H-indol-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H12 N2 O S
+
+>  <MolecularWeight>
+244.312
+
+>  <ModifiedDate>
+2015-06-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H12N2OS/c1-8-14-11(7-17-8)9-3-4-12-10(5-9)6-13(16)15(12)2/h3-5,7H,6H2,1-2H3
+
+>  <InChIKey>
+ZBEXFNOIOKBKIV-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1nc(cs1)c2ccc3c(c2)CC(=O)N3C
+
+$$$$

@@ -1,0 +1,135 @@
+3RKE_MZZ_A_610
+  RCSB PDB12061710353D
+Coordinates from PDB:3RKE:A:610 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    5.7980    2.6820   27.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5280    2.3810   28.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7020    2.9380   29.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0190    3.9710   28.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2700    4.3050   27.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1430    3.6840   26.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8550    1.9230   26.2850   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1040    4.5880   29.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7460    4.8600   29.9460   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8030    4.8290   31.1370   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1660    5.3520   30.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1740    5.5150   30.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2840    5.1160   29.3320   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9930    4.7150   28.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+N9
+A   10
+O12
+A   11
+C17
+A   12
+C18
+A   13
+N19
+A   14
+C20
+M  END
+>  <InstanceId>
+3RKE_MZZ_A_610
+
+>  <ChemCompId>
+MZZ
+
+>  <PdbId>
+3RKE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+610
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O
+
+>  <Name>
+(4-aminophenyl)-imidazol-1-yl-methanone
+
+>  <SystematicName>
+(4-aminophenyl)-imidazol-1-yl-methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N3 O
+
+>  <MolecularWeight>
+187.198
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9N3O/c11-9-3-1-8(2-4-9)10(14)13-6-5-12-7-13/h1-7H,11H2
+
+>  <InChIKey>
+HFAQMYBPGXYUBH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)n2ccnc2)N
+
+$$$$

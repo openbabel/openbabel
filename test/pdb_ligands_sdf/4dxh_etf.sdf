@@ -1,0 +1,101 @@
+1A71_ETF_A_404
+  RCSB PDB12061701573D
+Coordinates from PDB:1A71:A:404 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   -8.9360  -10.2160   19.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1810  -11.6890   19.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9820  -12.4470   19.6020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7460   -9.9020   18.7930   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8600   -9.6740   18.4940   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0100   -9.6060   20.4790   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O
+A    4
+F1
+A    5
+F2
+A    6
+F3
+M  END
+>  <InstanceId>
+1A71_ETF_A_404
+
+>  <ChemCompId>
+ETF
+
+>  <PdbId>
+1A71
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O F3
+
+>  <Name>
+TRIFLUOROETHANOL
+
+>  <SystematicName>
+2,2,2-trifluoroethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H3 F3 O
+
+>  <MolecularWeight>
+100.04
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H3F3O/c3-2(4,5)1-6/h6H,1H2
+
+>  <InChIKey>
+RHQDFWAXVIIEBN-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(F)(F)F)O
+
+$$$$

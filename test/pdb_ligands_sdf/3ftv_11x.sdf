@@ -1,0 +1,135 @@
+3EJ0_11X_A_176
+  RCSB PDB12061708283D
+Coordinates from PDB:3EJ0:A:176 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   11.7460  -23.2570  -29.0760   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1910  -23.8870  -27.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9830  -23.2190  -27.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9740  -23.7960  -28.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5670  -23.0270  -29.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5710  -22.4630  -28.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3560  -22.3600  -29.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6070  -23.6860  -29.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3430  -23.0960  -27.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5330  -22.6630  -27.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7290  -22.7530  -27.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1170  -24.0920  -29.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3870  -23.6100  -28.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1490  -24.4480  -28.6280   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 14  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+N1
+A    2
+C10
+A    3
+C11
+A    4
+C9
+A    5
+C14
+A    6
+C12
+A    7
+C13
+A    8
+C2
+A    9
+C4
+A   10
+C5
+A   11
+C6
+A   12
+C7
+A   13
+C3
+A   14
+N8
+M  END
+>  <InstanceId>
+3EJ0_11X_A_176
+
+>  <ChemCompId>
+11X
+
+>  <PdbId>
+3EJ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+176
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+N-(pyridin-3-ylmethyl)aniline
+
+>  <SystematicName>
+N-(pyridin-3-ylmethyl)aniline
+
+>  <Synonyms>
+PHENYL-PYRIDIN-3-YLMETHYL-AMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N2
+
+>  <MolecularWeight>
+184.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2/c1-2-6-12(7-3-1)14-10-11-5-4-8-13-9-11/h1-9,14H,10H2
+
+>  <InChIKey>
+BJXLHKJBRORJJJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)NCc2cccnc2
+
+$$$$

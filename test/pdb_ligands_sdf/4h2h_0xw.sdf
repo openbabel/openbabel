@@ -1,0 +1,123 @@
+4H2H_0XW_A_403
+  RCSB PDB12061712483D
+Coordinates from PDB:4H2H:A:403 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   35.7030  -28.7130   28.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4640  -29.3220   28.3060   N 0  3  0  0  0  0  0  0  0  0  0  0
+   34.4260  -29.1870   26.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4570  -30.7400   28.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2000  -31.0040   29.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2630  -31.5490   28.4800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9790  -29.7830   30.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2460  -28.7680   28.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2350  -27.3100   29.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8190  -26.4170   28.5900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5820  -26.9590   30.2910   O 0  5  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  7  1  0  0  0  0
+  4  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+M  CHG  2   2   1  11  -1
+A    1
+C01
+A    2
+N02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+O06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+O10
+A   11
+O11
+M  END
+>  <InstanceId>
+4H2H_0XW_A_403
+
+>  <ChemCompId>
+0XW
+
+>  <PdbId>
+4H2H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+(2S,4R)-4-hydroxy-1,1-dimethylpyrrolidinium-2-carboxylate
+
+>  <SystematicName>
+(2S,4R)-1,1-dimethyl-4-oxidanyl-pyrrolidin-1-ium-2-carboxylate
+
+>  <Synonyms>
+Betonicine, L-4-Hydroxyproline betaine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N O3
+
+>  <MolecularWeight>
+159.183
+
+>  <ModifiedDate>
+2012-10-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13NO3/c1-8(2)4-5(9)3-6(8)7(10)11/h5-6,9H,3-4H2,1-2H3/t5-,6+/m1/s1
+
+>  <InChIKey>
+MUNWAHDYFVYIKH-RITPCOANSA-N
+
+>  <SMILES>
+C[N+]1(C[C@@H](C[C@H]1C(=O)[O-])O)C
+
+$$$$

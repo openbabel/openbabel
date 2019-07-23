@@ -1,0 +1,131 @@
+3FU6_80G_A_710
+  RCSB PDB12061708393D
+Coordinates from PDB:3FU6:A:710 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   25.8510    0.5640    1.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5350    1.0840    0.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4660    1.0340   -0.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7140    0.4620   -0.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0310   -0.0580    0.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0990   -0.0080    1.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8520    0.6180    2.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9170    1.4920    3.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4830    0.2700    4.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5290   -0.2150    3.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7270    0.4070   -1.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7880    1.3610   -1.5700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7870    2.0420    2.4920   S 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 11  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7 13  1  0  0  0  0
+  7 10  2  0  0  0  0
+ 13  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C9
+A    9
+C10
+A   10
+C11
+A   11
+C12
+A   12
+N13
+A   13
+S8
+M  END
+>  <InstanceId>
+3FU6_80G_A_710
+
+>  <ChemCompId>
+80G
+
+>  <PdbId>
+3FU6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N S
+
+>  <Name>
+1-(4-thiophen-2-ylphenyl)methanamine
+
+>  <SystematicName>
+(4-thiophen-2-ylphenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N S
+
+>  <MolecularWeight>
+189.277
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NS/c12-8-9-3-5-10(6-4-9)11-2-1-7-13-11/h1-7H,8,12H2
+
+>  <InChIKey>
+YKNLMMDEWQZCLJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1)c2ccc(cc2)CN
+
+$$$$

@@ -1,0 +1,129 @@
+3B3X_A33_A_300
+  RCSB PDB12061707583D
+Coordinates from PDB:3B3X:A:300 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   52.2260   45.7470  -18.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7880   46.0730  -18.4720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0200   47.1040  -17.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6530   48.4980  -17.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7930   49.6530  -18.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9880   46.9750  -15.1810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9220   46.3950  -16.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7790   45.1720  -16.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4630   45.4090  -16.8270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1630   45.8180  -18.8850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6510   47.3150  -18.0410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.5400   49.6980  -19.3480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.3730   50.5800  -17.3860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  3  1  0  0  0  0
+  9  1  2  0  0  0  0
+ 13  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  5 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O92
+A    7
+C9
+A    8
+O91
+A    9
+O12
+A   10
+O11
+A   11
+NZ
+A   12
+O51
+A   13
+O52
+M  END
+>  <InstanceId>
+3B3X_A33_A_300
+
+>  <ChemCompId>
+A33
+
+>  <PdbId>
+3B3X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O6
+
+>  <Name>
+2-(carboxymethyl)-D-aspartic acid
+
+>  <SystematicName>
+2-aminopropane-1,2,3-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 N O6
+
+>  <MolecularWeight>
+191.139
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9NO6/c7-6(5(12)13,1-3(8)9)2-4(10)11/h1-2,7H2,(H,8,9)(H,10,11)(H,12,13)
+
+>  <InChIKey>
+ZJBWCVAEGNLETQ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)C(CC(=O)O)(C(=O)O)N
+
+$$$$

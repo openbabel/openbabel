@@ -1,0 +1,142 @@
+1IY7_CXA_A_500
+  RCSB PDB12061702533D
+Coordinates from PDB:1IY7:A:500 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    5.5640   -9.5750   12.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4700   -8.6550   11.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1860   -8.0880   10.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9950   -8.4330   10.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0960   -9.3430   10.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3830   -9.9050   11.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8360  -10.1860   13.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3710   -9.3430   15.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8240   -9.1650   15.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4260   -7.9600   14.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0340   -9.9880   15.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6840   -9.9530   16.5590   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5240   -9.0860   18.0720   S 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5090   -7.7220   18.3080   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9080   -9.9330   19.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2640   -8.4050   18.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 13 16  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C12
+A    8
+C13
+A    9
+C14
+A   10
+O15
+A   11
+O16
+A   12
+N17
+A   13
+S18
+A   14
+N19
+A   15
+O20
+A   16
+O21
+M  END
+>  <InstanceId>
+1IY7_CXA_A_500
+
+>  <ChemCompId>
+CXA
+
+>  <PdbId>
+1IY7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O4 S
+
+>  <Name>
+PHENYLALANINE-N-SULFONAMIDE
+
+>  <SystematicName>
+(2S)-3-phenyl-2-(sulfamoylamino)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O4 S
+
+>  <MolecularWeight>
+244.268
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2O4S/c10-16(14,15)11-8(9(12)13)6-7-4-2-1-3-5-7/h1-5,8,11H,6H2,(H,12,13)(H2,10,14,15)/t8-/m0/s1
+
+>  <InChIKey>
+PHGMHLLGXKQIDY-QMMMGPOBSA-N
+
+>  <SMILES>
+c1ccc(cc1)C[C@@H](C(=O)O)NS(=O)(=O)N
+
+$$$$

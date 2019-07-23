@@ -1,0 +1,119 @@
+1MPW_TMH_A_1450
+  RCSB PDB12061703193D
+Coordinates from PDB:1MPW:A:1450 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   24.9240  -14.3430  -47.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7770  -13.5960  -47.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9040  -13.6870  -46.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6850  -15.2980  -46.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0550  -15.1120  -45.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2190  -15.2290  -46.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5450  -13.7530  -44.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4810  -13.8030  -43.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6460  -12.8170  -44.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3200  -12.7360  -48.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C3
+A    2
+C2
+A    3
+C1
+A    4
+C6
+A    5
+C5
+A    6
+C4
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+M  END
+>  <InstanceId>
+1MPW_TMH_A_1450
+
+>  <ChemCompId>
+TMH
+
+>  <PdbId>
+1MPW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1450
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+(+)-alpha-Pinene
+
+>  <SystematicName>
+(1R,5R)-4,6,6-trimethylbicyclo[3.1.1]hept-3-ene
+
+>  <Synonyms>
+(+)-3,6,6-TRIMETHYLBICYCLO[3.1.1]HEPT-2-ENE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16
+
+>  <MolecularWeight>
+136.234
+
+>  <ModifiedDate>
+2014-12-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16/c1-7-4-5-8-6-9(7)10(8,2)3/h4,8-9H,5-6H2,1-3H3/t8-,9-/m1/s1
+
+>  <InChIKey>
+GRWFGVWFFZKLTI-RKDXNWHRSA-N
+
+>  <SMILES>
+CC1=CC[C@@H]2C[C@H]1C2(C)C
+
+$$$$

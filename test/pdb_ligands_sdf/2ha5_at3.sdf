@@ -1,0 +1,118 @@
+2C4H_AT3_A_1540
+  RCSB PDB12061705123D
+Coordinates from PDB:2C4H:A:1540 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    4.7350   68.4320   60.5460   N 0  3  0  0  0  0  0  0  0  0  0  0
+    4.3080   68.7990   61.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4150   69.4900   62.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8550   69.6630   65.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1800   71.0410   65.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8930   68.5820   65.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8610   69.6420   59.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7060   67.5640   59.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9990   67.6880   60.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2620   69.2100   64.4890   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4 10  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+O7
+A    6
+C6
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+S24
+M  END
+>  <InstanceId>
+2C4H_AT3_A_1540
+
+>  <ChemCompId>
+AT3
+
+>  <PdbId>
+2C4H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1540
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O S
+
+>  <Name>
+ACETYLTHIOCHOLINE
+
+>  <SystematicName>
+2-ethanoylsulfanylethyl-trimethyl-azanium
+
+>  <Synonyms>
+2-{[(1S)-1-HYDROXYETHYL]THIO}-N,N,N-TRIMETHYLETHANAMINIUM
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H16 N O S
+
+>  <MolecularWeight>
+162.273
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H16NOS/c1-7(9)10-6-5-8(2,3)4/h5-6H2,1-4H3/q+1
+
+>  <InChIKey>
+GFFIJCYHQYHUHB-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)SCC[N+](C)(C)C
+
+$$$$

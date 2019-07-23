@@ -1,0 +1,135 @@
+1VID_DNC_A_302
+  RCSB PDB12061704203D
+Coordinates from PDB:1VID:A:302 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -25.0370   61.8400   50.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1650   63.1630   50.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9370   61.1190   49.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0120   61.8390   49.1860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8600   59.6760   50.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7910   58.7990   49.4300   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -21.8670   59.2100   48.7460   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -22.8460   57.5860   49.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8960   59.0440   50.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9710   59.7910   51.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0120   59.1030   52.1100   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -26.9440   57.9230   52.2630   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -27.9120   59.7170   52.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0440   61.1880   51.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 14  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+M  CHG  4   6   1   7  -1  11   1  12  -1
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+N1
+A    7
+O3
+A    8
+O4
+A    9
+C4
+A   10
+C5
+A   11
+N2
+A   12
+O5
+A   13
+O6
+A   14
+C6
+M  END
+>  <InstanceId>
+1VID_DNC_A_302
+
+>  <ChemCompId>
+DNC
+
+>  <PdbId>
+1VID
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O6
+
+>  <Name>
+3,5-DINITROCATECHOL
+
+>  <SystematicName>
+3,5-dinitrobenzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H4 N2 O6
+
+>  <MolecularWeight>
+200.106
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4N2O6/c9-5-2-3(7(11)12)1-4(6(5)10)8(13)14/h1-2,9-10H
+
+>  <InChIKey>
+VDCDWNDTNSWDFJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1[N+](=O)[O-])O)O)[N+](=O)[O-]
+
+$$$$

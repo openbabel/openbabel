@@ -1,0 +1,129 @@
+1QJ3_KAP_A_1430
+  RCSB PDB12061703473D
+Coordinates from PDB:1QJ3:A:1430 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   23.7660   -4.9350   18.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8580   -3.8890   19.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5920   -2.6610   19.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0320   -4.2220   19.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5100   -4.2820   18.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2950   -4.6010   19.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2350   -3.4880   19.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0550   -4.1200   19.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3450   -3.3220   20.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8090   -2.4090   21.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7870   -1.3530   21.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1180   -3.4490   20.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3470   -3.4320   22.9230   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+OI1
+A    4
+OI2
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+CE
+A    9
+CZ
+A   10
+CH
+A   11
+CS
+A   12
+O
+A   13
+N
+M  END
+>  <InstanceId>
+1QJ3_KAP_A_1430
+
+>  <ChemCompId>
+KAP
+
+>  <PdbId>
+1QJ3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1430
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+7-KETO-8-AMINOPELARGONIC ACID
+
+>  <SystematicName>
+(8S)-8-amino-7-oxo-nonanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O3
+
+>  <MolecularWeight>
+187.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO3/c1-7(10)8(11)5-3-2-4-6-9(12)13/h7H,2-6,10H2,1H3,(H,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+GUAHPAJOXVYFON-ZETCQYMHSA-N
+
+>  <SMILES>
+C[C@@H](C(=O)CCCCCC(=O)O)N
+
+$$$$

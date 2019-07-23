@@ -1,0 +1,117 @@
+1B57_PGH_A_359
+  RCSB PDB12061702033D
+Coordinates from PDB:1B57:A:359 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   22.9990   38.7910  109.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9670   38.2820  110.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9610   40.1070  109.4770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1380   40.5670  108.9440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7170   38.0410  109.1210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9720   37.4520  110.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6770   38.1840  110.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9650   36.7340  112.3880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0540   35.8280  110.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6650   37.0630  110.9070   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N2
+A    4
+O2
+A    5
+O1
+A    6
+O1P
+A    7
+O2P
+A    8
+O3P
+A    9
+O4P
+A   10
+P
+M  END
+>  <InstanceId>
+1B57_PGH_A_359
+
+>  <ChemCompId>
+PGH
+
+>  <PdbId>
+1B57
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+359
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O6 P
+
+>  <Name>
+PHOSPHOGLYCOLOHYDROXAMIC ACID
+
+>  <SystematicName>
+[2-(hydroxyamino)-2-oxo-ethyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H6 N O6 P
+
+>  <MolecularWeight>
+171.046
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H6NO6P/c4-2(3-5)1-9-10(6,7)8/h5H,1H2,(H,3,4)(H2,6,7,8)
+
+>  <InChIKey>
+BAXHHWZKQZIJID-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)NO)OP(=O)(O)O
+
+$$$$

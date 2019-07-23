@@ -1,0 +1,135 @@
+5IPA_6C8_A_301
+  RCSB PDB12061718123D
+Coordinates from PDB:5IPA:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   32.9830   23.9130   16.5760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9810   23.2160   16.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0730   23.6700   15.8760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3860   23.0020   15.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2840   23.9090   15.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3450   24.8740   14.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9850   24.8590   15.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9490   21.8290   17.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9620   21.4970   17.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8400   20.1450   18.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7070   19.0960   18.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6270   19.7900   18.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8650   18.4680   19.2760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1410   17.9930   18.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 14  2  0  0  0  0
+ 10 12  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O1
+A    2
+C6
+A    3
+N
+A    4
+C10
+A    5
+C9
+A    6
+C8
+A    7
+C7
+A    8
+C5
+A    9
+C4
+A   10
+C3
+A   11
+C
+A   12
+C2
+A   13
+O
+A   14
+C1
+M  END
+>  <InstanceId>
+5IPA_6C8_A_301
+
+>  <ChemCompId>
+6C8
+
+>  <PdbId>
+5IPA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+(2E)-3-(furan-3-yl)-1-(pyrrolidin-1-yl)prop-2-en-1-one
+
+>  <SystematicName>
+(~{E})-3-(furan-3-yl)-1-pyrrolidin-1-yl-prop-2-en-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H13 N O2
+
+>  <MolecularWeight>
+191.226
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H13NO2/c13-11(12-6-1-2-7-12)4-3-10-5-8-14-9-10/h3-5,8-9H,1-2,6-7H2/b4-3+
+
+>  <InChIKey>
+GAMDFDCJGGCXFH-ONEGZZNKSA-N
+
+>  <SMILES>
+c1cocc1/C=C/C(=O)N2CCCC2
+
+$$$$

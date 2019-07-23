@@ -1,0 +1,127 @@
+3V1S_0LH_A_401
+  RCSB PDB12061711093D
+Coordinates from PDB:3V1S:A:401 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   25.0790   42.4310    0.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0150   42.8800    1.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4420   44.1870    1.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3520   45.1250    1.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5590   46.3630    1.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8700   46.6790    0.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9710   45.7490   -0.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7650   44.4930    0.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9420   43.4070   -0.1470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0530   43.3640   -1.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6480   43.8640   -1.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3460   44.3260    0.2790   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9  1  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  3  2  0  0  0  0
+  1  2  2  0  0  0  0
+  5  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+CAG
+A    2
+CAF
+A    3
+CAJ
+A    4
+CAD
+A    5
+CAB
+A    6
+CAC
+A    7
+CAE
+A    8
+CAK
+A    9
+NAL
+A   10
+CAI
+A   11
+CAH
+A   12
+NAA
+M  END
+>  <InstanceId>
+3V1S_0LH_A_401
+
+>  <ChemCompId>
+0LH
+
+>  <PdbId>
+3V1S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2
+
+>  <Name>
+2-(1H-indol-1-yl)ethanamine
+
+>  <SystematicName>
+2-indol-1-ylethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 N2
+
+>  <MolecularWeight>
+160.216
+
+>  <ModifiedDate>
+2012-02-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12N2/c11-6-8-12-7-5-9-3-1-2-4-10(9)12/h1-5,7H,6,8,11H2
+
+>  <InChIKey>
+BXEFQUSYBZYTAE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ccn2CCN
+
+$$$$

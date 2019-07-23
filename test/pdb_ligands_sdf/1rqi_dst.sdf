@@ -1,0 +1,133 @@
+1RQI_DST_A_401
+  RCSB PDB12061703553D
+Coordinates from PDB:1RQI:A:401 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   58.2730   72.0590   10.2530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.4700   73.5410   10.3410   P 0  0  0  0  0  0  0  0  0  0  0  0
+   57.7430   74.1360   11.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3480   74.2880    9.0350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0300   73.6640   10.6950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7150   75.0910   10.9340   P 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6200   75.8280    9.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1980   75.7580   12.1700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5680   74.7140   11.1630   S 0  0  0  0  0  0  0  0  0  0  0  0
+   63.0650   73.1580   11.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.7730   72.7520   12.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.3810   72.1850   14.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.3880   71.9010   15.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.9140   71.8990   14.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+O4
+A    2
+P1
+A    3
+O6
+A    4
+O5
+A    5
+O2
+A    6
+P3
+A    7
+O8
+A    8
+O7
+A    9
+S9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+1RQI_DST_A_401
+
+>  <ChemCompId>
+DST
+
+>  <PdbId>
+1RQI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O6 P2 S
+
+>  <Name>
+DIMETHYLALLYL S-THIOLODIPHOSPHATE
+
+>  <SystematicName>
+3-methylbutylsulfanyl-phosphonooxy-phosphinic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H14 O6 P2 S
+
+>  <MolecularWeight>
+264.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H14O6P2S/c1-5(2)3-4-14-13(9,10)11-12(6,7)8/h5H,3-4H2,1-2H3,(H,9,10)(H2,6,7,8)
+
+>  <InChIKey>
+UWSFTDFHOGCIEL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)CCS[P@@](=O)(O)OP(=O)(O)O
+
+$$$$

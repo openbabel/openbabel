@@ -1,0 +1,146 @@
+1XIV_RB2_A_500
+  RCSB PDB12061704383D
+Coordinates from PDB:1XIV:A:500 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   33.7370    9.0130   20.8370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4470    9.2880   19.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6870    8.4440   18.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0030   10.6440   19.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1740   11.2650   20.7570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2690   11.1190   18.4930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7680   12.3550   18.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9740   12.6230   16.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6520   11.6410   15.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7520   11.9750   14.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1960   10.3000   16.0070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4790    9.6090   14.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4960   13.8400   16.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8200   14.8120   17.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4870   16.3500   16.6620  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6230   14.5840   18.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1160   13.3560   19.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 17  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O17
+A    2
+C15
+A    3
+O16
+A    4
+C13
+A    5
+O14
+A    6
+N12
+A    7
+C6
+A    8
+C5
+A    9
+C8
+A   10
+O10
+A   11
+O9
+A   12
+C11
+A   13
+C4
+A   14
+C3
+A   15
+CL
+A   16
+C2
+A   17
+C1
+M  END
+>  <InstanceId>
+1XIV_RB2_A_500
+
+>  <ChemCompId>
+RB2
+
+>  <PdbId>
+1XIV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O5 Cl
+
+>  <Name>
+2-({4-CHLORO-2-[HYDROXY(METHOXY)METHYL]CYCLOHEXYL}AMINO)ETHANE-1,1,2-TRIOL
+
+>  <SystematicName>
+2-[[4-chloro-2-(hydroxy-methoxy-methyl)cyclohexyl]amino]ethane-1,1,2-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H20 Cl N O5
+
+>  <MolecularWeight>
+269.723
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20ClNO5/c1-17-10(16)6-4-5(11)2-3-7(6)12-8(13)9(14)15/h5-10,12-16H,2-4H2,1H3/t5-,6?,7-,8?,10+/m0/s1
+
+>  <InChIKey>
+ZCXQIUYGWAQWDL-MOQQMVQXSA-N
+
+>  <SMILES>
+COC(C1CC(CCC1NC(C(O)O)O)Cl)O
+
+$$$$

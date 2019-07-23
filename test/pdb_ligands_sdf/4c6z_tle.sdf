@@ -1,0 +1,138 @@
+4C6Z_TLE_A_1420
+  RCSB PDB12061711593D
+Coordinates from PDB:4C6Z:A:1420 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -8.5150  -17.5250    9.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8350  -23.9010    8.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6970  -21.5000    8.1490   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3810  -18.6940    8.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4960  -22.8200    5.6340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1720  -19.3510    7.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8480  -18.6950    8.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1730  -20.4750    7.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9840  -21.2470    6.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2450  -20.5480    5.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6730  -23.2870    7.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6520  -23.6940    6.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8600  -25.1290    6.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1240  -26.0560    7.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3570  -22.6760    6.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  2  0  0  0  0
+  2 11  2  0  0  0  0
+  3  9  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5 15  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 15  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C
+A    2
+O
+A    3
+S
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+A   12
+C8
+A   13
+C9
+A   14
+C10
+A   15
+C11
+M  END
+>  <InstanceId>
+4C6Z_TLE_A_1420
+
+>  <ChemCompId>
+TLE
+
+>  <PdbId>
+4C6Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1420
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2 S
+
+>  <Name>
+(5R)-3-ethyl-4-hydroxy-5-methyl-5-[(1E)-2-methylbuta-1,3-dien-1-yl]thiophen-2(5H)-one
+
+>  <SystematicName>
+(5R)-3-ethyl-5-methyl-5-[(1E)-2-methylbuta-1,3-dienyl]-4-oxidanyl-thiophen-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H16 O2 S
+
+>  <MolecularWeight>
+224.319
+
+>  <ModifiedDate>
+2013-10-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H16O2S/c1-5-8(3)7-12(4)10(13)9(6-2)11(14)15-12/h5,7,13H,1,6H2,2-4H3/b8-7+/t12-/m1/s1
+
+>  <InChIKey>
+JXKINNHBIPAUJR-ABZNLYFFSA-N
+
+>  <SMILES>
+CCC1=C([C@@](SC1=O)(C)/C=C(\C)/C=C)O
+
+$$$$

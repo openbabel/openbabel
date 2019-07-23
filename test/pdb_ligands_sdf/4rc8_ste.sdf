@@ -1,0 +1,137 @@
+1E7I_STE_A_1001
+  RCSB PDB12061702213D
+Coordinates from PDB:1E7I:A:1001 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   30.0760   12.6060   36.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1030   11.8500   36.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9530   13.7550   35.9260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4730   12.0990   36.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7100   12.2140   38.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1810   12.5480   38.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4270   14.0550   38.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3250   14.4640   37.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5670   15.9680   37.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8970   16.2820   36.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7980   16.1690   35.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7430   15.1340   34.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6950   15.7830   33.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4980   15.3630   31.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1160   14.8220   31.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+C10
+A   13
+C11
+A   14
+C12
+A   15
+C13
+M  END
+>  <InstanceId>
+1E7I_STE_A_1001
+
+>  <ChemCompId>
+STE
+
+>  <PdbId>
+1E7I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+5
+
+>  <ObservedFormula>
+C13 O2
+
+>  <Name>
+STEARIC ACID
+
+>  <SystematicName>
+octadecanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C18 H36 O2
+
+>  <MolecularWeight>
+284.477
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C18H36O2/c1-2-3-4-5-6-7-8-9-10-11-12-13-14-15-16-17-18(19)20/h2-17H2,1H3,(H,19,20)
+
+>  <InChIKey>
+QIQXTHQIDYTFRH-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCCCCCCC(=O)O
+
+$$$$

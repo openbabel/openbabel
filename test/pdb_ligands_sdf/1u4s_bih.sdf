@@ -1,0 +1,151 @@
+1U4S_BIH_A_336
+  RCSB PDB12061704113D
+Coordinates from PDB:1U4S:A:336 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   26.3910   21.2260    3.3220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0510   20.9240    2.8480   S 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1020   21.9790    3.1990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0300   20.5770    1.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5900   19.5870    3.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4210   18.4580    3.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0860   17.2990    4.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8790   17.2360    5.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4750   16.1080    5.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0110   18.4210    5.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3700   19.5460    4.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8170   18.3640    5.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4510   17.2210    6.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2730   16.0850    6.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7990   14.7730    7.5890   S 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7830   14.0070    6.8600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9570   13.8990    7.7260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2920   15.2190    8.8940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  2  0  0  0  0
+ 15 18  2  0  0  0  0
+A    1
+O31
+A    2
+S3
+A    3
+O32
+A    4
+O3
+A    5
+C2
+A    6
+C1
+A    7
+C
+A    8
+C8A
+A    9
+C5
+A   10
+C4A
+A   11
+C4
+A   12
+C9
+A   13
+C8
+A   14
+C7
+A   15
+S6
+A   16
+O6
+A   17
+O61
+A   18
+O1
+M  END
+>  <InstanceId>
+1U4S_BIH_A_336
+
+>  <ChemCompId>
+BIH
+
+>  <PdbId>
+1U4S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+336
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O6 S2
+
+>  <Name>
+NAPHTHALENE-2,6-DISULFONIC ACID
+
+>  <SystematicName>
+naphthalene-2,6-disulfonic acid
+
+>  <Synonyms>
+2,6-NAPHTHALENEDISULFONIC ACID; 2,6-NAPHTHALENEDISULPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 O6 S2
+
+>  <MolecularWeight>
+288.297
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8O6S2/c11-17(12,13)9-3-1-7-5-10(18(14,15)16)4-2-8(7)6-9/h1-6H,(H,11,12,13)(H,14,15,16)
+
+>  <InChIKey>
+FITZJYAVATZPMJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc2c1cc(cc2)S(=O)(=O)O)S(=O)(=O)O
+
+$$$$

@@ -1,0 +1,126 @@
+1RF8_MTN_A_320
+  RCSB PDB12061703533D
+Coordinates from PDB:1RF8:A:320 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   19.7190    7.6940  -14.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5930    7.1570  -14.3040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5210    7.8230  -13.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4790    6.7690  -13.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8480    5.6890  -14.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0020    4.4790  -14.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2800    4.6480  -13.8890   S 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2510    5.7930  -14.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1700    4.6800  -14.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2010    5.8260  -16.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0560    9.0710  -14.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9270    8.1460  -12.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+O1
+A    2
+N1
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+S1
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+M  END
+>  <InstanceId>
+1RF8_MTN_A_320
+
+>  <ChemCompId>
+MTN
+
+>  <PdbId>
+1RF8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+320
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+4
+
+>  <ObservedFormula>
+C9 N O S
+
+>  <Name>
+S-[(1-oxyl-2,2,5,5-tetramethyl-2,5-dihydro-1H-pyrrol-3-yl)methyl] methanesulfonothioate
+
+>  <SystematicName>
+1-$l^{1}-oxidanyl-2,2,5,5-tetramethyl-3-(methylsulfonylsulfanylmethyl)pyrrole
+
+>  <Synonyms>
+MTSL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 N O3 S2
+
+>  <MolecularWeight>
+264.385
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H19NO3S2/c1-9(2)6-8(7-15-16(5,13)14)10(3,4)11(9)12/h6,12H,7H2,1-5H3
+
+>  <InChIKey>
+MXZPGYFBZHBAQM-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(C=C(C(N1[O])(C)C)CSS(=O)(=O)C)C
+
+$$$$

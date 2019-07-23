@@ -1,0 +1,123 @@
+3KCY_HQY_A_1
+  RCSB PDB12061709253D
+Coordinates from PDB:3KCY:A:1 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -24.2980   25.4790    6.0950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7030   25.3290    7.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9410   25.8280    8.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6060   24.6920    6.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8590   23.8280    3.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0410   25.7020    7.6270   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.7080   23.9470    4.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1200   24.9640    5.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0740   24.3350    4.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.7570   24.5700    5.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9690   25.0850    6.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4 10  2  0  0  0  0
+  5  7  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+OAA
+A    2
+CAD
+A    3
+CAE
+A    4
+CAF
+A    5
+CAG
+A    6
+NAH
+A    7
+CAI
+A    8
+CAJ
+A    9
+CAK
+A   10
+CAL
+A   11
+CAM
+M  END
+>  <InstanceId>
+3KCY_HQY_A_1
+
+>  <ChemCompId>
+HQY
+
+>  <PdbId>
+3KCY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O
+
+>  <Name>
+quinolin-8-ol
+
+>  <SystematicName>
+quinolin-8-ol
+
+>  <Synonyms>
+8-hydroxyquinoline
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N O
+
+>  <MolecularWeight>
+145.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7NO/c11-8-5-1-3-7-4-2-6-10-9(7)8/h1-6,11H
+
+>  <InChIKey>
+MCJGNVYPOGVAJF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cccnc2c(c1)O
+
+$$$$

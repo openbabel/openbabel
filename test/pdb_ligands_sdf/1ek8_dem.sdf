@@ -1,0 +1,129 @@
+1EK8_DEM_A_901
+  RCSB PDB12061702233D
+Coordinates from PDB:1EK8:A:901 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -13.1700   18.6140   25.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0270   17.8960   26.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6690   18.4470   26.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6880   17.7140   25.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2470   18.2190   25.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2630   17.4780   24.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2180   16.1010   25.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3650   15.1880   24.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5750   13.8860   25.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9150   12.6930   24.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3450   11.5260   25.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9820   18.9340   26.1820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8590   18.3620   24.0660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+CM
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+O1
+A   13
+O5
+M  END
+>  <InstanceId>
+1EK8_DEM_A_901
+
+>  <ChemCompId>
+DEM
+
+>  <PdbId>
+1EK8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O2
+
+>  <Name>
+DECYLOXY-METHANOL
+
+>  <SystematicName>
+decoxymethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H24 O2
+
+>  <MolecularWeight>
+188.307
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H24O2/c1-2-3-4-5-6-7-8-9-10-13-11-12/h12H,2-11H2,1H3
+
+>  <InChIKey>
+CDMVCFBAVCCGIE-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCOCO
+
+$$$$

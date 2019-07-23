@@ -1,0 +1,129 @@
+1Q6R_LX1_A_7301
+  RCSB PDB12061703443D
+Coordinates from PDB:1Q6R:A:7301 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   64.7340   23.7830   25.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.9350   23.3890   24.2870   P 0  0  0  0  0  0  0  0  0  0  0  0
+   66.2570   24.4990   23.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   67.2840   23.0430   25.1030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.8350   21.8330   23.4340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.5650   20.6470   24.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.1060   20.3300   24.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.1260   19.0480   24.7240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4410   20.2600   22.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.1310   19.3860   21.8750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0200   19.7730   22.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.6420   18.6300   22.6760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.1270   20.7480   23.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+O8
+A    2
+P
+A    3
+O6
+A    4
+O7
+A    5
+O5
+A    6
+C5
+A    7
+C4
+A    8
+O4
+A    9
+C3
+A   10
+O3
+A   11
+C2
+A   12
+O2
+A   13
+C1
+M  END
+>  <InstanceId>
+1Q6R_LX1_A_7301
+
+>  <ChemCompId>
+LX1
+
+>  <PdbId>
+1Q6R
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+7301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O7 P
+
+>  <Name>
+L-XYLULOSE 5-PHOSPHATE
+
+>  <SystematicName>
+[(2S,3S,4R)-2,3,4-trihydroxypentyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H13 O7 P
+
+>  <MolecularWeight>
+216.126
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H13O7P/c1-3(6)5(8)4(7)2-12-13(9,10)11/h3-8H,2H2,1H3,(H2,9,10,11)/t3-,4+,5+/m1/s1
+
+>  <InChIKey>
+YPXGTKHZRCDZTL-WISUUJSJSA-N
+
+>  <SMILES>
+C[C@H]([C@@H]([C@H](COP(=O)(O)O)O)O)O
+
+$$$$

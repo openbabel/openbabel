@@ -1,0 +1,139 @@
+2WZI_5FN_A_1719
+  RCSB PDB12061707213D
+Coordinates from PDB:2WZI:A:1719 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -17.1380    2.6040   -0.5000   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7120    3.7260    0.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7730    4.2030    1.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2830    5.3580    1.7620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3500    3.4830    0.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5050    2.5770    1.7700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3960    2.9120   -0.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1030    2.7090    0.1800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5550    4.7050   -1.0010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5790    4.4700   -2.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0570    3.5680   -3.0220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8520    2.9340   -3.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7990    2.1230   -4.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7990    3.1680   -2.7660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2350    3.8750   -1.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+F1
+A    2
+C5
+A    3
+C6
+A    4
+O24
+A    5
+C4
+A    6
+O22
+A    7
+C3
+A    8
+O21
+A    9
+O23
+A   10
+C1
+A   11
+O1
+A   12
+C7
+A   13
+C9
+A   14
+N1
+A   15
+C2
+M  END
+>  <InstanceId>
+2WZI_5FN_A_1719
+
+>  <ChemCompId>
+5FN
+
+>  <PdbId>
+2WZI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1719
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O5 F
+
+>  <Name>
+(3AS,5S,6S,7R,7AR)-5-FLUORO-5-(HYDROXYMETHYL)-2-METHYL-5,6,7,7A-TETRAHYDRO-3AH-PYRANO[3,2-D][1,3]OXAZOLE-6,7-DIOL
+
+>  <SystematicName>
+(3aS,5S,6S,7R,7aR)-5-fluoro-5-(hydroxymethyl)-2-methyl-3a,6,7,7a-tetrahydropyrano[5,6-d][1,3]oxazole-6,7-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H12 F N O5
+
+>  <MolecularWeight>
+221.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12FNO5/c1-3-10-4-5(12)6(13)8(9,2-11)15-7(4)14-3/h4-7,11-13H,2H2,1H3/t4-,5-,6+,7+,8-/m1/s1
+
+>  <InChIKey>
+GCSIDVFZDNBNLE-QQGCVABSSA-N
+
+>  <SMILES>
+CC1=N[C@@H]2[C@H]([C@@H]([C@](O[C@@H]2O1)(CO)F)O)O
+
+$$$$

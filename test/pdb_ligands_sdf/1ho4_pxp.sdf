@@ -1,0 +1,142 @@
+1HO4_PXP_A_802
+  RCSB PDB12061702453D
+Coordinates from PDB:1HO4:A:802 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    2.3270  -17.0120   -6.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0320  -16.6240   -6.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1230  -17.5420   -7.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5710  -15.3970   -5.9990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7160  -14.9820   -6.2860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4280  -14.5630   -5.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9170  -13.2260   -4.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3710  -13.4260   -4.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7490  -14.9790   -4.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1830  -16.2070   -5.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7280  -14.1210   -4.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3170  -14.1170   -2.7370   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0760  -13.3670   -1.5960   P 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3400  -13.8440   -0.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8110  -11.8540   -1.9420   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5230  -13.5700   -1.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C2A
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+C4A
+A    8
+O4A
+A    9
+C5
+A   10
+C6
+A   11
+C5A
+A   12
+O4P
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1HO4_PXP_A_802
+
+>  <ChemCompId>
+PXP
+
+>  <PdbId>
+1HO4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O6 P
+
+>  <Name>
+PYRIDOXINE-5'-PHOSPHATE
+
+>  <SystematicName>
+[5-hydroxy-4-(hydroxymethyl)-6-methyl-pyridin-3-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 N O6 P
+
+>  <MolecularWeight>
+249.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12NO6P/c1-5-8(11)7(3-10)6(2-9-5)4-15-16(12,13)14/h2,10-11H,3-4H2,1H3,(H2,12,13,14)
+
+>  <InChIKey>
+WHOMFKWHIQZTHY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)COP(=O)(O)O)CO)O
+
+$$$$

@@ -1,0 +1,118 @@
+2GQ8_AC6_A_3097
+  RCSB PDB12061705423D
+Coordinates from PDB:2GQ8:A:3097 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -1.7430    0.0040   -2.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6360   -1.1860   -3.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5370   -1.5620   -2.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7250   -0.9180   -0.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8340    0.1230   -0.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8280    0.6020   -1.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8240    0.2410   -3.6050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6020   -2.1720   -0.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7450   -1.1180    0.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2060   -0.5070    1.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+C7
+A   10
+C8
+M  END
+>  <InstanceId>
+2GQ8_AC6_A_3097
+
+>  <ChemCompId>
+AC6
+
+>  <PdbId>
+2GQ8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3097
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O2
+
+>  <Name>
+P-HYDROXYACETOPHENONE
+
+>  <SystematicName>
+1-(4-hydroxyphenyl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O2
+
+>  <MolecularWeight>
+136.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O2/c1-6(9)7-2-4-8(10)5-3-7/h2-5,10H,1H3
+
+>  <InChIKey>
+TXFPEBPIARQUIG-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)c1ccc(cc1)O
+
+$$$$

@@ -1,0 +1,139 @@
+1E4N_HBO_A_514
+  RCSB PDB12061702203D
+Coordinates from PDB:1E4N:A:514 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   28.8260    4.6120   29.4620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0800    5.2810   29.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4910    5.4450   29.5080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9000    4.5090   28.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9610    3.7170   27.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5330    3.7750   28.0690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1010    4.9150   28.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2490    4.3940   28.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6440    3.5120   27.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3330    2.8470   26.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6700    5.6860   30.9910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3970    5.3480   30.6930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6910    2.7430   26.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1310    1.8230   25.3510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4860    1.2800   25.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O1A
+A    2
+C3B
+A    3
+N3B
+A    4
+C4B
+A    5
+C1B
+A    6
+O1B
+A    7
+C2B
+A    8
+C5B
+A    9
+C6B
+A   10
+C8B
+A   11
+O3B
+A   12
+OHB
+A   13
+C7B
+A   14
+O7B
+A   15
+C9B
+M  END
+>  <InstanceId>
+1E4N_HBO_A_514
+
+>  <ChemCompId>
+HBO
+
+>  <PdbId>
+1E4N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+514
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O5
+
+>  <Name>
+2,4-DIHYDROXY-7-(METHYLOXY)-2H-1,4-BENZOXAZIN-3(4H)-ONE
+
+>  <SystematicName>
+(2R)-2,4-dihydroxy-7-methoxy-1,4-benzoxazin-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O5
+
+>  <MolecularWeight>
+211.171
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO5/c1-14-5-2-3-6-7(4-5)15-9(12)8(11)10(6)13/h2-4,9,12-13H,1H3/t9-/m1/s1
+
+>  <InChIKey>
+GDNZNIJPBQATCZ-SECBINFHSA-N
+
+>  <SMILES>
+COc1ccc2c(c1)O[C@H](C(=O)N2O)O
+
+$$$$

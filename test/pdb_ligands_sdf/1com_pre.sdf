@@ -1,0 +1,142 @@
+1COM_PRE_A_223
+  RCSB PDB12061702113D
+Coordinates from PDB:1COM:A:223 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   38.1210   17.7430   28.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8140   17.0180   29.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4630   17.1770   30.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5040   18.2360   30.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4230   18.6890   32.2480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3510   19.3140   29.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7450   19.0860   28.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8040   17.8500   27.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5120   18.9020   26.9390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0430   16.8800   27.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0230   16.9040   27.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2930   16.2910   27.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2360   15.2390   28.5640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6180   17.0280   27.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5740   16.7370   28.5370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7120   17.9050   26.9440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+O4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+O71
+A   10
+O72
+A   11
+C8
+A   12
+C1'
+A   13
+O1'
+A   14
+C2'
+A   15
+O'L
+A   16
+O'M
+M  END
+>  <InstanceId>
+1COM_PRE_A_223
+
+>  <ChemCompId>
+PRE
+
+>  <PdbId>
+1COM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+223
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O6
+
+>  <Name>
+PREPHENIC ACID
+
+>  <SystematicName>
+4-hydroxy-1-(3-hydroxy-2,3-dioxo-propyl)cyclohexa-2,5-diene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O6
+
+>  <MolecularWeight>
+226.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O6/c11-6-1-3-10(4-2-6,9(15)16)5-7(12)8(13)14/h1-4,6,11H,5H2,(H,13,14)(H,15,16)/t6-,10+
+
+>  <InChIKey>
+FPWMCUPFBRFMLH-XGAOUMNUSA-N
+
+>  <SMILES>
+C1=CC(C=CC1O)(CC(=O)C(=O)O)C(=O)O
+
+$$$$

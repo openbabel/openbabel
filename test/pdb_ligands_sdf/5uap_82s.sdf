@@ -1,0 +1,123 @@
+5UAP_82S_A_505
+  RCSB PDB12061719503D
+Coordinates from PDB:5UAP:A:505 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   29.1120  -22.0200   25.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8330  -21.0670   24.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7060  -20.2150   25.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7930  -19.2890   26.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0680  -20.2400   27.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0790  -21.2180   26.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8030  -20.5670   27.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8550  -22.3990   25.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5380  -22.6500   28.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6060  -23.8910   25.1890  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6790  -21.5830   26.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  1 11  1  0  0  0  0
+  8  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 11  5  1  0  0  0  0
+ 11  9  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+BR1
+A   11
+C1
+M  END
+>  <InstanceId>
+5UAP_82S_A_505
+
+>  <ChemCompId>
+82S
+
+>  <PdbId>
+5UAP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+505
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 Br
+
+>  <Name>
+(1R,2R,4R)-2-bromo-1,7,7-trimethylbicyclo[2.2.1]heptane
+
+>  <SystematicName>
+(1~{R},2~{R},4~{R})-2-bromanyl-1,7,7-trimethyl-bicyclo[2.2.1]heptane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H17 Br
+
+>  <MolecularWeight>
+217.146
+
+>  <ModifiedDate>
+2017-04-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H17Br/c1-9(2)7-4-5-10(9,3)8(11)6-7/h7-8H,4-6H2,1-3H3/t7-,8-,10+/m1/s1
+
+>  <InChIKey>
+OTOQMOVZIUGCQE-MRTMQBJTSA-N
+
+>  <SMILES>
+C[C@@]12CC[C@@H](C1(C)C)C[C@H]2Br
+
+$$$$

@@ -1,0 +1,93 @@
+3G4Q_MCH_A_151
+  RCSB PDB12061708413D
+Coordinates from PDB:3G4Q:A:151 Model:1 without hydrogens
+  4  3  0  0  0  0            999 V2000
+   40.1260    0.0810   32.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6370   -0.8890   32.9470  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7740    1.3760   31.4220  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   40.6660    0.8360   34.1660  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C1
+A    2
+CL2
+A    3
+CL1
+A    4
+CL3
+M  END
+>  <InstanceId>
+3G4Q_MCH_A_151
+
+>  <ChemCompId>
+MCH
+
+>  <PdbId>
+3G4Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+151
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C Cl3
+
+>  <Name>
+trichloromethane
+
+>  <SystematicName>
+trichloromethane
+
+>  <Synonyms>
+Chloroform CHCl3
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C H Cl3
+
+>  <MolecularWeight>
+119.378
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/CHCl3/c2-1(3)4/h1H
+
+>  <InChIKey>
+HEDRZPFGACZZDS-UHFFFAOYSA-N
+
+>  <SMILES>
+C(Cl)(Cl)Cl
+
+$$$$

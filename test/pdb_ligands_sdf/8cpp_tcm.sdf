@@ -1,0 +1,123 @@
+8CPP_TCM_A_422
+  RCSB PDB12061720233D
+Coordinates from PDB:8CPP:A:422 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   46.1050   44.2190   13.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9940   45.4950   13.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4380   45.6200   14.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.7470   44.3560   15.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1940   44.6420   15.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7530   44.5540   13.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8470   43.2700   14.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.2680   42.8010   13.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2170   41.8870   14.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8040   43.6720   11.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3290   46.2430   12.1970   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+S2
+M  END
+>  <InstanceId>
+8CPP_TCM_A_422
+
+>  <ChemCompId>
+TCM
+
+>  <PdbId>
+8CPP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+422
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 S
+
+>  <Name>
+THIOCAMPHOR
+
+>  <SystematicName>
+(1R,4R)-1,7,7-trimethylbicyclo[2.2.1]heptane-6-thione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 S
+
+>  <MolecularWeight>
+168.299
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16S/c1-9(2)7-4-5-10(9,3)8(11)6-7/h7H,4-6H2,1-3H3/t7-,10+/m1/s1
+
+>  <InChIKey>
+AAADKYXUTOBAGS-XCBNKYQSSA-N
+
+>  <SMILES>
+CC1([C@@H]2CC[C@]1(C(=S)C2)C)C
+
+$$$$

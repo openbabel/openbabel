@@ -1,0 +1,134 @@
+1J37_X8Z_A_801
+  RCSB PDB12061702543D
+Coordinates from PDB:1J37:A:801 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   11.8780   -2.6990   17.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9240   -3.5900   18.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8730   -4.6980   18.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5000   -4.0100   18.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1180   -5.1660   18.1620   S 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0970   -5.6510   16.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8860   -3.5530   18.9960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9290   -2.4840   19.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7460   -2.4090   17.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8540   -3.3400   16.9830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3030   -1.2610   17.5100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0810   -4.5230   20.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2390   -4.0250   20.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7850   -2.7970   20.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O1
+A    2
+C4
+A    3
+C2
+A    4
+C1
+A    5
+S
+A    6
+C3
+A    7
+N
+A    8
+C8
+A    9
+C9
+A   10
+O3
+A   11
+O2
+A   12
+C5
+A   13
+C6
+A   14
+C7
+M  END
+>  <InstanceId>
+1J37_X8Z_A_801
+
+>  <ChemCompId>
+X8Z
+
+>  <PdbId>
+1J37
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3 S
+
+>  <Name>
+L-CAPTOPRIL
+
+>  <SystematicName>
+(2S)-1-[(2S)-2-methyl-3-sulfanyl-propanoyl]pyrrolidine-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H15 N O3 S
+
+>  <MolecularWeight>
+217.285
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+PRO CC8
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15NO3S/c1-6(5-14)8(11)10-4-2-3-7(10)9(12)13/h6-7,14H,2-5H2,1H3,(H,12,13)/t6-,7+/m1/s1
+
+>  <InChIKey>
+FAKRSMQSSFJEIM-RQJHMYQMSA-N
+
+>  <SMILES>
+C[C@H](CS)C(=O)N1CCC[C@H]1C(=O)O
+
+$$$$

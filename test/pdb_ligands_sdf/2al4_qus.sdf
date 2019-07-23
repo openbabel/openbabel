@@ -1,0 +1,130 @@
+1MM6_QUS_A_500
+  RCSB PDB12061703183D
+Coordinates from PDB:1MM6:A:500 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   31.4820   53.5320    6.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2240   53.7010    4.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1030   54.8840    4.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5190   53.7800    2.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2350   54.4870    0.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7520   53.8920    4.7920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6260   54.7210    3.1040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2570   53.6660    1.3270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5110   53.5130    7.1890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6770   53.4180    6.7760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3390   53.2160    3.3450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7230   54.6570   -0.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8060   55.1660    2.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5 12  2  0  0  0  0
+  5 13  1  0  0  0  0
+  7 13  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+NP3
+A    7
+N14
+A    8
+N15
+A    9
+O16
+A   10
+O17
+A   11
+O18
+A   12
+O19
+A   13
+O20
+M  END
+>  <InstanceId>
+1MM6_QUS_A_500
+
+>  <ChemCompId>
+QUS
+
+>  <PdbId>
+1MM6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 O5
+
+>  <Name>
+(S)-2-AMINO-3-(3,5-DIOXO-[1,2,4]OXADIAZOLIDIN-2-YL)-PROPIONIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-3-(3,5-dioxo-1,2,4-oxadiazolidin-2-yl)propanoic acid
+
+>  <Synonyms>
+QUISQUALATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N3 O5
+
+>  <MolecularWeight>
+189.126
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7N3O5/c6-2(3(9)10)1-8-4(11)7-5(12)13-8/h2H,1,6H2,(H,9,10)(H,7,11,12)/t2-/m0/s1
+
+>  <InChIKey>
+ASNFTDCKZKHJSW-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)N)N1C(=O)NC(=O)O1
+
+$$$$

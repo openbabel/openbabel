@@ -1,0 +1,134 @@
+4K4Q_06B_B_102
+  RCSB PDB12061713163D
+Coordinates from PDB:4K4Q:B:102 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    1.6080  -12.3000    5.0010  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0970  -13.9750    4.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5410  -14.0310    3.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3650  -12.8800    2.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7790  -12.0560    2.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1540  -15.2510    2.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4460  -15.2550    1.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6830  -15.1220    0.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3090  -15.3630    0.1290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2780  -15.1380    5.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8910  -16.3710    4.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3230  -16.4290    3.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0680  -17.6270    2.6610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3800  -18.8940    3.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  3  2  0  0  0  0
+  6 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+BR
+A    2
+C10
+A    3
+C12
+A    4
+O13
+A    5
+C14
+A    6
+C4
+A    7
+C2
+A    8
+O3
+A    9
+O1
+A   10
+C9
+A   11
+C8
+A   12
+C5
+A   13
+O6
+A   14
+C7
+M  END
+>  <InstanceId>
+4K4Q_06B_B_102
+
+>  <ChemCompId>
+06B
+
+>  <PdbId>
+4K4Q
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+102
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4 Br
+
+>  <Name>
+3-bromo-2,6-dimethoxybenzoic acid
+
+>  <SystematicName>
+3-bromanyl-2,6-dimethoxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 Br O4
+
+>  <MolecularWeight>
+261.069
+
+>  <ModifiedDate>
+2013-09-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9BrO4/c1-13-6-4-3-5(10)8(14-2)7(6)9(11)12/h3-4H,1-2H3,(H,11,12)
+
+>  <InChIKey>
+CUQANLQRQJHIQE-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(c(c1C(=O)O)OC)Br
+
+$$$$

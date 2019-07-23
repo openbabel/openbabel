@@ -1,0 +1,146 @@
+1RQJ_RIS_A_901
+  RCSB PDB12061703553D
+Coordinates from PDB:1RQJ:A:901 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   57.8200   74.3040   11.5720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.6230   73.6910   10.4330   P 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3290   74.5110    8.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2060   72.0940   10.2630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3340   73.7980   10.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.0510   73.1670    9.7100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.8320   75.4670   10.9550   P 0  0  0  0  0  0  0  0  0  0  0  0
+   62.4730   75.6540   11.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0140   76.1270   12.2590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4870   76.1750    9.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.5170   73.0360   12.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.9160   72.8430   12.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0300   72.6930   14.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2840   72.4960   14.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.3960   72.4540   13.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.2720   72.5970   12.4610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   63.0730   72.7870   11.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+A    1
+O12
+A    2
+P9
+A    3
+O11
+A    4
+O10
+A    5
+C8
+A    6
+O13
+A    7
+P14
+A    8
+O16
+A    9
+O15
+A   10
+O17
+A   11
+C7
+A   12
+C2
+A   13
+C1
+A   14
+C6
+A   15
+C5
+A   16
+N4
+A   17
+C3
+M  END
+>  <InstanceId>
+1RQJ_RIS_A_901
+
+>  <ChemCompId>
+RIS
+
+>  <PdbId>
+1RQJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O7 P2
+
+>  <Name>
+1-HYDROXY-2-(3-PYRIDINYL)ETHYLIDENE BIS-PHOSPHONIC ACID
+
+>  <SystematicName>
+(1-hydroxy-1-phosphono-2-pyridin-3-yl-ethyl)phosphonic acid
+
+>  <Synonyms>
+Risedronate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N O7 P2
+
+>  <MolecularWeight>
+283.112
+
+>  <ModifiedDate>
+2017-09-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO7P2/c9-7(16(10,11)12,17(13,14)15)4-6-2-1-3-8-5-6/h1-3,5,9H,4H2,(H2,10,11,12)(H2,13,14,15)
+
+>  <InChIKey>
+IIDJRNMFWXDHID-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)CC(O)(P(=O)(O)O)P(=O)(O)O
+
+$$$$

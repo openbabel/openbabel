@@ -1,0 +1,129 @@
+1GVC_NTA_A_1252
+  RCSB PDB12061702393D
+Coordinates from PDB:1GVC:A:1252 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -35.3040   33.0920    6.6550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.4060   32.5590    7.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.5340   34.5090    6.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2990   32.2110    6.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.1600   31.9240    7.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.0910   31.5540    5.9440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.2190   31.7790    7.8520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2570   32.0610    4.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.4060   35.3000    5.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5130   35.1480    4.5590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2610   36.1640    5.3210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.1600   31.4200    4.0810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3810   32.5620    3.9190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  8 12  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+N1
+A    2
+C6
+A    3
+C10
+A    4
+C2
+A    5
+C7
+A    6
+O8
+A    7
+O9
+A    8
+C3
+A    9
+C11
+A   10
+O12
+A   11
+O13
+A   12
+O4
+A   13
+O5
+M  END
+>  <InstanceId>
+1GVC_NTA_A_1252
+
+>  <ChemCompId>
+NTA
+
+>  <PdbId>
+1GVC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1252
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O6
+
+>  <Name>
+NITRILOTRIACETIC ACID
+
+>  <SystematicName>
+2-(bis(carboxymethyl)amino)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 N O6
+
+>  <MolecularWeight>
+191.139
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9NO6/c8-4(9)1-7(2-5(10)11)3-6(12)13/h1-3H2,(H,8,9)(H,10,11)(H,12,13)
+
+>  <InChIKey>
+MGFYIUFZLHCRTH-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)N(CC(=O)O)CC(=O)O
+
+$$$$

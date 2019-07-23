@@ -1,0 +1,127 @@
+1NOO_CAH_A_422
+  RCSB PDB12061703263D
+Coordinates from PDB:1NOO:A:422 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   46.7870   44.7850   14.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2920   44.7590   14.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4590   44.8300   15.2980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9410   44.5570   12.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3830   44.5820   12.4120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8760   46.0430   12.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9930   46.3050   11.7900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3130   46.1400   14.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1570   43.8310   13.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5960   42.4170   13.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6760   43.8540   13.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1520   44.2760   16.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+O5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+C10
+M  END
+>  <InstanceId>
+1NOO_CAH_A_422
+
+>  <ChemCompId>
+CAH
+
+>  <PdbId>
+1NOO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+422
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+5-EXO-HYDROXYCAMPHOR
+
+>  <SystematicName>
+(1R,3R,4R)-3-hydroxy-1,7,7-trimethyl-bicyclo[2.2.1]heptan-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 O2
+
+>  <MolecularWeight>
+168.233
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16O2/c1-9(2)6-4-8(12)10(9,3)5-7(6)11/h6-7,11H,4-5H2,1-3H3/t6-,7+,10-/m0/s1
+
+>  <InChIKey>
+DJQYBVLXBVJHMU-PJKMHFRUSA-N
+
+>  <SMILES>
+CC1([C@H]2CC(=O)[C@@]1(C[C@H]2O)C)C
+
+$$$$

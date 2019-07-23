@@ -1,0 +1,134 @@
+4JWX_1N4_A_301
+  RCSB PDB12061713143D
+Coordinates from PDB:4JWX:A:301 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   15.4050   22.5510   32.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0480   23.7070   33.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1430   23.5800   34.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9410   24.5810   35.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1990   25.1510   35.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5010   25.9900   36.1510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5620   26.0090   37.0780   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5730   26.7230   38.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5940   25.1780   36.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3540   24.9130   37.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5380   26.1560   37.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4590   27.0190   36.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9010   26.3390   38.7380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6900   24.4120   38.8320   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  4  9  2  0  0  0  0
+  6  7  1  0  0  0  0
+  9  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+CAA
+A    2
+CAG
+A    3
+CAH
+A    4
+CAK
+A    5
+CAF
+A    6
+NAI
+A    7
+NAN
+A    8
+OAE
+A    9
+CAL
+A   10
+CA
+A   11
+C
+A   12
+OXT
+A   13
+O
+A   14
+N
+M  END
+>  <InstanceId>
+4JWX_1N4_A_301
+
+>  <ChemCompId>
+1N4
+
+>  <PdbId>
+4JWX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O3
+
+>  <Name>
+(2R)-amino(1-hydroxy-4-propyl-1H-pyrazol-5-yl)ethanoic acid
+
+>  <SystematicName>
+(2R)-2-azanyl-2-(2-oxidanyl-4-propyl-pyrazol-3-yl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N3 O3
+
+>  <MolecularWeight>
+199.207
+
+>  <ModifiedDate>
+2013-05-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13N3O3/c1-2-3-5-4-10-11(14)7(5)6(9)8(12)13/h4,6,14H,2-3,9H2,1H3,(H,12,13)/t6-/m1/s1
+
+>  <InChIKey>
+SSPXLOGHCJIQFQ-ZCFIWIBFSA-N
+
+>  <SMILES>
+CCCc1cnn(c1[C@H](C(=O)O)N)O
+
+$$$$

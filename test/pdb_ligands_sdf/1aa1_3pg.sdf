@@ -1,0 +1,121 @@
+13PK_3PG_A_423
+  RCSB PDB12061701563D
+Coordinates from PDB:13PK:A:423 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -14.4450   75.2160   85.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3680   74.5310   86.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8410   74.7390   84.4230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2050   76.5320   85.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5910   76.9570   86.6970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4930   76.5500   84.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6250   75.7590   84.2740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9950   74.5210   83.1890   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6540   73.4400   84.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9090   75.2360   82.1910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7060   74.0620   82.5030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+O3
+A    6
+C3
+A    7
+O1P
+A    8
+P
+A    9
+O2P
+A   10
+O3P
+A   11
+O4P
+M  END
+>  <InstanceId>
+13PK_3PG_A_423
+
+>  <ChemCompId>
+3PG
+
+>  <PdbId>
+13PK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+423
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O7 P
+
+>  <Name>
+3-PHOSPHOGLYCERIC ACID
+
+>  <SystematicName>
+(2R)-2-hydroxy-3-phosphonooxy-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 O7 P
+
+>  <MolecularWeight>
+186.057
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7O7P/c4-2(3(5)6)1-10-11(7,8)9/h2,4H,1H2,(H,5,6)(H2,7,8,9)/t2-/m1/s1
+
+>  <InChIKey>
+OSJPPGNTCRNQQC-UWTATZPHSA-N
+
+>  <SMILES>
+C([C@H](C(=O)O)O)OP(=O)(O)O
+
+$$$$

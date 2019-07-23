@@ -1,0 +1,139 @@
+3N3L_MS0_F_1
+  RCSB PDB12061709513D
+Coordinates from PDB:3N3L:F:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    2.1000   74.9450   27.2660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5930   76.2700   27.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9440   76.4060   27.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3980   74.9920   27.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2800   74.2470   27.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8100   74.5190   26.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2940   74.9010   25.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2410   75.6630   25.3390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6260   74.3540   24.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5900   77.6450   27.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7780   78.8000   27.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3670   78.6760   27.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7840   77.3950   27.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5230   79.8020   27.3870   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1180   81.0930   27.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  1  1  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2 13  2  0  0  0  0
+  4  3  1  0  0  0  0
+ 10  3  2  0  0  0  0
+  6  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  6  1  0  0  0  0
+  9  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C7
+A    7
+C10
+A    8
+O11
+A    9
+O12
+A   10
+C14
+A   11
+C16
+A   12
+C18
+A   13
+C19
+A   14
+O21
+A   15
+C22
+M  END
+>  <InstanceId>
+3N3L_MS0_F_1
+
+>  <ChemCompId>
+MS0
+
+>  <PdbId>
+3N3L
+
+>  <ChainId>
+F
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4
+
+>  <Name>
+(6-methoxy-1-benzofuran-3-yl)acetic acid
+
+>  <SystematicName>
+2-(6-methoxy-1-benzofuran-3-yl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 O4
+
+>  <MolecularWeight>
+206.195
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10O4/c1-14-8-2-3-9-7(4-11(12)13)6-15-10(9)5-8/h2-3,5-6H,4H2,1H3,(H,12,13)
+
+>  <InChIKey>
+QCXJFLREQGIACT-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc2c(c1)occ2CC(=O)O
+
+$$$$

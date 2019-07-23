@@ -1,0 +1,129 @@
+1I7C_MGB_A_375
+  RCSB PDB12061702483D
+Coordinates from PDB:1I7C:A:375 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -12.9540   -4.6000    6.6960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3460   -2.5280    5.6590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7760   -3.7440    6.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0670   -4.0890    5.7600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4600   -5.2260    6.6820   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7200   -5.8490    6.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0740   -6.7560    7.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3370   -7.9170    7.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4760   -6.9680    7.2270   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2270   -7.5680    8.3860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5580   -7.5780    8.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2010   -8.7690    8.0740   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2090   -6.4360    7.8030   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+N1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N9
+A   10
+N10
+A   11
+C11
+A   12
+N12
+A   13
+N13
+M  END
+>  <InstanceId>
+1I7C_MGB_A_375
+
+>  <ChemCompId>
+MGB
+
+>  <PdbId>
+1I7C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+375
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N8
+
+>  <Name>
+METHYLGLYOXAL BIS-(GUANYLHYDRAZONE)
+
+>  <SystematicName>
+1-[2-(carbamimidoylhydrazinylidene)propylideneamino]guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N8
+
+>  <MolecularWeight>
+184.202
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N8/c1-3(11-13-5(8)9)2-10-12-4(6)7/h2H,1H3,(H4,6,7,12)(H4,8,9,13)/b10-2+,11-3+
+
+>  <InChIKey>
+MXWHMTNPTTVWDM-NXOFHUPFSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/N/N=C/C(=NNC(=N)N)C
+
+$$$$

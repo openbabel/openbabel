@@ -1,0 +1,126 @@
+3C3U_C2U_A_351
+  RCSB PDB12061708063D
+Coordinates from PDB:3C3U:A:351 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    7.1380   -2.7800   18.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5150   -3.6980   18.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2990   -3.7520   19.9600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8760   -4.7560   17.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9350   -4.6700   16.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2110   -5.8030   18.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1280   -5.9240   19.8780   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5950   -6.7480   17.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7120   -8.0430   18.5470  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6190   -6.7100   16.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3180   -5.6650   15.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3740   -5.5530   14.0310  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O7B
+A    2
+C7
+A    3
+O7A
+A    4
+C6
+A    5
+C1
+A    6
+C5
+A    7
+O5
+A    8
+C4
+A    9
+CL4
+A   10
+C3
+A   11
+C2
+A   12
+CL2
+M  END
+>  <InstanceId>
+3C3U_C2U_A_351
+
+>  <ChemCompId>
+C2U
+
+>  <PdbId>
+3C3U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3 Cl2
+
+>  <Name>
+3,5-dichloro-2-hydroxybenzoic acid
+
+>  <SystematicName>
+3,5-dichloro-2-hydroxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 Cl2 O3
+
+>  <MolecularWeight>
+207.011
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4Cl2O3/c8-3-1-4(7(11)12)6(10)5(9)2-3/h1-2,10H,(H,11,12)
+
+>  <InChIKey>
+CNJGWCQEGROXEE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1C(=O)O)O)Cl)Cl
+
+$$$$

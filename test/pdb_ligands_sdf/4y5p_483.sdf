@@ -1,0 +1,143 @@
+4Y5P_483_A_404
+  RCSB PDB12061716213D
+Coordinates from PDB:4Y5P:A:404 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -3.4770    6.6250    7.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4720    6.6770    5.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9240    8.1040    5.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7190    2.8410    9.6940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7490    4.7530    8.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5490    3.2490    8.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0670    2.3600   10.8950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1640    2.3310   10.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0620    2.0390   11.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3750    2.8430    9.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6720    5.4450    9.5190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0400    5.2480    7.3000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2960    7.5330    6.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7470    8.9610    6.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7560    9.0300    5.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2210   10.4590    5.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  1  0  0  0  0
+ 15  3  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+ 12  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  2  0  0  0  0
+  6  4  1  0  0  0  0
+  4 10  1  0  0  0  0
+  4  8  1  0  0  0  0
+ 10  7  2  0  0  0  0
+  8  9  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+C10
+A   10
+C11
+A   11
+O
+A   12
+N
+A   13
+C3
+A   14
+C2
+A   15
+C1
+A   16
+C
+M  END
+>  <InstanceId>
+4Y5P_483_A_404
+
+>  <ChemCompId>
+483
+
+>  <PdbId>
+4Y5P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O
+
+>  <Name>
+2-(1H-imidazol-1-yl)-N-(trans-4-methylcyclohexyl)acetamide
+
+>  <SystematicName>
+2-imidazol-1-yl-N-(4-methylcyclohexyl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H19 N3 O
+
+>  <MolecularWeight>
+221.299
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H19N3O/c1-10-2-4-11(5-3-10)14-12(16)8-15-7-6-13-9-15/h6-7,9-11H,2-5,8H2,1H3,(H,14,16)/t10-,11-
+
+>  <InChIKey>
+PKHDTDLLHJFDKS-XYPYZODXSA-N
+
+>  <SMILES>
+CC1CCC(CC1)NC(=O)Cn2ccnc2
+
+$$$$

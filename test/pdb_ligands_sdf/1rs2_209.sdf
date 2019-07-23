@@ -1,0 +1,135 @@
+1RS2_209_A_1001
+  RCSB PDB12061703553D
+Coordinates from PDB:1RS2:A:1001 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   48.0840   47.9700   74.0810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3250   47.7430   75.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7940   46.7250   76.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9050   46.0440   75.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6740   46.3260   74.7110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2610   47.2860   73.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2170   46.2670   77.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0480   45.3130   77.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.1050   45.0990   77.0690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8650   44.6400   79.0350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9050   45.5810   74.4290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6260   48.9900   73.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9130   47.5100   72.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2750   48.3110   75.5490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 13  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+N9
+A   10
+N10
+A   11
+C11
+A   12
+C15
+A   13
+O19
+A   14
+O20
+M  END
+>  <InstanceId>
+1RS2_209_A_1001
+
+>  <ChemCompId>
+209
+
+>  <PdbId>
+1RS2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O2
+
+>  <Name>
+8-AMINO-1,3-DIMETHYL-3,7-DIHYDROPURINE-2,6-DIONE
+
+>  <SystematicName>
+8-amino-1,3-dimethyl-9H-purine-2,6-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N5 O2
+
+>  <MolecularWeight>
+195.179
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N5O2/c1-11-4-3(9-6(8)10-4)5(13)12(2)7(11)14/h1-2H3,(H3,8,9,10)
+
+>  <InChIKey>
+ZZESAIGPDOBLKZ-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1c2c(nc([nH]2)N)C(=O)N(C1=O)C
+
+$$$$

@@ -1,0 +1,125 @@
+3URK_0CG_A_318
+  RCSB PDB12061711063D
+Coordinates from PDB:3URK:A:318 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+  -25.7070    0.9960  -18.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0330    0.8510  -16.6690   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7980    0.7880  -15.8220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0870    1.8390  -16.1850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7620   -0.5930  -16.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2600   -2.0920  -16.3970   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3380   -2.9510  -16.9510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8950   -2.3050  -16.8670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1560   -2.3210  -14.8320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0870   -1.9760  -13.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4590   -1.7110  -14.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6470   -1.4760  -14.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  7  6  2  0  0  0  0
+  8  6  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  3  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+O20
+A    2
+P17
+A    3
+O18
+A    4
+O19
+A    5
+O16
+A    6
+P13
+A    7
+O14
+A    8
+O15
+A    9
+O29
+A   10
+C28
+A   11
+C27
+A   12
+C30
+M  END
+>  <InstanceId>
+3URK_0CG_A_318
+
+>  <ChemCompId>
+0CG
+
+>  <PdbId>
+3URK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+318
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O7 P2
+
+>  <Name>
+prop-2-yn-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+phosphono prop-2-ynyl hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H6 O7 P2
+
+>  <MolecularWeight>
+216.023
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H6O7P2/c1-2-3-9-12(7,8)10-11(4,5)6/h1H,3H2,(H,7,8)(H2,4,5,6)
+
+>  <InChIKey>
+CEUAGVILADDFJF-UHFFFAOYSA-N
+
+>  <SMILES>
+C#CCOP(=O)(O)OP(=O)(O)O
+
+$$$$
