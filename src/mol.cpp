@@ -2924,6 +2924,21 @@ namespace OpenBabel
     return true;
   }
 
+  //check that unreasonable bonds aren't being added
+  static bool validAdditionalBond(OBAtom *a, OBAtom *n) 
+  {
+    if(a->GetExplicitValence() == 5 && a->GetAtomicNum() == 15) 
+    {
+      //only allow octhedral bonding for F and Cl
+      if(n->GetAtomicNum() == 9 || n->GetAtomicNum() == 17)
+        return true;
+      else
+        return false;
+    }
+    //other things to check?
+    return true;
+  }
+
   /*! This method adds single bonds between all atoms
     closer than their combined atomic covalent radii,
     then "cleans up" making sure bonded atoms are not
@@ -2982,7 +2997,7 @@ namespace OpenBabel
     double d2,cutoff,zd;
     for (j = 0 ; j < max ; ++j)
       {
-    	double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
+        double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
         idx1 = zsorted[j];
         for (k = j + 1 ; k < max ; k++ )
           {
@@ -3017,6 +3032,9 @@ namespace OpenBabel
             if (atom->IsConnected(nbr))
               continue;
 
+            if (!validAdditionalBond(atom,nbr) || !validAdditionalBond(nbr, atom))
+              continue;
+              
             AddBond(idx1+1,idx2+1,1);
           }
       }
