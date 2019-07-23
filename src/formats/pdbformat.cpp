@@ -131,7 +131,7 @@ namespace OpenBabel
     const char* title = pConv->GetTitle();
 
     int chainNum = 1;
-    char buffer[BUFF_SIZE];
+    char buffer[BUFF_SIZE] = {0,};
     string line, key, value;
     OBPairData *dp;
 
@@ -228,7 +228,7 @@ namespace OpenBabel
 
     if (!mol.NumAtoms()) { // skip the rest of this processing
       mol.EndModify();
-      return(true); //empty molecules are not invalid
+      return EQn(buffer,"END",3); //explictly empty molecules are not invalid
     }
 
     resdat.AssignBonds(mol);
