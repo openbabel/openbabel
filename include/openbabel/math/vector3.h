@@ -25,6 +25,8 @@ GNU General Public License for more details.
 #include <math.h>
 #include <iostream>
 
+#include <openbabel/babelconfig.h>
+
 #ifndef RAD_TO_DEG
 #define RAD_TO_DEG (180.0/M_PI)
 #endif
