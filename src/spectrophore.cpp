@@ -1645,7 +1645,7 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
       switch (n)
       {
          case 1:		// H
-            if (atom->GetValence())
+            if (atom->GetExplicitDegree())
             {
                if (atom->IsNonPolarHydrogen())
                // Non-polar H

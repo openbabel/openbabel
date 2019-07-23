@@ -79,7 +79,7 @@ namespace OpenBabel {
       std::vector<unsigned int> _canonLabels;
       OBStereoUnitSet _stereoUnits;
 
-      unsigned int GetHvyValence(OBAtom *atom);
+      unsigned int GetHvyDegree(OBAtom *atom);
       unsigned int GetHvyBondSum(OBAtom *atom);
       void FindRingAtoms(OBBitVec &ring_atoms);
       void CreateNewClassVector(std::vector<std::pair<OBAtom*,unsigned int> > &vp1,
@@ -134,10 +134,10 @@ namespace OpenBabel {
 
 
   /**
-   * Like OBAtom::GetHvyValence(): Counts the number non-hydrogen
+   * Like OBAtom::GetHvyDegree(): Counts the number non-hydrogen
    * neighbors, but doesn't count atoms not in the fragment.
    */
-  unsigned int OBGraphSymPrivate::GetHvyValence(OBAtom *atom)
+  unsigned int OBGraphSymPrivate::GetHvyDegree(OBAtom *atom)
   {
     unsigned int count = 0;
     OBBond *bond;
@@ -151,11 +151,6 @@ namespace OpenBabel {
     }
 
     return(count);
-  }
-
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
   }
 
   /**
@@ -185,7 +180,7 @@ namespace OpenBabel {
           count += (float)bond->GetBondOrder();
       }
     }
-    if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && TotalNumberOfBonds(atom) == 3) {
+    if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && atom->GetTotalDegree() == 3) {
       count += 1.0f;         // [nH] - add another bond
     }
     return(int(count + 0.5));     // round to nearest int
@@ -319,7 +314,7 @@ namespace OpenBabel {
       if (_frag_atoms.BitIsSet(atom->GetIdx())) {
         vid[i] =
           v[i]                                                    // 10 bits: graph-theoretical distance
-          | (GetHvyValence(atom)                <<10)  //  4 bits: heavy valence
+          | (GetHvyDegree(atom)                <<10)  //  4 bits: heavy valence
           | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
           | (((ring_atoms.BitIsSet(atom->GetIdx())) ? 1 : 0)<<15)  //  1 bit:  ring atom
           | (atom->GetAtomicNum()                          <<16)  //  7 bits: atomic number

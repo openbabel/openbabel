@@ -124,6 +124,7 @@ int main(int argc,char *argv[])
                     {
                       cerr << program_name << ": cannot read input format!" << endl;
                       usage();
+                      exit(1);
                     }
                   break;
 
@@ -147,6 +148,7 @@ int main(int argc,char *argv[])
                     {
                       cerr << program_name << ": cannot write output format!" << endl;
                       usage();
+                      exit(1);
                     }
                   break;
 
@@ -313,6 +315,7 @@ int main(int argc,char *argv[])
           cerr << "No input file or format spec or possibly a misplaced option.\n"
             "Most options must come after the input files. (-i -o -O -m can be anywhwere.)\n" <<endl;
           usage();
+          exit(1);
         }
     }
 
@@ -325,6 +328,7 @@ int main(int argc,char *argv[])
           cerr << "Missing or unknown output file or format spec or possibly a misplaced option.\n"
             "Options, other than -i -o -O -m, must come after the input files.\n" <<endl;
           usage();
+          exit(1);
         }
     }
   
@@ -332,11 +336,13 @@ int main(int argc,char *argv[])
     {
       cerr << "Invalid input format" << endl;
       usage();
+      exit(1);
     }
     if(!Conv.SetOutFormat(pOutFormat, outGzip))
     {
       cerr << "Invalid output format" << endl;
       usage();
+      exit(1);
     }
 
   if(SplitOrBatch)
@@ -413,14 +419,12 @@ void usage()
   cout << "Usage:\n" << program_name
        << " [-i<input-type>] <infilename> [-o<output-type>] -O<outfilename> [Options]" << endl;
   cout << "Try  -H option for more information." << endl;
-  
+
 #ifdef _DEBUG
   //CM keep window open
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-  
-  exit (0);
 }
 
 void help()

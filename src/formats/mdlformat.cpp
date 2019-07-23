@@ -976,7 +976,7 @@ namespace OpenBabel
   {
     FOR_ATOMS_OF_MOL(atom, mol) {
       if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen)
-          && atom->GetHvyValence() > 2
+          && atom->GetHvyDegree() > 2
           && atom->IsChiral())
         return true;
     }
@@ -1158,7 +1158,7 @@ namespace OpenBabel
           stereo = parity[atom];
 
         
-        int expval = atom->BOSum();
+        int expval = atom->GetExplicitValence();
         int impval = MDLValence(atom->GetAtomicNum(), atom->GetFormalCharge(), expval);
         int actual_impval = expval + atom->GetImplicitHCount();
         int valence;
@@ -1259,8 +1259,8 @@ namespace OpenBabel
             zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
           }
           int hcount = atom->ExplicitHydrogenCount() + atom->GetImplicitHCount();
-          int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
-                             - origatom->BOSum() + atom->ExplicitHydrogenCount();
+          int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->GetExplicitValence())
+                             - origatom->GetExplicitValence() + atom->ExplicitHydrogenCount();
           if (hcount != autohcount) {
             hyds.push_back(make_pair(origatom->GetIdx(), atom->GetImplicitHCount()));
           }

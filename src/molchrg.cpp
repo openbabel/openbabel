@@ -151,7 +151,7 @@ namespace OpenBabel
         if (atom->IsCarboxylOxygen())
           atom->SetPartialCharge(-0.500);
         else if (atom->IsPhosphateOxygen() &&
-                 atom->GetHvyValence() == 1)
+                 atom->GetHvyDegree() == 1)
           atom->SetPartialCharge(-0.666);
         else if (atom->IsSulfateOxygen())
           atom->SetPartialCharge(-0.500);
@@ -195,7 +195,7 @@ namespace OpenBabel
       case 7: //N
         if (atom->GetHyb() == 3)
           {
-            if (atom->GetValence() == 4 || atom->GetFormalCharge())
+            if (atom->GetExplicitDegree() == 4 || atom->GetFormalCharge())
               {
                 val[0] = 0.0;
                 val[1] = 0.0;

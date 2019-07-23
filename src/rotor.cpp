@@ -263,7 +263,7 @@ namespace OpenBabel
         }
 
         for (unsigned int hyb=2; hyb<=3; ++hyb) { // sp2 and sp3 carbons, with explicit Hs
-          if (this_side->GetAtomicNum() == 6 && this_side->GetHyb() == hyb && this_side->GetValence() == (hyb + 1) ) {
+          if (this_side->GetAtomicNum() == 6 && this_side->GetHyb() == hyb && this_side->GetExplicitDegree() == (hyb + 1) ) {
             syms.clear();
             FOR_NBORS_OF_ATOM(nbr, this_side) {
               if ( &(*nbr) == other_side ) continue;

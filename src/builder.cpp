@@ -226,7 +226,7 @@ namespace OpenBabel
       //
       //  a   --->   a--*
       //
-      if (atom->GetValence() == 0) {
+      if (atom->GetExplicitDegree() == 0) {
         newbond = atom->GetVector() + VX * length;
         return newbond;
       }
@@ -254,7 +254,7 @@ namespace OpenBabel
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
       //                              \                                      //
       //                               *
-      if (atom->GetValence() == 1) {
+      if (atom->GetExplicitDegree() == 1) {
         bool isCarboxylateO = atom->IsCarboxylOxygen();
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -322,7 +322,7 @@ namespace OpenBabel
       //     X  --->   X--*
       //    /         /
       //
-      if (atom->GetValence() == 2) {
+      if (atom->GetExplicitDegree() == 2) {
         FOR_NBORS_OF_ATOM (nbr, atom) {
           if (bond1 == VZero)
             bond1 = atom->GetVector() - nbr->GetVector();
@@ -391,7 +391,7 @@ namespace OpenBabel
        //    /          /
        //
        */
-      if (atom->GetValence() == 3) {
+      if (atom->GetExplicitDegree() == 3) {
         if (atom->GetHyb() == 3) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -475,7 +475,7 @@ namespace OpenBabel
         }
       }
 
-      if (atom->GetValence() == 4) {
+      if (atom->GetExplicitDegree() == 4) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -525,7 +525,7 @@ namespace OpenBabel
 
       }
 
-      if (atom->GetValence() == 5) {
+      if (atom->GetExplicitDegree() == 5) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -562,7 +562,7 @@ namespace OpenBabel
       //
       //  a   --->   a---*
       //
-      if (atom->GetValence() == 0) {
+      if (atom->GetExplicitDegree() == 0) {
         newbond = atom->GetVector() + VX * length;
         // Check that the vector is still finite before returning
         if (!isfinite(newbond.x()) || !isfinite(newbond.y()))
@@ -593,7 +593,7 @@ namespace OpenBabel
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109            //
       //                              \                                           //
       //                               *                                          //
-      if (atom->GetValence() == 1) {
+      if (atom->GetExplicitDegree() == 1) {
         OBAtom *nbr = atom->BeginNbrAtom(i);
         if (!nbr)
           return VZero;
@@ -615,14 +615,14 @@ namespace OpenBabel
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
-      } // GetValence() == 1
+      } // GetExplicitDegree() == 1
 
       //                          //
       //    \         \           //
       //     X  --->   X--*       //
       //    /         /           //
       //                          //
-      if (atom->GetValence() == 2) {
+      if (atom->GetExplicitDegree() == 2) {
         for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
           if (bond1 == VZero)
             bond1 = atom->GetVector() - nbr->GetVector();
@@ -643,7 +643,7 @@ namespace OpenBabel
       //   --X  --->  --X--*      //
       //    /          /          //
       //                          //
-      if (atom->GetValence() == 3) {
+      if (atom->GetExplicitDegree() == 3) {
         OBStereoFacade stereoFacade((OBMol*)atom->GetParent());
         if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
           OBBond *hash = 0;
@@ -1517,7 +1517,7 @@ namespace OpenBabel
   {
     OBMol workmol = mol; // Make a copy (this invalidates Ids, but not Idxs)
     OBAtom* watom = workmol.GetAtom(mol.GetAtomById(atomId)->GetIdx());
-    if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
+    if (watom->GetHvyDegree() != 4) // QUESTION: Do I need to restrict it further?
       return false;
 
     int atomsInSameRing = 0;

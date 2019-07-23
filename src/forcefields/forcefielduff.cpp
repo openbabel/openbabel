@@ -702,10 +702,10 @@ namespace OpenBabel {
       // calculate the number of lone pairs
       // e.g. for IF3 => "T-shaped"
       valenceElectrons -= b->GetFormalCharge(); // make sure to look for I+F4 -> see-saw
-      double lonePairs = (valenceElectrons - b->BOSum()) / 2.0;
+      double lonePairs = (valenceElectrons - b->GetExplicitValence()) / 2.0;
       // we actually need to round up here -- single e- take room too.
       int sites = (int)ceil(lonePairs);
-      coordination = b->GetValence() + sites;
+      coordination = b->GetExplicitDegree() + sites;
       if (coordination <= 4) { // normal valency
         coordination = ipar;
       } else if (b->GetAtomicNum() == OBElements::Sulfur && b->CountFreeOxygens() == 3) {
@@ -714,10 +714,10 @@ namespace OpenBabel {
         coordination = 2; // i.e., sp2
       }
       /* planar coordination of hexavalent molecules.*/
-      if (lonePairs == 0 && b->GetValence() == 3 && b->BOSum() == 6) {
+      if (lonePairs == 0 && b->GetExplicitDegree() == 3 && b->GetExplicitValence() == 6) {
         coordination = 2;
       }
-      if (lonePairs == 0 && b->GetValence() == 7) {
+      if (lonePairs == 0 && b->GetExplicitDegree() == 7) {
         coordination = 7;
       }
       // Check to see if coordination is really correct
@@ -726,13 +726,13 @@ namespace OpenBabel {
     } else {
       coordination = ipar; // coordination of central atom
     }
-    if (b->GetValence() > 4) {
-      coordination = b->GetValence();
+    if (b->GetExplicitDegree() > 4) {
+      coordination = b->GetExplicitDegree();
     } else {
-      int coordDifference = ipar - b->GetValence();
+      int coordDifference = ipar - b->GetExplicitDegree();
       if (abs(coordDifference) > 2)
         // low valent, but very different than expected by ipar
-        coordination = b->GetValence() - 1; // 4 coordinate == sp3
+        coordination = b->GetExplicitDegree() - 1; // 4 coordinate == sp3
     }
     return coordination;
   }
@@ -1306,7 +1306,7 @@ namespace OpenBabel {
         continue;
       }
 
-      if (b->GetValence() > 3) // no OOP for hypervalent atoms
+      if (b->GetExplicitDegree() > 3) // no OOP for hypervalent atoms
         continue;
 
       a = NULL;

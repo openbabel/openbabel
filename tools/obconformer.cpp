@@ -94,8 +94,10 @@ int main(int argc,char *argv[])
         pFF->UpdateCoordinates(mol);
         conv.Write(&mol);
       }
-      else
+      else {
         cerr << "Error! Cannot set up force field." << endl;
+        return 1;
+      }
     } // while reading molecules
 
   return(0);

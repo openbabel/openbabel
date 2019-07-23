@@ -275,7 +275,7 @@ class OBAPI OBCisTransStereo : public OBTetraPlanarStereo
      * Check if the two atoms for @p id1 & @p id2 are bonded to the same
      * atom. If the atoms for one of the atoms doesn't exist (anymore),
      * the valence of the begin and end atom is checked. If the exising
-     * atom is bonded to the begin atom and end->GetValence() == 2, the
+     * atom is bonded to the begin atom and end->GetExplicitDegree() == 2, the
      * ids are considered to be on different atoms. The reasoning behind
      * this is that hydrogens may be deleted. However, you can also use
      * OBStereo::ImplicitRef explicitly in code like:
