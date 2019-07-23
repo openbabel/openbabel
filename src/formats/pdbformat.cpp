@@ -141,13 +141,17 @@ namespace OpenBabel
     mol.SetChainsPerceived();
 
     mol.BeginModify();
+    bool ateend = false;
     while (ifs.good() && ifs.getline(buffer,BUFF_SIZE))
       {
-        if (EQn(buffer,"ENDMDL",6))
+        if (EQn(buffer,"ENDMDL",6)) {
+          ateend = true;
           break;
+        }
         if (EQn(buffer,"END",3)) {
           // eat anything until the next ENDMDL
           while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"ENDMDL",6));
+          ateend = true;
           break;
         }
         if (EQn(buffer,"TER",3)) {
@@ -228,7 +232,7 @@ namespace OpenBabel
 
     if (!mol.NumAtoms()) { // skip the rest of this processing
       mol.EndModify();
-      return EQn(buffer,"END",3); //explictly empty molecules are not invalid
+      return ateend; //explictly empty molecules are not invalid
     }
 
     resdat.AssignBonds(mol);
