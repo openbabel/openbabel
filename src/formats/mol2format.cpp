@@ -139,17 +139,22 @@ namespace OpenBabel
     return OBElements::GetAtomicNum(symbol);
   }
 
-  //read from ifs until token is reached, return true if found
+  //read from ifs until token or next molecule (@<TRIPOS> MOLE) reached, return true if found
   static bool read_until(istream & ifs, const string& token) 
   {
       char buffer[BUFF_SIZE];
       unsigned len = token.length();
       for (;;)
       {
+        streampos oldpos = ifs.tellg();
         if (!ifs.getline(buffer,BUFF_SIZE))
           return(false);
         if (!strncmp(buffer,token.c_str(),len))
           return true;
+        if(!strncmp(buffer,"@<TRIPOS>MOLECULE",17)) {
+          ifs.seekg(oldpos);
+          return false;
+        }
       }      
   }
   /////////////////////////////////////////////////////////////////
