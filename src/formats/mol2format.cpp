@@ -139,22 +139,16 @@ namespace OpenBabel
     return OBElements::GetAtomicNum(symbol);
   }
 
-  //read from ifs until token or next molecule (@<TRIPOS> MOLE) reached, return true if found
-  static bool read_until(istream & ifs, const string& token) 
+  //read from ifs until next rti is found and return it
+  static string read_until_rti(istream & ifs) 
   {
       char buffer[BUFF_SIZE];
-      unsigned len = token.length();
       for (;;)
       {
-        streampos oldpos = ifs.tellg();
         if (!ifs.getline(buffer,BUFF_SIZE))
-          return(false);
-        if (!strncmp(buffer,token.c_str(),len))
-          return true;
-        if(!strncmp(buffer,"@<TRIPOS>MOLECULE",17)) {
-          ifs.seekg(oldpos);
-          return false;
-        }
+          return "";
+        if (!strncmp(buffer,"@<TRIPOS>",9))
+          return string(buffer);
       }      
   }
   /////////////////////////////////////////////////////////////////
@@ -407,7 +401,38 @@ namespace OpenBabel
           } // end adding residue info
       }
 
-    if(!read_until(ifs, "@<TRIPOS>BOND"))
+    string nextrti;
+    do { nextrti = read_until_rti(ifs); } 
+    while(nextrti != "@<TRIPOS>UNITY_ATOM_ATTR" && nextrti != "@<TRIPOS>BOND" && nextrti.length() > 0);
+
+    if(nextrti == "@<TRIPOS>UNITY_ATOM_ATTR")
+    { //read in formal charge information, must be done before Kekulization
+        int aid = 0, num = 0;
+        while (ifs.peek() != '@' && ifs.getline(buffer,BUFF_SIZE))
+        {
+          sscanf(buffer,"%d %d",&aid, &num);
+          for(int i = 0; i < num; i++) 
+          {
+            if (!ifs.getline(buffer,BUFF_SIZE))
+              return(false);
+            if(strncmp(buffer, "charge", 6) == 0)
+            {
+              int charge = 0;
+              sscanf(buffer,"%*s %d",&charge);
+              if(aid <= mol.NumAtoms()) 
+              {
+                OBAtom *atom = mol.GetAtom(aid);
+                atom->SetFormalCharge(charge);
+              }
+            }
+          }
+        }
+    }
+
+    while(nextrti != "@<TRIPOS>BOND" && nextrti.length() > 0)
+      nextrti = read_until_rti(ifs);
+
+    if(nextrti != "@<TRIPOS>BOND")
       return false;
 
     int start, end;
@@ -464,29 +489,6 @@ namespace OpenBabel
           break;
         }
       }
-    }
-    if(read_until(ifs, "@<TRIPOS>UNITY_ATOM_ATTR"))
-    { //read in formal charge information, must be done before Kekulization
-        int aid = 0, num = 0;
-        while (ifs.peek() != '@' && ifs.getline(buffer,BUFF_SIZE))
-        {
-          sscanf(buffer,"%d %d",&aid, &num);
-          for(int i = 0; i < num; i++) 
-          {
-            if (!ifs.getline(buffer,BUFF_SIZE))
-              return(false);
-            if(strncmp(buffer, "charge", 6) == 0)
-            {
-              int charge = 0;
-              sscanf(buffer,"%*s %d",&charge);
-              if(aid <= mol.NumAtoms()) 
-              {
-                OBAtom *atom = mol.GetAtom(aid);
-                atom->SetFormalCharge(charge);
-              }
-            }
-          }
-        }
     }
 
     // Kekulization is neccessary if an aromatic bond is present
@@ -724,6 +726,22 @@ namespace OpenBabel
         ofs << buffer << endl;
       }
 
+    //store formal charge info; put before bonds so we don't have
+    //to read past the end of the molecule to realize it is there
+    if(hasFormalCharges && !skipFormalCharge) {
+      //dkoes - to enable roundtriping of charges
+      ofs << "@<TRIPOS>UNITY_ATOM_ATTR\n";
+      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+      {
+        int charge = atom->GetFormalCharge();
+        if (charge != 0) 
+        {
+          ofs << atom->GetIdx() << " 1\n"; //one attribute
+          ofs << "charge " << charge << "\n"; //namely charge
+        }
+      }
+    }
+
     ofs << "@<TRIPOS>BOND" << endl;
     OBBond *bond;
     vector<OBBond*>::iterator j;
@@ -744,20 +762,6 @@ namespace OpenBabel
                  label);
         ofs << buffer << endl;
       }
-
-    if(hasFormalCharges && !skipFormalCharge) {
-      //dkoes - to enable roundtriping of charges
-      ofs << "@<TRIPOS>UNITY_ATOM_ATTR\n";
-      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      {
-        int charge = atom->GetFormalCharge();
-        if (charge != 0) 
-        {
-          ofs << atom->GetIdx() << " 1\n"; //one attribute
-          ofs << "charge " << charge << "\n"; //namely charge
-        }
-      }
-    }
     // NO trailing blank line (PR#1868929).
     //    ofs << endl;
 
