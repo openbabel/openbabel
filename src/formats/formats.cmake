@@ -98,7 +98,7 @@ set(formats_misc
       crkformat
       cssrformat
       dlpolyformat
-      exyzformat
+      exyzformat      
       fastsearchformat
       fastaformat
       featformat
