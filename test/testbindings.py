@@ -464,6 +464,25 @@ H         -0.26065        0.64232       -2.62218
 
         self.assertTrue(N > 100)
 
+    def testElementsSpecifiedByAtomicNumberInSmiles(self):
+        smis = [
+                ("[#100]", "[Fm]"),
+                ("[#255]", None),
+                ("[254#255]", None),
+                ("[#6]", -1),
+                ("[#256]", -1),
+                ("[#10a]", -1)
+               ]
+
+        for smi, rt in smis:
+            if rt==-1:
+                self.assertRaises(IOError, pybel.readstring, "smi", smi)
+                continue
+            if rt is None:
+                rt = smi
+            nsmi = pybel.readstring("smi", smi).write("smi").rstrip()
+            self.assertEqual(rt, nsmi)
+
     def testIterators(self):
         """Basic check that at least two iterators are working"""
         mol = pybel.readstring("smi", "c1ccccc1C(=O)Cl")
