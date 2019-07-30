@@ -40,27 +40,40 @@ using namespace OpenBabel;
 //add hydrogens and then perform some sanity checks
 void addh_check(OBMol *mol)
 {
+    unsigned len = mol->NumAtoms();
+    unsigned vcnts[len];
+    memset(vcnts, 0, sizeof(unsigned)*len);
+    //chemistry is weird, so can't rely on MaxBonds in general
+    //we recod the valence count before adding hydrogens
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      int total_valence = atom->GetExplicitValence();
+      assert(atom->GetIndex() < len);
+      vcnts[atom->GetIndex()] = total_valence;
+    }
     mol->AddHydrogens();
     //check valences and bond lengths
 
-    /* doesn't pass yet
     FOR_ATOMS_OF_MOL(atom, mol) {
       int total_valence = atom->GetTotalValence();
-      if(total_valence > OBElements::GetMaxBonds(atom->GetAtomicNum())) {
-        cerr << "Valence greater than MaxBonds " << total_valence << " vs "
+      if(atom->GetIndex() >= len) {
+        assert(total_valence == 1); //H
+        continue;
+      }
+      int maxval = max(OBElements::GetMaxBonds(atom->GetAtomicNum()), vcnts[atom->GetIndex()]);
+      if(total_valence > maxval) {
+        cerr << "Hydrogens added when already greater than MaxBonds " << total_valence << " vs "
             << OBElements::GetMaxBonds(atom->GetAtomicNum()) << " for atom "
             << atom->GetId() << " " << OBElements::GetSymbol(atom->GetAtomicNum()) << "\n";
-        exit(-1);
+        //exit(-1);
       }
     }
-  */
+
     FOR_BONDS_OF_MOL(bond, mol) {
-      cerr << "bond length " << bond->GetLength() << "\n";
       if(bond->GetLength() > 5) {
         cerr << "Bond length between " << bond->GetBeginAtom()->GetId()
             << " and " << bond->GetEndAtom()->GetId() << " is too long: "
             << bond->GetLength() << "\n";
-        exit(-1);
+        //exit(-1);
       }
     }
 }
@@ -136,6 +149,7 @@ int addhtest(int argc, char* argv[])
       #endif
 
       conv.ReadFile(&mol,filepath);
+      cerr << filepath << "\n";
       addh_check(&mol);
     }
   }
