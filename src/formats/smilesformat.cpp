@@ -3,6 +3,7 @@ Copyright (C) 2005-2007 by Craig A. James, eMolecules Inc.
 Some portions Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 Some portions Copyright (C) 2001-2008 by Geoffrey R. Hutchison
 Some portions Copyright (C) 2004 by Chris Morley
+Some portions Copyright (C) 2019 by NextMove Software.
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -1675,6 +1676,23 @@ namespace OpenBabel {
           return false;
         break;
 
+      case '#':
+        // Only support three digits for this extension
+        if ((_ptr[1] == '1' || _ptr[1] == '2') &&
+            (_ptr[2] >= '0' && _ptr[2] <= '9') &&
+            (_ptr[3] >= '0' && _ptr[3] <= '9')) {
+          element = (_ptr[1]-'0')*100 + (_ptr[2]-'0')*10 + (_ptr[3]-'0');
+          if (element > 255) {
+            std::string err = "Element number must be <= 255)";
+            obErrorLog.ThrowError(__FUNCTION__,
+              err, obError);
+            return false;
+          }
+          _ptr += 3;
+          break;
+        }
+        /* fall through to default */
+
       default:
         {
           std::string err;
@@ -2777,8 +2795,8 @@ namespace OpenBabel {
       if (iso >= 10000) // max 4 characters
         obErrorLog.ThrowError(__FUNCTION__, "Isotope value larger than 9999. Ignoring value.", obWarning);
       else {
-        char iso[5]; // 4 characters plus null
-        sprintf(iso, "%d", atom->GetIsotope());
+        char iso[8]; // 7 characters plus null
+        snprintf(iso, 8, "%u", atom->GetIsotope());
         buffer += iso;
       }
     }
@@ -2788,8 +2806,13 @@ namespace OpenBabel {
       if (atom->GetAtomicNum() == OBElements::Hydrogen && options.smarts)
         buffer += "#1";
       else {
-        const char* symbol = OBElements::GetSymbol(atom->GetAtomicNum());
-        if (!options.kekulesmi && atom->IsAromatic()) { // aromatic atom
+        unsigned int elem = atom->GetAtomicNum();
+        const char* symbol = OBElements::GetSymbol(elem);
+        if (*symbol == '\0') {
+          char atomnum[8];  // '#' plus 3 digits plus null
+          snprintf(atomnum, 8, "#%u", elem);
+          buffer += atomnum;
+        } else if (!options.kekulesmi && atom->IsAromatic()) { // aromatic atom
           buffer += symbol[0] + ('a' - 'A');
           if (symbol[1])
             buffer += symbol[1];
