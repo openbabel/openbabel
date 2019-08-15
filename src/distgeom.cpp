@@ -218,6 +218,29 @@ namespace OpenBabel {
         }
       }
     }
+
+    // Planar constraint for aromatic ring
+    if (rlist.size() > 0) {
+      FOR_RINGS_OF_MOL(r, _mol) {
+        int size = r->Size();
+        if (!r->IsAromatic()) continue;
+
+        std::vector<int> path = r->_path;
+        for (int a = 0; a < size; ++a) {
+          unsigned long idx = path[a];
+          OBAtom* atom = _mol.GetAtom(idx);
+
+          vector<unsigned long> nbrs = {idx-1};
+          FOR_NBORS_OF_ATOM(b, &*atom) {
+            nbrs.push_back(b->GetIdx()-1);
+          }
+          if(nbrs.size() == 4) {
+            TetrahedralInfo ti(idx, nbrs, 0.0, 0.0);
+            _stereo.push_back(ti);
+          }
+        }
+      }
+    }
     return true;
   }
 
@@ -414,7 +437,8 @@ namespace OpenBabel {
       // Aromatic rings must be planar, so atoms in the ring = regular polygon
       double angle = 180.0 - (360.0 / size);
       angle *= DEG_TO_RAD;
-      float bondDist, radius;
+      float bondDist, 
+radius;
 
       // We should have 1-2 and 1-3 distances set exactly.
       // So we need to set 1-4 (e.g., para)
@@ -805,7 +829,7 @@ namespace OpenBabel {
         return (*i)->Size();
     }
 
-    return 0;
+   return 0;
   }
 
   //! Implements the smoothing described by
@@ -860,8 +884,10 @@ namespace OpenBabel {
             _d->SetLowerBounds(b, c, l_bc);
           }
 
-          if (u_bc < l_bc)
+          if (u_bc < l_bc) {
             _d->SetUpperBounds(b, c, l_bc);
+            obErrorLog.ThrowError(__FUNCTION__, "Triagle Smoothing: Erroneous Bounds.", obWarning);
+          }
 
         } // loop(c)
 
@@ -901,127 +927,6 @@ namespace OpenBabel {
         }
     }
   }
-
-  // Correct the stereo constraints by swapping atom positions
-  // .. note that in general this isn't a good strategy, since bonds will scramble
-  // .. but in the DG algorithm, this is fine
-  void OBDistanceGeometry::CorrectStereoConstraints(double lambda)
-  {
-    // First, save the stereo information (cis-trans and tetrahedral)
-    std::vector<OBCisTransStereo*> cistrans, newcistrans;
-    std::vector<OBTetrahedralStereo*> tetra, newtetra;
-    OBStereoUnitSet ctSunits, tetSunits;
-    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    OBStereo::Ref atom_id;
-    OBStereo::Ref bond_id;
-    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data) {
-      // If it's cis-trans and specified
-      if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
-        OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
-        if (ct->GetConfig().specified) {
-          cistrans.push_back(ct);
-          bond_id = _mol.GetBond(_mol.GetAtomById(ct->GetConfig().begin),
-                                 _mol.GetAtomById(ct->GetConfig().end))->GetId();
-          ctSunits.push_back(OBStereoUnit(OBStereo::CisTrans, bond_id));
-        }
-      }
-
-      if (((OBStereoBase*)*data)->GetType() == OBStereo::Tetrahedral) {
-        OBTetrahedralStereo *th = dynamic_cast<OBTetrahedralStereo*>(*data);
-        if (th->GetConfig().specified) {
-          tetra.push_back(th);
-          atom_id = th->GetConfig().center;
-          tetSunits.push_back(OBStereoUnit(OBStereo::Tetrahedral, atom_id));
-        }
-      } // end tetrahedral
-    } // end for (i.e., saving the known, specified stereochemistry
-
-
-    // OK, now check for the current stereochemistry based on 3D coordinates
-    // .. if it's invalid, we swap atom positions
-    newcistrans = CisTransFrom3D(&_mol, ctSunits, false);
-    std::vector<OBCisTransStereo*>::iterator origct, newct;
-    OBAtom *atom_a, *atom_b, *atom_c, *atom_o;
-    vector3 a, b, c, o;
-    vector3 temp; // save an atomic position to allow swapping
-    for (origct=cistrans.begin(), newct=newcistrans.begin(); origct!=cistrans.end(); ++origct, ++newct) {
-      OBCisTransStereo::Config config = (*newct)->GetConfig(OBStereo::ShapeU);
-      if ((*origct)->GetConfig(OBStereo::ShapeU) !=  config) {
-        // OK, they don't match, so let's move four atoms
-        // refs[0]            refs[3]
-        //        \          /
-        //         begin==end
-        //        /          \
-        // refs[1]            refs[2]
-        // .. move atoms according to the gradient of volume of four atoms
-        if(config.refs.size() < 4) continue;
-        atom_o = _mol.GetAtomById(config.refs[0]);
-        atom_a = _mol.GetAtomById(config.refs[1]);
-        atom_b = _mol.GetAtomById(config.refs[2]);
-        atom_c = _mol.GetAtomById(config.refs[3]);
-
-        if(atom_o == NULL || atom_a == NULL || atom_b == NULL || atom_c == NULL) {
-          cerr << "Failed to obtain four atoms" << endl;
-          continue;
-        }
-
-        o = atom_o->GetVector();
-        a = atom_a->GetVector() - o;
-        b = atom_b->GetVector() - o;
-        c = atom_c->GetVector() - o;
-
-        vector3 delta_a;
-        delta_a.SetX(b.GetY()*c.GetZ() - b.GetZ()*c.GetY());
-        delta_a.SetY(b.GetZ()*c.GetX() - b.GetX()*c.GetZ());
-        delta_a.SetZ(b.GetX()*c.GetY() - b.GetY()*c.GetX());
-        vector3 delta_b;
-        delta_b.SetX(c.GetY()*a.GetZ() - c.GetZ()*a.GetY());
-        delta_b.SetY(c.GetZ()*a.GetX() - c.GetX()*a.GetZ());
-        delta_b.SetZ(c.GetX()*a.GetY() - c.GetY()*a.GetX());
-        vector3 delta_c;
-        delta_c.SetX(a.GetY()*b.GetZ() - a.GetZ()*b.GetY());
-        delta_c.SetY(a.GetZ()*b.GetX() - a.GetX()*b.GetZ());
-        delta_c.SetZ(a.GetX()*b.GetY() - a.GetY()*b.GetX());
-        vector3 delta_o;
-
-        delta_o.SetX(  a.GetZ() * (b.GetY() - c.GetY())
-                     + b.GetZ() * (c.GetY() - a.GetY())
-                     + c.GetZ() * (a.GetY() - b.GetY()));
-        delta_o.SetY(  a.GetX() * (b.GetZ() - c.GetZ())
-                     + b.GetX() * (c.GetZ() - a.GetZ())
-                     + c.GetX() * (a.GetZ() - b.GetZ()));
-        delta_o.SetZ(  a.GetY() * (b.GetX() - c.GetX())
-                     + b.GetY() * (c.GetX() - a.GetX())
-                     + c.GetY() * (a.GetX() - b.GetX()));
-
-        double volume =  a.GetX() * b.GetY() * c.GetZ()
-                               + b.GetX() * c.GetY() * a.GetZ()
-                               + c.GetX() * a.GetY() * b.GetZ()
-                               - a.GetX() * c.GetY() * c.GetZ()
-                               - b.GetX() * a.GetY() * c.GetZ()
-                               - c.GetX() * b.GetY() * a.GetZ();
-        double sign = volume > 0 ? -1 : 1;
-        double Z = delta_a.length() + delta_b.length() + delta_c.length() + delta_o.length();
-        atom_a->SetVector(atom_a->GetVector() + sign * lambda * delta_a / Z);
-        atom_b->SetVector(atom_b->GetVector() + sign * lambda * delta_b / Z);
-        atom_c->SetVector(atom_c->GetVector() + sign * lambda * delta_c / Z);
-        atom_o->SetVector(atom_o->GetVector() + sign * lambda * delta_o / Z);
-
-        o = atom_o->GetVector();
-        a = atom_a->GetVector() - o;
-        b = atom_b->GetVector() - o;
-        c = atom_c->GetVector() - o;
-        double fixed_volume =  a.GetX() * b.GetY() * c.GetZ()
-                               + b.GetX() * c.GetY() * a.GetZ()
-                               + c.GetX() * a.GetY() * b.GetZ()
-                               - a.GetX() * c.GetY() * c.GetZ()
-                               - b.GetX() * a.GetY() * c.GetZ()
-                               - c.GetX() * b.GetY() * a.GetZ();
-        cerr << "volume: " << volume << " -> " << fixed_volume << ", Z: " << Z << endl;
-      }
-    } // looping through tetrahedral stereo centers
-
-  } // done with CorrectStereoConstraints()
 
   bool OBDistanceGeometry::CheckStereoConstraints()
   {
@@ -1172,6 +1077,14 @@ namespace OpenBabel {
         distMat2(i, j) = sqrt(distMat2(i, j));
       }
     }
+
+    for(size_t i=0; i<N; i++) {
+      for (size_t j=0; j<N; j++) {
+        double lb = _d->GetLowerBounds(i, j);
+        double ub = _d->GetUpperBounds(i, j);
+        //cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " (" << distMat(i, j) << ")" << " < " << ub << endl;
+      }
+    }
     return true;
   }
 
@@ -1192,6 +1105,23 @@ namespace OpenBabel {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
       OBAtom* a = _mol.GetAtom(i+1);
       a->SetVector(v);
+    }
+
+    Eigen::MatrixXd distMat2(N, N);
+    for (size_t i = 0; i < N; i++) {
+      for (size_t j = 0; j < N; j++) {
+        for(size_t k = 0; k < dim; k++)
+          distMat2(i, j) += pow(_coord(i*dim + k)-_coord(j*dim + k), 2.0);
+        distMat2(i, j) = sqrt(distMat2(i, j));
+      }
+    }
+
+    for(size_t i=0; i<N; i++) {
+      for (size_t j=0; j<N; j++) {
+        double lb = _d->GetLowerBounds(i, j);
+        double ub = _d->GetUpperBounds(i, j);
+        //cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " < " << ub << endl;
+      }
     }
     return true;
   }
