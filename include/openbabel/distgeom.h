@@ -23,10 +23,6 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 
-#include <openbabel/cppoptlib/meta.h>
-#include <openbabel/cppoptlib/problem.h>
-#include <openbabel/cppoptlib/solver/bfgssolver.h>
-
 #include <iostream>
 
 #ifndef OBAPI
@@ -36,6 +32,7 @@ GNU General Public License for more details.
 #ifdef HAVE_EIGEN
 
 #include <Eigen/Core>
+#include <openbabel/LBFGS.h>
 
 namespace OpenBabel {
 
@@ -129,28 +126,18 @@ namespace OpenBabel {
     //! \return True if the bounds are met
     bool CheckBounds();
   };
-  class DistGeomFunc : public cppoptlib::Problem<double> {
+  class DistGeomFunc {
     OBDistanceGeometry* const owner;
     public:
       DistGeomFunc(OBDistanceGeometry* owner) : owner(owner) {}
-      using typename cppoptlib::Problem<double>::Scalar;
-      using typename cppoptlib::Problem<double>::TVector;
-  
-      double value(const TVector &x);
-      void gradient(const TVector &x, TVector &grad);
-
-      static double calcValue(OBDistanceGeometry* owner, const TVector &x);
-      static void calcGradient(OBDistanceGeometry* owner, const TVector &x, TVector &grad);
+      double operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad);
   };
-  class DistGeomFuncInclude4D : public cppoptlib::Problem<double> {
+
+  class DistGeomFunc4D {
     OBDistanceGeometry* const owner;
     public:
-      DistGeomFuncInclude4D(OBDistanceGeometry* owner) : owner(owner) {}
-      using typename cppoptlib::Problem<double>::Scalar;
-      using typename cppoptlib::Problem<double>::TVector;
-  
-      double value(const TVector &x);
-      void gradient(const TVector &x, TVector &grad);
+      DistGeomFunc4D(OBDistanceGeometry* owner) : owner(owner) {}
+      double operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad);
   };
 }
 

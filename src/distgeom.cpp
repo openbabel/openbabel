@@ -26,9 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
-#include <openbabel/cppoptlib/meta.h>
-#include <openbabel/cppoptlib/problem.h>
-#include <openbabel/cppoptlib/solver/bfgssolver.h>
+#include <openbabel/LBFGS.h>
 #include "rand.h"
 
 #include <openbabel/stereo/stereo.h>
@@ -41,7 +39,7 @@ GNU General Public License for more details.
 #include <string>
 #include <cmath>
 #include <random>
-
+#include <Eigen/Core>
 #include <Eigen/Eigenvalues>
 
 using namespace std;
@@ -200,13 +198,13 @@ namespace OpenBabel {
         vector<unsigned long> nbrs;
 
         nbrs.push_back(config.from);
-        for(auto &r : config.refs) {
-          nbrs.push_back(r);
+        for(size_t i=0; i<config.refs.size(); i++) {
+          nbrs.push_back(config.refs[i]);
         }
 
         // This is required to avoid segfault (why?)
-        for(auto &n : nbrs) {
-          if (n > _mol.NumAtoms()) n = config.center;
+        for(size_t i=0; i<nbrs.size(); i++) {
+          if (nbrs[i] > _mol.NumAtoms()) nbrs[i] = config.center;
         }
 
         if(config.winding == OBStereo::Clockwise) {
@@ -437,8 +435,7 @@ namespace OpenBabel {
       // Aromatic rings must be planar, so atoms in the ring = regular polygon
       double angle = 180.0 - (360.0 / size);
       angle *= DEG_TO_RAD;
-      float bondDist, 
-radius;
+      float bondDist, radius;
 
       // We should have 1-2 and 1-3 distances set exactly.
       // So we need to set 1-4 (e.g., para)
@@ -829,7 +826,7 @@ radius;
         return (*i)->Size();
     }
 
-   return 0;
+    return 0;
   }
 
   //! Implements the smoothing described by
@@ -1098,8 +1095,18 @@ radius;
     }
     DistGeomFunc f(this);
 
-    cppoptlib::BfgsSolver<DistGeomFunc> solver;
-    solver.minimize(f, _coord);
+    LBFGSpp::LBFGSParam<double> param;
+    param.epsilon = 1e-6;
+    param.max_iterations = 10000;
+
+    // Create solver and function object
+    LBFGSpp::LBFGSSolver<double> solver(param);
+    DistGeomFunc fun(this);
+
+    double fx;
+    int niter = solver.minimize(fun, _coord, fx);
+    std::cout << niter << " iterations" << std::endl;
+    std::cout << "f(x) = " << fx << std::endl;
 
     for(size_t i=0; i<N; ++i) {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
@@ -1133,10 +1140,18 @@ radius;
       OBAtom* a = _mol.GetAtom(i+1);
       a->SetVector(v);
     }
-    DistGeomFuncInclude4D f(this);
 
-    cppoptlib::BfgsSolver<DistGeomFuncInclude4D> solver;
-    solver.minimize(f, _coord);
+    LBFGSpp::LBFGSParam<double> param;
+    param.epsilon = 1e-6;
+    param.max_iterations = 10000;
+
+    LBFGSpp::LBFGSSolver<double> solver(param);
+    DistGeomFunc4D fun(this);
+
+    double fx;
+    int niter = solver.minimize(fun, _coord, fx);
+    std::cout << niter << " iterations" << std::endl;
+    std::cout << "f(x) = " << fx << std::endl;
 
     for(size_t i=0; i<N; ++i) {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
@@ -1263,21 +1278,7 @@ radius;
     return true;
   }
 
-  double DistGeomFunc::value(const TVector &x) {
-    return calcValue(owner, x);
-  }
-
-  double DistGeomFuncInclude4D::value(const TVector &x) {
-    double ret = DistGeomFunc::calcValue(owner, x);
-    const size_t dim = owner->GetDimension();
-    const size_t size = x.size()/dim;
-    for(size_t i=0; i<size; ++i) {
-      ret += pow(x[i*dim+3], 2.0);
-    }
-    return ret;
-  }
-
-  double DistGeomFunc::calcValue(OBDistanceGeometry* owner, const TVector &x) {
+  double DistGeomFunc::operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad) {
     unsigned int dim = owner->GetDimension();
     const size_t size = x.size()/dim;
     double ret = 0.0;
@@ -1299,7 +1300,8 @@ radius;
         }
     }
     // calculate distance error
-    for(auto &tetra : owner->_stereo) {
+    for(size_t i = 0; i < owner->_stereo.size(); i++) {
+      TetrahedralInfo tetra = owner->_stereo[i];
       vector<unsigned long> nbrs = tetra.GetNeighbors();
       Eigen::Vector3d v1(x(nbrs[0] * dim), x(nbrs[0]*dim+1), x(nbrs[0]*dim+2));
       Eigen::Vector3d v2(x(nbrs[1] * dim), x(nbrs[1]*dim+1), x(nbrs[1]*dim+2));
@@ -1311,24 +1313,6 @@ radius;
       if(vol < lb) ret += (vol - lb) * (vol - lb);
       else if(vol > ub) ret += (vol - ub) * (vol - ub);
     }
-    return ret;
-  }
-
-  void DistGeomFunc::gradient(const TVector &x, TVector &grad) {
-    calcGradient(owner, x, grad);
-  }
-  void DistGeomFuncInclude4D::gradient(const TVector &x, TVector &grad) {
-    DistGeomFunc::calcGradient(owner, x, grad);
-    unsigned int dim = owner->GetDimension();
-    unsigned int N = x.size() / dim;
-    for(size_t i=0; i<N; ++i) {
-      grad[i * dim + 3] += 2.0 * x[i * dim + 3];
-    }
-  }
-
-  void DistGeomFunc::calcGradient(OBDistanceGeometry* owner,
-                                  const TVector &x, TVector &grad) {
-    unsigned int dim = owner->GetDimension();
     // clear gradient
     for (size_t i=0; i<grad.rows(); i++) {
       grad[i] = 0;
@@ -1361,7 +1345,8 @@ radius;
       }
     }
     // gradient for chiral error
-    for(auto &tetra : owner->_stereo) {
+    for(size_t i = 0; i < owner->_stereo.size(); i++) {
+      TetrahedralInfo tetra = owner->_stereo[i];
       vector<unsigned long> nbrs = tetra.GetNeighbors();
       unsigned long idx1, idx2, idx3, idx4;
       idx1 = nbrs[0];
@@ -1417,6 +1402,142 @@ radius;
          x[idx2 * dim + 1] * (x[idx3 * dim] - x[idx1 * dim]) + 
          x[idx3 * dim + 1] * (x[idx1 * dim] - x[idx2 * dim]));
     }
+    return ret;
+  }
+
+  double DistGeomFunc4D::operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad) {
+    unsigned int dim = owner->GetDimension();
+    const size_t size = x.size()/dim;
+    double ret = 0.0;
+    // calculate distance error
+    for(size_t i=0; i<size; ++i) {
+        for(size_t j=0; j<size; ++j) {
+            double v = 0.0;
+            double d2 = 0;
+            for(size_t k=0; k<dim; k++)
+              d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
+            double d = sqrt(d2);
+            double ub = owner->GetUpperBounds(i, j);
+            double lb = owner->GetLowerBounds(i, j);
+            double u2 = ub * ub;
+            double l2 = lb * lb;
+            if (d > ub) v = d2/u2-1.0; 
+            else if (d < lb) v = (2.0*l2 / (l2+d2))-1.0;
+            if(v > 0.0) ret += v*v;
+        }
+    }
+    // calculate distance error
+    for(size_t i = 0; i < owner->_stereo.size(); i++) {
+      TetrahedralInfo tetra = owner->_stereo[i];
+      vector<unsigned long> nbrs = tetra.GetNeighbors();
+      Eigen::Vector3d v1(x(nbrs[0] * dim), x(nbrs[0]*dim+1), x(nbrs[0]*dim+2));
+      Eigen::Vector3d v2(x(nbrs[1] * dim), x(nbrs[1]*dim+1), x(nbrs[1]*dim+2));
+      Eigen::Vector3d v3(x(nbrs[2] * dim), x(nbrs[2]*dim+1), x(nbrs[2]*dim+2));
+      Eigen::Vector3d v4(x(nbrs[3] * dim), x(nbrs[3]*dim+1), x(nbrs[3]*dim+2));
+      double vol = (v1-v4).dot((v2-v4).cross(v3-v4));
+      double lb = tetra.GetLowerBound();
+      double ub = tetra.GetUpperBound();
+      if(vol < lb) ret += (vol - lb) * (vol - lb);
+      else if(vol > ub) ret += (vol - ub) * (vol - ub);
+    }
+    // clear gradient
+    for (size_t i=0; i<grad.rows(); i++) {
+      grad[i] = 0;
+    }
+    // gradient for distance error
+    unsigned int N = x.size() / dim;
+    for(size_t i=0; i<N; ++i) {
+      for(size_t j=0; j<N; ++j) {
+        double preFactor = 0.0;
+        double ub = owner->GetUpperBounds(i, j);
+        double lb = owner->GetLowerBounds(i, j);
+        double d2 = 0;
+        for(size_t k=0; k<dim; k++)
+          d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
+        double d = sqrt(d2);
+        if (d > ub) {
+          double u2 = ub * ub;
+          preFactor = 4.0 * (((d2)/u2) - 1.0) * (d/u2);
+        } else if(d < lb) {
+          double l2 = lb * lb;
+          double l2d2 = d2 + l2;
+          preFactor = 8.0 * l2 * d * (1.0 - 2.0 * l2 / l2d2) / (l2d2 * l2d2);
+        }
+        for (size_t k=0; k<dim; ++k) {
+          double g = 0;
+          if(d > 0) g = preFactor * (x[i*dim+k] - x[j*dim+k]) / d;
+          grad[i * dim + k] += g;
+          grad[j * dim + k] += -g;
+        }
+      }
+    }
+    // gradient for chiral error
+    for(size_t i = 0; i < owner->_stereo.size(); i++) {
+      TetrahedralInfo tetra = owner->_stereo[i];
+      vector<unsigned long> nbrs = tetra.GetNeighbors();
+      unsigned long idx1, idx2, idx3, idx4;
+      idx1 = nbrs[0];
+      idx2 = nbrs[1];
+      idx3 = nbrs[2];
+      idx4 = nbrs[3];
+
+      Eigen::Vector3d v1(x(idx1 * dim), x(idx1 * dim+1), x(idx1 * dim+2));
+      Eigen::Vector3d v2(x(idx2 * dim), x(idx2 * dim+1), x(idx2 * dim+2));
+      Eigen::Vector3d v3(x(idx3 * dim), x(idx3 * dim+1), x(idx3 * dim+2));
+      Eigen::Vector3d v4(x(idx4 * dim), x(idx4 * dim+1), x(idx4 * dim+2));
+      v1 -= v4;
+      v2 -= v4;
+      v3 -= v4;
+
+      double vol = v1.dot(v2.cross(v3));
+      double lb = tetra.GetLowerBound();
+      double ub = tetra.GetUpperBound();
+
+      double preFactor;
+      if (vol < lb) preFactor = vol - lb;
+      else if (vol > ub) preFactor = vol - ub;
+      else continue;
+
+      // RDKit: Code/DistGeom/ChiralViolationContrib.cpp
+      grad[dim * idx1] += preFactor * (v2.y() * v3.z() - v3.y() * v2.z());
+      grad[dim * idx1 + 1] += preFactor * (v3.x() * v2.z() - v2.x() * v3.z());
+      grad[dim * idx1 + 2] += preFactor * (v2.x() * v3.y() - v3.x() * v2.y());
+
+      grad[dim * idx2] += preFactor * (v3.y() * v1.z() - v3.z() * v1.y());
+      grad[dim * idx2 + 1] += preFactor * (v3.z() * v1.x() - v3.z() * v1.z());
+      grad[dim * idx2 + 2] += preFactor * (v3.x() * v1.y() - v3.y() * v1.x());
+
+      grad[dim * idx3] += preFactor * (v2.z() * v1.y() - v2.y() * v1.z());
+      grad[dim * idx3 + 1] += preFactor * (v2.x() * v1.z() - v2.z() * v1.x());
+      grad[dim * idx3 + 2] += preFactor * (v2.y() * v1.x() - v2.x() * v1.y());
+
+      grad[dim * idx4] += 
+        preFactor *
+        (x[idx1 * dim + 2] * (x[idx2 * dim + 1] - x[idx3 * dim + 1]) + 
+         x[idx2 * dim + 2] * (x[idx3 * dim + 1] - x[idx1 * dim + 1]) + 
+         x[idx3 * dim + 2] * (x[idx1 * dim + 1] - x[idx2 * dim + 1]));
+
+      grad[dim * idx4 + 1] += 
+        preFactor *
+        (x[idx1 * dim] * (x[idx2 * dim + 2] - x[idx3 * dim + 2]) + 
+         x[idx2 * dim] * (x[idx3 * dim + 2] - x[idx1 * dim + 2]) + 
+         x[idx3 * dim] * (x[idx1 * dim + 2] - x[idx2 * dim + 2]));
+
+      grad[dim * idx4 + 2] += 
+        preFactor *
+        (x[idx1 * dim + 1] * (x[idx2 * dim] - x[idx3 * dim]) + 
+         x[idx2 * dim + 1] * (x[idx3 * dim] - x[idx1 * dim]) + 
+         x[idx3 * dim + 1] * (x[idx1 * dim] - x[idx2 * dim]));
+    }
+
+    for(size_t i=0; i<size; ++i) {
+      ret += pow(x[i*dim+3], 2.0);
+    }
+
+    for(size_t i=0; i<N; ++i) {
+      grad[i * dim + 3] += 2.0 * x[i * dim + 3];
+    }
+    return ret;
   }
 
 } // end namespace
