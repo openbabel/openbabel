@@ -38,7 +38,29 @@ namespace OpenBabel {
 
   class DistanceGeometryPrivate;
   class OBCisTransStereo;
-  class TetrahedralInfo;
+
+  class TetrahedralInfo {
+    int c;
+    std::vector<unsigned long> nbrs;
+    double lb, ub;
+    public:
+    TetrahedralInfo(int center, std::vector<unsigned long> neighbors,
+                    double lower_bound, double upper_bound) :
+                    c(center), nbrs(neighbors),
+                    lb(lower_bound), ub(upper_bound) {}
+    int GetCenter() {
+      return c;
+    }
+    std::vector<unsigned long> GetNeighbors() {
+      return nbrs;
+    }
+    double GetUpperBound() {
+      return ub;
+    }
+    double GetLowerBound() {
+      return lb;
+    }
+  };
 
   class OBAPI OBDistanceGeometry {
     friend class DistgeomFunc;

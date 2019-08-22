@@ -102,28 +102,6 @@ namespace OpenBabel {
     Eigen::MatrixXf bounds, preMet;
     bool debug; double maxBoxSize; };
 
-  class TetrahedralInfo {
-    int c;
-    vector<unsigned long> nbrs;
-    double lb, ub;
-    public:
-    TetrahedralInfo(int center, vector<unsigned long> neighbors,
-                    double lower_bound, double upper_bound) :
-                    c(center), nbrs(neighbors),
-                    lb(lower_bound), ub(upper_bound) {}
-    int GetCenter() {
-      return c;
-    }
-    vector<unsigned long> GetNeighbors() {
-      return nbrs;
-    }
-    double GetUpperBound() {
-      return ub;
-    }
-    double GetLowerBound() {
-      return lb;
-    }
-  };
 
   OBDistanceGeometry::OBDistanceGeometry(): _d(NULL) {}
 
@@ -1173,8 +1151,6 @@ namespace OpenBabel {
       cerr << " max box size: " << _d->maxBoxSize << endl;
     }
 
-    unsigned int i,j;
-    float lBounds, uBounds, dist;
     bool success = false;
     unsigned int maxIter = 1 * _mol.NumAtoms();
     for (unsigned int trial = 0; trial < maxIter; trial++) {
