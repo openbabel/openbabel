@@ -2197,6 +2197,7 @@ namespace OpenBabel
         double bondlen = hbrad + CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb());
         for (m = 0;m < k->second;++m)
           {
+            int badh = 0;
             for (n = 0;n < NumConformers();++n)
               {
                 SetConformer(n);
@@ -2215,40 +2216,36 @@ namespace OpenBabel
                       _c[(NumAtoms())*3+1] = 0.0;
                       _c[(NumAtoms())*3+2] = 0.0;
                       obErrorLog.ThrowError(__FUNCTION__,
-                                            "Ran OpenBabel::AddHydrogens -- non-finite hydrogens found.",
+                                            "Ran OpenBabel::AddHydrogens -- no reasonable bond geometry for desired hydrogen.",
                                             obAuditMsg);
+                      badh++;
                     }
                   }
                 else
                   memset((char*)&_c[NumAtoms()*3],'\0',sizeof(double)*3);
               }
-            h = NewAtom();
-            h->SetType("H");
-            h->SetAtomicNum(1);
-
-            // copy parent atom residue to added hydrogen     REG 6/30/02
-
-            if (atom->HasResidue())
+            if(badh == 0 || badh < NumConformers()) 
               {
+                h = NewAtom();
+                h->SetType("H");
+                h->SetAtomicNum(1);
 
-                string aname;
+                // copy parent atom residue to added hydrogen     REG 6/30/02
+                if (atom->HasResidue())
+                  {
+                    string aname = "H";
+                    // Add the new H atom to the appropriate residue list
+                    atom->GetResidue()->AddAtom(h);
+                    // Give the new atom a pointer back to the residue
+                    h->SetResidue(atom->GetResidue());
+                    atom->GetResidue()->SetAtomID(h,aname);
+                  }
 
-                aname = "H";
-
-                // Add the new H atom to the appropriate residue list
-                atom->GetResidue()->AddAtom(h);
-
-                // Give the new atom a pointer back to the residue
-                h->SetResidue(atom->GetResidue());
-
-                atom->GetResidue()->SetAtomID(h,aname);
-
+                int bondFlags = 0;
+                AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
+                h->SetCoordPtr(&_c);
+                OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
               }
-
-            int bondFlags = 0;
-            AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
-            h->SetCoordPtr(&_c);
-            OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
           }
       }
 
