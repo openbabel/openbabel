@@ -57,6 +57,12 @@ if (EIGEN2_FOUND OR EIGEN3_FOUND)
   set (align_parts 1 2 3 4 5)
 endif ()
 
+if (WITH_MAEPARSER)
+    set(cpptests ${cpptests}
+        maereader)
+    set (maereader_parts 1 2)
+endif ()
+
 set(origtests
     aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
     datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
