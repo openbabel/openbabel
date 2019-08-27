@@ -2798,7 +2798,7 @@ namespace OpenBabel
           }
 
           // check to see how large the gradients are
-          if (dir.length_2() > maxgrad)
+          if (dir.length_2() < maxgrad)
             maxgrad = dir.length_2();
 
           if (!_constraints.IsXFixed(idx))
@@ -3004,7 +3004,7 @@ namespace OpenBabel
           }
 
           // check to see how large the gradients are
-          if (grad2.length_2() > maxgrad)
+          if (grad2.length_2() < maxgrad)
             maxgrad = grad2.length_2();
 
           if (!_constraints.IsXFixed(idx))
