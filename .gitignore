@@ -1,5 +1,4 @@
 *.py[cod]
-build
 nbproject
 scripts/**/*.cpp
 scripts/python/openbabel/__init__.py
@@ -8,3 +7,10 @@ scripts/java/openbabel.jar
 scripts/php/openbabel.php
 scripts/php/php_openbabel.h
 external
+
+# build
+build
+build-static
+
+# editors
+.vscode

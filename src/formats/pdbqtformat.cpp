@@ -1190,15 +1190,17 @@ namespace OpenBabel
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
+    char icode = sbuf.substr(20,1)[0];
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
     if (res == NULL || res->GetName() != resname
-      || res->GetNumString() != resnum)
+      || res->GetNumString() != resnum || res->GetInsertionCode() != icode)
     {
       vector<OBResidue*>::iterator ri;
       for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
       if (res->GetName() == resname
         && res->GetNumString() == resnum
-        && static_cast<int>(res->GetChain()) == chain)
+        && static_cast<int>(res->GetChain()) == chain
+        && res-> GetInsertionCode() == icode)
         break;
 
       if (res == NULL)
@@ -1207,6 +1209,7 @@ namespace OpenBabel
         res->SetChain(chain);
         res->SetName(resname);
         res->SetNum(resnum);
+        res->SetInsertionCode(icode);
       }
     }
 
