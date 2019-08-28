@@ -107,7 +107,7 @@ namespace OpenBabel
 
       virtual const char* SpecificationURL()
       {
-        return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";
+        return "https://www.3dsbiovia.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html";
       }
 
       virtual const char* GetMIMEType()
