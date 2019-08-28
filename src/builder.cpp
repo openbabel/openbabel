@@ -1050,6 +1050,7 @@ namespace OpenBabel
     vector<int>::iterator k, k2;
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
+    vector<double> ring_torsions; // ring torsion list for rules
 
     OBConversion conv;
     conv.SetOutFormat("can"); // Canonical SMILES
@@ -1064,6 +1065,23 @@ namespace OpenBabel
     if (workMol.GetDimension() == 2)
       workMol.SetDimension(0);
 
+    // Get the rings
+    vector<OBRing*> rlist;
+    vector<OBRing*>::iterator ringit;
+
+    if (!mol.HasSSSRPerceived())
+      mol.FindSSSR();
+    rlist = mol.GetSSSR();
+    ring_torsions.resize(rlist.size());
+    for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
+    {
+      if ((*ringit)->PathSize() <= 3)
+        continue;
+
+      cerr << " ring id: " << (*ringit)->ring_id << " size " << (*ringit)->PathSize() << endl;
+
+//      torsion = DEG_TO_RAD*(180.0 - 720.0/float((*ringit)->PathSize()));
+    }
 
     // Delete all bonds in the working molecule
     // (we will add them back at the end)
@@ -1219,15 +1237,13 @@ namespace OpenBabel
     }
 
     // Fix the ring bonds
-    vector<OBRing*> rlist;
-    vector<OBRing*>::iterator ringit;
     vector<int> path;
     double torsion = 0.0;
     OBAtom *a, *b, *c, *d;
 
-    if (!workMol.HasSSSRPerceived())
-      workMol.FindSSSR();
-    rlist = workMol.GetSSSR();
+    if (!mol.HasSSSRPerceived())
+      mol.FindSSSR();
+    rlist = mol.GetSSSR();
     for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
     {
       if ((*ringit)->PathSize() <= 3)
