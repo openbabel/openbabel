@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/ring.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 #include <openbabel/obconversion.h>
@@ -336,7 +337,7 @@ namespace OpenBabel
         v1 = v1.normalize();
 
         if (atom->GetHyb() == 2)
-          newbond = v1; 
+          newbond = v1;
         else if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
@@ -1151,62 +1152,6 @@ namespace OpenBabel
           }
         }
       }
-      if(!isMatchRigid) {    // if rigid fragment is not in database
-        // Count the number of ring atoms.
-        unsigned int ratoms = 0;
-        FOR_ATOMS_OF_MOL(a, mol) {
-          if (a->IsInRing()) {
-            ratoms++;
-          }
-        }
-        if (ratoms < 3) continue; // Smallest ring fragment has 3 atoms
-
-        vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
-        // Skip all fragments that are too big to match
-        // Note: It would be faster to compare to the size of the largest
-        //       isolated ring system instead of comparing to ratoms
-        for (i = _ring_fragments.begin(); i != _ring_fragments.end() && i->first->NumAtoms() > ratoms; ++i);
-
-        // Loop through the remaining fragments and assign the coordinates from
-        // the first (most complex) fragment.
-        // Stop if there are no unassigned ring atoms (ratoms).
-        for (; i != _ring_fragments.end() && ratoms; ++i) {
-          if (i->first != NULL && i->first->Match(*f)) { // if match to fragment
-            i->first->Match(mol);                        // match over mol
-            mlist = i->first->GetUMapList();
-            for (j = mlist.begin();j != mlist.end();++j) { // for all matches
-              // Have any atoms of this match already been added?
-              bool alreadydone = false;
-              for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
-                if (vfrag.BitIsSet(*k)) {
-                  alreadydone = true;
-                  break;
-                }
-              }
-              if (alreadydone) continue;
-              for (k = j->begin(); k != j->end(); ++k)
-                vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
-
-              int counter;
-              for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
-                // set coordinates for atoms
-                OBAtom *atom = workMol.GetAtom(*k);
-                atom->SetVector(i->second[counter]);
-              }
-              // add the bonds for the fragment
-              for (k = j->begin(); k != j->end(); ++k) {
-                OBAtom *atom1 = mol.GetAtom(*k);
-                for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                  OBAtom *atom2 = mol.GetAtom(*k2);
-                  OBBond *bond = atom1->GetBond(atom2);
-                  if (bond != NULL)
-                    workMol.AddBond(*bond);
-                }
-              }
-            }
-          }
-        }
-      }
     } // for all fragments
 
     // iterate over all atoms to place them in 3D space
@@ -1273,11 +1218,54 @@ namespace OpenBabel
 
     }
 
+    // Fix the ring bonds
+    vector<OBRing*> rlist;
+    vector<OBRing*>::iterator ringit;
+    vector<int> path;
+    double torsion = 0.0;
+    OBAtom *a, *b, *c, *d;
+
+    if (!workMol.HasSSSRPerceived())
+      workMol.FindSSSR();
+    rlist = workMol.GetSSSR();
+    for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
+    {
+      if ((*ringit)->PathSize() <= 3)
+        continue;
+
+      path = (*ringit)->_path;
+
+      // save then delete the closure bond
+      a = workMol.GetAtom(path[0]);
+      b = workMol.GetAtom(path[path.size() - 1]);
+      cout << " deleting ring torsion ";
+      workMol.DeleteBond(workMol.GetBond(a,b));
+
+      // Make a "crown" conformer
+      torsion = DEG_TO_RAD*(180.0 - 720.0/float((*ringit)->PathSize()));
+      a = workMol.GetAtom(path[0]);
+      b = workMol.GetAtom(path[1]);
+      c = workMol.GetAtom(path[2]);
+      d = workMol.GetAtom(path[3]);
+      workMol.SetTorsion(a,b,c,d,torsion);
+      for (unsigned int j = 4; j < path.size(); ++j)
+      {
+        a = b; b = c; c = d;
+        d = workMol.GetAtom(path[j]);
+        torsion = -1.0 * torsion;
+        workMol.SetTorsion(a,b,c,d,torsion);
+
+        cout << " setting torsion " << torsion << " " << path.size() << endl;
+      }
+      // re-create the closure bond below
+      workMol.AddBond(path[0], path[path.size()], 1);
+    }
+
     // Make sure we keep the bond indexes the same
     // so we'll delete the bonds again and copy them
     // Fixes PR#3448379 (and likely other topology issues)
     while (workMol.NumBonds())
-      workMol.DeleteBond(workMol.GetBond(0));
+    workMol.DeleteBond(workMol.GetBond(0));
 
     int beginIdx, endIdx;
     FOR_BONDS_OF_MOL(b, mol) {
