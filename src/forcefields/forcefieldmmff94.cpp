@@ -3656,7 +3656,7 @@ namespace OpenBabel
           continue;
       }
 
-      elecalc.qq = 332.0716 * a->GetPartialCharge() * b->GetPartialCharge();
+      elecalc.qq = 332.0716 * a->GetPartialCharge() * b->GetPartialCharge() / _epsilon;
 
       if (elecalc.qq) {
         elecalc.a = &*a;
