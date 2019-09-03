@@ -174,21 +174,22 @@ namespace OpenBabel {
         OBTetrahedralStereo::Config config = ts->GetConfig();
         vector<unsigned long> nbrs;
 
-        nbrs.push_back(config.from);
+        nbrs.push_back(_mol.GetAtomById(config.from)->GetIdx()-1);
         for(size_t i=0; i<config.refs.size(); i++) {
-          nbrs.push_back(config.refs[i]);
+          nbrs.push_back(_mol.GetAtomById(config.refs[i])->GetIdx()-1);
         }
 
         // This is required to avoid segfault (why?)
+        unsigned long centerIdx = _mol.GetAtomById(config.center)->GetIdx()-1;
         for(size_t i=0; i<nbrs.size(); i++) {
-          if (nbrs[i] > _mol.NumAtoms()) nbrs[i] = config.center;
+          if (nbrs[i] > _mol.NumAtoms()) nbrs[i] = centerIdx;
         }
 
         if(config.winding == OBStereo::Clockwise) {
-          TetrahedralInfo ti(config.center, nbrs, -100.0, -5.0);
+          TetrahedralInfo ti(centerIdx, nbrs, -100.0, -5.0);
           _stereo.push_back(ti);
         } else if(config.winding == OBStereo::AntiClockwise) {
-          TetrahedralInfo ti(config.center, nbrs, 5.0, 100.0);
+          TetrahedralInfo ti(centerIdx, nbrs, 5.0, 100.0);
           _stereo.push_back(ti);
         }
       }
