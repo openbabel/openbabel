@@ -57,6 +57,12 @@ set(formats_compchem
       zindoformat
   )
 
+if(WITH_MAEPARSER)
+    set(formats_compchem ${formats_compchem}
+        maeformat
+       )
+endif()
+
 
 if(MSVC OR HAVE_REGEX_H)
   set(formats_compchem
