@@ -32,7 +32,7 @@ GNU General Public License for more details.
 #ifdef HAVE_EIGEN
 
 #include <Eigen/Core>
-#include <openbabel/LBFGS.h>
+#include <LBFGS.h>
 
 namespace OpenBabel {
 
