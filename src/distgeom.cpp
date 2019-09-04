@@ -131,6 +131,10 @@ namespace OpenBabel {
     dim = 4;
     _mol = mol;
 
+    OBConversion conv;
+    conv.SetOutFormat("can");
+    input_smiles = conv.WriteString(&_mol, true);
+
     _mol.SetDimension(3);
     _vdata = _mol.GetAllData(OBGenericDataType::StereoData);
     _d = new DistanceGeometryPrivate(mol.NumAtoms());
@@ -905,11 +909,18 @@ namespace OpenBabel {
 
   bool OBDistanceGeometry::CheckStereoConstraints()
   {
+    // Check stereo by canonical SMILES
+    _mol.SetChiralityPerceived();
+    OBConversion conv;
+    conv.SetOutFormat("can");
+    std::string predicted_smiles = conv.WriteString(&_mol, true);
+    return input_smiles == predicted_smiles;
+
     // Check all stereo constraints
     // First, gather the known, specified stereochemistry
     // Get TetrahedralStereos and make a vector of corresponding OBStereoUnits
     // Get CisTrans and make a vector of those too
-    std::vector<OBTetrahedralStereo*> tetra, newtetra;
+    /*std::vector<OBTetrahedralStereo*> tetra, newtetra;
     std::vector<OBCisTransStereo*> cistrans, newcistrans;
     OBStereoUnitSet ctSunits, tetSunits;
     std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
@@ -959,7 +970,7 @@ namespace OpenBabel {
     }
 
     // everything validated
-    return true;
+    return true;*/
   }
 
   Eigen::MatrixXf OBDistanceGeometry::GetBoundsMatrix()

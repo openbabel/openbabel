@@ -107,6 +107,7 @@ namespace OpenBabel {
     std::vector<OBGenericData*> _vdata;
     DistanceGeometryPrivate  *_d;    //!< Internal private data, including bounds matrix
     Eigen::VectorXd _coord;          // one-dimensional vector containing coordinates of atoms
+    std::string input_smiles;
 
     unsigned int dim;
 
