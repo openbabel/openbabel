@@ -302,6 +302,7 @@ namespace OpenBabel {
   // (otherwise ignore them for C++ use)
   namespace OBResidueIndex
   {
+    
     enum
     {
       ALA   =  0,
