@@ -282,6 +282,9 @@ namespace OpenBabel
       std::vector<char>           chains;
     };
 
+    //! Global OBChainsParser for detecting macromolecular chains and residues
+    EXTERN  OBChainsParser   chainsparser;
+
 }
 #endif // OB_CHAINS_H
 

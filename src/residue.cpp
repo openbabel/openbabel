@@ -841,7 +841,7 @@ _insertioncode=0;
     _atomid   = src._atomid;
     _hetatm   = src._hetatm;
     _sernum   = src._sernum;
-_insertioncode=src._insertioncode;
+    _insertioncode=src._insertioncode;
 
   }
 
@@ -872,7 +872,7 @@ _insertioncode=src._insertioncode;
         _atomid   = src._atomid;
         _hetatm   = src._hetatm;
         _sernum   = src._sernum;
-   _insertioncode = src._insertioncode;
+        _insertioncode = src._insertioncode;
       }
 
     return(*this);
@@ -1013,7 +1013,7 @@ _insertioncode=src._insertioncode;
         vector<OBBond*>::iterator b;
         for (bond = atom->BeginBond(b) ; bond ; bond = atom->NextBond(b))
           {
-            if (!idxs.BitIsOn(bond->GetIdx()))
+            if (!idxs.BitIsSet(bond->GetIdx()))
               {
                 if (!exterior)
                   {
@@ -1041,7 +1041,7 @@ _insertioncode=src._insertioncode;
     return _resnum;
   }
 
-  unsigned int OBResidue::GetNum(void)
+  int OBResidue::GetNum(void)
   {
     return atoi(_resnum.c_str());
   }

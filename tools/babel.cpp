@@ -129,6 +129,7 @@ int main(int argc,char *argv[])
                     {
                       cerr << program_name << ": cannot read input format!" << endl;
                       usage();
+                      exit(1);
                     }
                   break;
 
@@ -139,7 +140,10 @@ int main(int argc,char *argv[])
                     oext = argv[++arg]; //space left after -i: use next argument
 
                   if (arg >= argc)
-                    usage(); // error in parsing command-line
+                    {
+                      usage(); // error in parsing command-line
+                      exit(1);
+                    }
 
                   if (strncasecmp(oext, "MIME", 4) == 0)
                     {
@@ -154,6 +158,7 @@ int main(int argc,char *argv[])
                     {
                       cerr << program_name << ": cannot write output format!" << endl;
                       usage();
+                      exit(1);
                     }
                   break;
 
@@ -285,6 +290,7 @@ int main(int argc,char *argv[])
         {
           cerr << "No output file or format spec!" << endl;
           usage();
+          exit(1);
         }
       OutputFileName = FileList.back();
       FileList.pop_back();
@@ -305,6 +311,7 @@ int main(int argc,char *argv[])
         {
           cerr << "No input file or format spec!" <<endl;
           usage();
+          exit(1);
         }
     }
 
@@ -315,6 +322,7 @@ int main(int argc,char *argv[])
         {
           cerr << program_name << ": cannot write output format!" << endl;
           usage();
+          exit(1);
         }
     }
 
@@ -322,11 +330,13 @@ int main(int argc,char *argv[])
     {
       cerr << "Invalid input format" << endl;
       usage();
+      exit(1);
     }
     if(!Conv.SetOutFormat(pOutFormat, outGzip))
     {
       cerr << "Invalid output format" << endl;
       usage();
+      exit(1);
     }
 
   if(SplitOrBatch)
@@ -432,8 +442,6 @@ void usage()
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-
-  exit (0);
 }
 
 void help()
@@ -559,6 +567,7 @@ void help()
 *  \n    ccc -- CCC format [Readonly]
 *  \n    cht -- ChemTool format [Writeonly]
 *  \n    cml -- Chemical Markup Language
+*  \n    com -- Gaussian Cartesian Input [Writeonly]
 *  \n    crk2d -- Chemical Resource Kit diagram format (2D)
 *  \n    crk3d -- Chemical Resource Kit 3D format
 *  \n    csr -- CSR format [Writeonly]
@@ -569,13 +578,16 @@ void help()
 *  \n    feat -- Feature format
 *  \n    fh -- Fenske-Hall Z-Matrix format [Writeonly]
 *  \n    fix -- FIX format [Writeonly]
-*  \n    g03 -- Gaussian98/03 Cartesian [Writeonly]
-*  \n    g98 -- Gaussian98/03 Cartesian [Writeonly]
+*  \n    g03 -- Gaussian 98/03 Output [Readonly]
+*  \n    g98 -- Gaussian 98/03 Output [Readonly]
 *  \n    gam -- GAMESS Output
 *  \n    gamout -- GAMESS Output
-*  \n    gau -- Gaussian98/03 Cartesian [Writeonly]
+*  \n    gau -- Gaussian Cartesian Input [Writeonly]
+*  \n    gjc -- Gaussian Cartesian Input [Writeonly]
+*  \n    gjf -- Gaussian Cartesian Input [Writeonly]
 *  \n    gpr -- Ghemical format
 *  \n    gr96 -- GROMOS96 format [Writeonly]
+*  \n    gzmat -- Gaussian Z-Matrix Input
 *  \n    hin -- HyperChem Input format
 *  \n    ins -- ShelX format [Readonly]
 *  \n    jout -- Jaguar output format

@@ -14,11 +14,9 @@ In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
 """
 
-import os
 import unittest
-import pdb
 
-from testbabel import run_exec, executable, log, BaseTest
+from testbabel import run_exec, BaseTest
 
 def checkmatch(query, molecules):
     result = []
@@ -69,7 +67,7 @@ class TestSmartsSym(BaseTest):
         self.assertEqual(fastcheckmatch(data[2], data[0:6]),
                          [False, True, True, False, False, False])
         self.assertEqual(fastcheckmatch(data[4], data[0:6]), [True]*6)
-        
+
     def testTetStereoImplicitH(self):
         data = ['[C@H](Br)(Cl)I',
                 '[C@@H](Br)(Cl)I',
@@ -99,7 +97,7 @@ class TestSmartsSym(BaseTest):
         self.assertEqual(fastcheckmatch(data[2], data[0:6]),
                          [False, True, True, False, False, False])
         self.assertEqual(fastcheckmatch(data[5], data[0:6]), [True]*6)
-        
+
 
 if __name__ == "__main__":
     testsuite = []

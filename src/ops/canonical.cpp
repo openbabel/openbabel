@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/op.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
 

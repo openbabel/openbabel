@@ -20,7 +20,12 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obutil.h>
+#include <openbabel/internalcoord.h>
+
+#include <cstring>
 
 #ifdef HAVE_CONIO_H
 #include <conio.h>

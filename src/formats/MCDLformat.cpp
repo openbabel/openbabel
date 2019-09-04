@@ -19,8 +19,13 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/chiral.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+
 #include <openbabel/mcdlutil.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
@@ -46,7 +51,7 @@ public:
 "            Language (MCDL): Composition, Connectivity and\n"
 "            Supplementary Modules.**\n"
 "            *J. Chem. Inf. Comput. Sci.*, **2004**, *41*, 1491-1499.\n"
-"            [`Link <http://dx.doi.org/10.1021/ci000108y>`_]\n\n"
+"            [`Link <https://doi.org/10.1021/ci000108y>`_]\n\n"
 
 "Here's an example conversion from SMILES to MCDL::\n\n"
 "  obabel -:\"CC(=O)Cl\" -omcdl\n"
@@ -526,7 +531,6 @@ private:
     std::vector <int>  bondStereoList;
     std::vector <int>  atomStereoList;
     std::vector <int>  anumStereo;
-    bool test;//, testParity;
     string as1,as2,as3,as4;
     string linestereo;
     OBAtom *atom;
@@ -549,8 +553,6 @@ private:
     radicalflag=0;
     netradical=0;
 
-  //pmol->FindChiralCenters();
-  test=pmol->IsChiral();  //Instead of above lines...
   netcharge=pmol->GetTotalCharge();
   netradical=pmol->GetTotalSpinMultiplicity()-1;
 
@@ -566,7 +568,7 @@ private:
     aCharge[i-1]=atom->GetFormalCharge();
     aRadical[i-1]=atom->GetSpinMultiplicity();
     aSymb[i-1]=OBElements::GetSymbol(atom->GetAtomicNum());
-    nConn[i-1]=atom->GetHvyValence();
+    nConn[i-1]=atom->GetHvyDegree();
     aNumber[i-1]=i-1;
   };
   for (i=1; i<=nbStore; i++) {

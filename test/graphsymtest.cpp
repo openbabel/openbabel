@@ -5,6 +5,8 @@
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 #include <openbabel/canon.h>
 
@@ -75,9 +77,9 @@ void genericGraphSymTest(const std::string &smiles)
       continue;
 
     OB_ASSERT( a1->GetAtomicNum() == a2->GetAtomicNum() );
-    OB_ASSERT( a1->GetValence() == a2->GetValence() );
-    OB_ASSERT( a1->GetHvyValence() == a2->GetHvyValence() );
-    OB_ASSERT( a1->GetHeteroValence() == a2->GetHeteroValence() );
+    OB_ASSERT( a1->GetExplicitDegree() == a2->GetExplicitDegree() );
+    OB_ASSERT( a1->GetHvyDegree() == a2->GetHvyDegree() );
+    OB_ASSERT( a1->GetHeteroDegree() == a2->GetHeteroDegree() );
     OB_ASSERT( a1->GetImplicitHCount() == a2->GetImplicitHCount() );
   }
 

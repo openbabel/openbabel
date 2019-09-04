@@ -23,8 +23,8 @@ GNU General Public License for more details.
 #define OB_GRIDDATA_H
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/base.h>
 #include <openbabel/math/vector3.h>
+#include <openbabel/generic.h>
 
 #include <vector>
 

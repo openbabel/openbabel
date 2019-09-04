@@ -18,6 +18,10 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
 #include <openbabel/rotamer.h>
 
 #define OB_TITLE_SIZE     254
@@ -337,13 +341,13 @@ namespace OpenBabel
     vector<pair<OBAtom**,vector<int> > >::iterator i;
     for (size=1,i = _vrotor.begin();i != _vrotor.end();++i,++size)
       {
-        idx = (i->first[0])->GetCIdx();
+        idx = (i->first[0])->GetCoordinateIdx();
         v1.Set(c[idx],c[idx+1],c[idx+2]);
-        idx = (i->first[1])->GetCIdx();
+        idx = (i->first[1])->GetCoordinateIdx();
         v2.Set(c[idx],c[idx+1],c[idx+2]);
-        idx = (i->first[2])->GetCIdx();
+        idx = (i->first[2])->GetCoordinateIdx();
         v3.Set(c[idx],c[idx+1],c[idx+2]);
-        idx = (i->first[3])->GetCIdx();
+        idx = (i->first[3])->GetCoordinateIdx();
         v4.Set(c[idx],c[idx+1],c[idx+2]);
 
         angle = CalcTorsionAngle(v1,v2,v3,v4);
@@ -571,6 +575,11 @@ namespace OpenBabel
     return true;
   }
 
+  void OBRotamerList::SetBaseCoordinateSets(OBMol& mol)
+  {
+    SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
+  }
+
   //Copies the coordinates in bc, NOT the pointers, into the object
   void OBRotamerList::SetBaseCoordinateSets(vector<double*> bc, unsigned int N)
   {
@@ -608,10 +617,10 @@ namespace OpenBabel
     double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
     int tor[4];
-    tor[0] = ref[0]->GetCIdx();
-    tor[1] = ref[1]->GetCIdx();
-    tor[2] = ref[2]->GetCIdx();
-    tor[3] = ref[3]->GetCIdx();
+    tor[0] = ref[0]->GetCoordinateIdx();
+    tor[1] = ref[1]->GetCoordinateIdx();
+    tor[2] = ref[2]->GetCoordinateIdx();
+    tor[3] = ref[3]->GetCoordinateIdx();
 
     //
     //calculate the torsion angle

@@ -220,6 +220,10 @@ namespace OpenBabel
       std::string GetToType();
     };
 
+  //! Global OBTypeTable for translating between different atom types
+  //! (e.g., Sybyl <-> MM2)
+  EXTERN  OBTypeTable      ttab;
+
   /** \class OBResidueData data.h <openbabel/data.h>
       \brief Table of common biomolecule residues (for PDB or other files).
 
@@ -261,6 +265,10 @@ namespace OpenBabel
       //! based on the residue information assigned to atoms
       bool AssignBonds(OBMol &);
     };
+
+  //! Global OBResidueData biomolecule residue database
+  EXTERN  OBResidueData    resdat;
+
 
 } // end namespace OpenBabel
   

@@ -17,6 +17,11 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 #include <openbabel/kinetics.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -1810,7 +1815,7 @@ namespace OpenBabel
         vector<OBBond*>::iterator ib;
         for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
           {
-            int bo = pbond->GetBO();
+            int bo = pbond->GetBondOrder();
 
             if(!arrayform)
               {
@@ -1931,7 +1936,7 @@ namespace OpenBabel
           {
             for (pbond = mol.BeginBond(ib);pbond;pbond = mol.NextBond(ib))
               {
-                if(pbond->GetBO()==2 || pbond->IsWedge() || pbond->IsHash())
+                if(pbond->GetBondOrder()==2 || pbond->IsWedge() || pbond->IsHash())
                   WriteBondStereo(pbond, atomIds);
               }
           }
@@ -2015,33 +2020,34 @@ namespace OpenBabel
       xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
     else
     {
+      return; // TODO: This code has bit-rotted
       //double bond stereo
       int ud1=0, ud2=0;
       int idx1=0, idx2=0;
       OBAtom* patomA = pbond->GetBeginAtom();
-      FOR_BONDS_OF_ATOM(b1,patomA)
-        {
-          if(b1->IsUp() || b1->IsDown() )
-            {
-              idx1=(b1->GetNbrAtom(patomA))->GetIdx();
-              ud1 = b1->IsDown() ? -1 : 1;
-              // Conjugated double bonds have to be treated differently, see comments
-              // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
-              if((b1->GetNbrAtom(patomA))->HasDoubleBond())
-                ud1 = -ud1;
-              break;
-            }
-        }
+      //FOR_BONDS_OF_ATOM(b1,patomA)
+      //  {
+      //    if(b1->IsUp() || b1->IsDown() )
+      //      {
+      //        idx1=(b1->GetNbrAtom(patomA))->GetIdx();
+      //        ud1 = b1->IsDown() ? -1 : 1;
+      //        // Conjugated double bonds have to be treated differently, see comments
+      //        // in OBMol2Smi::GetCisTransBondSymbol(). Reverse symbol for other than first double bond.
+      //        if((b1->GetNbrAtom(patomA))->HasDoubleBond())
+      //          ud1 = -ud1;
+      //        break;
+      //      }
+      //  }
       OBAtom* patomB = pbond->GetEndAtom();
-      FOR_BONDS_OF_ATOM(b2,patomB)
-        {
-          if(b2->IsUp() || b2->IsDown() )
-            {
-              idx2=(b2->GetNbrAtom(patomB))->GetIdx();
-              ud2 = b2->IsDown() ? -1 : 1;
-              break;
-            }
-        }
+      //FOR_BONDS_OF_ATOM(b2,patomB)
+      //  {
+      //    if(b2->IsUp() || b2->IsDown() )
+      //      {
+      //        idx2=(b2->GetNbrAtom(patomB))->GetIdx();
+      //        ud2 = b2->IsDown() ? -1 : 1;
+      //        break;
+      //      }
+      //  }
       if(!ud1 || !ud2)
         return;
 

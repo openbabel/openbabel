@@ -19,6 +19,11 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/typer.h>
 #include <openbabel/elements.h>
 
@@ -33,7 +38,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-
+  // Initialize globals declared in typer.h
   OBAromaticTyper  aromtyper;
   OBAtomTyper      atomtyper;
 
@@ -198,6 +203,26 @@ namespace OpenBabel
           mol.GetAtom((*j)[0])->SetHyb(i->second);
       }
     }
+
+    // check all atoms to make sure *some* hybridization is assigned
+    for (atom = mol.BeginAtom(k);atom;atom = mol.NextAtom(k))
+      if (atom->GetHyb() == 0) {
+        switch (atom->GetExplicitDegree()) {
+          case 0:
+          case 1:
+          case 2:
+            atom->SetHyb(1);
+            break;
+          case 3:
+            atom->SetHyb(2);
+            break;
+          case 4:
+            atom->SetHyb(3);
+            break;
+          default:
+            atom->SetHyb(atom->GetExplicitDegree());
+        }
+      }
   }
 
   /*! \class OBRingTyper typer.h <openbabel/typer.h>
@@ -298,7 +323,7 @@ namespace OpenBabel
 
   // Start of helper functions for AssignOBAromaticityModel
   enum ExocyclicAtom { NO_EXOCYCLIC_ATOM, EXO_OXYGEN, EXO_NONOXYGEN };
-  
+
   static ExocyclicAtom FindExocyclicAtom(OBAtom *atm)
   {
     FOR_BONDS_OF_ATOM(bond, atm) {
@@ -326,7 +351,7 @@ namespace OpenBabel
     }
     return false;
   }
-  
+
   static bool HasExocyclicDblBondToOxygen(OBAtom *atm)
   {
     FOR_BONDS_OF_ATOM(bond, atm) {
@@ -373,8 +398,8 @@ namespace OpenBabel
 
     unsigned int elem = atm->GetAtomicNum();
     int chg = atm->GetFormalCharge();
-    unsigned int deg = atm->GetValence() + atm->GetImplicitHCount();
-    unsigned int val = atm->BOSum() + atm->GetImplicitHCount();
+    unsigned int deg = atm->GetExplicitDegree() + atm->GetImplicitHCount();
+    unsigned int val = atm->GetExplicitValence() + atm->GetImplicitHCount();
 
     switch (elem) {
     case OBElements::Carbon:
@@ -549,7 +574,7 @@ namespace OpenBabel
 
     min = 0; max = 0; // nothing matched
     return false;
-  }  
+  }
 
   class OBAromaticTyperMolState
   {
@@ -592,15 +617,15 @@ namespace OpenBabel
 
     //unset all aromatic flags
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
-      atom->UnsetAromatic();
+      atom->SetAromatic(false);
     for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))
-      bond->UnsetAromatic();
+      bond->SetAromatic(false);
 
     // New code using lookups instead of SMARTS patterns
     FOR_ATOMS_OF_MOL(atom, mol) {
       unsigned int idx = atom->GetIdx();
       _vpa[idx] = AssignOBAromaticityModel(&(*atom), _velec[idx].first, _velec[idx].second);
-    }    
+    }
 
     //propagate potentially aromatic atoms
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
@@ -835,7 +860,7 @@ namespace OpenBabel
 
             for (nbr = atom->BeginNbrAtom(l);nbr;nbr = atom->NextNbrAtom(l))
               {
-                // we can get this from atom->GetHvyValence()
+                // we can get this from atom->GetHvyDegree()
                 // but we need to find neighbors in rings too
                 // so let's save some time
                 if (nbr->GetAtomicNum() != OBElements::Hydrogen)

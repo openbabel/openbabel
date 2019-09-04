@@ -14,6 +14,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
@@ -93,7 +99,7 @@ namespace OpenBabel
         snprintf(buffer, BUFF_SIZE, "%3d%3d%3d%3d",
                  bond->GetBeginAtomIdx(),
                  bond->GetEndAtomIdx(),
-                 bond->GetBO(), bond->GetBO());
+                 bond->GetBondOrder(), bond->GetBondOrder());
         ofs << buffer << endl;
       }
     return(true);
@@ -155,9 +161,14 @@ namespace OpenBabel
         }
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     mol.EndModify();
     return(true);

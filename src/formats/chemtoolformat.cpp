@@ -17,6 +17,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+
 #include <stdlib.h>
 
 using namespace std;
@@ -105,9 +110,9 @@ namespace OpenBabel
         bondtype = 0;
         atom1 = bond->GetBeginAtom();
         atom2 = bond->GetEndAtom();
-        if (bond->GetBO() == 2)
+        if (bond->GetBondOrder() == 2)
           bondtype = 1;
-        if (bond->GetBO() == 3)
+        if (bond->GetBondOrder() == 3)
           bondtype = 3;
         // @todo: use flag-info, too
         snprintf(buffer, BUFF_SIZE, "%d\t%d\t%d\t%d\t%1d",

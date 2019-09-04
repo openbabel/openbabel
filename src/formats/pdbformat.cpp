@@ -16,16 +16,24 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <openbabel/data.h>
 
 #include <vector>
 #include <map>
+#include <cstdlib>
+#include <algorithm>
 
 #include <sstream>
 
 using namespace std;
 namespace OpenBabel
 {
-
   class PDBFormat : public OBMoleculeFormat
   {
   public:
@@ -122,7 +130,9 @@ namespace OpenBabel
     OBPairData *dp;
 
     mol.SetTitle(title);
-    mol.SetChainsPerceived(); // It's a PDB file, we read all chain/res info.
+    // We need to prevent chains perception routines from running while
+    // we are adding residues from the PDB file
+    mol.SetChainsPerceived();
 
     mol.BeginModify();
     while (ifs.good() && ifs.getline(buffer,BUFF_SIZE))
@@ -223,21 +233,28 @@ namespace OpenBabel
     vector<OBGenericData*> vbonds = mol.GetAllData(OBGenericDataType::VirtualBondData);
     mol.DeleteData(vbonds);
 
-
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
 
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    // EndModify() blows away the chains perception flag so we set it again here
+    mol.SetChainsPerceived();
+
     // Guess how many hydrogens are present on each atom based on typical valencies
     FOR_ATOMS_OF_MOL(matom, mol)
       OBAtomAssignTypicalImplicitHydrogens(&*matom);
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     return(true);
   }
@@ -714,7 +731,15 @@ namespace OpenBabel
             scharge[1] = scharge[0];
             scharge[0] = tmp;
           }
-        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f  1.00  0.00          %2s%2s\n",
+
+        double occup = 1.0;
+        if (atom->HasData("_atom_site_occupancy"))
+        {
+         OBPairFloatingPoint *occup_fp = dynamic_cast<OBPairFloatingPoint*> (atom->GetData("_atom_site_occupancy"));
+         occup = occup_fp->GetGenericValue();
+        }
+
+        snprintf(buffer, BUFF_SIZE, "%s%5d %-4s %-3s %c%4d%c   %8.3f%8.3f%8.3f%6.2f  0.00          %2s%2s\n",
                  het?"HETATM":"ATOM  ",
                  i,
                  type_name,
@@ -725,6 +750,7 @@ namespace OpenBabel
                  atom->GetX(),
                  atom->GetY(),
                  atom->GetZ(),
+                 occup,
                  element_name,
                  scharge);
         ofs << buffer;
@@ -735,7 +761,7 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i ++)
       {
         atom = mol.GetAtom(i);
-        if (atom->GetValence() == 0)
+        if (atom->GetExplicitDegree() == 0)
           continue; // no need to write a CONECT record -- no bonds
 
         // Write out up to 4 real bonds per line PR#1711154
@@ -1034,6 +1060,16 @@ namespace OpenBabel
     string zstr = sbuf.substr(40,8);
     vector3 v(atof(xstr.c_str()),atof(ystr.c_str()),atof(zstr.c_str()));
     atom.SetVector(v);
+
+    double occupancy = atof(sbuf.substr(48, 6).c_str());
+    OBPairFloatingPoint* occup = new OBPairFloatingPoint;
+    occup->SetAttribute("_atom_site_occupancy");
+    if (occupancy <= 0.0 || occupancy > 1.0){
+      occupancy = 1.0;
+    }
+    occup->SetValue(occupancy);
+    occup->SetOrigin(fileformatInput);
+    atom.SetData(occup);
 
     // useful for debugging unknown atom types (e.g., PR#1577238)
     //    cout << mol.NumAtoms() + 1  << " : '" << element << "'" << " " << OBElements::GetAtomicNum(element.c_str()) << endl;

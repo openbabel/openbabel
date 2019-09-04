@@ -24,11 +24,13 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

@@ -22,9 +22,20 @@ GNU General Public License for more details.
 
 #include <openbabel/parsmart.h>
 #include <openbabel/typer.h>
+#include <openbabel/bitvec.h>
+
+#ifdef UNUSED
+#elif (__GNUC__ == 4)
+# define UNUSED(x) UNUSED_ ## x __attribute__((unused))
+#elif defined(__LCLINT__)
+# define UNUSED(x) /*@unused@*/ x
+#else
+# define UNUSED(x) x
+#endif
 
 namespace OpenBabel
 {
+  class OBRing;
 
 #ifndef SQUARE
 #define SQUARE(x) ((x)*(x))
@@ -489,7 +500,7 @@ namespace OpenBabel
      */
     bool HasFixedBonds()
     {
-      return !_fixedbonds.Empty();
+      return !_fixedbonds.IsEmpty();
     }
     //! Rotates each bond to zero and 180 degrees and tests
     //! if the 2 conformers are duplicates.  if so - the symmetric torsion
@@ -618,7 +629,7 @@ namespace OpenBabel
      */
     bool HasFixedAtoms()
     {
-      return(!_fixedatoms.Empty());
+      return(!_fixedatoms.IsEmpty());
     }
     //! Has no effect
     //! \deprecated Currently has no effect

@@ -132,9 +132,6 @@ namespace OpenBabel
       //! Calculates the transpose of a matrix.
       matrix3x3 transpose(void) const;
 
-      //! Generates a matrix for a random rotation
-      void randomRotation(OBRandom &rnd);
-
       //! \return The determinant of the matrix
       double determinant() const;
 

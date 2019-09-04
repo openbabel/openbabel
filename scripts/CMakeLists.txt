@@ -19,7 +19,7 @@ endif (RUN_SWIG)
 
 # The following needs to be kept in synch with ..\CMakeLists.txt
 if(EIGEN3_FOUND)
-  set (eigen_define "-DHAVE_EIGEN -DHAVE_EIGEN3")
+  set (eigen_define "-DHAVE_EIGEN" "-DHAVE_EIGEN3")
   include_directories(${EIGEN3_INCLUDE_DIR})
   set (CPPFLAGS_VALUE "-I${EIGEN3_INCLUDE_DIR}")
   set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
@@ -70,26 +70,32 @@ if (DO_PYTHON_BINDINGS)
     )
 
     if(RUN_SWIG)
-      if(WIN32) # Skip the extra COMMANDs below as 'cat' is not present on Windows
-        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+      COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
-      else(WIN32)
-        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              MAIN_DEPENDENCY openbabel-python.i
-              VERBATIM
-              )
-      endif(WIN32)
     endif(RUN_SWIG)
+    
+    configure_file(${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py.in
+                   ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py)
+    add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp)
 
-    add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
-    if(BINDINGS_ONLY)
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+    if(APPLE)
+      # Don't link against Python library on Mac
+      set_target_properties(bindings_python PROPERTIES LINK_FLAGS "-undefined dynamic_lookup")
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY})
+      else()
+        target_link_libraries(bindings_python ${BABEL_LIBRARY})
+      endif()
     else()
+      # Link against Python library on Linux and Windows
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+      else()
         target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+      endif()
     endif()
 
     if(NOT WIN32)
@@ -103,18 +109,31 @@ if (DO_PYTHON_BINDINGS)
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
+	#workaround for https://bugs.launchpad.net/ubuntu/+source/python3-defaults/+bug/1814653
+	if(NOT ${PYTHON_INSTDIR} MATCHES "python[0-9].[0-9]")
+	  execute_process(
+           COMMAND
+           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,1,prefix='${CMAKE_INSTALL_PREFIX}'))"
+           OUTPUT_VARIABLE PYTHON_INSTDIR
+           OUTPUT_STRIP_TRAILING_WHITESPACE
+          )
+          set(PYTHON_INSTDIR "${PYTHON_INSTDIR}/dist-packages")
+	endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
@@ -132,16 +151,19 @@ if (DO_PYTHON_BINDINGS)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
 endif (DO_PYTHON_BINDINGS)

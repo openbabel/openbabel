@@ -20,6 +20,8 @@ GNU General Public License for more details.
 #ifndef OB_PATTY_H
 #define OB_PATTY_H
 
+#include <openbabel/parsmart.h>
+
 namespace OpenBabel
 {
 #define PT_CATION      1

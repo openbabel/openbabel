@@ -151,7 +151,7 @@ namespace OpenBabel
   void SVGPainter::DrawText(double x, double y, const std::string &text)
   {
     m_ofs << "<text x=\"" << x << "\" y=\"" << y << "\""
-      << " fill=" << MakeRGB(m_Pencolor) << " stroke=" << MakeRGB(m_Pencolor) << "stroke-width=\"1\" "
+      << " fill=" << MakeRGB(m_Pencolor) << "stroke-width='0' font-weight='bold' "
       << "font-size=\"" << m_fontPointSize << "\" >"
       << text << "</text>\n";
   }
@@ -163,7 +163,7 @@ namespace OpenBabel
     metrics.ascent   = m_fontPointSize;
     metrics.descent  = m_fontPointSize * -0.23; // Offset from baseline of bottom of text
     metrics.height   = m_fontPointSize *  1.26; // Distance between successive lines of text
-    metrics.width = 0.0;
+    metrics.width    = 0.0;
     for(string::size_type i=0;i<text.size();++i)
       metrics.width += m_fontPointSize * (isalpha(text[i]) ? 0.75 : 0.5);
 

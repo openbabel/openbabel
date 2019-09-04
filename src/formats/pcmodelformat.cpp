@@ -14,6 +14,14 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/data.h>
+#include <openbabel/obiter.h>
+#include <openbabel/bond.h>
+#include <cstdlib>
+
 
 using namespace std;
 namespace OpenBabel
@@ -155,9 +163,14 @@ namespace OpenBabel
       } // end reading
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     mol.EndModify();
     if (hasPartialCharges)
@@ -199,14 +212,14 @@ namespace OpenBabel
         ofs << "AT " << atom->GetIdx() << "," << type << ":";
         ofs << atom->GetX() << "," << atom->GetY() << "," << atom->GetZ();
 
-        if (atom->GetValence() > 0)
+        if (atom->GetExplicitDegree() > 0)
           {
             ofs << " B";
             for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
               {
                 nbrIdx = nbr->GetIdx();
                 ofs << " " << nbrIdx << ","
-                    << (mol.GetBond(nbrIdx, atomIdx))->GetBO();
+                    << (mol.GetBond(nbrIdx, atomIdx))->GetBondOrder();
               }
           }
 

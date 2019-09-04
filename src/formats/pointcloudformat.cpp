@@ -26,16 +26,25 @@
 
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/elements.h>
 
 #include <openbabel/obiter.h>
 #include <openbabel/data.h>
+#include <openbabel/bitvec.h>
 
 #include <iostream>
 
 #include <stdlib.h>
 #include <math.h>
+#include <cstdlib>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 using namespace std;
 

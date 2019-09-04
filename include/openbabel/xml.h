@@ -18,9 +18,9 @@ GNU General Public License for more details.
 
 #include <typeinfo>
 
-#include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
 
 #include <libxml/xmlreader.h>
 #include <libxml/xmlwriter.h>

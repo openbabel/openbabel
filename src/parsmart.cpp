@@ -20,8 +20,11 @@ GNU General Public License for more details.
 
 #include <ctype.h>
 #include <iomanip>
+#include <cstring>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/tetrahedral.h>
@@ -30,11 +33,6 @@ using namespace std;
 
 namespace OpenBabel
 {
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
-  }
-
   /*! \class OBSmartsPattern parsmart.h <openbabel/parsmart.h>
 
     Substructure search is an incredibly useful tool in the context of a
@@ -1713,11 +1711,13 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const char *buffer)
   {
-	  if (_buffer != NULL)
-		  delete[] _buffer;
-	  _buffer = new char[strlen(buffer) + 1];
+    if (_buffer != NULL)
+      delete[] _buffer;
+    _buffer = new char[strlen(buffer) + 1];
     strcpy(_buffer,buffer);
 
+    if (_pat != NULL)
+      FreePattern(_pat);
     _pat = ParseSMARTSRecord(_buffer);
     _str = _buffer;
 
@@ -1726,15 +1726,17 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const std::string &s)
   {
-	if (_buffer != NULL)
-		delete[] _buffer;
-	_buffer = new char[s.length() + 1];
-	strcpy(_buffer, s.c_str());
+    if (_buffer != NULL)
+      delete[] _buffer;
+    _buffer = new char[s.length() + 1];
+    strcpy(_buffer, s.c_str());
 
-	_pat = ParseSMARTSRecord(_buffer);
-	_str = s;
+    if (_pat != NULL)
+      FreePattern(_pat);
+    _pat = ParseSMARTSRecord(_buffer);
+    _str = s;
 
-	return (_pat != (Pattern*) NULL);
+    return (_pat != (Pattern*) NULL);
   }
 
   OBSmartsPattern::~OBSmartsPattern()
@@ -2137,9 +2139,9 @@ namespace OpenBabel
         case AE_CHARGE:
           return expr->leaf.value == atom->GetFormalCharge();
         case AE_CONNECT:
-          return expr->leaf.value == (int)TotalNumberOfBonds(atom);
+          return expr->leaf.value == (int)atom->GetTotalDegree();
         case AE_DEGREE:
-          return expr->leaf.value == (int)atom->GetValence();
+          return expr->leaf.value == (int)atom->GetExplicitDegree();
         case AE_IMPLICIT:
           return expr->leaf.value == (int)atom->GetImplicitHCount();
         case AE_RINGS:
@@ -2147,7 +2149,7 @@ namespace OpenBabel
         case AE_SIZE:
           return atom->IsInRingSize(expr->leaf.value);
         case AE_VALENCE:
-          return expr->leaf.value == (int)(atom->BOSum() + atom->GetImplicitHCount());
+          return expr->leaf.value == (int)atom->GetTotalValence();
         case AE_CHIRAL:
           // always return true (i.e. accept the match) and check later
           return true;
@@ -2223,27 +2225,27 @@ namespace OpenBabel
         case BE_ANY:
           return true;
         case BE_DEFAULT:
-          return bond->GetBO()==1 || bond->IsAromatic();
+          return bond->GetBondOrder()==1 || bond->IsAromatic();
         case BE_SINGLE:
-          return bond->GetBO()==1 && !bond->IsAromatic();
+          return bond->GetBondOrder()==1 && !bond->IsAromatic();
         case BE_DOUBLE:
-          return bond->GetBO()==2 && !bond->IsAromatic();
+          return bond->GetBondOrder()==2 && !bond->IsAromatic();
         case BE_TRIPLE:
-          return bond->GetBO() == 3;
+          return bond->GetBondOrder() == 3;
         case BE_QUAD:
-          return bond->GetBO() == 4;
+          return bond->GetBondOrder() == 4;
         case BE_AROM:
           return bond->IsAromatic();
         case BE_RING:
           return bond->IsInRing();
-        case BE_UP:
-          return bond->IsUp();
-        case BE_DOWN:
-          return bond->IsDown();
-        case BE_UPUNSPEC: // up or unspecified (i.e., not down)
-          return !bond->IsDown();
-        case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
-          return !bond->IsUp();
+        //case BE_UP:
+        //  return bond->IsUp();
+        //case BE_DOWN:
+        //  return bond->IsDown();
+        //case BE_UPUNSPEC: // up or unspecified (i.e., not down)
+        //  return !bond->IsDown();
+        //case BE_DOWNUNSPEC: // down or unspecified (i.e., not up)
+        //  return !bond->IsUp();
         default:
           return false;
         }

@@ -26,7 +26,13 @@
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obutil.h>
+#include <openbabel/obiter.h>
 #include <openbabel/graphsym.h>
+#include <openbabel/math/matrix3x3.h>
 #include <openbabel/canon.h>
 #include <openbabel/oberror.h>
 #include <openbabel/elements.h>
@@ -94,7 +100,7 @@ namespace OpenBabel {
   {
     std::vector<OBAtom*>::iterator ia;
     for (OBAtom *atom = mol->BeginAtom(ia); atom; atom = mol->NextAtom(ia))
-      if (atom->GetHyb() == 3 && atom->GetHvyValence() >= 3) {
+      if (atom->GetHyb() == 3 && atom->GetHvyDegree() >= 3) {
         return true;
       }
     return false;
@@ -108,15 +114,10 @@ namespace OpenBabel {
   {
     std::vector<OBBond*>::iterator ib;
     for (OBBond *bond = mol->BeginBond(ib); bond; bond = mol->NextBond(ib))
-      if (bond->GetBO() == 2) {
+      if (bond->GetBondOrder() == 2) {
         return true;
       }
     return false;
-  }
-
-  static unsigned int TotalNoOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
   }
 
   /**
@@ -136,7 +137,7 @@ namespace OpenBabel {
   {
     // consider only potential steroecenters
     if ((atom->GetHyb() != 3 && !(atom->GetHyb() == 5 && atom->GetAtomicNum() == OBElements::Phosphorus))
-        || TotalNoOfBonds(atom) > 4 || atom->GetHvyValence() < 3 || atom->GetHvyValence() > 4)
+        || atom->GetTotalDegree() > 4 || atom->GetHvyDegree() < 3 || atom->GetHvyDegree() > 4)
       return false;
     // skip non-chiral N
     if (atom->GetAtomicNum() == OBElements::Nitrogen && atom->GetFormalCharge()==0) {
@@ -152,7 +153,7 @@ namespace OpenBabel {
       if (atom->GetFormalCharge())
         return false;
       FOR_NBORS_OF_ATOM (nbr, atom) {
-        if (nbr->GetAtomicNum() == 26 && nbr->GetValence() > 7)
+        if (nbr->GetAtomicNum() == 26 && nbr->GetExplicitDegree() > 7)
           return false;
       }
     }
@@ -176,9 +177,9 @@ namespace OpenBabel {
       return false;
     if (!bond->GetBeginAtom()->HasSingleBond() || !bond->GetEndAtom()->HasSingleBond())
       return false;
-    if (bond->GetBeginAtom()->GetHvyValence() == 1 || bond->GetEndAtom()->GetHvyValence() == 1)
+    if (bond->GetBeginAtom()->GetHvyDegree() == 1 || bond->GetEndAtom()->GetHvyDegree() == 1)
       return false;
-    if (bond->GetBeginAtom()->GetHvyValence() > 3 || bond->GetEndAtom()->GetHvyValence() > 3)
+    if (bond->GetBeginAtom()->GetHvyDegree() > 3 || bond->GetEndAtom()->GetHvyDegree() > 3)
       return false;
     return true;
   }
@@ -201,13 +202,13 @@ namespace OpenBabel {
   bool isUnitInFragment(OBMol *mol, const OBStereoUnit &unit, const OBBitVec &fragment)
   {
     if (unit.type == OBStereo::Tetrahedral) {
-      if (fragment.BitIsOn(unit.id))
+      if (fragment.BitIsSet(unit.id))
         return true;
     } else if(unit.type == OBStereo::CisTrans) {
       OBBond *bond = mol->GetBondById(unit.id);
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
-      if (fragment.BitIsOn(begin->GetId()) || fragment.BitIsOn(end->GetId()))
+      if (fragment.BitIsSet(begin->GetId()) || fragment.BitIsSet(end->GetId()))
         return true;
     }
     return false;
@@ -764,13 +765,13 @@ namespace OpenBabel {
       if (bond->IsInRing() && bond->IsAromatic())
         continue; // Exclude C=C in phenyl rings for example
 
-      if (bond->GetBO() == 2) {
+      if (bond->GetBondOrder() == 2) {
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
         if (!begin || !end)
           continue;
 
-        if (TotalNoOfBonds(begin) > 3 || TotalNoOfBonds(end) > 3)
+        if (begin->GetTotalDegree() > 3 || end->GetTotalDegree() > 3)
           continue; // e.g. C=Ru where the Ru has four substituents
 
         // Needs to have at least one explicit single bond at either end
@@ -781,14 +782,14 @@ namespace OpenBabel {
         isCisTransBond = true;
         std::vector<OBBond*>::iterator j;
 
-        if (begin->GetValence() == 2) {
+        if (begin->GetExplicitDegree() == 2) {
           // Begin atom has two explicit neighbors. One is the end atom. The other should
           // be a heavy atom - this is what we test here.
           // (There is a third, implicit, neighbor which is either a hydrogen
           // or a lone pair.)
           if (begin->ExplicitHydrogenCount() == 1)
             isCisTransBond = false;
-        } else if (begin->GetValence() == 3) {
+        } else if (begin->GetExplicitDegree() == 3) {
           std::vector<unsigned int> tlist;
 
           for (OBAtom *nbr = begin->BeginNbrAtom(j); nbr; nbr = begin->NextNbrAtom(j)) {
@@ -817,11 +818,11 @@ namespace OpenBabel {
         if (!isCisTransBond)
           continue;
 
-        if (end->GetValence() == 2) {
+        if (end->GetExplicitDegree() == 2) {
           // see comment above for begin atom
           if (end->ExplicitHydrogenCount() == 1)
             isCisTransBond = false;
-        } else if (end->GetValence() == 3) {
+        } else if (end->GetExplicitDegree() == 3) {
           std::vector<unsigned int> tlist;
 
           for (OBAtom *nbr = end->BeginNbrAtom(j); nbr; nbr = end->NextNbrAtom(j)) {
@@ -1085,13 +1086,13 @@ namespace OpenBabel {
             OBBitVec ligand = getFragment(ligandAtom, begin);
             for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
               if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id))
+                if (ligand.BitIsSet((*u2).id))
                   beginValid = true;
               } else if((*u2).type == OBStereo::CisTrans) {
                 OBBond *bond = mol->GetBondById((*u2).id);
                 OBAtom *begin = bond->GetBeginAtom();
                 OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                if (ligand.BitIsSet(begin->GetId()) || ligand.BitIsSet(end->GetId()))
                   beginValid = true;
               }
             }
@@ -1122,13 +1123,13 @@ namespace OpenBabel {
             OBBitVec ligand = getFragment(ligandAtom, end);
             for (OBStereoUnitSet::iterator u2 = units.begin(); u2 != units.end(); ++u2) {
               if ((*u2).type == OBStereo::Tetrahedral) {
-                if (ligand.BitIsOn((*u2).id))
+                if (ligand.BitIsSet((*u2).id))
                   endValid = true;
               } else if((*u2).type == OBStereo::CisTrans) {
                 OBBond *bond = mol->GetBondById((*u2).id);
                 OBAtom *begin = bond->GetBeginAtom();
                 OBAtom *end = bond->GetEndAtom();
-                if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId()))
+                if (ligand.BitIsSet(begin->GetId()) || ligand.BitIsSet(end->GetId()))
                   endValid = true;
               }
             }
@@ -1560,11 +1561,11 @@ namespace OpenBabel {
     std::vector<unsigned int> ringIndices;
     for (OBStereoUnitSet::const_iterator u2 = units.begin(); u2 != units.end(); ++u2) {
       if ((*u2).type == OBStereo::Tetrahedral) {
-        if (ligand.BitIsOn((*u2).id)) {
+        if (ligand.BitIsSet((*u2).id)) {
           if ((*u2).para) {
             OBAtom *paraAtom = mol->GetAtomById((*u2).id);
             for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-              if (mergedRings.at(ringIdx).BitIsOn(paraAtom->GetIdx()))
+              if (mergedRings.at(ringIdx).BitIsSet(paraAtom->GetIdx()))
                 if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end())
                   ringIndices.push_back(ringIdx);
             }
@@ -1575,10 +1576,10 @@ namespace OpenBabel {
         OBBond *bond = mol->GetBondById((*u2).id);
         OBAtom *begin = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
-        if (ligand.BitIsOn(begin->GetId()) || ligand.BitIsOn(end->GetId())) {
+        if (ligand.BitIsSet(begin->GetId()) || ligand.BitIsSet(end->GetId())) {
           if ((*u2).para) {
             for (std::size_t ringIdx = 0; ringIdx < mergedRings.size(); ++ringIdx) {
-              if (mergedRings.at(ringIdx).BitIsOn(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsOn(end->GetIdx())) {
+              if (mergedRings.at(ringIdx).BitIsSet(begin->GetIdx()) || mergedRings.at(ringIdx).BitIsSet(end->GetIdx())) {
                 if (std::find(ringIndices.begin(), ringIndices.end(), ringIdx) == ringIndices.end()) {
                   ringIndices.push_back(ringIdx);
                 }
@@ -2111,10 +2112,10 @@ namespace OpenBabel {
 
       // make sure we have at least 3 heavy atom neighbors
       // timvdm 28 Jun 2009: This is already checked in FindStereogenicUnits
-      if (center->GetHvyValence() < 3) {
+      if (center->GetHvyDegree() < 3) {
         std::stringstream errorMsg;
         errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of "
-                 << center->GetHvyValence() << std::endl;
+                 << center->GetHvyDegree() << std::endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
         continue;
       }
@@ -2350,10 +2351,10 @@ namespace OpenBabel {
       OBAtom *center = mol->GetAtomById(*i);
 
       // make sure we have at least 3 heavy atom neighbors
-      if (center->GetHvyValence() < 3) {
+      if (center->GetHvyDegree() < 3) {
         std::stringstream errorMsg;
         errorMsg << "Cannot calculate a signed volume for an atom with a heavy atom valence of "
-                 << center->GetHvyValence() << std::endl;
+                 << center->GetHvyDegree() << std::endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obInfo);
         continue;
       }
@@ -2411,7 +2412,7 @@ namespace OpenBabel {
 
       // Handle the case of a tet center with four plane atoms or
       //        3 plane atoms with the fourth bond implicit
-      if (planeAtoms.size() == 4 || (planeAtoms.size() == 3 && center->GetValence()==3))
+      if (planeAtoms.size() == 4 || (planeAtoms.size() == 3 && center->GetExplicitDegree()==3))
         config.specified = false;
 
       bool success = true;
@@ -2764,7 +2765,7 @@ namespace OpenBabel {
             if (alreadyset.find(&*b) != alreadyset.end()) continue;
 
             OBAtom* nbr = b->GetNbrAtom(center);
-	    int nbr_nbonds = nbr->GetValence();
+	    int nbr_nbonds = nbr->GetExplicitDegree();
             int score = 0;
             if (!b->IsInRing()) {
 	      if (!nbr->IsInRing())

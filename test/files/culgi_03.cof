@@ -1,0 +1,149 @@
+@CulgiVersion: 13.0.0
+# Culgi Object File
+
+moleculekeys
+	name
+	id
+end_moleculekeys
+
+atomkeys
+	index
+	name
+	element_type
+	force_field_type
+	charge
+	fixed
+	x
+	y
+	z
+	velocity_x
+	velocity_y
+	velocity_z
+	velocity_const_x
+	velocity_const_y
+	velocity_const_z
+end_atomkeys
+
+bondkeys
+	atom1_index
+	atom2_index
+	bond_order
+end_bondkeys
+
+formalqkeys
+	atom_index
+	formal_charge
+end_formalqkeys
+
+molecule	culgi_03	0
+atom	0	C1	C	C	0	0	5.6107	-2.114	-5.1801	0	0	0	0	0	0
+atom	1	C2	C	C	0	0	5.5315	-3.4301	-5.5913	0	0	0	0	0	0
+atom	2	C3	C	C	0	0	4.5993	-4.2783	-5.0163	0	0	0	0	0	0
+atom	3	C4	C	C	0	0	3.7497	-3.7984	-4.0257	0	0	0	0	0	0
+atom	4	C5	C	C	0	0	3.8356	-2.4748	-3.6147	0	0	0	0	0	0
+atom	5	C6	C	C	0	0	4.7635	-1.6334	-4.1938	0	0	0	0	0	0
+atom	6	C7	C	C	0	0	4.8823	-0.1895	-3.7797	0	0	0	0	0	0
+atom	7	H1	H	H	0	0	4.4291	0.4412	-4.5446	0	0	0	0	0	0
+atom	8	O1	O	O	0	0	4.2169	0.0246	-2.5355	0	0	0	0	0	0
+atom	9	C8	C	C	0	0	2.8697	-0.4613	-2.5264	0	0	0	0	0	0
+atom	10	H2	H	H	0	0	2.3446	-0.1017	-3.4113	0	0	0	0	0	0
+atom	11	C9	C	C	0	0	2.9016	-1.9907	-2.5337	0	0	0	0	0	0
+atom	12	C10	C	C	0	0	2.1536	0.0321	-1.2676	0	0	0	0	0	0
+atom	13	C11	C	C	0	0	0.7182	-0.4975	-1.2568	0	0	0	0	0	0
+atom	14	C12	C	C	0	0	0.0021	-0.0041	0.002	0	0	0	0	0	0
+atom	15	C13	C	C	0	0	-0.0187	1.5258	0.0104	0	0	0	0	0	0
+atom	16	C14	C	C	0	0	1.4167	2.0553	-0.0004	0	0	0	0	0	0
+atom	17	C15	C	C	0	0	2.1328	1.5619	-1.2592	0	0	0	0	0	0
+atom	18	C16	C	C	0	0	2.1567	1.5485	1.2391	0	0	0	0	0	0
+atom	19	C17	C	C	0	0	2.1775	0.0187	1.2307	0	0	0	0	0	0
+atom	20	C18	C	C	0	0	0.7421	-0.5109	1.2415	0	0	0	0	0	0
+atom	21	C19	C	C	0	0	2.8936	-0.4747	-0.0281	0	0	0	0	0	0
+atom	22	C20	C	C	0	0	6.3608	0.1755	-3.6329	0	0	0	0	0	0
+atom	23	O2	O	O	0	0	2.8325	-4.6268	-3.4584	0	0	0	0	0	0
+atom	24	O3	O	O	0	0	4.5151	-5.5745	-5.4193	0	0	0	0	0	0
+atom	25	H3	H	H	0	0	6.3378	-1.4545	-5.6304	0	0	0	0	0	0
+atom	26	H4	H	H	0	0	6.1949	-3.7973	-6.3604	0	0	0	0	0	0
+atom	27	H5	H	H	0	0	3.2532	-2.3505	-1.5667	0	0	0	0	0	0
+atom	28	H6	H	H	0	0	1.8979	-2.3733	-2.7188	0	0	0	0	0	0
+atom	29	H7	H	H	0	0	0.733	-1.5874	-1.2628	0	0	0	0	0	0
+atom	30	H8	H	H	0	0	0.191	-0.1364	-2.1398	0	0	0	0	0	0
+atom	31	H9	H	H	0	0	-1.0205	-0.3814	0.0098	0	0	0	0	0	0
+atom	32	H10	H	H	0	0	-0.5459	1.8868	-0.8726	0	0	0	0	0	0
+atom	33	H11	H	H	0	0	-0.5289	1.8773	0.9072	0	0	0	0	0	0
+atom	34	H12	H	H	0	0	1.4019	3.1452	0.0056	0	0	0	0	0	0
+atom	35	H13	H	H	0	0	1.6057	1.923	-2.1423	0	0	0	0	0	0
+atom	36	H14	H	H	0	0	3.1554	1.9392	-1.267	0	0	0	0	0	0
+atom	37	H15	H	H	0	0	1.6465	1.9	2.1359	0	0	0	0	0	0
+atom	38	H16	H	H	0	0	3.1793	1.9258	1.2314	0	0	0	0	0	0
+atom	39	H17	H	H	0	0	2.7046	-0.3424	2.1137	0	0	0	0	0	0
+atom	40	H18	H	H	0	0	0.2319	-0.1594	2.1383	0	0	0	0	0	0
+atom	41	H19	H	H	0	0	0.7568	-1.6008	1.2356	0	0	0	0	0	0
+atom	42	H20	H	H	0	0	3.9162	-0.0975	-0.0359	0	0	0	0	0	0
+atom	43	H21	H	H	0	0	2.9084	-1.5646	-0.0341	0	0	0	0	0	0
+atom	44	H22	H	H	0	0	6.8149	-0.45	-2.8644	0	0	0	0	0	0
+atom	45	H23	H	H	0	0	6.8712	0.0128	-4.5822	0	0	0	0	0	0
+atom	46	H24	H	H	0	0	5.9612	1.7785	-2.4045	0	0	0	0	0	0
+atom	47	H25	H	H	0	0	7.4485	1.854	-3.145	0	0	0	0	0	0
+atom	48	H26	H	H	0	0	1.9782	-4.6367	-3.9113	0	0	0	0	0	0
+atom	49	H27	H	H	0	0	3.9016	-5.7193	-6.1525	0	0	0	0	0	0
+atom	50	N1	N	N	0	0	6.47	1.5991	-3.2686	0	0	0	0	0	0
+atom	51	H28	H	H	0	0	6.067	2.1716	-4.0197	0	0	0	0	0	0
+bond	0	5	1.5
+bond	0	1	1.5
+bond	0	25	1
+bond	1	2	1.5
+bond	1	26	1
+bond	2	3	1.5
+bond	2	24	1
+bond	3	4	1.5
+bond	3	23	1
+bond	4	11	1
+bond	4	5	1.5
+bond	5	6	1
+bond	6	7	1
+bond	6	8	1
+bond	6	22	1
+bond	8	9	1
+bond	9	10	1
+bond	9	11	1
+bond	9	12	1
+bond	11	27	1
+bond	11	28	1
+bond	12	17	1
+bond	12	21	1
+bond	12	13	1
+bond	13	14	1
+bond	13	29	1
+bond	13	30	1
+bond	14	20	1
+bond	14	15	1
+bond	14	31	1
+bond	15	16	1
+bond	15	32	1
+bond	15	33	1
+bond	16	17	1
+bond	16	18	1
+bond	16	34	1
+bond	17	35	1
+bond	17	36	1
+bond	18	19	1
+bond	18	37	1
+bond	18	38	1
+bond	19	20	1
+bond	19	21	1
+bond	19	39	1
+bond	20	40	1
+bond	20	41	1
+bond	21	42	1
+bond	21	43	1
+bond	22	44	1
+bond	22	45	1
+bond	22	50	1
+bond	23	48	1
+bond	24	49	1
+bond	46	50	1
+bond	47	50	1
+bond	50	51	1
+formalq	50	1
+end_molecule
+

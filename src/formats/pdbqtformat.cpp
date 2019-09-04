@@ -22,7 +22,17 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <openbabel/bond.h>
+#include <openbabel/data.h>
+#include <openbabel/obiter.h>
+#include <openbabel/typer.h>
 
+#include <algorithm>
+#include <cstdlib>
 #include <vector>
 #include <map>
 #include <set>
@@ -296,12 +306,18 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
 
+    mol.SetChainsPerceived();
+
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-      (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
     {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
     }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
+
     mol.SetPartialChargesPerceived();
     return(true);
   }
@@ -434,34 +450,22 @@ namespace OpenBabel
         best_root_atom=i;
       }
     }
-    vector <unsigned int> bonds_to_delete;
-    {
-      OBMol  mol_pieces = mol;
-      for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
-      {
-        if (IsRotBond_PDBQT((*it)))
-        {
-          bonds_to_delete.push_back((*it)->GetIdx());
-        }
-      }
 
-      if (bonds_to_delete.size() != 0) //checks there is something to delete
+    vector <OBBond*> bonds_to_delete;
+    OBMol mol_pieces = mol;
+    for (OBBondIterator it=mol_pieces.BeginBonds(); it != mol_pieces.EndBonds(); it++)
+    {
+      if (IsRotBond_PDBQT((*it)))
       {
-        vector <unsigned int>::iterator itb=bonds_to_delete.end();
-        --itb;
-        for (OBBondIterator it=mol_pieces.EndBonds(); true; )
-        {
-          it--;
-          if ( (*it)->GetIdx() == (*itb) )
-          {
-            mol_pieces.DeleteBond((*it), true);
-            if (itb == bonds_to_delete.begin()) {break;}
-            else {--itb;}
-          }
-        }
+        bonds_to_delete.push_back(*it);
       }
-      mol_pieces.ContigFragList(rigid_fragments);
     }
+    for (vector<OBBond*>::iterator bit = bonds_to_delete.begin(); bit != bonds_to_delete.end(); ++bit)
+    {
+      mol_pieces.DeleteBond(*bit, true);
+    }
+    mol_pieces.ContigFragList(rigid_fragments);
+
     return best_root_atom;
   }
 
@@ -676,7 +680,7 @@ namespace OpenBabel
 
   static bool IsImide(OBBond* querybond)
   {
-    if (querybond->GetBO() != 2)
+    if (querybond->GetBondOrder() != 2)
       return(false);
 
     OBAtom* bgn = querybond->GetBeginAtom();
@@ -686,11 +690,6 @@ namespace OpenBabel
       return(true);
 
     return(false);
-  }
-
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
   }
 
   static bool IsAmidine(OBBond* querybond)
@@ -713,7 +712,7 @@ namespace OpenBabel
     }
     if (!c || !n) return(false);
     if (querybond->GetBondOrder() != 1) return(false);
-    if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+    if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
     // Make sure C is attached to =N
     OBBond *bond;
@@ -736,7 +735,7 @@ namespace OpenBabel
     if ( the_bond->GetBondOrder() != 1 || the_bond->IsAromatic() || 
          the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() )
       return false;
-    if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
+    if ( ((the_bond->GetBeginAtom())->GetExplicitDegree() == 1) || ((the_bond->GetEndAtom())->GetExplicitDegree() == 1) ) {return false;}
     return true;
   }
 
@@ -840,6 +839,10 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol & mol = *pmol;
 
+    if(!mol.HasAromaticPerceived()) { //need aromaticity for correct atom typing
+      aromtyper.AssignAromaticFlags(mol);
+    }
+
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
     if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
@@ -859,7 +862,7 @@ namespace OpenBabel
       bool residue=false;
       string res_name="";
       string res_chain="";
-      unsigned int res_num=1;
+      int res_num=1;
       if (pConv->IsOption("s",OBConversion::OUTOPTIONS))
       {
         residue=true;
@@ -871,6 +874,7 @@ namespace OpenBabel
       }
 
       all_pieces.at(i).SetAutomaticPartialCharge(false);
+      all_pieces.at(i).SetAromaticPerceived(); //retain aromatic flags in fragments
       if (!(pConv->IsOption("h",OBConversion::OUTOPTIONS))) {
       	DeleteHydrogens(all_pieces.at(i));
 			}
@@ -923,13 +927,14 @@ namespace OpenBabel
               if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != 0)
               {
                 snprintf(type_name,5,"%s",(char*)res->GetAtomID(rotBondTable[rotBondId][bondAtomNum]).c_str());
-                end=0;
+                // AtomIDs may start with space if read from a PDB file (rather than perceived)
+                end = isspace(type_name[0]) ? 1 : 0;
                 // Use sizeof() - 1 to ensure there's room for the NULL termination!
                 while (end < sizeof(type_name) - 1 && type_name[end] && !isspace(type_name[end]))
                   end++;
                 type_name[end] = '\0';
               }
-              snprintf(buffer, BUFF_SIZE, "%s_%d", type_name,
+              snprintf(buffer, BUFF_SIZE, "%s_%d", type_name + (isspace(type_name[0]) ? 1 : 0),
                 rotBondTable[rotBondId][bondAtomNum]->GetIdx());
               ofs << buffer;
               if (bondAtomNum == 0)
@@ -1012,6 +1017,7 @@ namespace OpenBabel
 
       bool preserve_original_index = (pConv->IsOption("p",OBConversion::OUTOPTIONS));
       if (!flexible) {preserve_original_index=false;} //no need to relabel if we are preserving the original order anyway
+
       if (!OutputTree(pConv, all_pieces.at(i), ofs, tree, rotatable_bonds, false, preserve_original_index) )
 //      if (!OutputTree(mol, ofs, tree, rotatable_bonds, false, preserve_original_index) )
       {
@@ -1184,15 +1190,17 @@ namespace OpenBabel
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
+    char icode = sbuf.substr(20,1)[0];
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
     if (res == NULL || res->GetName() != resname
-      || res->GetNumString() != resnum)
+      || res->GetNumString() != resnum || res->GetInsertionCode() != icode)
     {
       vector<OBResidue*>::iterator ri;
       for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
       if (res->GetName() == resname
         && res->GetNumString() == resnum
-        && static_cast<int>(res->GetChain()) == chain)
+        && static_cast<int>(res->GetChain()) == chain
+        && res-> GetInsertionCode() == icode)
         break;
 
       if (res == NULL)
@@ -1201,6 +1209,7 @@ namespace OpenBabel
         res->SetChain(chain);
         res->SetName(resname);
         res->SetNum(resnum);
+        res->SetInsertionCode(icode);
       }
     }
 

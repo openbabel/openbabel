@@ -14,6 +14,15 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/internalcoord.h>
+#include <openbabel/generic.h>
+
+#include <cstdlib>
 
 //Possible replacement for strcasestr. See end of file
 const char *_strcasestr(const char *s, const char *pattern);
@@ -48,7 +57,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    { return "http://www.gaussian.com/";};
+    { return "https://www.gaussian.com/zmat/"; };
 
     virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-input"; };
@@ -77,7 +86,7 @@ namespace OpenBabel
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
-    string defaultKeywords = "#Put Keywords Here, check Charge and Multiplicity.";
+    string defaultKeywords = "!Put Keywords Here, check Charge and Multiplicity.\n#";
 
     if(keywords) {
       defaultKeywords = keywords;

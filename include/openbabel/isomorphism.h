@@ -24,11 +24,12 @@
 #ifndef OB_ISOMORPHISM_H
 #define OB_ISOMORPHISM_H
 
-#include <openbabel/mol.h>
+#include <openbabel/bitvec.h>
 
 namespace OpenBabel {
 
   class OBQuery;
+  class OBMol;
 
   ///@addtogroup substructure Substructure Searching
   ///@{

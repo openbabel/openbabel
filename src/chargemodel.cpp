@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 namespace OpenBabel

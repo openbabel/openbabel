@@ -20,6 +20,12 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/data.h>
+#include <cstdlib>
+
 
 #define LAYER_DEPTH 2 // cannot increase past 2 without adding more *nbr atom pointers and loops
 #define LAYER_SIZE 184 // number of types needed for types system used
@@ -60,7 +66,7 @@ namespace OpenBabel
 "             Similarity Searching Using Atom Environments, Information-Based\n"
 "             Feature Selection, and a Naive Bayesian Classifier.**\n"
 "             *J. Chem. Inf. Comput. Sci.* **2004**, *44*, 170-178.\n"
-"             [`Link <http://dx.doi.org/10.1021/ci034207y>`_]\n\n"
+"             [`Link <https://doi.org/10.1021/ci034207y>`_]\n\n"
 
            " Write Options: e.g. -xnc\n"
            "  n prefix molecule names with name of file \n"
@@ -70,7 +76,7 @@ namespace OpenBabel
 
     virtual const char* SpecificationURL()
     {
-      return "http://dx.doi.org/10.1021/ci034207y";
+      return "https://doi.org/10.1021/ci034207y";
     }; //optional
 
 

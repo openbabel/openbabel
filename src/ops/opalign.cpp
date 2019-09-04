@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #include<openbabel/mol.h>
 #include<openbabel/math/align.h> // ** This requires Eigen to be installed **
 #include<openbabel/obconversion.h>
+#include <openbabel/parsmart.h>
+#include <openbabel/generic.h>
 #include "opisomorph.h"
 
 //#define DEPICTION2D     0x100 // Should have the same value as in format.h!!

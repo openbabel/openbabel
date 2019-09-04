@@ -22,11 +22,10 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#include <openbabel/mol.h>
 #include <vector>
-#include <string>
 
 namespace OpenBabel {
+ class OBMol;
 
  const double HARTEE_TO_KCALPERMOL = 627.509469;
  const double HARTREE_TO_KJPERMOL = 2625.49962;
