@@ -45,11 +45,12 @@ namespace OpenBabel
 {
 
   extern bool SwabInt;
-  extern THREAD_LOCAL OBPhModel  phmodel;
-  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
-  extern THREAD_LOCAL OBAtomTyper      atomtyper;
-  extern THREAD_LOCAL OBBondTyper      bondtyper;
-  
+  extern OBPhModel  phmodel;
+  extern OBAromaticTyper  aromtyper;
+  extern OBAtomTyper      atomtyper;
+  extern OBBondTyper      bondtyper;
+
+
   /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class
 
@@ -797,11 +798,17 @@ namespace OpenBabel
     return(count);
   }
 
-  unsigned int OBMol::NumRotors(bool sampleRingBonds)
+  unsigned int OBMol::NumRotors(bool includeRingBonds)
   {
-    OBRotorList rl;
-    rl.FindRotors(*this, sampleRingBonds);
-    return rl.Size();
+    OBBond *bond;
+    vector<OBBond*>::iterator i;
+
+    unsigned int count = 0;
+    for (bond = BeginBond(i);bond;bond = NextBond(i)) {
+      if (bond->IsRotor(includeRingBonds))
+        count++;
+    }
+    return(count);
   }
 
   //! Returns a pointer to the atom after a safety check
@@ -2119,13 +2126,15 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (!_vconf.empty() && !Empty()) {
+    if (!_vconf.empty() && !Empty() && !_mod)
+    {
+      if(!_c) _c = _vconf[0];
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
-      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-        {
-          atom->SetVector();
-        }
+      for (atom = BeginAtom(i); atom; atom = NextAtom(i))
+      {
+        atom->SetVector();
+      }
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags

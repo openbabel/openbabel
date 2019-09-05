@@ -7,10 +7,6 @@
 #define USING_OBDLL
 #endif
 
-// workaround perl namespace pollution - c++11 defines seed
-#ifdef seed
-  #undef seed
-#endif
 
 #include <openbabel/obutil.h>
 #include <openbabel/math/vector3.h>

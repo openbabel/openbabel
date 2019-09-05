@@ -103,9 +103,9 @@ namespace OpenBabel
       \endcode
   */
 
-  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
-  extern THREAD_LOCAL OBAtomTyper      atomtyper;
-  extern THREAD_LOCAL OBPhModel        phmodel;
+  extern OBAromaticTyper  aromtyper;
+  extern OBAtomTyper      atomtyper;
+  extern OBPhModel        phmodel;
   EXTERN OBTypeTable      ttab;
   
   //

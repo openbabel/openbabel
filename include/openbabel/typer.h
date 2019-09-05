@@ -21,14 +21,13 @@ GNU General Public License for more details.
 #define OB_TYPER_H
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
 
 #include <vector>
 #include <string>
 
 #include <openbabel/parsmart.h>
 #include <openbabel/data.h>
-#include <boost/thread/recursive_mutex.hpp>
+
 namespace OpenBabel
 {
 
@@ -41,15 +40,9 @@ class OBAPI OBAtomTyper : public OBGlobalDataBase
   std::vector<std::pair<OBSmartsPattern*,int> >            _vinthyb; //!< internal hybridization rules
   std::vector<std::pair<OBSmartsPattern*,std::string> >    _vexttyp; //!< external atom type rules
 
-  boost::recursive_mutex typer_mutex; //in particular, protect _mlist
-
 public:
     OBAtomTyper();
-    OBAtomTyper(const OBAtomTyper& rhs) {abort();}
     ~OBAtomTyper();
-
-    //swig is requiring these, but I can't figure out how to make it not, so definte with abort
-    const OBAtomTyper& operator=(const OBAtomTyper& rhs) {abort();}
 
     void ParseLine(const char*);
     //! \return the number of internal hybridization rules
@@ -61,15 +54,9 @@ public:
     void AssignTypes(OBMol&);
 };
 
-#ifndef THREAD_LOCAL
-# define THREAD_LOCAL
-#endif
-#ifndef EXTERN
-#error EXTERN
-#endif
 //! Global OBAtomTyper for marking internal valence, hybridization,
 //!  and atom types (for internal and external use)
-THREAD_LOCAL EXTERN OBAtomTyper      atomtyper;
+EXTERN  OBAtomTyper      atomtyper;
 
 // class introduction in typer.cpp
 class OBAPI OBAromaticTyper
@@ -83,7 +70,7 @@ public:
 };
 
 //! Global OBAromaticTyper for detecting aromatic atoms and bonds
-THREAD_LOCAL EXTERN OBAromaticTyper  aromtyper;
+EXTERN  OBAromaticTyper  aromtyper;
 
 // class introduction in typer.cpp
 class OBAPI OBRingTyper : public OBGlobalDataBase
