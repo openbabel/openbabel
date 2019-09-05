@@ -1280,10 +1280,7 @@ namespace OpenBabel
           {
             res = NewResidue();
             src_res = src.GetResidue(k);
-            res->SetName(src_res->GetName());
-            res->SetNum(src_res->GetNumString());
-            res->SetChain(src_res->GetChain());
-            res->SetChainNum(src_res->GetChainNum());
+            *res = *src_res;
             for (src_atom=src_res->BeginAtom(ii) ; src_atom ; src_atom=src_res->NextAtom(ii))
               {
                 atom = GetAtom(src_atom->GetIdx());
