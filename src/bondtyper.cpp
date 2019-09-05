@@ -35,7 +35,10 @@ namespace OpenBabel
 
 
   //! Global OBBondTyper for perception of bond order assignment.
-  OBBondTyper  bondtyper;
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
+	OBBondTyper  bondtyper;
 
   /*! \class OBBondTyper bondtyper.h <openbabel/bondtyper.cpp>
     \brief Assigns bond types for file formats without bond information

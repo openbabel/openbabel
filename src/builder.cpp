@@ -335,9 +335,8 @@ namespace OpenBabel
         v1 = bond1 + bond2;
         v1 = v1.normalize();
 
-        if (atom->GetHyb() == 2)
-          newbond = v1; 
-        else if (atom->GetHyb() == 3) {
+        newbond = v1; //default
+        if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
           newbond = bond1 - v2 * tan(DEG_TO_RAD*(180.0 - 109.471));
