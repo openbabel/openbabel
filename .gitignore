@@ -10,7 +10,9 @@ external
 
 # build
 build
-build-static
+
+# install
+install
 
 # editors
 .vscode
