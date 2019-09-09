@@ -18,9 +18,9 @@ include (CheckCXXCompilerFlag)
 # Version numbering - should be bumped for each release
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
-set(BABEL_MAJ_VER   2)
-set(BABEL_MIN_VER   4)
-set(BABEL_PATCH_VER 90)
+set(BABEL_MAJ_VER   3)
+set(BABEL_MIN_VER   0)
+set(BABEL_PATCH_VER a1)
 
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
