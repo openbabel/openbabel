@@ -85,9 +85,18 @@ namespace OpenBabel
 
     itr = pOptions->find("p");
     if(itr!=pOptions->end()) {
-      double pH = strtod(itr->second.c_str(), 0);
-      if(!AddHydrogens(false, true, pH))
-        ret=false;
+      if(pOptions->find("h")!=pOptions->end()){
+        stringstream errorMsg;
+        errorMsg << "Both -p and -h options are set. "
+                 << "All implicit hydrogens (-h) will be added without considering pH."
+                 << endl;
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      }
+      else {
+        double pH = strtod(itr->second.c_str(), 0);
+        if(!AddHydrogens(false, true, pH))
+          ret=false;
+      }
     }
 
     if(pOptions->find("c")!=pOptions->end())
