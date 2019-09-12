@@ -460,12 +460,12 @@ std::vector<std::string> EnableStaticPlugins()
  There are two levels of plugin. The top layer (at the time of writing) are:
   formats descriptors fingerprints forcefields charges ops loaders
  but additional types can be added without disturbing the main API. At runtime
-   babel -L
+   obabel -L
  will list the top level of plugins. They typically are abstract classes with
  virtual functions that define an interface for that type. Classes derived
  from these are the second layer of plugins, and can be listed at runtime like,
  for instance:
-   babel -L formats cml
+   obabel -L formats cml
  where formats is the top level of plugin and cml is the id of a derived class
  of this type.
 

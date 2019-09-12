@@ -27,7 +27,7 @@ def run_exec(*args):
     With two arguments (stdin, commandline) it pipes
     the stdin through the executable.
 
-    Example: run_exec("CC(=O)Cl", "babel -ismi -oinchi")
+    Example: run_exec("CC(=O)Cl", "obabel -ismi -oinchi")
 
     Return a tuple (stdout, stderr)
     """
