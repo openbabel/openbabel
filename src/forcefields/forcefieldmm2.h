@@ -98,7 +98,7 @@ namespace OpenBabel
 
 
       virtual const char* Description()
-	{ return "MM2 force field.";};
+      { return "MM2 force field.";};
 
 
       //! Destructor
@@ -129,4 +129,3 @@ namespace OpenBabel
 
 //! \file forcefieldmm2.h
 //! \brief MM2 force field
-

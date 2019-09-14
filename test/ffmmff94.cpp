@@ -5,11 +5,11 @@ This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 Some portions Copyright (C) 2008 Geoffrey R. Hutchison
- 
+
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -40,7 +40,7 @@ using namespace OpenBabel;
 
   int currentTest = 0;
 
-void GenerateEnergies(string molecules_file, string results_file)
+void GenerateEnergies(string molecules_file, string results_file, string method, double epsilon = 1.0)
 {
   std::ifstream ifs;
   if (!SafeOpen(ifs, molecules_file.c_str()))
@@ -53,18 +53,19 @@ void GenerateEnergies(string molecules_file, string results_file)
   OBMol mol;
   OBConversion conv(&ifs, &cout);
   char buffer[BUFF_SIZE];
-  
+
   if(! conv.SetInAndOutFormats("SDF","SDF"))
     {
       cerr << "SDF format is not loaded" << endl;
       return;
     }
 
-  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+  OBForceField* pFF = OBForceField::FindForceField(method);
   OB_REQUIRE(pFF != NULL);
 
   pFF->SetLogFile(&cout);
   pFF->SetLogLevel(OBFF_LOGLVL_NONE);
+  pFF->SetDielectricConstant(epsilon);
 
   for (;ifs;)
     {
@@ -77,7 +78,7 @@ void GenerateEnergies(string molecules_file, string results_file)
         cerr << "Could not setup force field on molecule: " << mol.GetTitle() << endl;
         return;
       }
-      
+
       // Don't compute gradients
       sprintf(buffer, "%15.5f\n", pFF->Energy(false));
       ofs << buffer;
@@ -87,7 +88,7 @@ void GenerateEnergies(string molecules_file, string results_file)
   return;
 }
 
-void TestFile(string filename, string results_file)
+void TestFile(string filename, string results_file, string method, double epsilon = 1.0)
 {
   std::ifstream mifs;
   if (!SafeOpen(mifs, filename.c_str()))
@@ -113,12 +114,13 @@ void TestFile(string filename, string results_file)
       cout << "Bail out! SDF format is not loaded" << endl;
       return;
     }
-    
-  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+
+  OBForceField* pFF = OBForceField::FindForceField(method);
   OB_REQUIRE(pFF != NULL);
 
   pFF->SetLogFile(&cout);
   pFF->SetLogLevel(OBFF_LOGLVL_NONE);
+  pFF->SetDielectricConstant(epsilon);
 
   double energy;
   while(mifs)
@@ -132,7 +134,7 @@ void TestFile(string filename, string results_file)
           cout << "Bail out! error reading reference data" << endl;
           return;
         }
-        
+
       if (!pFF->Setup(mol)) {
         cout << "Bail out! could not setup force field on " << mol.GetTitle() << endl;
         return;
@@ -164,7 +166,7 @@ void TestFile(string filename, string results_file)
 int ffmmff94(int argc, char* argv[])
 {
   int defaultchoice = 1;
-  
+
   int choice = defaultchoice;
 
   if (argc > 1) {
@@ -174,22 +176,46 @@ int ffmmff94(int argc, char* argv[])
     }
   }
 
+  string testdatadir = TESTDATADIR;
+
+  if (choice == 99)
+    {
+      GenerateEnergies(testdatadir + "forcefield.sdf", testdatadir + "mmff94results.txt", "MMFF94");
+      GenerateEnergies(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94results.txt", "MMFF94"); // provided by Paolo Tosco
+      GenerateEnergies(testdatadir + "forcefield.sdf", testdatadir + "mmff94sresults.txt", "MMFF94s");
+      GenerateEnergies(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94sresults.txt", "MMFF94s"); // ditto
+      GenerateEnergies(testdatadir + "forcefield.sdf", testdatadir + "mmff94e4results.txt", "MMFF94", 4.0);
+      GenerateEnergies(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94e4results.txt", "MMFF94", 4.0); // provided by Paolo Tosco
+
+      return 0;
+    }
+
   // Define location of file formats for testing
   #ifdef FORMATDIR
     char env[BUFF_SIZE];
     snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
     putenv(env);
-  #endif  
-
-  string testdatadir = TESTDATADIR;
+  #endif
 
   cout << "# Testing MMFF94 Force Field..." << endl;
   switch(choice) {
   case 1:
-    TestFile(testdatadir + "forcefield.sdf", testdatadir + "mmff94results.txt");
+    TestFile(testdatadir + "forcefield.sdf", testdatadir + "mmff94results.txt", "MMFF94");
     break;
   case 2:
-    TestFile(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94results.txt"); // provided by Paolo Tosco
+    TestFile(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94results.txt", "MMFF94"); // provided by Paolo Tosco
+    break;
+  case 3:
+    TestFile(testdatadir + "forcefield.sdf", testdatadir + "mmff94sresults.txt", "MMFF94s");
+    break;
+  case 4:
+    TestFile(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94sresults.txt", "MMFF94s"); // ditto
+    break;
+  case 5:
+    TestFile(testdatadir + "forcefield.sdf", testdatadir + "mmff94e4results.txt", "MMFF94", 4.0);
+    break;
+  case 6:
+    TestFile(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94e4sresults.txt", "MMFF94", 4.0);
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
@@ -199,4 +225,3 @@ int ffmmff94(int argc, char* argv[])
   // Passed tests
   return 0;
 }
-
