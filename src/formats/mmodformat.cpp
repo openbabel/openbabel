@@ -15,6 +15,14 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/data.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
+
 
 using namespace std;
 namespace OpenBabel
@@ -177,8 +185,8 @@ namespace OpenBabel
     OBBond *bond;
     vector<OBBond*>::iterator bi;
     for (bond = mol.BeginBond(bi);bond;bond = mol.NextBond(bi))
-      if (bond->GetBO() == 5 && !bond->IsInRing())
-        bond->SetBO(1);
+      if (bond->GetBondOrder() == 5 && !bond->IsInRing())
+        bond->SetBondOrder(1);
 
     if ( natoms != (signed)mol.NumAtoms() )
       return(false);
@@ -241,10 +249,10 @@ namespace OpenBabel
         ofs << buffer;
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           {
-            snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBO());
+            snprintf(buffer, BUFF_SIZE, " %5d %1d",nbr->GetIdx(),(*j)->GetBondOrder());
             ofs << buffer;
           }
-        for (k=atom->GetValence();k < 6;k++)
+        for (k=atom->GetExplicitDegree();k < 6;k++)
           {
             snprintf(buffer, BUFF_SIZE," %5d %1d",0,0);
             ofs << buffer;

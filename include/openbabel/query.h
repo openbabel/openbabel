@@ -24,12 +24,14 @@
 #ifndef OB_QUERY_H
 #define OB_QUERY_H
 
-#include <openbabel/mol.h>
+#include <openbabel/bond.h> // TODO: Move OBBond code out of this header
+#include <openbabel/bitvec.h>
 #include <openbabel/tokenst.h>
 
 namespace OpenBabel {
 
   class OBQueryBond;
+  class OBMol;
 
   ///@addtogroup substructure Substructure Searching
   ///@{
@@ -195,11 +197,7 @@ namespace OpenBabel {
   class OBAPI OBQuery
   {
     public:
-      ~OBQuery()
-      {
-        std::for_each(m_atoms.begin(),m_atoms.end(), DeleteObject());
-        std::for_each(m_bonds.begin(),m_bonds.end(), DeleteObject());
-      }
+      ~OBQuery();
       /**
        * @return The number of atoms in the query.
        */

@@ -226,7 +226,7 @@ namespace OpenBabel
       //
       //  a   --->   a--*
       //
-      if (atom->GetValence() == 0) {
+      if (atom->GetExplicitDegree() == 0) {
         newbond = atom->GetVector() + VX * length;
         return newbond;
       }
@@ -254,7 +254,7 @@ namespace OpenBabel
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
       //                              \                                      //
       //                               *
-      if (atom->GetValence() == 1) {
+      if (atom->GetExplicitDegree() == 1) {
         bool isCarboxylateO = atom->IsCarboxylOxygen();
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -322,7 +322,7 @@ namespace OpenBabel
       //     X  --->   X--*
       //    /         /
       //
-      if (atom->GetValence() == 2) {
+      if (atom->GetExplicitDegree() == 2) {
         FOR_NBORS_OF_ATOM (nbr, atom) {
           if (bond1 == VZero)
             bond1 = atom->GetVector() - nbr->GetVector();
@@ -336,14 +336,14 @@ namespace OpenBabel
         v1 = v1.normalize();
 
         if (atom->GetHyb() == 2)
-          newbond = v1;
-        if (atom->GetHyb() == 3) {
+          newbond = v1; 
+        else if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
           newbond = bond1 - v2 * tan(DEG_TO_RAD*(180.0 - 109.471));
           newbond = v2 + v1 * (sqrt(2.0) / 2.0); // used to be tan(70.53 degrees/2) which is sqrt(2.0) / 2.0
         }
-        if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
+        else if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
           /* add the first equatorial atom, orthogonally to bond1 (and bond2 = -bond1) */
           /* is atom order correct?  I don't think it matters, but I might have to ask a chemist
            * whether PClF4 would be more likely to have an equatorial or axial Cl-P bond */
@@ -358,12 +358,12 @@ namespace OpenBabel
           v1 = v1.normalize();
           newbond = v1;
         }
-        if (atom->GetHyb() == 6) {
+        else if (atom->GetHyb() == 6) {
           v2 = cross(bond1, bond2);
           newbond = v2;
         }
 
-        newbond = newbond.normalize();
+        newbond = newbond.normalize(); //if newbond was not set, it will become non-finite here
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
@@ -392,7 +392,7 @@ namespace OpenBabel
        //    /          /
        //
        */
-      if (atom->GetValence() == 3) {
+      if (atom->GetExplicitDegree() == 3) {
         if (atom->GetHyb() == 3) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -476,7 +476,7 @@ namespace OpenBabel
         }
       }
 
-      if (atom->GetValence() == 4) {
+      if (atom->GetExplicitDegree() == 4) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -526,7 +526,7 @@ namespace OpenBabel
 
       }
 
-      if (atom->GetValence() == 5) {
+      if (atom->GetExplicitDegree() == 5) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -563,7 +563,7 @@ namespace OpenBabel
       //
       //  a   --->   a---*
       //
-      if (atom->GetValence() == 0) {
+      if (atom->GetExplicitDegree() == 0) {
         newbond = atom->GetVector() + VX * length;
         // Check that the vector is still finite before returning
         if (!isfinite(newbond.x()) || !isfinite(newbond.y()))
@@ -594,7 +594,7 @@ namespace OpenBabel
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109            //
       //                              \                                           //
       //                               *                                          //
-      if (atom->GetValence() == 1) {
+      if (atom->GetExplicitDegree() == 1) {
         OBAtom *nbr = atom->BeginNbrAtom(i);
         if (!nbr)
           return VZero;
@@ -616,14 +616,14 @@ namespace OpenBabel
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
-      } // GetValence() == 1
+      } // GetExplicitDegree() == 1
 
       //                          //
       //    \         \           //
       //     X  --->   X--*       //
       //    /         /           //
       //                          //
-      if (atom->GetValence() == 2) {
+      if (atom->GetExplicitDegree() == 2) {
         for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
           if (bond1 == VZero)
             bond1 = atom->GetVector() - nbr->GetVector();
@@ -644,7 +644,7 @@ namespace OpenBabel
       //   --X  --->  --X--*      //
       //    /          /          //
       //                          //
-      if (atom->GetValence() == 3) {
+      if (atom->GetExplicitDegree() == 3) {
         OBStereoFacade stereoFacade((OBMol*)atom->GetParent());
         if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
           OBBond *hash = 0;
@@ -1241,7 +1241,7 @@ namespace OpenBabel
 
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        int bondType = a->GetBond(prev)->GetBO();
+        int bondType = a->GetBond(prev)->GetBondOrder();
         if (a->GetBond(prev)->IsAromatic())
           bondType = -1;
 
@@ -1283,7 +1283,7 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(b, mol) {
       beginIdx = b->GetBeginAtomIdx();
       endIdx = b->GetEndAtomIdx();
-      workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
+      workMol.AddBond(beginIdx, endIdx, b->GetBondOrder(), b->GetFlags());
     }
 
     /*
@@ -1518,7 +1518,7 @@ namespace OpenBabel
   {
     OBMol workmol = mol; // Make a copy (this invalidates Ids, but not Idxs)
     OBAtom* watom = workmol.GetAtom(mol.GetAtomById(atomId)->GetIdx());
-    if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
+    if (watom->GetHvyDegree() != 4) // QUESTION: Do I need to restrict it further?
       return false;
 
     int atomsInSameRing = 0;

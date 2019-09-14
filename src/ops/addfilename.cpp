@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/op.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/base.h>
 
 namespace OpenBabel
 {

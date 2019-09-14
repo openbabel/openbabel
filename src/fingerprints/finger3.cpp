@@ -17,7 +17,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
-
+#include <openbabel/parsmart.h>
+#include <openbabel/oberror.h>
 #include <sstream>
 #include <fstream>
 #include <map>

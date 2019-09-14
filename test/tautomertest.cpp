@@ -2,6 +2,7 @@
 #include <openbabel/tautomer.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <algorithm>
 
 using namespace OpenBabel;
 

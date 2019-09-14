@@ -21,8 +21,6 @@ Global variables:
 import sys
 import os.path
 import tempfile
-import json
-import uuid
 import xml.etree.ElementTree as ET
 
 if sys.platform[:4] == "java":
@@ -50,7 +48,7 @@ elif sys.platform[:3] == "cli":
     _obfuncs = ob.openbabel_csharp
     _obconsts = ob.openbabel_csharp
 else:
-    import openbabel as ob
+    from . import openbabel as ob
     _obfuncs = _obconsts = ob
     try:
         import Tkinter as tk
@@ -284,6 +282,14 @@ class Outputfile(object):
         self.obConversion.CloseOutFile()
         self.filename = None
 
+    def __enter__(self):
+        """Called by with statement, returns itself"""
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        """Called by with statement, closes itself"""
+        self.close()
+
 
 class Molecule(object):
     """Represent a Pybel Molecule.
@@ -414,7 +420,7 @@ class Molecule(object):
         if ipython_3d:
             return None
 
-        # Open babel returns a nested svg, which IPython unpacks and treats as
+        # Open Babel returns a nested svg, which IPython unpacks and treats as
         # two SVGs, messing with the display location. This parses out the
         # inner svg before handing over to IPython.
         namespace = "http://www.w3.org/2000/svg"
@@ -706,10 +712,10 @@ class Atom(object):
        OBAtom -- an Open Babel OBAtom
 
     Attributes:
-       atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
-       formalcharge, heavyvalence, heterovalence, hyb, idx,
+       atomicmass, atomicnum, cidx, coords, coordidx, degree, exactmass,
+       formalcharge, heavydegree, heterodegree, hyb, idx,
        implicitvalence, isotope, partialcharge, residue, spin, type,
-       valence, vector.
+       vector.
 
     (refer to the Open Babel library documentation for more info).
 
@@ -741,6 +747,10 @@ class Atom(object):
         return self.OBAtom.GetCoordinateIdx()
 
     @property
+    def degree(self):
+        return self.OBAtom.GetExplicitDegree()
+
+    @property
     def exactmass(self):
         return self.OBAtom.GetExactMass()
 
@@ -749,12 +759,20 @@ class Atom(object):
         return self.OBAtom.GetFormalCharge()
 
     @property
+    def heavydegree(self):
+        return self.OBAtom.GetHvyDegree()
+    
+    @property
     def heavyvalence(self):
-        return self.OBAtom.GetHvyValence()
+        raise AttributeError("This property has been renamed. Use Atom.heavydegree instead.")
 
     @property
+    def heterodegree(self):
+        return self.OBAtom.GetHeteroDegree()
+    
+    @property
     def heterovalence(self):
-        return self.OBAtom.GetHeteroValence()
+        raise AttributeError("This property has been renamed. Use Atom.heterodegree instead.")
 
     @property
     def hyb(self):
@@ -790,7 +808,7 @@ class Atom(object):
 
     @property
     def valence(self):
-        return self.OBAtom.GetValence()
+        raise AttributeError("This property has been renamed. Use Atom.degree instead.")
 
     @property
     def vector(self):

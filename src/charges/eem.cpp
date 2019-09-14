@@ -18,10 +18,14 @@ GNU General Public License for more details.
 
 #include <string>
 #include <vector>
+#include <cstdlib>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/molchrg.h>
 #include <openbabel/elements.h>
 

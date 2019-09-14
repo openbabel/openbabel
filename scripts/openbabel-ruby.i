@@ -16,7 +16,6 @@
 #endif
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
@@ -69,6 +68,8 @@
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
 
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 #include <openbabel/kekulize.h>
 %}
 
@@ -152,7 +153,6 @@ OpenBabel::OB ## subclass *to ## subclass(OpenBabel::OBGenericData *data) {
 %}
 %enddef
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
 CAST_GENERICDATA_TO(ExternalBondData)
@@ -195,7 +195,6 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators

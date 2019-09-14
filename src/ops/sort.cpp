@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
+#include <openbabel/obutil.h>
 #include "deferred.h"
 #include <set>
 #include <algorithm>

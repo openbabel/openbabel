@@ -22,13 +22,9 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#include <string>
-
-#include <openbabel/mol.h>
-
 namespace OpenBabel
 {
-
+  class OBMol;
   class PointGroupPrivate;
 
   /** \class OBPointGroup pointgroup.h <openbabel/pointgroup.h>

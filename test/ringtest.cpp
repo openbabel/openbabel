@@ -27,6 +27,9 @@ GNU General Public License for more details.
 #include <fstream>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obutil.h>
 
@@ -97,8 +100,8 @@ int ringtest(int argc, char* argv[])
   vector<int> vi;
   OBMol mol;
   vector<string>::iterator i;
-  vector<OBEdgeBase*>::iterator j;
-  vector<OBNodeBase*>::iterator k;
+  vector<OBBond*>::iterator j;
+  vector<OBAtom*>::iterator k;
   vector<OBRing*>::iterator m;
   OBConversion conv(&mifs, &cout);
   unsigned int currentTest = 0;
@@ -218,7 +221,7 @@ void GenerateRingReference()
   OBBond *bond;
   char buffer[BUFF_SIZE];
   vector<OBRing*> vr;
-  vector<OBEdgeBase*>::iterator i;
+  vector<OBBond*>::iterator i;
   vector<OBNodeBase*>::iterator j;
   vector<OBRing*>::iterator k;
   OBMol mol;

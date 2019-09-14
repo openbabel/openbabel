@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/pointgroup.h>
-
+#include <cstdlib>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif

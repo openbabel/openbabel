@@ -14,16 +14,15 @@ In both cases, the test file is run directly from the source folder,
 and so you can quickly develop the tests and try them out.
 """
 
-import os
 import unittest
 
 from testbabel import run_exec, BaseTest
 
 class TestUnique(BaseTest):
-    """A series of tests relating to babel --unique"""
+    """A series of tests relating to obabel --unique"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
         self.smiles = """C	methane
 COC	dimethyl ether
 OC(C)CC	2-butanol
@@ -50,8 +49,8 @@ C([2H])([2H])([2H])[2H]	deuteromethane"""
 
         for param in params:
             output, error = run_exec(self.smiles,
-                                     "babel -ismi -osmi --unique %s" % param[0])
+                                     "obabel -ismi -osmi --unique %s" % param[0])
             self.assertConverted(error, param[1])
-        
+
 if __name__ == "__main__":
     unittest.main()

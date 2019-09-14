@@ -19,7 +19,14 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/typer.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/phmodel.h>
+
+#include <cstdlib>
 
 // private data header with default parameters
 #include "phmodeldata.h"

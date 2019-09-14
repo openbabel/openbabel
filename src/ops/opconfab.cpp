@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include<openbabel/forcefield.h>
 #include <openbabel/obconversion.h>
 #include<openbabel/generic.h>
+#include <cstdlib>
 
 #define CONFAB_VER "1.1.0"
 

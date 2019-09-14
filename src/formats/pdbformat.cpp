@@ -16,16 +16,24 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <openbabel/data.h>
 
 #include <vector>
 #include <map>
+#include <cstdlib>
+#include <algorithm>
 
 #include <sstream>
 
 using namespace std;
 namespace OpenBabel
 {
-
   class PDBFormat : public OBMoleculeFormat
   {
   public:
@@ -753,7 +761,7 @@ namespace OpenBabel
     for (i = 1; i <= mol.NumAtoms(); i ++)
       {
         atom = mol.GetAtom(i);
-        if (atom->GetValence() == 0)
+        if (atom->GetExplicitDegree() == 0)
           continue; // no need to write a CONECT record -- no bonds
 
         // Write out up to 4 real bonds per line PR#1711154

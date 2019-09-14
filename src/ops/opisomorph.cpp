@@ -15,6 +15,9 @@ GNU General Public License for more details.
 #include <openbabel/parsmart.h>
 #include <openbabel/isomorphism.h>
 #include "opisomorph.h"
+#include <openbabel/generic.h>
+#include <cstdlib>
+#include <algorithm>
 
 namespace OpenBabel
 {

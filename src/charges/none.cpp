@@ -20,6 +20,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/chargemodel.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
+#include <openbabel/atom.h>
 
 namespace OpenBabel
 {

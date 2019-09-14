@@ -25,6 +25,7 @@
 #include <openbabel/babelconfig.h>
 
 #include <fstream>
+#include <cstdlib>
 
 #include <openbabel/mol.h>
 #include <openbabel/obiter.h>

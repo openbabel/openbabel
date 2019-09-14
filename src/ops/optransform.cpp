@@ -17,6 +17,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/optransform.h>
+#include <openbabel/mol.h>
+#include <openbabel/oberror.h>
 #include <openbabel/locale.h>
 #include <vector>
 

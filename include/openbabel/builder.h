@@ -26,12 +26,17 @@ GNU General Public License for more details.
 
 #include <list>
 #include <set>
-#include <openbabel/base.h>
-#include <openbabel/mol.h>
+
 #include <openbabel/stereo/stereo.h>
 
 namespace OpenBabel
 {
+  class OBMol;
+  class OBAtom;
+  class OBSmartsPattern;
+  class vector3;
+  class OBBitVec;
+
   //! \class OBBuilder builder.h <openbabel/builder.h>
   //! \brief Class to build 3D structures
   class OBAPI OBBuilder {
@@ -69,7 +74,8 @@ namespace OpenBabel
       void LoadFragments();
       std::vector<vector3> GetFragmentCoord(std::string smiles);
 
-      /*! Get the position for a new neighbour on atom.
+      /*! Get the position for a new neighbour on atom.  Returns
+       * non-finite vector if there is no reasonable location.
        *  \param atom Atom for which we want a new neighbour location.
        *  \returns The position for the new atom.
        */

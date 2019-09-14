@@ -22,6 +22,11 @@ GNU General Public License for more details.
 #include <openbabel/fingerprint.h>
 #include <openbabel/op.h>
 #include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/obutil.h>
+#include <cstdlib>
+#include <algorithm>
+
 
 using namespace std;
 namespace OpenBabel {
@@ -684,14 +689,14 @@ virtual const char* Description() //required
 
     if(idx>=patternMol.NumBonds())
       return;
-    if(patternMol.GetBond(idx)->GetBO()==4)
+    if(patternMol.GetBond(idx)->GetBondOrder()==4)
     {
-      patternMol.GetBond(idx)->SetBO(1);
+      patternMol.GetBond(idx)->SetBondOrder(1);
       patternMols.push_back(patternMol);
       AddPattern(patternMols, patternMol,idx+1);
 
       patternMols.push_back(patternMol);
-      patternMols.back().GetBond(idx)->SetBO(5);
+      patternMols.back().GetBond(idx)->SetBondOrder(5);
     }
     AddPattern(patternMols, patternMol,idx+1);
   }

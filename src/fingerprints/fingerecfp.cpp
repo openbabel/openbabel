@@ -12,12 +12,17 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/oberror.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/fingerprint.h>
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
 
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 namespace OpenBabel
@@ -223,8 +228,8 @@ static void ECFPFirstPass(OpenBabel::OBMol &mol,
       continue;
     OpenBabel::OBAtom* aptr = &(*atom);
     unsigned int idx = aptr->GetIdx();
-    buffer[0] = aptr->GetHvyValence(); // degree of heavy atom connections
-    buffer[1] = aptr->BOSum() - aptr->ExplicitHydrogenCount(); // valence of heavy atom connections
+    buffer[0] = aptr->GetHvyDegree(); // degree of heavy atom connections
+    buffer[1] = aptr->GetExplicitValence() - aptr->ExplicitHydrogenCount(); // valence of heavy atom connections
     buffer[2] = aptr->GetAtomicNum();
     buffer[3] = (unsigned char)aptr->GetIsotope();
     buffer[4] = (unsigned char)aptr->GetFormalCharge();

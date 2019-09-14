@@ -3,20 +3,41 @@
 .Dt obrms 1 URM
 .Sh NAME
 .Nm obrms
-.Nd "calculate the RMSD between two chemically identical structures"
+.Nd "Calculate the heavy-atom RMSD between two chemically identical structures"
 .Sh SYNOPSIS
 .Nm
-.Op Ar -firstonly
+.Op -fmxso
 .Ar filename1
 .Ar filename2
 .Sh DESCRIPTION
 Computes the heavy-atom RMSD of identical compound structures.
 Structures in multi-structure files are compared one-by-one unless -firstonly
 is passed, in which case only the first structure in the reference file is used.
+.Sh OPTIONS
+.Bl -tag -width flag
+.It Fl f, -firstonly
+use only the first structure in the reference file (otherwise the nth molecule
+in the reference file is compared to the nth molecule in the test file)
+.It Fl m,  -minimize
+Compute the minimum RMSD achievable by applying a rigid-body transformation to 
+the test molecule
+.It Fl x, -cross
+Compute all n^2 RMSDs between molecules of the reference file.  Test file is ignored.
+.It Fl s, -separate 
+Separate reference file into constituent molecules (disconnected fragments)
+and report best RMSD
+.It Fl o, -out 
+Re-oriented test structure output (used with -m) 
 .Sh EXAMPLES
 .Dl "obrms ref.sdf test.sdf"
 .Pp
-Calculate the RMSD between ref.sdf and test.sdf
+Calculate the RMSD between ref.sdf and test.sdf.  Both files should have the
+same number of molecules.
+
+.Dl "obrms -f ref.sdf test.sdf"
+.Pp
+Calculate the RMSD between the first molecule in ref.sdf and each molecule in
+test.sdf.
 .Sh SEE ALSO
 .Xr obfit 1 .
 .Pp

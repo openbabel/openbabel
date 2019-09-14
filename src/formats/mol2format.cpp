@@ -15,13 +15,20 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/data.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
 {
-
   //The routine WriteSmiOrderedMol2() in the original mol2.cpp is presumably
   //another output format, but was not made available in version 100.1.2, nor
   //is it here.
@@ -78,7 +85,7 @@ namespace OpenBabel
   {
     if (queryatom->GetAtomicNum() != OBElements::Sulfur)
       return(false);
-    if (queryatom->GetHvyValence() != 1)
+    if (queryatom->GetHvyDegree() != 1)
       return(false);
 
     OBAtom *atom = NULL;
@@ -102,10 +109,6 @@ namespace OpenBabel
     return(true);
   }
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
-  }
   static bool IsOxygenOrSulfur(OBAtom *atom)
   {
     switch (atom->GetAtomicNum()) {
@@ -430,7 +433,7 @@ namespace OpenBabel
 
     if (has_explicit_hydrogen) {
       FOR_ATOMS_OF_MOL(atom, mol) {
-        unsigned int total_valence = TotalNumberOfBonds(&*atom);
+        unsigned int total_valence = atom->GetTotalDegree();
         switch (atom->GetAtomicNum()) {
         case 8:
           if (total_valence != 1) continue;
@@ -457,7 +460,7 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL(atom, mol) {
         OBAtom* oxygenOrSulfur = &*atom;
         // Look first for a terminal O/S
-        if (!IsOxygenOrSulfur(oxygenOrSulfur) || TotalNumberOfBonds(oxygenOrSulfur) != 1) continue;
+        if (!IsOxygenOrSulfur(oxygenOrSulfur) || oxygenOrSulfur->GetTotalDegree() != 1) continue;
         OBAtomBondIter bitA(oxygenOrSulfur);
         OBBond *bondA = &*bitA;
         if (!bondA->IsAromatic()) continue;
@@ -470,7 +473,7 @@ namespace OpenBabel
         FOR_BONDS_OF_ATOM(bitB, carbon) {
           if (&*bitB == bondA || !bitB->IsAromatic()) continue;
           OBAtom* nbr = bitB->GetNbrAtom(carbon);
-          if (IsOxygenOrSulfur(nbr) && TotalNumberOfBonds(nbr) == 1) {
+          if (IsOxygenOrSulfur(nbr) && nbr->GetTotalDegree() == 1) {
             otherOxygenOrSulfur = nbr;
             bondB = &*bitB;
           }
@@ -478,10 +481,10 @@ namespace OpenBabel
         if (!otherOxygenOrSulfur) continue;
 
         // Now set as C(=O)O
-        bondA->UnsetAromatic();
+        bondA->SetAromatic(false);
         oxygenOrSulfur->SetFormalCharge(-1);
 
-        bondB->UnsetAromatic();
+        bondB->SetAromatic(false);
         bondB->SetBondOrder(2);
       }
 
@@ -683,7 +686,6 @@ namespace OpenBabel
     ofs << "@<TRIPOS>BOND" << endl;
     OBBond *bond;
     vector<OBBond*>::iterator j;
-    OBSmartsPattern pat;
     string s1, s2;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
@@ -694,7 +696,7 @@ namespace OpenBabel
         else if (bond->IsAmide())
           strcpy(label,"am");
         else
-          snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+          snprintf(label,BUFF_SIZE,"%d",bond->GetBondOrder());
 
         snprintf(buffer, BUFF_SIZE,"%6d %5d %5d   %2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),

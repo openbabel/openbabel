@@ -26,6 +26,9 @@
 
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
@@ -42,6 +45,11 @@
   typedef unsigned __int8 uint8_t;
   typedef unsigned __int16 uint16_t;
 #endif
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 using namespace std;
 

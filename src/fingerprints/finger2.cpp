@@ -17,10 +17,14 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/oberror.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/fingerprint.h>
 #include <set>
 #include <vector>
+#include <algorithm>
 #include <openbabel/elements.h>
 
 using namespace std;
@@ -148,7 +152,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	int bo=0;
 	if(pbond)
 	{
-		bo = pbond->IsAromatic() ? 5 : pbond->GetBO();
+		bo = pbond->IsAromatic() ? 5 : pbond->GetBondOrder();
 
 //		OBAtom* pprevat = pbond->GetNbrAtom(patom);
 //		if(patom->GetFormalCharge() && (patom->GetFormalCharge() == -pprevat->GetFormalCharge()))
@@ -158,7 +162,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 	curfrag.push_back(patom->GetAtomicNum());
 	levels[patom->GetIdx()-1] = level;
 
-	vector<OBEdgeBase*>::iterator itr;
+	vector<OBBond*>::iterator itr;
 	OBBond *pnewbond;
 //	PrintFpt(curfrag,(int)patom);
 	for (pnewbond = patom->BeginBond(itr);pnewbond;pnewbond = patom->NextBond(itr))
@@ -174,7 +178,7 @@ void fingerprint2::getFragments(vector<int> levels, vector<int> curfrag,
 			{
 				//If complete ring (last bond is back to starting atom) add bond at front
 				//and save in ringset
-				curfrag[0] = pnewbond->IsAromatic() ? 5 : pnewbond->GetBO();
+				curfrag[0] = pnewbond->IsAromatic() ? 5 : pnewbond->GetBondOrder();
 				ringset.insert(curfrag);
  				curfrag[0] = 0;
 			}

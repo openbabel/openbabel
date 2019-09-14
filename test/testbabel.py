@@ -19,7 +19,7 @@ import re
 import sys
 import unittest
 
-from subprocess import Popen, PIPE, check_output, STDOUT
+from subprocess import CalledProcessError, Popen, PIPE, check_output, STDOUT
 
 def run_exec(*args):
     """Run one of OpenBabel's executables
@@ -27,7 +27,7 @@ def run_exec(*args):
     With two arguments (stdin, commandline) it pipes
     the stdin through the executable.
 
-    Example: run_exec("CC(=O)Cl", "babel -ismi -oinchi")
+    Example: run_exec("CC(=O)Cl", "obabel -ismi -oinchi")
 
     Return a tuple (stdout, stderr)
     """
@@ -38,8 +38,12 @@ def run_exec(*args):
     else:
         raise Exception("One or two arguments expected")
 
-    broken = commandline.encode().split()
-    exe = executable(broken[0].decode())
+    if sys.platform.startswith("win"):
+        broken = commandline.split()
+        exe = executable(broken[0])
+    else:
+        broken = commandline.encode().split()
+        exe = executable(broken[0].decode())
     # Note that bufsize = -1 means default buffering
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
@@ -67,9 +71,8 @@ def log(text):
 
     The log file (log.txt) is created in build/test
     """
-    output = open("log.txt", "a")
-    print >> output, text
-    output.close()
+    with open("log.txt", "a") as output:
+        output.write(text + "\n")
 
 class BaseTest(unittest.TestCase):
     """A base class for test classes that adds additional
@@ -218,14 +221,18 @@ ENDBRANCH   1   9
 TORSDOF 5
 '''
         output, error = run_exec(pdb, "obabel -ipdb -opdbqt")
-        self.assertEqual(output, pdbqt)        
+        self.assertEqual(output.replace("\r", ""), pdbqt.replace("\r", ""))
 
     def testMissingPlugins(self):
+        if sys.platform.startswith("win32"):
+            return
         libdir = os.environ.pop("BABEL_LIBDIR", None)
         os.environ["BABEL_LIBDIR"] = ""
 
         obabel = executable("obabel")
-        msg = check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+        with self.assertRaises(CalledProcessError) as cm:
+            check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+        msg = cm.exception.output
         if libdir:
             os.environ["BABEL_LIBDIR"] = libdir
         else:
@@ -263,7 +270,7 @@ TORSDOF 5
                 'O=[S@@](c1nc2c([nH]1)cccc2)Cc1nccc(c1C)OCC(F)(F)F',
                 'C#C[C@]1(O)CC[C@@H]2[C@]1(C)CC[C@H]1[C@H]2CCc2c1ccc(c2)O',
                 ]
-        for cofname, CAN in zip(listCOFnames, listCANexpected): 
+        for cofname, CAN in zip(listCOFnames, listCANexpected):
             coffilename = cofname + '.cof'
             if(cofname == 'culgi_06'):
                 cofname = 'mol24' # Special case: 'internal name' not the same as file name

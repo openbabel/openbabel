@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #include <stdio.h>
 #include <math.h>
 
-#include <openbabel/rand.h>
+#include "rand.h"
 
 #if TIME_WITH_SYS_TIME
 #include <sys/time.h>
@@ -192,14 +192,14 @@ namespace OpenBabel
     return( x == 1 );
   }
 
-  void DoubleAdd( DoubleType *x, unsigned int y )
+  static void DoubleAdd( DoubleType *x, unsigned int y )
   {
     x->lo += y;
     if( x->lo < y )
       x->hi++;
   }
 
-  void DoubleMultiply( unsigned int x, unsigned int y, DoubleType *z )
+  static void DoubleMultiply( unsigned int x, unsigned int y, DoubleType *z )
   {
     unsigned int x0, x1, x2, x3;
     unsigned int hx, lx;
@@ -254,7 +254,7 @@ namespace OpenBabel
       return 32-table[x];
   }
 
-  unsigned int DoubleModulus( DoubleType *n,  unsigned int d )
+  static unsigned int DoubleModulus( DoubleType *n,  unsigned int d )
   {
     unsigned int d1, d0;
     unsigned int r1, r0;
@@ -366,7 +366,7 @@ namespace OpenBabel
     return 1;
   }
 
-  int DetermineSequence( unsigned int m, unsigned int *pm,
+  static int DetermineSequence( unsigned int m, unsigned int *pm,
                          unsigned int *pa,
                          unsigned int *pc )
   {
@@ -425,7 +425,7 @@ namespace OpenBabel
   }
 
 
-  void GenerateSequence( unsigned int p, unsigned int m,
+  static void GenerateSequence( unsigned int p, unsigned int m,
                          unsigned int a, unsigned int c )
   {
     unsigned int i;

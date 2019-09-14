@@ -24,6 +24,8 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obutil.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

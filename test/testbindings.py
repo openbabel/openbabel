@@ -19,7 +19,6 @@ and so you can quickly develop the tests and try them out.
 """
 
 import os
-import re
 import sys
 import unittest
 import itertools
@@ -28,12 +27,12 @@ here = sys.path[0]
 iswin = sys.platform.startswith("win")
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except ImportError:
     ob = None
 
 try:
-    import pybel
+    from openbabel import pybel
 except ImportError:
     pybel = None
 
@@ -87,7 +86,7 @@ class TestSuite(PythonBindings):
         mol = pybel.readstring("smi", "c1ccccc1").OBMol
         mol.DeleteAtom(mol.GetFirstAtom())
         self.assertTrue(mol.GetFirstAtom().IsAromatic())
-        mol.UnsetAromaticPerceived()
+        mol.SetAromaticPerceived(False)
         self.assertFalse(mol.GetFirstAtom().IsAromatic())
 
     def testLPStereo(self):
@@ -152,7 +151,7 @@ class TestSuite(PythonBindings):
             # Aromaticity is perceived during the last step of reading SMILES
             # so let's unset it here for the first pass
             if N == 0:
-                obmol.UnsetAromaticPerceived()
+                obmol.SetAromaticPerceived(False)
             else:
                 self.assertTrue(obmol.HasAromaticPerceived())
 
@@ -243,6 +242,8 @@ H          0.74700        0.50628       -0.64089
         ff = pybel._forcefields["mmff94"]
 
         self.assertTrue(ff.Setup(mol.OBMol))
+        energy = ff.Energy() # note: calling GetGradient w/o calling Energy()
+                             #       just returns random numbers
         for atom in mol.atoms:
             # this should throw an AttributeError if not available
             grad = ff.GetGradient(atom.OBAtom)
@@ -462,6 +463,25 @@ H         -0.26065        0.64232       -2.62218
             self.assertEqual(N, getattr(ob, ob.GetName(N)))
 
         self.assertTrue(N > 100)
+
+    def testElementsSpecifiedByAtomicNumberInSmiles(self):
+        smis = [
+                ("[#100]", "[Fm]"),
+                ("[#255]", None),
+                ("[254#255]", None),
+                ("[#6]", -1),
+                ("[#256]", -1),
+                ("[#10a]", -1)
+               ]
+
+        for smi, rt in smis:
+            if rt==-1:
+                self.assertRaises(IOError, pybel.readstring, "smi", smi)
+                continue
+            if rt is None:
+                rt = smi
+            nsmi = pybel.readstring("smi", smi).write("smi").rstrip()
+            self.assertEqual(rt, nsmi)
 
     def testIterators(self):
         """Basic check that at least two iterators are working"""
