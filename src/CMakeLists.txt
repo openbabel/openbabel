@@ -250,9 +250,9 @@ set_target_properties(openbabel PROPERTIES
   DEFINE_SYMBOL MAKE_OBDLL
   )
 if(MSVC)
-  # Set the output name to openbabel-2 (preserves old behaviour). Is this desired?
+  # Set the output name to openbabel-3 (preserves old behaviour). Is this desired?
   set_target_properties(openbabel PROPERTIES
-    OUTPUT_NAME openbabel-2)
+    OUTPUT_NAME openbabel-3)
   remove_definitions(_UNICODE UNICODE)
 endif(MSVC)
 
