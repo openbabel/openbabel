@@ -20,7 +20,7 @@ GNU General Public License for more details.
 ********************************************************************/
 namespace baphpel;
 
-include_once '/usr/local/lib/openbabel.php';
+include_once 'openbabel.php';
 
 # define global elements
 $_builder = new \OBBuilder;
