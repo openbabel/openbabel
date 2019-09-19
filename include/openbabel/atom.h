@@ -33,7 +33,6 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/residue.h>
 #include <openbabel/math/vector3.h>
-#include <openbabel/elements.h>
 
 namespace OpenBabel
 {

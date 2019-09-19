@@ -23,7 +23,6 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
-#include <openbabel/elements.h>
 
 #include <openbabel/base.h>
 #include <openbabel/elements.h>
