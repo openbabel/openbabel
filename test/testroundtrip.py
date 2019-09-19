@@ -31,6 +31,8 @@ import itertools
 from multiprocessing import Pool  
 from multiprocessing import TimeoutError
 
+from contextlib import contextmanager
+
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
 
@@ -184,14 +186,24 @@ class TestSuite(unittest.TestCase):
         self.canFindFile(fullpath)
         return fullpath    
         
+    @contextmanager
+    def dummy_context(self, enter_result=None):
+        yield enter_result
         
+    def subtest(self, enter_result=None):
+        try:
+            return self.subTest()
+        except AttributeError: # python < 3.4
+            return self.dummy_context()
+
+            
     def testRoundtrip(self):
         """Verify PDB ligand properties are mainted through conversion"""
         root = self.getTestFile('pdb_ligands_sdf')
         #sometimes openbabel segfaults, so fork off each test        
         processes_pool = Pool(1)
         for (i,fname) in enumerate(glob.glob(os.path.join(root,'*.sdf'))):
-          with self.subTest():
+          with self.subtest():
             try:
               result = processes_pool.apply_async(roundtripFile, args = (fname, ))
               ret = result.get(timeout=10) #surely 10 seconds is long enough
