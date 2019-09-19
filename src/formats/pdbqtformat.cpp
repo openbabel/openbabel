@@ -1190,6 +1190,7 @@ namespace OpenBabel
     string resnum = sbuf.substr(16,4);
     char icode = sbuf[20];
     if(icode == ' ') icode = 0;
+
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
     if (res == NULL || res->GetName() != resname
       || res->GetNumString() != resnum || res->GetInsertionCode() != icode)

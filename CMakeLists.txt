@@ -15,6 +15,18 @@ endif()
 
 include (CheckCXXCompilerFlag)
 
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+if(COMPILER_SUPPORTS_CXX11)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Multi-threaded applications may experience race conditions.")
+endif()
+
+#include (MacroEnsureVersion)
+
 # Version numbering - should be bumped for each release
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
@@ -351,6 +363,11 @@ else()
 endif()
 message(STATUS "Use ${OB_SHARED_PTR_IMPLEMENTATION} in ${OB_SHARED_PTR_HEADER}")
 
+find_package(Boost COMPONENTS program_options iostreams)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+ endif()
+
 # Intel C++ Compiler
 # Note: Windows version uses different options!
 if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
@@ -459,6 +476,38 @@ else()
   endif()
 endif()
 #cjh
+
+
+find_package(Boost)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+    option(WITH_MAEPARSER "Build Maestro support" ON)
+else()
+    option(WITH_MAEPARSER "Build Maestro support" OFF)
+endif()
+
+
+if(WITH_MAEPARSER)
+    set (CMAKE_CXX_STANDARD 11)
+
+    set(MAEPARSER_VERSION 1.1)
+    if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
+        file(DOWNLOAD "https://github.com/schrodinger/maeparser/archive/v${MAEPARSER_VERSION}.tar.gz"
+            "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.tar.gz" STATUS status)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
+            ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.tar.gz
+            WORKING_DIRECTORY ${openbabel_SOURCE_DIR}/external)
+        message(STATUS "Downloaded MaeParser to ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.")
+    endif()
+    set(MAEPARSER_DIR ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION})
+    add_subdirectory(${MAEPARSER_DIR})
+    include_directories(${MAEPARSER_DIR})
+    set(libs ${libs} maeparser)
+
+    message(STATUS "Maestro formats will be supported. Using MaeParser ${MAEPARSER_VERSION} at ${MAEPARSER_INCLUDE_DIRS}")
+else()
+    message(STATUS "Maestro formats will NOT be supported. Please install Boost to enable Maestro formats.")
+endif()
 
 option(WITH_JSON "Build JSON support" ON)
 option(OPENBABEL_USE_SYSTEM_RAPIDJSON "Use the system rapidjson if available." ON)

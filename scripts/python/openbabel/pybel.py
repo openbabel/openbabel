@@ -712,10 +712,10 @@ class Atom(object):
        OBAtom -- an Open Babel OBAtom
 
     Attributes:
-       atomicmass, atomicnum, cidx, coords, coordidx, exactmass,
-       formalcharge, heavyvalence, heterovalence, hyb, idx,
+       atomicmass, atomicnum, cidx, coords, coordidx, degree, exactmass,
+       formalcharge, heavydegree, heterodegree, hyb, idx,
        implicitvalence, isotope, partialcharge, residue, spin, type,
-       valence, vector.
+       vector.
 
     (refer to the Open Babel library documentation for more info).
 
@@ -747,6 +747,10 @@ class Atom(object):
         return self.OBAtom.GetCoordinateIdx()
 
     @property
+    def degree(self):
+        return self.OBAtom.GetExplicitDegree()
+
+    @property
     def exactmass(self):
         return self.OBAtom.GetExactMass()
 
@@ -755,12 +759,20 @@ class Atom(object):
         return self.OBAtom.GetFormalCharge()
 
     @property
+    def heavydegree(self):
+        return self.OBAtom.GetHvyDegree()
+    
+    @property
     def heavyvalence(self):
-        return self.OBAtom.GetHvyValence()
+        raise AttributeError("This property has been renamed. Use Atom.heavydegree instead.")
 
     @property
+    def heterodegree(self):
+        return self.OBAtom.GetHeteroDegree()
+    
+    @property
     def heterovalence(self):
-        return self.OBAtom.GetHeteroValence()
+        raise AttributeError("This property has been renamed. Use Atom.heterodegree instead.")
 
     @property
     def hyb(self):
@@ -796,7 +808,7 @@ class Atom(object):
 
     @property
     def valence(self):
-        return self.OBAtom.GetValence()
+        raise AttributeError("This property has been renamed. Use Atom.degree instead.")
 
     @property
     def vector(self):

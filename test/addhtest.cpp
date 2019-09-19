@@ -41,7 +41,9 @@ using namespace OpenBabel;
 void addh_check(OBMol *mol)
 {
     unsigned len = mol->NumAtoms();
-    unsigned vcnts[len] = {0,};
+    unsigned *vcnts = (unsigned*)alloca(len*sizeof(unsigned));
+    memset(vcnts, 0, sizeof(unsigned)*len);
+
     //chemistry is weird, so can't rely on MaxBonds in general
     //we recod the valence count before adding hydrogens
     FOR_ATOMS_OF_MOL(atom, mol) {
@@ -55,8 +57,8 @@ void addh_check(OBMol *mol)
     FOR_ATOMS_OF_MOL(atom, mol) {
       int total_valence = atom->GetTotalValence();
       if(atom->GetIndex() >= len) {
-	 assert(total_valence == 1); //H
-	 continue;
+        assert(total_valence == 1); //H
+        continue;
       }
       int maxval = max(OBElements::GetMaxBonds(atom->GetAtomicNum()), vcnts[atom->GetIndex()]);
       if(total_valence > maxval) {

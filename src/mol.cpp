@@ -45,12 +45,11 @@ namespace OpenBabel
 {
 
   extern bool SwabInt;
-  extern OBPhModel  phmodel;
-  extern OBAromaticTyper  aromtyper;
-  extern OBAtomTyper      atomtyper;
-  extern OBBondTyper      bondtyper;
-
-
+  extern THREAD_LOCAL OBPhModel  phmodel;
+  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
+  extern THREAD_LOCAL OBAtomTyper      atomtyper;
+  extern THREAD_LOCAL OBBondTyper      bondtyper;
+  
   /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class
 
@@ -798,17 +797,11 @@ namespace OpenBabel
     return(count);
   }
 
-  unsigned int OBMol::NumRotors(bool includeRingBonds)
+  unsigned int OBMol::NumRotors(bool sampleRingBonds)
   {
-    OBBond *bond;
-    vector<OBBond*>::iterator i;
-
-    unsigned int count = 0;
-    for (bond = BeginBond(i);bond;bond = NextBond(i)) {
-      if (bond->IsRotor(includeRingBonds))
-        count++;
-    }
-    return(count);
+    OBRotorList rl;
+    rl.FindRotors(*this, sampleRingBonds);
+    return rl.Size();
   }
 
   //! Returns a pointer to the atom after a safety check
@@ -2126,15 +2119,13 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (!_vconf.empty() && !Empty() && !_mod)
-    {
-      if(!_c) _c = _vconf[0];
+    if (!_vconf.empty() && !Empty()) {
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
-      for (atom = BeginAtom(i); atom; atom = NextAtom(i))
-      {
-        atom->SetVector();
-      }
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+        {
+          atom->SetVector();
+        }
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
@@ -2197,6 +2188,7 @@ namespace OpenBabel
         double bondlen = hbrad + CorrectedBondRad(atom->GetAtomicNum(), atom->GetHyb());
         for (m = 0;m < k->second;++m)
           {
+            int badh = 0;
             for (n = 0;n < NumConformers();++n)
               {
                 SetConformer(n);
@@ -2215,47 +2207,44 @@ namespace OpenBabel
                       _c[(NumAtoms())*3+1] = 0.0;
                       _c[(NumAtoms())*3+2] = 0.0;
                       obErrorLog.ThrowError(__FUNCTION__,
-                                            "Ran OpenBabel::AddHydrogens -- non-finite hydrogens found.",
+                                            "Ran OpenBabel::AddHydrogens -- no reasonable bond geometry for desired hydrogen.",
                                             obAuditMsg);
+                      badh++;
                     }
                   }
                 else
                   memset((char*)&_c[NumAtoms()*3],'\0',sizeof(double)*3);
               }
-            h = NewAtom();
-            h->SetType("H");
-            h->SetAtomicNum(1);
-
-            // copy parent atom residue to added hydrogen     REG 6/30/02
-
-            if (atom->HasResidue())
+            if(badh == 0 || badh < NumConformers()) 
               {
-
-                string aname;
-
-                aname = "H";
+                h = NewAtom();
+                h->SetType("H");
+                h->SetAtomicNum(1);
+                string aname = "H";
 
                 // Add the new H atom to the appropriate residue list
                 OBResidue *res = atom->GetResidue();
-                res->AddAtom(h);
+                if(res) 
+                {
+                  res->AddAtom(h);
 
-                // Give the new atom a pointer back to the residue
-                h->SetResidue(res);
+                  // Give the new atom a pointer back to the residue
+                  h->SetResidue(res);
 
-                res->SetAtomID(h,aname);
-                
-                //hydrogen should inherit hetatm status of heteroatom (default is false)
-                if(res->IsHetAtom(atom)) 
+                  res->SetAtomID(h,aname);
+                  
+                  //hydrogen should inherit hetatm status of heteroatom (default is false)
+                  if(res->IsHetAtom(atom)) 
                   {
-                    res->SetHetAtom(h, true);
+                      res->SetHetAtom(h, true);
                   }
+                }
 
+                int bondFlags = 0;
+                AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
+                h->SetCoordPtr(&_c);
+                OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
               }
-
-            int bondFlags = 0;
-            AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
-            h->SetCoordPtr(&_c);
-            OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
           }
       }
 

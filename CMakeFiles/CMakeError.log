@@ -1,0 +1,85 @@
+Determining if the include file conio.h exists failed with the following output:
+Change Dir: /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2290740261/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2290740261.dir/build.make CMakeFiles/cmTryCompileExec2290740261.dir/build
+make[1]: Entering directory `/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2290740261.dir/CheckIncludeFile.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2290740261.dir/CheckIncludeFile.c.o   -c /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckIncludeFile.c
+/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckIncludeFile.c:1:19: fatal error: conio.h: No such file or directory
+ #include <conio.h>
+                   ^
+compilation terminated.
+make[1]: *** [CMakeFiles/cmTryCompileExec2290740261.dir/CheckIncludeFile.c.o] Error 1
+make[1]: Leaving directory `/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec2290740261/fast] Error 2
+
+
+Determining if the rint exist failed with the following output:
+Change Dir: /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2405087803/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2405087803.dir/build.make CMakeFiles/cmTryCompileExec2405087803.dir/build
+make[1]: Entering directory `/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2405087803.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2405087803.dir/CheckSymbolExists.c.o   -c /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTryCompileExec2405087803
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTryCompileExec2405087803.dir/link.txt --verbose=1
+/usr/bin/cc       CMakeFiles/cmTryCompileExec2405087803.dir/CheckSymbolExists.c.o  -o cmTryCompileExec2405087803 -rdynamic 
+CMakeFiles/cmTryCompileExec2405087803.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x16): undefined reference to `rint'
+collect2: error: ld returned 1 exit status
+make[1]: *** [cmTryCompileExec2405087803] Error 1
+make[1]: Leaving directory `/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec2405087803/fast] Error 2
+
+File /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <math.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef rint
+  return ((int*)(&rint))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the sranddev exist failed with the following output:
+Change Dir: /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make "cmTryCompileExec2012483211/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2012483211.dir/build.make CMakeFiles/cmTryCompileExec2012483211.dir/build
+make[1]: Entering directory `/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp'
+/usr/bin/cmake -E cmake_progress_report /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2012483211.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2012483211.dir/CheckSymbolExists.c.o   -c /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘sranddev’ undeclared (first use in this function)
+   return ((int*)(&sranddev))[argc];
+                   ^
+/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+make[1]: *** [CMakeFiles/cmTryCompileExec2012483211.dir/CheckSymbolExists.c.o] Error 1
+make[1]: Leaving directory `/home/dkoes/git/openbabel/CMakeFiles/CMakeTmp'
+make: *** [cmTryCompileExec2012483211/fast] Error 2
+
+File /home/dkoes/git/openbabel/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdlib.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef sranddev
+  return ((int*)(&sranddev))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+

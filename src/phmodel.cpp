@@ -41,8 +41,7 @@ namespace OpenBabel
 {
 
   // Global OBPhModel for assigning formal charges and hydrogen addition rules
-  OBPhModel phmodel;
-  extern OBAtomTyper atomtyper;
+  THREAD_LOCAL OBPhModel phmodel;
 
   OBPhModel::OBPhModel()
   {

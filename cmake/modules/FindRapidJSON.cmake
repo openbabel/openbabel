@@ -40,7 +40,7 @@ else()
     set(RAPIDJSON_VERSION ${PC_RAPIDJSON_VERSION})
   elseif(EXISTS ${RAPIDJSON_INCLUDE_DIRS}/rapidjson/rapidjson.h)
     file(STRINGS ${RAPIDJSON_INCLUDE_DIRS}/rapidjson/rapidjson.h DEFINES REGEX "#define RAPIDJSON_(MAJOR|MINOR|PATCH)_VERSION ([0-9]+)")
-    string(REGEX REPLACE ".+([0-9]+).+([0-9]+).+([0-9]+)" "\\1.\\2.\\3" RAPIDJSON_VERSION ${DEFINES})
+    string(REGEX REPLACE ".+([0-9]+).+([0-9]+).+([0-9]+)" "\\1.\\2.\\3" RAPIDJSON_VERSION "${DEFINES}")
   endif()
   mark_as_advanced(RAPIDJSON_VERSION)
 

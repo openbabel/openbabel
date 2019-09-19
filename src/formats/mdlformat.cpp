@@ -107,7 +107,7 @@ namespace OpenBabel
 
       virtual const char* SpecificationURL()
       {
-        return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";
+        return "https://www.3dsbiovia.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html";
       }
 
       virtual const char* GetMIMEType()
@@ -550,6 +550,7 @@ namespace OpenBabel
         }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
+          errorMsg << line << "\n";
           errorMsg << "Invalid bond specification, atom numbers or bond order are wrong;\n";
           errorMsg << "each should be in a field of three characters.\n";
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
