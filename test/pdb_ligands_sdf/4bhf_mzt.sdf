@@ -1,0 +1,122 @@
+4BHF_MZT_A_401
+  RCSB PDB12061711503D
+Coordinates from PDB:4BHF:A:401 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   22.5500   31.9450   87.7140   N 0  3  0  0  0  0  0  0  0  0  0  0
+   22.5610   32.8600   88.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7790   27.1630   87.8820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5490   27.3470   87.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8480   26.5400   88.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8100   28.5060   87.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7520   30.7110   88.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9110   32.6670   86.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9400   31.6640   87.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6870   29.7040   86.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2220   29.9820   89.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C8
+A    3
+O4
+A    4
+C5
+A    5
+O7
+A    6
+C6
+A    7
+C2
+A    8
+C9
+A    9
+C10
+A   10
+C3
+A   11
+C21
+M  END
+>  <InstanceId>
+4BHF_MZT_A_401
+
+>  <ChemCompId>
+MZT
+
+>  <PdbId>
+4BHF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+4-(Trimethylammonio)pentanoic acid
+
+>  <SystematicName>
+trimethyl-[(2R)-5-oxidanyl-5-oxidanylidene-pentan-2-yl]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H18 N O2
+
+>  <MolecularWeight>
+160.234
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO2/c1-7(9(2,3)4)5-6-8(10)11/h7H,5-6H2,1-4H3/p+1/t7-/m1/s1
+
+>  <InChIKey>
+RXHVPPWXTMHWGY-SSDOTTSWSA-O
+
+>  <SMILES>
+C[C@H](CCC(=O)O)[N+](C)(C)C
+
+$$$$

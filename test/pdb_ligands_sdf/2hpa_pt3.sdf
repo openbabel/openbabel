@@ -1,0 +1,129 @@
+2HPA_PT3_A_1345
+  RCSB PDB12061705493D
+Coordinates from PDB:2HPA:A:1345 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   48.6060   96.5980   19.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1710   95.5320   17.7300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1470   96.2160   17.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0960   96.7280   16.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7260   95.9460   15.7740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5160   96.4390   17.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6830   95.0350   17.7220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.5390   96.8410   16.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3540   96.1050   15.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4270   98.1340   15.9870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3940   98.6130   14.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2050  100.1080   14.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1780  100.7420   13.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O1
+A    2
+O11
+A    3
+C1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O41
+A   10
+N4
+A   11
+C41
+A   12
+C42
+A   13
+C43
+M  END
+>  <InstanceId>
+2HPA_PT3_A_1345
+
+>  <ChemCompId>
+PT3
+
+>  <PdbId>
+2HPA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1345
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O5
+
+>  <Name>
+N-PROPYL-TARTRAMIC ACID
+
+>  <SystematicName>
+(2R,3R)-2,3-dihydroxy-4-oxo-4-propylamino-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N O5
+
+>  <MolecularWeight>
+191.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13NO5/c1-2-3-8-6(11)4(9)5(10)7(12)13/h4-5,9-10H,2-3H2,1H3,(H,8,11)(H,12,13)/t4-,5-/m1/s1
+
+>  <InChIKey>
+LNEZKQHJUNIZIS-RFZPGFLSSA-N
+
+>  <SMILES>
+CCCNC(=O)[C@@H]([C@H](C(=O)O)O)O
+
+$$$$

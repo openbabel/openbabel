@@ -1,0 +1,102 @@
+3E4E_4PZ_A_501
+  RCSB PDB12061708243D
+Coordinates from PDB:3E4E:A:501 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   40.0410   29.6640    8.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8030   29.9670    8.0960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9980   30.3680    9.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9390   29.8900    9.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0910   29.6620   10.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7080   30.3260   10.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C3
+A    2
+N2
+A    3
+N1
+A    4
+C4
+A    5
+C19
+A    6
+C5
+M  END
+>  <InstanceId>
+3E4E_4PZ_A_501
+
+>  <ChemCompId>
+4PZ
+
+>  <PdbId>
+3E4E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2
+
+>  <Name>
+4-methyl-1H-pyrazole
+
+>  <SystematicName>
+4-methyl-1H-pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N2
+
+>  <MolecularWeight>
+82.104
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N2/c1-4-2-5-6-3-4/h2-3H,1H3,(H,5,6)
+
+>  <InChIKey>
+RIKMMFOAQPJVMX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c[nH]nc1
+
+$$$$

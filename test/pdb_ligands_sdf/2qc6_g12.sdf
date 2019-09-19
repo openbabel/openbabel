@@ -1,0 +1,139 @@
+2QC6_G12_A_1
+  RCSB PDB12061706463D
+Coordinates from PDB:2QC6:A:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   20.6500    8.4710   20.9160  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6920    7.9380   19.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6210    6.7740   19.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7870    6.0880   20.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3140    6.4420   18.3370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5510    8.6930   18.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6180    9.8670   18.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3540    8.2480   17.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1930    7.1450   17.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9390    6.7120   16.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0610    5.2040   16.3110  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2670    8.9130   15.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0180    8.4700   14.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8530    7.3710   14.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5830    6.9360   13.8450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8 12  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+BR2
+A    2
+C9
+A    3
+C8
+A    4
+O15
+A    5
+O7
+A    6
+C10
+A    7
+C13
+A    8
+C5
+A    9
+C6
+A   10
+C4
+A   11
+BR1
+A   12
+C1
+A   13
+C2
+A   14
+C3
+A   15
+O11
+M  END
+>  <InstanceId>
+2QC6_G12_A_1
+
+>  <ChemCompId>
+G12
+
+>  <PdbId>
+2QC6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O3 Br2
+
+>  <Name>
+3,8-DIBROMO-7-HYDROXY-4-METHYL-2H-CHROMEN-2-ONE
+
+>  <SystematicName>
+3,8-dibromo-7-hydroxy-4-methyl-chromen-2-one
+
+>  <Synonyms>
+3,8-DIBROMO-7-HYDROXY-4-METHYLCHROMEN-2-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H6 Br2 O3
+
+>  <MolecularWeight>
+333.961
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C10H6Br2O3/c1-4-5-2-3-6(13)8(12)9(5)15-10(14)7(4)11/h2-3,13H,1H3
+
+>  <InChIKey>
+MSOLROYRAHCJNK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(C(=O)Oc2c1ccc(c2Br)O)Br
+
+$$$$

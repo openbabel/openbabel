@@ -1,0 +1,82 @@
+117E_MN_A_2001
+  RCSB PDB12061701563D
+Coordinates from PDB:117E:A:2001 Model:1 without hydrogens
+  1  0  0  0  0  0            999 V2000
+   50.3960  -17.1970  -40.3040  Mn 0  2  0  0  0  0  0  0  0  0  0  0
+M  CHG  1   1   2
+A    1
+MN
+M  END
+>  <InstanceId>
+117E_MN_A_2001
+
+>  <ChemCompId>
+MN
+
+>  <PdbId>
+117E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+Mn
+
+>  <Name>
+MANGANESE (II) ION
+
+>  <SystematicName>
+manganese(+2) cation
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+Mn
+
+>  <MolecularWeight>
+54.938
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/Mn/q+2
+
+>  <InChIKey>
+WAEMQWOKJMHJLA-UHFFFAOYSA-N
+
+>  <SMILES>
+[Mn+2]
+
+$$$$

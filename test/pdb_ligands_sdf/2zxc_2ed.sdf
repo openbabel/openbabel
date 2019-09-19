@@ -1,0 +1,129 @@
+2ZXC_2ED_A_701
+  RCSB PDB12061707473D
+Coordinates from PDB:2ZXC:A:701 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    5.1710   -4.9380   51.5510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4470   -1.9130   48.1180   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2750   -6.2770   48.5570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6430   -3.9970   49.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3840   -5.2250   48.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6160   -4.8760   46.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0810   -5.7970   45.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3750   -7.1920   46.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9580   -8.0180   45.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0340   -4.5650   51.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9450   -4.6100   52.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6790   -4.0920   50.1210   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2750   -2.7180   48.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  2  0  0  0  0
+  2 13  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+O2
+A    2
+O3
+A    3
+O1
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C18
+A   11
+C19
+A   12
+N
+A   13
+C
+M  END
+>  <InstanceId>
+2ZXC_2ED_A_701
+
+>  <ChemCompId>
+2ED
+
+>  <PdbId>
+2ZXC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+11
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+N-[(1R,2R,3E)-2-hydroxy-1-(hydroxymethyl)heptadec-3-en-1-yl]acetamide
+
+>  <SystematicName>
+N-[(E,2R,3R)-1,3-dihydroxyoctadec-4-en-2-yl]ethanamide
+
+>  <Synonyms>
+C2-ceramide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C20 H39 N O3
+
+>  <MolecularWeight>
+341.529
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C20H39NO3/c1-3-4-5-6-7-8-9-10-11-12-13-14-15-16-20(24)19(17-22)21-18(2)23/h15-16,19-20,22,24H,3-14,17H2,1-2H3,(H,21,23)/b16-15+/t19-,20-/m1/s1
+
+>  <InChIKey>
+BLTCBVOJNNKFKC-KTEGJIGUSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCC\C=C\[C@H]([C@@H](CO)NC(=O)C)O
+
+$$$$

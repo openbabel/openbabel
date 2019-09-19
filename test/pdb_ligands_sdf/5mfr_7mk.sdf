@@ -1,0 +1,136 @@
+5MFR_7MK_A_1002
+  RCSB PDB12061719023D
+Coordinates from PDB:5MFR:A:1002 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -66.0720   16.0670   -6.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -65.5540   19.2360   -9.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -64.5130   19.8330   -8.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -67.5880   15.2530   -8.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.8030   15.0270   -7.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.1060   17.3390   -7.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.8980   17.5660   -8.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -67.6450   16.5200   -8.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -65.2980   18.4670   -6.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.8910   18.9190   -9.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -64.1350   18.9670   -7.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -63.2610   20.1560   -9.4790   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -63.2510   19.7400   -6.6940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -63.3050   17.9500   -7.9270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 12  3  1  0  0  0  0
+ 10  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+ 14 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  6  1  2  0  0  0  0
+  6  9  1  0  0  0  0
+  5  1  1  0  0  0  0
+M  CHG  1  12   1
+A    1
+C1
+A    2
+C10
+A    3
+C11
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+N1
+A   13
+O1
+A   14
+O2
+M  END
+>  <InstanceId>
+5MFR_7MK_A_1002
+
+>  <ChemCompId>
+7MK
+
+>  <PdbId>
+5MFR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+[(7~{S})-6,6-bis(oxidanyl)-5,7,8,9-tetrahydrobenzo[7]annulen-7-yl]azanium
+
+>  <SystematicName>
+[(7~{S})-6,6-bis(oxidanyl)-5,7,8,9-tetrahydrobenzo[7]annulen-7-yl]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N O2
+
+>  <MolecularWeight>
+194.25
+
+>  <ModifiedDate>
+2017-04-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15NO2/c12-10-6-5-8-3-1-2-4-9(8)7-11(10,13)14/h1-4,10,13-14H,5-7,12H2/p+1/t10-/m0/s1
+
+>  <InChIKey>
+DUYOIJVXOKTLQG-JTQLQIEISA-O
+
+>  <SMILES>
+c1ccc2c(c1)CC[C@@H](C(C2)(O)O)[NH3+]
+
+$$$$

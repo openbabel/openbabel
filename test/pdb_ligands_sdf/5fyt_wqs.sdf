@@ -1,0 +1,139 @@
+5FYT_WQS_A_1757
+  RCSB PDB12061717463D
+Coordinates from PDB:5FYT:A:1757 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   86.1040   66.1720   13.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.1120   64.7530   14.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.3370   64.3880   14.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8800   63.2680   14.2120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   86.9100   62.7290   13.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.9120   61.6220   12.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8210   61.4050   11.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.7280   62.3290   11.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.7270   63.4660   12.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.7850   63.6860   13.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.6950   62.1170   10.6240   F 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8860   65.0400   15.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6780   66.6720   13.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.1270   66.6070   12.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   84.0430   67.1370   14.4780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+N04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+F11
+A   12
+O12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+5FYT_WQS_A_1757
+
+>  <ChemCompId>
+WQS
+
+>  <PdbId>
+5FYT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1757
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3 F
+
+>  <Name>
+2-[(3S)-5-fluoranyl-2-oxidanylidene-1,3-dihydroindol-3-yl]ethanoic acid
+
+>  <SystematicName>
+2-[(3S)-5-fluoranyl-2-oxidanylidene-1,3-dihydroindol-3-yl]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H8 F N O3
+
+>  <MolecularWeight>
+209.174
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8FNO3/c11-5-1-2-8-6(3-5)7(4-9(13)14)10(15)12-8/h1-3,7H,4H2,(H,12,15)(H,13,14)/t7-/m0/s1
+
+>  <InChIKey>
+GOJAJUSLXBXIJY-ZETCQYMHSA-N
+
+>  <SMILES>
+c1cc2c(cc1F)[C@@H](C(=O)N2)CC(=O)O
+
+$$$$

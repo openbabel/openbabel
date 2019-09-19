@@ -1,0 +1,152 @@
+1CKP_PVB_A_299
+  RCSB PDB12061702113D
+Coordinates from PDB:1CKP:A:299 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+   24.7810   27.7440   28.1860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4790   31.4500   27.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1430   31.0470   28.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4690   29.8110   28.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8930   28.6810   27.4880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0150   27.6920   27.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3340   28.8830   28.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2540   30.0170   28.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1600   31.2710   29.3340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2870   31.8800   28.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0780   28.9110   29.4620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3530   27.6590   29.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1060   27.1870   30.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4060   25.9960   31.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9450   25.2620   30.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1870   25.7260   28.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6210   24.8320   27.3770  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8890   26.9230   28.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 18  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  2  0  0  0  0
+A    1
+N1
+A    2
+C9
+A    3
+N9
+A    4
+C4
+A    5
+N3
+A    6
+C2
+A    7
+C6
+A    8
+C5
+A    9
+N7
+A   10
+C8
+A   11
+N6
+A   12
+C1A
+A   13
+C2A
+A   14
+C3A
+A   15
+C4A
+A   16
+C5A
+A   17
+CL1
+A   18
+C6A
+M  END
+>  <InstanceId>
+1CKP_PVB_A_299
+
+>  <ChemCompId>
+PVB
+
+>  <PdbId>
+1CKP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+299
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+12
+
+>  <ObservedFormula>
+C12 N5 Cl
+
+>  <Name>
+PURVALANOL B
+
+>  <SystematicName>
+2-chloro-4-[[2-[[(2R)-1-hydroxy-3-methyl-butan-2-yl]amino]-9-propan-2-yl-purin-6-yl]amino]benzoic acid
+
+>  <Synonyms>
+2-CHLORO-4-{[2-{[(1R)-1-(HYDROXYMETHYL)-2-METHYLPROPYL]AMINO}-9-(1-METHYLETHYL)-9H-PURIN-6-YL]AMINO}BENZOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C20 H25 Cl N6 O3
+
+>  <MolecularWeight>
+432.904
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C20H25ClN6O3/c1-10(2)15(8-28)24-20-25-17(16-18(26-20)27(9-22-16)11(3)4)23-12-5-6-13(19(29)30)14(21)7-12/h5-7,9-11,15,28H,8H2,1-4H3,(H,29,30)(H2,23,24,25,26)/t15-/m0/s1
+
+>  <InChIKey>
+ZKDXRFMOHZVXSG-HNNXBMFYSA-N
+
+>  <SMILES>
+CC(C)[C@H](CO)Nc1nc(c2c(n1)n(cn2)C(C)C)Nc3ccc(c(c3)Cl)C(=O)O
+
+$$$$

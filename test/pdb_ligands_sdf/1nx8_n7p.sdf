@@ -1,0 +1,85 @@
+1NX8_N7P_B_290
+  RCSB PDB12061703283D
+Coordinates from PDB:1NX8:B:290 Model:1 without hydrogens
+  2  1  0  0  0  0            999 V2000
+   20.4090   76.2970   63.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6830   76.7220   62.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+M  END
+>  <InstanceId>
+1NX8_N7P_B_290
+
+>  <ChemCompId>
+N7P
+
+>  <PdbId>
+1NX8
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+9
+
+>  <ObservedFormula>
+C2
+
+>  <Name>
+1-ACETYL-L-PROLINE
+
+>  <SystematicName>
+(2~{S})-1-ethanoylpyrrolidine-2-carboxylic acid
+
+>  <Synonyms>
+N-ACETYLPROLINE
+
+>  <Type>
+L-peptide linking
+
+>  <Formula>
+C7 H11 N O3
+
+>  <MolecularWeight>
+157.167
+
+>  <ModifiedDate>
+2016-08-08
+
+>  <Parent>
+PRO
+
+>  <OneLetterCode>
+P
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO3/c1-5(9)8-4-2-3-6(8)7(10)11/h6H,2-4H2,1H3,(H,10,11)/t6-/m0/s1
+
+>  <InChIKey>
+GNMSLDIYJOSUSW-LURJTMIESA-N
+
+>  <SMILES>
+CC(=O)N1CCC[C@H]1C(=O)O
+
+$$$$

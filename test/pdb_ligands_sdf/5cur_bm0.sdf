@@ -1,0 +1,119 @@
+5CT4_BM0_A_201
+  RCSB PDB12061717093D
+Coordinates from PDB:5CT4:A:201 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   17.9700   16.4960   98.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7150   15.4340   97.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8650   14.2120   97.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3550   13.1040   99.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9950   11.8760   99.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8850   11.7990   97.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2260    9.7050   98.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7160   11.0540   98.2430   N 0  3  0  0  0  0  0  0  0  0  0  0
+   18.6380   13.0760   97.9520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9510   17.5840   98.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  9  1  0  0  0  0
+  6  8  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+  9  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  5  1  0  0  0  0
+  1 10  1  0  0  0  0
+  4  5  2  0  0  0  0
+M  CHG  1   8   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N1
+A    9
+N
+A   10
+C
+M  END
+>  <InstanceId>
+5CT4_BM0_A_201
+
+>  <ChemCompId>
+BM0
+
+>  <PdbId>
+5CT4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2
+
+>  <Name>
+1-butyl-3-methyl-1H-imidazol-3-ium
+
+>  <SystematicName>
+1-butyl-3-methyl-imidazol-3-ium
+
+>  <Synonyms>
+1-butyl-3-methylimidazolium
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 N2
+
+>  <MolecularWeight>
+139.218
+
+>  <ModifiedDate>
+2015-10-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15N2/c1-3-4-5-10-7-6-9(2)8-10/h6-8H,3-5H2,1-2H3/q+1
+
+>  <InChIKey>
+IQQRAVYLUAZUGX-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCn1cc[n+](c1)C
+
+$$$$

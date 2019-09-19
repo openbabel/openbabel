@@ -1,0 +1,131 @@
+1ENU_APZ_A_400
+  RCSB PDB12061702243D
+Coordinates from PDB:1ENU:A:400 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   15.8570   17.0170   23.9000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4180   16.8080   22.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2550   16.4500   22.4630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3270   16.9930   21.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9130   16.7940   20.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8180   16.9950   19.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1390   17.4020   19.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5520   17.6070   20.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6490   17.4110   21.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0560   17.6170   23.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2020   17.9730   23.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1670   17.4200   24.1640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0140   17.5980   18.3900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N10
+A    2
+C5
+A    3
+O11
+A    4
+C2
+A    5
+C6
+A    6
+C12
+A    7
+C9
+A    8
+C4
+A    9
+C1
+A   10
+C3
+A   11
+O8
+A   12
+N7
+A   13
+N13
+M  END
+>  <InstanceId>
+1ENU_APZ_A_400
+
+>  <ChemCompId>
+APZ
+
+>  <PdbId>
+1ENU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O2
+
+>  <Name>
+4-AMINOPHTHALHYDRAZIDE
+
+>  <SystematicName>
+6-amino-2,3-dihydrophthalazine-1,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N3 O2
+
+>  <MolecularWeight>
+177.16
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7N3O2/c9-4-1-2-5-6(3-4)8(13)11-10-7(5)12/h1-3H,9H2,(H,10,12)(H,11,13)
+
+>  <InChIKey>
+HUDPLKWXRLNSPC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1N)C(=O)NNC2=O
+
+$$$$

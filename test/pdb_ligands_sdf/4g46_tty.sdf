@@ -1,0 +1,131 @@
+4G46_TTY_A_406
+  RCSB PDB12061712393D
+Coordinates from PDB:4G46:A:406 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -14.5370   16.1270    3.7740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4520   16.7600    3.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5830   17.9420    3.1480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1880   16.1580    3.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9530   16.3740    2.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4690   17.1840    1.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2440   17.8830    1.2100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0510   17.2780    1.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4180   15.9210    1.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6780   15.3290    3.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0640   15.4510    3.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6520   14.7020    4.3410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0890   15.1790    4.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  6  1  0  0  0  0
+  9 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5 11  2  0  0  0  0
+  5  4  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  4 13  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAA
+A    2
+CAI
+A    3
+OAC
+A    4
+CAK
+A    5
+CAM
+A    6
+CAJ
+A    7
+OAB
+A    8
+CAF
+A    9
+CAE
+A   10
+CAG
+A   11
+CAL
+A   12
+OAH
+A   13
+CAD
+M  END
+>  <InstanceId>
+4G46_TTY_A_406
+
+>  <ChemCompId>
+TTY
+
+>  <PdbId>
+4G46
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+406
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+4-oxo-4,5,6,7-tetrahydro-1-benzofuran-3-carboxylic acid
+
+>  <SystematicName>
+4-oxidanylidene-6,7-dihydro-5H-1-benzofuran-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O4
+
+>  <MolecularWeight>
+180.157
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O4/c10-6-2-1-3-7-8(6)5(4-13-7)9(11)12/h4H,1-3H2,(H,11,12)
+
+>  <InChIKey>
+FABBWECRHZNMDQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c2c(o1)CCCC2=O)C(=O)O
+
+$$$$

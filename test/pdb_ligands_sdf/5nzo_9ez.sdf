@@ -1,0 +1,131 @@
+5NZO_9EZ_B_301
+  RCSB PDB12061719153D
+Coordinates from PDB:5NZO:B:301 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -25.7480   14.5660    6.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8910   14.3110    5.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2050   12.9930    5.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7440   15.3930    5.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.6120   15.3710    4.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1770   16.6090    4.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9230   18.6990    5.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.6480   17.3350    5.1040   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7630   16.5990    5.8190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9560   13.5190    6.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.0970   17.0970    3.1990   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4030   11.9550    5.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2670   12.2160    6.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10 13  2  0  0  0  0
+ 10  1  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  1  2  2  0  0  0  0
+ 12  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  9  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6 11  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N1
+A    9
+N2
+A   10
+C3
+A   11
+N3
+A   12
+C1
+A   13
+C2
+M  END
+>  <InstanceId>
+5NZO_9EZ_B_301
+
+>  <ChemCompId>
+9EZ
+
+>  <PdbId>
+5NZO
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3
+
+>  <Name>
+2-methyl-5-phenyl-pyrazol-3-amine
+
+>  <SystematicName>
+2-methyl-5-phenyl-pyrazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 N3
+
+>  <MolecularWeight>
+173.214
+
+>  <ModifiedDate>
+2017-06-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3/c1-13-10(11)7-9(12-13)8-5-3-2-4-6-8/h2-7H,11H2,1H3
+
+>  <InChIKey>
+KCYRMURRLLYLPU-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1c(cc(n1)c2ccccc2)N
+
+$$$$

@@ -1,0 +1,117 @@
+4IF7_HCM_A_403
+  RCSB PDB12061713003D
+Coordinates from PDB:4IF7:A:403 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   37.6390  -15.0250    4.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0200  -13.9000    4.9370   S 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5130  -15.0330    5.7020   S 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2640  -15.1050    7.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7130  -13.7730    7.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5360  -13.0660    9.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9450  -13.6010    9.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2860  -13.4850   10.5700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6650  -14.0530    8.4340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4660  -11.6080    8.9410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9  7  2  0  0  0  0
+ 10  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+S2
+A    3
+SD
+A    4
+CG
+A    5
+CB
+A    6
+CA
+A    7
+C
+A    8
+OXT
+A    9
+O
+A   10
+N
+M  END
+>  <InstanceId>
+4IF7_HCM_A_403
+
+>  <ChemCompId>
+HCM
+
+>  <PdbId>
+4IF7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2 S2
+
+>  <Name>
+(2S)-2-amino-4-(methyldisulfanyl)butanoic acid
+
+>  <SystematicName>
+(2S)-2-azanyl-4-(methyldisulfanyl)butanoic acid
+
+>  <Synonyms>
+S-methylsulfanyl-homocystein
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C5 H11 N O2 S2
+
+>  <MolecularWeight>
+181.276
+
+>  <ModifiedDate>
+2013-12-13
+
+>  <Parent>
+CYS
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO2S2/c1-9-10-3-2-4(6)5(7)8/h4H,2-3,6H2,1H3,(H,7,8)/t4-/m0/s1
+
+>  <InChIKey>
+FBHYROPXAAGPRS-BYPYZUCNSA-N
+
+>  <SMILES>
+CSSCC[C@@H](C(=O)O)N
+
+$$$$

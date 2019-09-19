@@ -1,0 +1,142 @@
+1G0R_G1P_A_2500
+  RCSB PDB12061702333D
+Coordinates from PDB:1G0R:A:2500 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   68.9460   66.8260   70.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.3010   68.1920   70.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.8050   68.4500   70.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.4750   67.3060   71.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.1650   65.9360   70.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.6610   64.7250   71.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.0850   66.9430   68.7640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5920   69.2080   69.9910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   71.1010   69.7150   71.3230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   72.8370   67.7270   71.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   69.8260   65.6890   70.4460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   71.2730   63.5020   70.7820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2320   65.9220   67.7980   P 0  0  0  0  0  0  0  0  0  0  0  0
+   68.6810   64.4260   67.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.5380   66.1050   67.9400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5570   66.3570   66.2190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1G0R_G1P_A_2500
+
+>  <ChemCompId>
+G1P
+
+>  <PdbId>
+1G0R
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O9 P
+
+>  <Name>
+ALPHA-D-GLUCOSE-1-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3R,4S,5S,6R)-3,4,5-trihydroxy-6-(hydroxymethyl)oxan-2-yl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C6 H13 O9 P
+
+>  <MolecularWeight>
+260.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13O9P/c7-1-2-3(8)4(9)5(10)6(14-2)15-16(11,12)13/h2-10H,1H2,(H2,11,12,13)/t2-,3-,4+,5-,6-/m1/s1
+
+>  <InChIKey>
+HXXFSFRBOHSIMQ-VFUOTHLCSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)OP(=O)(O)O)O)O)O)O
+
+$$$$

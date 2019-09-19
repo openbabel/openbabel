@@ -1,0 +1,121 @@
+4YTS_TGS_A_402
+  RCSB PDB12061716303D
+Coordinates from PDB:4YTS:A:402 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   10.5440  -18.8660   16.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8220  -18.1400   16.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5100  -17.0190   15.5650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7460  -19.0880   15.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9280  -18.9380   14.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3260  -20.3020   16.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3340  -20.9000   15.5320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8970  -19.8880   17.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6780  -18.7110   17.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7320  -20.9670   18.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0270  -22.1930   18.3810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  7  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  2  1  0  0  0  0
+  6  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+O5
+A   10
+C6
+A   11
+O6
+M  END
+>  <InstanceId>
+4YTS_TGS_A_402
+
+>  <ChemCompId>
+TGS
+
+>  <PdbId>
+4YTS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+1-deoxy-D-xylo-hex-3-ulose
+
+>  <SystematicName>
+(2S,4S,5R)-2,4,5,6-tetrakis(oxidanyl)hexan-3-one
+
+>  <Synonyms>
+1-deoxy 3-keto-D-galactitol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c1-3(8)5(10)6(11)4(9)2-7/h3-4,6-9,11H,2H2,1H3/t3-,4+,6-/m0/s1
+
+>  <InChIKey>
+UCLAXLMTPFNPGE-RPDRRWSUSA-N
+
+>  <SMILES>
+C[C@@H](C(=O)[C@H]([C@@H](CO)O)O)O
+
+$$$$

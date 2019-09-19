@@ -1,0 +1,134 @@
+4MS1_381_A_501
+  RCSB PDB12061713473D
+Coordinates from PDB:4MS1:A:501 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -45.4230   20.1420  -25.8450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.4990   21.1210  -26.0820   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.9250   20.2300  -26.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.0250   21.1840  -27.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.0160   20.4650  -28.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.0660   21.3780  -28.6420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.9640   22.2610  -27.0790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.9750   21.9370  -24.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.7610   21.0580  -23.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.9120   19.9740  -22.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.1040   19.8530  -21.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.5350   20.0700  -20.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.3030   21.2110  -21.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.4520   21.9720  -22.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  7  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O1
+A    2
+P
+A    3
+C3
+A    4
+C2
+A    5
+C1
+A    6
+N
+A    7
+O2
+A    8
+C4
+A    9
+C5
+A   10
+C10
+A   11
+C9
+A   12
+C8
+A   13
+C7
+A   14
+C6
+M  END
+>  <InstanceId>
+4MS1_381_A_501
+
+>  <ChemCompId>
+381
+
+>  <PdbId>
+4MS1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2 P
+
+>  <Name>
+(S)-(3-aminopropyl)(cyclohexylmethyl)phosphinic acid
+
+>  <SystematicName>
+3-azanylpropyl(cyclohexylmethyl)phosphinic acid
+
+>  <Synonyms>
+CGP 46381
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H22 N O2 P
+
+>  <MolecularWeight>
+219.261
+
+>  <ModifiedDate>
+2013-12-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H22NO2P/c11-7-4-8-14(12,13)9-10-5-2-1-3-6-10/h10H,1-9,11H2,(H,12,13)
+
+>  <InChIKey>
+XOESDNIUAWGCLU-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(CC1)CP(=O)(CCCN)O
+
+$$$$

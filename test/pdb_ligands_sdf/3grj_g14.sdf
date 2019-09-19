@@ -1,0 +1,135 @@
+2XP4_G14_A_1165
+  RCSB PDB12061707283D
+Coordinates from PDB:2XP4:A:1165 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -38.6610   28.5810   25.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.7740   28.0390   26.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.6260   28.2960   27.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8670   27.0210   25.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.1270   26.5820   24.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.0910   25.8040   23.9480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.1990   25.8180   24.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.6660   26.6290   25.9470   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.0090   25.1070   24.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.4000   24.8210   23.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.2040   24.0690   23.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5920   23.6850   24.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.1840   24.0120   26.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.4090   24.7170   26.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 14  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+O14
+A    2
+C12
+A    3
+O13
+A    4
+C10
+A    5
+C9
+A    6
+N8
+A    7
+C7
+A    8
+N11
+A    9
+C6
+A   10
+C1
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+C5
+M  END
+>  <InstanceId>
+2XP4_G14_A_1165
+
+>  <ChemCompId>
+G14
+
+>  <PdbId>
+2XP4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1165
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+2-phenyl-1H-imidazole-4-carboxylic acid
+
+>  <SystematicName>
+2-phenyl-1H-imidazole-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 N2 O2
+
+>  <MolecularWeight>
+188.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8N2O2/c13-10(14)8-6-11-9(12-8)7-4-2-1-3-5-7/h1-6H,(H,11,12)(H,13,14)
+
+>  <InChIKey>
+XCAXKZJNJCKTQH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2[nH]cc(n2)C(=O)O
+
+$$$$

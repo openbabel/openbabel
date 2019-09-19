@@ -1,0 +1,121 @@
+2AOV_4DI_A_301
+  RCSB PDB12061705013D
+Coordinates from PDB:2AOV:A:301 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   35.8890  -26.7740    4.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3340  -27.8760    5.0120   S 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9850  -27.4000    4.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6320  -28.6890    4.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9870  -29.1270    4.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9010  -30.2910    4.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9910  -30.9450    4.1390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6190  -31.4450    5.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0400  -30.4570    3.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8250  -25.5310    4.7190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6200  -27.4180    5.2450   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  1 11  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+S
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+N1
+A    8
+C6
+A    9
+C7
+A   10
+N2
+A   11
+N3
+M  END
+>  <InstanceId>
+2AOV_4DI_A_301
+
+>  <ChemCompId>
+4DI
+
+>  <PdbId>
+2AOV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 S
+
+>  <Name>
+4-(DIMETHYLAMINO)BUTYL IMIDOTHIOCARBAMATE
+
+>  <SystematicName>
+4-dimethylaminobutylsulfanylmethanimidamide
+
+>  <Synonyms>
+SKF-91488, 4-(-DIMETHYLAMINO)BUTYL ESTER 4(-N,N-DIMETHYLAMINO)BUTYLISOTHIOUREA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H17 N3 S
+
+>  <MolecularWeight>
+175.295
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H17N3S/c1-10(2)5-3-4-6-11-7(8)9/h3-6H2,1-2H3,(H3,8,9)
+
+>  <InChIKey>
+UFYJLJINUGVUHO-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/SCCCCN(C)C
+
+$$$$

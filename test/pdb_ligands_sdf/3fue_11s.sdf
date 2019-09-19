@@ -1,0 +1,119 @@
+3FUE_11S_A_710
+  RCSB PDB12061708393D
+Coordinates from PDB:3FUE:A:710 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   22.4820   -3.0260   -5.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8700   -3.2290   -4.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3200    0.0370   -4.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9350    0.3370   -3.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8990   -0.5280   -2.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2210   -1.7530   -2.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6020   -2.0660   -3.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6500   -1.1810   -4.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7670    0.1420   -1.1100  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9650   -1.7820   -5.9480   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  7  1  0  0  0  0
+  8  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  6  5  2  0  0  0  0
+  5  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+ 10  8  1  0  0  0  0
+A    1
+C8
+A    2
+C9
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+CL10
+A   10
+N7
+M  END
+>  <InstanceId>
+3FUE_11S_A_710
+
+>  <ChemCompId>
+11S
+
+>  <PdbId>
+3FUE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N Cl
+
+>  <Name>
+5-chloro-1H-indole
+
+>  <SystematicName>
+5-chloro-1H-indole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 Cl N
+
+>  <MolecularWeight>
+151.593
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6ClN/c9-7-1-2-8-6(5-7)3-4-10-8/h1-5,10H
+
+>  <InChIKey>
+MYTGFBZJLDLWQG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc[nH]2)cc1Cl
+
+$$$$

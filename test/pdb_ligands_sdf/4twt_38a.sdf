@@ -1,0 +1,126 @@
+4TWT_38A_E_103
+  RCSB PDB12061714513D
+Coordinates from PDB:4TWT:E:103 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -11.5590   69.6470  231.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3940   70.9010  230.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1410   71.5040  230.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9810   70.8540  231.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4930   71.4930  229.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8580   70.8550  229.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3410   72.6770  229.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5960   73.2740  228.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0810   73.2830  229.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9280   74.5550  228.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9700   72.7080  229.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6010   73.4100  229.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  2  0  0  0  0
+  9 11  1  0  0  0  0
+  7  5  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  3  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAK
+A    2
+CAC
+A    3
+CAB
+A    4
+CAG
+A    5
+CAD
+A    6
+CAI
+A    7
+CAE
+A    8
+CAL
+A    9
+CAF
+A   10
+CAH
+A   11
+CAA
+A   12
+CAJ
+M  END
+>  <InstanceId>
+4TWT_38A_E_103
+
+>  <ChemCompId>
+38A
+
+>  <PdbId>
+4TWT
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+103
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+3
+
+>  <ObservedFormula>
+C12
+
+>  <Name>
+(2,4,6-trimethylbenzene-1,3,5-triyl)trimethanol
+
+>  <SystematicName>
+[3,5-bis(hydroxymethyl)-2,4,6-trimethyl-phenyl]methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H18 O3
+
+>  <MolecularWeight>
+210.27
+
+>  <ModifiedDate>
+2015-01-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18O3/c1-7-10(4-13)8(2)12(6-15)9(3)11(7)5-14/h13-15H,4-6H2,1-3H3
+
+>  <InChIKey>
+RZPWWYFQBDXLBQ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(c(c1CO)C)CO)C)CO
+
+$$$$

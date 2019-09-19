@@ -1,0 +1,138 @@
+2Y03_5FW_A_601
+  RCSB PDB12061707313D
+Coordinates from PDB:2Y03:A:601 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -27.6980  -15.4470   25.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1780  -15.4000   25.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5400  -16.5420   24.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7030  -14.0740   24.7580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2770  -13.8010   25.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0400  -12.2910   25.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4230  -11.7730   23.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5730  -11.9970   25.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9820  -12.4770   26.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8090  -11.2550   24.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4570  -10.9840   24.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8740  -11.4800   25.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5660  -11.2330   26.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6410  -12.2280   26.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1060  -12.7290   27.8770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAI
+A    2
+CAG
+A    3
+CAJ
+A    4
+NAD
+A    5
+CAF
+A    6
+CAE
+A    7
+OAA
+A    8
+CAH
+A    9
+CAK
+A   10
+CAL
+A   11
+CAN
+A   12
+CAO
+A   13
+OAC
+A   14
+CAM
+A   15
+OAB
+M  END
+>  <InstanceId>
+2Y03_5FW_A_601
+
+>  <ChemCompId>
+5FW
+
+>  <PdbId>
+2Y03
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O3
+
+>  <Name>
+ISOPRENALINE
+
+>  <SystematicName>
+4-[(1R)-1-hydroxy-2-(propan-2-ylamino)ethyl]benzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H17 N O3
+
+>  <MolecularWeight>
+211.258
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17NO3/c1-7(2)12-6-11(15)8-3-4-9(13)10(14)5-8/h3-5,7,11-15H,6H2,1-2H3/t11-/m0/s1
+
+>  <InChIKey>
+JWZZKOKVBUJMES-NSHDSACASA-N
+
+>  <SMILES>
+CC(C)NC[C@@H](c1ccc(c(c1)O)O)O
+
+$$$$

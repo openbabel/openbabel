@@ -1,0 +1,131 @@
+4IYG_1HU_A_401
+  RCSB PDB12061713053D
+Coordinates from PDB:4IYG:A:401 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   22.6490  -40.0510    2.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7900  -40.0490    1.5650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3610  -39.3200    0.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8320  -40.0070   -0.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4770  -41.3660   -0.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6000  -41.7020    0.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4050  -40.9980    0.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4360  -41.6600    1.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6570  -43.0120    1.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8440  -43.7030    0.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8250  -43.0210   -0.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9760  -43.5420   -1.0190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1250  -42.5850   -1.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13  5  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 11  6  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAA
+A    2
+NAI
+A    3
+CAG
+A    4
+CAH
+A    5
+CAK
+A    6
+CAM
+A    7
+CAE
+A    8
+CAC
+A    9
+CAB
+A   10
+CAD
+A   11
+CAL
+A   12
+NAJ
+A   13
+CAF
+M  END
+>  <InstanceId>
+4IYG_1HU_A_401
+
+>  <ChemCompId>
+1HU
+
+>  <PdbId>
+4IYG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2
+
+>  <Name>
+2-(1H-indol-3-yl)-N-methylethanamine
+
+>  <SystematicName>
+2-(1H-indol-3-yl)-N-methyl-ethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 N2
+
+>  <MolecularWeight>
+174.242
+
+>  <ModifiedDate>
+2014-01-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14N2/c1-12-7-6-9-8-13-11-5-3-2-4-10(9)11/h2-5,8,12-13H,6-7H2,1H3
+
+>  <InChIKey>
+NCIKQJBVUNUXLW-UHFFFAOYSA-N
+
+>  <SMILES>
+CNCCc1c[nH]c2c1cccc2
+
+$$$$

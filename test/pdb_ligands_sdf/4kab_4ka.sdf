@@ -1,0 +1,115 @@
+4KAB_4KA_A_701
+  RCSB PDB12061713183D
+Coordinates from PDB:4KAB:A:701 Model:1 without hydrogens
+  9 10  0  0  0  0            999 V2000
+   -8.3810   26.1070  -41.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5010   26.3510  -42.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7540   27.3440  -40.7280   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3630   27.1210  -41.9800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5980   26.7430  -40.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1110   25.1250  -43.8880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5090   25.3440  -42.6420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2790   25.7090  -43.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6450   26.6950  -39.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  6  1  0  0  0  0
+  8  2  2  0  0  0  0
+  6  7  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7  1  2  0  0  0  0
+  4  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+N4
+A    5
+C5
+A    6
+N6
+A    7
+N7
+A    8
+C8
+A    9
+C9
+M  END
+>  <InstanceId>
+4KAB_4KA_A_701
+
+>  <ChemCompId>
+4KA
+
+>  <PdbId>
+4KAB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4
+
+>  <Name>
+3-methyl-1,5-dihydropyrazolo[4,3-c]pyrazole
+
+>  <SystematicName>
+6-methyl-2,4-dihydropyrazolo[4,3-c]pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 N4
+
+>  <MolecularWeight>
+122.128
+
+>  <ModifiedDate>
+2013-09-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N4/c1-3-5-4(8-7-3)2-6-9-5/h2H,1H3,(H,6,9)(H,7,8)
+
+>  <InChIKey>
+KRAKREBEXWCQMF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c2c(c[nH]n2)[nH]n1
+
+$$$$

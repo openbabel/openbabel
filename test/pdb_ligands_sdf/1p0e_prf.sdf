@@ -1,0 +1,131 @@
+1EFZ_PRF_A_400
+  RCSB PDB12061702233D
+Coordinates from PDB:1EFZ:A:400 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   17.0380   17.3220   23.8250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7050   16.9730   23.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2220   16.7830   22.4590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0680   16.9400   21.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3520   17.2830   21.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8970   17.4890   22.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0640   17.7960   22.8870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8290   17.3330   20.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2020   17.6620   19.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4970   17.7200   18.0570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7880   17.0240   19.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7700   16.7980   20.0150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9720   16.8460   24.7060   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O6
+A    8
+C7
+A    9
+C10
+A   10
+N11
+A   11
+C8
+A   12
+N9
+A   13
+N2
+M  END
+>  <InstanceId>
+1EFZ_PRF_A_400
+
+>  <ChemCompId>
+PRF
+
+>  <PdbId>
+1EFZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O
+
+>  <Name>
+7-DEAZA-7-AMINOMETHYL-GUANINE
+
+>  <SystematicName>
+2-amino-5-(aminomethyl)-3,7-dihydropyrrolo[3,2-e]pyrimidin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N5 O
+
+>  <MolecularWeight>
+179.179
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N5O/c8-1-3-2-10-5-4(3)6(13)12-7(9)11-5/h2H,1,8H2,(H4,9,10,11,12,13)
+
+>  <InChIKey>
+MEYMBLGOKYDGLZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c2c([nH]1)N=C(NC2=O)N)CN
+
+$$$$

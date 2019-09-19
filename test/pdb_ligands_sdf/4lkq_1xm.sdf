@@ -1,0 +1,123 @@
+4LKQ_1XM_A_900
+  RCSB PDB12061713353D
+Coordinates from PDB:4LKQ:A:900 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    2.8330   15.0380   41.9400   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4240   14.0610   42.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5250   14.1120   44.0120   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1170   13.1170   44.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2210   13.2160   46.5140   S 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6560   12.0130   44.1540   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5750   11.9270   42.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9900   10.9810   41.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6720   11.3500   40.6970   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0420   12.5480   40.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9680   12.9360   42.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9 10  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  8  7  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 11  2  1  0  0  0  0
+ 11  7  2  0  0  0  0
+  2  3  2  0  0  0  0
+  7  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  6  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+S5
+A    6
+N6
+A    7
+C7
+A    8
+N8
+A    9
+N9
+A   10
+C10
+A   11
+C11
+M  END
+>  <InstanceId>
+4LKQ_1XM_A_900
+
+>  <ChemCompId>
+1XM
+
+>  <PdbId>
+4LKQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 S
+
+>  <Name>
+4-amino-1,7-dihydro-6H-pyrazolo[3,4-d]pyrimidine-6-thione
+
+>  <SystematicName>
+4-azanyl-1,7-dihydropyrazolo[3,4-d]pyrimidine-6-thione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N5 S
+
+>  <MolecularWeight>
+167.192
+
+>  <ModifiedDate>
+2014-02-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5N5S/c6-3-2-1-7-10-4(2)9-5(11)8-3/h1H,(H4,6,7,8,9,10,11)
+
+>  <InChIKey>
+YJMNLDSYAAJOPX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c([nH]n1)NC(=S)N=C2N
+
+$$$$

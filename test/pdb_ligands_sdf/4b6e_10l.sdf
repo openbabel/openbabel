@@ -1,0 +1,119 @@
+4B6E_10L_B_1722
+  RCSB PDB12061711473D
+Coordinates from PDB:4B6E:B:1722 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   45.2750    9.2910  -39.4650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5300    8.1520  -39.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9930    6.8600  -39.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2590    8.2400  -40.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4850    7.1130  -40.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9520    5.8540  -40.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2150    5.7340  -39.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9870    4.6540  -39.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1740    5.0660  -38.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1670    6.4190  -38.7490   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  3  7  2  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+N3
+A    2
+C3
+A    3
+C2
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C1'
+A    9
+N1'
+A   10
+N9
+M  END
+>  <InstanceId>
+4B6E_10L_B_1722
+
+>  <ChemCompId>
+10L
+
+>  <PdbId>
+4B6E
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1722
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3
+
+>  <Name>
+1H-indazol-7-amine
+
+>  <SystematicName>
+1H-indazol-7-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H7 N3
+
+>  <MolecularWeight>
+133.151
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N3/c8-6-3-1-2-5-4-9-10-7(5)6/h1-4H,8H2,(H,9,10)
+
+>  <InChIKey>
+OTFFCAGPSWJBDK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cn[nH]c2c(c1)N
+
+$$$$

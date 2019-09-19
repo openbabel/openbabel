@@ -1,0 +1,160 @@
+3SMI_QDR_A_1
+  RCSB PDB12061710453D
+Coordinates from PDB:3SMI:A:1 Model:1 without hydrogens
+ 20 22  0  0  0  0            999 V2000
+    2.1010   11.1610  -25.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6210    6.2320  -33.0120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3440   11.5290  -27.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2750   12.4260  -24.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0530   12.1160  -24.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0100   12.1150  -25.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2590    9.6500  -30.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0020    9.1270  -33.2270   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8810    7.9880  -31.6240   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4430   10.6130  -27.7730   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4600    8.1170  -33.7370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6110   10.6660  -28.8490   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7070   10.3710  -30.7760   S 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6390   11.4980  -25.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0110    7.3830  -32.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2940   10.3470  -28.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2190    9.1010  -31.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1800   11.2400  -27.8260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4280   11.5220  -26.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1090   11.1880  -26.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  1  1  0  0  0  0
+ 15  2  1  0  0  0  0
+ 18  3  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6 19  2  0  0  0  0
+ 16  7  1  0  0  0  0
+  7 13  1  0  0  0  0
+ 17  8  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 17  9  2  0  0  0  0
+  9 15  1  0  0  0  0
+ 20 10  1  0  0  0  0
+ 10 16  2  0  0  0  0
+ 15 11  2  0  0  0  0
+ 18 12  1  0  0  0  0
+ 16 12  1  0  0  0  0
+ 13 17  1  0  0  0  0
+ 14 20  2  0  0  0  0
+ 19 18  1  0  0  0  0
+ 19 20  1  0  0  0  0
+A    1
+CAA
+A    2
+NAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+NAI
+A   10
+NAJ
+A   11
+NAK
+A   12
+NAL
+A   13
+SAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+CAR
+A   19
+CAS
+A   20
+CAT
+M  END
+>  <InstanceId>
+3SMI_QDR_A_1
+
+>  <ChemCompId>
+QDR
+
+>  <PdbId>
+3SMI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N6 O S
+
+>  <Name>
+2-{[(3-amino-1H-1,2,4-triazol-5-yl)sulfanyl]methyl}-8-methylquinazolin-4(3H)-one
+
+>  <SystematicName>
+2-[(3-azanyl-1H-1,2,4-triazol-5-yl)sulfanylmethyl]-8-methyl-3H-quinazolin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N6 O S
+
+>  <MolecularWeight>
+288.328
+
+>  <ModifiedDate>
+2011-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N6OS/c1-6-3-2-4-7-9(6)14-8(15-10(7)19)5-20-12-16-11(13)17-18-12/h2-4H,5H2,1H3,(H,14,15,19)(H3,13,16,17,18)
+
+>  <InChIKey>
+QKVQIWSGFFADDR-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc2c1N=C(NC2=O)CSc3[nH]nc(n3)N
+
+$$$$

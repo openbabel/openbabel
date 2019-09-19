@@ -1,0 +1,139 @@
+5A6N_U7E_A_300
+  RCSB PDB12061716453D
+Coordinates from PDB:5A6N:A:300 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    6.3650  112.6950  100.7620   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7250  113.1570  100.7240   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6140  112.0360  100.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0650  113.8230   99.3200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9160  114.2500  101.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8380  114.7450  102.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0560  115.6930  103.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3460  116.1530  103.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4320  115.6620  103.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1990  114.7110  102.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8400  116.1100  103.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0050  115.8060  102.8070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0200  116.5190  103.5020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4250  117.2990  104.4900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0570  117.0070  104.3790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O1
+A    2
+S
+A    3
+O
+A    4
+N4
+A    5
+C
+A    6
+C5
+A    7
+C4
+A    8
+C3
+A    9
+C2
+A   10
+C1
+A   11
+C6
+A   12
+N3
+A   13
+N2
+A   14
+N1
+A   15
+N
+M  END
+>  <InstanceId>
+5A6N_U7E_A_300
+
+>  <ChemCompId>
+U7E
+
+>  <PdbId>
+5A6N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O2 S
+
+>  <Name>
+5-(3-SULFAMOYLPHENYL)-1H-1,2,3,4-TETRAZOL-1-IDE
+
+>  <SystematicName>
+3-(1H-1,2,3,4-tetrazol-5-yl)benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H7 N5 O2 S
+
+>  <MolecularWeight>
+225.228
+
+>  <ModifiedDate>
+2015-10-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N5O2S/c8-15(13,14)6-3-1-2-5(4-6)7-9-11-12-10-7/h1-4H,(H2,8,13,14)(H,9,10,11,12)
+
+>  <InChIKey>
+BIOBAIFFWOWFPU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)S(=O)(=O)N)c2[nH]nnn2
+
+$$$$

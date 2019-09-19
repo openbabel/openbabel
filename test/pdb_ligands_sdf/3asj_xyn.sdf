@@ -1,0 +1,121 @@
+3ASJ_XYN_A_1000
+  RCSB PDB12061707553D
+Coordinates from PDB:3ASJ:A:1000 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   35.7140  -52.5870  -33.7540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4850  -52.6430  -35.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9970  -50.7790  -37.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9750  -51.4790  -35.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8460  -50.4380  -35.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1550  -52.9700  -35.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6320  -53.0800  -37.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3800  -53.2030  -37.2800   S 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3810  -52.2810  -34.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1070  -51.5850  -36.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2800  -51.7200  -37.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  2  0  0  0  0
+  2 10  2  0  0  0  0
+  3 11  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+OBA
+A    2
+OBB
+A    3
+OBC
+A    4
+OBD
+A    5
+OBE
+A    6
+CBF
+A    7
+CBG
+A    8
+SBH
+A    9
+CBI
+A   10
+CBJ
+A   11
+CBK
+M  END
+>  <InstanceId>
+3ASJ_XYN_A_1000
+
+>  <ChemCompId>
+XYN
+
+>  <PdbId>
+3ASJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5 S
+
+>  <Name>
+3-[(carboxymethyl)sulfanyl]-2-oxopropanoic acid
+
+>  <SystematicName>
+3-(carboxymethylsulfanyl)-2-oxo-propanoic acid
+
+>  <Synonyms>
+3-(carboxymethylthio)-2-oxopropanoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 O5 S
+
+>  <MolecularWeight>
+178.163
+
+>  <ModifiedDate>
+2011-09-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6O5S/c6-3(5(9)10)1-11-2-4(7)8/h1-2H2,(H,7,8)(H,9,10)
+
+>  <InChIKey>
+FDUKYMHTXNDQPD-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)C(=O)O)SCC(=O)O
+
+$$$$

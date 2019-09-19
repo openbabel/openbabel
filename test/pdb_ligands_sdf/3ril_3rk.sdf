@@ -1,0 +1,122 @@
+3RIL_3RK_A_513
+  RCSB PDB12061710343D
+Coordinates from PDB:3RIL:A:513 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -14.8550   -4.8250   38.8600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6150   -8.2940   42.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8630   -7.7900   39.3770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7420   -9.0830   41.4580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6680   -5.8880   39.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0620   -6.3760   41.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4010   -5.3830   40.6960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1760   -6.0740   39.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2480   -7.2450   42.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9240   -6.9840   40.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0130   -7.9330   40.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  9  2  1  0  0  0  0
+  3 10  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  8  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAE
+A    6
+CAF
+A    7
+NAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3RIL_3RK_A_513
+
+>  <ChemCompId>
+3RK
+
+>  <PdbId>
+3RIL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+513
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+(3S,4R,5R,6S)-azepane-3,4,5,6-tetrol
+
+>  <SystematicName>
+(3S,4R,5R,6S)-azepane-3,4,5,6-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4
+
+>  <MolecularWeight>
+163.172
+
+>  <ModifiedDate>
+2012-03-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO4/c8-3-1-7-2-4(9)6(11)5(3)10/h3-11H,1-2H2/t3-,4-,5+,6+/m0/s1
+
+>  <InChIKey>
+MRFFNLOQLBWKPJ-UNTFVMJOSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H](CN1)O)O)O)O
+
+$$$$

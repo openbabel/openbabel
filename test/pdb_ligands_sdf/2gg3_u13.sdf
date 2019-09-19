@@ -1,0 +1,143 @@
+2GG3_U13_A_501
+  RCSB PDB12061705403D
+Coordinates from PDB:2GG3:A:501 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -8.4270   -1.7810    7.6520   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1880   -1.4290    8.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0540   -2.0670    7.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7900   -1.6780    8.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6830   -0.6810    8.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8130   -0.0250    9.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0660   -0.4170    9.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4480   -0.2000    9.4460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4850   -0.4760    8.7240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2090   -0.0390    8.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6660    0.8020   10.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3420    1.3480   11.1300   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6700    0.9860    9.8930   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0850    0.3020    8.7360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0100   -0.2930    8.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0010   -1.0490    7.0650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+F7
+A    2
+C3
+A    3
+C6
+A    4
+C2
+A    5
+C5
+A    6
+C4
+A    7
+C1
+A    8
+N9
+A    9
+N13
+A   10
+C14
+A   11
+C19
+A   12
+N16
+A   13
+N20
+A   14
+N17
+A   15
+C15
+A   16
+N18
+M  END
+>  <InstanceId>
+2GG3_U13_A_501
+
+>  <ChemCompId>
+U13
+
+>  <PdbId>
+2GG3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N6 F
+
+>  <Name>
+4-(4-FLUORO-PHENYLAZO)-5-IMINO-5H-PYRAZOL-3-YLAMINE
+
+>  <SystematicName>
+4-(4-fluorophenyl)diazenyl-5-imino-pyrazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 F N6
+
+>  <MolecularWeight>
+218.19
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7FN6/c10-5-1-3-6(4-2-5)13-14-7-8(11)15-16-9(7)12/h1-4,11H,12H2/b11-8+,14-13+
+
+>  <InChIKey>
+HALOLQDLOLYIOW-ZOBWXTBZSA-N
+
+>  <SMILES>
+[H]/N=C/1\C(=C(N=N1)N)/N=N/c2ccc(cc2)F
+
+$$$$

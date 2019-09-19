@@ -1,0 +1,150 @@
+5CCQ_502_A_206
+  RCSB PDB12061717043D
+Coordinates from PDB:5CCQ:A:206 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   -2.1580   -4.8740    2.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4020   -6.0210    3.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8130   -7.4160    5.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5690   -6.3150    4.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4510   -6.8760    3.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6770   -7.9570    4.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5390   -3.1350    3.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8200   -8.2310    5.2160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6690   -3.7600    3.3690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3310   -2.0980    3.8850   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2590   -3.4580    2.2390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8660   -1.3230    3.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8920   -2.0120    4.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1640   -1.4960    4.5340   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6550   -2.8270    5.5720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2800   -1.9570    5.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4680   -1.1380    4.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7760   -8.8870    3.8960   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  7  2  0  0  0  0
+  1  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  5  2  2  0  0  0  0
+  5  6  1  0  0  0  0
+  2  4  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 18  6  1  0  0  0  0
+  6  8  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 14 16  1  0  0  0  0
+  4  3  2  0  0  0  0
+ 13 15  2  0  0  0  0
+ 17 16  1  0  0  0  0
+  8  3  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C6
+A    4
+C7
+A    5
+C3
+A    6
+C4
+A    7
+C9
+A    8
+N5
+A    9
+N8
+A   10
+N10
+A   11
+O11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+A   16
+C16
+A   17
+C17
+A   18
+N18
+M  END
+>  <InstanceId>
+5CCQ_502_A_206
+
+>  <ChemCompId>
+502
+
+>  <PdbId>
+5CCQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+206
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O3
+
+>  <Name>
+ethyl N-{[(2-aminopyridin-4-yl)methyl]carbamoyl}glycinate
+
+>  <SystematicName>
+ethyl 2-[(2-azanylpyridin-4-yl)methylcarbamoylamino]ethanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N4 O3
+
+>  <MolecularWeight>
+252.27
+
+>  <ModifiedDate>
+2016-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N4O3/c1-2-18-10(16)7-15-11(17)14-6-8-3-4-13-9(12)5-8/h3-5H,2,6-7H2,1H3,(H2,12,13)(H2,14,15,17)
+
+>  <InChIKey>
+HBRFEPDAWBTTTH-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)CNC(=O)NCc1ccnc(c1)N
+
+$$$$

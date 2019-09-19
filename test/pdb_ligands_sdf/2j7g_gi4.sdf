@@ -1,0 +1,152 @@
+2J7G_GI4_A_1446
+  RCSB PDB12061706003D
+Coordinates from PDB:2J7G:A:1446 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   -2.0290    9.3280   13.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9850   10.7530   10.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0050   11.5230    9.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5790   11.7990    8.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3710   10.5560    7.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6280   10.3660    8.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5440    9.2260    8.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3680   12.7580   10.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5410   12.0790    7.5940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8180   10.7610    6.6050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2060   10.1920   10.2360   N 0  3  0  0  0  0  0  0  0  0  0  0
+   -2.9030    7.9790    8.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8660   10.4410   11.9350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9140    9.7170   12.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7480    9.5700   11.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4910    7.9810   14.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3590    7.6630   13.8490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2270    7.3170   14.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 14  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  2  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 18  1  0  0  0  0
+M  CHG  1  11   1
+A    1
+C1
+A    2
+C1B
+A    3
+C2B
+A    4
+C3B
+A    5
+C4B
+A    6
+C5B
+A    7
+C6B
+A    8
+O2B
+A    9
+O3B
+A   10
+O4B
+A   11
+N1B
+A   12
+O6B
+A   13
+N2B
+A   14
+C7B
+A   15
+C8B
+A   16
+C2
+A   17
+O1
+A   18
+O5
+M  END
+>  <InstanceId>
+2J7G_GI4_A_1446
+
+>  <ChemCompId>
+GI4
+
+>  <PdbId>
+2J7G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1446
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O6
+
+>  <Name>
+METHYL ACETIC ACID-SUBSTITUTED GLUCOIMIDAZOLE
+
+>  <SystematicName>
+2-[(5R,6R,7S,8S)-6,7,8-trihydroxy-5-(hydroxymethyl)-5,6,7,8-tetrahydro-1H-imidazo[1,2-a]pyridin-4-ium-2-yl]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N2 O6
+
+>  <MolecularWeight>
+259.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C10H14N2O6/c13-3-5-7(16)8(17)9(18)10-11-4(1-6(14)15)2-12(5)10/h2,5,7-9,13,16-18H,1,3H2,(H,14,15)/p+1/t5-,7-,8+,9-/m1/s1
+
+>  <InChIKey>
+FOWXVHLJDQDRHS-BUJSFMDZSA-O
+
+>  <SMILES>
+c1c([nH]c2[n+]1[C@@H]([C@H]([C@@H]([C@H]2O)O)O)CO)CC(=O)O
+
+$$$$

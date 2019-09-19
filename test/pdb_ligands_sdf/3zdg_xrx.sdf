@@ -1,0 +1,129 @@
+3ZDG_XRX_A_301
+  RCSB PDB12061711283D
+Coordinates from PDB:3ZDG:A:301 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -16.2360   58.6290  -23.7580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8710   57.8680  -20.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5400   58.3850  -21.0140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8010   60.0590  -23.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5060   58.7190  -19.9770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0420   57.1130  -19.2190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6600   58.4040  -23.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8200   58.6820  -21.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6860   57.9610  -20.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9140   57.9460  -25.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6460   59.2160  -24.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4100   58.2530  -19.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1870   59.8150  -20.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  9  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5 12  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+N5
+A    6
+O6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+M  END
+>  <InstanceId>
+3ZDG_XRX_A_301
+
+>  <ChemCompId>
+XRX
+
+>  <PdbId>
+3ZDG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+3-(dimethylamino)butyl dimethylcarbamate
+
+>  <SystematicName>
+[(3R)-3-(dimethylamino)butyl] N,N-dimethylcarbamate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H20 N2 O2
+
+>  <MolecularWeight>
+188.267
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20N2O2/c1-8(10(2)3)6-7-13-9(12)11(4)5/h8H,6-7H2,1-5H3/t8-/m1/s1
+
+>  <InChIKey>
+VVGQXMCHKFOTKZ-MRVPVSSYSA-N
+
+>  <SMILES>
+C[C@H](CCOC(=O)N(C)C)N(C)C
+
+$$$$

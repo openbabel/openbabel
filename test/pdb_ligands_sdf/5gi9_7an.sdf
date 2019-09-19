@@ -1,0 +1,139 @@
+5GI9_7AN_A_302
+  RCSB PDB12061717503D
+Coordinates from PDB:5GI9:A:302 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -11.8960   22.6010  -15.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3180   17.8060  -16.4240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7250   16.8800  -14.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2270   19.2100  -14.9850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1090   20.0450  -17.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6170   21.9200  -18.5970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4600   18.7500  -17.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0630   20.7530  -16.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3490   21.9060  -17.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9950   18.8980  -17.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8630   20.8230  -18.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6990   20.5010  -15.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2760   22.8480  -16.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6130   21.4310  -15.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4140   18.0510  -15.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  6  1  0  0  0  0
+ 11  5  2  0  0  0  0
+  6  9  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  9 13  2  0  0  0  0
+  9  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 10  2  1  0  0  0  0
+ 13  1  1  0  0  0  0
+  8 12  2  0  0  0  0
+  2 15  1  0  0  0  0
+  1 14  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 15  4  2  0  0  0  0
+ 15  3  1  0  0  0  0
+A    1
+C10
+A    2
+N
+A    3
+C
+A    4
+O
+A    5
+C01
+A    6
+N01
+A    7
+C02
+A    8
+C03
+A    9
+C04
+A   10
+C05
+A   11
+C06
+A   12
+C07
+A   13
+C08
+A   14
+C09
+A   15
+C11
+M  END
+>  <InstanceId>
+5GI9_7AN_A_302
+
+>  <ChemCompId>
+7AN
+
+>  <PdbId>
+5GI9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+~{N}-[2-(1~{H}-indol-3-yl)ethyl]ethanamide
+
+>  <SystematicName>
+~{N}-[2-(1~{H}-indol-3-yl)ethyl]ethanamide
+
+>  <Synonyms>
+N-acetyltryptamine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 N2 O
+
+>  <MolecularWeight>
+202.252
+
+>  <ModifiedDate>
+2017-06-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O/c1-9(15)13-7-6-10-8-14-12-5-3-2-4-11(10)12/h2-5,8,14H,6-7H2,1H3,(H,13,15)
+
+>  <InChIKey>
+NVUGEQAEQJTCIX-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCc1c[nH]c2c1cccc2
+
+$$$$

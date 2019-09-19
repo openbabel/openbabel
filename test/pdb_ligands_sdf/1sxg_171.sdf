@@ -1,0 +1,130 @@
+1SXG_171_A_3256
+  RCSB PDB12061704023D
+Coordinates from PDB:1SXG:A:3256 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  134.9610  -12.0710   35.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.8810  -10.8470   35.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.8320   -9.8190   35.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.8960  -10.0180   34.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.7080   -8.6550   36.3190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  134.5620   -7.9240   35.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.1610   -6.5430   36.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.7900   -6.2940   35.3330   S 0  0  0  0  0  0  0  0  0  0  0  0
+  132.1890   -4.9080   35.5620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  133.1900   -6.5240   33.8450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  131.7530   -7.3400   35.7330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  136.9660  -11.2570   34.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.0060  -12.2720   34.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C3'
+A    2
+C2'
+A    3
+C1'
+A    4
+C6'
+A    5
+N
+A    6
+C1
+A    7
+C2
+A    8
+S
+A    9
+O1
+A   10
+O2
+A   11
+O3
+A   12
+C5'
+A   13
+C4'
+M  END
+>  <InstanceId>
+1SXG_171_A_3256
+
+>  <ChemCompId>
+171
+
+>  <PdbId>
+1SXG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3256
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S
+
+>  <Name>
+2-PHENYLAMINO-ETHANESULFONIC ACID
+
+>  <SystematicName>
+2-phenylazanylethanesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O3 S
+
+>  <MolecularWeight>
+201.243
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO3S/c10-13(11,12)7-6-9-8-4-2-1-3-5-8/h1-5,9H,6-7H2,(H,10,11,12)
+
+>  <InChIKey>
+IAVHKMVGTPXJIC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)NCCS(=O)(=O)O
+
+$$$$

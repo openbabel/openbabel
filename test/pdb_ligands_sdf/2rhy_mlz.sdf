@@ -1,0 +1,121 @@
+1P0Y_MLZ_C_900
+  RCSB PDB12061703373D
+Coordinates from PDB:1P0Y:C:900 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   68.8050  129.6650   64.1060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2530  130.9650   63.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.4750  131.0500   62.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2830  130.7680   61.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.6880  130.9460   59.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.5750  131.6170   59.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.9330  130.7390   58.0080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   67.2750  131.2090   56.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.4160  132.1790   64.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.4200  131.9690   64.8770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.7960  133.2510   63.7200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+CE
+A    7
+NZ
+A    8
+CM
+A    9
+C
+A   10
+O
+A   11
+OXT
+M  END
+>  <InstanceId>
+1P0Y_MLZ_C_900
+
+>  <ChemCompId>
+MLZ
+
+>  <PdbId>
+1P0Y
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O2
+
+>  <Name>
+N-METHYL-LYSINE
+
+>  <SystematicName>
+(2S)-2-amino-6-methylamino-hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C7 H16 N2 O2
+
+>  <MolecularWeight>
+160.214
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H16N2O2/c1-9-5-3-2-4-6(8)7(10)11/h6,9H,2-5,8H2,1H3,(H,10,11)/t6-/m0/s1
+
+>  <InChIKey>
+PQNASZJZHFPQLE-LURJTMIESA-N
+
+>  <SMILES>
+CNCCCC[C@@H](C(=O)O)N
+
+$$$$

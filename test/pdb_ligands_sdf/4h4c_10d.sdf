@@ -1,0 +1,137 @@
+4H4C_10D_A_402
+  RCSB PDB12061712493D
+Coordinates from PDB:4H4C:A:402 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -24.9550    0.8480  -15.8360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0310    0.7010  -16.7960   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6580    0.9660  -18.2660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1430    1.5830  -16.2940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6920   -0.7500  -16.7560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1800   -2.2000  -16.3630   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2980   -3.0530  -16.9160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6750   -2.3490  -16.7850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1010   -2.2020  -14.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0000   -2.5890  -13.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0940   -1.7060  -14.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8960   -0.5600  -13.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5610   -0.2760  -12.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1870    0.2580  -13.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.2210   -0.6900  -13.8590   F 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  7  6  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  8  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O14
+A    2
+P10
+A    3
+O11
+A    4
+O15
+A    5
+O9
+A    6
+P8
+A    7
+O12
+A    8
+O13
+A    9
+O7
+A   10
+C6
+A   11
+C5
+A   12
+C3
+A   13
+C4
+A   14
+C1
+A   15
+F2
+M  END
+>  <InstanceId>
+4H4C_10D_A_402
+
+>  <ChemCompId>
+10D
+
+>  <PdbId>
+4H4C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O7 P2 F
+
+>  <Name>
+(2E)-4-fluoro-3-methylbut-2-en-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+[(E)-4-fluoranyl-3-methyl-but-2-enyl] phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 F O7 P2
+
+>  <MolecularWeight>
+264.083
+
+>  <ModifiedDate>
+2013-01-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11FO7P2/c1-5(4-6)2-3-12-15(10,11)13-14(7,8)9/h2H,3-4H2,1H3,(H,10,11)(H2,7,8,9)/b5-2+
+
+>  <InChIKey>
+OAODEACEICJXDG-GORDUTHDSA-N
+
+>  <SMILES>
+C/C(=C\COP(=O)(O)OP(=O)(O)O)/CF
+
+$$$$

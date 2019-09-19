@@ -1,0 +1,134 @@
+4WW8_VD9_A_305
+  RCSB PDB12061716063D
+Coordinates from PDB:4WW8:A:305 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   23.0210    2.5850    8.7080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6830    2.4010   10.0070   S 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7240    1.3220   10.0150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6150    2.1410   11.1640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5410    3.8900   10.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9260    3.9260   10.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6420    5.1260   10.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8880    6.2490   10.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4930    6.2820   10.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8660    5.0310   10.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6430    7.8580   10.9600   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3810    7.6430   10.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4650    7.4590    8.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9090    7.2310    8.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+  1  2  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+O4
+A    2
+S2
+A    3
+O1
+A    4
+N3
+A    5
+C5
+A    6
+C10
+A    7
+C9
+A    8
+C8
+A    9
+C7
+A   10
+C6
+A   11
+S11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+4WW8_VD9_A_305
+
+>  <ChemCompId>
+VD9
+
+>  <PdbId>
+4WW8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+305
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 S2
+
+>  <Name>
+4-(propylsulfanyl)benzenesulfonamide
+
+>  <SystematicName>
+4-propylsulfanylbenzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N O2 S2
+
+>  <MolecularWeight>
+231.335
+
+>  <ModifiedDate>
+2015-06-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13NO2S2/c1-2-7-13-8-3-5-9(6-4-8)14(10,11)12/h3-6H,2,7H2,1H3,(H2,10,11,12)
+
+>  <InChIKey>
+QFWWUTSCPNTDPO-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCSc1ccc(cc1)S(=O)(=O)N
+
+$$$$

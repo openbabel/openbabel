@@ -1,0 +1,145 @@
+2FQO_HYI_A_703
+  RCSB PDB12061705353D
+Coordinates from PDB:2FQO:A:703 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+  -19.0770   33.2340  -13.6560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1920   33.1840  -14.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9120   34.1010  -15.7030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7200   31.8800  -15.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8010   30.8490  -14.4560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1040   32.1190  -16.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0970   32.6460  -15.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.7270   33.0610  -15.7940   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3570   31.3860  -16.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8770   31.2640  -17.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8740   32.2610  -17.8430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4720   29.8790  -17.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5950   29.6640  -17.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9450   29.8160  -19.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1290   29.9760  -19.6110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9820   29.5870  -20.2160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2760   29.5090  -21.5410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CG
+A    8
+SD
+A    9
+C5
+A   10
+C4
+A   11
+O4
+A   12
+C3
+A   13
+O3
+A   14
+C2
+A   15
+O2
+A   16
+N1
+A   17
+O1
+M  END
+>  <InstanceId>
+2FQO_HYI_A_703
+
+>  <ChemCompId>
+HYI
+
+>  <PdbId>
+2FQO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+703
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O6 S
+
+>  <Name>
+(2S)-2-AMINO-4-[(2R,3R)-2,3-DIHYDROXY-3-N-HYDROXYCARBAMOYL-PROPYLMERCAPTO]BUTYRIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-4-[(2R,3R)-2,3-dihydroxy-4-(hydroxyamino)-4-oxo-butyl]sulfanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N2 O6 S
+
+>  <MolecularWeight>
+268.287
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+MET
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O6S/c9-4(8(14)15)1-2-17-3-5(11)6(12)7(13)10-16/h4-6,11-12,16H,1-3,9H2,(H,10,13)(H,14,15)/t4-,5-,6+/m0/s1
+
+>  <InChIKey>
+PWFBZASPUNGGAM-HCWXCVPCSA-N
+
+>  <SMILES>
+C(CSC[C@@H]([C@H](C(=O)NO)O)O)[C@@H](C(=O)O)N
+
+$$$$

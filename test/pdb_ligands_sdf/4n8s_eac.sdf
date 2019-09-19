@@ -1,0 +1,113 @@
+4GBG_EAC_A_301
+  RCSB PDB12061712413D
+Coordinates from PDB:4GBG:A:301 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   15.7320  -42.1580    1.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2760  -40.9060    0.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2440  -41.1750   -0.4390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4460  -40.3830   -1.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4910  -39.7900   -2.3100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1480  -38.1180   -3.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1830  -39.2450   -3.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6640  -39.3000   -4.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8870  -40.3340   -2.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C4
+A    2
+C9
+A    3
+O5
+A    4
+C10
+A    5
+O6
+A    6
+C13
+A    7
+C14
+A    8
+O8
+A    9
+C15
+M  END
+>  <InstanceId>
+4GBG_EAC_A_301
+
+>  <ChemCompId>
+EAC
+
+>  <PdbId>
+4GBG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+ethyl 3-oxobutanoate
+
+>  <SystematicName>
+ethyl 3-oxidanylidenebutanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 O3
+
+>  <MolecularWeight>
+130.142
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O3/c1-3-9-6(8)4-5(2)7/h3-4H2,1-2H3
+
+>  <InChIKey>
+XYIBRDXRRQCHLP-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)CC(=O)C
+
+$$$$

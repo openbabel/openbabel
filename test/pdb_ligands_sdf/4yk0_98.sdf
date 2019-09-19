@@ -1,0 +1,131 @@
+4YK0_98_A_1201
+  RCSB PDB12061716273D
+Coordinates from PDB:4YK0:A:1201 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -31.7800    4.1330  -37.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.7560    3.0540  -38.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.6040    3.4760  -40.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.0740    3.6440  -39.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5400    4.7740  -39.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.8520    2.5830  -39.5140   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.4110    1.3260  -39.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.2470    0.3990  -40.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.7880   -0.9400  -40.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.5520   -1.2870  -39.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.7420   -0.3390  -39.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.1650    0.9720  -39.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.2840    1.7850  -38.3710   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  2 13  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+O
+A    6
+N1
+A    7
+C5
+A    8
+C10
+A    9
+C9
+A   10
+C8
+A   11
+C7
+A   12
+C6
+A   13
+N2
+M  END
+>  <InstanceId>
+4YK0_98_A_1201
+
+>  <ChemCompId>
+98
+
+>  <PdbId>
+4YK0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O
+
+>  <Name>
+(4R)-4-methyl-1,3,4,5-tetrahydro-2H-1,5-benzodiazepin-2-one
+
+>  <SystematicName>
+(2R)-2-methyl-1,2,3,5-tetrahydro-1,5-benzodiazepin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 N2 O
+
+>  <MolecularWeight>
+176.215
+
+>  <ModifiedDate>
+2016-04-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12N2O/c1-7-6-10(13)12-9-5-3-2-4-8(9)11-7/h2-5,7,11H,6H2,1H3,(H,12,13)/t7-/m1/s1
+
+>  <InChIKey>
+BBPWQLMHOSRDMA-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@@H]1CC(=O)Nc2ccccc2N1
+
+$$$$

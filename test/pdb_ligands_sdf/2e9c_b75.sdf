@@ -1,0 +1,117 @@
+2E95_B75_A_1001
+  RCSB PDB12061705253D
+Coordinates from PDB:2E95:A:1001 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   28.1940   46.2740    4.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5250   44.9680    4.7920   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8910   43.5360    5.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8230   45.0170    3.2120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7640   45.2600    5.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6790   45.9120    5.8310   P 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6190   44.3550    6.2380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7370   46.7550    7.1960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5010   46.3170    5.0330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7900   46.3770    3.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+CBH
+A    2
+PBI
+A    3
+OAF
+A    4
+OAG
+A    5
+OAA
+A    6
+PBJ
+A    7
+OAH
+A    8
+OAI
+A    9
+OAB
+A   10
+OAE
+M  END
+>  <InstanceId>
+2E95_B75_A_1001
+
+>  <ChemCompId>
+B75
+
+>  <PdbId>
+2E95
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+27
+
+>  <ObservedFormula>
+C O7 P2
+
+>  <Name>
+1-HYDROXY-2-[3'-(NAPHTHALENE-2-SULFONYLAMINO)-BIPHENYL-3-YL]ETHYLIDENE-1,1-BISPHOSPHONIC ACID
+
+>  <SystematicName>
+[1-hydroxy-2-[3-[3-(naphthalen-2-ylsulfonylamino)phenyl]phenyl]-1-phosphono-ethyl]phosphonic acid
+
+>  <Synonyms>
+(1-HYDROXY-2-{3'-[(2-NAPHTHYLSULFONYL)AMINO]BIPHENYL-3-YL}ETHANE-1,1-DIYL)BIS(PHOSPHONIC ACID)
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C24 H23 N O9 P2 S
+
+>  <MolecularWeight>
+563.453
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C24H23NO9P2S/c26-24(35(27,28)29,36(30,31)32)16-17-5-3-8-19(13-17)20-9-4-10-22(14-20)25-37(33,34)23-12-11-18-6-1-2-7-21(18)15-23/h1-15,25-26H,16H2,(H2,27,28,29)(H2,30,31,32)
+
+>  <InChIKey>
+MZVWVRVNMXTDAK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2cc(ccc2c1)S(=O)(=O)Nc3cccc(c3)c4cccc(c4)CC(O)(P(=O)(O)O)P(=O)(O)O
+
+$$$$

@@ -1,0 +1,146 @@
+4MV5_2E7_A_402
+  RCSB PDB12061713483D
+Coordinates from PDB:4MV5:A:402 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+  -30.3640   -0.5630  -14.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8690    0.7010  -14.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5220   -2.8860  -17.0140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2790   -2.1130  -16.5790   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8940   -2.3700  -17.1170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8040   -0.6150  -16.9020   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0050    0.7520  -17.0250   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1670    1.6460  -16.7510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8690    0.8360  -16.0760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6580    0.9120  -18.4910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0850   -2.2030  -14.9620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1390   -2.5090  -14.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1470   -1.3970  -14.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7170   -0.1100  -13.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.5720    0.9220  -13.8700   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4810   -1.6420  -14.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.9640    2.0980  -14.3140  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  7  2  0  0  0  0
+  5  4  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  6  4  1  0  0  0  0
+  4 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 15 14  2  0  0  0  0
+ 15  2  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 17  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 16  2  0  0  0  0
+  1 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O10
+A    4
+P9
+A    5
+O11
+A    6
+O12
+A    7
+P13
+A    8
+O14
+A    9
+O15
+A   10
+O16
+A   11
+O8
+A   12
+C7
+A   13
+C5
+A   14
+C4
+A   15
+N3
+A   16
+C6
+A   17
+CL
+M  END
+>  <InstanceId>
+4MV5_2E7_A_402
+
+>  <ChemCompId>
+2E7
+
+>  <PdbId>
+4MV5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O7 P2 Cl
+
+>  <Name>
+(6-chloropyridin-3-yl)methyl trihydrogen diphosphate
+
+>  <SystematicName>
+(6-chloranylpyridin-3-yl)methyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 Cl N O7 P2
+
+>  <MolecularWeight>
+303.531
+
+>  <ModifiedDate>
+2014-06-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8ClNO7P2/c7-6-2-1-5(3-8-6)4-14-17(12,13)15-16(9,10)11/h1-3H,4H2,(H,12,13)(H2,9,10,11)
+
+>  <InChIKey>
+HWMZLVMBHKPTHS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1COP(=O)(O)OP(=O)(O)O)Cl
+
+$$$$

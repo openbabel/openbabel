@@ -1,0 +1,117 @@
+3VU8_MDS_A_602
+  RCSB PDB12061711163D
+Coordinates from PDB:3VU8:A:602 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   38.4220   38.3110   37.1720   S 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3820   37.3020   36.3240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0910   36.0800   35.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9660   35.6250   36.1450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0940   35.3800   35.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7840   36.1950   34.1340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0770   34.8580   36.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8170   33.6220   35.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9190   32.0730   36.0570   S 0  0  0  0  0  0  0  0  0  0  0  0
+   41.5010   31.0680   34.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+S1
+A    2
+N2
+A    3
+C5
+A    4
+O5
+A    5
+C6
+A    6
+N3
+A    7
+C7
+A    8
+C8
+A    9
+S2
+A   10
+C9
+M  END
+>  <InstanceId>
+3VU8_MDS_A_602
+
+>  <ChemCompId>
+MDS
+
+>  <PdbId>
+3VU8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+21
+
+>  <ObservedFormula>
+C5 N2 O S2
+
+>  <Name>
+N-[METHIONYL]-N'-[ADENOSYL]-DIAMINOSULFONE
+
+>  <SystematicName>
+(2S)-2-amino-N-[[(2R,3R,4S,5S)-5-(6-aminopurin-9-yl)-3,4-dihydroxy-oxolan-2-yl]methylsulfamoyl]-4-methylsulfanyl-butanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H24 N8 O6 S2
+
+>  <MolecularWeight>
+476.531
+
+>  <ModifiedDate>
+2013-06-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H24N8O6S2/c1-30-3-2-7(16)14(26)22-31(27,28)21-4-8-10(24)11(25)15(29-8)23-6-20-9-12(17)18-5-19-13(9)23/h5-8,10-11,15,21,24-25H,2-4,16H2,1H3,(H,22,26)(H2,17,18,19)/t7-,8?,10?,11?,15?/m0/s1
+
+>  <InChIKey>
+DAUQVCLMADDCHF-QWRDWHBNSA-N
+
+>  <SMILES>
+CSCC[C@@H](C(=O)NS(=O)(=O)NC[C@@H]1[C@@H]([C@@H]([C@H](O1)n2cnc3c2ncnc3N)O)O)N
+
+$$$$

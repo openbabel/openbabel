@@ -1,0 +1,140 @@
+4NVN_2O1_B_302
+  RCSB PDB12061713573D
+Coordinates from PDB:4NVN:B:302 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+   20.2690    5.6510   -6.0210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3140    5.0360   -4.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3550    5.3080   -4.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6540    4.1080   -3.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4130    3.5880   -2.5930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2940    3.4880   -3.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2590    4.2010   -4.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1310    4.0970   -5.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0670    3.2780   -5.0020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1130    2.5890   -3.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2260    2.6820   -3.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2660    1.9650   -1.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1980    1.1600   -1.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0840    1.0650   -2.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0450    1.7820   -3.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  7  6  2  0  0  0  0
+  3  4  1  0  0  0  0
+ 10 15  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  6 11  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14 13  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAA
+A    2
+CAK
+A    3
+CAH
+A    4
+CAG
+A    5
+NAI
+A    6
+CAM
+A    7
+CAL
+A    8
+CAF
+A    9
+NAJ
+A   10
+CAN
+A   11
+CAO
+A   12
+CAE
+A   13
+CAC
+A   14
+CAB
+A   15
+CAD
+M  END
+>  <InstanceId>
+4NVN_2O1_B_302
+
+>  <ChemCompId>
+2O1
+
+>  <PdbId>
+4NVN
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+2,3-dihydrobenzo[h][1,6]naphthyridin-4(1H)-one
+
+>  <SystematicName>
+2,3-dihydro-1H-benzo[h][1,6]naphthyridin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 N2 O
+
+>  <MolecularWeight>
+198.221
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10N2O/c15-11-5-6-13-12-8-3-1-2-4-10(8)14-7-9(11)12/h1-4,7,13H,5-6H2
+
+>  <InChIKey>
+PTMYWDHBZAMKMN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c3c(cn2)C(=O)CCN3
+
+$$$$

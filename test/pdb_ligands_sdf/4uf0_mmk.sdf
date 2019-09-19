@@ -1,0 +1,166 @@
+4UF0_MMK_A_2268
+  RCSB PDB12061715063D
+Coordinates from PDB:4UF0:A:2268 Model:1 without hydrogens
+ 22 22  0  0  0  0            999 V2000
+  -17.7670    3.4370  -26.7620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6740    2.9460  -26.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3450    1.7940  -26.8420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8620    3.5830  -25.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4770    3.8250  -25.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4070    3.9740  -24.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6130    4.5150  -23.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3420    4.6810  -23.3590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7130    4.3480  -24.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2770    4.6070  -24.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8860    5.8560  -23.8610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4300    5.8190  -23.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5010    6.0240  -24.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0180    6.3540  -25.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0830    5.8050  -24.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4130    5.5150  -23.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3790    4.0130  -22.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1610    5.9350  -25.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5070    5.2910  -26.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6340    5.2180  -27.6370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8410    4.0890  -28.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1440    6.4690  -28.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 18  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 19 20  1  0  0  0  0
+ 20 21  1  0  0  0  0
+ 20 22  1  0  0  0  0
+A    1
+OAT
+A    2
+CAS
+A    3
+OAU
+A    4
+CAO
+A    5
+CAN
+A    6
+CAP
+A    7
+CAQ
+A    8
+NAR
+A    9
+CAM
+A   10
+CAL
+A   11
+N
+A   12
+CA
+A   13
+C
+A   14
+O
+A   15
+NAC
+A   16
+CAB
+A   17
+CAA
+A   18
+CAD
+A   19
+CAE
+A   20
+NAF
+A   21
+CAH
+A   22
+CAG
+M  END
+>  <InstanceId>
+4UF0_MMK_A_2268
+
+>  <ChemCompId>
+MMK
+
+>  <PdbId>
+4UF0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2268
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N4 O3
+
+>  <Name>
+2-{[(2-{[(E)-2-(dimethylamino)ethenyl](ethyl)amino}-2-oxoethyl)amino]methyl}pyridine-4-carboxylic acid
+
+>  <SystematicName>
+2-[[[2-[[(E)-2-(dimethylamino)ethenyl]-ethyl-amino]-2-oxidanylidene-ethyl]amino]methyl]pyridine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C15 H22 N4 O3
+
+>  <MolecularWeight>
+306.36
+
+>  <ModifiedDate>
+2015-01-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H22N4O3/c1-4-19(8-7-18(2)3)14(20)11-16-10-13-9-12(15(21)22)5-6-17-13/h5-9,16H,4,10-11H2,1-3H3,(H,21,22)/b8-7+
+
+>  <InChIKey>
+RTKGUAPXWDCFNW-BQYQJAHWSA-N
+
+>  <SMILES>
+CCN(/C=C/N(C)C)C(=O)CNCc1cc(ccn1)C(=O)O
+
+$$$$

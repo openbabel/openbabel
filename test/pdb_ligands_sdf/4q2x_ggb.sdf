@@ -1,0 +1,125 @@
+3LAP_GGB_A_200
+  RCSB PDB12061709353D
+Coordinates from PDB:3LAP:A:200 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   -3.5960   -8.1200  -49.2550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9500   -6.9570  -48.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9290   -7.2280  -47.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4340   -8.0540  -46.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7330   -6.2560  -47.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3760   -8.3440  -45.2520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1190   -9.1320  -44.2520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9480   -8.5630  -42.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7430   -7.2490  -42.8420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8260   -9.3620  -41.9120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7320   -5.0530  -47.7230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6420   -7.0420  -47.7130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5 11  2  0  0  0  0
+  5 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+C
+A    6
+OD
+A    7
+NE
+A    8
+CZ
+A    9
+NH1
+A   10
+NH2
+A   11
+OA1
+A   12
+OA2
+M  END
+>  <InstanceId>
+3LAP_GGB_A_200
+
+>  <ChemCompId>
+GGB
+
+>  <PdbId>
+3LAP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O3
+
+>  <Name>
+L-CANAVANINE
+
+>  <SystematicName>
+(2S)-2-amino-4-carbamimidamidooxy-butanoic acid
+
+>  <Synonyms>
+L-2-AMINO-4-(GUANIDINOOXY)BUTYRIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N4 O3
+
+>  <MolecularWeight>
+176.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N4O3/c6-3(4(10)11)1-2-12-9-5(7)8/h3H,1-2,6H2,(H,10,11)(H4,7,8,9)/t3-/m0/s1
+
+>  <InChIKey>
+FSBIGDSBMBYOPN-VKHMYHEASA-N
+
+>  <SMILES>
+[H]/N=C(\N)/NOCC[C@@H](C(=O)O)N
+
+$$$$

@@ -1,0 +1,127 @@
+5FZH_0TI_A_1770
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZH:A:1770 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   87.0190   62.5900   12.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.0160   60.4650   12.0590   F 0  0  0  0  0  0  0  0  0  0  0  0
+   88.2390   65.4440   14.3080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.6260   66.2500   15.9520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   87.0170   63.8670   12.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.2900   63.9480   15.0400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   88.0260   64.2340   13.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.0460   63.3440   13.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.0740   62.0770   13.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.0440   61.7340   12.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.8770   63.9390   15.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.2830   65.3760   15.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4 12  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C
+A    2
+F
+A    3
+N
+A    4
+O
+A    5
+C1
+A    6
+O1
+A    7
+C2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C6
+A   12
+C7
+M  END
+>  <InstanceId>
+5FZH_0TI_A_1770
+
+>  <ChemCompId>
+0TI
+
+>  <PdbId>
+5FZH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1770
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2 F
+
+>  <Name>
+(3R)-5-fluoro-3-hydroxy-1,3-dihydro-2H-indol-2-one
+
+>  <SystematicName>
+(3R)-5-fluoranyl-3-oxidanyl-1,3-dihydroindol-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 F N O2
+
+>  <MolecularWeight>
+167.137
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6FNO2/c9-4-1-2-6-5(3-4)7(11)8(12)10-6/h1-3,7,11H,(H,10,12)/t7-/m1/s1
+
+>  <InChIKey>
+XYDTZHMQTYEJQN-SSDOTTSWSA-N
+
+>  <SMILES>
+c1cc2c(cc1F)[C@H](C(=O)N2)O
+
+$$$$

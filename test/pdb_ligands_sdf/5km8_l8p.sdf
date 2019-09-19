@@ -1,0 +1,150 @@
+5KM8_L8P_B_201
+  RCSB PDB12061718383D
+Coordinates from PDB:5KM8:B:201 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+  -11.5730    1.1000   -0.2770   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3080   -1.2970    3.2820   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2230   -2.7060    3.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1470   -3.2420    2.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3060   -3.4860    3.4070   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4820   -2.9290    3.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6640   -3.7900    4.0500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5860   -1.5480    3.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4730   -0.7450    3.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1370   -0.4430    3.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9150   -0.1890    1.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0360    0.6920    0.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2260    1.8300    1.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3530    0.8020   -0.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.6610    0.4810    1.3580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1030    2.2060    0.6480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4960    1.4690   -1.7420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9510   -0.2340    0.1030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 14  1  0  0  0  0
+  1 16  1  0  0  0  0
+  1 17  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  1 18  1  0  0  0  0
+A    1
+P
+A    2
+N1
+A    3
+C2
+A    4
+O2
+A    5
+N3
+A    6
+C4
+A    7
+N4
+A    8
+C5
+A    9
+C6
+A   10
+C1'
+A   11
+C2'
+A   12
+C3'
+A   13
+O3'
+A   14
+C4'
+A   15
+O4'
+A   16
+OP1
+A   17
+OP2
+A   18
+O6
+M  END
+>  <InstanceId>
+5KM8_L8P_B_201
+
+>  <ChemCompId>
+L8P
+
+>  <PdbId>
+5KM8
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O6 P
+
+>  <Name>
+({[(2S)-1-(4-amino-2-oxopyrimidin-1(2H)-yl)-3-hydroxypropan-2-yl]oxy}methyl)phosphonic acid
+
+>  <SystematicName>
+[(2S)-1-(4-azanyl-2-oxo-pyrimidin-1-yl)-3-hydroxy-propan-2-yl]oxymethylphosphonic acid
+
+>  <Synonyms>
+Cidofovir
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H14 N3 O6 P
+
+>  <MolecularWeight>
+279.187
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H14N3O6P/c9-7-1-2-11(8(13)10-7)3-6(4-12)17-5-18(14,15)16/h1-2,6,12H,3-5H2,(H2,9,10,13)(H2,14,15,16)/t6-/m0/s1
+
+>  <InChIKey>
+VWFCHDSQECPREK-LURJTMIESA-N
+
+>  <SMILES>
+C1=CN(C(=O)N=C1N)C[C@@H](CO)OCP(=O)(O)O
+
+$$$$

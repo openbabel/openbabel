@@ -1,0 +1,156 @@
+5KTU_6XB_A_1201
+  RCSB PDB12061718403D
+Coordinates from PDB:5KTU:A:1201 Model:1 without hydrogens
+ 19 21  0  0  0  0            999 V2000
+   50.4150  121.5190    6.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.1710  120.4910    6.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7390  120.6260    4.6440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0120  119.6310    4.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7040  118.6570    4.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7360  119.6930    2.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0380  121.8840    3.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6610  122.9480    4.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.3720  122.7510    6.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1000  123.9630    6.7130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1080  124.8280    5.7600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.4580  124.2460    4.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7670  124.8820    3.4680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1340  125.9410    2.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7180  126.5460    1.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1260  127.6300    1.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9000  128.0460    1.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3190  127.4950    2.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9240  126.4100    3.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 15  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 15 14  2  0  0  0  0
+  6  4  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 14 19  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  7  3  1  0  0  0  0
+  7  8  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+ 12  8  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  3  2  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  2  1  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  1  1  0  0  0  0
+A    1
+CAM
+A    2
+CAN
+A    3
+NAO
+A    4
+CAQ
+A    5
+OAR
+A    6
+CAS
+A    7
+CAP
+A    8
+CAL
+A    9
+CAK
+A   10
+NAJ
+A   11
+NAI
+A   12
+CAH
+A   13
+NAG
+A   14
+CAF
+A   15
+CAE
+A   16
+CAD
+A   17
+CAC
+A   18
+CAB
+A   19
+CAA
+M  END
+>  <InstanceId>
+5KTU_6XB_A_1201
+
+>  <ChemCompId>
+6XB
+
+>  <PdbId>
+5KTU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N4 O
+
+>  <Name>
+1-(3-phenylazanyl-1,4,6,7-tetrahydropyrazolo[4,3-c]pyridin-5-yl)ethanone
+
+>  <SystematicName>
+1-(3-phenylazanyl-1,4,6,7-tetrahydropyrazolo[4,3-c]pyridin-5-yl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H16 N4 O
+
+>  <MolecularWeight>
+256.303
+
+>  <ModifiedDate>
+2016-10-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H16N4O/c1-10(19)18-8-7-13-12(9-18)14(17-16-13)15-11-5-3-2-4-6-11/h2-6H,7-9H2,1H3,(H2,15,16,17)
+
+>  <InChIKey>
+ZXIJCVCJLDGJRX-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)N1CCc2c(c(n[nH]2)Nc3ccccc3)C1
+
+$$$$

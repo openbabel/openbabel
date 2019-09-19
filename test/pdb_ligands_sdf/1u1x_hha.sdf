@@ -1,0 +1,122 @@
+1U1X_HHA_A_401
+  RCSB PDB12061704103D
+Coordinates from PDB:1U1X:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    8.0410   30.4780   23.7130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4280   31.3600   23.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0090   32.3930   23.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2470   31.2480   21.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6410   32.3450   20.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2590   32.1780   19.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4480   30.9740   19.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3330   29.9500   19.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2290   28.6970   18.9750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2370   29.8770   21.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2780   28.9090   21.4550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O1
+A    2
+C
+A    3
+O2
+A    4
+C1
+A    5
+C6
+A    6
+C5
+A    7
+C4
+A    8
+C3
+A    9
+O3'
+A   10
+C2
+A   11
+N2
+M  END
+>  <InstanceId>
+1U1X_HHA_A_401
+
+>  <ChemCompId>
+HHA
+
+>  <PdbId>
+1U1X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+(2S,3S)-TRANS-2,3-DIHYDRO-3-HYDROXYANTHRANILIC ACID
+
+>  <SystematicName>
+(5S,6S)-6-amino-5-hydroxy-cyclohexa-1,3-diene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N O3
+
+>  <MolecularWeight>
+155.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9NO3/c8-6-4(7(10)11)2-1-3-5(6)9/h1-3,5-6,9H,8H2,(H,10,11)/t5-,6-/m0/s1
+
+>  <InChIKey>
+XBTXTLKLSHACSS-WDSKDSINSA-N
+
+>  <SMILES>
+C1=C[C@@H]([C@H](C(=C1)C(=O)O)N)O
+
+$$$$

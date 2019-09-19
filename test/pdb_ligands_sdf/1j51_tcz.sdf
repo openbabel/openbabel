@@ -1,0 +1,114 @@
+1J51_TCZ_A_1450
+  RCSB PDB12061702553D
+Coordinates from PDB:1J51:A:1450 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   24.6890  -14.0090  -46.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4670  -13.7150  -47.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2660  -13.7550  -46.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2880  -14.0810  -45.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5430  -14.3730  -44.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7360  -14.3370  -45.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1160  -13.9830  -47.7680  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7870  -13.4240  -47.5370  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6030  -14.7690  -43.0720  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+CL1
+A    8
+CL3
+A    9
+CL5
+M  END
+>  <InstanceId>
+1J51_TCZ_A_1450
+
+>  <ChemCompId>
+TCZ
+
+>  <PdbId>
+1J51
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1450
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 Cl3
+
+>  <Name>
+1,3,5-TRICHLORO-BENZENE
+
+>  <SystematicName>
+1,3,5-trichlorobenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H3 Cl3
+
+>  <MolecularWeight>
+181.447
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H3Cl3/c7-4-1-5(8)3-6(9)2-4/h1-3H
+
+>  <InChIKey>
+XKEFYDZQGKAQCN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(cc1Cl)Cl)Cl
+
+$$$$

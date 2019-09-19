@@ -1,0 +1,134 @@
+2HDS_4MB_A_1601
+  RCSB PDB12061705473D
+Coordinates from PDB:2HDS:A:1601 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   27.3900    9.1420   20.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2650   10.3480   21.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6570   10.2090   18.9640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8580   10.2810   19.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6120    9.1760   20.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5540   10.4580   21.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7150   11.5380   20.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1780   12.1270   20.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5350   11.4980   19.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1890    9.3810   22.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0120   11.5810   22.1260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6950   11.4380   18.5990   S 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4200   12.4650   17.9240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5570   10.8780   17.9000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  9  2  0  0  0  0
+  6 10  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  2  0  0  0  0
+A    1
+C3
+A    2
+C5
+A    3
+N1
+A    4
+C2
+A    5
+C4
+A    6
+C6
+A    7
+C9
+A    8
+C12
+A    9
+C10
+A   10
+O7
+A   11
+O8
+A   12
+S11
+A   13
+O14
+A   14
+O13
+M  END
+>  <InstanceId>
+2HDS_4MB_A_1601
+
+>  <ChemCompId>
+4MB
+
+>  <PdbId>
+2HDS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4 S
+
+>  <Name>
+4-[(METHYLSULFONYL)AMINO]BENZOIC ACID
+
+>  <SystematicName>
+4-(methylsulfonylamino)benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O4 S
+
+>  <MolecularWeight>
+215.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO4S/c1-14(12,13)9-7-4-2-6(3-5-7)8(10)11/h2-5,9H,1H3,(H,10,11)
+
+>  <InChIKey>
+SROHFTOYGFCJAF-UHFFFAOYSA-N
+
+>  <SMILES>
+CS(=O)(=O)Nc1ccc(cc1)C(=O)O
+
+$$$$

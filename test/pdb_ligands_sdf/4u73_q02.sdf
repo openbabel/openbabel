@@ -1,0 +1,126 @@
+4U6E_Q02_A_403
+  RCSB PDB12061715033D
+Coordinates from PDB:4U6E:A:403 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -20.3360  -15.6720  -11.3220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7060  -15.1050  -11.2160   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3530  -14.8960  -12.6660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7000  -13.7300  -10.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7050  -16.2140  -10.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9700  -15.5790   -9.8250   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9870  -17.5750  -10.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3670  -18.0770  -11.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6540  -19.3690  -12.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5590  -20.1690  -11.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1770  -19.6680  -10.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8910  -18.3720   -9.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  7  5  1  0  0  0  0
+  7 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+O
+A    2
+P
+A    3
+O1
+A    4
+O2
+A    5
+C
+A    6
+N
+A    7
+C1
+A    8
+C6
+A    9
+C5
+A   10
+C4
+A   11
+C3
+A   12
+C2
+M  END
+>  <InstanceId>
+4U6E_Q02_A_403
+
+>  <ChemCompId>
+Q02
+
+>  <PdbId>
+4U6E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3 P
+
+>  <Name>
+[(R)-amino(phenyl)methyl]phosphonic acid
+
+>  <SystematicName>
+[(R)-azanyl(phenyl)methyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N O3 P
+
+>  <MolecularWeight>
+187.133
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10NO3P/c8-7(12(9,10)11)6-4-2-1-3-5-6/h1-5,7H,8H2,(H2,9,10,11)/t7-/m1/s1
+
+>  <InChIKey>
+ZKFNOUUKULVDOB-SSDOTTSWSA-N
+
+>  <SMILES>
+c1ccc(cc1)[C@H](N)P(=O)(O)O
+
+$$$$

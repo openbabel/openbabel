@@ -1,0 +1,136 @@
+1E6Z_NGO_A_502
+  RCSB PDB12061702213D
+Coordinates from PDB:1E6Z:A:502 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   19.1550   44.7050  102.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6770   44.5200  101.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9770   43.2110  101.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9610   42.0370  102.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2260   42.4230  102.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2620   41.3070  103.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7170   46.0290  103.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1640   47.1180  103.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9700   45.5370  102.0670   N 0  3  0  0  0  0  0  0  0  0  0  0
+   19.0100   45.6220  103.1570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9600   42.8720  101.0100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2910   40.9790  102.8150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9200   43.5060  102.3300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4510   40.6180  101.8140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+M  CHG  1   9   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N2
+A   10
+O1
+A   11
+O3
+A   12
+O4
+A   13
+O5
+A   14
+O6
+M  END
+>  <InstanceId>
+1E6Z_NGO_A_502
+
+>  <ChemCompId>
+NGO
+
+>  <PdbId>
+1E6Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O5
+
+>  <Name>
+2-METHYL-4,5-DIHYDRO-(1,2-DIDEOXY-ALPHA-D-GLUCOPYRANOSO)[2,1-D]-1,3-OXAZOLE
+
+>  <SystematicName>
+(3aR,5R,6S,7R,7aR)-5-(hydroxymethyl)-2-methyl-5,6,7,7a-tetrahydro-3aH-pyrano[5,6-d][1,3]oxazol-1-ium-6,7-diol
+
+>  <Synonyms>
+N-ACETYLGLUCOSAMINE-OXAZOLINIUM ION INTERMEDIATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H14 N O5
+
+>  <MolecularWeight>
+204.2
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13NO5/c1-3-9-5-7(12)6(11)4(2-10)14-8(5)13-3/h4-8,10-12H,2H2,1H3/p+1/t4-,5-,6-,7-,8+/m1/s1
+
+>  <InChIKey>
+PDBSWNMXMILYCQ-PVFLNQBWSA-O
+
+>  <SMILES>
+CC1=[NH+][C@@H]2[C@H]([C@@H]([C@H](O[C@@H]2O1)CO)O)O
+
+$$$$

@@ -1,0 +1,84 @@
+2IRJ_ZSP_?_25
+  RCSB PDB12061705573D
+Coordinates from PDB:2IRJ:?:25 Model:1 without hydrogens
+  2  0  0  0  0  0            999 V2000
+   18.8880   30.2370   39.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5720   31.7500   36.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+A    1
+C16
+A    2
+C13
+M  END
+>  <InstanceId>
+2IRJ_ZSP_?_25
+
+>  <ChemCompId>
+ZSP
+
+>  <PdbId>
+2IRJ
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+15
+
+>  <ObservedFormula>
+C2
+
+>  <Name>
+2-amino-6-[(1Z)-1,2-dihydroxyprop-1-en-1-yl]-7,8-dihydropteridin-4(3H)-one
+
+>  <SystematicName>
+2-azanyl-6-[(Z)-1,2-bis(oxidanyl)prop-1-enyl]-7,8-dihydro-3H-pteridin-4-one
+
+>  <Synonyms>
+Sepiapterin  (enol-form)
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N5 O3
+
+>  <MolecularWeight>
+237.215
+
+>  <ModifiedDate>
+2014-07-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11N5O3/c1-3(15)6(16)4-2-11-7-5(12-4)8(17)14-9(10)13-7/h15-16H,2H2,1H3,(H4,10,11,13,14,17)/b6-3-
+
+>  <InChIKey>
+FYDGMRRMOMSOLR-UTCJRWHESA-N
+
+>  <SMILES>
+C/C(=C(\C1=NC2=C(NC1)N=C(NC2=O)N)/O)/O
+
+$$$$

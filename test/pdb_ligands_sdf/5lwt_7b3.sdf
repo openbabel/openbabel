@@ -1,0 +1,135 @@
+5LWT_7B3_A_409
+  RCSB PDB12061718543D
+Coordinates from PDB:5LWT:A:409 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -10.2100    4.6900    1.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1060    5.9340    2.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8170    3.9560    2.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5380    4.0850    0.4280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6070    2.7590    0.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7520    1.6170    0.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1710    3.8020    1.7240   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9540    3.0270    0.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0160    2.4610   -0.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7240    1.3630   -0.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7620    0.7980   -1.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3130    4.2050    1.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6090    4.6950    1.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2370    2.9490   -0.2200   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 14  9  2  0  0  0  0
+ 14  4  1  0  0  0  0
+  9  8  1  0  0  0  0
+  4 13  2  0  0  0  0
+  6  5  1  0  0  0  0
+  8  5  2  0  0  0  0
+  8 12  1  0  0  0  0
+  5  7  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12  1  2  0  0  0  0
+  7  1  1  0  0  0  0
+  7  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+C1
+A   10
+O
+A   11
+C
+A   12
+C3
+A   13
+C2
+A   14
+N
+M  END
+>  <InstanceId>
+5LWT_7B3_A_409
+
+>  <ChemCompId>
+7B3
+
+>  <PdbId>
+5LWT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O
+
+>  <Name>
+4-methoxy-5,6,7-trimethyl-pyrrolo[3,4-d]pyridazine
+
+>  <SystematicName>
+4-methoxy-5,6,7-trimethyl-pyrrolo[3,4-d]pyridazine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N3 O
+
+>  <MolecularWeight>
+191.23
+
+>  <ModifiedDate>
+2017-08-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13N3O/c1-6-8-5-11-12-10(14-4)9(8)7(2)13(6)3/h5H,1-4H3
+
+>  <InChIKey>
+JBVFAOAKSYCBHG-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c2cnnc(c2c(n1C)C)OC
+
+$$$$

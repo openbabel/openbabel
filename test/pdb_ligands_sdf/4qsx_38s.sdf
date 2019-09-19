@@ -1,0 +1,143 @@
+4QSX_38S_A_1207
+  RCSB PDB12061714293D
+Coordinates from PDB:4QSX:A:1207 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   28.4180   44.2780  -12.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3170   44.4440  -11.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3260   43.5470  -12.1690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0400   43.6540  -11.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2580   42.7900  -11.9840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7450   44.6540  -10.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4740   44.8010  -10.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7660   45.5510  -10.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0560   45.4280  -10.9610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1120   46.3960  -10.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1000   46.5760   -9.1750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7500   47.7000  -11.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5760   48.5900  -10.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4650   47.9440   -8.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4490   48.6460   -8.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2350   48.7740   -8.8130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  2  9  1  0  0  0  0
+  4  6  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+OAC
+A    2
+CAM
+A    3
+NAI
+A    4
+CAL
+A    5
+OAB
+A    6
+CAK
+A    7
+CAA
+A    8
+CAE
+A    9
+NAP
+A   10
+CAO
+A   11
+OAJ
+A   12
+CAH
+A   13
+CAG
+A   14
+CAN
+A   15
+CAF
+A   16
+OAD
+M  END
+>  <InstanceId>
+4QSX_38S_A_1207
+
+>  <ChemCompId>
+38S
+
+>  <PdbId>
+4QSX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1207
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4
+
+>  <Name>
+1-[(2R,5S)-5-(hydroxymethyl)tetrahydrofuran-2-yl]-5-methylpyrimidine-2,4(1H,3H)-dione
+
+>  <SystematicName>
+1-[(2R,5S)-5-(hydroxymethyl)oxolan-2-yl]-5-methyl-pyrimidine-2,4-dione
+
+>  <Synonyms>
+3'-deoxy thymidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2 O4
+
+>  <MolecularWeight>
+226.229
+
+>  <ModifiedDate>
+2014-07-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2O4/c1-6-4-12(10(15)11-9(6)14)8-3-2-7(5-13)16-8/h4,7-8,13H,2-3,5H2,1H3,(H,11,14,15)/t7-,8+/m0/s1
+
+>  <InChIKey>
+XKKCQTLDIPIRQD-JGVFFNPUSA-N
+
+>  <SMILES>
+CC1=CN(C(=O)NC1=O)[C@H]2CC[C@H](O2)CO
+
+$$$$

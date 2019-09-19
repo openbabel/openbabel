@@ -1,0 +1,135 @@
+3IU8_T03_A_289
+  RCSB PDB12061709073D
+Coordinates from PDB:3IU8:A:289 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    6.7540   46.4650    8.4770   F 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4220   43.0520    4.4420   S 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6980   45.2510    5.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8540   43.0640    3.5700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0570   45.4040    7.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0370   43.2670    1.4100   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0470   45.7890    8.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3680   43.2330    1.9050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7320   46.0720    7.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3720   45.9370    6.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3720   45.5350    5.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7110   44.7790    4.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1260   43.1350    2.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1430   43.1040    3.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2 12  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3 11  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4 13  1  0  0  0  0
+  4 14  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 13  2  0  0  0  0
+  7  9  2  0  0  0  0
+  8 14  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+F
+A    2
+S
+A    3
+C1
+A    4
+N1
+A    5
+C2
+A    6
+N2
+A    7
+C3
+A    8
+N3
+A    9
+C4
+A   10
+C5
+A   11
+C6
+A   12
+C7
+A   13
+C8
+A   14
+C9
+M  END
+>  <InstanceId>
+3IU8_T03_A_289
+
+>  <ChemCompId>
+T03
+
+>  <PdbId>
+3IU8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+289
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 S F
+
+>  <Name>
+3-[(4-fluorobenzyl)sulfanyl]-4H-1,2,4-triazole
+
+>  <SystematicName>
+3-[(4-fluorophenyl)methylsulfanyl]-4H-1,2,4-triazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 F N3 S
+
+>  <MolecularWeight>
+209.243
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8FN3S/c10-8-3-1-7(2-4-8)5-14-9-11-6-12-13-9/h1-4,6H,5H2,(H,11,12,13)
+
+>  <InChIKey>
+XLRSDRUBTQOPEY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CSc2[nH]cnn2)F
+
+$$$$

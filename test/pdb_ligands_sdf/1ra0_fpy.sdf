@@ -1,0 +1,114 @@
+1RA0_FPY_A_501
+  RCSB PDB12061703523D
+Coordinates from PDB:1RA0:A:501 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    3.9910   23.8270  102.0730   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0450   22.4370  102.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5130   21.5550  101.6190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7710   22.0870  103.4310   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4230   23.0180  104.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8820   22.8000  104.0060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3230   24.4240  104.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9000   25.2970  104.8230   F 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6320   24.8110  102.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+F5
+A    9
+C6
+M  END
+>  <InstanceId>
+1RA0_FPY_A_501
+
+>  <ChemCompId>
+FPY
+
+>  <PdbId>
+1RA0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O2 F
+
+>  <Name>
+(4S)-5-FLUORO-4-HYDROXY-3,4-DIHYDROPYRIMIDIN-2(1H)-ONE
+
+>  <SystematicName>
+(4S)-5-fluoro-4-hydroxy-3,4-dihydro-1H-pyrimidin-2-one
+
+>  <Synonyms>
+5-FLUORO-4-(S)-HYDROXY-3,4-DIHYDROPYRIMIDINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H5 F N2 O2
+
+>  <MolecularWeight>
+132.093
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H5FN2O2/c5-2-1-6-4(9)7-3(2)8/h1,3,8H,(H2,6,7,9)/t3-/m0/s1
+
+>  <InChIKey>
+PRVUBDAKZJCBTI-VKHMYHEASA-N
+
+>  <SMILES>
+C1=C([C@@H](NC(=O)N1)O)F
+
+$$$$

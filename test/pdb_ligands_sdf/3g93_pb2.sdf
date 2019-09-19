@@ -1,0 +1,152 @@
+3G5N_PB2_A_501
+  RCSB PDB12061708423D
+Coordinates from PDB:3G5N:A:501 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+    2.6620   12.8100   39.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3440   13.0500   41.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6780   13.5890   42.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2830   13.8890   42.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5780   13.6620   40.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1990   13.1340   39.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4200   12.8780   38.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3910   13.8590   38.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1680   13.6470   36.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3940   11.5650   37.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3390   11.3630   36.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1630   12.3950   36.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0190   12.2190   34.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1040   11.2850   35.1940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0750   11.4500   36.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8400   10.2830   36.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2460    9.4140   35.2410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1890    9.9760   34.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 18  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  2  0  0  0  0
+A    1
+CDB
+A    2
+CDC
+A    3
+CDD
+A    4
+CDE
+A    5
+CDF
+A    6
+CDA
+A    7
+CCD
+A    8
+CCE
+A    9
+CCF
+A   10
+CCC
+A   11
+CCB
+A   12
+CCA
+A   13
+CAA
+A   14
+NAB
+A   15
+CAF
+A   16
+CAE
+A   17
+NAD
+A   18
+CAC
+M  END
+>  <InstanceId>
+3G5N_PB2_A_501
+
+>  <ChemCompId>
+PB2
+
+>  <PdbId>
+3G5N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C16 N2
+
+>  <Name>
+1-(biphenyl-4-ylmethyl)-1H-imidazole
+
+>  <SystematicName>
+1-[(4-phenylphenyl)methyl]imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H14 N2
+
+>  <MolecularWeight>
+234.296
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H14N2/c1-2-4-15(5-3-1)16-8-6-14(7-9-16)12-18-11-10-17-13-18/h1-11,13H,12H2
+
+>  <InChIKey>
+DLYMRVCQTVOYEW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2ccc(cc2)Cn3ccnc3
+
+$$$$

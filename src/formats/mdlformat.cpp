@@ -550,6 +550,7 @@ namespace OpenBabel
         }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
+          errorMsg << line << "\n";
           errorMsg << "Invalid bond specification, atom numbers or bond order are wrong;\n";
           errorMsg << "each should be in a field of three characters.\n";
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
@@ -641,12 +642,15 @@ namespace OpenBabel
             ad->SetAlias(line);
             ad->SetOrigin(fileformatInput);
             OBAtom* at = mol.GetAtom(atomnum);
-            if (at) {
+            if (at) { // dkoes - only expand wild cards
               at->SetData(ad);
               //at->SetAtomicNum(0); Now leave element as found
               //The alias has now been added as a dummy atom with a AliasData object.
               //Delay the chemical interpretation until the rest of the molecule has been built
-              aliases.push_back(make_pair(ad, at));
+              //dkoes - only expand alias if referenced atom is wild card
+              //this is necessary since this field is used to store atom names (at least in the PDB)              
+              if(at->GetAtomicNum() == 0)
+                aliases.push_back(make_pair(ad, at));
             }
           }
           continue;
@@ -822,6 +826,10 @@ namespace OpenBabel
       }
     }
 
+    //alias expansion may need to look at coordinate array, so call
+    //endmodify to set mol->_c
+    mol.EndModify();
+
     //Expand aliases (implicit hydrogens already set on these as read from SMILES)
     for (vector<pair<AliasData*, OBAtom*> >::iterator iter = aliases.begin(); iter != aliases.end(); ++iter)
     {
@@ -829,8 +837,6 @@ namespace OpenBabel
       unsigned atomnum = (*iter).second->GetIdx();
       ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
-
-    mol.EndModify();
 
     if (comment.length()) {
       OBCommentData *cd = new OBCommentData;
@@ -1133,7 +1139,7 @@ namespace OpenBabel
       // mmm = no longer supported (default=999)
       //                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
       bool chiralFlag = GetChiralFlagFromGenericData(mol);
-
+ 
       snprintf(buff, BUFF_SIZE, "%3d%3d  0  0%3d  0  0  0  0  0999 V2000\n",
                mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;

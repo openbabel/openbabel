@@ -1,0 +1,118 @@
+4YPX_4FG_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YPX:A:301 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -21.1710   40.7010   -8.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0510   40.3120   -9.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8230   42.2800   -7.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0750   41.6990   -7.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8160   40.9470   -8.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2430   42.1540   -6.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6950   41.9410   -7.8290   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6610   40.6080   -9.4690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1380   43.3520   -5.9970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2940   41.5080   -6.5870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  5  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  1  1  0  0  0  0
+  5  7  1  0  0  0  0
+  1  4  2  0  0  0  0
+  7  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C5
+A    4
+C1
+A    5
+C4
+A    6
+C
+A    7
+N2
+A    8
+N1
+A    9
+N
+A   10
+O
+M  END
+>  <InstanceId>
+4YPX_4FG_A_301
+
+>  <ChemCompId>
+4FG
+
+>  <PdbId>
+4YPX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O
+
+>  <Name>
+6-aminopyridine-3-carboxamide
+
+>  <SystematicName>
+6-azanylpyridine-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N3 O
+
+>  <MolecularWeight>
+137.139
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N3O/c7-5-2-1-4(3-9-5)6(8)10/h1-3H,(H2,7,9)(H2,8,10)
+
+>  <InChIKey>
+ZLWYEPMDOUQDBW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1C(=O)N)N
+
+$$$$

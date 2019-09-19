@@ -1,0 +1,131 @@
+3DEH_RXA_C_300
+  RCSB PDB12061708183D
+Coordinates from PDB:3DEH:C:300 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -51.0150   13.8180  -21.5490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.7810   14.0000  -21.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.1320   13.5330  -20.2410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.0880   14.7050  -22.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.7450   15.0930  -23.3120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.7100   14.9390  -22.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.0500   14.4550  -21.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.6690   14.6930  -20.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.7900   13.7460  -20.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.2120   13.3050  -18.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.9860   15.6340  -23.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.6070   15.8740  -22.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.9440   15.4090  -21.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAA
+A    2
+CAI
+A    3
+NAH
+A    4
+CAK
+A    5
+OAC
+A    6
+CAM
+A    7
+CAL
+A    8
+CAF
+A    9
+CAJ
+A   10
+OAB
+A   11
+CAG
+A   12
+CAE
+A   13
+CAD
+M  END
+>  <InstanceId>
+3DEH_RXA_C_300
+
+>  <ChemCompId>
+RXA
+
+>  <PdbId>
+3DEH
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+isoquinoline-1,3,4(2H)-trione
+
+>  <SystematicName>
+isoquinoline-1,3,4-trione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H5 N O3
+
+>  <MolecularWeight>
+175.141
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H5NO3/c11-7-5-3-1-2-4-6(5)8(12)10-9(7)13/h1-4H,(H,10,12,13)
+
+>  <InChIKey>
+YIOFGHHAURBGSJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C(=O)C(=O)NC2=O
+
+$$$$

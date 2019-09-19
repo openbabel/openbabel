@@ -1,0 +1,151 @@
+3P3S_3M2_A_128
+  RCSB PDB12061710123D
+Coordinates from PDB:3P3S:A:128 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   -0.4820    2.1060   -7.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4760    2.6010  -10.8100   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3300   -1.9800  -10.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0650    0.1860   -2.2540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9390    2.0000   -3.4480  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0060   -2.0010   -3.2830  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0640   -0.8590   -7.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8860    0.5230   -5.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7810   -1.1490   -5.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0500    0.1890  -11.0050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0010    0.0030   -3.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0390   -0.4380   -6.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8480    0.7420   -4.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7970   -0.9210   -4.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2770    1.3470  -10.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1070   -0.7600  -10.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0420   -0.1460   -8.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2670    1.1140   -9.0480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1 18  1  0  0  0  0
+  2 15  1  0  0  0  0
+ 16  3  2  0  0  0  0
+  4 11  1  0  0  0  0
+  5 13  1  0  0  0  0
+ 14  6  1  0  0  0  0
+ 12  7  1  0  0  0  0
+  7 17  2  0  0  0  0
+ 13  8  2  0  0  0  0
+  8 12  1  0  0  0  0
+ 14  9  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 15 10  2  0  0  0  0
+ 16 10  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  2  0  0  0  0
+ 18 15  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 18 17  1  0  0  0  0
+A    1
+CAA
+A    2
+NAB
+A    3
+OAC
+A    4
+OAD
+A    5
+BRAE
+A    6
+BRAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+NAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+NAR
+M  END
+>  <InstanceId>
+3P3S_3M2_A_128
+
+>  <ChemCompId>
+3M2
+
+>  <PdbId>
+3P3S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+128
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2 Br2
+
+>  <Name>
+(5Z)-2-amino-5-(3,5-dibromo-4-hydroxybenzylidene)-1-methyl-1,5-dihydro-4H-imidazol-4-one
+
+>  <SystematicName>
+(5Z)-2-azanyl-5-[(3,5-dibromo-4-hydroxy-phenyl)methylidene]-1-methyl-imidazol-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 Br2 N3 O2
+
+>  <MolecularWeight>
+375.016
+
+>  <ModifiedDate>
+2011-08-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9Br2N3O2/c1-16-8(10(18)15-11(16)14)4-5-2-6(12)9(17)7(13)3-5/h2-4,17H,1H3,(H2,14,15,18)/b8-4-
+
+>  <InChIKey>
+XBSUMZSVMPLGBU-YWEYNIOJSA-N
+
+>  <SMILES>
+CN1/C(=C\c2cc(c(c(c2)Br)O)Br)/C(=O)N=C1N
+
+$$$$

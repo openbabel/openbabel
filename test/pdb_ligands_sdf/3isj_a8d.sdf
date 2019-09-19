@@ -1,0 +1,151 @@
+3ISJ_A8D_A_308
+  RCSB PDB12061709073D
+Coordinates from PDB:3ISJ:A:308 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   11.0400    9.5660   -5.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2820   10.5410    4.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0380   11.3770    1.0800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8010   10.4920    3.8290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7360   12.7050    3.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6860   10.1600   -4.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6850   10.4580   -3.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0970    9.9720   -2.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1390   10.4010   -0.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9930   10.8070    1.9470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1710   10.7820   -1.4720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4860    9.5880   -5.3440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8730   10.9740    0.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3710    9.9150   -4.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3970   10.7170   -0.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1150   10.2490   -2.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3830   10.5020   -2.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5060   11.1820    3.5930   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  1  1  0  0  0  0
+ 18  2  1  0  0  0  0
+ 13  3  2  0  0  0  0
+ 18  4  2  0  0  0  0
+ 18  5  2  0  0  0  0
+  6 14  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7 17  2  0  0  0  0
+ 14  8  1  0  0  0  0
+  8 16  2  0  0  0  0
+ 16  9  1  0  0  0  0
+  9 15  2  0  0  0  0
+ 13 10  1  0  0  0  0
+ 10 18  1  0  0  0  0
+ 17 11  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 15 13  1  0  0  0  0
+ 17 16  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+NAJ
+A   11
+NAK
+A   12
+OAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+SAR
+M  END
+>  <InstanceId>
+3ISJ_A8D_A_308
+
+>  <ChemCompId>
+A8D
+
+>  <PdbId>
+3ISJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+308
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4 S
+
+>  <Name>
+5-methoxy-N-(methylsulfonyl)-1H-indole-2-carboxamide
+
+>  <SystematicName>
+5-methoxy-N-methylsulfonyl-1H-indole-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N2 O4 S
+
+>  <MolecularWeight>
+268.289
+
+>  <ModifiedDate>
+2015-09-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2O4S/c1-17-8-3-4-9-7(5-8)6-10(12-9)11(14)13-18(2,15)16/h3-6,12H,1-2H3,(H,13,14)
+
+>  <InChIKey>
+DXGOZIMONBKDBI-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc2c(c1)cc([nH]2)C(=O)NS(=O)(=O)C
+
+$$$$

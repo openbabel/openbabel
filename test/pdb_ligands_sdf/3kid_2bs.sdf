@@ -1,0 +1,139 @@
+3KID_2BS_U_1
+  RCSB PDB12061709263D
+Coordinates from PDB:3KID:U:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -0.6840  -30.6190  -12.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8810  -34.3990   -8.7520   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1700  -28.9330  -10.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9760  -36.1120  -10.7520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1110  -29.6180  -11.3350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7250  -28.8460   -9.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7650  -32.0800  -11.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7800  -32.4530  -10.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8550  -33.8050  -10.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9620  -36.0120   -9.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9150  -34.8820  -11.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9000  -34.4690  -12.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2760  -30.2490  -13.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0030  -37.1030   -8.5830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8260  -33.0750  -13.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 13  2  0  0  0  0
+  2  9  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4 10  2  0  0  0  0
+  4 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 15  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 15  2  0  0  0  0
+A    1
+C1
+A    2
+S1
+A    3
+C2
+A    4
+N2
+A    5
+O2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+O01
+A   14
+N02
+A   15
+C10
+M  END
+>  <InstanceId>
+3KID_2BS_U_1
+
+>  <ChemCompId>
+2BS
+
+>  <PdbId>
+3KID
+
+>  <ChainId>
+U
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 S
+
+>  <Name>
+ethyl 2-amino-1,3-benzothiazole-6-carboxylate
+
+>  <SystematicName>
+ethyl 2-azanyl-1,3-benzothiazole-6-carboxylate
+
+>  <Synonyms>
+2-amino-benzothiazole-6-carboxylic acid ethyl ester
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O2 S
+
+>  <MolecularWeight>
+222.264
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O2S/c1-2-14-9(13)6-3-4-7-8(5-6)15-10(11)12-7/h3-5H,2H2,1H3,(H2,11,12)
+
+>  <InChIKey>
+VYJSGJXWKSDUSG-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1ccc2c(c1)sc(n2)N
+
+$$$$

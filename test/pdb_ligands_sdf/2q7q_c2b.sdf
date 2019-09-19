@@ -1,0 +1,114 @@
+2Q7Q_C2B_D_2002
+  RCSB PDB12061706453D
+Coordinates from PDB:2Q7Q:D:2002 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   20.3210   14.1440   30.5970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7530   14.2460   30.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2320   15.3690   29.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8700   16.4730   30.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2980   17.5490   29.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0730   17.5810   27.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4420   16.5480   27.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9670   15.3480   28.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5590   18.9460   26.9820  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+N1
+A    2
+CB
+A    3
+CG
+A    4
+CD1
+A    5
+CE1
+A    6
+CZ
+A    7
+CE2
+A    8
+CD2
+A    9
+CL
+M  END
+>  <InstanceId>
+2Q7Q_C2B_D_2002
+
+>  <ChemCompId>
+C2B
+
+>  <PdbId>
+2Q7Q
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+2002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N Cl
+
+>  <Name>
+1-(4-CHLOROPHENYL)METHANAMINE
+
+>  <SystematicName>
+(4-chlorophenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 Cl N
+
+>  <MolecularWeight>
+141.598
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H8ClN/c8-7-3-1-6(5-9)2-4-7/h1-4H,5,9H2
+
+>  <InChIKey>
+YMVFJGSXZNNUDW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CN)Cl
+
+$$$$

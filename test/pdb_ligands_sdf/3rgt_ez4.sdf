@@ -1,0 +1,125 @@
+3RGT_EZ4_A_407
+  RCSB PDB12061710343D
+Coordinates from PDB:3RGT:A:407 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   27.1920  -16.6950   -7.1300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2740  -15.2030   -8.5020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5910  -11.2880   -6.2950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4830  -12.3090   -6.2590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1040  -13.5710   -6.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2250  -14.6240   -6.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0490  -15.6340   -7.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3180  -16.2440   -8.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0880  -17.0760   -9.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2800  -17.3300  -10.2170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9360  -13.8900   -6.7300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2240  -15.2650   -5.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+ 11  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+NAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+OAJ
+A   11
+OAK
+A   12
+OAL
+M  END
+>  <InstanceId>
+3RGT_EZ4_A_407
+
+>  <ChemCompId>
+EZ4
+
+>  <PdbId>
+3RGT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+407
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O6
+
+>  <Name>
+(2S,3R,4R)-2,3,4,5-tetrahydroxy-N-oxo-pentanamide
+
+>  <SystematicName>
+(2S,3R,4R)-2,3,4,5-tetrahydroxy-N-oxo-pentanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N O6
+
+>  <MolecularWeight>
+179.128
+
+>  <ModifiedDate>
+2012-04-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO6/c7-1-2(8)3(9)4(10)5(11)6-12/h2-4,7-10H,1H2/t2-,3-,4+/m1/s1
+
+>  <InChIKey>
+VIMQVNVKLDVNFU-JJYYJPOSSA-N
+
+>  <SMILES>
+C([C@H]([C@H]([C@@H](C(=O)N=O)O)O)O)O
+
+$$$$

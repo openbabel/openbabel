@@ -1,0 +1,106 @@
+3QU8_3QU_A_501
+  RCSB PDB12061710283D
+Coordinates from PDB:3QU8:A:501 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+  -13.7500    0.6660    1.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4370    2.2280    1.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1230   -0.0720    0.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8720    1.5330    0.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6330   -0.4110   -1.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3930    1.7800    2.0600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1910    0.3760   -0.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2  6  2  0  0  0  0
+  3  1  2  0  0  0  0
+  4  2  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  3  1  0  0  0  0
+  7  4  2  0  0  0  0
+A    1
+CAC
+A    2
+CAD
+A    3
+CAE
+A    4
+CAF
+A    5
+CAK
+A    6
+NAL
+A    7
+CAM
+M  END
+>  <InstanceId>
+3QU8_3QU_A_501
+
+>  <ChemCompId>
+3QU
+
+>  <PdbId>
+3QU8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+9
+
+>  <ObservedFormula>
+C6 N
+
+>  <Name>
+4-(4-nitrobenzyl)pyridine
+
+>  <SystematicName>
+4-[(4-nitrophenyl)methyl]pyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 N2 O2
+
+>  <MolecularWeight>
+214.22
+
+>  <ModifiedDate>
+2011-09-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10N2O2/c15-14(16)12-3-1-10(2-4-12)9-11-5-7-13-8-6-11/h1-8H,9H2
+
+>  <InChIKey>
+MNHKUCBXXMFQDM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1Cc2ccncc2)[N+](=O)[O-]
+
+$$$$

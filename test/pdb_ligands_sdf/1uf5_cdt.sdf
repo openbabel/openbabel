@@ -1,0 +1,125 @@
+1UF5_CDT_A_998
+  RCSB PDB12061704133D
+Coordinates from PDB:1UF5:A:998 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   53.3140   80.0350   -4.4530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7360   80.2950   -3.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3220   81.4240   -3.0230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6080   79.2910   -2.3500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0920   79.5120   -0.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6050   78.3720   -0.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1950   78.5570    1.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.9160   80.0720    2.1280   S 0  0  0  0  0  0  0  0  0  0  0  0
+   54.6810   79.8160    1.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5700   79.5310   -0.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9460   78.7450   -1.6780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9260   80.4230   -0.2450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+NT
+A    2
+CT
+A    3
+OT
+A    4
+N
+A    5
+CA
+A    6
+CB
+A    7
+CG
+A    8
+SD
+A    9
+CE
+A   10
+C
+A   11
+O
+A   12
+OXT
+M  END
+>  <InstanceId>
+1UF5_CDT_A_998
+
+>  <ChemCompId>
+CDT
+
+>  <PdbId>
+1UF5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+998
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O3 S
+
+>  <Name>
+4-METHYLSULFANYL-2-UREIDO-BUTYRIC ACID
+
+>  <SystematicName>
+(2R)-2-(aminocarbonylamino)-4-methylsulfanyl-butanoic acid
+
+>  <Synonyms>
+N-CARBAMYL-D-METHIONINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 N2 O3 S
+
+>  <MolecularWeight>
+192.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12N2O3S/c1-12-3-2-4(5(9)10)8-6(7)11/h4H,2-3H2,1H3,(H,9,10)(H3,7,8,11)/t4-/m1/s1
+
+>  <InChIKey>
+DEWDMTSMCKXBNP-SCSAIBSYSA-N
+
+>  <SMILES>
+CSCC[C@H](C(=O)O)NC(=O)N
+
+$$$$

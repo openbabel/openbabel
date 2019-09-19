@@ -1,0 +1,122 @@
+4OWS_4M0_A_402
+  RCSB PDB12061714073D
+Coordinates from PDB:4OWS:A:402 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -18.2210  -36.7170   17.8400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7190  -35.5470   17.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5080  -35.2810   18.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4230  -34.5280   16.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0070  -33.2730   17.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7690  -32.1900   16.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9280  -32.3420   15.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6780  -31.2560   14.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3330  -33.5850   14.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5650  -34.6610   15.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9630  -35.8360   15.6150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  2  0  0  0  0
+  9 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  4  2  0  0  0  0
+  6  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAC
+A    2
+CAH
+A    3
+OAD
+A    4
+CAK
+A    5
+CAF
+A    6
+CAE
+A    7
+CAI
+A    8
+CAA
+A    9
+CAG
+A   10
+CAJ
+A   11
+NAB
+M  END
+>  <InstanceId>
+4OWS_4M0_A_402
+
+>  <ChemCompId>
+4M0
+
+>  <PdbId>
+4OWS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+2-azanyl-4-methyl-benzoic acid
+
+>  <SystematicName>
+2-azanyl-4-methyl-benzoic acid
+
+>  <Synonyms>
+4-methylanthranilate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O2
+
+>  <MolecularWeight>
+151.163
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO2/c1-5-2-3-6(8(10)11)7(9)4-5/h2-4H,9H2,1H3,(H,10,11)
+
+>  <InChIKey>
+RPGKFFKUTVJVPY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1)N)C(=O)O
+
+$$$$

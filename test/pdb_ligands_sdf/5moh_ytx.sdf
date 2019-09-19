@@ -1,0 +1,130 @@
+5MOH_YTX_A_401
+  RCSB PDB12061719043D
+Coordinates from PDB:5MOH:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+ -123.4460 -180.3810  314.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.3470 -181.2120  312.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.5120 -182.5900  313.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -122.5500 -185.3800  312.9770   O 0  0  0  0  0  0  0  0  0  0  0  0
+ -122.9250 -185.5620  310.7960   O 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.4770 -183.4730  311.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -122.9560 -184.8940  311.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.7720 -183.1140  314.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.8680 -182.2960  315.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.7020 -180.9270  315.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.7940 -180.1510  316.3950   O 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.3290 -179.0180  313.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+ -123.2140 -178.3700  312.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  3  1  0  0  0  0
+  7  4  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  3  8  1  0  0  0  0
+ 12  1  1  0  0  0  0
+  1 10  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O1
+A    5
+O2
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+O3
+A   12
+O
+A   13
+C
+M  END
+>  <InstanceId>
+5MOH_YTX_A_401
+
+>  <ChemCompId>
+YTX
+
+>  <PdbId>
+5MOH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+2-(3-methoxy-4-oxidanyl-phenyl)ethanoic acid
+
+>  <SystematicName>
+2-(3-methoxy-4-oxidanyl-phenyl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 O4
+
+>  <MolecularWeight>
+182.173
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10O4/c1-13-8-4-6(5-9(11)12)2-3-7(8)10/h2-4,10H,5H2,1H3,(H,11,12)
+
+>  <InChIKey>
+QRMZSPFSDQBLIX-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(ccc1O)CC(=O)O
+
+$$$$

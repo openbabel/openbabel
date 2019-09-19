@@ -1,0 +1,127 @@
+1WRR_UNC_A_999
+  RCSB PDB12061704343D
+Coordinates from PDB:1WRR:A:999 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   31.6380   25.6270   41.0620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1940   25.7730   39.9730   N 0  3  0  0  0  0  0  0  0  0  0  0
+   33.3800   25.4290   39.7550   O 0  5  0  0  0  0  0  0  0  0  0  0
+   31.4840   26.4430   38.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2150   26.8910   39.0900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6610   27.5560   37.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4860   27.9640   38.0580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2450   26.6700   37.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4690   26.2390   37.6510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6020   27.3790   36.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2700   27.5930   35.6350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3390   27.7900   36.8430   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+M  CHG  2   2   1   3  -1
+A    1
+OD2
+A    2
+N4
+A    3
+OD1
+A    4
+C4
+A    5
+N3
+A    6
+C2
+A    7
+O2
+A    8
+C5
+A    9
+N5
+A   10
+C6
+A   11
+O6
+A   12
+N1
+M  END
+>  <InstanceId>
+1WRR_UNC_A_999
+
+>  <ChemCompId>
+UNC
+
+>  <PdbId>
+1WRR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N4 O4
+
+>  <Name>
+5-AMINO-6-NITROPYRIMIDINE-2,4(1H,3H)-DIONE
+
+>  <SystematicName>
+5-amino-6-nitro-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+5-AMINO 6-NITRO URACIL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H4 N4 O4
+
+>  <MolecularWeight>
+172.099
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H4N4O4/c5-1-2(8(11)12)6-4(10)7-3(1)9/h5H2,(H2,6,7,9,10)
+
+>  <InChIKey>
+CLOSWQFGCBFNCK-UHFFFAOYSA-N
+
+>  <SMILES>
+C1(=C(NC(=O)NC1=O)[N+](=O)[O-])N
+
+$$$$

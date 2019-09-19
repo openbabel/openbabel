@@ -1,0 +1,106 @@
+1H4Q_PRI_A_1480
+  RCSB PDB12061702413D
+Coordinates from PDB:1H4Q:A:1480 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   23.8070  104.3130  101.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9310  104.3860   99.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4210  105.2000  102.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4280  105.0860  103.6610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5880  103.4050  101.4120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7520  103.4240   99.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7900  103.9680  102.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+CB
+A    2
+CG
+A    3
+C
+A    4
+OT1
+A    5
+N
+A    6
+CD
+A    7
+CA
+M  END
+>  <InstanceId>
+1H4Q_PRI_A_1480
+
+>  <ChemCompId>
+PRI
+
+>  <PdbId>
+1H4Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1480
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O
+
+>  <Name>
+PYRROLIDINE-2-CARBALDEHYDE
+
+>  <SystematicName>
+(2S)-pyrrolidine-2-carbaldehyde
+
+>  <Synonyms>
+PROLINOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N O
+
+>  <MolecularWeight>
+99.131
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO/c7-4-5-2-1-3-6-5/h4-6H,1-3H2/t5-/m0/s1
+
+>  <InChIKey>
+JIDDDPVQQUHACU-YFKPBYRVSA-N
+
+>  <SMILES>
+C1C[C@H](NC1)C=O
+
+$$$$

@@ -1,0 +1,139 @@
+5FJK_EM6_A_1350
+  RCSB PDB12061717423D
+Coordinates from PDB:5FJK:A:1350 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -9.0770  -18.2370   -6.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2030  -17.4570   -5.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2670  -18.4700   -5.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3600  -19.1310   -3.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3290  -18.7860   -2.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3420  -20.0300   -3.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2310  -20.3160   -4.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3480  -21.1490   -4.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7510  -22.0170   -3.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9880  -22.8650   -2.9650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9500  -21.0990   -5.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2190  -20.1710   -6.6500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2160  -19.7410   -5.7900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2710  -18.8510   -6.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2930  -18.3270   -7.3330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 14  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  3  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+N06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+N10
+A   11
+C11
+A   12
+N12
+A   13
+N13
+A   14
+C14
+A   15
+O15
+M  END
+>  <InstanceId>
+5FJK_EM6_A_1350
+
+>  <ChemCompId>
+EM6
+
+>  <PdbId>
+5FJK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1350
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O
+
+>  <Name>
+6-ethyl-5-methyl-7-oxidanylidene-1H-pyrazolo[1,5-a]pyrimidine-3-carbonitrile
+
+>  <SystematicName>
+6-ethyl-5-methyl-7-oxidanylidene-1H-pyrazolo[1,5-a]pyrimidine-3-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N4 O
+
+>  <MolecularWeight>
+202.213
+
+>  <ModifiedDate>
+2015-10-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N4O/c1-3-8-6(2)13-9-7(4-11)5-12-14(9)10(8)15/h5,12H,3H2,1-2H3
+
+>  <InChIKey>
+PJIRQIUNBLUWJK-UHFFFAOYSA-N
+
+>  <SMILES>
+CCC1=C(N=C2C(=CNN2C1=O)C#N)C
+
+$$$$

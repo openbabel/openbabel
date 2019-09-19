@@ -1,0 +1,122 @@
+4BBZ_4OJ_A_1530
+  RCSB PDB12061711493D
+Coordinates from PDB:4BBZ:A:1530 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -13.5450  -40.3430  -22.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8320  -41.5720  -23.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1400  -41.9190  -23.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1700  -41.0270  -23.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8860  -39.7980  -22.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.5820  -39.4540  -22.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8710  -38.8790  -22.2110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4770  -37.7510  -23.1370   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9560  -37.8510  -23.0380   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0180  -37.8670  -24.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3270  -38.1030  -21.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O12
+A    8
+P13
+A    9
+O1P
+A   10
+O2P
+A   11
+C7
+M  END
+>  <InstanceId>
+4BBZ_4OJ_A_1530
+
+>  <ChemCompId>
+4OJ
+
+>  <PdbId>
+4BBZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1530
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 O3 P
+
+>  <Name>
+(2-methylphenyl) dihydrogen phosphate
+
+>  <SystematicName>
+(2-methylphenyl) dihydrogen phosphate
+
+>  <Synonyms>
+o-cresyl-phosphate
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H9 O4 P
+
+>  <MolecularWeight>
+188.118
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9O4P/c1-6-4-2-3-5-7(6)11-12(8,9)10/h2-5H,1H3,(H2,8,9,10)
+
+>  <InChIKey>
+HUJOGFUFUMBXPL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccccc1OP(=O)(O)O
+
+$$$$

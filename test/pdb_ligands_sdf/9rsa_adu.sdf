@@ -1,0 +1,93 @@
+9RSA_ADU_A_125
+  RCSB PDB12061720243D
+Coordinates from PDB:9RSA:A:125 Model:1 without hydrogens
+  4  3  0  0  0  0            999 V2000
+   47.5160   37.3050   64.9800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.7130   36.6410   64.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7530   35.9210   64.5340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9810   36.8240   62.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+A    1
+N3'
+A    2
+C8'
+A    3
+O8'
+A    4
+C9'
+M  END
+>  <InstanceId>
+9RSA_ADU_A_125
+
+>  <ChemCompId>
+ADU
+
+>  <PdbId>
+9RSA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+125
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+16
+
+>  <ObservedFormula>
+C2 N O
+
+>  <Name>
+3'-DEOXY-3'-ACETAMIDO-URIDINE
+
+>  <SystematicName>
+N-[(2S,3S,4R,5R)-5-(2,4-dioxopyrimidin-1-yl)-4-hydroxy-2-(hydroxymethyl)oxolan-3-yl]ethanamide
+
+>  <Synonyms>
+((((3'-DEOXY-3'-URIDINYL)-AMINO)CARBONYL)METHYL)
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 N3 O6
+
+>  <MolecularWeight>
+285.253
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15N3O6/c1-5(16)12-8-6(4-15)20-10(9(8)18)14-3-2-7(17)13-11(14)19/h2-3,6,8-10,15,18H,4H2,1H3,(H,12,16)(H,13,17,19)/t6-,8-,9?,10-/m1/s1
+
+>  <InChIKey>
+BUUSLPRPRSICHU-JLRHVRHOSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H](O[C@H]([C@@H]1O)N2C=CC(=O)NC2=O)CO
+
+$$$$

@@ -1,0 +1,102 @@
+1S83_4HA_A_5
+  RCSB PDB12061703583D
+Coordinates from PDB:1S83:A:5 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   35.7380   27.1020   10.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9480   26.4360   11.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4820   26.6460   11.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8570   27.9510   11.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3960   27.9670   13.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6370   29.2150   13.5890   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+M  CHG  1   6   1
+A    1
+OA
+A    2
+CB
+A    3
+CG
+A    4
+CD
+A    5
+CE
+A    6
+NZ
+M  END
+>  <InstanceId>
+1S83_4HA_A_5
+
+>  <ChemCompId>
+4HA
+
+>  <PdbId>
+1S83
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O
+
+>  <Name>
+4-HYDROXYBUTAN-1-AMINIUM
+
+>  <SystematicName>
+4-hydroxybutylazanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H12 N O
+
+>  <MolecularWeight>
+90.144
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H11NO/c5-3-1-2-4-6/h6H,1-5H2/p+1
+
+>  <InChIKey>
+BLFRQYKZFKYQLO-UHFFFAOYSA-O
+
+>  <SMILES>
+C(CCO)C[NH3+]
+
+$$$$

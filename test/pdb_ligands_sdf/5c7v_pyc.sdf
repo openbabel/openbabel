@@ -1,0 +1,111 @@
+1ELI_PYC_A_801
+  RCSB PDB12061702243D
+Coordinates from PDB:1ELI:A:801 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+    8.9780   28.9300   25.5510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7990   29.3620   27.5430   O 0  5  0  0  0  0  0  0  0  0  0  0
+    9.5820   29.6810   26.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0440   30.9680   25.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9890   31.6650   24.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6110   32.8730   25.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0520   32.9070   26.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6940   31.7560   26.8740   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+M  CHG  1   2  -1
+A    1
+O7
+A    2
+O8
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+N6
+M  END
+>  <InstanceId>
+1ELI_PYC_A_801
+
+>  <ChemCompId>
+PYC
+
+>  <PdbId>
+1ELI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2
+
+>  <Name>
+PYRROLE-2-CARBOXYLATE
+
+>  <SystematicName>
+1H-pyrrole-2-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N O2
+
+>  <MolecularWeight>
+110.091
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5NO2/c7-5(8)4-2-1-3-6-4/h1-3,6H,(H,7,8)/p-1
+
+>  <InChIKey>
+WRHZVMBBRYBTKZ-UHFFFAOYSA-M
+
+>  <SMILES>
+c1cc([nH]c1)C(=O)[O-]
+
+$$$$

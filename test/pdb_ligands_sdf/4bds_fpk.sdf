@@ -1,0 +1,118 @@
+4BDS_FPK_A_710
+  RCSB PDB12061711493D
+Coordinates from PDB:4BDS:A:710 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  138.9320  117.4200   40.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  139.7530  115.0300   40.9200   N 0  0  0  0  0  0  0  0  0  0  0  0
+  137.6710  117.5700   41.3040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  139.8290  116.2960   41.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  141.2630  116.6730   41.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  141.9710  115.4440   41.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  141.0330  114.3700   41.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  138.5830  114.4600   40.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  137.4880  115.0820   40.0010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  139.4820  118.4110   39.9600   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  1  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  8  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  8  2  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+CA
+A    5
+CB
+A    6
+CC
+A    7
+CD
+A    8
+CE
+A    9
+OE
+A   10
+OXT
+M  END
+>  <InstanceId>
+4BDS_FPK_A_710
+
+>  <ChemCompId>
+FPK
+
+>  <PdbId>
+4BDS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3
+
+>  <Name>
+1-formyl-L-proline
+
+>  <SystematicName>
+(2S)-1-methanoylpyrrolidine-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C6 H9 N O3
+
+>  <MolecularWeight>
+143.141
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+PRO
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9NO3/c8-4-7-3-1-2-5(7)6(9)10/h4-5H,1-3H2,(H,9,10)/t5-/m0/s1
+
+>  <InChIKey>
+DHDRGOURKDLAOT-YFKPBYRVSA-N
+
+>  <SMILES>
+C1C[C@H](N(C1)C=O)C(=O)O
+
+$$$$

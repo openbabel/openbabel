@@ -1,0 +1,127 @@
+1GVY_NIN_A_1422
+  RCSB PDB12061702393D
+Coordinates from PDB:1GVY:A:1422 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   82.5040   32.8680   10.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.9560   33.5200   11.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.8240   34.5910   11.7940   N 0  3  0  0  0  0  0  0  0  0  0  0
+   84.4370   35.2060   12.6970   O 0  5  0  0  0  0  0  0  0  0  0  0
+   84.1180   34.9900   10.6880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   82.5500   33.1160   13.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.6600   32.0970   13.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.3150   31.7270   14.6230   N 0  3  0  0  0  0  0  0  0  0  0  0
+   80.5290   30.8180   14.8030   O 0  5  0  0  0  0  0  0  0  0  0  0
+   81.7650   32.3590   15.5720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   81.2240   31.4190   12.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.6150   31.8170   10.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  8  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11  7  1  0  0  0  0
+ 12  1  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  7  6  2  0  0  0  0
+  1  2  2  0  0  0  0
+  6  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+M  CHG  4   3   1   4  -1   8   1   9  -1
+A    1
+C1
+A    2
+C2
+A    3
+N2
+A    4
+O21
+A    5
+O22
+A    6
+C3
+A    7
+C4
+A    8
+N4
+A    9
+O41
+A   10
+O42
+A   11
+C5
+A   12
+C6
+M  END
+>  <InstanceId>
+1GVY_NIN_A_1422
+
+>  <ChemCompId>
+NIN
+
+>  <PdbId>
+1GVY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1422
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O4
+
+>  <Name>
+DINITROPHENYLENE
+
+>  <SystematicName>
+1,3-dinitrobenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H4 N2 O4
+
+>  <MolecularWeight>
+168.107
+
+>  <ModifiedDate>
+2012-01-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4N2O4/c9-7(10)5-2-1-3-6(4-5)8(11)12/h1-4H
+
+>  <InChIKey>
+WDCYWAQPCXBPJA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)[N+](=O)[O-])[N+](=O)[O-]
+
+$$$$

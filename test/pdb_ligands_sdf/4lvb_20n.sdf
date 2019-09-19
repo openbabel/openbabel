@@ -1,0 +1,143 @@
+4LVB_20N_A_601
+  RCSB PDB12061713383D
+Coordinates from PDB:4LVB:A:601 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   13.3730    3.9080   -3.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4230    5.1200   -2.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5010    5.9050   -3.0280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4920    5.2840   -2.1600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7130    6.3440   -1.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6900    6.1600   -0.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9570    7.1540    0.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2730    8.3620    0.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2830    8.5460   -0.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0100    7.5460   -1.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5950    9.2830    1.6140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8700   10.3490    2.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8270   10.7000    1.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4040   11.1350    3.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3810   11.5020    4.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9590   12.5870    3.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  1  0  0  0  0
+ 16 14  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9 10  2  0  0  0  0
+  6  5  2  0  0  0  0
+ 10  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+A   12
+C12
+A   13
+O13
+A   14
+C14
+A   15
+C15
+A   16
+C16
+M  END
+>  <InstanceId>
+4LVB_20N_A_601
+
+>  <ChemCompId>
+20N
+
+>  <PdbId>
+4LVB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2
+
+>  <Name>
+N-[4-(acetylamino)phenyl]cyclopropanecarboxamide
+
+>  <SystematicName>
+N-(4-acetamidophenyl)cyclopropanecarboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 N2 O2
+
+>  <MolecularWeight>
+218.252
+
+>  <ModifiedDate>
+2013-09-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O2/c1-8(15)13-10-4-6-11(7-5-10)14-12(16)9-2-3-9/h4-7,9H,2-3H2,1H3,(H,13,15)(H,14,16)
+
+>  <InChIKey>
+XJFJFROTOPBZCO-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccc(cc1)NC(=O)C2CC2
+
+$$$$

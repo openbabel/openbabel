@@ -1,0 +1,150 @@
+2H3W_HC5_A_1602
+  RCSB PDB12061705453D
+Coordinates from PDB:2H3W:A:1602 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   57.0980    5.0820   -0.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.7410    6.4710   -0.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2130    6.8790   -1.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.9520    8.2200   -1.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0360    9.3920   -1.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8000   10.7160   -1.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7270   10.8370   -2.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.4300   11.7640   -0.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.2860   12.9020   -1.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0100   13.2070    0.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.0650   14.3060    0.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.2230   15.1450    1.0110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7840   14.3380   -0.8700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.4620   14.1170   -1.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9190   13.9930   -2.8390   N 0  3  0  0  0  0  0  0  0  0  0  0
+   57.2430   15.2560   -3.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.9260   12.9070   -2.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.9880   13.7730   -3.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 18  1  0  0  0  0
+M  CHG  1  15   1
+A    1
+CAC
+A    2
+CAD
+A    3
+CAE
+A    4
+CAF
+A    5
+CAG
+A    6
+CAH
+A    7
+OAI
+A    8
+OAK
+A    9
+CAP
+A   10
+CAQ
+A   11
+CAR
+A   12
+OAL
+A   13
+OAS
+A   14
+CAO
+A   15
+NAN
+A   16
+CAT
+A   17
+CAJ
+A   18
+CAM
+M  END
+>  <InstanceId>
+2H3W_HC5_A_1602
+
+>  <ChemCompId>
+HC5
+
+>  <PdbId>
+2H3W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O4
+
+>  <Name>
+(R)-3-CARBOXY-2-(HEXANOYLOXY)-N,N,N-TRIMETHYLPROPAN-1-AMINIUM
+
+>  <SystematicName>
+[(2R)-2-hexanoyloxy-4-hydroxy-4-oxo-butyl]-trimethyl-azanium
+
+>  <Synonyms>
+HEXANOYLCARNITINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H26 N O4
+
+>  <MolecularWeight>
+260.35
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H25NO4/c1-5-6-7-8-13(17)18-11(9-12(15)16)10-14(2,3)4/h11H,5-10H2,1-4H3/p+1/t11-/m1/s1
+
+>  <InChIKey>
+VVPRQWTYSNDTEA-LLVKDONJSA-O
+
+>  <SMILES>
+CCCCCC(=O)O[C@H](CC(=O)O)C[N+](C)(C)C
+
+$$$$

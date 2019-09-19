@@ -1,0 +1,160 @@
+5BZM_4X8_A_201
+  RCSB PDB12061717013D
+Coordinates from PDB:5BZM:A:201 Model:1 without hydrogens
+ 20 22  0  0  0  0            999 V2000
+   12.2590   -5.9640    1.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8450   -4.7810    0.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9860   -4.3120   -0.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5130   -3.4520   -1.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7140   -2.9450   -2.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3530   -3.2630   -2.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8460   -4.1490   -1.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5490   -4.5000   -1.8750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6190   -4.6620   -0.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0480   -5.5550    0.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8520   -5.7310    1.4460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3240   -6.7790    2.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0870   -6.8970    3.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0440   -5.8760    4.4520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7780   -5.8780    5.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5680   -6.9730    5.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6170   -8.0340    5.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3580   -9.1050    5.3620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8860   -8.0220    3.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9650   -9.1170    3.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  9  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 20 19  1  0  0  0  0
+ 13 19  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 19 17  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 16  2  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+CAJ
+A    2
+CAI
+A    3
+CAQ
+A    4
+CAG
+A    5
+CAD
+A    6
+CAF
+A    7
+CAO
+A    8
+NAC
+A    9
+CAS
+A   10
+CAL
+A   11
+NAT
+A   12
+CAK
+A   13
+CAR
+A   14
+NAM
+A   15
+CAE
+A   16
+CAH
+A   17
+CAN
+A   18
+NAB
+A   19
+CAP
+A   20
+CAA
+M  END
+>  <InstanceId>
+5BZM_4X8_A_201
+
+>  <ChemCompId>
+4X8
+
+>  <PdbId>
+5BZM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C16 N4
+
+>  <Name>
+2-[(4-amino-3-methylpyridin-2-yl)methyl]-1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <SystematicName>
+2-[(4-azanyl-3-methyl-pyridin-2-yl)methyl]-3,4-dihydro-1H-isoquinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H20 N4
+
+>  <MolecularWeight>
+268.357
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H20N4/c1-11-14(17)5-7-19-16(11)10-20-8-6-12-3-2-4-15(18)13(12)9-20/h2-5,7H,6,8-10,18H2,1H3,(H2,17,19)
+
+>  <InChIKey>
+HNIXXQJEZDAUFJ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(ccnc1CN2CCc3cccc(c3C2)N)N
+
+$$$$

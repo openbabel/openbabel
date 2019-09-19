@@ -1,0 +1,146 @@
+4OJT_2WP_A_301
+  RCSB PDB12061714043D
+Coordinates from PDB:4OJT:A:301 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   38.7440   -4.1390   31.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1880   -4.1560   30.9970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2930   -3.6730   32.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0340   -2.5980   32.9790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5850   -4.9610   33.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9490   -5.2350   33.3930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0240   -6.0350   32.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2060   -5.4610   31.0110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5280   -6.2790   32.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3770  -11.6130   31.5270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4920  -11.5700   32.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2950  -10.3470   33.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4530   -9.0540   32.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2620   -7.6410   33.8010   S 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5290  -12.8800   33.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4120  -13.3840   33.5770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6380  -13.3100   33.7260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  8  1  1  0  0  0  0
+  8  7  1  0  0  0  0
+  1  3  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  5  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+CE
+A   10
+N
+A   11
+CA
+A   12
+CB
+A   13
+CG
+A   14
+SD
+A   15
+C
+A   16
+O
+A   17
+OXT
+M  END
+>  <InstanceId>
+4OJT_2WP_A_301
+
+>  <ChemCompId>
+2WP
+
+>  <PdbId>
+4OJT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O6 S
+
+>  <Name>
+(2S)-2-amino-4-({[(2S,3S,4R,5S)-3,4,5-trihydroxytetrahydrofuran-2-yl]methyl}sulfanyl)butanoic acid
+
+>  <SystematicName>
+(2S)-2-azanyl-4-[[(2S,3S,4R,5S)-3,4,5-tris(oxidanyl)oxolan-2-yl]methylsulfanyl]butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O6 S
+
+>  <MolecularWeight>
+267.299
+
+>  <ModifiedDate>
+2014-03-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO6S/c10-4(8(13)14)1-2-17-3-5-6(11)7(12)9(15)16-5/h4-7,9,11-12,15H,1-3,10H2,(H,13,14)/t4-,5+,6+,7+,9-/m0/s1
+
+>  <InChIKey>
+IQFWYNFDWRYSRA-LYNCRYNASA-N
+
+>  <SMILES>
+C(CSC[C@@H]1[C@H]([C@H]([C@H](O1)O)O)O)[C@@H](C(=O)O)N
+
+$$$$

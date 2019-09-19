@@ -1,0 +1,123 @@
+4JQM_1LQ_A_303
+  RCSB PDB12061713123D
+Coordinates from PDB:4JQM:A:303 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -15.1860    2.7280    5.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1810    1.9720    3.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3500    1.9150    3.0600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4640    2.6510    3.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4730    3.3500    4.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2860    3.4390    5.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2310    4.2070    6.5660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3120    4.8920    6.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5390    4.7890    6.2770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5940    4.1110    5.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7270    4.0430    4.5070   N 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  5 10  2  0  0  0  0
+  5  6  1  0  0  0  0
+  1  6  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  9  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+CAE
+A    2
+CAB
+A    3
+CAC
+A    4
+CAF
+A    5
+C5
+A    6
+C4
+A    7
+N3
+A    8
+C2
+A    9
+N1
+A   10
+C6
+A   11
+NAA
+M  END
+>  <InstanceId>
+4JQM_1LQ_A_303
+
+>  <ChemCompId>
+1LQ
+
+>  <PdbId>
+4JQM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3
+
+>  <Name>
+quinazolin-4-amine
+
+>  <SystematicName>
+quinazolin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N3
+
+>  <MolecularWeight>
+145.161
+
+>  <ModifiedDate>
+2013-07-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7N3/c9-8-6-3-1-2-4-7(6)10-5-11-8/h1-5H,(H2,9,10,11)
+
+>  <InChIKey>
+DRYRBWIFRVMRPV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(ncn2)N
+
+$$$$

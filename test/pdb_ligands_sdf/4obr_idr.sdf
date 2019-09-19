@@ -1,0 +1,126 @@
+1HM2_IDR_A_710
+  RCSB PDB12061702443D
+Coordinates from PDB:1HM2:A:710 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   19.2780   28.6260   50.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9280   28.2260   50.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9120   27.5300   51.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9450   27.9850   52.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3890   28.0640   53.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4380   28.4640   54.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2190   29.2630   49.3390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1320   26.0560   51.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2920   29.3170   52.7370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0960   29.0640   52.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8320   29.6180   54.7900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0850   27.5560   55.3960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6 11  2  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O5
+A   11
+O6A
+A   12
+O6B
+M  END
+>  <InstanceId>
+1HM2_IDR_A_710
+
+>  <ChemCompId>
+IDR
+
+>  <PdbId>
+1HM2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+L-IDURONIC ACID
+
+>  <SystematicName>
+(2R,3S,4S,5R,6R)-3,4,5,6-tetrahydroxyoxane-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-SACCHARIDE
+
+>  <Formula>
+C6 H10 O7
+
+>  <MolecularWeight>
+194.139
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O7/c7-1-2(8)4(5(10)11)13-6(12)3(1)9/h1-4,6-9,12H,(H,10,11)/t1-,2-,3+,4+,6+/m0/s1
+
+>  <InChIKey>
+AEMOLEFTQBMNLQ-VCSGLWQLSA-N
+
+>  <SMILES>
+[C@@H]1([C@@H]([C@@H](O[C@H]([C@@H]1O)O)C(=O)O)O)O
+
+$$$$

@@ -1,0 +1,135 @@
+1KNO_PNP_B_551
+  RCSB PDB12061703063D
+Coordinates from PDB:1KNO:B:551 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   -4.4840   -4.4560    4.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4010   -5.2350    3.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4850   -4.9830    2.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6400   -3.9460    2.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6930   -3.1550    4.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6330   -3.4010    5.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7080   -5.7000    7.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6900   -3.6730    1.9250   N 0  3  0  0  0  0  0  0  0  0  0  0
+   -1.6560   -4.3720    0.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0090   -2.8040    2.0620   O 0  5  0  0  0  0  0  0  0  0  0  0
+   -5.2620   -5.6760    7.0910   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4480   -4.7320    5.8140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1930   -5.0590    7.6720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7950   -6.9490    6.5620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 14  1  0  0  0  0
+M  CHG  2   8   1  10  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+CM
+A    8
+N
+A    9
+O1N
+A   10
+O2N
+A   11
+P
+A   12
+O1P
+A   13
+O2P
+A   14
+O3P
+M  END
+>  <InstanceId>
+1KNO_PNP_B_551
+
+>  <ChemCompId>
+PNP
+
+>  <PdbId>
+1KNO
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+551
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O5 P
+
+>  <Name>
+METHYL-PHOSPHONIC ACID MONO-(4-NITRO-PHENYL) ESTER
+
+>  <SystematicName>
+methyl-(4-nitrophenoxy)phosphinic acid
+
+>  <Synonyms>
+4-NITROPHENYL HYDROGEN METHYLPHOSPHONATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N O5 P
+
+>  <MolecularWeight>
+217.116
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8NO5P/c1-14(11,12)13-7-4-2-6(3-5-7)8(9)10/h2-5H,1H3,(H,11,12)
+
+>  <InChIKey>
+VJPXTXIEAOSJBR-UHFFFAOYSA-N
+
+>  <SMILES>
+C[P@@](=O)(O)Oc1ccc(cc1)[N+](=O)[O-]
+
+$$$$

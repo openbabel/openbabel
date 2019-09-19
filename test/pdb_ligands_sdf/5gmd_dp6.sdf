@@ -1,0 +1,149 @@
+2OI2_DP6_A_300
+  RCSB PDB12061706303D
+Coordinates from PDB:2OI2:A:300 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   23.8130   24.3380   48.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9100   25.3620   44.8130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5640   24.6070   46.5870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0170   26.6940   48.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0680   23.1690   43.3480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4440   21.2480   43.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7460   21.2920   44.9820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5870   22.2300   44.3830   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9170   22.9730   45.6440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2060   24.5170   45.9900   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1140   24.7690   47.1410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7190   24.8400   46.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9960   25.5110   48.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4870   25.6550   47.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1650   26.0030   46.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5670   27.4180   45.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0580   27.6210   44.7910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3840   28.3740   46.6430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 14  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3 10  1  0  0  0  0
+  4 14  1  0  0  0  0
+  5  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 18  1  0  0  0  0
+A    1
+C3A
+A    2
+O1A
+A    3
+O2A
+A    4
+O3A
+A    5
+O1B
+A    6
+O2B
+A    7
+O3B
+A    8
+PB
+A    9
+O6
+A   10
+PA
+A   11
+O5
+A   12
+C5
+A   13
+C4
+A   14
+C3
+A   15
+C2
+A   16
+C1
+A   17
+O1
+A   18
+O2
+M  END
+>  <InstanceId>
+2OI2_DP6_A_300
+
+>  <ChemCompId>
+DP6
+
+>  <PdbId>
+2OI2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O10 P2
+
+>  <Name>
+(3R)-3-HYDROXY-5-{[(R)-HYDROXY(PHOSPHONOOXY)PHOSPHORYL]OXY}-3-METHYLPENTANOIC ACID
+
+>  <SystematicName>
+(3R)-3-hydroxy-5-(hydroxy-phosphonooxy-phosphoryl)oxy-3-methyl-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O10 P2
+
+>  <MolecularWeight>
+308.117
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H14O10P2/c1-6(9,4-5(7)8)2-3-15-18(13,14)16-17(10,11)12/h9H,2-4H2,1H3,(H,7,8)(H,13,14)(H2,10,11,12)/t6-/m1/s1
+
+>  <InChIKey>
+SIGQQUBJQXSAMW-ZCFIWIBFSA-N
+
+>  <SMILES>
+C[C@@](CCO[P@@](=O)(O)OP(=O)(O)O)(CC(=O)O)O
+
+$$$$

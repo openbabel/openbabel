@@ -1,0 +1,135 @@
+4NJK_2KA_A_303
+  RCSB PDB12061713543D
+Coordinates from PDB:4NJK:A:303 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -11.3350   82.4740   24.0570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8420   83.4640   23.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4070   84.5790   23.3380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4210   83.3360   22.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3550   82.4490   23.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8440   84.2370   22.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4930   84.0250   22.0260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1530   82.9580   22.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9040   82.5070   23.0200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7920   81.5190   23.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5720   81.0820   24.2530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8680   80.9400   24.5040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1880   81.3380   24.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0860   80.7440   24.9210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  6  4  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  9 10  2  0  0  0  0
+  3  2  2  0  0  0  0
+  5 13  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+O7B
+A    2
+C7A
+A    3
+O7A
+A    4
+C7
+A    5
+C5
+A    6
+C8
+A    7
+N9
+A    8
+C4
+A    9
+N3
+A   10
+C2
+A   11
+N2
+A   12
+N1
+A   13
+C6
+A   14
+O6
+M  END
+>  <InstanceId>
+4NJK_2KA_A_303
+
+>  <ChemCompId>
+2KA
+
+>  <PdbId>
+4NJK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N4 O3
+
+>  <Name>
+2-amino-4-oxo-4,7-dihydro-3H-pyrrolo[2,3-d]pyrimidine-5-carboxylic acid
+
+>  <SystematicName>
+2-azanyl-4-oxidanylidene-3,7-dihydropyrrolo[2,3-d]pyrimidine-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 N4 O3
+
+>  <MolecularWeight>
+194.148
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6N4O3/c8-7-10-4-3(5(12)11-7)2(1-9-4)6(13)14/h1H,(H,13,14)(H4,8,9,10,11,12)
+
+>  <InChIKey>
+XIUIRSLBMMTDSK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c2c([nH]1)N=C(NC2=O)N)C(=O)O
+
+$$$$

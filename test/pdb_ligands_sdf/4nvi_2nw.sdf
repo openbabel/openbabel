@@ -1,0 +1,127 @@
+4NVI_2NW_B_302
+  RCSB PDB12061713573D
+Coordinates from PDB:4NVI:B:302 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   20.3180    4.9730   -5.6980  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9690    3.9370   -4.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7630    3.7950   -5.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7530    3.0370   -4.9960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9160    2.4350   -3.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8760    1.6900   -3.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0300    1.0620   -2.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2290    1.1880   -1.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2710    1.9340   -1.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1120    2.5570   -3.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1300    3.3080   -3.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2790    3.4270   -3.0300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2 11  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+BR
+A    2
+CAI
+A    3
+CAG
+A    4
+NAH
+A    5
+CAK
+A    6
+CAE
+A    7
+CAC
+A    8
+CAD
+A    9
+CAF
+A   10
+CAL
+A   11
+CAJ
+A   12
+NAA
+M  END
+>  <InstanceId>
+4NVI_2NW_B_302
+
+>  <ChemCompId>
+2NW
+
+>  <PdbId>
+4NVI
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 Br
+
+>  <Name>
+3-bromoquinolin-4-amine
+
+>  <SystematicName>
+3-bromanylquinolin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Br N2
+
+>  <MolecularWeight>
+223.069
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7BrN2/c10-7-5-12-8-4-2-1-3-6(8)9(7)11/h1-5H,(H2,11,12)
+
+>  <InChIKey>
+TYGUEEGQSYNEHB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c(cn2)Br)N
+
+$$$$

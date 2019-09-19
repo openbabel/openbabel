@@ -1,0 +1,122 @@
+4Y4A_47G_A_404
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4A:A:404 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -1.8210    2.3770   10.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0080    3.0230   10.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5250    3.1360   10.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5100    0.7530   11.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0430   -1.0630   10.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0300    0.2900   10.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2140    0.9610   10.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3110    0.1570   10.9580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8500    1.0040   10.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2000    2.3290   11.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4180    4.0030    9.3780   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9  6  2  0  0  0  0
+  9  1  1  0  0  0  0
+  6  7  1  0  0  0  0
+  3  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  2  0  0  0  0
+  2 10  1  0  0  0  0
+  8  4  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+O
+A    6
+C2
+A    7
+C1
+A    8
+O1
+A    9
+C3
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+4Y4A_47G_A_404
+
+>  <ChemCompId>
+47G
+
+>  <PdbId>
+4Y4A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+5-(aminomethyl)-2-methoxyphenol
+
+>  <SystematicName>
+5-(aminomethyl)-2-methoxy-phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O2
+
+>  <MolecularWeight>
+153.178
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO2/c1-11-8-3-2-6(5-9)4-7(8)10/h2-4,10H,5,9H2,1H3
+
+>  <InChIKey>
+HJIDMVZCXORAIG-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1O)CN
+
+$$$$

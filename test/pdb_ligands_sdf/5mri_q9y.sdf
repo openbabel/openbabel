@@ -1,0 +1,138 @@
+5MRI_Q9Y_A_807
+  RCSB PDB12061719053D
+Coordinates from PDB:5MRI:A:807 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -13.5750  -75.5650   33.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0950  -78.8010   29.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0210  -79.9310   30.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2000  -81.0480   31.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1350  -79.3260   31.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6150  -80.2450   32.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4990  -78.6180   35.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3730  -78.7150   34.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5810  -77.7860   34.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0130  -79.7940   33.7230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9430  -80.3410   34.3120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6350  -79.6270   35.4050   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4150  -76.3510   33.9410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4900  -77.6560   36.5100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7130  -78.2720   33.9840   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  1 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  8  1  0  0  0  0
+ 13  9  1  0  0  0  0
+ 15  9  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 11 12  2  0  0  0  0
+  8  7  2  0  0  0  0
+ 12  7  1  0  0  0  0
+  7 14  1  0  0  0  0
+A    1
+C15
+A    2
+C01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C09
+A    8
+C11
+A    9
+C12
+A   10
+N06
+A   11
+N07
+A   12
+N08
+A   13
+N14
+A   14
+O10
+A   15
+O13
+M  END
+>  <InstanceId>
+5MRI_Q9Y_A_807
+
+>  <ChemCompId>
+Q9Y
+
+>  <PdbId>
+5MRI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+807
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O2
+
+>  <Name>
+~{N}-methyl-3-(3-methylbutyl)-5-oxidanyl-1,2,3-triazole-4-carboxamide
+
+>  <SystematicName>
+~{N}-methyl-3-(3-methylbutyl)-5-oxidanyl-1,2,3-triazole-4-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N4 O2
+
+>  <MolecularWeight>
+212.249
+
+>  <ModifiedDate>
+2017-05-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N4O2/c1-6(2)4-5-13-7(8(14)10-3)9(15)11-12-13/h6,15H,4-5H2,1-3H3,(H,10,14)
+
+>  <InChIKey>
+DKBFJEZTUMLWCW-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)CCn1c(c(nn1)O)C(=O)NC
+
+$$$$

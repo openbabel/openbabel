@@ -1,0 +1,102 @@
+3MJL_2AI_A_5001
+  RCSB PDB12061709453D
+Coordinates from PDB:3MJL:A:5001 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   -3.4140  -24.2900   -4.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1770  -24.7370   -4.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3180  -24.0180   -5.3340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9830  -23.1690   -6.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2740  -23.3280   -5.8340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3620  -22.2890   -6.9900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+CG
+A    2
+CD2
+A    3
+NE2
+A    4
+CE1
+A    5
+ND1
+A    6
+NT
+M  END
+>  <InstanceId>
+3MJL_2AI_A_5001
+
+>  <ChemCompId>
+2AI
+
+>  <PdbId>
+3MJL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N3
+
+>  <Name>
+1H-imidazol-2-amine
+
+>  <SystematicName>
+1H-imidazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 N3
+
+>  <MolecularWeight>
+83.092
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5N3/c4-3-5-1-2-6-3/h1-2H,(H3,4,5,6)
+
+>  <InChIKey>
+DEPDDPLQZYCHOH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnc([nH]1)N
+
+$$$$

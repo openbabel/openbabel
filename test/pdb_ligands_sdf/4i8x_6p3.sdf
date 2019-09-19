@@ -1,0 +1,139 @@
+4I8X_6P3_A_401
+  RCSB PDB12061712583D
+Coordinates from PDB:4I8X:A:401 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   11.9180   12.6490   43.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6020   13.7030   42.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9930   13.6590   41.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7160   12.5500   40.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0380   11.4890   41.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6430   11.5440   42.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4950   12.7480   44.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3280   14.0280   45.3590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9600   14.2330   46.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7210   13.1580   47.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8790   11.8440   47.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2640   11.6370   45.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3350   13.4190   48.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5780   14.4690   49.4480   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7190   12.4140   49.5940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  1  2  0  0  0  0
+  6  1  1  0  0  0  0
+  1  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C12
+A    8
+N13
+A    9
+C14
+A   10
+C15
+A   11
+C16
+A   12
+C17
+A   13
+C21
+A   14
+O22
+A   15
+O23
+M  END
+>  <InstanceId>
+4I8X_6P3_A_401
+
+>  <ChemCompId>
+6P3
+
+>  <PdbId>
+4I8X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2
+
+>  <Name>
+6-phenylpyridine-3-carboxylic acid
+
+>  <SystematicName>
+6-phenylpyridine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H9 N O2
+
+>  <MolecularWeight>
+199.205
+
+>  <ModifiedDate>
+2013-01-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9NO2/c14-12(15)10-6-7-11(13-8-10)9-4-2-1-3-5-9/h1-8H,(H,14,15)
+
+>  <InChIKey>
+DLFLQXUYRFIFOK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2ccc(cn2)C(=O)O
+
+$$$$

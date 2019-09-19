@@ -1,0 +1,133 @@
+4YB4_48Y_A_402
+  RCSB PDB12061716243D
+Coordinates from PDB:4YB4:A:402 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  -24.2580  -27.0190  -38.1350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5600  -27.4980  -39.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8660  -28.5050  -39.6680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1750  -26.8480  -39.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3850  -27.7250  -40.1230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4610  -26.5370  -37.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2850  -27.8760  -37.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2800  -28.2810  -36.5770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2040  -28.4780  -37.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1320  -25.8260  -38.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9340  -24.9420  -36.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6670  -24.0430  -37.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0810  -23.8680  -38.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3260  -23.5310  -35.9180   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  2  0  0  0  0
+ 14 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  9  7  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAB
+A    2
+CAK
+A    3
+OAF
+A    4
+CAM
+A    5
+OAD
+A    6
+CAN
+A    7
+CAL
+A    8
+OAG
+A    9
+OAC
+A   10
+CAI
+A   11
+CAH
+A   12
+CAJ
+A   13
+OAE
+A   14
+OAA
+M  END
+>  <InstanceId>
+4YB4_48Y_A_402
+
+>  <ChemCompId>
+48Y
+
+>  <PdbId>
+4YB4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7
+
+>  <Name>
+(1R,2S)-1-hydroxybutane-1,2,4-tricarboxylic acid
+
+>  <SystematicName>
+(1R,2S)-1-oxidanylbutane-1,2,4-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 O7
+
+>  <MolecularWeight>
+206.15
+
+>  <ModifiedDate>
+2016-03-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10O7/c8-4(9)2-1-3(6(11)12)5(10)7(13)14/h3,5,10H,1-2H2,(H,8,9)(H,11,12)(H,13,14)/t3-,5+/m0/s1
+
+>  <InChIKey>
+OEJZZCGRGVFWHK-WVZVXSGGSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@@H]([C@H](C(=O)O)O)C(=O)O
+
+$$$$

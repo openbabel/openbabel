@@ -1,0 +1,109 @@
+1JQW_HCS_A_401
+  RCSB PDB12061702593D
+Coordinates from PDB:1JQW:A:401 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+  -19.1990   30.6180  -14.1150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3870   31.8600  -14.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8210   32.3790  -14.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8790   31.5710  -15.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4890   32.4480  -15.5740   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4150   32.9760  -14.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9430   33.7060  -15.3730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1390   33.1160  -13.2660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+SD
+A    6
+C
+A    7
+OXT
+A    8
+O
+M  END
+>  <InstanceId>
+1JQW_HCS_A_401
+
+>  <ChemCompId>
+HCS
+
+>  <PdbId>
+1JQW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O2 S
+
+>  <Name>
+2-AMINO-4-MERCAPTO-BUTYRIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-4-sulfanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H9 N O2 S
+
+>  <MolecularWeight>
+135.185
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H9NO2S/c5-3(1-2-8)4(6)7/h3,8H,1-2,5H2,(H,6,7)/t3-/m0/s1
+
+>  <InChIKey>
+FFFHZYDWPBMWHY-VKHMYHEASA-N
+
+>  <SMILES>
+C(CS)[C@@H](C(=O)O)N
+
+$$$$

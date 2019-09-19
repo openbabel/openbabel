@@ -1,0 +1,138 @@
+1HKI_NA1_A_1387
+  RCSB PDB12061702443D
+Coordinates from PDB:1HKI:A:1387 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    0.9780   61.6450   -1.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4520   61.8930   -2.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2670   60.5920   -2.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5350   59.4900   -3.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8860   59.3250   -2.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6310   58.2120   -3.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4200   64.1520   -2.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0770   65.1250   -1.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0980   62.9570   -1.5810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4180   60.1920   -0.9750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2430   58.2540   -2.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6040   60.5900   -2.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0180   58.1000   -2.8700   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1080   57.6330   -1.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2270   64.4780   -3.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 15  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+A   14
+C9
+A   15
+O7
+M  END
+>  <InstanceId>
+1HKI_NA1_A_1387
+
+>  <ChemCompId>
+NA1
+
+>  <PdbId>
+1HKI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1387
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 N O5
+
+>  <Name>
+METHYL N-ACETYL ALLOSAMINE
+
+>  <SystematicName>
+N-[(2S,3R,4S,5S,6R)-2,4,5-trihydroxy-6-(methoxymethyl)oxan-3-yl]ethanamide
+
+>  <Synonyms>
+2-(ACETYLAMINO)-2-DEOXY-6-O-METHYL-ALPHA-D-ALLOPYRANOSE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O6
+
+>  <MolecularWeight>
+235.234
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO6/c1-4(11)10-6-8(13)7(12)5(3-15-2)16-9(6)14/h5-9,12-14H,3H2,1-2H3,(H,10,11)/t5-,6-,7-,8+,9?/m1/s1
+
+>  <InChIKey>
+KDTVUHXJRZVEIF-NBTWYFBKSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@@H]([C@@H]([C@H](O[C@@H]1O)COC)O)O
+
+$$$$

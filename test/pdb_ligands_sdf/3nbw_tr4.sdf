@@ -1,0 +1,143 @@
+3NBW_TR4_A_301
+  RCSB PDB12061709533D
+Coordinates from PDB:3NBW:A:301 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -2.1790   -1.3830   14.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4100   -0.3430   15.3440   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1880   -0.7100   16.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2370   -1.9170   17.4120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9760   -1.7880   18.5160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4840   -0.4810   18.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2800   -0.0430   19.7290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9560    0.2300   17.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1520    1.5710   17.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3070    2.6860   17.0460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3000   -2.8610   19.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3680   -2.6230   20.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7180   -3.6990   21.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9880   -4.9510   20.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9160   -5.1620   19.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5670   -4.0980   18.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  3  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+C01
+A    2
+S02
+A    3
+C03
+A    4
+N04
+A    5
+N05
+A    6
+C06
+A    7
+N07
+A    8
+C08
+A    9
+C09
+A   10
+N10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+C16
+M  END
+>  <InstanceId>
+3NBW_TR4_A_301
+
+>  <ChemCompId>
+TR4
+
+>  <PdbId>
+3NBW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 S
+
+>  <Name>
+5-amino-3-(methylsulfanyl)-1-phenyl-1H-pyrazole-4-carbonitrile
+
+>  <SystematicName>
+5-azanyl-3-methylsulfanyl-1-phenyl-pyrazole-4-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N4 S
+
+>  <MolecularWeight>
+230.289
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N4S/c1-16-11-9(7-12)10(13)15(14-11)8-5-3-2-4-6-8/h2-6H,13H2,1H3
+
+>  <InChIKey>
+IIOQJYJHSDCILE-UHFFFAOYSA-N
+
+>  <SMILES>
+CSc1c(c(n(n1)c2ccccc2)N)C#N
+
+$$$$

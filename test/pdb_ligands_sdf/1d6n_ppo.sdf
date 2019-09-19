@@ -1,0 +1,119 @@
+1D6N_PPO_A_300
+  RCSB PDB12061702143D
+Coordinates from PDB:1D6N:A:300 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   45.7210   51.0030    3.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9190   50.0450    3.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8470   49.7780    4.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4150   50.4750    5.6470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4140   49.7890    6.1030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1480   48.6640    5.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0690   48.6440    4.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1770   47.6920    3.3460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1880   47.9370    2.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0210   49.0570    2.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+C5
+A    4
+N7
+A    5
+N8
+A    6
+C9
+A    7
+C4
+A    8
+N3
+A    9
+C2
+A   10
+N1
+M  END
+>  <InstanceId>
+1D6N_PPO_A_300
+
+>  <ChemCompId>
+PPO
+
+>  <PdbId>
+1D6N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O
+
+>  <Name>
+3H-PYRAZOLO[4,3-D]PYRIMIDIN-7-OL
+
+>  <SystematicName>
+3H-pyrazolo[3,4-e]pyrimidin-7-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N4 O
+
+>  <MolecularWeight>
+136.111
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4O/c10-5-4-3(1-8-9-4)6-2-7-5/h2H,1H2,(H,6,7,10)
+
+>  <InChIKey>
+OGCXIHWGXUQTCQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1nc2c(c(n1)O)N=NC2
+
+$$$$

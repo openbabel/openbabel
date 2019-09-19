@@ -1,0 +1,118 @@
+1OCN_IFM_A_452
+  RCSB PDB12061703323D
+Coordinates from PDB:1OCN:A:452 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    8.5540   -8.4180   10.5740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7330   -7.6360   10.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8080   -8.3620   11.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7660   -7.8270   12.4310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1590   -8.1750   10.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1420   -8.8210    9.1590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9960   -8.4870    8.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9600   -7.5030    8.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3060   -6.0870    8.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3360   -5.5570    9.1320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C3
+A    4
+O3
+A    5
+C2
+A    6
+N
+A    7
+C1
+A    8
+C5
+A    9
+C6
+A   10
+O6
+M  END
+>  <InstanceId>
+1OCN_IFM_A_452
+
+>  <ChemCompId>
+IFM
+
+>  <PdbId>
+1OCN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+452
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3
+
+>  <Name>
+5-HYDROXYMETHYL-3,4-DIHYDROXYPIPERIDINE
+
+>  <SystematicName>
+(3R,4R,5R)-5-(hydroxymethyl)piperidine-3,4-diol
+
+>  <Synonyms>
+Afegostat, isofagomine, (3R,4R,5R)-5-(HYDROXYMETHYL)PIPERIDINE-3,4-DIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O3
+
+>  <MolecularWeight>
+147.172
+
+>  <ModifiedDate>
+2015-06-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO3/c8-3-4-1-7-2-5(9)6(4)10/h4-10H,1-3H2/t4-,5-,6-/m1/s1
+
+>  <InChIKey>
+QPYJXFZUIJOGNX-HSUXUTPPSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H](CN1)O)O)CO
+
+$$$$

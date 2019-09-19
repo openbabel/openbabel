@@ -1,0 +1,143 @@
+2NO7_LDC_A_401
+  RCSB PDB12061706243D
+Coordinates from PDB:2NO7:A:401 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   48.9100   67.2020  100.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8480   66.5720  100.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6970   67.3100  100.6460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5240   66.8190  100.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4540   67.5480  100.9460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4210   65.4170  100.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5650   64.7270   99.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7580   65.3360   99.8270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0080   64.6690   99.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4540   65.0670   97.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0160   63.7430   97.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4240   63.7680   97.5550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2920   62.6120   98.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8500   63.2520   99.3910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1400   61.9870   97.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3810   61.0100   98.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+N3
+A    4
+C3
+A    5
+N4
+A    6
+C4
+A    7
+C5
+A    8
+N2
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+O3
+A   13
+C11
+A   14
+O4
+A   15
+C12
+A   16
+O5
+M  END
+>  <InstanceId>
+2NO7_LDC_A_401
+
+>  <ChemCompId>
+LDC
+
+>  <PdbId>
+2NO7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O4
+
+>  <Name>
+4-AMINO-1-(2-DEOXY-BETA-L-ERYTHRO-PENTOFURANOSYL)PYRIMIDIN-2(1H)-ONE
+
+>  <SystematicName>
+4-amino-1-[(2S,4R,5S)-4-hydroxy-5-(hydroxymethyl)oxolan-2-yl]pyrimidin-2-one
+
+>  <Synonyms>
+L-2'-DEOXYCYTIDINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N3 O4
+
+>  <MolecularWeight>
+227.217
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H13N3O4/c10-7-1-2-12(9(15)11-7)8-3-5(14)6(4-13)16-8/h1-2,5-6,8,13-14H,3-4H2,(H2,10,11,15)/t5-,6+,8+/m1/s1
+
+>  <InChIKey>
+CKTSBUTUHBMZGZ-CHKWXVPMSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](O[C@@H]1N2C=CC(=NC2=O)N)CO)O
+
+$$$$

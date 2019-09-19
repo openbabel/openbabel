@@ -1,0 +1,126 @@
+2BXL_DIU_A_3001
+  RCSB PDB12061705103D
+Coordinates from PDB:2BXL:A:3001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   34.4220   13.9350   11.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2470   14.1560   11.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0440   12.9670   11.7530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8920   15.2470    9.1900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0390   14.7650   10.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2620   15.4110    9.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9100   16.2360    8.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3110   16.4180    8.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0820   15.7930    9.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4580   14.9610   10.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8340   17.1560    6.8070   I 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1110   16.0900    9.3510   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 12  1  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+I1
+A   12
+I2
+M  END
+>  <InstanceId>
+2BXL_DIU_A_3001
+
+>  <ChemCompId>
+DIU
+
+>  <PdbId>
+2BXL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3 I2
+
+>  <Name>
+2-HYDROXY-3,5-DIIODO-BENZOIC ACID
+
+>  <SystematicName>
+2-hydroxy-3,5-diiodo-benzoic acid
+
+>  <Synonyms>
+2-HYDROXY-3,5-DIIODOBENZOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 I2 O3
+
+>  <MolecularWeight>
+389.914
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4I2O3/c8-3-1-4(7(11)12)6(10)5(9)2-3/h1-2,10H,(H,11,12)
+
+>  <InChIKey>
+DHZVWQPHNWDCFS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1C(=O)O)O)I)I
+
+$$$$

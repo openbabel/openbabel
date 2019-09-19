@@ -1,0 +1,126 @@
+5NOZ_L99_A_201
+  RCSB PDB12061719123D
+Coordinates from PDB:5NOZ:A:201 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   -2.0760   23.5420   -7.2890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2490   22.4330   -6.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4820   21.9340   -5.8420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9890   20.9840   -4.9310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3630   21.5550   -7.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4940   22.1320   -7.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5310   21.3280   -8.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6320   21.8940   -8.8800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4410   19.9510   -8.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4530   19.1700   -8.6690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3120   19.3700   -7.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2740   20.1710   -7.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7  6  1  0  0  0  0
+  9 11  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 11 12  2  0  0  0  0
+  5 12  1  0  0  0  0
+  5  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+N1
+A    4
+N
+A    5
+C1
+A    6
+C6
+A    7
+C5
+A    8
+N3
+A    9
+C4
+A   10
+N2
+A   11
+C3
+A   12
+C2
+M  END
+>  <InstanceId>
+5NOZ_L99_A_201
+
+>  <ChemCompId>
+L99
+
+>  <PdbId>
+5NOZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N4 O
+
+>  <Name>
+3,4-bis(azanyl)benzohydrazide
+
+>  <SystematicName>
+3,4-bis(azanyl)benzohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N4 O
+
+>  <MolecularWeight>
+166.18
+
+>  <ModifiedDate>
+2017-07-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10N4O/c8-5-2-1-4(3-6(5)9)7(12)11-10/h1-3H,8-10H2,(H,11,12)
+
+>  <InChIKey>
+YGCXQTYRSKMILM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1C(=O)NN)N)N
+
+$$$$

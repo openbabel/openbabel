@@ -1,0 +1,147 @@
+3K8Q_22A_A_290
+  RCSB PDB12061709243D
+Coordinates from PDB:3K8Q:A:290 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   13.5820    8.6130   55.8030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8260    8.9380   56.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9660   10.1000   57.5260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9120   10.9840   57.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6340   10.7580   55.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5560    9.4240   55.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2240    9.1190   54.3140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6390   11.7880   55.7830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2810   12.6930   56.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2300   12.2470   57.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6380   12.8270   59.8540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6670   12.9790   58.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8310   11.5130   60.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9640   11.3940   61.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2940   11.1840   60.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1840   12.3160   60.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9400   12.6120   62.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  1  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  2  0  0  0  0
+  8  5  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O6
+A    8
+N7
+A    9
+C8
+A   10
+C9
+A   11
+N1'
+A   12
+C10
+A   13
+C2'
+A   14
+C3'
+A   15
+C4'
+A   16
+O5'
+A   17
+O6'
+M  END
+>  <InstanceId>
+3K8Q_22A_A_290
+
+>  <ChemCompId>
+22A
+
+>  <PdbId>
+3K8Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O3
+
+>  <Name>
+7-({[2-hydroxy-1-(hydroxymethyl)ethyl]amino}methyl)-3,5-dihydro-4H-pyrrolo[3,2-d]pyrimidin-4-one
+
+>  <SystematicName>
+7-[(1,3-dihydroxypropan-2-ylamino)methyl]-3,5-dihydropyrrolo[3,2-d]pyrimidin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N4 O3
+
+>  <MolecularWeight>
+238.243
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N4O3/c15-3-7(4-16)11-1-6-2-12-9-8(6)13-5-14-10(9)17/h2,5,7,11-12,15-16H,1,3-4H2,(H,13,14,17)
+
+>  <InChIKey>
+YGATXRRSBPFSBK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c2c([nH]1)C(=O)NC=N2)CNC(CO)CO
+
+$$$$

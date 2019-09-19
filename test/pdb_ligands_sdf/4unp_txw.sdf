@@ -1,0 +1,139 @@
+4UNP_TXW_A_1211
+  RCSB PDB12061715163D
+Coordinates from PDB:4UNP:A:1211 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   41.8050   32.3730   55.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0690   31.8060   57.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4600   31.4280   56.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7690   33.6670   56.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0030   33.1410   58.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7330   30.7810   58.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7630   29.4990   58.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1190   29.1040   57.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6760   33.6680   59.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2760   35.7710   55.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0470   34.7410   55.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9350   35.5970   54.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3560   34.0450   57.5890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4890   30.1060   56.3320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1280   27.9490   56.5600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4 11  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5 13  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8 14  1  0  0  0  0
+  8 15  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C5
+A    2
+C7
+A    3
+C6
+A    4
+C4
+A    5
+C13
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+C15
+A   10
+C1
+A   11
+C3
+A   12
+C2
+A   13
+N14
+A   14
+N12
+A   15
+O11
+M  END
+>  <InstanceId>
+4UNP_TXW_A_1211
+
+>  <ChemCompId>
+TXW
+
+>  <PdbId>
+4UNP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1211
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+5-methyl-7-propyl-1,6-naphthyridin-2(1H)-one
+
+>  <SystematicName>
+5-methyl-7-propyl-1H-1,6-naphthyridin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H14 N2 O
+
+>  <MolecularWeight>
+202.252
+
+>  <ModifiedDate>
+2015-01-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O/c1-3-4-9-7-11-10(8(2)13-9)5-6-12(15)14-11/h5-7H,3-4H2,1-2H3,(H,14,15)
+
+>  <InChIKey>
+GNDSCMXBXGHCIV-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCc1cc2c(c(n1)C)C=CC(=O)N2
+
+$$$$

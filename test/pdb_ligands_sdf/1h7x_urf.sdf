@@ -1,0 +1,114 @@
+1H7X_URF_A_1033
+  RCSB PDB12061702423D
+Coordinates from PDB:1H7X:A:1033 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   64.5290   40.8670   51.1220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1700   42.0000   50.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.7010   42.3650   49.3030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   63.7050   41.7450   48.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.0880   40.5830   49.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.5070   40.1900   50.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.0620   42.6200   51.1450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4230   42.2120   47.4600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.1410   39.9280   48.5820   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O2
+A    8
+O4
+A    9
+F5
+M  END
+>  <InstanceId>
+1H7X_URF_A_1033
+
+>  <ChemCompId>
+URF
+
+>  <PdbId>
+1H7X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1033
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O2 F
+
+>  <Name>
+5-FLUOROURACIL
+
+>  <SystematicName>
+5-fluoro-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H3 F N2 O2
+
+>  <MolecularWeight>
+130.077
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H3FN2O2/c5-2-1-6-4(9)7-3(2)8/h1H,(H2,6,7,8,9)
+
+>  <InChIKey>
+GHASVSINZRGABV-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1)F
+
+$$$$

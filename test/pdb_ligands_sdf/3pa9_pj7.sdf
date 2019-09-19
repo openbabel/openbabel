@@ -1,0 +1,110 @@
+3PA9_PJ7_A_500
+  RCSB PDB12061710143D
+Coordinates from PDB:3PA9:A:500 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   24.3350   12.5160  -14.7410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5540   12.9540  -12.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5960   11.5080  -11.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0580   10.0470  -12.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4800   10.5890  -11.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8780   10.5910  -13.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7960   11.4700  -13.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9470   12.3700  -13.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  2  0  0  0  0
+  8  2  1  0  0  0  0
+  7  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  6  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+O3
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+C9
+M  END
+>  <InstanceId>
+3PA9_PJ7_A_500
+
+>  <ChemCompId>
+PJ7
+
+>  <PdbId>
+3PA9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O3
+
+>  <Name>
+4-aminofuran-2-carboxylic acid
+
+>  <SystematicName>
+4-azanylfuran-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N O3
+
+>  <MolecularWeight>
+127.098
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5NO3/c6-3-1-4(5(7)8)9-2-3/h1-2H,6H2,(H,7,8)
+
+>  <InChIKey>
+JZMYAVSMLZDPMH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(coc1C(=O)O)N
+
+$$$$

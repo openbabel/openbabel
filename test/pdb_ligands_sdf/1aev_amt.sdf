@@ -1,0 +1,102 @@
+1AEV_AMT_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEV:A:296 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   -7.5900   52.6470  111.3780   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0270   52.2360  110.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1060   52.9390  110.7770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8670   53.8660  111.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5450   53.8400  112.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0150   51.2060  109.6360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+A    1
+S1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+N
+M  END
+>  <InstanceId>
+1AEV_AMT_A_296
+
+>  <ChemCompId>
+AMT
+
+>  <PdbId>
+1AEV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N2 S
+
+>  <Name>
+2-AMINOTHIAZOLE
+
+>  <SystematicName>
+1,3-thiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H4 N2 S
+
+>  <MolecularWeight>
+100.142
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H4N2S/c4-3-5-1-2-6-3/h1-2H,(H2,4,5)
+
+>  <InChIKey>
+RAIPHJJURHTUIC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1csc(n1)N
+
+$$$$

@@ -1,0 +1,118 @@
+5FZB_YS6_A_1769
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZB:A:1769 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   88.9720   65.6050   15.6960   S 0  0  0  0  0  0  0  0  0  0  0  0
+   89.0740   64.2890   14.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.0280   63.3840   14.7620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   88.1680   64.1230   13.6650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.0530   64.9030   13.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.0840   64.2770   12.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.9100   66.2640   13.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8290   66.9280   13.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.8970   66.3430   12.2500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   85.0470   65.0340   12.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  6 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+S
+A    2
+C5
+A    3
+N2
+A    4
+N1
+A    5
+C4
+A    6
+C
+A    7
+C3
+A    8
+C2
+A    9
+N
+A   10
+C1
+M  END
+>  <InstanceId>
+5FZB_YS6_A_1769
+
+>  <ChemCompId>
+YS6
+
+>  <PdbId>
+5FZB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1769
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 S
+
+>  <Name>
+1-pyridin-4-ylthiourea
+
+>  <SystematicName>
+1-pyridin-4-ylthiourea
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H7 N3 S
+
+>  <MolecularWeight>
+153.205
+
+>  <ModifiedDate>
+2016-03-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N3S/c7-6(10)9-5-1-3-8-4-2-5/h1-4H,(H3,7,8,9,10)
+
+>  <InChIKey>
+HLOFIQOOOSRNFY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnccc1NC(=S)N
+
+$$$$

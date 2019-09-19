@@ -1,0 +1,147 @@
+5BZP_4XG_A_201
+  RCSB PDB12061717013D
+Coordinates from PDB:5BZP:A:201 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   12.1040   -6.2440    0.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6460   -4.9130    0.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8270   -4.3960   -0.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3780   -3.4800   -1.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6120   -2.9410   -2.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2750   -3.2640   -2.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7260   -4.1840   -1.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4330   -4.5200   -1.8770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4730   -4.7570   -0.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8610   -5.6840    0.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6870   -6.1360    1.3610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2660   -7.4700    1.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2160   -7.5310    3.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4840   -8.1380    4.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2560   -7.2280    4.9680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7110   -5.8780    5.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5870   -7.8850    6.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  9  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+CAK
+A    2
+CAH
+A    3
+CAN
+A    4
+CAF
+A    5
+CAD
+A    6
+CAE
+A    7
+CAM
+A    8
+NAC
+A    9
+CAO
+A   10
+CAL
+A   11
+NAQ
+A   12
+CAJ
+A   13
+CAG
+A   14
+CAI
+A   15
+NAP
+A   16
+CAB
+A   17
+CAA
+M  END
+>  <InstanceId>
+5BZP_4XG_A_201
+
+>  <ChemCompId>
+4XG
+
+>  <PdbId>
+5BZP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N3
+
+>  <Name>
+2-[3-(dimethylamino)propyl]-1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <SystematicName>
+2-[3-(dimethylamino)propyl]-3,4-dihydro-1H-isoquinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H23 N3
+
+>  <MolecularWeight>
+233.353
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H23N3/c1-16(2)8-4-9-17-10-7-12-5-3-6-14(15)13(12)11-17/h3,5-6H,4,7-11,15H2,1-2H3
+
+>  <InChIKey>
+HWRKGGXCPROGGI-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)CCCN1CCc2cccc(c2C1)N
+
+$$$$

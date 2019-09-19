@@ -1,0 +1,151 @@
+5KH7_6T7_A_1304
+  RCSB PDB12061718363D
+Coordinates from PDB:5KH7:A:1304 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   -0.4660    6.7040    3.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4940    3.7950    6.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5810    1.9050    8.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6610    3.2990    6.8090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7660    2.4990    8.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7430    3.3960    7.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6070    2.3550    7.8360   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8850    1.8470    8.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1020    2.3260    7.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5890    3.7000    7.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3290    4.2910    7.2360   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1270    4.2010    9.0770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5130    1.0860    9.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4370    4.8340    5.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6040    4.8840    4.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4600    5.7630    5.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4950    6.6720    4.2480   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6040    5.8450    3.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 18  2  0  0  0  0
+  1 17  1  0  0  0  0
+ 18 15  1  0  0  0  0
+ 17 16  2  0  0  0  0
+ 15 14  2  0  0  0  0
+ 16 14  1  0  0  0  0
+ 14  2  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 11 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  3  1  0  0  0  0
+ 10 12  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3 13  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+C10
+A   10
+C11
+A   11
+O1
+A   12
+O2
+A   13
+O
+A   14
+C2
+A   15
+C1
+A   16
+C3
+A   17
+N
+A   18
+C
+M  END
+>  <InstanceId>
+5KH7_6T7_A_1304
+
+>  <ChemCompId>
+6T7
+
+>  <PdbId>
+5KH7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O3
+
+>  <Name>
+3-(6-oxidanylidene-3-pyridin-3-yl-pyridazin-1-yl)propanoic acid
+
+>  <SystematicName>
+3-(6-oxidanylidene-3-pyridin-3-yl-pyridazin-1-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H11 N3 O3
+
+>  <MolecularWeight>
+245.234
+
+>  <ModifiedDate>
+2016-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11N3O3/c16-11-4-3-10(9-2-1-6-13-8-9)14-15(11)7-5-12(17)18/h1-4,6,8H,5,7H2,(H,17,18)
+
+>  <InChIKey>
+FPHNPEYKDLCEEE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)C2=NN(C(=O)C=C2)CCC(=O)O
+
+$$$$

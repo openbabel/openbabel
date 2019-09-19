@@ -1,0 +1,117 @@
+1PJX_ME2_A_471
+  RCSB PDB12061703403D
+Coordinates from PDB:1PJX:A:471 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    3.1350  -23.3280    6.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6490  -23.5430    6.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5470  -22.7680    7.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5210  -23.2310    8.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0560  -24.7110    8.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0720  -25.3560    7.3990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7740  -26.6140    7.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9500  -26.7490    8.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8580  -27.8140    8.4910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2590  -27.4450    8.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+O3
+A    4
+C5
+A    5
+C4
+A    6
+O2
+A    7
+C3
+A    8
+C2
+A    9
+O1
+A   10
+C1
+M  END
+>  <InstanceId>
+1PJX_ME2_A_471
+
+>  <ChemCompId>
+ME2
+
+>  <PdbId>
+1PJX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+471
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3
+
+>  <Name>
+1-ETHOXY-2-(2-METHOXYETHOXY)ETHANE
+
+>  <SystematicName>
+1-ethoxy-2-(2-methoxyethoxy)ethane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H16 O3
+
+>  <MolecularWeight>
+148.2
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H16O3/c1-3-9-6-7-10-5-4-8-2/h3-7H2,1-2H3
+
+>  <InChIKey>
+CNJRPYFBORAQAU-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOCCOCCOC
+
+$$$$

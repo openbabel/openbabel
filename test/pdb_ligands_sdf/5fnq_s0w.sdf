@@ -1,0 +1,126 @@
+5FNQ_S0W_A_1614
+  RCSB PDB12061717433D
+Coordinates from PDB:5FNQ:A:1614 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   16.9750   65.6170   23.8830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7930   64.9260   24.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5970   64.1080   24.0420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8120   65.0940   26.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9750   64.0620   26.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9990   64.2150   28.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1460   63.9000   28.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1730   64.0380   30.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0550   64.4910   31.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0920   64.6630   32.7540  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9050   64.8090   30.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8780   64.6720   28.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+CL1
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+5FNQ_S0W_A_1614
+
+>  <ChemCompId>
+S0W
+
+>  <PdbId>
+5FNQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1614
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2 Cl
+
+>  <Name>
+3-(4-CHLOROPHENYL)PROPANOIC ACID
+
+>  <SystematicName>
+3-(4-chlorophenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H9 Cl O2
+
+>  <MolecularWeight>
+184.62
+
+>  <ModifiedDate>
+2016-04-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9ClO2/c10-8-4-1-7(2-5-8)3-6-9(11)12/h1-2,4-5H,3,6H2,(H,11,12)
+
+>  <InChIKey>
+BBSLOKZINKEUCR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CCC(=O)O)Cl
+
+$$$$

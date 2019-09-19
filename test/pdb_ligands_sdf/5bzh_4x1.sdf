@@ -1,0 +1,135 @@
+5BZH_4X1_A_202
+  RCSB PDB12061717003D
+Coordinates from PDB:5BZH:A:202 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    9.8360   -6.7610    0.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0910   -5.7640   -0.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9880   -4.8250   -1.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5090   -4.0120   -2.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3210   -3.0590   -2.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6440   -2.9020   -2.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1440   -3.7040   -1.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3320   -4.6730   -0.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8710   -5.4620    0.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7720   -6.0300    1.2100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2270   -6.8500    2.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6970   -5.9210    3.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8790   -6.6370    4.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9560   -5.6180    5.8570   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+  4  3  2  0  0  0  0
+  7  8  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 10  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CAJ
+A    2
+CAH
+A    3
+CAL
+A    4
+CAD
+A    5
+CAB
+A    6
+CAC
+A    7
+CAE
+A    8
+CAM
+A    9
+CAK
+A   10
+NAN
+A   11
+CAI
+A   12
+CAG
+A   13
+CAF
+A   14
+NAA
+M  END
+>  <InstanceId>
+5BZH_4X1_A_202
+
+>  <ChemCompId>
+4X1
+
+>  <PdbId>
+5BZH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+3-(3,4-dihydroisoquinolin-2(1H)-yl)propan-1-amine
+
+>  <SystematicName>
+3-(3,4-dihydro-1H-isoquinolin-2-yl)propan-1-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H18 N2
+
+>  <MolecularWeight>
+190.285
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18N2/c13-7-3-8-14-9-6-11-4-1-2-5-12(11)10-14/h1-2,4-5H,3,6-10,13H2
+
+>  <InChIKey>
+OZWGXKVQFUBMTE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)CCN(C2)CCCN
+
+$$$$

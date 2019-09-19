@@ -1,0 +1,143 @@
+3C6P_2S3_B_1001
+  RCSB PDB12061708073D
+Coordinates from PDB:3C6P:B:1001 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   18.7890    8.6820   34.9250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4250    9.4120   33.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6620    9.0100   33.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8410   10.8510   33.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3040   11.0220   32.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7290   12.2840   31.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4930   12.0890   30.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6770   11.7200   34.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3410   12.3390   35.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0760   12.3660   36.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5270   13.0710   37.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3140   13.7140   37.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5680   13.7090   36.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1090   12.9700   35.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6820   12.7780   33.7560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6110   11.9570   33.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 16  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+OAC
+A    2
+CAM
+A    3
+OAB
+A    4
+CAQ
+A    5
+CAK
+A    6
+CAJ
+A    7
+CAI
+A    8
+CAN
+A    9
+CAP
+A   10
+CAG
+A   11
+CAE
+A   12
+CAD
+A   13
+CAF
+A   14
+CAO
+A   15
+NL
+A   16
+CAH
+M  END
+>  <InstanceId>
+3C6P_2S3_B_1001
+
+>  <ChemCompId>
+2S3
+
+>  <PdbId>
+3C6P
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O2
+
+>  <Name>
+(2S)-2-(1H-indol-3-yl)pentanoic acid
+
+>  <SystematicName>
+(2S)-2-(1H-indol-3-yl)pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H15 N O2
+
+>  <MolecularWeight>
+217.264
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H15NO2/c1-2-5-10(13(15)16)11-8-14-12-7-4-3-6-9(11)12/h3-4,6-8,10,14H,2,5H2,1H3,(H,15,16)/t10-/m0/s1
+
+>  <InChIKey>
+QRCBLBWFQJDFJQ-JTQLQIEISA-N
+
+>  <SMILES>
+CCC[C@@H](c1c[nH]c2c1cccc2)C(=O)O
+
+$$$$

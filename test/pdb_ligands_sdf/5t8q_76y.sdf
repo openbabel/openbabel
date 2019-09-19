@@ -1,0 +1,143 @@
+5T8Q_76Y_A_706
+  RCSB PDB12061719323D
+Coordinates from PDB:5T8Q:A:706 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   19.4060   42.2080    6.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2230   42.5810    5.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1820   42.6570    4.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9070   43.0170    4.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1900   43.1440    5.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5580   42.9160    7.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2360   40.1320   10.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6460   41.3790    9.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5910   42.7850   10.7230  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2750   39.0430    9.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7180   39.1920    7.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1430   40.4230    7.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1300   41.5480    8.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9980   42.8840    6.3480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2550   41.9300    7.8890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6220   42.1700    6.1750   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  3  2  2  0  0  0  0
+  5 14  1  0  0  0  0
+  2 14  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 16  1  1  0  0  0  0
+ 14  6  1  0  0  0  0
+  1 15  2  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+  6 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13  8  2  0  0  0  0
+ 10  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C11
+A    8
+C12
+A    9
+CL
+A   10
+C10
+A   11
+C9
+A   12
+C8
+A   13
+C7
+A   14
+N2
+A   15
+O
+A   16
+N1
+M  END
+>  <InstanceId>
+5T8Q_76Y_A_706
+
+>  <ChemCompId>
+76Y
+
+>  <PdbId>
+5T8Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+706
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O Cl
+
+>  <Name>
+1-[(2-chlorophenyl)methyl]pyrrole-2-carboxamide
+
+>  <SystematicName>
+1-[(2-chlorophenyl)methyl]pyrrole-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H11 Cl N2 O
+
+>  <MolecularWeight>
+234.682
+
+>  <ModifiedDate>
+2017-01-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11ClN2O/c13-10-5-2-1-4-9(10)8-15-7-3-6-11(15)12(14)16/h1-7H,8H2,(H2,14,16)
+
+>  <InChIKey>
+FNWQVYIDFQBAEE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)Cn2cccc2C(=O)N)Cl
+
+$$$$

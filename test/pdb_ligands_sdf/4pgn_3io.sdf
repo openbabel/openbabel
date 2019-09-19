@@ -1,0 +1,139 @@
+1XES_3IO_A_2000
+  RCSB PDB12061704373D
+Coordinates from PDB:1XES:A:2000 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   30.4630   49.7460  100.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1730   49.6720   99.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3510   48.6000   99.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8210   47.6030  100.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1100   47.6760  101.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9300   48.7510  100.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1730   49.0760  101.2050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5080   50.2220  100.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4970   50.6640   99.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5380   51.8800   98.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5500   52.9780   99.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4840   52.7150   99.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9190   54.4400   99.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1320   54.7420   99.0410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9860   55.2630   98.9580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+CAO
+A    2
+CAG
+A    3
+CAE
+A    4
+CAD
+A    5
+CAF
+A    6
+CAN
+A    7
+NAJ
+A    8
+CAH
+A    9
+CAM
+A   10
+CAI
+A   11
+CAL
+A   12
+OAB
+A   13
+CAK
+A   14
+OAC
+A   15
+OAA
+M  END
+>  <InstanceId>
+1XES_3IO_A_2000
+
+>  <ChemCompId>
+3IO
+
+>  <PdbId>
+1XES
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O3
+
+>  <Name>
+3-(1H-INDOL-3-YL)-2-OXOPROPANOIC ACID
+
+>  <SystematicName>
+3-(1H-indol-3-yl)-2-oxo-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 N O3
+
+>  <MolecularWeight>
+203.194
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H9NO3/c13-10(11(14)15)5-7-6-12-9-4-2-1-3-8(7)9/h1-4,6,12H,5H2,(H,14,15)
+
+>  <InChIKey>
+RSTKLPZEZYGQPY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)CC(=O)C(=O)O
+
+$$$$

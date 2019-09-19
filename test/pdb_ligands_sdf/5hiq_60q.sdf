@@ -1,0 +1,135 @@
+5HIQ_60Q_A_403
+  RCSB PDB12061718013D
+Coordinates from PDB:5HIQ:A:403 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -18.0740    1.6090   -6.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2950    4.6590  -11.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8560    4.1150  -10.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3370    2.8140  -10.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2480    2.0500  -11.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6900    2.5980  -12.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2110    3.8990  -12.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7670    0.6260  -11.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2880   -0.2530  -10.5160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6850    0.3230  -12.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8730    2.3100   -8.9560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1430    1.9020   -8.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2980    1.4530   -7.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2100    2.1480   -7.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  2  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  8  5  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5  4  2  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 14  1  2  0  0  0  0
+ 13  1  1  0  0  0  0
+A    1
+C13
+A    2
+C01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+O08
+A   10
+O09
+A   11
+N10
+A   12
+C11
+A   13
+C12
+A   14
+C14
+M  END
+>  <InstanceId>
+5HIQ_60Q_A_403
+
+>  <ChemCompId>
+60Q
+
+>  <PdbId>
+5HIQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+2-pyrrol-1-ylbenzoic acid
+
+>  <SystematicName>
+2-pyrrol-1-ylbenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 N O2
+
+>  <MolecularWeight>
+187.195
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9NO2/c13-11(14)9-5-1-2-6-10(9)12-7-3-4-8-12/h1-8H,(H,13,14)
+
+>  <InChIKey>
+GNWTWXOZRSBCOZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)n2cccc2
+
+$$$$

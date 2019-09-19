@@ -1,0 +1,155 @@
+3ZJ8_LR1_A_1001
+  RCSB PDB12061711293D
+Coordinates from PDB:3ZJ8:A:1001 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+  -36.3000    8.5430   -9.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.9900    8.6040   -8.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.2420    7.4240   -8.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.4430    7.4350   -7.8200  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.7980    6.1970   -8.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.0950    6.1310   -9.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8410    7.3110   -9.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1400    7.2360   -9.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.8900    6.1680   -9.2230   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.3410    6.3200   -9.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.1250    5.0500   -8.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6400    4.3720  -10.1560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.2790    5.5470   -8.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.5110    4.5410   -7.2020   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6940    6.7800   -7.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.6930    7.7100   -6.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.8900    7.4630   -8.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.7460    8.2340   -7.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.2490    9.4990   -7.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 17  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+CAH
+A    2
+CAF
+A    3
+CAM
+A    4
+BR
+A    5
+CAG
+A    6
+CAI
+A    7
+CAN
+A    8
+CAK
+A    9
+NAL
+A   10
+CAS
+A   11
+CAQ
+A   12
+OAD
+A   13
+CAO
+A   14
+OAB
+A   15
+CAP
+A   16
+OAC
+A   17
+CAR
+A   18
+CAJ
+A   19
+OAA
+M  END
+>  <InstanceId>
+3ZJ8_LR1_A_1001
+
+>  <ChemCompId>
+LR1
+
+>  <PdbId>
+3ZJ8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O4 Br
+
+>  <Name>
+(1R,2S,3S,4R,5R)-4-[(4-bromophenyl)methylamino]-5-(hydroxymethyl)cyclopentane-1,2,3-triol
+
+>  <SystematicName>
+(1R,2S,3S,4R,5R)-4-[(4-bromophenyl)methylamino]-5-(hydroxymethyl)cyclopentane-1,2,3-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C13 H18 Br N O4
+
+>  <MolecularWeight>
+332.19
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H18BrNO4/c14-8-3-1-7(2-4-8)5-15-10-9(6-16)11(17)13(19)12(10)18/h1-4,9-13,15-19H,5-6H2/t9-,10+,11+,12-,13-/m0/s1
+
+>  <InChIKey>
+BSQKACVWQISROJ-QWQWKMKNSA-N
+
+>  <SMILES>
+c1cc(ccc1CN[C@@H]2[C@@H]([C@H]([C@@H]([C@H]2O)O)O)CO)Br
+
+$$$$

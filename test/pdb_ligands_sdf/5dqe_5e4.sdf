@@ -1,0 +1,147 @@
+5DQE_5E4_A_501
+  RCSB PDB12061717213D
+Coordinates from PDB:5DQE:A:501 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   47.5940   42.9870  -13.1300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1610   41.9880  -13.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8020   40.9100  -13.7000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8640   42.1100  -14.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2030   41.0460  -14.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.9010   41.2200  -15.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4590   42.4340  -16.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2370   43.6630  -15.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3540   43.5120  -14.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1480   44.6230  -14.3710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1290   45.9700  -14.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9620   46.6470  -14.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8860   47.9240  -15.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1330   48.7280  -15.2730  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9940   48.5820  -15.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1980   47.9110  -15.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2650   46.6090  -15.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 16 15  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 15 13  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 17 11  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  2  0  0  0  0
+  5  4  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  9  4  1  0  0  0  0
+  9 10  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAD
+A    2
+CAP
+A    3
+OAQ
+A    4
+CAI
+A    5
+CAH
+A    6
+CAA
+A    7
+CAB
+A    8
+CAC
+A    9
+CAJ
+A   10
+NAK
+A   11
+CAL
+A   12
+CAM
+A   13
+CAN
+A   14
+BR
+A   15
+CAG
+A   16
+CAF
+A   17
+CAE
+M  END
+>  <InstanceId>
+5DQE_5E4_A_501
+
+>  <ChemCompId>
+5E4
+
+>  <PdbId>
+5DQE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O2 Br
+
+>  <Name>
+2-[(3-bromophenyl)amino]benzoic acid
+
+>  <SystematicName>
+2-[(3-bromophenyl)amino]benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H10 Br N O2
+
+>  <MolecularWeight>
+292.128
+
+>  <ModifiedDate>
+2015-11-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H10BrNO2/c14-9-4-3-5-10(8-9)15-12-7-2-1-6-11(12)13(16)17/h1-8,15H,(H,16,17)
+
+>  <InChIKey>
+IRGQJNUPNQPHQP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)Nc2cccc(c2)Br
+
+$$$$

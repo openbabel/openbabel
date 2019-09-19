@@ -1,0 +1,122 @@
+4XPA_42J_A_703
+  RCSB PDB12061716153D
+Coordinates from PDB:4XPA:A:703 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -60.1870 -143.5810   27.2920  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.4790 -143.0340   27.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.7490 -143.0880   26.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.5120 -143.7070   24.5930  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.4260 -142.6640   26.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.8390 -142.1860   27.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.8930 -142.5520   28.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.5680 -142.1330   28.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.9330 -141.6130   29.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -54.5660 -142.2600   29.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.5380 -141.4910   29.1860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  7  2  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CL1
+A    2
+C6
+A    3
+C5
+A    4
+CL
+A    5
+C4
+A    6
+C3
+A    7
+C7
+A    8
+C2
+A    9
+C1
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+4XPA_42J_A_703
+
+>  <ChemCompId>
+42J
+
+>  <PdbId>
+4XPA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+703
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N Cl2
+
+>  <Name>
+2-(3,4-dichlorophenyl)ethanamine
+
+>  <SystematicName>
+2-(3,4-dichlorophenyl)ethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 Cl2 N
+
+>  <MolecularWeight>
+190.07
+
+>  <ModifiedDate>
+2015-05-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9Cl2N/c9-7-2-1-6(3-4-11)5-8(7)10/h1-2,5H,3-4,11H2
+
+>  <InChIKey>
+MQPUAVYKVIHUJP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1CCN)Cl)Cl
+
+$$$$

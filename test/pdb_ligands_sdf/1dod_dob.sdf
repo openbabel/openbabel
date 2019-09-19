@@ -1,0 +1,122 @@
+1DOD_DOB_A_396
+  RCSB PDB12061702173D
+Coordinates from PDB:1DOD:A:396 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   17.2050   96.8430   45.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0140   97.5190   46.2940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2280   97.4500   45.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3260   95.4470   45.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3740   94.7420   46.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4170   93.3410   46.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3510   92.6310   45.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2590   93.2740   45.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2650   94.6880   45.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4130   95.3830   46.6800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4080   91.2960   45.5500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O2
+A   11
+O4
+M  END
+>  <InstanceId>
+1DOD_DOB_A_396
+
+>  <ChemCompId>
+DOB
+
+>  <PdbId>
+1DOD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+396
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O4
+
+>  <Name>
+2,4-DIHYDROXYBENZOIC ACID
+
+>  <SystematicName>
+2,4-dihydroxybenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O4
+
+>  <MolecularWeight>
+154.12
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O4/c8-4-1-2-5(7(10)11)6(9)3-4/h1-3,8-9H,(H,10,11)
+
+>  <InChIKey>
+UIAFKZKHHVMJGS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)O)C(=O)O
+
+$$$$

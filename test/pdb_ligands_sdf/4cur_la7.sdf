@@ -1,0 +1,118 @@
+4CUR_LA7_A_2972
+  RCSB PDB12061712063D
+Coordinates from PDB:4CUR:A:2972 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   16.7250   40.0430   30.1360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4620   39.4830   29.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3060   38.0870   29.8400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0190   37.5950   29.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3580   40.2900   29.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5210   41.7880   29.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0210   42.2190   30.9220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1610   39.7850   29.3870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9740   38.4760   29.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5970   37.9170   29.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+C4
+A    3
+C3
+A    4
+C2
+A    5
+C5
+A    6
+C6
+A    7
+O
+A    8
+N
+A    9
+C1
+A   10
+C
+M  END
+>  <InstanceId>
+4CUR_LA7_A_2972
+
+>  <ChemCompId>
+LA7
+
+>  <PdbId>
+4CUR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2972
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+2-(hydroxymethyl)-6-methylpyridin-3-ol
+
+>  <SystematicName>
+2-(hydroxymethyl)-6-methyl-pyridin-3-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H9 N O2
+
+>  <MolecularWeight>
+139.152
+
+>  <ModifiedDate>
+2014-03-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9NO2/c1-5-2-3-7(10)6(4-9)8-5/h2-3,9-10H,4H2,1H3
+
+>  <InChIKey>
+PAGTXDLKXRBHFL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(n1)CO)O
+
+$$$$

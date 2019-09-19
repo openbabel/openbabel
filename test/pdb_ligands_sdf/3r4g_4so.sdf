@@ -1,0 +1,130 @@
+3R4G_4SO_A_1
+  RCSB PDB12061710303D
+Coordinates from PDB:3R4G:A:1 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   20.9290    4.2470    5.4200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0730    8.2240    8.7950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9550    6.2230    7.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2070    5.3700    6.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1330    4.6580    6.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2030    3.5850    5.8070   S 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0610    3.2220    4.5110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4610    7.2810    9.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6290    6.3590    8.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5620    5.6410    8.9790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8110    4.7920    8.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8900    2.3420    6.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5270    7.0040   10.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  2  0  0  0  0
+  2  8  2  0  0  0  0
+  9  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 11  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 12  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+SAF
+A    7
+NAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+OAL
+A   13
+OAM
+M  END
+>  <InstanceId>
+3R4G_4SO_A_1
+
+>  <ChemCompId>
+4SO
+
+>  <PdbId>
+3R4G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4 S
+
+>  <Name>
+4-sulfamoylbenzoic acid
+
+>  <SystematicName>
+4-sulfamoylbenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O4 S
+
+>  <MolecularWeight>
+201.2
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO4S/c8-13(11,12)6-3-1-5(2-4-6)7(9)10/h1-4H,(H,9,10)(H2,8,11,12)
+
+>  <InChIKey>
+UCAGLBKTLXCODC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)O)S(=O)(=O)N
+
+$$$$

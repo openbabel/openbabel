@@ -1,0 +1,147 @@
+3I58_7NA_A_402
+  RCSB PDB12061709013D
+Coordinates from PDB:3I58:A:402 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -50.6630   19.8520  -28.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.1850   18.6660  -24.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.4320   20.2680  -24.9540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.9250   20.5500  -22.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.1420   20.6400  -21.1050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.9360   19.9560  -21.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.0190   19.5290  -22.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.8790   18.8330  -26.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.1150   19.4960  -25.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.5740   18.9710  -27.9040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.1140   20.3170  -23.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.4910   18.9640  -24.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.1920   19.1010  -26.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.2500   20.2200  -22.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.6530   20.0590  -23.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.4160   19.3700  -23.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.7310   19.6350  -24.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  1  1  0  0  0  0
+  2 12  1  0  0  0  0
+ 11  3  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5 14  1  0  0  0  0
+  6 14  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7 16  2  0  0  0  0
+ 12  8  2  0  0  0  0
+  8 13  1  0  0  0  0
+ 17  9  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 13 10  1  0  0  0  0
+ 15 11  1  0  0  0  0
+ 16 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 17  2  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+C1A
+A    2
+C1B
+A    3
+O1C
+A    4
+O1D
+A    5
+O1E
+A    6
+C1F
+A    7
+C1G
+A    8
+C1H
+A    9
+C1I
+A   10
+O1J
+A   11
+C1K
+A   12
+C1L
+A   13
+C1M
+A   14
+C1N
+A   15
+C1O
+A   16
+C1P
+A   17
+C1Q
+M  END
+>  <InstanceId>
+3I58_7NA_A_402
+
+>  <ChemCompId>
+7NA
+
+>  <PdbId>
+3I58
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O4
+
+>  <Name>
+2-hydroxy-7-methoxy-5-methyl naphthoic acid
+
+>  <SystematicName>
+2-hydroxy-7-methoxy-5-methyl-naphthalene-1-carboxylic acid
+
+>  <Synonyms>
+2-hydroxy-7-methoxy-5-methylnaphthalene-1-carboxylic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H12 O4
+
+>  <MolecularWeight>
+232.232
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H12O4/c1-7-5-8(17-2)6-10-9(7)3-4-11(14)12(10)13(15)16/h3-6,14H,1-2H3,(H,15,16)
+
+>  <InChIKey>
+LYGUXQMPYLCEGL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(cc2c1ccc(c2C(=O)O)O)OC
+
+$$$$

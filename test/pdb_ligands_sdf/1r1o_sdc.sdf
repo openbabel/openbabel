@@ -1,0 +1,129 @@
+1R1O_SDC_A_1000
+  RCSB PDB12061703503D
+Coordinates from PDB:1R1O:A:1000 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    2.8040   50.7000   -3.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1780   50.1760   -2.0890   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0470   49.6780   -2.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0040   50.7900   -3.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6620   51.9340   -3.5320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4660   48.5030   -2.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7370   47.3650   -3.3530   S 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5430   46.5170   -2.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6830   45.0230   -2.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2440   44.0910   -2.0310   S 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7560   43.2130   -3.0060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7990   43.1630   -0.8040   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2890   44.8490   -1.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  2  0  0  0  0
+A    1
+O01
+A    2
+NP2
+A    3
+C03
+A    4
+C04
+A    5
+O05
+A    6
+C06
+A    7
+S07
+A    8
+C08
+A    9
+C09
+A   10
+S10
+A   11
+O11
+A   12
+N12
+A   13
+O13
+M  END
+>  <InstanceId>
+1R1O_SDC_A_1000
+
+>  <ChemCompId>
+SDC
+
+>  <PdbId>
+1R1O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O4 S2
+
+>  <Name>
+S-[2-(AMINOSULFONYL)ETHYL]-D-CYSTEINE
+
+>  <SystematicName>
+(2R)-2-amino-3-(2-sulfamoylethylsulfanyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N2 O4 S2
+
+>  <MolecularWeight>
+228.29
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N2O4S2/c6-4(5(8)9)3-12-1-2-13(7,10)11/h4H,1-3,6H2,(H,8,9)(H2,7,10,11)/t4-/m0/s1
+
+>  <InChIKey>
+ZRCBQBJBRHIRRG-BYPYZUCNSA-N
+
+>  <SMILES>
+C(CS(=O)(=O)N)SC[C@@H](C(=O)O)N
+
+$$$$

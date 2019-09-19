@@ -1,0 +1,151 @@
+4HCY_0YN_A_401
+  RCSB PDB12061712513D
+Coordinates from PDB:4HCY:A:401 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   62.1120   17.2850   29.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.0970   19.7220   24.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6580   19.1250   23.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3940   19.5820   22.8630   S 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3210   20.7650   22.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.6850   20.7990   22.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7960   21.7090   22.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6170   21.4860   20.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3520   21.2580   19.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5630   21.7650   18.5060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5520   17.1480   27.1380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3710   17.9250   28.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.4200   19.2710   28.1270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   62.6500   19.8600   26.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.6970   21.2100   26.8410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   62.8350   19.0770   25.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7840   17.6950   25.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.8110   19.8800   23.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6 18  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 18  3  2  0  0  0  0
+ 18  2  1  0  0  0  0
+  2 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 14  1  0  0  0  0
+ 17 11  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12  1  1  0  0  0  0
+A    1
+C2A
+A    2
+C35
+A    3
+C2
+A    4
+S1
+A    5
+C5
+A    6
+C4
+A    7
+C4A
+A    8
+C5A
+A    9
+C5B
+A   10
+O5G
+A   11
+N1'
+A   12
+C2'
+A   13
+N3'
+A   14
+C4'
+A   15
+N4'
+A   16
+C5'
+A   17
+C6'
+A   18
+C3
+M  END
+>  <InstanceId>
+4HCY_0YN_A_401
+
+>  <ChemCompId>
+0YN
+
+>  <PdbId>
+4HCY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N3 O S
+
+>  <Name>
+2-{4-[(4-amino-2-methylpyrimidin-5-yl)methyl]-3-methylthiophen-2-yl}ethanol
+
+>  <SystematicName>
+2-[4-[(4-azanyl-2-methyl-pyrimidin-5-yl)methyl]-3-methyl-thiophen-2-yl]ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H17 N3 O S
+
+>  <MolecularWeight>
+263.359
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H17N3OS/c1-8-11(7-18-12(8)3-4-17)5-10-6-15-9(2)16-13(10)14/h6-7,17H,3-5H2,1-2H3,(H2,14,15,16)
+
+>  <InChIKey>
+HLBXMICRXICHJQ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(csc1CCO)Cc2cnc(nc2N)C
+
+$$$$

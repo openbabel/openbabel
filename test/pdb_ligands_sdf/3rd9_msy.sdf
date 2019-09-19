@@ -1,0 +1,147 @@
+3RD9_MSY_X_301
+  RCSB PDB12061710333D
+Coordinates from PDB:3RD9:X:301 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    3.2600   21.7710   18.8260   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5760   20.6080   18.6040   S 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2400   20.3030   19.9230   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5980   21.1880   17.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9480   19.1700   17.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9500   19.0820   16.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4450   17.9270   15.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9380   16.8570   16.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9400   16.9580   18.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4490   18.1140   18.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4770   17.9030   14.4590   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3430   18.8990   13.7740   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2980   19.5800   11.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4270   18.5790   12.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6560   17.1540   12.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6890   16.6840   13.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8620   15.5550   14.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  4  2  2  0  0  0  0
+  5  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  6  5  2  0  0  0  0
+  5 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 16 11  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 14 12  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+A    1
+N
+A    2
+S
+A    3
+O1
+A    4
+O2
+A    5
+CA1
+A    6
+CA2
+A    7
+CA3
+A    8
+CA4
+A    9
+CA5
+A   10
+CA6
+A   11
+NB1
+A   12
+NB2
+A   13
+CME
+A   14
+CP3
+A   15
+CP4
+A   16
+CP5
+A   17
+OPY
+M  END
+>  <InstanceId>
+3RD9_MSY_X_301
+
+>  <ChemCompId>
+MSY
+
+>  <PdbId>
+3RD9
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O3 S
+
+>  <Name>
+3-(3-methyl-5-oxo-4,5-dihydro-1H-pyrazol-1-yl)benzenesulfonamide
+
+>  <SystematicName>
+3-(3-methyl-5-oxo-4H-pyrazol-1-yl)benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 N3 O3 S
+
+>  <MolecularWeight>
+253.278
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3O3S/c1-7-5-10(14)13(12-7)8-3-2-4-9(6-8)17(11,15)16/h2-4,6H,5H2,1H3,(H2,11,15,16)
+
+>  <InChIKey>
+ASVVGQURNHNITH-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=NN(C(=O)C1)c2cccc(c2)S(=O)(=O)N
+
+$$$$

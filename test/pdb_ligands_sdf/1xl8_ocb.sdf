@@ -1,0 +1,158 @@
+1XL8_OCB_B_613
+  RCSB PDB12061704393D
+Coordinates from PDB:1XL8:B:613 Model:1 without hydrogens
+ 20 19  0  0  0  0            999 V2000
+   55.0570   51.5400  109.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.6240   50.5880  108.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1650   49.2440  109.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7240   48.3130  107.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1010   47.0310  108.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4500   46.2210  107.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6180   45.0730  107.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7810   44.3920  106.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0440   44.5540  105.6420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7550   43.5840  107.2170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0070   43.0260  106.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6200   43.6800  106.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6490   43.0800  105.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4710   42.8880  105.4400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0290   42.7730  104.0030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8660   41.5100  106.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1430   40.7770  106.3490   N 0  3  0  0  0  0  0  0  0  0  0  0
+   49.8230   39.3420  106.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9080   41.1080  107.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9620   41.0380  105.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 17 20  1  0  0  0  0
+M  CHG  1  17   1
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+OAI
+A   10
+OAK
+A   11
+CAP
+A   12
+CAQ
+A   13
+CAR
+A   14
+OAL
+A   15
+OAS
+A   16
+CAO
+A   17
+NAN
+A   18
+CAT
+A   19
+CAJ
+A   20
+CAM
+M  END
+>  <InstanceId>
+1XL8_OCB_B_613
+
+>  <ChemCompId>
+OCB
+
+>  <PdbId>
+1XL8
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+613
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N O4
+
+>  <Name>
+OCTANOYLCARNITINE
+
+>  <SystematicName>
+[(2R)-4-hydroxy-2-octanoyloxy-4-oxo-butyl]-trimethyl-azanium
+
+>  <Synonyms>
+3-CARBOXY-N,N,N-TRIMETHYL-2-(OCTANOYLOXY)PROPAN-1-AMINIUM
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H30 N O4
+
+>  <MolecularWeight>
+288.403
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H29NO4/c1-5-6-7-8-9-10-15(19)20-13(11-14(17)18)12-16(2,3)4/h13H,5-12H2,1-4H3/p+1/t13-/m1/s1
+
+>  <InChIKey>
+CXTATJFJDMJMIY-CYBMUJFWSA-O
+
+>  <SMILES>
+CCCCCCCC(=O)O[C@H](CC(=O)O)C[N+](C)(C)C
+
+$$$$

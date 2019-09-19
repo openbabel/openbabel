@@ -1,0 +1,122 @@
+1PBC_BHA_A_396
+  RCSB PDB12061703383D
+Coordinates from PDB:1PBC:A:396 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   17.2060   96.7690   45.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1600   97.4110   46.4860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1640   97.3510   45.5980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3030   95.3450   45.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4600   94.7010   46.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5590   93.3060   46.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5330   92.5300   45.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3840   93.1470   45.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2770   94.5330   45.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4700   95.2730   47.0200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6970   91.2050   45.8160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O2
+A   11
+N4
+M  END
+>  <InstanceId>
+1PBC_BHA_A_396
+
+>  <ChemCompId>
+BHA
+
+>  <PdbId>
+1PBC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+396
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+2-HYDROXY-4-AMINOBENZOIC ACID
+
+>  <SystematicName>
+4-amino-2-hydroxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O3
+
+>  <MolecularWeight>
+153.135
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO3/c8-4-1-2-5(7(10)11)6(9)3-4/h1-3,9H,8H2,(H,10,11)
+
+>  <InChIKey>
+WUBBRNOQWQTFEX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1N)O)C(=O)O
+
+$$$$

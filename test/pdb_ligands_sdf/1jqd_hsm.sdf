@@ -1,0 +1,110 @@
+1AVN_HSM_A_264
+  RCSB PDB12061702013D
+Coordinates from PDB:1AVN:A:264 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+    0.4720    5.1050    9.7360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6460    5.9190   10.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9700    5.5830    9.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1410    4.9460   10.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4800    3.6270   10.0410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0830    5.4150   11.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5450    3.2880   10.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9260    4.3630   11.3830   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+ND1
+A    6
+CD2
+A    7
+CE1
+A    8
+NE2
+M  END
+>  <InstanceId>
+1AVN_HSM_A_264
+
+>  <ChemCompId>
+HSM
+
+>  <PdbId>
+1AVN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+264
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3
+
+>  <Name>
+HISTAMINE
+
+>  <SystematicName>
+2-(1H-imidazol-4-yl)ethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N3
+
+>  <MolecularWeight>
+111.145
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9N3/c6-2-1-5-3-7-4-8-5/h3-4H,1-2,6H2,(H,7,8)
+
+>  <InChIKey>
+NTYJJOPFIAHURM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc[nH]1)CCN
+
+$$$$

@@ -1,0 +1,159 @@
+1TD7_NFL_A_2001
+  RCSB PDB12061704063D
+Coordinates from PDB:1TD7:A:2001 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+    9.6370   10.8690    6.7250   F 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9360   11.0920    6.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5690    9.9370    6.7290   F 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2370   11.4250    8.1800   F 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5150   11.9890    5.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7960   12.5070    4.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4490   13.2950    3.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8150   13.5120    3.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5200   12.9860    5.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8760   12.2240    5.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9080   13.8960    2.6330   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6240   13.9240    2.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6180   13.2880    2.7560   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2600   14.6540    0.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2270   15.4370   -0.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4180   15.5370    0.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8340   15.9900   -1.0890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9280   14.6030    0.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9800   13.9110    1.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3530   13.2680    2.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 20  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 18  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  2  0  0  0  0
+ 18 19  1  0  0  0  0
+ 19 20  2  0  0  0  0
+A    1
+F3
+A    2
+C15
+A    3
+F1
+A    4
+F2
+A    5
+C9
+A    6
+C10
+A    7
+C11
+A    8
+C12
+A    9
+C13
+A   10
+C14
+A   11
+N2
+A   12
+C1
+A   13
+N1
+A   14
+C2
+A   15
+C6
+A   16
+O8
+A   17
+O7
+A   18
+C3
+A   19
+C4
+A   20
+C5
+M  END
+>  <InstanceId>
+1TD7_NFL_A_2001
+
+>  <ChemCompId>
+NFL
+
+>  <PdbId>
+1TD7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O2 F3
+
+>  <Name>
+2-{[3-(TRIFLUOROMETHYL)PHENYL]AMINO}NICOTINIC ACID
+
+>  <SystematicName>
+2-[[3-(trifluoromethyl)phenyl]amino]pyridine-3-carboxylic acid
+
+>  <Synonyms>
+2-[(3-TRIFLUOROMETHYL)PHENYL]AMINO-3-PYRIDINE-CARBOXYLIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H9 F3 N2 O2
+
+>  <MolecularWeight>
+282.218
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H9F3N2O2/c14-13(15,16)8-3-1-4-9(7-8)18-11-10(12(19)20)5-2-6-17-11/h1-7H,(H,17,18)(H,19,20)
+
+>  <InChIKey>
+JZFPYUNJRRFVQU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)Nc2c(cccn2)C(=O)O)C(F)(F)F
+
+$$$$

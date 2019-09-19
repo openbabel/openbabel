@@ -1,0 +1,126 @@
+1QPR_PHT_A_1
+  RCSB PDB12061703483D
+Coordinates from PDB:1QPR:A:1 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -18.1220   40.6030   18.1460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3480   39.9400   20.1090   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6220   41.7530   16.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0770   42.4570   15.7210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2310   40.5850   16.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2780   40.7100   19.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.5640   43.2920   18.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4860   42.2680   18.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2020   41.8030   19.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9150   42.3920   20.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0670   43.4630   20.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3720   43.8660   19.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+O8
+A    2
+O9
+A    3
+C10
+A    4
+O11
+A    5
+O12
+A    6
+C7
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C4
+A   11
+C5
+A   12
+C6
+M  END
+>  <InstanceId>
+1QPR_PHT_A_1
+
+>  <ChemCompId>
+PHT
+
+>  <PdbId>
+1QPR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O4
+
+>  <Name>
+PHTHALIC ACID
+
+>  <SystematicName>
+phthalic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 O4
+
+>  <MolecularWeight>
+166.131
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6O4/c9-7(10)5-3-1-2-4-6(5)8(11)12/h1-4H,(H,9,10)(H,11,12)
+
+>  <InChIKey>
+XNGIFLGASWRNHJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)C(=O)O
+
+$$$$

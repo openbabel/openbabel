@@ -1,0 +1,150 @@
+3UF9_FST_A_317
+  RCSB PDB12061711023D
+Coordinates from PDB:3UF9:A:317 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+  -18.3200   17.9700  -20.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6280   16.8530  -21.7610   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6440   16.5500  -23.0210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2010   17.3940  -22.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0300   16.8190  -21.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7830   17.2810  -22.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7000   18.3310  -23.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8690   18.9040  -23.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1150   18.4430  -23.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4840   18.7980  -23.5250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2830   19.2100  -22.5330   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1630   20.6180  -23.2840   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9660   19.6200  -21.1340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8650   20.7220  -21.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6250   21.6490  -22.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4590   17.8580  -22.2420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7980   17.6580  -20.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0990   16.2680  -20.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+C1
+A    2
+S2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O10
+A   11
+P11
+A   12
+S12
+A   13
+O13
+A   14
+C14
+A   15
+C15
+A   16
+O16
+A   17
+C17
+A   18
+C18
+M  END
+>  <InstanceId>
+3UF9_FST_A_317
+
+>  <ChemCompId>
+FST
+
+>  <PdbId>
+3UF9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+317
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4 P S2
+
+>  <Name>
+O,O-diethyl O-{4-[(R)-methylsulfinyl]phenyl} phosphorothioate
+
+>  <SystematicName>
+diethoxy-[4-[(R)-methylsulfinyl]phenoxy]-sulfanylidene-$l^{5}-phosphane
+
+>  <Synonyms>
+Fensulfothion
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 O4 P S2
+
+>  <MolecularWeight>
+308.354
+
+>  <ModifiedDate>
+2012-09-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17O4PS2/c1-4-13-16(17,14-5-2)15-10-6-8-11(9-7-10)18(3)12/h6-9H,4-5H2,1-3H3/t18-/m1/s1
+
+>  <InChIKey>
+XDNBJTQLKCIJBV-GOSISDBHSA-N
+
+>  <SMILES>
+CCOP(=S)(OCC)Oc1ccc(cc1)[S@](=O)C
+
+$$$$

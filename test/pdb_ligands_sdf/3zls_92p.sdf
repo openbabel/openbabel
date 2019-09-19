@@ -1,0 +1,131 @@
+3ZLS_92P_A_1383
+  RCSB PDB12061711303D
+Coordinates from PDB:3ZLS:A:1383 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -20.8130   26.5030   -3.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0960   27.0270   -2.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3640   28.3400   -2.8990   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7350   27.3720   -2.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3460   30.5430   -2.7430   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0550   30.9960   -2.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1760   29.9330   -2.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9890   28.7380   -2.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3130   29.1800   -2.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6920   29.9480   -2.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9990   28.9590   -2.8270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2110   31.1930   -2.8010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7750   31.3290   -2.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+O11
+A   12
+O12
+A   13
+C13
+M  END
+>  <InstanceId>
+3ZLS_92P_A_1383
+
+>  <ChemCompId>
+92P
+
+>  <PdbId>
+3ZLS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1383
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+1H-PYRROLO[2,3-B]PYRIDINE-3-CARBOXYLIC ACID
+
+>  <SystematicName>
+methyl 1H-pyrrolo[2,3-b]pyridine-3-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H8 N2 O2
+
+>  <MolecularWeight>
+176.172
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2O2/c1-13-9(12)7-5-11-8-6(7)3-2-4-10-8/h2-5H,1H3,(H,10,11)
+
+>  <InChIKey>
+XYRUNIAHPKBUJT-UHFFFAOYSA-N
+
+>  <SMILES>
+COC(=O)c1c[nH]c2c1cccn2
+
+$$$$

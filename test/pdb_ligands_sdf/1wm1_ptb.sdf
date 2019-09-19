@@ -1,0 +1,143 @@
+1WM1_PTB_A_401
+  RCSB PDB12061704333D
+Coordinates from PDB:1WM1:A:401 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   18.6800   -0.4760   -9.3240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2460    0.2360   -8.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7360   -0.0180   -7.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1800   -1.1050   -7.6480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4130   -0.1730   -6.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0900   -0.6470   -7.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3560   -1.0600   -8.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5840    1.1390   -8.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2760    2.3710   -8.6440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3680    3.1040   -8.6820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4300    2.3720   -8.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9740    1.0760   -7.9250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8840    2.7160   -8.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0010    4.0230   -7.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5060    2.8940   -9.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6000    1.5920   -7.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+C2
+A    9
+N3
+A   10
+N4
+A   11
+C5
+A   12
+O1
+A   13
+C6
+A   14
+C7
+A   15
+C8
+A   16
+C9
+M  END
+>  <InstanceId>
+1WM1_PTB_A_401
+
+>  <ChemCompId>
+PTB
+
+>  <PdbId>
+1WM1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2
+
+>  <Name>
+(5-TERT-BUTYL-1,3,4-OXADIAZOL-2-YL)[(2R)-PYRROLIDIN-2-YL]METHANONE
+
+>  <SystematicName>
+(5-tert-butyl-1,3,4-oxadiazol-2-yl)-[(2S)-pyrrolidin-2-yl]methanone
+
+>  <Synonyms>
+2-PROLYL-5-TERT-BUTYL-[1,3,4]OXADIAZOLE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 N3 O2
+
+>  <MolecularWeight>
+223.272
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17N3O2/c1-11(2,3)10-14-13-9(16-10)8(15)7-5-4-6-12-7/h7,12H,4-6H2,1-3H3/t7-/m0/s1
+
+>  <InChIKey>
+YUKGJYBQODPVBL-ZETCQYMHSA-N
+
+>  <SMILES>
+CC(C)(C)c1nnc(o1)C(=O)[C@@H]2CCCN2
+
+$$$$

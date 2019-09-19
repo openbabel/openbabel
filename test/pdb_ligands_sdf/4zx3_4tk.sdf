@@ -1,0 +1,154 @@
+4ZX3_4TK_A_1102
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZX3:A:1102 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+   89.0690  120.1930   12.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.6730  118.9380   11.8080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.9750  118.9030   11.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.7270  119.8640   11.6340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   91.4920  117.5870   10.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.9980  117.4600   11.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.7570  116.3960   11.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.2390  117.6150    9.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.0510  120.6240   11.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.0810  119.9180   10.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   88.3450  121.7790   10.6200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.4500  122.2410    9.6140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.4590  120.2880   17.7920  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   88.4800  120.1450   13.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8050  121.2800   13.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2050  121.3170   15.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2830  120.2110   16.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.9640  119.0710   15.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.5660  119.0350   14.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  5  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  7  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  9  1  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 19  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 19 18  2  0  0  0  0
+ 16 17  2  0  0  0  0
+ 18 17  1  0  0  0  0
+ 17 13  1  0  0  0  0
+A    1
+CA
+A    2
+N
+A    3
+CAO
+A    4
+OAE
+A    5
+CAS
+A    6
+CAA
+A    7
+CAB
+A    8
+CAC
+A    9
+C
+A   10
+O
+A   11
+NAL
+A   12
+OAF
+A   13
+BRG
+A   14
+CAQ
+A   15
+CAJ
+A   16
+CAH
+A   17
+CAP
+A   18
+CAI
+A   19
+CAK
+M  END
+>  <InstanceId>
+4ZX3_4TK_A_1102
+
+>  <ChemCompId>
+4TK
+
+>  <PdbId>
+4ZX3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1102
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O3 Br
+
+>  <Name>
+N-[(1R)-1-(4-bromophenyl)-2-(hydroxyamino)-2-oxoethyl]-2,2-dimethylpropanamide
+
+>  <SystematicName>
+N-[(1R)-1-(4-bromophenyl)-2-(oxidanylamino)-2-oxidanylidene-ethyl]-2,2-dimethyl-propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H17 Br N2 O3
+
+>  <MolecularWeight>
+329.19
+
+>  <ModifiedDate>
+2016-03-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H17BrN2O3/c1-13(2,3)12(18)15-10(11(17)16-19)8-4-6-9(14)7-5-8/h4-7,10,19H,1-3H3,(H,15,18)(H,16,17)/t10-/m1/s1
+
+>  <InChIKey>
+QSMFBPVNXFNEGF-SNVBAGLBSA-N
+
+>  <SMILES>
+CC(C)(C)C(=O)N[C@H](c1ccc(cc1)Br)C(=O)NO
+
+$$$$

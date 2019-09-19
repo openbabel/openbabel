@@ -1,0 +1,118 @@
+5JAH_6HQ_A_502
+  RCSB PDB12061718233D
+Coordinates from PDB:5JAH:A:502 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   29.1050    1.4580   -2.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0860    3.6950   -1.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8430    3.2340   -1.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5740    1.8980   -2.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2790    0.9620   -0.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9630    2.3550   -2.0230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1140    4.3440   -1.8470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7980    4.1970   -1.7290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6460    3.4040   -1.8020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1890    1.2770   -3.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  4  1  0  0  0  0
+  1  6  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  2  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  8  1  0  0  0  0
+  3  9  2  0  0  0  0
+  3  8  1  0  0  0  0
+A    1
+C1
+A    2
+C3
+A    3
+C6
+A    4
+C8
+A    5
+C10
+A    6
+N2
+A    7
+O4
+A    8
+N5
+A    9
+O7
+A   10
+C9
+M  END
+>  <InstanceId>
+5JAH_6HQ_A_502
+
+>  <ChemCompId>
+6HQ
+
+>  <PdbId>
+5JAH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2
+
+>  <Name>
+1,5,5-trimethylimidazolidine-2,4-dione
+
+>  <SystematicName>
+1,5,5-trimethylimidazolidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N2 O2
+
+>  <MolecularWeight>
+142.156
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10N2O2/c1-6(2)4(9)7-5(10)8(6)3/h1-3H3,(H,7,9,10)
+
+>  <InChIKey>
+ZNYIPTYJBRGSSL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(C(=O)NC(=O)N1C)C
+
+$$$$

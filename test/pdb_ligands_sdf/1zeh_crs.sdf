@@ -1,0 +1,110 @@
+1EV3_CRS_A_22
+  RCSB PDB12061702253D
+Coordinates from PDB:1EV3:A:22 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+  -10.8280   -0.2590   10.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2730   -0.9610    9.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5340   -0.9870    8.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3300   -0.2850    8.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8600    0.4240    9.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6150    0.4340   10.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0460   -1.8070    6.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6380   -0.2310   11.5140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+M  END
+>  <InstanceId>
+1EV3_CRS_A_22
+
+>  <ChemCompId>
+CRS
+
+>  <PdbId>
+1EV3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+22
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O
+
+>  <Name>
+M-CRESOL
+
+>  <SystematicName>
+3-methylphenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 O
+
+>  <MolecularWeight>
+108.138
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8O/c1-6-3-2-4-7(8)5-6/h2-5,8H,1H3
+
+>  <InChIKey>
+RLSSMJSEOOYNOY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1)O
+
+$$$$

@@ -1,0 +1,133 @@
+4W9Y_3K0_A_818
+  RCSB PDB12061715563D
+Coordinates from PDB:4W9Y:A:818 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   13.9320   48.6930   40.4480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9410   47.4660   40.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1580   46.8620   39.5080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0470   46.6840   41.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8510   45.1600   41.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1190   44.4070   41.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2210   44.6430   40.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0810   45.5470   40.5920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1230   43.9230   39.4090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5630   44.9290   42.8550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6800   43.9690   43.6330   S 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2850   44.7960   44.7080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7250   43.4880   42.6440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8780   42.7170   44.1500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  2  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+ 13 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+OE1
+A    2
+CD
+A    3
+OE2
+A    4
+CG
+A    5
+CB
+A    6
+CA
+A    7
+C
+A    8
+OXT
+A    9
+O
+A   10
+N
+A   11
+SAN
+A   12
+OAD
+A   13
+OAE
+A   14
+NAA
+M  END
+>  <InstanceId>
+4W9Y_3K0_A_818
+
+>  <ChemCompId>
+3K0
+
+>  <PdbId>
+4W9Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+818
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O6 S
+
+>  <Name>
+N-sulfamoyl-L-glutamic acid
+
+>  <SystematicName>
+(2S)-2-(sulfamoylamino)pentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 N2 O6 S
+
+>  <MolecularWeight>
+226.208
+
+>  <ModifiedDate>
+2015-09-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10N2O6S/c6-14(12,13)7-3(5(10)11)1-2-4(8)9/h3,7H,1-2H2,(H,8,9)(H,10,11)(H2,6,12,13)/t3-/m0/s1
+
+>  <InChIKey>
+ZYYFXKZXQCQRTJ-VKHMYHEASA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@@H](C(=O)O)NS(=O)(=O)N
+
+$$$$

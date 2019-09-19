@@ -1,0 +1,131 @@
+4ZI4_DVG_A_501
+  RCSB PDB12061716383D
+Coordinates from PDB:4ZI4:A:501 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    9.3530   -3.9390   10.9870   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3510   -4.8360   10.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1720   -4.6290    9.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0810   -3.2280    8.8830   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9310   -5.3200    8.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8000   -4.9140    9.2290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1540   -1.3370   11.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2590   -2.2020   10.1220   V 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9610   -1.8210   10.8120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5630   -2.1530    7.2710   V 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9100   -1.5990    7.0250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1240   -3.6620    6.4530   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6440   -1.2910    8.4830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+O3
+A    2
+C3
+A    3
+C2
+A    4
+O2
+A    5
+C1
+A    6
+O1
+A    7
+O01
+A    8
+V02
+A    9
+O03
+A   10
+V06
+A   11
+O07
+A   12
+O08
+A   13
+O09
+M  END
+>  <InstanceId>
+4ZI4_DVG_A_501
+
+>  <ChemCompId>
+DVG
+
+>  <PdbId>
+4ZI4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O8 V2
+
+>  <Name>
+Divanadate Glycerol ester
+
+>  <SystematicName>
+[(2R)-5,5,7,7-tetrakis(oxidanyl)-4,6-dioxa-1-oxonia-5$l^{5},7$l^{4}-divanadabicyclo[3.2.0]heptan-2-yl]methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H10 O8 V2
+
+>  <MolecularWeight>
+275.99
+
+>  <ModifiedDate>
+2015-10-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H6O3.4H2O.O.2V/c4-1-3(6)2-5;;;;;;;/h3-4H,1-2H2;4*1H2;;;/q;;;;;;+2;+3/p-4/t3-;;;;;;;/m1......./s1
+
+>  <InChIKey>
+NROZHPLEEURAFR-ALWRQVICSA-J
+
+>  <SMILES>
+C1[C@H]([O+]2[V](O[V]2(O1)(O)O)(O)O)CO
+
+$$$$

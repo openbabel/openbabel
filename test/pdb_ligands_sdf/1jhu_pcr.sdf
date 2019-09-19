@@ -1,0 +1,110 @@
+1DIQ_PCR_A_798
+  RCSB PDB12061702163D
+Coordinates from PDB:1DIQ:A:798 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+  102.8400   37.9060  -29.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.4360   36.6160  -29.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.4970   36.6280  -27.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.0730   35.4150  -27.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.9570   35.3640  -29.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.5390   34.1370  -28.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.6010   34.1800  -27.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.2430   33.0390  -27.0820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+CB
+A    2
+CG
+A    3
+CD1
+A    4
+CE1
+A    5
+CD2
+A    6
+CE2
+A    7
+CZ
+A    8
+OH
+M  END
+>  <InstanceId>
+1DIQ_PCR_A_798
+
+>  <ChemCompId>
+PCR
+
+>  <PdbId>
+1DIQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+798
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O
+
+>  <Name>
+P-CRESOL
+
+>  <SystematicName>
+4-methylphenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 O
+
+>  <MolecularWeight>
+108.138
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8O/c1-6-2-4-7(8)5-3-6/h2-5,8H,1H3
+
+>  <InChIKey>
+IWDCLRJOBJJRNH-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(cc1)O
+
+$$$$

@@ -339,11 +339,11 @@ namespace OpenBabel
     seekdata.resize(header.nEntries);
 
     pIndexstream->read((char*)&(fptdata[0]), sizeof(unsigned int) * nwords);
-    if(header.seek64)
+    if(header.seek64) 
       {
     	pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned long) * header.nEntries);
       }
-    else
+    else 
       { //legacy format
 	 vector<unsigned int> tmp(header.nEntries);
          pIndexstream->read((char*)&(tmp[0]), sizeof(unsigned int) * header.nEntries);

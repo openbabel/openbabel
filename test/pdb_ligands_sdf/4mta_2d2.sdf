@@ -1,0 +1,139 @@
+4MTA_2D2_A_401
+  RCSB PDB12061713473D
+Coordinates from PDB:4MTA:A:401 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   73.7660   34.3100   -0.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.3420   35.7510   -0.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.6660   33.5870   -2.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.1920   33.6510    0.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.2700   36.3130    0.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.9160   36.5060   -1.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.1720   32.2820   -1.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.4390   32.4400   -0.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.7990   37.6210    0.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.4590   37.8270   -1.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.2460   31.1070   -2.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.9220   31.4090    0.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.4080   38.3840   -0.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.6370   31.1210   -3.7030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.8300   30.1270   -2.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 11  2  0  0  0  0
+ 11 15  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3  1  2  0  0  0  0
+  6 10  2  0  0  0  0
+  6  2  1  0  0  0  0
+ 10 13  1  0  0  0  0
+  7  8  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  5  2  0  0  0  0
+ 13  9  2  0  0  0  0
+  8  4  1  0  0  0  0
+  8 12  1  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+4MTA_2D2_A_401
+
+>  <ChemCompId>
+2D2
+
+>  <PdbId>
+4MTA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O3
+
+>  <Name>
+2-methyl-5-phenylfuran-3-carboxylic acid
+
+>  <SystematicName>
+2-methyl-5-phenyl-furan-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 O3
+
+>  <MolecularWeight>
+202.206
+
+>  <ModifiedDate>
+2015-01-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10O3/c1-8-10(12(13)14)7-11(15-8)9-5-3-2-4-6-9/h2-7H,1H3,(H,13,14)
+
+>  <InChIKey>
+VLMNACSEESRUAK-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(cc(o1)c2ccccc2)C(=O)O
+
+$$$$

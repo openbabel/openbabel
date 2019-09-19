@@ -1,0 +1,121 @@
+1ZQ8_AN0_A_345
+  RCSB PDB12061704543D
+Coordinates from PDB:1ZQ8:A:345 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  109.5940   42.2930   82.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.6350   43.0600   81.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.5560   43.4590   80.7440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  110.7460   43.2530   80.6850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  109.4420   43.2590   83.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.1750   44.0750   83.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.0820   44.9510   84.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.9500   41.8280   82.8520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  111.5000   40.6580   82.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.8730   39.7720   81.9760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  112.9470   40.5340   82.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+OXT
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+N1
+A    9
+C1
+A   10
+O1
+A   11
+C2
+M  END
+>  <InstanceId>
+1ZQ8_AN0_A_345
+
+>  <ChemCompId>
+AN0
+
+>  <PdbId>
+1ZQ8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+345
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+N-ACETYL-L-NORVALINE
+
+>  <SystematicName>
+(2S)-2-acetamidopentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N O3
+
+>  <MolecularWeight>
+159.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13NO3/c1-3-4-6(7(10)11)8-5(2)9/h6H,3-4H2,1-2H3,(H,8,9)(H,10,11)/t6-/m0/s1
+
+>  <InChIKey>
+BSYFPUSAWVWWDG-LURJTMIESA-N
+
+>  <SMILES>
+CCC[C@@H](C(=O)O)NC(=O)C
+
+$$$$

@@ -1,0 +1,134 @@
+1MLZ_TZA_A_431
+  RCSB PDB12061703183D
+Coordinates from PDB:1MLZ:A:431 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   61.9800   -2.6980   36.4090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   61.4240   -2.5620   37.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0120   -1.6630   38.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.5070   -1.4740   39.7980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3300   -3.3120   38.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.8340   -3.1240   39.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3790   -2.1810   40.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.8570   -2.2390   41.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.5160   -3.3310   42.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0490   -3.3220   43.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8480   -4.1290   44.0310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6760   -1.9780   44.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5230   -1.6010   44.4050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4700   -1.2550   45.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+NH
+A    2
+CZ
+A    3
+CE2
+A    4
+CD2
+A    5
+CE1
+A    6
+CD1
+A    7
+CG
+A    8
+CX
+A    9
+CB
+A   10
+CA
+A   11
+N
+A   12
+C
+A   13
+O
+A   14
+O2
+M  END
+>  <InstanceId>
+1MLZ_TZA_A_431
+
+>  <ChemCompId>
+TZA
+
+>  <PdbId>
+1MLZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+431
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+TRANS-AMICLENOMYCIN
+
+>  <SystematicName>
+(2S)-2-amino-4-(4-amino-1-cyclohexa-2,5-dienyl)butanoic acid
+
+>  <Synonyms>
+2-AMINO-4-(4-AMINO-CYCLOHEXA-2,5-DIENYL)-BUTYRIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N2 O2
+
+>  <MolecularWeight>
+196.246
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N2O2/c11-8-4-1-7(2-5-8)3-6-9(12)10(13)14/h1-2,4-5,7-9H,3,6,11-12H2,(H,13,14)/t7-,8-,9-/m0/s1
+
+>  <InChIKey>
+LAJWZJCOWPUSOA-CIUDSAMLSA-N
+
+>  <SMILES>
+C1=CC(C=CC1CC[C@@H](C(=O)O)N)N
+
+$$$$

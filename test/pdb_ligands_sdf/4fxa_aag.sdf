@@ -1,0 +1,137 @@
+1DRY_AAG_A_331
+  RCSB PDB12061702183D
+Coordinates from PDB:1DRY:A:331 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+    2.5460    6.1290    4.7710   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9060    7.2820    4.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6940    6.8570    3.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1240    5.9100    2.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9600    6.6730    1.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7380    6.0860   -0.2280   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6280    5.2340   -0.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6470    4.7630   -0.0410   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4730    4.8760   -1.9950   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4300    8.2210    5.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1220    7.8180    6.3610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3840    9.5090    4.8930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7490    6.1620    5.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2860    4.9630    6.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4610    7.1730    5.2970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C4
+A    5
+C5
+A    6
+N2
+A    7
+C6
+A    8
+N3
+A    9
+N4
+A   10
+C3
+A   11
+O1
+A   12
+O2
+A   13
+C8
+A   14
+C9
+A   15
+O4
+M  END
+>  <InstanceId>
+1DRY_AAG_A_331
+
+>  <ChemCompId>
+AAG
+
+>  <PdbId>
+1DRY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+331
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O3
+
+>  <Name>
+N-ALPHA-L-ACETYL-ARGININE
+
+>  <SystematicName>
+(2S)-2-acetamido-5-carbamimidamido-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N4 O3
+
+>  <MolecularWeight>
+216.238
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N4O3/c1-5(13)12-6(7(14)15)3-2-4-11-8(9)10/h6H,2-4H2,1H3,(H,12,13)(H,14,15)(H4,9,10,11)/t6-/m0/s1
+
+>  <InChIKey>
+SNEIUMQYRCDYCH-LURJTMIESA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CCCNC(=N)N)C(=O)O
+
+$$$$

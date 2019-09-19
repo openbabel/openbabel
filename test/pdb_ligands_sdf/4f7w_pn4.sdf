@@ -1,0 +1,157 @@
+4F7W_PN4_A_1402
+  RCSB PDB12061712293D
+Coordinates from PDB:4F7W:A:1402 Model:1 without hydrogens
+ 20 19  0  0  0  0            999 V2000
+  -22.2960   45.5440  -53.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0260   46.2890  -52.4460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7810   44.1430  -53.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2010   44.1800  -53.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4070   43.0960  -52.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1670   43.3380  -51.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9080   43.1840  -52.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6650   41.6740  -53.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0470   41.2920  -53.0260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0670   45.8690  -53.5010   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4890   47.1770  -53.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5470   48.1020  -54.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9950   48.4070  -54.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4990   47.9030  -55.7590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1290   53.4420  -52.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1220   52.2770  -52.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7830   51.3080  -53.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2770   51.0740  -53.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0200   49.6880  -54.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6260   49.2720  -53.9670   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 14 13  2  0  0  0  0
+  1  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  8  5  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 13 20  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  3  1  1  0  0  0  0
+  3  5  1  0  0  0  0
+A    1
+CAU
+A    2
+OAE
+A    3
+CAV
+A    4
+OAG
+A    5
+CAW
+A    6
+CAC
+A    7
+CAB
+A    8
+CAP
+A    9
+OAS
+A   10
+NAR
+A   11
+CAN
+A   12
+CAO
+A   13
+CAT
+A   14
+OAD
+A   15
+CAA
+A   16
+CAJ
+A   17
+CAK
+A   18
+CAL
+A   19
+CAM
+A   20
+NAQ
+M  END
+>  <InstanceId>
+4F7W_PN4_A_1402
+
+>  <ChemCompId>
+PN4
+
+>  <PdbId>
+4F7W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O4
+
+>  <Name>
+(2R)-2,4-dihydroxy-3,3-dimethyl-N-[3-oxo-3-(pentylamino)propyl]butanamide
+
+>  <SystematicName>
+(2R)-3,3-dimethyl-2,4-bis(oxidanyl)-N-[3-oxidanylidene-3-(pentylamino)propyl]butanamide
+
+>  <Synonyms>
+N-Pentylpantothenamide
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C14 H28 N2 O4
+
+>  <MolecularWeight>
+288.383
+
+>  <ModifiedDate>
+2013-04-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+PAF BAL AML
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H28N2O4/c1-4-5-6-8-15-11(18)7-9-16-13(20)12(19)14(2,3)10-17/h12,17,19H,4-10H2,1-3H3,(H,15,18)(H,16,20)/t12-/m0/s1
+
+>  <InChIKey>
+HWNKKPMQPCHGBA-LBPRGKRZSA-N
+
+>  <SMILES>
+CCCCCNC(=O)CCNC(=O)[C@@H](C(C)(C)CO)O
+
+$$$$

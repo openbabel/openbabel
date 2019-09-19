@@ -1,0 +1,122 @@
+1ABF_FCA_A_307
+  RCSB PDB12061701583D
+Coordinates from PDB:1ABF:A:307 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   14.2200   56.9530   55.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7840   57.2190   54.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2730   56.2710   53.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1220   56.4430   52.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6030   56.1780   52.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6060   56.4290   51.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4030   55.7180   55.7330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9520   57.2620   56.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8700   56.5300   53.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9720   57.7720   51.9890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0190   57.0540   53.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+M  END
+>  <InstanceId>
+1ABF_FCA_A_307
+
+>  <ChemCompId>
+FCA
+
+>  <PdbId>
+1ABF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+307
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+ALPHA-D-FUCOSE
+
+>  <SystematicName>
+(2S,3R,4S,5R,6R)-6-methyloxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c1-2-3(7)4(8)5(9)6(10)11-2/h2-10H,1H3/t2-,3+,4+,5-,6+/m1/s1
+
+>  <InChIKey>
+SHZGCJCMOBCMKK-PHYPRBDBSA-N
+
+>  <SMILES>
+C[C@@H]1[C@@H]([C@@H]([C@H]([C@H](O1)O)O)O)O
+
+$$$$

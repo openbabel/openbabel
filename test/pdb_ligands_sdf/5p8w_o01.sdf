@@ -1,0 +1,135 @@
+5P8W_O01_A_302
+  RCSB PDB12061719203D
+Coordinates from PDB:5P8W:A:302 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -24.9940   36.9340  -26.3640   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6280   35.6820  -26.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8220   34.6870  -27.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0280   39.0550  -25.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5640   37.1760  -22.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6040   37.0300  -19.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0500   36.8480  -24.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5180   37.2630  -20.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5700   36.5590  -22.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6740   37.6090  -25.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4240   38.2590  -20.9620   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2500   36.0920  -18.8560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0560   38.1750  -22.1670   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8380   35.2370  -24.8350   S 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2 14  1  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10  7  2  0  0  0  0
+ 14  7  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5 13  2  0  0  0  0
+  9  8  2  0  0  0  0
+ 13 11  1  0  0  0  0
+  8 11  1  0  0  0  0
+  8  6  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+N3
+A    2
+C4
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C13
+A    7
+C1
+A    8
+C11
+A    9
+C12
+A   10
+C2
+A   11
+N10
+A   12
+N14
+A   13
+N9
+A   14
+S5
+M  END
+>  <InstanceId>
+5P8W_O01_A_302
+
+>  <ChemCompId>
+O01
+
+>  <PdbId>
+5P8W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 S
+
+>  <Name>
+[5-(2,4-dimethyl-1,3-thiazol-5-yl)-1H-pyrazol-3-yl]methanamine
+
+>  <SystematicName>
+[3-(2,4-dimethyl-1,3-thiazol-5-yl)-1H-pyrazol-5-yl]methanamine
+
+>  <Synonyms>
+1-[3-(2,4-dimethyl-1,3-thiazol-5-yl)-1H-pyrazol-5-yl]methanamine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N4 S
+
+>  <MolecularWeight>
+208.283
+
+>  <ModifiedDate>
+2016-09-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N4S/c1-5-9(14-6(2)11-5)8-3-7(4-10)12-13-8/h3H,4,10H2,1-2H3,(H,12,13)
+
+>  <InChIKey>
+IPDYKGULJOZYNW-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(sc(n1)C)c2cc([nH]n2)CN
+
+$$$$

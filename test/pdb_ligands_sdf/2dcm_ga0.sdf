@@ -1,0 +1,146 @@
+2DCM_GA0_A_801
+  RCSB PDB12061705203D
+Coordinates from PDB:2DCM:A:801 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   -9.8950   48.5040   64.6570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2570   47.7390   65.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7700   46.4400   65.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5610   45.6570   64.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4610   46.1970   65.1900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8910   44.9690   64.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4870   45.2240   63.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8080   43.9000   65.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5270   44.2290   66.8910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0580   42.5910   65.3200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4070   42.1070   63.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0150   41.4310   66.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2990   40.2290   65.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1580   40.8150   64.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6230   41.3170   67.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6360   41.1060   68.2430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5870   41.4570   66.3780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+N1
+A    2
+CA1
+A    3
+C1
+A    4
+O1
+A    5
+N2
+A    6
+CA2
+A    7
+CB2
+A    8
+C2
+A    9
+O2
+A   10
+N3
+A   11
+CD3
+A   12
+CA3
+A   13
+CB3
+A   14
+CG3
+A   15
+C3
+A   16
+O3
+A   17
+NN
+M  END
+>  <InstanceId>
+2DCM_GA0_A_801
+
+>  <ChemCompId>
+GA0
+
+>  <PdbId>
+2DCM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+10
+
+>  <ObservedFormula>
+C10 N4 O3
+
+>  <Name>
+GLYCYLALANYL-N-2-NAPHTHYL-L-PROLINEAMIDE
+
+>  <SystematicName>
+(2S)-1-[(2S)-2-(2-aminoethanoylamino)propanoyl]-N-naphthalen-2-yl-pyrrolidine-2-carboxamide
+
+>  <Synonyms>
+GLYCYL-ALANYL-PROLINE-BETA-NAPHTHYLAMIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C20 H24 N4 O3
+
+>  <MolecularWeight>
+368.43
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C20H24N4O3/c1-13(22-18(25)12-21)20(27)24-10-4-7-17(24)19(26)23-16-9-8-14-5-2-3-6-15(14)11-16/h2-3,5-6,8-9,11,13,17H,4,7,10,12,21H2,1H3,(H,22,25)(H,23,26)/t13-,17-/m0/s1
+
+>  <InChIKey>
+KCELZXZDIUJGNM-GUYCJALGSA-N
+
+>  <SMILES>
+C[C@@H](C(=O)N1CCC[C@H]1C(=O)Nc2ccc3ccccc3c2)NC(=O)CN
+
+$$$$

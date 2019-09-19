@@ -1,0 +1,149 @@
+4ZYB_4SQ_A_409
+  RCSB PDB12061716433D
+Coordinates from PDB:4ZYB:A:409 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+    7.4180   50.9710   67.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7540   61.8070   73.3050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4540   60.3280   71.3650   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3130   54.0000   69.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4990   49.7120   67.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1690   51.5930   66.2060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6370   51.7550   68.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8710   52.9630   68.5640   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3620   53.9420   69.8870   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4760   55.2800   69.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2640   56.4870   69.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2240   57.7720   70.4680   P 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2220   58.2070   69.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5710   57.2600   71.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2530   59.2230   70.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8730   61.2050   72.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9790   61.1080   72.7810   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9190   62.3350   72.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  4  1  0  0  0  0
+  4 10  1  0  0  0  0
+  4  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 15  3  1  0  0  0  0
+  3 16  1  0  0  0  0
+ 16 18  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 18  2  1  0  0  0  0
+A    1
+C4
+A    2
+N1
+A    3
+N2
+A    4
+C3
+A    5
+O42
+A    6
+O41
+A    7
+CA4
+A    8
+N4
+A    9
+O3
+A   10
+CA3
+A   11
+CN3
+A   12
+P
+A   13
+OP1
+A   14
+OP2
+A   15
+CA2
+A   16
+C1
+A   17
+O1
+A   18
+CA1
+M  END
+>  <InstanceId>
+4ZYB_4SQ_A_409
+
+>  <ChemCompId>
+4SQ
+
+>  <PdbId>
+4ZYB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O6 P
+
+>  <Name>
+tetraglycine phosphinate
+
+>  <SystematicName>
+2-[3-[(2-azanylethanoylamino)methyl-oxidanyl-phosphoryl]propanoylamino]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N3 O6 P
+
+>  <MolecularWeight>
+281.203
+
+>  <ModifiedDate>
+2015-10-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N3O6P/c9-3-7(13)11-5-18(16,17)2-1-6(12)10-4-8(14)15/h1-5,9H2,(H,10,12)(H,11,13)(H,14,15)(H,16,17)
+
+>  <InChIKey>
+UENGEQFXYOYUEI-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CP(=O)(CNC(=O)CN)O)C(=O)NCC(=O)O
+
+$$$$

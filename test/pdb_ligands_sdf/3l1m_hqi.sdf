@@ -1,0 +1,139 @@
+3L1M_HQI_A_151
+  RCSB PDB12061709323D
+Coordinates from PDB:3L1M:A:151 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    4.7430   18.0970   11.3880   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3040   16.5390   14.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5750   18.4240    9.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9710   20.0020   11.5390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0990   18.9940   15.3870   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3160   15.0500   12.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3970   15.3290   13.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8220   19.8260   13.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7560   19.6100   12.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1440   16.0660   12.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7030   18.9360   10.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9900   18.7950   14.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8600   18.3570   12.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0280   17.3310   12.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0900   17.5420   13.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 11  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2 15  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8 12  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 12 15  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+N1
+A    2
+N2
+A    3
+CAA
+A    4
+OAB
+A    5
+OAC
+A    6
+CAD
+A    7
+CAE
+A    8
+CAF
+A    9
+CAG
+A   10
+CAH
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+M  END
+>  <InstanceId>
+3L1M_HQI_A_151
+
+>  <ChemCompId>
+HQI
+
+>  <PdbId>
+3L1M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+151
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+N-(8-hydroxyquinolin-5-yl)acetamide
+
+>  <SystematicName>
+N-(8-hydroxyquinolin-5-yl)ethanamide
+
+>  <Synonyms>
+8-hydroxyquinoline
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2 O2
+
+>  <MolecularWeight>
+202.209
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O2/c1-7(14)13-9-4-5-10(15)11-8(9)3-2-6-12-11/h2-6,15H,1H3,(H,13,14)
+
+>  <InChIKey>
+YATHWKGKLIXEFF-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccc(c2c1cccn2)O
+
+$$$$

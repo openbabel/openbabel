@@ -1,0 +1,130 @@
+2ILP_GB5_A_600
+  RCSB PDB12061705563D
+Coordinates from PDB:2ILP:A:600 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   -5.1480   -6.0740   21.4580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3600   -6.6480   22.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8010   -6.0090   23.2180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0290   -4.6500   23.4070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9550   -8.0410   21.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3270   -8.6090   20.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9600   -9.9950   20.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1550  -10.8420   21.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8550  -12.1340   20.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3530  -12.5970   19.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0330  -13.9980   18.9730  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1470  -11.7480   18.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4530  -10.4600   19.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7 13  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+O12
+A    2
+C11
+A    3
+N13
+A    4
+O14
+A    5
+C10
+A    6
+C9
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C4
+A   11
+CL1
+A   12
+C5
+A   13
+C6
+M  END
+>  <InstanceId>
+2ILP_GB5_A_600
+
+>  <ChemCompId>
+GB5
+
+>  <PdbId>
+2ILP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 Cl
+
+>  <Name>
+(2E)-3-(4-CHLOROPHENYL)-N-HYDROXYACRYLAMIDE
+
+>  <SystematicName>
+(E)-3-(4-chlorophenyl)-N-hydroxy-prop-2-enamide
+
+>  <Synonyms>
+4-CHLOROCINNAMYLHYDROXAMATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 Cl N O2
+
+>  <MolecularWeight>
+197.618
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H8ClNO2/c10-8-4-1-7(2-5-8)3-6-9(12)11-13/h1-6,13H,(H,11,12)/b6-3+
+
+>  <InChIKey>
+YPYUWBDOEMPXSK-ZZXKWVIFSA-N
+
+>  <SMILES>
+c1cc(ccc1\C=C\C(=O)NO)Cl
+
+$$$$

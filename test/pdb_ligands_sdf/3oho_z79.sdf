@@ -1,0 +1,146 @@
+3LK8_Z79_A_0
+  RCSB PDB12061709373D
+Coordinates from PDB:3LK8:A:0 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+    3.2440   -3.0610    4.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0610   -3.1300    4.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5060   -2.3710    5.3080   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3060   -1.5120    6.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1460   -4.1060    3.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6810   -5.4480    3.6950   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4570   -6.3220    5.0030   S 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1810   -5.9000    5.5650   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3840   -7.7240    4.6820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5680   -6.1780    6.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3120   -5.3360    7.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2220   -5.2360    8.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3940   -5.9730    8.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2670   -5.8580    9.3380   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3280   -6.7880    9.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6550   -6.8330    7.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7430   -6.9330    6.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 17  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 16  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 17  2  0  0  0  0
+A    1
+O4
+A    2
+C8
+A    3
+N2
+A    4
+O5
+A    5
+C7
+A    6
+N1
+A    7
+S1
+A    8
+O1
+A    9
+O2
+A   10
+C3
+A   11
+C6
+A   12
+C5
+A   13
+C4
+A   14
+O3
+A   15
+C9
+A   16
+C2
+A   17
+C1
+M  END
+>  <InstanceId>
+3LK8_Z79_A_0
+
+>  <ChemCompId>
+Z79
+
+>  <PdbId>
+3LK8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5 S
+
+>  <Name>
+N-hydroxy-N~2~-[(4-methoxyphenyl)sulfonyl]glycinamide
+
+>  <SystematicName>
+N-hydroxy-2-[(4-methoxyphenyl)sulfonylamino]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O5 S
+
+>  <MolecularWeight>
+260.267
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2O5S/c1-16-7-2-4-8(5-3-7)17(14,15)10-6-9(12)11-13/h2-5,10,13H,6H2,1H3,(H,11,12)
+
+>  <InChIKey>
+WLZISXXOYYGJNT-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)S(=O)(=O)NCC(=O)NO
+
+$$$$

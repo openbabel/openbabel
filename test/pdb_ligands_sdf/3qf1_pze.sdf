@@ -1,0 +1,102 @@
+3QF1_PZE_A_6951
+  RCSB PDB12061710243D
+Coordinates from PDB:3QF1:A:6951 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+    4.1180    3.7120   29.7200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7590    2.4020   29.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1880    2.0190   28.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8550    3.1800   27.8060   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1440    4.4380   27.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8300    4.8360   29.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+N7
+A    2
+C8
+A    3
+C9
+A    4
+N10
+A    5
+C11
+A    6
+C12
+M  END
+>  <InstanceId>
+3QF1_PZE_A_6951
+
+>  <ChemCompId>
+PZE
+
+>  <PdbId>
+3QF1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+6951
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2
+
+>  <Name>
+piperazine
+
+>  <SystematicName>
+piperazine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 N2
+
+>  <MolecularWeight>
+86.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10N2/c1-2-6-4-3-5-1/h5-6H,1-4H2
+
+>  <InChIKey>
+GLUUGHFHXGJENI-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CNCCN1
+
+$$$$

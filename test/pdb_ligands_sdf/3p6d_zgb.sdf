@@ -1,0 +1,134 @@
+3P6D_ZGB_A_133
+  RCSB PDB12061710133D
+Coordinates from PDB:3P6D:A:133 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    3.6050    6.4410   22.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0460    7.3660   23.6320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7870    7.0210   21.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6540    7.1420   15.2260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6740    7.0280   20.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0030    4.9810   15.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9560    7.4460   22.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3100    7.7620   24.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9770    7.9530   21.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9070    7.9640   20.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7510    7.5420   19.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6560    7.5570   18.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4050    6.3500   17.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0530    6.1340   15.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  1  0  0  0  0
+  7  2  1  0  0  0  0
+  2  8  1  0  0  0  0
+  5  3  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4 14  2  0  0  0  0
+ 11  5  1  0  0  0  0
+  6 14  1  0  0  0  0
+  9  7  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+C10
+A   14
+C11
+M  END
+>  <InstanceId>
+3P6D_ZGB_A_133
+
+>  <ChemCompId>
+ZGB
+
+>  <PdbId>
+3P6D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+133
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O3
+
+>  <Name>
+3-(4-methoxy-3-methylphenyl)propanoic acid
+
+>  <SystematicName>
+3-(4-methoxy-3-methyl-phenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 O3
+
+>  <MolecularWeight>
+194.227
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14O3/c1-8-7-9(4-6-11(12)13)3-5-10(8)14-2/h3,5,7H,4,6H2,1-2H3,(H,12,13)
+
+>  <InChIKey>
+ZATPJYSLVGVGGY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(ccc1OC)CCC(=O)O
+
+$$$$

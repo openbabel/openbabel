@@ -1,0 +1,126 @@
+1AXZ_GLA_A_401
+  RCSB PDB12061702023D
+Coordinates from PDB:1AXZ:A:401 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   17.0610   -1.2330   36.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0520   -0.6550   35.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6560   -1.2150   35.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7220   -2.7380   35.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7800   -3.2250   36.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9410   -4.7310   36.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7160   -0.8680   37.7330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0250    0.7570   35.5630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7510   -0.7720   34.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0480   -3.1970   34.4090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0660   -2.6610   36.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7190   -5.1460   37.8200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+1AXZ_GLA_A_401
+
+>  <ChemCompId>
+GLA
+
+>  <PdbId>
+1AXZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+ALPHA D-GALACTOSE
+
+>  <SystematicName>
+(2S,3R,4S,5R,6R)-6-(hydroxymethyl)oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C6 H12 O6
+
+>  <MolecularWeight>
+180.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O6/c7-1-2-3(8)4(9)5(10)6(11)12-2/h2-11H,1H2/t2-,3+,4+,5-,6+/m1/s1
+
+>  <InChIKey>
+WQZGKKKJIJFFOK-PHYPRBDBSA-N
+
+>  <SMILES>
+C([C@@H]1[C@@H]([C@@H]([C@H]([C@H](O1)O)O)O)O)O
+
+$$$$

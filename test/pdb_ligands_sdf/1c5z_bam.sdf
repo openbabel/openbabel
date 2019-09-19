@@ -1,0 +1,115 @@
+1C1N_BAM_A_246
+  RCSB PDB12061702083D
+Coordinates from PDB:1C1N:A:246 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   45.4380   19.3060   52.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9320   18.8720   51.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5960   19.7710   50.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7540   21.1330   50.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2490   21.6050   51.9790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5840   20.7070   52.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7710   18.3990   53.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5120   18.8070   54.8450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3490   17.1610   53.8010   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+M  CHG  1   9   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C
+A    8
+N1
+A    9
+N2
+M  END
+>  <InstanceId>
+1C1N_BAM_A_246
+
+>  <ChemCompId>
+BAM
+
+>  <PdbId>
+1C1N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+246
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2
+
+>  <Name>
+BENZAMIDINE
+
+>  <SystematicName>
+(amino-phenyl-methylidene)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N2
+
+>  <MolecularWeight>
+121.16
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2/c8-7(9)6-4-2-1-3-5-6/h1-5H,(H3,8,9)/p+1
+
+>  <InChIKey>
+PXXJHWLDUBFPOL-UHFFFAOYSA-O
+
+>  <SMILES>
+c1ccc(cc1)C(=[NH2+])N
+
+$$$$

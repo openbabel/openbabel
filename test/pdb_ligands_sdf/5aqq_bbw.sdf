@@ -1,0 +1,127 @@
+5AQQ_BBW_A_1382
+  RCSB PDB12061716523D
+Coordinates from PDB:5AQQ:A:1382 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  381.0830   -8.7860  148.8250   N 0  0  0  0  0  0  0  0  0  0  0  0
+  380.5150   -9.2490  147.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  380.5320  -10.6600  147.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  381.1170  -11.7050  148.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  379.9160   -8.3480  146.8770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  379.3480   -8.8320  145.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  379.2810  -10.0780  145.3590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  379.8780  -11.0030  146.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  379.8330  -12.3580  145.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  380.4100  -13.3520  146.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  380.3550  -14.7920  146.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  381.0510  -12.9980  147.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  8  3  1  0  0  0  0
+ 10 12  2  0  0  0  0
+  5  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+ 12  4  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+N2
+A    6
+C4
+A    7
+N3
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+M  END
+>  <InstanceId>
+5AQQ_BBW_A_1382
+
+>  <ChemCompId>
+BBW
+
+>  <PdbId>
+5AQQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1382
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3
+
+>  <Name>
+7-methylquinazolin-4-amine
+
+>  <SystematicName>
+7-methylquinazolin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N3
+
+>  <MolecularWeight>
+159.188
+
+>  <ModifiedDate>
+2016-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9N3/c1-6-2-3-7-8(4-6)11-5-12-9(7)10/h2-5H,1H3,(H2,10,11,12)
+
+>  <InChIKey>
+PTMKZYCUJHQJBN-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2c(c1)ncnc2N
+
+$$$$

@@ -1,0 +1,143 @@
+1ZOE_K25_A_501
+  RCSB PDB12061704543D
+Coordinates from PDB:1ZOE:A:501 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   21.5230    8.7540   19.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2850    8.2590   20.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9770    7.1270   20.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4150    8.1090   18.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7040    5.4130   20.1850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1510    6.9840   18.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8900    6.5180   19.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3470    5.1960   19.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1090    6.2160   18.1670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2790    4.1620   18.9040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4880    3.2670   20.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9890    3.9590   17.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4670   10.2030   18.4730  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9810    9.0580   21.5580  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8520    6.4120   22.6210  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9250    8.8690   16.5740  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  7  2  0  0  0  0
+  3 15  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4 16  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+N6
+A    6
+C7
+A    7
+C8
+A    8
+C13
+A    9
+N14
+A   10
+N15
+A   11
+C16
+A   12
+C17
+A   13
+BR1
+A   14
+BR9
+A   15
+BR10
+A   16
+BR11
+M  END
+>  <InstanceId>
+1ZOE_K25_A_501
+
+>  <ChemCompId>
+K25
+
+>  <PdbId>
+1ZOE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 Br4
+
+>  <Name>
+4,5,6,7-TETRABROMO-N,N-DIMETHYL-1H-BENZIMIDAZOL-2-AMINE
+
+>  <SystematicName>
+4,5,6,7-tetrabromo-N,N-dimethyl-1H-benzimidazol-2-amine
+
+>  <Synonyms>
+DIMETHYL-(4,5,6,7-TETRABROMO-1H-BENZOIMIDAZOL-2-YL)-AMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Br4 N3
+
+>  <MolecularWeight>
+476.788
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7Br4N3/c1-16(2)9-14-7-5(12)3(10)4(11)6(13)8(7)15-9/h1-2H3,(H,14,15)
+
+>  <InChIKey>
+SLPJGDQJLTYWCI-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)c1[nH]c2c(n1)c(c(c(c2Br)Br)Br)Br
+
+$$$$

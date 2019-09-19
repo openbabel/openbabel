@@ -1,0 +1,126 @@
+2E25_FOT_A_410
+  RCSB PDB12061705243D
+Coordinates from PDB:2E25:A:410 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    0.8760   18.7300    5.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1310   20.9190    5.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2560   20.4190    5.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8360   17.9660    6.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3620   18.2060    5.7070   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1100   20.0440    5.5470   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3750   22.1310    5.0810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2910   21.2400    4.9290   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4340   18.9670    5.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8040   18.3700    5.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6670   18.8370    6.1560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0360   17.4420    4.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3  9  2  0  0  0  0
+  5  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C2
+A    2
+C6
+A    3
+C5
+A    4
+O2
+A    5
+N3
+A    6
+N1
+A    7
+O6
+A    8
+F5
+A    9
+C4
+A   10
+C41
+A   11
+O42
+A   12
+O41
+M  END
+>  <InstanceId>
+2E25_FOT_A_410
+
+>  <ChemCompId>
+FOT
+
+>  <PdbId>
+2E25
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+410
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O4 F
+
+>  <Name>
+5-FLUORO-2,6-DIOXO-1,2,3,6-TETRAHYDROPYRIMIDINE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+5-fluoro-2,6-dioxo-3H-pyrimidine-4-carboxylic acid
+
+>  <Synonyms>
+5-FLUOROOROTIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H3 F N2 O4
+
+>  <MolecularWeight>
+174.087
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C5H3FN2O4/c6-1-2(4(10)11)7-5(12)8-3(1)9/h(H,10,11)(H2,7,8,9,12)
+
+>  <InChIKey>
+SEHFUALWMUWDKS-UHFFFAOYSA-N
+
+>  <SMILES>
+C1(=C(NC(=O)NC1=O)C(=O)O)F
+
+$$$$

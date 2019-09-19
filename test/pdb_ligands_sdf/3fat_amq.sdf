@@ -1,0 +1,130 @@
+1FTM_AMQ_A_428
+  RCSB PDB12061702313D
+Coordinates from PDB:1FTM:A:428 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   75.0740   27.4930   42.9170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   76.1360   26.4300   42.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.4420   26.0550   44.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.3630   25.2540   44.6680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.7220   26.5630   45.3460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4080   26.9270   42.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.2430   27.1260   40.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4330   26.1680   39.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.8220   28.2030   40.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.3770   29.5860   40.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.8230   24.9460   40.0650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1790   26.5320   38.4750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   76.7700   27.9040   38.6870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 11  1  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+OT1
+A    5
+OT2
+A    6
+CB
+A    7
+CG
+A    8
+CD1
+A    9
+CD2
+A   10
+CE2
+A   11
+OE1
+A   12
+NE1
+A   13
+OE2
+M  END
+>  <InstanceId>
+1FTM_AMQ_A_428
+
+>  <ChemCompId>
+AMQ
+
+>  <PdbId>
+1FTM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+428
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O4
+
+>  <Name>
+(S)-ALPHA-AMINO-3-HYDROXY-5-METHYL-4-ISOXAZOLEPROPIONIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-3-(3-hydroxy-5-methyl-1,2-oxazol-4-yl)propanoic acid
+
+>  <Synonyms>
+AMPA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N2 O4
+
+>  <MolecularWeight>
+186.165
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10N2O4/c1-3-4(6(10)9-13-3)2-5(8)7(11)12/h5H,2,8H2,1H3,(H,9,10)(H,11,12)/t5-/m0/s1
+
+>  <InChIKey>
+UUDAMDVQRQNNHZ-YFKPBYRVSA-N
+
+>  <SMILES>
+Cc1c(c(no1)O)C[C@@H](C(=O)O)N
+
+$$$$

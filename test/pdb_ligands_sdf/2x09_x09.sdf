@@ -1,0 +1,131 @@
+2X09_X09_A_1900
+  RCSB PDB12061707213D
+Coordinates from PDB:2X09:A:1900 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   48.8940   41.8300   74.1300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0490   41.8200   72.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6870   43.0950   72.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8250   44.2140   72.2750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7900   42.6640   70.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.8100   43.4110   69.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.7910   44.1020   70.5730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4760   42.2690   69.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6060   41.2390   70.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2700   41.2520   70.7650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2020   40.9020   72.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9310   39.4130   72.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.3620   39.0310   73.5960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAC
+A    2
+CAI
+A    3
+CAJ
+A    4
+OAD
+A    5
+CAL
+A    6
+CAH
+A    7
+OAB
+A    8
+CAF
+A    9
+CAG
+A   10
+NAM
+A   11
+CAK
+A   12
+CAE
+A   13
+NAA
+M  END
+>  <InstanceId>
+2X09_X09_A_1900
+
+>  <ChemCompId>
+X09
+
+>  <PdbId>
+2X09
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O3
+
+>  <Name>
+AMINO-AUSTRALINE
+
+>  <SystematicName>
+(1R,2R,3R,4S,7S,8R)-3-(aminomethyl)-2,3,5,6,7,8-hexahydro-1H-pyrrolizine-1,2,7-triol
+
+>  <Synonyms>
+(1R,2R,3R,7S,7AR)-3-(AMINOMETHYL)HEXAHYDRO-1H-PYRROLIZINE-1,2,7-TRIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N2 O3
+
+>  <MolecularWeight>
+188.224
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O3/c9-3-4-7(12)8(13)6-5(11)1-2-10(4)6/h4-8,11-13H,1-3,9H2/t4-,5+,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+RTYGUSZVNGAYPW-OZRXBMAMSA-N
+
+>  <SMILES>
+C1C[N@]2[C@@H]([C@H]([C@@H]([C@H]2[C@H]1O)O)O)CN
+
+$$$$

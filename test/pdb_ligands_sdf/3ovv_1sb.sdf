@@ -1,0 +1,121 @@
+2GXV_1SB_?_25
+  RCSB PDB12061705443D
+Coordinates from PDB:2GXV:?:25 Model:1 without hydrogens
+ 12  7  0  0  0  0            999 V2000
+   19.6130   27.6880   33.9820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3430   26.6770   34.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6430   26.7470   36.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6230   25.6010   36.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2700   24.3380   36.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2700   23.2410   37.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9320   24.3060   35.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9020   25.4550   34.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4070   27.0470   33.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9960   27.6400   31.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7020   26.9610   30.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4980   27.4370   29.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C9
+A    8
+C10
+A    9
+C12
+A   10
+C13
+A   11
+C14
+A   12
+C15
+M  END
+>  <InstanceId>
+2GXV_1SB_?_25
+
+>  <ChemCompId>
+1SB
+
+>  <PdbId>
+2GXV
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+9
+
+>  <ObservedFormula>
+C11 N
+
+>  <Name>
+N'-[(1E)-(4-hydroxyphenyl)methylidene]-2-(3-methoxyphenyl)acetohydrazide
+
+>  <SystematicName>
+N-[(E)-(4-hydroxyphenyl)methylideneamino]-2-(3-methoxyphenyl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H16 N2 O3
+
+>  <MolecularWeight>
+284.31
+
+>  <ModifiedDate>
+2011-09-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H16N2O3/c1-21-15-4-2-3-13(9-15)10-16(20)18-17-11-12-5-7-14(19)8-6-12/h2-9,11,19H,10H2,1H3,(H,18,20)/b17-11+
+
+>  <InChIKey>
+MRDUCOTYVMACNC-GZTJUZNOSA-N
+
+>  <SMILES>
+COc1cccc(c1)CC(=O)N/N=C/c2ccc(cc2)O
+
+$$$$

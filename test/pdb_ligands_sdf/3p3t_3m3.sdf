@@ -1,0 +1,151 @@
+3P3T_3M3_A_128
+  RCSB PDB12061710123D
+Coordinates from PDB:3P3T:A:128 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+    0.1120   -2.5970   -9.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5150    2.4550   -9.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1440   -2.2510   -4.7390   F 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4880   -1.3430   -1.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2840   -0.6650   -1.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1170   -1.8890   -2.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6770   -0.5050   -2.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5670    0.3180   -6.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2760    0.2750   -5.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6480   -0.0780   -7.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2570   -0.6860  -11.2590   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1060    0.5650  -11.2950   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8430   -0.9940   -5.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5320   -1.7610   -3.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0240   -1.1410  -10.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2280    0.9930  -10.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3410   -1.0610   -3.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2950   -0.0800   -9.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 15  1  0  0  0  0
+  2 16  1  0  0  0  0
+ 14  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 14  2  0  0  0  0
+  7 17  2  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 13  9  1  0  0  0  0
+ 10 18  1  0  0  0  0
+ 15 11  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 16 12  2  0  0  0  0
+ 17 13  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 18 15  2  0  0  0  0
+ 18 16  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+FAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+NAK
+A   12
+NAL
+A   13
+OAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+CAR
+M  END
+>  <InstanceId>
+3P3T_3M3_A_128
+
+>  <ChemCompId>
+3M3
+
+>  <PdbId>
+3P3T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+128
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O F
+
+>  <Name>
+4-[3-(2-fluorophenoxy)propyl]-3,5-dimethyl-1H-pyrazole
+
+>  <SystematicName>
+4-[3-(2-fluorophenoxy)propyl]-3,5-dimethyl-1H-pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H17 F N2 O
+
+>  <MolecularWeight>
+248.296
+
+>  <ModifiedDate>
+2011-08-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H17FN2O/c1-10-12(11(2)17-16-10)6-5-9-18-14-8-4-3-7-13(14)15/h3-4,7-8H,5-6,9H2,1-2H3,(H,16,17)
+
+>  <InChIKey>
+SIXWAFDHGGAHMK-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(n[nH]1)C)CCCOc2ccccc2F
+
+$$$$

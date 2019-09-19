@@ -1,0 +1,107 @@
+1AED_DTI_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AED:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   32.3440   93.0260   48.0810   N 0  3  0  0  0  0  0  0  0  0  0  0
+   31.4960   93.7630   47.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2060   94.6520   49.6430   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2950   93.3850   49.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8050   94.6950   47.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4240   93.4960   45.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2180   91.9420   47.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  2  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  1  1  0  0  0  0
+  7  1  1  0  0  0  0
+  5  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  4  3  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N10
+A    2
+C9
+A    3
+S13
+A    4
+C11
+A    5
+C14
+A    6
+C1
+A    7
+C5
+M  END
+>  <InstanceId>
+1AED_DTI_A_296
+
+>  <ChemCompId>
+DTI
+
+>  <PdbId>
+1AED
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N S
+
+>  <Name>
+3,4-DIMETHYLTHIAZOLIUM ION
+
+>  <SystematicName>
+3,4-dimethyl-1,3-thiazol-3-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 N S
+
+>  <MolecularWeight>
+114.189
+
+>  <ModifiedDate>
+2012-01-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8NS/c1-5-3-7-4-6(5)2/h3-4H,1-2H3/q+1
+
+>  <InChIKey>
+RHRPPNDIWVFSRX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1csc[n+]1C
+
+$$$$

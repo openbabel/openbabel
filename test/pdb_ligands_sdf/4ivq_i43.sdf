@@ -1,0 +1,146 @@
+4IVQ_I43_A_501
+  RCSB PDB12061713053D
+Coordinates from PDB:4IVQ:A:501 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   21.2070   23.2990   64.0150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8510   24.7130   64.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3170   24.1130   63.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7030   19.5880   63.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0440   18.6360   64.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0610   21.8330   63.2870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5920   23.1190   63.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2030   20.8160   63.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7950   20.9400   63.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9060   19.7270   63.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3310   22.2130   64.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9180   22.4320   64.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7830   22.2470   63.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4930   21.7470   64.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7330   22.3200   62.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0100   22.7750   65.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7790   21.6150   61.7810   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 15  1  0  0  0  0
+ 15 13  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  3  7  2  0  0  0  0
+  7  1  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  2  0  0  0  0
+  1 11  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+N1
+A    2
+C01
+A    3
+O1
+A    4
+O2
+A    5
+C02
+A    6
+N2
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C4
+A   11
+C5
+A   12
+C11
+A   13
+C12
+A   14
+C13
+A   15
+C14
+A   16
+O3
+A   17
+O4
+M  END
+>  <InstanceId>
+4IVQ_I43_A_501
+
+>  <ChemCompId>
+I43
+
+>  <PdbId>
+4IVQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4
+
+>  <Name>
+6-[3-hydroxy-2-(hydroxymethyl)prop-1-en-1-yl]-4-methoxy-1,5-dimethylpyrimidin-2(1H)-one
+
+>  <SystematicName>
+6-[2-(hydroxymethyl)-3-oxidanyl-prop-1-enyl]-4-methoxy-1,5-dimethyl-pyrimidin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N2 O4
+
+>  <MolecularWeight>
+240.256
+
+>  <ModifiedDate>
+2013-02-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N2O4/c1-7-9(4-8(5-14)6-15)13(2)11(16)12-10(7)17-3/h4,14-15H,5-6H2,1-3H3
+
+>  <InChIKey>
+TVEZWTMUGAPERI-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(N(C(=O)N=C1OC)C)C=C(CO)CO
+
+$$$$

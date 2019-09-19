@@ -1,0 +1,117 @@
+4TLN_LNO_A_322
+  RCSB PDB12061714453D
+Coordinates from PDB:4TLN:A:322 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   52.9070   16.5460   -4.3540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   51.9980   17.6810   -4.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5700   18.7580   -5.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6330   18.7010   -6.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0280   18.4720   -3.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.9200   17.7210   -2.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.2770   17.6690   -3.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0310   18.2540   -0.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.8440   19.8300   -5.6540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4760   20.7250   -6.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CD2
+A    9
+N2
+A   10
+ON2
+M  END
+>  <InstanceId>
+4TLN_LNO_A_322
+
+>  <ChemCompId>
+LNO
+
+>  <PdbId>
+4TLN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+322
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2
+
+>  <Name>
+L-LEUCYL-HYDROXYLAMINE
+
+>  <SystematicName>
+(2S)-2-amino-N-hydroxy-4-methyl-pentanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 N2 O2
+
+>  <MolecularWeight>
+146.188
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N2O2/c1-4(2)3-5(7)6(9)8-10/h4-5,10H,3,7H2,1-2H3,(H,8,9)/t5-/m0/s1
+
+>  <InChIKey>
+UJJHPFLWSVFLBE-YFKPBYRVSA-N
+
+>  <SMILES>
+CC(C)C[C@@H](C(=O)NO)N
+
+$$$$

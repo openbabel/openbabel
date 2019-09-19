@@ -1,0 +1,139 @@
+5CSH_54E_A_401
+  RCSB PDB12061717093D
+Coordinates from PDB:5CSH:A:401 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -4.8260  166.5000  397.4910  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6100  167.0990  398.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3010  166.6980  398.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9620  168.0230  399.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9350  168.5620  400.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6200  168.1730  400.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2840  167.2290  399.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1540  166.7750  399.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6630  166.4510  397.7050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3780  168.4340  399.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3260  167.5140  400.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6690  167.8550  400.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0850  169.1220  399.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1570  170.0510  399.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8150  169.7120  399.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 10 15  2  0  0  0  0
+ 10  4  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  4  2  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  3  2  0  0  0  0
+  8  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CL
+A    2
+C3
+A    3
+C2
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C
+A    9
+N
+A   10
+C7
+A   11
+C12
+A   12
+C11
+A   13
+C10
+A   14
+C9
+A   15
+C8
+M  END
+>  <InstanceId>
+5CSH_54E_A_401
+
+>  <ChemCompId>
+54E
+
+>  <PdbId>
+5CSH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N Cl
+
+>  <Name>
+1-(2-chlorobiphenyl-4-yl)methanamine
+
+>  <SystematicName>
+(3-chloranyl-4-phenyl-phenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H12 Cl N
+
+>  <MolecularWeight>
+217.694
+
+>  <ModifiedDate>
+2016-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H12ClN/c14-13-8-10(9-15)6-7-12(13)11-4-2-1-3-5-11/h1-8H,9,15H2
+
+>  <InChIKey>
+CUCWYGFPAKDUOM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2ccc(cc2Cl)CN
+
+$$$$

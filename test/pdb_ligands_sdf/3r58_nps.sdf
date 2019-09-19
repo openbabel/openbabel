@@ -1,0 +1,147 @@
+2VDB_NPS_A_1591
+  RCSB PDB12061707043D
+Coordinates from PDB:2VDB:A:1591 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   15.2910   -5.2140   27.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0220   -6.3350   27.7880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5610   -4.0570   27.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8420   -0.9840   29.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7710   -2.9430   27.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7020   -2.9750   28.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4420   -4.2240   29.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2460   -5.2920   28.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8630   -1.9050   28.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8230   -2.0480   29.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2450   -0.4410   28.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4110   -4.3300   29.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6110   -3.2440   30.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0470   -6.3920   26.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5310    1.2210   30.1270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1800    0.0260   31.8540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2250    0.1560   30.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 16  2  0  0  0  0
+ 17  4  1  0  0  0  0
+  4 11  1  0  0  0  0
+  4 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 13  2  0  0  0  0
+  9  6  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  5  3  2  0  0  0  0
+  3  1  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  1  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2 14  1  0  0  0  0
+A    1
+C1
+A    2
+O2
+A    3
+C2
+A    4
+C14
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C10
+A   12
+C13
+A   13
+C11
+A   14
+C12
+A   15
+O
+A   16
+OXT
+A   17
+C15
+M  END
+>  <InstanceId>
+2VDB_NPS_A_1591
+
+>  <ChemCompId>
+NPS
+
+>  <PdbId>
+2VDB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1591
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O3
+
+>  <Name>
+(2S)-2-(6-methoxynaphthalen-2-yl)propanoic acid
+
+>  <SystematicName>
+(2S)-2-(6-methoxynaphthalen-2-yl)propanoic acid
+
+>  <Synonyms>
+NAPROXEN
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C14 H14 O3
+
+>  <MolecularWeight>
+230.259
+
+>  <ModifiedDate>
+2011-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C14H14O3/c1-9(14(15)16)10-3-4-12-8-13(17-2)6-5-11(12)7-10/h3-9H,1-2H3,(H,15,16)/t9-/m0/s1
+
+>  <InChIKey>
+CMWTZPSULFXXJA-VIFPVBQESA-N
+
+>  <SMILES>
+C[C@@H](c1ccc2cc(ccc2c1)OC)C(=O)O
+
+$$$$

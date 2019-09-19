@@ -1,0 +1,127 @@
+4TT5_36Y_A_402
+  RCSB PDB12061714483D
+Coordinates from PDB:4TT5:A:402 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   43.9590  -43.6120   -7.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8130  -43.3220   -9.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5310  -43.2180   -8.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2130  -43.1700  -10.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2790  -43.0690  -11.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6960  -42.9000  -13.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0600  -42.8340  -13.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9710  -42.9200  -12.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7260  -42.6040  -15.2530  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5650  -43.0890  -11.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6740  -43.4090   -7.4480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6570  -43.5460   -8.3070   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8 10  2  0  0  0  0
+  5  4  2  0  0  0  0
+ 10  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3 11  1  0  0  0  0
+  2 12  1  0  0  0  0
+ 11  1  2  0  0  0  0
+ 12  1  1  0  0  0  0
+A    1
+C2
+A    2
+C5
+A    3
+C4
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+BR
+A   10
+C11
+A   11
+N3
+A   12
+N1
+M  END
+>  <InstanceId>
+4TT5_36Y_A_402
+
+>  <ChemCompId>
+36Y
+
+>  <PdbId>
+4TT5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 Br
+
+>  <Name>
+4-(4-bromophenyl)-1H-imidazole
+
+>  <SystematicName>
+4-(4-bromophenyl)-1H-imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Br N2
+
+>  <MolecularWeight>
+223.069
+
+>  <ModifiedDate>
+2015-02-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7BrN2/c10-8-3-1-7(2-4-8)9-5-11-6-12-9/h1-6H,(H,11,12)
+
+>  <InChIKey>
+YLIOAWKNPLJMID-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2c[nH]cn2)Br
+
+$$$$

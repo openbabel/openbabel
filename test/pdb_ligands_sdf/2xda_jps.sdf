@@ -1,0 +1,160 @@
+2XDA_JPS_A_1151
+  RCSB PDB12061707253D
+Coordinates from PDB:2XDA:A:1151 Model:1 without hydrogens
+ 20 22  0  0  0  0            999 V2000
+    1.0330   18.5770   26.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1820   17.4800   25.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3770   16.5370   25.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2390   15.3590   24.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0960   14.0500   25.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2610   15.5580   23.1290   S 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0760   13.9370   22.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0010   13.2210   23.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8090   11.6790   23.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9480   11.2750   25.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5710   11.1780   26.2130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2760   11.0620   25.0200   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0760   10.9940   24.1390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2290   11.1970   22.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0610   11.8050   21.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5430   11.3300   20.2010   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9390   13.3210   21.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8510   13.9730   20.5060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3070   19.3200   26.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9320   20.0080   26.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 19  1  0  0  0  0
+  1 20  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 17  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 19 20  1  0  0  0  0
+A    1
+CAA
+A    2
+CAG
+A    3
+CAH
+A    4
+CAM
+A    5
+CAI
+A    6
+SAK
+A    7
+CAO
+A    8
+CAN
+A    9
+CAR
+A   10
+CAL
+A   11
+OAC
+A   12
+OAB
+A   13
+OAF
+A   14
+CAJ
+A   15
+CAP
+A   16
+OAD
+A   17
+CAQ
+A   18
+OAE
+A   19
+CA0
+A   20
+CA1
+M  END
+>  <InstanceId>
+2XDA_JPS_A_1151
+
+>  <ChemCompId>
+JPS
+
+>  <PdbId>
+2XDA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1151
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O5 S
+
+>  <Name>
+(4R,6R,7S)-2-(2-CYCLOPROPYLETHYL)-4,6,7-TRIHYDROXY-4,5,6,7-TETRAHYDRO-1-BENZOTHIOPHENE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+(4R,6R,7S)-2-(2-cyclopropylethyl)-4,6,7-trihydroxy-6,7-dihydro-5H-1-benzothiophene-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C14 H18 O5 S
+
+>  <MolecularWeight>
+298.355
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H18O5S/c15-10-6-14(19,13(17)18)9-5-8(4-3-7-1-2-7)20-12(9)11(10)16/h5,7,10-11,15-16,19H,1-4,6H2,(H,17,18)/t10-,11+,14-/m1/s1
+
+>  <InChIKey>
+ZGKGERUMGXJOHU-UHIISALHSA-N
+
+>  <SMILES>
+c1c(sc2c1[C@](C[C@H]([C@@H]2O)O)(C(=O)O)O)CCC3CC3
+
+$$$$

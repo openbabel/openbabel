@@ -1,0 +1,130 @@
+5FSN_6Q3_A_201
+  RCSB PDB12061717453D
+Coordinates from PDB:5FSN:A:201 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   15.8790   21.6550    4.7830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1840   21.3420    4.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6910   20.4230    5.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0160   21.8760    3.7160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5030   22.8020    2.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4350   23.3880    1.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4140   22.5830    3.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1800   23.1950    2.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3200   21.6220    4.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8800   22.3540    5.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9630   23.1580    4.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2680   22.3990    5.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1200   22.9930    4.0210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+N3
+A    2
+C2
+A    3
+N2
+A    4
+N1
+A    5
+C6
+A    6
+C7
+A    7
+C4
+A    8
+C5
+A    9
+O1'
+A   10
+C1'
+A   11
+C2'
+A   12
+C3'
+A   13
+O3'
+M  END
+>  <InstanceId>
+5FSN_6Q3_A_201
+
+>  <ChemCompId>
+6Q3
+
+>  <PdbId>
+5FSN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O2
+
+>  <Name>
+3-(2-AMINO-6-METHYL-PYRIMIDIN-4-YL)OXYPROPAN-1-OL
+
+>  <SystematicName>
+3-(2-azanyl-6-methyl-pyrimidin-4-yl)oxypropan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H13 N3 O2
+
+>  <MolecularWeight>
+183.208
+
+>  <ModifiedDate>
+2016-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13N3O2/c1-6-5-7(11-8(9)10-6)13-4-2-3-12/h5,12H,2-4H2,1H3,(H2,9,10,11)
+
+>  <InChIKey>
+IGISMMDITOHCMM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc(n1)N)OCCCO
+
+$$$$

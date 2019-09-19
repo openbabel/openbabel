@@ -1,0 +1,117 @@
+4ZUQ_6XA_A_403
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZUQ:A:403 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   -4.6910   -3.6030  -27.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1170   -4.5830  -28.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4470   -5.7720  -27.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5900   -6.5600  -28.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3450   -7.7530  -29.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5680   -8.6100  -30.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5990   -4.3190  -26.6820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3160   -8.9290  -30.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0930   -9.0410  -31.4270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6850   -9.7430  -31.0950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  6  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1  7  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+N1
+A    8
+N8
+A    9
+O10
+A   10
+O9
+M  END
+>  <InstanceId>
+4ZUQ_6XA_A_403
+
+>  <ChemCompId>
+6XA
+
+>  <PdbId>
+4ZUQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2
+
+>  <Name>
+6-amino-N-hydroxyhexanamide
+
+>  <SystematicName>
+6-azanyl-N-oxidanyl-hexanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 N2 O2
+
+>  <MolecularWeight>
+146.188
+
+>  <ModifiedDate>
+2015-07-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N2O2/c7-5-3-1-2-4-6(9)8-10/h10H,1-5,7H2,(H,8,9)
+
+>  <InChIKey>
+HAQVDFULTKFINY-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCC(=O)NO)CCN
+
+$$$$

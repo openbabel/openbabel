@@ -1,0 +1,147 @@
+5FZK_NRW_A_1766
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZK:A:1766 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   88.5950   57.9990    7.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8710   59.2870    8.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2550   59.5360    9.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.7120   60.8320    9.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.9060   61.5700   10.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.2630   61.6210   11.6690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.4470   60.9540   12.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.3830   62.3340   12.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.5620   63.8380   12.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6400   64.3530   13.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.7310   65.7320   13.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.7520   66.5570   13.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6970   66.0550   12.3740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6100   64.7100   12.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.8820   62.1520    9.9300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.9940   61.3150    7.9300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   87.7200   60.3550    7.2260   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 17  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 16  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 15  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+N06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+A   14
+C14
+A   15
+O15
+A   16
+O16
+A   17
+N17
+M  END
+>  <InstanceId>
+5FZK_NRW_A_1766
+
+>  <ChemCompId>
+NRW
+
+>  <PdbId>
+5FZK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1766
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O2
+
+>  <Name>
+N,3-dimethyl-N-[(pyridin-3-yl)methyl]-1,2-oxazole-5-carboxamide
+
+>  <SystematicName>
+N,3-dimethyl-N-(pyridin-3-ylmethyl)-1,2-oxazole-5-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 N3 O2
+
+>  <MolecularWeight>
+231.251
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13N3O2/c1-9-6-11(17-14-9)12(16)15(2)8-10-4-3-5-13-7-10/h3-7H,8H2,1-2H3
+
+>  <InChIKey>
+YRZCJLIACJLYBI-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(on1)C(=O)N(C)Cc2cccnc2
+
+$$$$

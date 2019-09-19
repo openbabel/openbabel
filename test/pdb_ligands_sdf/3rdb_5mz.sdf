@@ -1,0 +1,135 @@
+3RDB_5MZ_A_208
+  RCSB PDB12061710333D
+Coordinates from PDB:3RDB:A:208 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    1.3900   15.3330   23.5570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2000   13.4310   21.4130  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8840   16.6170   20.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1110   16.2700   21.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6580   16.3030   19.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0710   15.3460   21.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7480   13.6630   19.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8710   15.6120   18.5490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4650   14.6060   20.4080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1150   15.0410   18.3550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1620   15.6300   22.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3160   15.6880   20.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4440   14.4250   19.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5210   15.3410   19.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 11  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5 12  2  0  0  0  0
+  6 11  2  0  0  0  0
+  6 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 14  2  0  0  0  0
+  9 13  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+NAA
+A    2
+CLAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+NAI
+A   10
+OAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+M  END
+>  <InstanceId>
+3RDB_5MZ_A_208
+
+>  <ChemCompId>
+5MZ
+
+>  <PdbId>
+3RDB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+208
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O Cl
+
+>  <Name>
+3-[5-(chloromethyl)-1,2,4-oxadiazol-3-yl]aniline
+
+>  <SystematicName>
+3-[5-(chloromethyl)-1,2,4-oxadiazol-3-yl]aniline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 Cl N3 O
+
+>  <MolecularWeight>
+209.632
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8ClN3O/c10-5-8-12-9(13-14-8)6-2-1-3-7(11)4-6/h1-4H,5,11H2
+
+>  <InChIKey>
+AHCZAZOXRKPNHL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)N)c2nc(on2)CCl
+
+$$$$

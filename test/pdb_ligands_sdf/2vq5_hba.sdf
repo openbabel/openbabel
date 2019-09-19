@@ -1,0 +1,114 @@
+1EB9_HBA_A_1259
+  RCSB PDB12061702223D
+Coordinates from PDB:1EB9:A:1259 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   51.2460   45.0700  120.9190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.8700   44.6100  122.0150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2460   46.5010  120.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4710   46.9940  119.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4710   48.3730  119.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2440   49.2610  120.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0180   48.7390  121.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0200   47.3650  121.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2640   50.6390  120.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+O4
+M  END
+>  <InstanceId>
+1EB9_HBA_A_1259
+
+>  <ChemCompId>
+HBA
+
+>  <PdbId>
+1EB9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1259
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2
+
+>  <Name>
+P-HYDROXYBENZALDEHYDE
+
+>  <SystematicName>
+4-hydroxybenzaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O2
+
+>  <MolecularWeight>
+122.121
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O2/c8-5-6-1-3-7(9)4-2-6/h1-5,9H
+
+>  <InChIKey>
+RGHHSNMVTDWUBI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C=O)O
+
+$$$$

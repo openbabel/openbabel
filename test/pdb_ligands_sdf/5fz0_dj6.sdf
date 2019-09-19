@@ -1,0 +1,143 @@
+5FZ0_DJ6_A_1767
+  RCSB PDB12061717463D
+Coordinates from PDB:5FZ0:A:1767 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   87.5790   66.2380   13.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.7540   66.5780   12.3610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   88.7440   62.3260   12.7790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   87.6430   58.3050   11.1080   S 0  0  0  0  0  0  0  0  0  0  0  0
+   89.7170   60.3680   10.9170  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   87.6060   64.8910   13.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6200   63.0160   12.2820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   85.0300   57.3520   12.1170  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6950   64.3860   12.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8000   65.2760   12.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6370   67.0370   13.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.5920   62.0780   12.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.1990   60.6800   12.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.0250   59.9110   12.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.1440   58.6360   11.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.1380   59.9310   11.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2 10  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3 12  2  0  0  0  0
+  4 15  1  0  0  0  0
+  4 16  1  0  0  0  0
+  5 16  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8 15  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 16  2  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+S
+A    5
+CL
+A    6
+C1
+A    7
+N1
+A    8
+CL1
+A    9
+C2
+A   10
+C3
+A   11
+C4
+A   12
+C5
+A   13
+C6
+A   14
+C7
+A   15
+C8
+A   16
+C9
+M  END
+>  <InstanceId>
+5FZ0_DJ6_A_1767
+
+>  <ChemCompId>
+DJ6
+
+>  <PdbId>
+5FZ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1767
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O S Cl2
+
+>  <Name>
+2,5-dichloro-N-(pyridin-3-yl)thiophene-3-carboxamide
+
+>  <SystematicName>
+2,5-bis(chloranyl)-N-pyridin-3-yl-thiophene-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H6 Cl2 N2 O S
+
+>  <MolecularWeight>
+273.138
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6Cl2N2OS/c11-8-4-7(9(12)16-8)10(15)14-6-2-1-3-13-5-6/h1-5H,(H,14,15)
+
+>  <InChIKey>
+XUXVQIKOGRNZPD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)NC(=O)c2cc(sc2Cl)Cl
+
+$$$$

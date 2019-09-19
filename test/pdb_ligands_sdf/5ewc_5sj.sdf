@@ -1,0 +1,147 @@
+5EWC_5SJ_A_801
+  RCSB PDB12061717333D
+Coordinates from PDB:5EWC:A:801 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    9.1630   -7.7850   10.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2900   -7.4680    9.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9760   -7.8470    8.5000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1120   -8.2850    7.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0260   -7.7590    7.2940   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5570   -9.3910    6.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9590   -9.7490    5.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4330  -10.8570    4.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8510  -11.2420    3.6930   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4340  -12.2480    2.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8800  -12.5740    1.8430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6390  -12.8550    3.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7700  -12.2300    2.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9470  -12.7250    4.7050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4830  -11.6110    5.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0770  -11.2570    6.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6140  -10.1450    7.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 12 14  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  8 15  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 15 16  1  0  0  0  0
+  7  6  2  0  0  0  0
+ 16 17  2  0  0  0  0
+  6 17  1  0  0  0  0
+  6  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAA
+A    2
+CAH
+A    3
+OAK
+A    4
+CAL
+A    5
+OAC
+A    6
+CAN
+A    7
+CAG
+A    8
+CAP
+A    9
+NAI
+A   10
+C
+A   11
+O
+A   12
+CA
+A   13
+CB
+A   14
+N
+A   15
+CAO
+A   16
+CAF
+A   17
+CAE
+M  END
+>  <InstanceId>
+5EWC_5SJ_A_801
+
+>  <ChemCompId>
+5SJ
+
+>  <PdbId>
+5EWC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O3
+
+>  <Name>
+ethyl (2~{R})-2-methyl-3-oxidanylidene-2,4-dihydro-1~{H}-quinoxaline-6-carboxylate
+
+>  <SystematicName>
+ethyl (2~{R})-2-methyl-3-oxidanylidene-2,4-dihydro-1~{H}-quinoxaline-6-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 N2 O3
+
+>  <MolecularWeight>
+234.251
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O3/c1-3-17-12(16)8-4-5-9-10(6-8)14-11(15)7(2)13-9/h4-7,13H,3H2,1-2H3,(H,14,15)/t7-/m1/s1
+
+>  <InChIKey>
+MLLYUWSDLZJMSV-SSDOTTSWSA-N
+
+>  <SMILES>
+CCOC(=O)c1ccc2c(c1)NC(=O)[C@H](N2)C
+
+$$$$

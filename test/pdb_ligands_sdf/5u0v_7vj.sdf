@@ -1,0 +1,126 @@
+5U0V_7VJ_A_301
+  RCSB PDB12061719473D
+Coordinates from PDB:5U0V:A:301 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   16.7020   -6.9950   49.2520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0180   -8.1640   49.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5330   -6.0410   49.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7160   -6.1750   50.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1840   -7.4170   50.6470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3870   -7.5380   51.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4560   -5.0920   50.6420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0280   -3.9130   50.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6940   -2.7670   50.6400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8300   -3.6880   49.6760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0270   -4.7150   49.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9590   -4.5560   48.7010   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  2  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+ 11  3  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  2  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+N3
+A    2
+O2
+A    3
+C2
+A    4
+C1
+A    5
+N2
+A    6
+C5
+A    7
+N1
+A    8
+C4
+A    9
+N5
+A   10
+N4
+A   11
+C3
+A   12
+O1
+M  END
+>  <InstanceId>
+5U0V_7VJ_A_301
+
+>  <ChemCompId>
+7VJ
+
+>  <PdbId>
+5U0V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 O2
+
+>  <Name>
+2-amino-6-(methylamino)-5-nitrosopyrimidin-4(3H)-one
+
+>  <SystematicName>
+2-azanyl-4-(methylamino)-5-nitroso-1~{H}-pyrimidin-6-one
+
+>  <Synonyms>
+6-METHYLAMINO-5-NITROSOISOCYTOSINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N5 O2
+
+>  <MolecularWeight>
+169.141
+
+>  <ModifiedDate>
+2017-12-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7N5O2/c1-7-3-2(10-12)4(11)9-5(6)8-3/h1H3,(H4,6,7,8,9,11)
+
+>  <InChIKey>
+ISOZZGJCVBHMSM-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC1=C(C(=O)NC(=N1)N)N=O
+
+$$$$

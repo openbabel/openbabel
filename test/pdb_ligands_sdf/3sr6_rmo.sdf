@@ -1,0 +1,102 @@
+3RCA_RMO_C_1317
+  RCSB PDB12061710333D
+Coordinates from PDB:3RCA:C:1317 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   36.0730   14.5930   18.3310   S 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6550   16.0660   17.9320  As 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6070   12.8710   17.7620  Mo 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9490   14.6140   17.0390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6870   13.0750   19.0640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1410   17.6940   17.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  6  1  0  0  0  0
+  1  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  5  2  0  0  0  0
+A    1
+S1
+A    2
+AS1
+A    3
+MO1
+A    4
+O1
+A    5
+O2
+A    6
+O3
+M  END
+>  <InstanceId>
+3RCA_RMO_C_1317
+
+>  <ChemCompId>
+RMO
+
+>  <PdbId>
+3RCA
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1317
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+O3 As Mo S
+
+>  <Name>
+[arsenothionito(2-)-kappa~2~O,S](oxo)molybdenum
+
+>  <SystematicName>
+2-oxidanyl-1-oxa-3-thia-2-arsa-4$l^{4}-molybdacyclobutane 4-oxide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+As H Mo O3 S
+
+>  <MolecularWeight>
+251.933
+
+>  <ModifiedDate>
+2011-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/AsHO2S.Mo.O/c2-1(3)4;;/h2H;;/q-2;+2;
+
+>  <InChIKey>
+OQRBJXHQYFZCTC-UHFFFAOYSA-N
+
+>  <SMILES>
+O[As]1O[Mo](=O)S1
+
+$$$$

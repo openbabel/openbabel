@@ -1,0 +1,110 @@
+2P2R_CYT_A_501
+  RCSB PDB12061706353D
+Coordinates from PDB:2P2R:A:501 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   26.6110   29.5920   43.2500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5680   29.9830   41.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6420   27.5490   42.5370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1410   28.3740   43.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1970   27.9750   44.7250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0320   31.1790   41.7070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0630   29.1580   40.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5920   27.9690   41.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+N3
+A    2
+C4
+A    3
+N1
+A    4
+C2
+A    5
+O2
+A    6
+N4
+A    7
+C5
+A    8
+C6
+M  END
+>  <InstanceId>
+2P2R_CYT_A_501
+
+>  <ChemCompId>
+CYT
+
+>  <PdbId>
+2P2R
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N3 O
+
+>  <Name>
+6-AMINOPYRIMIDIN-2(1H)-ONE
+
+>  <SystematicName>
+4-amino-3H-pyrimidin-2-one
+
+>  <Synonyms>
+CYTOSINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H5 N3 O
+
+>  <MolecularWeight>
+111.102
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C4H5N3O/c5-3-1-2-6-4(8)7-3/h1-2H,(H3,5,6,7,8)
+
+>  <InChIKey>
+OPTASPLRGRRNAP-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(NC(=O)N=C1)N
+
+$$$$

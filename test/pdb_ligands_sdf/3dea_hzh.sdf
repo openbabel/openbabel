@@ -1,0 +1,142 @@
+3DEA_HZH_A_401
+  RCSB PDB12061708183D
+Coordinates from PDB:3DEA:A:401 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   10.5120   24.1290   31.8820   F 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0640   25.1580   31.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8230   25.1410   30.1120   F 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1740   26.2960   31.8930   F 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5920   24.9560   30.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2650   25.8570   29.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5520   25.0890   31.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5260   23.7190   33.0210   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3070   24.5760   34.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5280   24.6960   35.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2020   23.8780   36.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3700   23.1280   36.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9580   22.3680   37.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3930   22.3380   38.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2260   23.0770   39.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6400   23.8370   38.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+F2
+A    2
+C11
+A    3
+F1
+A    4
+F3
+A    5
+C10
+A    6
+O1
+A    7
+C9
+A    8
+S
+A    9
+C8
+A   10
+C7
+A   11
+C6
+A   12
+C4
+A   13
+C2
+A   14
+C1
+A   15
+C3
+A   16
+C5
+M  END
+>  <InstanceId>
+3DEA_HZH_A_401
+
+>  <ChemCompId>
+HZH
+
+>  <PdbId>
+3DEA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O S F3
+
+>  <Name>
+1,1,1-trifluoro-3-[(2-phenylethyl)sulfanyl]propan-2-one
+
+>  <SystematicName>
+1,1,1-trifluoro-3-phenethylsulfanyl-propan-2-one
+
+>  <Synonyms>
+3-phenethylthio-1,1,1-trifluoropropan-2-one, PETFP
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 F3 O S
+
+>  <MolecularWeight>
+248.265
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11F3OS/c12-11(13,14)10(15)8-16-7-6-9-4-2-1-3-5-9/h1-5H,6-8H2
+
+>  <InChIKey>
+UJAGOKUXPHIFEB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CCSCC(=O)C(F)(F)F
+
+$$$$

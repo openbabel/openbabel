@@ -1,0 +1,131 @@
+1S38_MAQ_A_900
+  RCSB PDB12061703573D
+Coordinates from PDB:1S38:A:900 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   17.1110   16.7670   18.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0680   16.4780   19.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6910   15.9090   19.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3090   16.7310   21.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3370   16.4740   22.0920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5140   16.6900   23.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5310   16.4170   24.2140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6740   17.1860   23.8600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7200   17.4890   23.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7830   17.9410   23.4930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5900   17.2630   21.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6150   17.5430   20.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3790   17.2950   19.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C9
+A    4
+C3
+A    5
+N3
+A    6
+C8
+A    7
+N2
+A    8
+N1
+A    9
+C7
+A   10
+O1
+A   11
+C4
+A   12
+C5
+A   13
+C6
+M  END
+>  <InstanceId>
+1S38_MAQ_A_900
+
+>  <ChemCompId>
+MAQ
+
+>  <PdbId>
+1S38
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O
+
+>  <Name>
+2-AMINO-8-METHYLQUINAZOLIN-4(3H)-ONE
+
+>  <SystematicName>
+2-amino-8-methyl-1H-quinazolin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N3 O
+
+>  <MolecularWeight>
+175.187
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9N3O/c1-5-3-2-4-6-7(5)11-9(10)12-8(6)13/h2-4H,1H3,(H3,10,11,12,13)
+
+>  <InChIKey>
+NLLZAHIPYDRNRQ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc2c1NC(=NC2=O)N
+
+$$$$

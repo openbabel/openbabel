@@ -1,0 +1,117 @@
+4I4B_1CO_B_1002
+  RCSB PDB12061712573D
+Coordinates from PDB:4I4B:B:1002 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   95.7910  132.6720  131.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.6650  132.8400  133.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.4300  131.6370  131.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.0550  132.1600  131.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.1150  132.0770  132.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.6790  132.3740  132.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.5660  130.7450  132.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  100.3950  132.1320  130.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   96.9070  130.6960  132.6100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   93.1790  132.2270  131.8590   S 0  0  0  0  0  0  0  0  0  0  0  0
+  8  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3  7  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5  2  1  0  0  0  0
+A    1
+C2
+A    2
+C6
+A    3
+C5
+A    4
+C4
+A    5
+C3
+A    6
+C1
+A    7
+O4
+A    8
+O3
+A    9
+O7
+A   10
+S2
+M  END
+>  <InstanceId>
+4I4B_1CO_B_1002
+
+>  <ChemCompId>
+1CO
+
+>  <PdbId>
+4I4B
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3 S
+
+>  <Name>
+(3S)-3-hydroxy-3-methyl-5-sulfanylpentanoic acid
+
+>  <SystematicName>
+(3S)-3-methyl-3-oxidanyl-5-sulfanyl-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O3 S
+
+>  <MolecularWeight>
+164.223
+
+>  <ModifiedDate>
+2013-07-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O3S/c1-6(9,2-3-10)4-5(7)8/h9-10H,2-4H2,1H3,(H,7,8)/t6-/m1/s1
+
+>  <InChIKey>
+MCHPXVGJHBKMNR-ZCFIWIBFSA-N
+
+>  <SMILES>
+C[C@@](CCS)(CC(=O)O)O
+
+$$$$

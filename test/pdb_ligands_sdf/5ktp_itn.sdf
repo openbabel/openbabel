@@ -1,0 +1,113 @@
+5KTP_ITN_A_403
+  RCSB PDB12061718403D
+Coordinates from PDB:5KTP:A:403 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   17.3850   33.3560   10.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6940   32.1300   10.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2130   32.2190   10.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4610   33.4860   10.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2760   33.5080   10.9150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9960   34.5190   10.2010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5840   31.0900   11.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1880   33.8950   10.2540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1470   33.7940   12.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  4  2  0  0  0  0
+  8  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3  7  2  0  0  0  0
+  1  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+O3
+A    6
+O4
+A    7
+C4
+A    8
+O1
+A    9
+O2
+M  END
+>  <InstanceId>
+5KTP_ITN_A_403
+
+>  <ChemCompId>
+ITN
+
+>  <PdbId>
+5KTP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+2-methylidenebutanedioic acid
+
+>  <SystematicName>
+2-methylidenebutanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 O4
+
+>  <MolecularWeight>
+130.099
+
+>  <ModifiedDate>
+2016-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6O4/c1-3(5(8)9)2-4(6)7/h1-2H2,(H,6,7)(H,8,9)
+
+>  <InChIKey>
+LVHBHZANLOWSRM-UHFFFAOYSA-N
+
+>  <SMILES>
+C=C(CC(=O)O)C(=O)O
+
+$$$$

@@ -1,0 +1,146 @@
+2GMS_P0P_A_400
+  RCSB PDB12061705423D
+Coordinates from PDB:2GMS:A:400 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   -3.4950   -3.3920    5.3230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8910   -4.7400    7.3310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9540   -4.6870    6.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6860   -5.9460    6.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4050   -3.4770    6.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7280   -2.3190    6.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2620   -0.9850    6.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5930   -1.1400    5.5880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4990   -0.4840    4.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5430   -2.3830    7.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2130   -3.6410    7.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0370   -1.1760    7.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4890   -0.3270    8.5850   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1610    1.1300    8.4810   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2620    1.6830    7.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5140    1.9630    9.6860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7650    1.1270    8.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 17  1  0  0  0  0
+A    1
+O3
+A    2
+N1
+A    3
+C2
+A    4
+C2A
+A    5
+C3
+A    6
+C4
+A    7
+C4A
+A    8
+O4A
+A    9
+O4B
+A   10
+C5
+A   11
+C6
+A   12
+C5A
+A   13
+O4P
+A   14
+P
+A   15
+O1P
+A   16
+O2P
+A   17
+O3P
+M  END
+>  <InstanceId>
+2GMS_P0P_A_400
+
+>  <ChemCompId>
+P0P
+
+>  <PdbId>
+2GMS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O7 P
+
+>  <Name>
+[4-(DIHYDROXYMETHYL)-5-HYDROXY-6-METHYLPYRIDIN-3-YL]METHYL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+[4-(dihydroxymethyl)-5-hydroxy-6-methyl-pyridin-3-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 N O7 P
+
+>  <MolecularWeight>
+265.157
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12NO7P/c1-4-7(10)6(8(11)12)5(2-9-4)3-16-17(13,14)15/h2,8,10-12H,3H2,1H3,(H2,13,14,15)
+
+>  <InChIKey>
+WNSLUVKENIMLGR-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)COP(=O)(O)O)C(O)O)O
+
+$$$$

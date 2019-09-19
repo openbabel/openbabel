@@ -1,0 +1,143 @@
+2XP6_4G2_A_1165
+  RCSB PDB12061707283D
+Coordinates from PDB:2XP6:A:1165 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  -37.8530   28.3630   27.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1060   28.1520   26.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.0270   28.7820   25.9190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2130   27.1770   25.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.4050   26.6840   24.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.3630   25.9020   24.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.5230   25.9250   25.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.0250   26.7200   26.1020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3210   25.2570   25.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.6760   25.1900   26.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.4260   24.5200   26.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.8520   23.9350   25.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.5000   24.0560   24.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.7410   24.7260   24.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5940   24.4120   27.9890  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5780   26.9250   23.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 16  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O14
+A    2
+C12
+A    3
+O13
+A    4
+C10
+A    5
+C9
+A    6
+N8
+A    7
+C7
+A    8
+N11
+A    9
+C6
+A   10
+C1
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+C5
+A   15
+CL1
+A   16
+C15
+M  END
+>  <InstanceId>
+2XP6_4G2_A_1165
+
+>  <ChemCompId>
+4G2
+
+>  <PdbId>
+2XP6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1165
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2 Cl
+
+>  <Name>
+2-(3-CHLORO-PHENYL)-5-METHYL-1H-IMIDAZOLE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+2-(3-chlorophenyl)-5-methyl-1H-imidazole-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H9 Cl N2 O2
+
+>  <MolecularWeight>
+236.654
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9ClN2O2/c1-6-9(11(15)16)14-10(13-6)7-3-2-4-8(12)5-7/h2-5H,1H3,(H,13,14)(H,15,16)
+
+>  <InChIKey>
+AZJGRTCDZBQXFC-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(nc([nH]1)c2cccc(c2)Cl)C(=O)O
+
+$$$$

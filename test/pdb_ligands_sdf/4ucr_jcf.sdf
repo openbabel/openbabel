@@ -1,0 +1,139 @@
+4UCR_JCF_A_1319
+  RCSB PDB12061715053D
+Coordinates from PDB:4UCR:A:1319 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   17.3440   94.6070   14.9730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5110   94.9750   15.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1110   94.8600   16.3280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2780   95.6120   14.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6460   95.7470   14.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5520   96.1030   12.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1930   96.7450   11.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4840   97.1600   10.8220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6060   96.9100   11.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3360   96.4130   13.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7390   96.5610   12.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3320   97.1720   11.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2200   97.5130   10.8440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5440   97.6350   10.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1700   98.3610    9.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O1
+A    2
+C10
+A    3
+N1
+A    4
+C6
+A    5
+C5
+A    6
+C7
+A    7
+C8
+A    8
+O
+A    9
+C9
+A   10
+C4
+A   11
+C3
+A   12
+C2
+A   13
+N
+A   14
+C1
+A   15
+C
+M  END
+>  <InstanceId>
+4UCR_JCF_A_1319
+
+>  <ChemCompId>
+JCF
+
+>  <PdbId>
+4UCR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1319
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+8-hydroxy-2-methylquinoline-6-carboxamide
+
+>  <SystematicName>
+2-methyl-8-oxidanyl-quinoline-6-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2 O2
+
+>  <MolecularWeight>
+202.209
+
+>  <ModifiedDate>
+2015-10-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O2/c1-6-2-3-7-4-8(11(12)15)5-9(14)10(7)13-6/h2-5,14H,1H3,(H2,12,15)
+
+>  <InChIKey>
+CTRBRVRHXAPYCD-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2cc(cc(c2n1)O)C(=O)N
+
+$$$$

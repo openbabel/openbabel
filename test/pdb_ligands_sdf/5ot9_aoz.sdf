@@ -1,0 +1,142 @@
+5OT9_AOZ_A_303
+  RCSB PDB12191704023D
+Coordinates from PDB:5OT9:A:303 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   21.5590   -4.4400   -0.4450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4570   -5.0540   -0.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2500   -6.5100   -0.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7930   -7.4640    0.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8560   -6.8700   -1.0550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0990   -6.0650   -1.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7960   -6.7370   -2.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5890   -7.9260   -2.0170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9050   -6.1040   -3.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8140   -5.4370   -3.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3190   -6.3200   -4.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5220   -5.9180   -5.5760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6710   -7.6720   -4.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9760   -6.9350   -6.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0850   -8.0020   -5.5230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4980   -4.4780    0.2930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  2  0  0  0  0
+ 14 12  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 15 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 13  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2 16  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+CA
+A    4
+CB
+A    5
+N
+A    6
+CAI
+A    7
+CAE
+A    8
+OAB
+A    9
+OAF
+A   10
+CAK
+A   11
+CAL
+A   12
+NAN
+A   13
+CAP
+A   14
+CAQ
+A   15
+NAQ
+A   16
+OXT
+M  END
+>  <InstanceId>
+5OT9_AOZ_A_303
+
+>  <ChemCompId>
+AOZ
+
+>  <PdbId>
+5OT9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O4
+
+>  <Name>
+Histopine
+
+>  <SystematicName>
+3-(1~{H}-imidazol-4-yl)-2-[(1-oxidanyl-1-oxidanylidene-propan-2-yl)amino]propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N3 O4
+
+>  <MolecularWeight>
+227.217
+
+>  <ModifiedDate>
+2017-12-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N3O4/c1-5(8(13)14)12-7(9(15)16)2-6-3-10-4-11-6/h3-5,7,12H,2H2,1H3,(H,10,11)(H,13,14)(H,15,16)/t5-,7+/m1/s1
+
+>  <InChIKey>
+KEMGAOPOGGLPBQ-VDTYLAMSSA-N
+
+>  <SMILES>
+CC(C(=O)O)NC(Cc1c[nH]cn1)C(=O)O
+
+$$$$

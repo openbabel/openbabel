@@ -1,0 +1,118 @@
+1IUS_PAB_A_396
+  RCSB PDB12061702523D
+Coordinates from PDB:1IUS:A:396 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   17.4110   96.9980   45.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2170   97.7260   46.3340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4650   97.5990   45.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5430   95.5910   45.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5590   94.8760   46.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5890   93.4880   46.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5660   92.7880   45.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5580   93.4890   45.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5510   94.8600   45.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4780   91.4720   45.6820   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+N4
+M  END
+>  <InstanceId>
+1IUS_PAB_A_396
+
+>  <ChemCompId>
+PAB
+
+>  <PdbId>
+1IUS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+396
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+4-AMINOBENZOIC ACID
+
+>  <SystematicName>
+4-aminobenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O2
+
+>  <MolecularWeight>
+137.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO2/c8-6-3-1-5(2-4-6)7(9)10/h1-4H,8H2,(H,9,10)
+
+>  <InChIKey>
+ALYNCZNDIQEVRV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)O)N
+
+$$$$

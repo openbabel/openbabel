@@ -1,0 +1,101 @@
+2PWA_B2A_A_2001
+  RCSB PDB12061706413D
+Coordinates from PDB:2PWA:A:2001 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   15.5190   -9.5520  -12.3410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8900   -9.6400  -11.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2820   -8.3410  -11.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9560  -10.8300  -10.8040   B 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5300  -12.1260  -11.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0970  -11.0500   -9.8960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+B
+A    5
+O1
+A    6
+O2
+M  END
+>  <InstanceId>
+2PWA_B2A_A_2001
+
+>  <ChemCompId>
+B2A
+
+>  <PdbId>
+2PWA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O2 B
+
+>  <Name>
+ALANINE BORONIC ACID
+
+>  <SystematicName>
+[(1R)-1-azanylethyl]boronic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C2 H8 B N O2
+
+>  <MolecularWeight>
+88.901
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+ALA
+
+>  <OneLetterCode>
+A
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H8BNO2/c1-2(4)3(5)6/h2,5-6H,4H2,1H3/t2-/m0/s1
+
+>  <InChIKey>
+MEJXSZPJYPOEIL-REOHCLBHSA-N
+
+>  <SMILES>
+B([C@H](C)N)(O)O
+
+$$$$

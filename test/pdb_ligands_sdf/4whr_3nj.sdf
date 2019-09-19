@@ -1,0 +1,118 @@
+4WHR_3NJ_B_607
+  RCSB PDB12061715583D
+Coordinates from PDB:4WHR:B:607 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -9.7280  -15.5560  -39.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2050  -13.8380  -40.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3990  -13.1970  -41.5350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6330  -13.4190  -41.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9710  -14.3330  -40.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1500  -15.2950  -39.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9650  -15.2470  -41.0250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5820  -12.8010  -41.7660   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3450  -13.3980  -40.3620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0280  -16.0400  -38.9930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  7  2  1  0  0  0  0
+  7  1  1  0  0  0  0
+  2  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1 10  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O3
+A    8
+F4
+A    9
+O2
+A   10
+O1
+M  END
+>  <InstanceId>
+4WHR_3NJ_B_607
+
+>  <ChemCompId>
+3NJ
+
+>  <PdbId>
+4WHR
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+607
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3 F
+
+>  <Name>
+4-fluorooxepine-2,7-dione
+
+>  <SystematicName>
+4-fluoranyloxepine-2,7-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H3 F O3
+
+>  <MolecularWeight>
+142.085
+
+>  <ModifiedDate>
+2014-12-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H3FO3/c7-4-1-2-5(8)10-6(9)3-4/h1-3H
+
+>  <InChIKey>
+MARYQJLDFKFFCO-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=CC(=O)OC(=O)C=C1F
+
+$$$$

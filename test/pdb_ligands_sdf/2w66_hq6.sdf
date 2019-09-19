@@ -1,0 +1,142 @@
+2W66_HQ6_A_1716
+  RCSB PDB12061707123D
+Coordinates from PDB:2W66:A:1716 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    5.8140  -10.0040    5.5050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9450   -9.9230    5.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2630   -9.2940    7.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0650  -10.4360    5.2000   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9890  -11.3450    4.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4050  -12.7960    4.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7260  -13.6770    3.1340   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5180  -10.4890    2.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6890  -10.1550    2.0970   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4740  -11.0700    1.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3160  -10.1960    0.7820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1280  -11.4320    2.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9690  -11.5510    1.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1680  -12.6890    0.7190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2440  -12.7780    3.1200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8780  -12.8890    4.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 16  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+O9
+A    2
+C9
+A    3
+C10
+A    4
+N2
+A    5
+C5
+A    6
+C6
+A    7
+O6
+A    8
+C4
+A    9
+O4
+A   10
+C3
+A   11
+O3
+A   12
+C2
+A   13
+C8
+A   14
+O8
+A   15
+N1
+A   16
+C7
+M  END
+>  <InstanceId>
+2W66_HQ6_A_1716
+
+>  <ChemCompId>
+HQ6
+
+>  <PdbId>
+2W66
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1716
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5
+
+>  <Name>
+N-[(3R,4S,5R,6R,7R)-3,5,6-trihydroxy-7-(hydroxymethyl)azepan-4-yl]acetamide
+
+>  <SystematicName>
+N-[(3R,4S,5R,6R,7R)-3,5,6-trihydroxy-7-(hydroxymethyl)azepan-4-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H18 N2 O5
+
+>  <MolecularWeight>
+234.25
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H18N2O5/c1-4(13)11-7-6(14)2-10-5(3-12)8(15)9(7)16/h5-10,12,14-16H,2-3H2,1H3,(H,11,13)/t5-,6-,7+,8-,9-/m1/s1
+
+>  <InChIKey>
+RJAFVDFBXXHCRJ-SYHAXYEDSA-N
+
+>  <SMILES>
+CC(=O)N[C@H]1[C@@H](CN[C@@H]([C@H]([C@@H]1O)O)CO)O
+
+$$$$

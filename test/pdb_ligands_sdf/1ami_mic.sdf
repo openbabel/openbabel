@@ -1,0 +1,133 @@
+1AMI_MIC_A_755
+  RCSB PDB12061702003D
+Coordinates from PDB:1AMI:A:755 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   35.1320   34.7900   69.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8330   36.0210   69.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5770   34.1150   68.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1740   34.0680   70.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5430   34.5270   70.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2340   32.6800   70.4200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7260   34.3110   72.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6350   33.9840   73.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7830   34.8860   73.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6780   36.1150   73.3340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9160   34.3700   73.4540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2500   33.9950   72.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9450   33.9370   73.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3390   33.7880   71.7660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+CM2
+A    6
+O7
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+O3
+A   11
+O4
+A   12
+C6
+A   13
+O5
+A   14
+O6
+M  END
+>  <InstanceId>
+1AMI_MIC_A_755
+
+>  <ChemCompId>
+MIC
+
+>  <PdbId>
+1AMI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+755
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7
+
+>  <Name>
+ALPHA-METHYLISOCITRIC ACID
+
+>  <SystematicName>
+(2S,3R)-3-hydroxybutane-1,2,3-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 O7
+
+>  <MolecularWeight>
+206.15
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10O7/c1-7(14,6(12)13)3(5(10)11)2-4(8)9/h3,14H,2H2,1H3,(H,8,9)(H,10,11)(H,12,13)/t3-,7-/m1/s1
+
+>  <InChIKey>
+HHKPKXCSHMJWCF-WVBDSBKLSA-N
+
+>  <SMILES>
+C[C@@]([C@H](CC(=O)O)C(=O)O)(C(=O)O)O
+
+$$$$

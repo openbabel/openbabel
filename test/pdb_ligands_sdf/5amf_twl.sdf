@@ -1,0 +1,135 @@
+5AMF_TWL_A_1143
+  RCSB PDB12061716513D
+Coordinates from PDB:5AMF:A:1143 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -3.8160   11.8950   -2.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7890   12.5360   -1.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8420   11.5820   -1.7650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7940   12.0950   -0.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4150   11.1380    0.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1900    9.6880   -0.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0020    8.9190    1.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0860    9.3910    1.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9330   10.4910    1.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8690   11.4080    0.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7860   10.5740    2.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4290    9.5360    3.7530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4210    8.8230    3.2240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0970   13.2810   -0.8150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 14  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+N12
+A   13
+N13
+A   14
+O14
+M  END
+>  <InstanceId>
+5AMF_TWL_A_1143
+
+>  <ChemCompId>
+TWL
+
+>  <PdbId>
+5AMF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1143
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+ETHYL (5R)-4,5,6,7-TETRAHYDRO-1H-INDAZOLE-5-CARBOXYLATE
+
+>  <SystematicName>
+ethyl (5R)-4,5,6,7-tetrahydro-1H-indazole-5-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H14 N2 O2
+
+>  <MolecularWeight>
+194.23
+
+>  <ModifiedDate>
+2015-03-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2O2/c1-2-14-10(13)7-3-4-9-8(5-7)6-11-12-9/h6-7H,2-5H2,1H3,(H,11,12)/t7-/m1/s1
+
+>  <InChIKey>
+OYSSLPZFSXHQEY-SSDOTTSWSA-N
+
+>  <SMILES>
+CCOC(=O)[C@@H]1CCc2c(cn[nH]2)C1
+
+$$$$

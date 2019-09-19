@@ -1,0 +1,114 @@
+1WBU_WBU_A_1125
+  RCSB PDB12061704313D
+Coordinates from PDB:1WBU:A:1125 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   36.0050   -2.0760   12.4750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0820   -2.4020   11.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7470   -1.5720   10.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5250   -3.6410   11.4950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8830   -4.5870   12.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3800   -5.7000   12.3700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8580   -4.2590   13.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4020   -3.0040   13.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2530   -5.2160   14.3660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+A    9
+N01
+M  END
+>  <InstanceId>
+1WBU_WBU_A_1125
+
+>  <ChemCompId>
+WBU
+
+>  <PdbId>
+1WBU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1125
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N3 O2
+
+>  <Name>
+5-AMINO-1H-PYRIMIDINE-2,4-DIONE
+
+>  <SystematicName>
+5-amino-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H5 N3 O2
+
+>  <MolecularWeight>
+127.101
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H5N3O2/c5-2-1-6-4(9)7-3(2)8/h1H,5H2,(H2,6,7,8,9)
+
+>  <InChIKey>
+BISHACNKZIBDFM-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1)N
+
+$$$$

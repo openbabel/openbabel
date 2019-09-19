@@ -1,0 +1,163 @@
+4RZQ_Y7Y_A_501
+  RCSB PDB12061714433D
+Coordinates from PDB:4RZQ:A:501 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   24.2680    4.8310  -11.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1700    5.4100  -11.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0780    5.0850   -9.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6290    4.0460   -9.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2470    6.1250   -8.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8150    7.5660   -8.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1660    8.4210   -7.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0200    8.8530   -6.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4260   10.2210   -5.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0940   10.8860   -5.6340   S 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0450   11.9320   -4.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9610   11.3570   -3.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1440   10.2300   -4.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5210    8.9740   -3.5280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2800    9.3110   -2.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6490    8.6130   -1.5530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6390   10.5520   -2.2190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1560   10.7340   -1.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1680   11.3890   -0.8070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1740   10.8470   -0.1290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4350   12.1200   -0.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 18 20  1  0  0  0  0
+ 21 20  1  0  0  0  0
+A    1
+CAU
+A    2
+OAT
+A    3
+CAR
+A    4
+OAS
+A    5
+CAQ
+A    6
+CAP
+A    7
+CAO
+A    8
+CAM
+A    9
+CAC
+A   10
+SAB
+A   11
+CAA
+A   12
+CAE
+A   13
+CAD
+A   14
+NAF
+A   15
+CAG
+A   16
+OAN
+A   17
+NAH
+A   18
+CAV
+A   19
+OAW
+A   20
+OAX
+A   21
+CAY
+M  END
+>  <InstanceId>
+4RZQ_Y7Y_A_501
+
+>  <ChemCompId>
+Y7Y
+
+>  <PdbId>
+4RZQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O5 S
+
+>  <Name>
+methyl (3aS,4S,6aR)-4-(5-methoxy-5-oxopentyl)-2-oxohexahydro-1H-thieno[3,4-d]imidazole-1-carboxylate
+
+>  <SystematicName>
+methyl (3aR,6S,6aS)-6-(5-methoxy-5-oxidanylidene-pentyl)-2-oxidanylidene-3a,4,6,6a-tetrahydro-1H-thieno[3,4-d]imidazole-3-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H20 N2 O5 S
+
+>  <MolecularWeight>
+316.373
+
+>  <ModifiedDate>
+2015-06-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H20N2O5S/c1-19-10(16)6-4-3-5-9-11-8(7-21-9)15(12(17)14-11)13(18)20-2/h8-9,11H,3-7H2,1-2H3,(H,14,17)/t8-,9-,11-/m0/s1
+
+>  <InChIKey>
+BNKOHWLXGAGMAQ-QXEWZRGKSA-N
+
+>  <SMILES>
+COC(=O)CCCC[C@H]1[C@@H]2[C@H](CS1)N(C(=O)N2)C(=O)OC
+
+$$$$

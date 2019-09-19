@@ -1,0 +1,101 @@
+1CI1_HEX_B_261
+  RCSB PDB12061702103D
+Coordinates from PDB:1CI1:B:261 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   10.9230   83.6360   47.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3720   83.4330   45.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6080   82.0240   45.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8840   82.0390   43.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0290   81.1030   43.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3270   81.1020   42.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+M  END
+>  <InstanceId>
+1CI1_HEX_B_261
+
+>  <ChemCompId>
+HEX
+
+>  <PdbId>
+1CI1
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+261
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6
+
+>  <Name>
+HEXANE
+
+>  <SystematicName>
+hexane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14
+
+>  <MolecularWeight>
+86.175
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14/c1-3-5-6-4-2/h3-6H2,1-2H3
+
+>  <InChIKey>
+VLKZOEOYAKHREP-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCC
+
+$$$$

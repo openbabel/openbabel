@@ -391,6 +391,54 @@ void test_SMILES_Valence()
   OB_COMPARE(conv.WriteString(&mol, true), "C[H:1]");
 }
 
+//make sure insertion code gets copied (it wasn't)
+void test_insertioncode() 
+{
+  const char* pdb = "ATOM    266  HB2 ASP L  14      -2.604   8.021  19.867  1.00  0.00           H\n\
+ATOM    267  CG  ASP L  14      -2.280   6.992  21.697  1.00 18.10           C\n\
+ATOM    268  OD1 ASP L  14      -1.109   7.431  21.698  1.00 18.97           O\n\
+ATOM    269  OD2 ASP L  14      -2.735   6.263  22.603  1.00 19.18           O\n\
+ATOM    270  N   LYS L  14A     -5.804   6.060  21.469  1.00 20.85           N\n\
+ATOM    271  H   LYS L  14A     -5.589   5.759  20.497  1.00  0.00           H\n\
+ATOM    272  CA  LYS L  14A     -6.654   5.209  22.296  1.00 22.86           C\n\
+ATOM    273  HA  LYS L  14A     -7.392   5.923  22.662  1.00  0.00           H\n\
+ATOM    274  C   LYS L  14A     -6.108   4.607  23.591  1.00 21.70           C\n\
+ATOM    275  O   LYS L  14A     -6.892   4.228  24.455  1.00 21.72           O\n";
+
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("pdb", "pdb"));
+    OBMol mol;
+    conv.ReadString(&mol, pdb);
+    OBMol mol2;
+    mol2 = mol;
+    char i = mol2.GetResidue(1)->GetInsertionCode();
+    OB_COMPARE(i, 'A');
+}
+
+//make sure icode is read by pdbqt
+void test_insertioncode_pdbqt() 
+{
+  const char* pdb = "ATOM    266  HB2 ASP L  14      -2.604   8.021  19.867  1.00  0.00           H\n\
+ATOM    267  CG  ASP L  14      -2.280   6.992  21.697  1.00 18.10           C\n\
+ATOM    268  OD1 ASP L  14      -1.109   7.431  21.698  1.00 18.97           O\n\
+ATOM    269  OD2 ASP L  14      -2.735   6.263  22.603  1.00 19.18           O\n\
+ATOM    270  N   LYS L  14A     -5.804   6.060  21.469  1.00 20.85           N\n\
+ATOM    271  H   LYS L  14A     -5.589   5.759  20.497  1.00  0.00           H\n\
+ATOM    272  CA  LYS L  14A     -6.654   5.209  22.296  1.00 22.86           C\n\
+ATOM    273  HA  LYS L  14A     -7.392   5.923  22.662  1.00  0.00           H\n\
+ATOM    274  C   LYS L  14A     -6.108   4.607  23.591  1.00 21.70           C\n\
+ATOM    275  O   LYS L  14A     -6.892   4.228  24.455  1.00 21.72           O\n";
+
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("pdbqt", "pdbqt"));
+    OBMol mol;
+    conv.ReadString(&mol, pdb);
+    OBMol mol2;
+    mol2 = mol;
+    char i = mol2.GetResidue(1)->GetInsertionCode();
+    OB_COMPARE(i, 'A');
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -440,6 +488,12 @@ int regressionstest(int argc, char* argv[])
     break;
   case 240:
     test_Fix1912_PDBReading();
+    break;
+  case 241:
+    test_insertioncode();
+    break;
+  case 242:
+    test_insertioncode_pdbqt();
     break;
     //case N:
   //  YOUR_TEST_HERE();

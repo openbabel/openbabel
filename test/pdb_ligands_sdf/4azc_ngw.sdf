@@ -1,0 +1,135 @@
+4AZ5_NGW_A_1615
+  RCSB PDB12061711453D
+Coordinates from PDB:4AZ5:A:1615 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   14.3680   30.8060   26.0800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3180   29.8140   25.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9360   29.2450   24.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7180   30.4870   25.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7050   28.5150   24.4690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0260   28.2390   23.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9270   27.8290   22.5270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4920   28.7710   24.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3340   28.9530   21.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7000   28.5040   20.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6560   29.7980   22.5560   S 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7180   29.5250   25.2620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2520   31.1690   26.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2330   30.2290   27.9730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  8 12  1  0  0  0  0
+ 12  4  1  0  0  0  0
+  4 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C3
+A    4
+C5
+A    5
+O3
+A    6
+C2
+A    7
+N2
+A    8
+C1
+A    9
+C7
+A   10
+C8
+A   11
+S1
+A   12
+O5
+A   13
+C6
+A   14
+O6
+M  END
+>  <InstanceId>
+4AZ5_NGW_A_1615
+
+>  <ChemCompId>
+NGW
+
+>  <PdbId>
+4AZ5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1615
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4 S
+
+>  <Name>
+(2S,3aR,5R,6S,7R,7aR)-5-(hydroxymethyl)-2-methyl-2,3a,5,6,7,7a-hexahydro-1H-pyrano[3,2-d][1,3]thiazole-6,7-diol
+
+>  <SystematicName>
+(2S,3aR,5R,6S,7R,7aR)-5-(hydroxymethyl)-2-methyl-2,3a,5,6,7,7a-hexahydro-1H-pyrano[3,2-d][1,3]thiazole-6,7-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H15 N O4 S
+
+>  <MolecularWeight>
+221.274
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO4S/c1-3-9-5-7(12)6(11)4(2-10)13-8(5)14-3/h3-12H,2H2,1H3/t3-,4+,5+,6+,7+,8+/m0/s1
+
+>  <InChIKey>
+XWPUWEBFKDEDIF-GUHFPMLUSA-N
+
+>  <SMILES>
+C[C@H]1N[C@@H]2[C@H]([C@@H]([C@H](O[C@@H]2S1)CO)O)O
+
+$$$$

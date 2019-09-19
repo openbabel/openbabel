@@ -1,0 +1,105 @@
+1GQW_TAU_A_351
+  RCSB PDB12061702383D
+Coordinates from PDB:1GQW:A:351 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   22.2590   33.4900   50.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2200   32.6940   49.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2060   34.3190   50.5130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0810   31.1030   49.2120   S 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5270   31.3510   49.5450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4210   30.2710   50.2820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0140   30.3970   47.8860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N1
+A    4
+S
+A    5
+O1
+A    6
+O2
+A    7
+O3
+M  END
+>  <InstanceId>
+1GQW_TAU_A_351
+
+>  <ChemCompId>
+TAU
+
+>  <PdbId>
+1GQW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O3 S
+
+>  <Name>
+2-AMINOETHANESULFONIC ACID
+
+>  <SystematicName>
+2-aminoethanesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H7 N O3 S
+
+>  <MolecularWeight>
+125.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H7NO3S/c3-1-2-7(4,5)6/h1-3H2,(H,4,5,6)
+
+>  <InChIKey>
+XOAAWQZATWQOTB-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CS(=O)(=O)O)N
+
+$$$$

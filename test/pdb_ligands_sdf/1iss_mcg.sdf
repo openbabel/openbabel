@@ -1,0 +1,138 @@
+1ISS_MCG_A_1001
+  RCSB PDB12061702523D
+Coordinates from PDB:1ISS:A:1001 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   83.9080   71.0120  107.2220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   83.1230   70.7010  106.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.9290   69.2090  105.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.8130   71.2460  104.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.3410   70.3700  103.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.9670   72.6420  104.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.0290   70.8950  102.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6530   73.1570  103.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.1880   72.2870  102.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.9320   72.8250  101.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.3600   73.6430  100.7010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   87.1170   72.4530  101.2970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   81.8970   68.8000  105.2940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   83.8120   68.4580  106.3460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   81.6940   71.2940  106.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 15  1  0  0  0  0
+  3 13  2  0  0  0  0
+  3 14  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+CB
+A    5
+CG1
+A    6
+CG2
+A    7
+CD1
+A    8
+CD2
+A    9
+CE
+A   10
+CZ
+A   11
+OH2
+A   12
+OH1
+A   13
+O
+A   14
+OXT
+A   15
+CM
+M  END
+>  <InstanceId>
+1ISS_MCG_A_1001
+
+>  <ChemCompId>
+MCG
+
+>  <PdbId>
+1ISS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4
+
+>  <Name>
+(S)-(ALPHA)-METHYL-4-CARBOXYPHENYLGLYCINE
+
+>  <SystematicName>
+4-[(2S)-2-amino-1-hydroxy-1-oxo-propan-2-yl]benzoic acid
+
+>  <Synonyms>
+4-(1-AMINO-1-CARBOXY-ETHYL)-BENZOIC ACID
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C10 H11 N O4
+
+>  <MolecularWeight>
+209.199
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11NO4/c1-10(11,9(14)15)7-4-2-6(3-5-7)8(12)13/h2-5H,11H2,1H3,(H,12,13)(H,14,15)/t10-/m0/s1
+
+>  <InChIKey>
+DNCAZYRLRMTVSF-JTQLQIEISA-N
+
+>  <SMILES>
+C[C@](c1ccc(cc1)C(=O)O)(C(=O)O)N
+
+$$$$

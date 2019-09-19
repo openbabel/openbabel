@@ -1,0 +1,109 @@
+4IOO_BAE_A_306
+  RCSB PDB12061713033D
+Coordinates from PDB:4IOO:A:306 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   12.2860    6.9890    0.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3850    6.1020    0.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7110    6.8060    0.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0880    5.7800    2.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5020    4.7720    0.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4950    4.0390    0.1240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4560    4.4650   -0.7710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5060    3.1910   -1.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+CAB
+A    2
+CAH
+A    3
+CAC
+A    4
+CAD
+A    5
+CAG
+A    6
+OAE
+A    7
+N
+A    8
+CAA
+M  END
+>  <InstanceId>
+4IOO_BAE_A_306
+
+>  <ChemCompId>
+BAE
+
+>  <PdbId>
+4IOO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+306
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O
+
+>  <Name>
+N-methyltrimethylacetamide
+
+>  <SystematicName>
+N,2,2-trimethylpropanamide
+
+>  <Synonyms>
+N,2,2-trimethylpropanamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O
+
+>  <MolecularWeight>
+115.174
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO/c1-6(2,3)5(8)7-4/h1-4H3,(H,7,8)
+
+>  <InChIKey>
+QMKKJBRRKIKWFK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)C(=O)NC
+
+$$$$

@@ -1,0 +1,150 @@
+3DGA_RJ1_A_609
+  RCSB PDB12061708193D
+Coordinates from PDB:3DGA:A:609 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   25.6380    5.4370   60.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8740    4.6760   61.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0450    4.0240   61.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0440    4.1090   61.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8620    4.8730   59.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6480    5.5320   59.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4650    3.2390   61.3980  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3060    6.1480   60.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2830    7.0750   59.5210   F 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2530    5.2400   60.3250   F 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0210    6.8620   61.7000   F 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8500    4.9850   58.8950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8560    4.3890   58.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2380    4.7140   56.9210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6890    5.2210   55.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9690    4.7480   54.5800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5120    3.4340   58.7320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8690    6.2020   55.9300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  1  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5 12  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 17  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 18 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+CL7
+A    8
+C8
+A    9
+F9
+A   10
+F10
+A   11
+F11
+A   12
+N12
+A   13
+C13
+A   14
+N14
+A   15
+C15
+A   16
+N16
+A   17
+N17
+A   18
+N18
+M  END
+>  <InstanceId>
+3DGA_RJ1_A_609
+
+>  <ChemCompId>
+RJ1
+
+>  <PdbId>
+3DGA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+609
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5 F3 Cl
+
+>  <Name>
+N-[2-chloro-5-(trifluoromethyl)phenyl]imidodicarbonimidic diamide
+
+>  <SystematicName>
+3-carbamimidoyl-1-[2-chloro-5-(trifluoromethyl)phenyl]guanidine
+
+>  <Synonyms>
+2-{[{[amino(imino)methyl]amino}(imino)methyl]amino}-1-chloro-4-(trifluoromethyl)benzene
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 Cl F3 N5
+
+>  <MolecularWeight>
+279.649
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9ClF3N5/c10-5-2-1-4(9(11,12)13)3-6(5)17-8(16)18-7(14)15/h1-3H,(H6,14,15,16,17,18)
+
+>  <InChIKey>
+IGFTZEOFHWPCDL-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/N/C(=N\[H])/Nc1cc(ccc1Cl)C(F)(F)F
+
+$$$$

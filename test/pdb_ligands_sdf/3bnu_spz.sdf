@@ -1,0 +1,78 @@
+2GXK_SPZ_?_25
+  RCSB PDB12061705443D
+Coordinates from PDB:2GXK:?:25 Model:1 without hydrogens
+  0  0  0  0  0  0            999 V2000
+M  END
+>  <InstanceId>
+2GXK_SPZ_?_25
+
+>  <ChemCompId>
+SPZ
+
+>  <PdbId>
+2GXK
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+16
+
+>  <ObservedFormula>
+
+
+>  <Name>
+(3S,3'S)-N~1~,N~1~'-butane-1,4-diyldibutane-1,3-diamine
+
+>  <SystematicName>
+(3S)-N-[4-[[(3S)-3-aminobutyl]amino]butyl]butane-1,3-diamine
+
+>  <Synonyms>
+bis-(3S,3'S)-methyl spermine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H30 N4
+
+>  <MolecularWeight>
+230.393
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H30N4/c1-11(13)5-9-15-7-3-4-8-16-10-6-12(2)14/h11-12,15-16H,3-10,13-14H2,1-2H3/t11-,12-/m0/s1
+
+>  <InChIKey>
+LXKFTCVCBKNJNM-RYUDHWBXSA-N
+
+>  <SMILES>
+C[C@@H](CCNCCCCNCC[C@H](C)N)N
+
+$$$$

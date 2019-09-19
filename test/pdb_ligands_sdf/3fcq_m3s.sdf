@@ -1,0 +1,134 @@
+3FCQ_M3S_A_600
+  RCSB PDB12061708343D
+Coordinates from PDB:3FCQ:A:600 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   37.6510   42.4060   -3.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7500   42.7090   -2.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6710   41.9040   -2.5740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7260   40.7140   -3.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8100   39.5460   -2.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8360   39.6720   -0.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8660   38.3060   -3.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8450   38.2300   -4.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7620   39.3990   -5.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7020   40.6370   -4.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6120   41.9300   -5.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8350   42.8840   -5.1130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3630   41.8940   -6.6150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7080   43.9220   -1.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 10  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  7  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O12
+A    2
+C11
+A    3
+O1
+A    4
+C2
+A    5
+C7
+A    6
+C1
+A    7
+C6
+A    8
+C5
+A    9
+C4
+A   10
+C3
+A   11
+C8
+A   12
+O10
+A   13
+O9
+A   14
+C13
+M  END
+>  <InstanceId>
+3FCQ_M3S_A_600
+
+>  <ChemCompId>
+M3S
+
+>  <PdbId>
+3FCQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4
+
+>  <Name>
+2-(acetyloxy)-3-methylbenzoic acid
+
+>  <SystematicName>
+2-acetyloxy-3-methyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O4
+
+>  <MolecularWeight>
+194.184
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O4/c1-6-4-3-5-8(10(12)13)9(6)14-7(2)11/h3-5H,1-2H3,(H,12,13)
+
+>  <InChIKey>
+XRBMKGUDDJPAMH-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1OC(=O)C)C(=O)O
+
+$$$$

@@ -1,0 +1,126 @@
+5CUC_54W_A_2001
+  RCSB PDB12061717093D
+Coordinates from PDB:5CUC:A:2001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   12.7650   42.2060   31.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6200   42.3080   30.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7180   43.3410   30.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9460   44.2760   31.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0800   44.1940   32.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2170   39.4830   30.3040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3480   38.7320   29.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6180   37.2820   29.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1220   39.1670   29.5900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7240   40.5660   29.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7390   41.0740   31.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9820   43.1610   32.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9 10  1  0  0  0  0
+  9  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  7  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  1 12  2  0  0  0  0
+  4  5  2  0  0  0  0
+ 12  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+O
+A    7
+C1
+A    8
+C
+A    9
+N
+A   10
+C2
+A   11
+C3
+A   12
+C9
+M  END
+>  <InstanceId>
+5CUC_54W_A_2001
+
+>  <ChemCompId>
+54W
+
+>  <PdbId>
+5CUC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+N-(2-phenylethyl)acetamide
+
+>  <SystematicName>
+N-(2-phenylethyl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O
+
+>  <MolecularWeight>
+163.216
+
+>  <ModifiedDate>
+2015-09-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO/c1-9(12)11-8-7-10-5-3-2-4-6-10/h2-6H,7-8H2,1H3,(H,11,12)
+
+>  <InChIKey>
+MODKMHXGCGKTLE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCc1ccccc1
+
+$$$$

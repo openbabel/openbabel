@@ -1,0 +1,122 @@
+1FOI_14W_A_810
+  RCSB PDB12061702313D
+Coordinates from PDB:1FOI:A:810 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   10.4670   12.4540   33.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2660   13.4890   34.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9580   14.8440   33.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8520   15.1710   33.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0500   14.1370   32.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3540   12.7700   32.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5010   11.6510   32.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0260   11.8890   32.2700   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1550   11.6400   31.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5540   11.0680   29.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8820   11.9260   31.5160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C1
+A    7
+C7
+A    8
+N8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+M  END
+>  <InstanceId>
+1FOI_14W_A_810
+
+>  <ChemCompId>
+14W
+
+>  <PdbId>
+1FOI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+810
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+N-(3-(AMINOMETHYL)BENZYL)ACETAMIDINE
+
+>  <SystematicName>
+N-[[3-(aminomethyl)phenyl]methyl]ethanimidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N3
+
+>  <MolecularWeight>
+177.246
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N3/c1-8(12)13-7-10-4-2-3-9(5-10)6-11/h2-5H,6-7,11H2,1H3,(H2,12,13)
+
+>  <InChIKey>
+RODUKNYOEVZQPR-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/C)\NCc1cccc(c1)CN
+
+$$$$

@@ -1,0 +1,155 @@
+1Y1D_FHI_A_2000
+  RCSB PDB12061704423D
+Coordinates from PDB:1Y1D:A:2000 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+   -0.0640    2.5910    8.8900   F 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0850    1.3150    9.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1960    0.9740   10.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0490   -0.3370   11.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3230   -0.6530   12.2950   F 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3790   -1.3120   10.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6610   -0.9700    8.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5030    0.3470    8.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7920    0.7240    7.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2320    0.0860    5.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5700    0.5190    4.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0140   -0.1410    3.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3460    0.2700    2.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8380   -1.0740    3.6240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6780    1.7790    6.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0090    2.2060    5.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3420    3.7990    5.3820   I 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4540    1.5740    4.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7690    1.9830    3.3120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 15  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 18  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+FAT
+A    2
+CAN
+A    3
+CAM
+A    4
+CAF
+A    5
+FAE
+A    6
+CAG
+A    7
+CAH
+A    8
+CAO
+A    9
+CAP
+A   10
+CAI
+A   11
+CAJ
+A   12
+CAC
+A   13
+OAD
+A   14
+OAB
+A   15
+CAQ
+A   16
+CAR
+A   17
+IAS
+A   18
+CAK
+A   19
+OAL
+M  END
+>  <InstanceId>
+1Y1D_FHI_A_2000
+
+>  <ChemCompId>
+FHI
+
+>  <PdbId>
+1Y1D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O3 F2 I
+
+>  <Name>
+2',4'-DIFLUORO-4-HYDROXY-5-IODO-1,1'-BIPHENYL-3-CARBOXYLIC ACID
+
+>  <SystematicName>
+5-(2,4-difluorophenyl)-2-hydroxy-3-iodo-benzoic acid
+
+>  <Synonyms>
+IODODIFLUNISAL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H7 F2 I O3
+
+>  <MolecularWeight>
+376.094
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H7F2IO3/c14-7-1-2-8(10(15)5-7)6-3-9(13(18)19)12(17)11(16)4-6/h1-5,17H,(H,18,19)
+
+>  <InChIKey>
+SSYOLLIRAAWGDJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1F)F)c2cc(c(c(c2)I)O)C(=O)O
+
+$$$$

@@ -1,0 +1,138 @@
+3S9Z_I92_A_803
+  RCSB PDB12061710413D
+Coordinates from PDB:3S9Z:A:803 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   37.8690   80.5380   65.6980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1730   80.8980   64.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2930   80.8200   64.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0300   80.8120   63.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0230   81.5610   62.4960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9820   79.7170   63.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2920   79.1610   62.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1740   79.8370   61.4350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5270   77.8510   62.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0930   76.8820   63.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3950   75.6830   64.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1310   75.4240   63.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5600   76.3810   62.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2670   77.5870   62.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4770   78.8830   61.1470  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  4  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  5  4  2  0  0  0  0
+  4  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 14  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 14  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+O05
+A    6
+C06
+A    7
+C07
+A    8
+O08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+BR15
+M  END
+>  <InstanceId>
+3S9Z_I92_A_803
+
+>  <ChemCompId>
+I92
+
+>  <PdbId>
+3S9Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4 Br
+
+>  <Name>
+4-(2-bromophenyl)-2,4-dioxobutanoic acid
+
+>  <SystematicName>
+4-(2-bromophenyl)-2,4-bis(oxidanylidene)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 Br O4
+
+>  <MolecularWeight>
+271.064
+
+>  <ModifiedDate>
+2012-11-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7BrO4/c11-7-4-2-1-3-6(7)8(12)5-9(13)10(14)15/h1-4H,5H2,(H,14,15)
+
+>  <InChIKey>
+HQXXYSXUODFGRE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)CC(=O)C(=O)O)Br
+
+$$$$

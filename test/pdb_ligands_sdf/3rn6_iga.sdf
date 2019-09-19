@@ -1,0 +1,123 @@
+3RN6_IGA_A_430
+  RCSB PDB12061710353D
+Coordinates from PDB:3RN6:A:430 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -69.1150   20.2230  -16.5650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.7360   19.9620  -15.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.3510   20.8780  -14.7540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.7270   18.7360  -14.7880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.0990   17.6960  -15.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -68.4060   17.9010  -16.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -68.4530   19.2630  -17.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -67.8770   19.4780  -18.3600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -67.8680   16.7220  -17.0160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -68.1790   15.8240  -16.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -68.9180   16.4050  -15.0550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  2  0  0  0  0
+  5 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+N6
+A    9
+N7
+A   10
+C8
+A   11
+N9
+M  END
+>  <InstanceId>
+3RN6_IGA_A_430
+
+>  <ChemCompId>
+IGA
+
+>  <PdbId>
+3RN6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+430
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 O
+
+>  <Name>
+6-amino-3,7-dihydro-2H-purin-2-one
+
+>  <SystematicName>
+6-azanyl-3,7-dihydropurin-2-one
+
+>  <Synonyms>
+Isoguanine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N5 O
+
+>  <MolecularWeight>
+151.126
+
+>  <ModifiedDate>
+2011-08-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5N5O/c6-3-2-4(8-1-7-2)10-5(11)9-3/h1H,(H4,6,7,8,9,10,11)
+
+>  <InChIKey>
+DRAVOWXCEBXPTN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)NC(=O)N=C2N
+
+$$$$

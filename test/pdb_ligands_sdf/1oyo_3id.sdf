@@ -1,0 +1,123 @@
+1F9B_3ID_A_694
+  RCSB PDB12061702283D
+Coordinates from PDB:1F9B:A:694 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   10.0720    1.8650   13.6830   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6570    2.2660   14.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8500    2.6680   15.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6760    0.8970   15.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6750    0.3760   14.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5520    0.4810   13.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6050    1.4520   13.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4090    1.4840   13.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5320    1.4410   15.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0270    0.1090   15.4130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4180   -0.3220   12.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+1F9B_3ID_A_694
+
+>  <ChemCompId>
+3ID
+
+>  <PdbId>
+1F9B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+694
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+3H-INDOLE-5,6-DIOL
+
+>  <SystematicName>
+1H-indole-5,6-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O2
+
+>  <MolecularWeight>
+149.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO2/c10-7-3-5-1-2-9-6(5)4-8(7)11/h1-4,9-11H
+
+>  <InChIKey>
+SGNZYJXNUURYCH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c[nH]c2c1cc(c(c2)O)O
+
+$$$$

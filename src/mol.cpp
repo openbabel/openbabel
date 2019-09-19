@@ -45,12 +45,11 @@ namespace OpenBabel
 {
 
   extern bool SwabInt;
-  extern OBPhModel  phmodel;
-  extern OBAromaticTyper  aromtyper;
-  extern OBAtomTyper      atomtyper;
-  extern OBBondTyper      bondtyper;
-
-
+  extern THREAD_LOCAL OBPhModel  phmodel;
+  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
+  extern THREAD_LOCAL OBAtomTyper      atomtyper;
+  extern THREAD_LOCAL OBBondTyper      bondtyper;
+  
   /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class
 
@@ -798,17 +797,11 @@ namespace OpenBabel
     return(count);
   }
 
-  unsigned int OBMol::NumRotors(bool includeRingBonds)
+  unsigned int OBMol::NumRotors(bool sampleRingBonds)
   {
-    OBBond *bond;
-    vector<OBBond*>::iterator i;
-
-    unsigned int count = 0;
-    for (bond = BeginBond(i);bond;bond = NextBond(i)) {
-      if (bond->IsRotor(includeRingBonds))
-        count++;
-    }
-    return(count);
+    OBRotorList rl;
+    rl.FindRotors(*this, sampleRingBonds);
+    return rl.Size();
   }
 
   //! Returns a pointer to the atom after a safety check
@@ -1217,7 +1210,7 @@ namespace OpenBabel
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
-  //OB_TSPIN_MOL, OB_AROMATIC_MOL and OB_PATTERN_STRUCTURE which are copied
+  //OB_TSPIN_MOL, OB_AROMATIC_MOL, OB_CHAINS_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
       return *this;
@@ -1261,8 +1254,8 @@ namespace OpenBabel
       this->SetFlag(OB_HYBRID_MOL);
     if (src.HasFlag(OB_AROMATIC_MOL))
       this->SetFlag(OB_AROMATIC_MOL);
-
-
+    if (src.HasFlag(OB_CHAINS_MOL))
+      this->SetFlag(OB_CHAINS_MOL);
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
 
 
@@ -1280,7 +1273,7 @@ namespace OpenBabel
           {
             res = NewResidue();
             src_res = src.GetResidue(k);
-            *res = *src_res;
+            *res = *src_res; //does not copy atoms
             for (src_atom=src_res->BeginAtom(ii) ; src_atom ; src_atom=src_res->NextAtom(ii))
               {
                 atom = GetAtom(src_atom->GetIdx());
@@ -2126,15 +2119,13 @@ namespace OpenBabel
                             "Ran OpenBabel::AddHydrogens -- nonpolar only", obAuditMsg);
 
     // Make sure we have conformers (PR#1665519)
-    if (!_vconf.empty() && !Empty() && !_mod)
-    {
-      if(!_c) _c = _vconf[0];
+    if (!_vconf.empty() && !Empty()) {
       OBAtom *atom;
       vector<OBAtom*>::iterator i;
-      for (atom = BeginAtom(i); atom; atom = NextAtom(i))
-      {
-        atom->SetVector();
-      }
+      for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+        {
+          atom->SetVector();
+        }
     }
 
     SetHydrogensAdded(); // This must come after EndModify() as EndModify() wipes the flags
@@ -2229,17 +2220,25 @@ namespace OpenBabel
                 h = NewAtom();
                 h->SetType("H");
                 h->SetAtomicNum(1);
+                string aname = "H";
 
-                // copy parent atom residue to added hydrogen     REG 6/30/02
-                if (atom->HasResidue())
+                // Add the new H atom to the appropriate residue list
+                OBResidue *res = atom->GetResidue();
+                if(res) 
+                {
+                  res->AddAtom(h);
+
+                  // Give the new atom a pointer back to the residue
+                  h->SetResidue(res);
+
+                  res->SetAtomID(h,aname);
+                  
+                  //hydrogen should inherit hetatm status of heteroatom (default is false)
+                  if(res->IsHetAtom(atom)) 
                   {
-                    string aname = "H";
-                    // Add the new H atom to the appropriate residue list
-                    atom->GetResidue()->AddAtom(h);
-                    // Give the new atom a pointer back to the residue
-                    h->SetResidue(atom->GetResidue());
-                    atom->GetResidue()->SetAtomID(h,aname);
+                      res->SetHetAtom(h, true);
                   }
+                }
 
                 int bondFlags = 0;
                 AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
@@ -2252,7 +2251,7 @@ namespace OpenBabel
     DecrementMod();
 
     //reset atom type and partial charge flags
-    _flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL|OB_SSSR_MOL|OB_AROMATIC_MOL));
+    _flags &= (~(OB_PCHARGE_MOL|OB_ATOMTYPES_MOL|OB_SSSR_MOL|OB_AROMATIC_MOL|OB_HYBRID_MOL));
 
     return(true);
   }
@@ -2914,6 +2913,21 @@ namespace OpenBabel
     return true;
   }
 
+  //check that unreasonable bonds aren't being added
+  static bool validAdditionalBond(OBAtom *a, OBAtom *n) 
+  {
+    if(a->GetExplicitValence() == 5 && a->GetAtomicNum() == 15) 
+    {
+      //only allow octhedral bonding for F and Cl
+      if(n->GetAtomicNum() == 9 || n->GetAtomicNum() == 17)
+        return true;
+      else
+        return false;
+    }
+    //other things to check?
+    return true;
+  }
+
   /*! This method adds single bonds between all atoms
     closer than their combined atomic covalent radii,
     then "cleans up" making sure bonded atoms are not
@@ -2945,10 +2959,16 @@ namespace OpenBabel
 
     for (j = 0, atom = BeginAtom(i) ; atom ; atom = NextAtom(i), ++j)
       {
+        bondCount.push_back(atom->GetExplicitDegree());
+        //don't consider atoms with a full valance already
+        //this is both for correctness (trust existing bonds) and performance
+        if(atom->GetExplicitValence() >= OBElements::GetMaxBonds(atom->GetAtomicNum()))
+          continue;        
+        if(atom->GetAtomicNum() == 7 && atom->GetFormalCharge() == 0 && atom->GetExplicitValence() >= 3)
+          continue; 
         (atom->GetVector()).Get(&c[j*3]);
         pair<OBAtom*,double> entry(atom, atom->GetVector().z());
         zsortedAtoms.push_back(entry);
-        bondCount.push_back(atom->GetExplicitDegree());
       }
     sort(zsortedAtoms.begin(), zsortedAtoms.end(), SortAtomZ);
 
@@ -2966,7 +2986,7 @@ namespace OpenBabel
     double d2,cutoff,zd;
     for (j = 0 ; j < max ; ++j)
       {
-    	double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
+        double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
         idx1 = zsorted[j];
         for (k = j + 1 ; k < max ; k++ )
           {
@@ -3001,6 +3021,9 @@ namespace OpenBabel
             if (atom->IsConnected(nbr))
               continue;
 
+            if (!validAdditionalBond(atom,nbr) || !validAdditionalBond(nbr, atom))
+              continue;
+              
             AddBond(idx1+1,idx2+1,1);
           }
       }
@@ -3311,21 +3334,13 @@ namespace OpenBabel
     }
 
     // Quick pass.. eliminate inter-ring sulfur atom multiple bonds
-    for (atom = BeginAtom(i); atom; atom = NextAtom(i)) {
-      // Don't build multiple bonds to ring sulfurs
-      //  except thiopyrylium
-      if (atom->IsInRing() && atom->GetAtomicNum() == 16) {
-        if (_totalCharge > 1 && atom->GetFormalCharge() == 0)
-          atom->SetFormalCharge(+1);
-        else {
-          // remove any ring bonds with multiple bond order
-          FOR_BONDS_OF_ATOM(bond, &*atom) {
-            if (bond->IsInRing() && bond->GetBondOrder() > 1)
-              bond->SetBondOrder(1);
-          }
-        }
-      }
-    }
+    // dkoes - I have removed this code - if double bonds are set,
+    // we should trust them.  See pdb_ligands_sdf/4iph_1fj.sdf for
+    // a case where the charge isn't set, but we break the molecule
+    // if we remove the double bond.  Also, the previous code was
+    // fragile - relying on the total mol charge being set.  If we
+    // are going to do anything, we should "perceive" a formal charge
+    // in the case of a ring sulfur with a double bond (thiopyrylium)
 
     // Pass 6: Assign remaining bond types, ordered by atom electronegativity
     vector<pair<OBAtom*,double> > sortedAtoms;
@@ -4063,10 +4078,7 @@ namespace OpenBabel
         OBResidue *newres;
         if (mit == ResidueMap.end()) {
           newres = newmol.NewResidue();
-          newres->SetName(res->GetName());
-          newres->SetNum(res->GetNumString());
-          newres->SetChain(res->GetChain());
-          newres->SetChainNum(res->GetChainNum());
+          *newres = *res;
           ResidueMap[res] = newres;
         } else {
           newres = mit->second;

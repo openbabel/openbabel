@@ -1,0 +1,143 @@
+3GVB_3GV_A_1
+  RCSB PDB12061708483D
+Coordinates from PDB:3GVB:A:1 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   10.6950   45.9040   27.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6200   45.6950   26.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6820   46.2100   25.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7120   44.9870   27.0890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6140   44.7690   25.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8010   45.3730   24.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2160   44.2710   23.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0200   43.9420   24.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9500   43.7150   23.1350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9990   44.4750   28.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0000   43.1020   28.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7250   42.2200   27.6050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2900   42.6120   29.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5740   43.4910   30.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5730   44.8650   30.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2880   45.3550   29.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 16  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 15 14  1  0  0  0  0
+ 16 15  2  0  0  0  0
+A    1
+O13
+A    2
+C9
+A    3
+C10
+A    4
+N8
+A    5
+C12
+A    6
+C11
+A    7
+C14
+A    8
+O15
+A    9
+O16
+A   10
+C4
+A   11
+C5
+A   12
+O7
+A   13
+C6
+A   14
+C1
+A   15
+C2
+A   16
+C3
+M  END
+>  <InstanceId>
+3GVB_3GV_A_1
+
+>  <ChemCompId>
+3GV
+
+>  <PdbId>
+3GVB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O4
+
+>  <Name>
+(3S)-1-(2-hydroxyphenyl)-5-oxopyrrolidine-3-carboxylic acid
+
+>  <SystematicName>
+(3S)-1-(2-hydroxyphenyl)-5-oxo-pyrrolidine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O4
+
+>  <MolecularWeight>
+221.209
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO4/c13-9-4-2-1-3-8(9)12-6-7(11(15)16)5-10(12)14/h1-4,7,13H,5-6H2,(H,15,16)/t7-/m0/s1
+
+>  <InChIKey>
+FPQOSKXLHCTVED-ZETCQYMHSA-N
+
+>  <SMILES>
+c1ccc(c(c1)N2C[C@H](CC2=O)C(=O)O)O
+
+$$$$

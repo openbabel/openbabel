@@ -1,0 +1,143 @@
+3T4O_WA2_A_400
+  RCSB PDB12061710503D
+Coordinates from PDB:3T4O:A:400 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    3.8390   23.1640   26.1910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3660   24.2200   26.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1670   24.9670   27.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4790   24.7150   27.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0260   23.6200   26.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1560   22.8460   26.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6190   21.7560   25.4390   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3950   23.6120   27.2610   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6630   24.6660   28.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5210   25.3140   28.3790   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2470   20.9380   21.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3360   17.9980   22.0660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0190   19.1990   21.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7440   21.0520   24.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6310   20.2810   23.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9960   19.8660   22.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 14  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 16  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N6
+A    8
+N7
+A    9
+C8
+A   10
+N9
+A   11
+CAA
+A   12
+OAB
+A   13
+CAE
+A   14
+CAF
+A   15
+CAG
+A   16
+CAP
+M  END
+>  <InstanceId>
+3T4O_WA2_A_400
+
+>  <ChemCompId>
+WA2
+
+>  <PdbId>
+3T4O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N5 O
+
+>  <Name>
+(2R)-2-methyl-4-(7H-purin-6-ylamino)butan-1-ol
+
+>  <SystematicName>
+(2R)-2-methyl-4-(7H-purin-6-ylamino)butan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N5 O
+
+>  <MolecularWeight>
+221.259
+
+>  <ModifiedDate>
+2011-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N5O/c1-7(4-16)2-3-11-9-8-10(13-5-12-8)15-6-14-9/h5-7,16H,2-4H2,1H3,(H2,11,12,13,14,15)/t7-/m1/s1
+
+>  <InChIKey>
+XXFACTAYGKKOQB-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@H](CCNc1c2c(nc[nH]2)ncn1)CO
+
+$$$$

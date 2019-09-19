@@ -1,0 +1,145 @@
+4L50_D8X_A_501
+  RCSB PDB12061713293D
+Coordinates from PDB:4L50:A:501 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+  -42.5900  -11.4290   12.1430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.9490  -11.8310   13.5230   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.2800  -11.2740   13.8920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.9520  -13.4060   13.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.8280  -11.2070   14.5410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.5120  -11.6960   14.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.6420  -10.6840   13.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.8580  -10.8450   12.4790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1400  -10.8580   14.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.6490  -12.0990   13.7770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.9650  -10.7290   15.5490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2990   -9.7250   13.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3420   -8.5840   13.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.3060  -10.0750   12.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.0220   -8.7830   11.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.1010   -9.1150   10.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3480   -7.6880   12.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 15 17  1  0  0  0  0
+  1  2  2  0  0  0  0
+ 14 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12  9  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+O3P
+A    2
+P
+A    3
+O1P
+A    4
+O2P
+A    5
+O5
+A    6
+C5
+A    7
+C4
+A    8
+O4
+A    9
+C3
+A   10
+O3
+A   11
+O3'
+A   12
+C2
+A   13
+O2
+A   14
+C1
+A   15
+C1'
+A   16
+C2'
+A   17
+C22
+M  END
+>  <InstanceId>
+4L50_D8X_A_501
+
+>  <ChemCompId>
+D8X
+
+>  <PdbId>
+4L50
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O8 P
+
+>  <Name>
+(2S)-2,3,3-trihydroxy-6-methyl-4-oxoheptyl dihydrogen phosphate
+
+>  <SystematicName>
+[(2S)-6-methyl-2,3,3-tris(oxidanyl)-4-oxidanylidene-heptyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 O8 P
+
+>  <MolecularWeight>
+272.19
+
+>  <ModifiedDate>
+2013-11-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17O8P/c1-5(2)3-6(9)8(11,12)7(10)4-16-17(13,14)15/h5,7,10-12H,3-4H2,1-2H3,(H2,13,14,15)/t7-/m0/s1
+
+>  <InChIKey>
+JMUSONIELWHGQU-ZETCQYMHSA-N
+
+>  <SMILES>
+CC(C)CC(=O)C([C@H](COP(=O)(O)O)O)(O)O
+
+$$$$

@@ -1,0 +1,109 @@
+1GQG_DCD_A_1351
+  RCSB PDB12061702383D
+Coordinates from PDB:1GQG:A:1351 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   64.3560   11.2340   71.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1760   11.2800   73.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.7560    9.9750   73.4930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1930    9.1140   74.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.8280    7.6450   74.6630   S 0  0  0  0  0  0  0  0  0  0  0  0
+   63.8080    9.5510   75.0990   S 0  0  0  0  0  0  0  0  0  0  0  0
+   66.9920    9.7300   72.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1790   10.1750   73.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C5
+A    2
+C3
+A    3
+N1
+A    4
+C1
+A    5
+S2
+A    6
+S1
+A    7
+C2
+A    8
+C4
+M  END
+>  <InstanceId>
+1GQG_DCD_A_1351
+
+>  <ChemCompId>
+DCD
+
+>  <PdbId>
+1GQG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N S2
+
+>  <Name>
+DIETHYLCARBAMODITHIOIC ACID
+
+>  <SystematicName>
+diethylaminomethanedithioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 N S2
+
+>  <MolecularWeight>
+149.278
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NS2/c1-3-6(4-2)5(7)8/h3-4H2,1-2H3,(H,7,8)
+
+>  <InChIKey>
+LMBWSYZSUOEYSN-UHFFFAOYSA-N
+
+>  <SMILES>
+CCN(CC)C(=S)S
+
+$$$$

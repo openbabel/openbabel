@@ -1,0 +1,142 @@
+4KZ4_4A1_B_401
+  RCSB PDB12061713273D
+Coordinates from PDB:4KZ4:B:401 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   80.4970    4.4730   33.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.2300    5.2860   34.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9760    5.8330   28.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0730    4.8180   30.1470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   78.5440    3.4980   28.0710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   78.5060    4.5280   31.6450   S 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0270    5.9940   29.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.3260    4.4240   26.1910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0540    7.2690   29.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.2160    5.0940   31.6190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0270    8.3560   29.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.7190    3.1470   31.8620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9680    8.2090   27.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9460    6.9560   27.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9340    4.4740   27.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.5670    5.4240   32.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8 15  2  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14  3  1  0  0  0  0
+ 15  3  1  0  0  0  0
+ 15  5  1  0  0  0  0
+ 13 11  1  0  0  0  0
+  3  7  2  0  0  0  0
+ 11  9  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+ 10  6  2  0  0  0  0
+  6 12  2  0  0  0  0
+  6 16  1  0  0  0  0
+ 16  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C1
+A    4
+N1
+A    5
+O1
+A    6
+S1
+A    7
+C2
+A    8
+O2
+A    9
+C3
+A   10
+O3
+A   11
+C4
+A   12
+O4
+A   13
+C5
+A   14
+C6
+A   15
+C7
+A   16
+C8
+M  END
+>  <InstanceId>
+4KZ4_4A1_B_401
+
+>  <ChemCompId>
+4A1
+
+>  <PdbId>
+4KZ4
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4 S
+
+>  <Name>
+2-[(propylsulfonyl)amino]benzoic acid
+
+>  <SystematicName>
+2-(propylsulfonylamino)benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O4 S
+
+>  <MolecularWeight>
+243.28
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO4S/c1-2-7-16(14,15)11-9-6-4-3-5-8(9)10(12)13/h3-6,11H,2,7H2,1H3,(H,12,13)
+
+>  <InChIKey>
+YEXKFOGSUASBRA-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCS(=O)(=O)Nc1ccccc1C(=O)O
+
+$$$$

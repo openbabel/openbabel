@@ -1,0 +1,117 @@
+1N6D_D10_G_2101
+  RCSB PDB12061703223D
+Coordinates from PDB:1N6D:G:2101 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  -34.4430  -14.2830  -13.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.8550  -14.8320  -13.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.6140  -15.4330  -12.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.4710  -16.6700  -11.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.7670  -17.5030  -10.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.6310  -18.7320  -10.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1200  -18.3560  -10.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.7840  -18.5210   -8.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.3150  -18.5550   -9.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.9840  -18.4860   -7.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+M  END
+>  <InstanceId>
+1N6D_D10_G_2101
+
+>  <ChemCompId>
+D10
+
+>  <PdbId>
+1N6D
+
+>  <ChainId>
+G
+
+>  <ResidueNumber>
+2101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+DECANE
+
+>  <SystematicName>
+decane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H22
+
+>  <MolecularWeight>
+142.282
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H22/c1-3-5-7-9-10-8-6-4-2/h3-10H2,1-2H3
+
+>  <InChIKey>
+DIOQZVSQGTUSAI-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCC
+
+$$$$

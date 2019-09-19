@@ -1,0 +1,119 @@
+3NUS_JNZ_A_374
+  RCSB PDB12061709583D
+Coordinates from PDB:3NUS:A:374 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+  -41.6470   16.7550   12.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.6540   15.9820   12.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.3940   16.2470   13.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.4820   14.6480   11.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.1960   14.9090   12.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.2270   14.1640   12.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1000   14.0160   12.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.4300   12.7990   12.3950   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.7100   12.9160   12.0150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.8980   14.4010   13.3140   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  4  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C8
+A    2
+C7
+A    3
+C9
+A    4
+C6
+A    5
+C10
+A    6
+C5
+A    7
+C2
+A    8
+N3
+A    9
+N4
+A   10
+N1
+M  END
+>  <InstanceId>
+3NUS_JNZ_A_374
+
+>  <ChemCompId>
+JNZ
+
+>  <PdbId>
+3NUS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+374
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3
+
+>  <Name>
+1H-indazol-3-amine
+
+>  <SystematicName>
+1H-indazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N3
+
+>  <MolecularWeight>
+133.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N3/c8-7-5-3-1-2-4-6(5)9-10-7/h1-4H,(H3,8,9,10)
+
+>  <InChIKey>
+YDTDKKULPWTHRV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(n[nH]2)N
+
+$$$$

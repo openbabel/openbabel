@@ -1,0 +1,110 @@
+3G4Y_9CL_A_151
+  RCSB PDB12061708413D
+Coordinates from PDB:3G4Y:A:151 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   38.6900   -1.1710   33.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3970   -0.0530   33.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4880    0.5540   33.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1480    1.5930   33.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7190    2.0300   31.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6290    1.4210   31.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9670    0.3810   31.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3530   -0.5420   34.9930  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  1  8  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  7  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+A    1
+C
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+CL1
+M  END
+>  <InstanceId>
+3G4Y_9CL_A_151
+
+>  <ChemCompId>
+9CL
+
+>  <PdbId>
+3G4Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+151
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 Cl
+
+>  <Name>
+(chloromethyl)benzene
+
+>  <SystematicName>
+chloromethylbenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 Cl
+
+>  <MolecularWeight>
+126.583
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7Cl/c8-6-7-4-2-1-3-5-7/h1-5H,6H2
+
+>  <InChIKey>
+KCXMKQUNVWSEMD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CCl
+
+$$$$

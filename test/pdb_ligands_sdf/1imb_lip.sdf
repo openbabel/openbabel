@@ -1,0 +1,143 @@
+1IMB_LIP_A_279
+  RCSB PDB12061702513D
+Coordinates from PDB:1IMB:A:279 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    5.1470   52.8980   13.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8670   52.8100   14.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2050   51.8040   15.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1130   50.4220   14.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3680   50.4830   13.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0910   51.4540   12.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2330   54.3830   10.9070   P 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8910   53.7990   12.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9070   54.0840   15.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9780   51.7320   16.6350   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4390   49.5310   15.6830   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3020   49.1680   12.8990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4270   50.9850   12.2420   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9410   54.9830   11.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2430   55.3780   10.3400   O 0  5  0  0  0  0  0  0  0  0  0  0
+    5.1650   53.2710    9.8540   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 14  2  0  0  0  0
+  7 15  1  0  0  0  0
+  7 16  1  0  0  0  0
+M  CHG  2  15  -1  16  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+P1
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+A   14
+O7
+A   15
+O8
+A   16
+O9
+M  END
+>  <InstanceId>
+1IMB_LIP_A_279
+
+>  <ChemCompId>
+LIP
+
+>  <PdbId>
+1IMB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+279
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O9 P
+
+>  <Name>
+L-MYO-INOSITOL-1-PHOSPHATE
+
+>  <SystematicName>
+[(2S,3R,5S,6S)-2,3,4,5,6-pentakis(oxidanyl)cyclohexyl] phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 O9 P
+
+>  <MolecularWeight>
+258.12
+
+>  <ModifiedDate>
+2013-03-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13O9P/c7-1-2(8)4(10)6(5(11)3(1)9)15-16(12,13)14/h1-11H,(H2,12,13,14)/p-2/t1-,2-,3+,4-,5-,6-/m0/s1
+
+>  <InChIKey>
+INAPMGSXUVUWAF-PTQMNWPWSA-L
+
+>  <SMILES>
+[C@H]1([C@@H](C([C@H]([C@@H](C1O)O)O)OP(=O)([O-])[O-])O)O
+
+$$$$

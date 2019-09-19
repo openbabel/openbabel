@@ -1,0 +1,123 @@
+5FZ9_NUK_A_1767
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZ9:A:1767 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   44.0550   68.3960    0.4550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2790   67.8580    1.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6040   66.8510    1.9870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3880   68.2940    2.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7950   67.7660    3.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4160   69.5910    1.8710   S 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4270   69.4140    3.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5930   70.0810    3.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9640   68.4070    4.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9770   68.2660    5.4560   S 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9860   69.5510    4.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O1
+A    2
+C5
+A    3
+O
+A    4
+C4
+A    5
+C3
+A    6
+S1
+A    7
+C6
+A    8
+C
+A    9
+C2
+A   10
+S
+A   11
+C1
+M  END
+>  <InstanceId>
+5FZ9_NUK_A_1767
+
+>  <ChemCompId>
+NUK
+
+>  <PdbId>
+5FZ9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1767
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2 S2
+
+>  <Name>
+thieno[3,2-b]thiophene-5-carboxylic acid
+
+>  <SystematicName>
+thieno[3,2-b]thiophene-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H4 O2 S2
+
+>  <MolecularWeight>
+184.235
+
+>  <ModifiedDate>
+2016-03-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4O2S2/c8-7(9)6-3-5-4(11-6)1-2-10-5/h1-3H,(H,8,9)
+
+>  <InChIKey>
+GVZXSZWCZGKLRS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1csc2c1sc(c2)C(=O)O
+
+$$$$

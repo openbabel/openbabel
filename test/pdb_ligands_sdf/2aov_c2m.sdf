@@ -1,0 +1,147 @@
+2AOV_C2M_A_401
+  RCSB PDB12061705013D
+Coordinates from PDB:2AOV:A:401 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   43.5450  -32.7960   -5.1450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7500  -31.8430   -4.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3610  -32.1760   -2.8850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7850  -33.3930   -2.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5230  -34.4560   -3.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9590  -34.0470   -4.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8980  -35.7450   -3.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4320  -35.7700   -3.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7500  -37.0130   -2.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5580  -38.3030   -2.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0170  -38.2860   -2.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6820  -37.0100   -3.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3390  -30.5340   -4.4350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4460  -33.5760   -1.1910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8540  -34.8450   -6.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8860  -39.7840   -2.0590  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0910  -36.8700   -2.4440  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 14  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6 15  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 17  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 16  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+N3
+A   14
+N4
+A   15
+C12
+A   16
+CL1
+A   17
+CL2
+M  END
+>  <InstanceId>
+2AOV_C2M_A_401
+
+>  <ChemCompId>
+C2M
+
+>  <PdbId>
+2AOV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 Cl2
+
+>  <Name>
+5-(3,4-DICHLOROPHENYL)-6-METHYLPYRIMIDINE-2,4-DIAMINE
+
+>  <SystematicName>
+5-(3,4-dichlorophenyl)-6-methyl-pyrimidine-2,4-diamine
+
+>  <Synonyms>
+METOPRINE, METHODICHLOROPHEN
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 Cl2 N4
+
+>  <MolecularWeight>
+269.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10Cl2N4/c1-5-9(10(14)17-11(15)16-5)6-2-3-7(12)8(13)4-6/h2-4H,1H3,(H4,14,15,16,17)
+
+>  <InChIKey>
+VQJHOPSWBGJHQS-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(nc(n1)N)N)c2ccc(c(c2)Cl)Cl
+
+$$$$

@@ -1,0 +1,122 @@
+1CZM_AAS_A_262
+  RCSB PDB12061702133D
+Coordinates from PDB:1CZM:A:262 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   34.7490   16.5020  -17.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1250   15.2700  -17.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9840   14.7110  -18.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4210   15.3560  -20.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0170   16.6110  -19.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1910   17.2020  -18.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8300   17.1140  -15.9920   S 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6620   15.8540  -15.3480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0500   18.3010  -16.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3560   17.5130  -15.8870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8200   15.0010  -21.2530   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+S1
+A    8
+O1
+A    9
+O2
+A   10
+N1
+A   11
+N2
+M  END
+>  <InstanceId>
+1CZM_AAS_A_262
+
+>  <ChemCompId>
+AAS
+
+>  <PdbId>
+1CZM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+262
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+5
+
+>  <ObservedFormula>
+C6 N2 O2 S
+
+>  <Name>
+3-ACTOXYMERCURI-4-AMINOBENZENESULFONAMIDE
+
+>  <SystematicName>
+acetyloxy-(2-amino-5-sulfamoyl-phenyl)mercury
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 Hg N2 O4 S
+
+>  <MolecularWeight>
+430.831
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N2O2S.C2H4O2.Hg/c7-5-1-3-6(4-2-5)11(8,9)10;1-2(3)4;/h1,3-4H,7H2,(H2,8,9,10);1H3,(H,3,4);/q;;+1/p-1
+
+>  <InChIKey>
+CEDUTBARXJHKFU-UHFFFAOYSA-M
+
+>  <SMILES>
+CC(=O)O[Hg]c1cc(ccc1N)S(=O)(=O)N
+
+$$$$
