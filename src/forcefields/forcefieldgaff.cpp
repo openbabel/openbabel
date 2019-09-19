@@ -19,9 +19,16 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/locale.h>
+#include <openbabel/oberror.h>
+#include <openbabel/parsmart.h>
+#include <openbabel/obutil.h>
 
 #include "forcefieldgaff.h"
+
+#include <cstdlib>
 
 using namespace std;
 
@@ -542,7 +549,7 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validBond = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()))
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()))
             validBond = true;
         }
         if (!validBond)
@@ -603,8 +610,8 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validAngle = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx()))
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+              _intraGroup[i].BitIsSet(c->GetIdx()))
             validAngle = true;
         }
         if (!validAngle)
@@ -671,8 +678,8 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validTorsion = false;
         for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-          if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-              _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+          if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+              _intraGroup[i].BitIsSet(c->GetIdx()) && _intraGroup[i].BitIsSet(d->GetIdx()))
             validTorsion = true;
         }
         if (!validTorsion)
@@ -756,8 +763,8 @@ namespace OpenBabel
       if (HasGroups()) {
 	bool validOOP = false;
 	for (unsigned int i=0; i < _intraGroup.size(); ++i) {
-	  if (_intraGroup[i].BitIsOn(a->GetIdx()) && _intraGroup[i].BitIsOn(b->GetIdx()) &&
-	      _intraGroup[i].BitIsOn(c->GetIdx()) && _intraGroup[i].BitIsOn(d->GetIdx()))
+	  if (_intraGroup[i].BitIsSet(a->GetIdx()) && _intraGroup[i].BitIsSet(b->GetIdx()) &&
+	      _intraGroup[i].BitIsSet(c->GetIdx()) && _intraGroup[i].BitIsSet(d->GetIdx()))
 	    validOOP = true;
 	}
 	if (!validOOP)
@@ -917,13 +924,13 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validVDW = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx()))
+          if (_interGroup[i].BitIsSet(a->GetIdx()) && _interGroup[i].BitIsSet(b->GetIdx()))
             validVDW = true;
         }
         for (unsigned int i=0; i < _interGroups.size(); ++i) {
-          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx()))
+          if (_interGroups[i].first.BitIsSet(a->GetIdx()) && _interGroups[i].second.BitIsSet(b->GetIdx()))
             validVDW = true;
-          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx()))
+          if (_interGroups[i].first.BitIsSet(b->GetIdx()) && _interGroups[i].second.BitIsSet(a->GetIdx()))
             validVDW = true;
         }
 
@@ -1019,13 +1026,13 @@ namespace OpenBabel
       if (HasGroups()) {
         bool validEle = false;
         for (unsigned int i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) && _interGroup[i].BitIsOn(b->GetIdx()))
+          if (_interGroup[i].BitIsSet(a->GetIdx()) && _interGroup[i].BitIsSet(b->GetIdx()))
             validEle = true;
         }
         for (unsigned int i=0; i < _interGroups.size(); ++i) {
-          if (_interGroups[i].first.BitIsOn(a->GetIdx()) && _interGroups[i].second.BitIsOn(b->GetIdx()))
+          if (_interGroups[i].first.BitIsSet(a->GetIdx()) && _interGroups[i].second.BitIsSet(b->GetIdx()))
             validEle = true;
-          if (_interGroups[i].first.BitIsOn(b->GetIdx()) && _interGroups[i].second.BitIsOn(a->GetIdx()))
+          if (_interGroups[i].first.BitIsSet(b->GetIdx()) && _interGroups[i].second.BitIsSet(a->GetIdx()))
             validEle = true;
         }
 
@@ -1033,7 +1040,7 @@ namespace OpenBabel
           continue;
       }
 
-      elecalc.qq = KCAL_TO_KJ * 332.17 * a->GetPartialCharge() * b->GetPartialCharge();
+      elecalc.qq = KCAL_TO_KJ * 332.17 * a->GetPartialCharge() * b->GetPartialCharge() / _epsilon;
 
       if (elecalc.qq) {
         elecalc.a = &*a;
@@ -1428,7 +1435,7 @@ namespace OpenBabel
     // Trigger calculation of Gasteiger charges
     // Note that the Gastegier charge calculation checks for the values of particular atom types
     _mol.SetAutomaticPartialCharge(true);
-    _mol.UnsetPartialChargesPerceived();
+    _mol.SetPartialChargesPerceived(false);
     // Trigger partial charge calculation
     FOR_ATOMS_OF_MOL(atom, _mol) {
       atom->GetPartialCharge();

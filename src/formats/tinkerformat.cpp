@@ -15,7 +15,15 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/data.h>
+#include <openbabel/generic.h>
+
 #include <openbabel/forcefield.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
@@ -131,9 +139,14 @@ namespace OpenBabel
       mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     mol.EndModify();
     mol.SetTitle(title);
@@ -258,7 +271,7 @@ namespace OpenBabel
       if (b->GetAtomicNum() == OBElements::Nitrogen) {
         if (b->IsAmideNitrogen())
           return 28;
-        if (b->GetValence() > 3)
+        if (b->GetExplicitDegree() > 3)
           return 48;// ammonium
         return 23; // default amine/imine
       }
@@ -280,7 +293,7 @@ namespace OpenBabel
       return 163; break;
 
     case 5: // B
-      if (atom->GetValence() >= 4)
+      if (atom->GetExplicitDegree() >= 4)
         return 27; // tetrahedral
       return 26; break;
 
@@ -343,7 +356,7 @@ namespace OpenBabel
         return 46;
 
       if (atom->GetHyb() == 3) {
-        if (atom->GetValence() > 3)
+        if (atom->GetExplicitDegree() > 3)
           return 39; // ammonium
         return 8;
       }
@@ -384,7 +397,7 @@ namespace OpenBabel
     case 15: // P
       if (atom->CountFreeOxygens() > 0)
         return 153; // phosphate
-      if (atom->BOSum() > 3)
+      if (atom->GetExplicitValence() > 3)
         return 60; // phosphorus V
       return 25; break;
 
@@ -404,7 +417,7 @@ namespace OpenBabel
         case 7:
           countNeighborN++; break;
         case 8:
-          if (b->GetHvyValence() == 1)
+          if (b->GetHvyDegree() == 1)
             countNeighborO++;
           break;
         case 16:

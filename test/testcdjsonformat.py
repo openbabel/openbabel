@@ -66,7 +66,7 @@ class TestCdJsonFormat(PybelWrapper):
         """Test reading bonds."""
         mols = list(pybel.readfile("cdjson", os.path.join(filedir, 'butane.json')))
         self.assertEqual(mols[0].OBMol.NumBonds(), 3)
-        self.assertEqual([mols[0].OBMol.GetBond(i).GetBO() for i in range(0, 3)], [1, 1, 1])
+        self.assertEqual([mols[0].OBMol.GetBond(i).GetBondOrder() for i in range(0, 3)], [1, 1, 1])
 
     def test_write_atoms(self):
         """Test writing atoms."""

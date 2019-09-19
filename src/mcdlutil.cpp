@@ -20,6 +20,8 @@ GNU General Public License for more details.
 */
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/mcdlutil.h>
 #include <openbabel/data.h>
 #include <openbabel/obconversion.h>
@@ -2033,7 +2035,7 @@ namespace OpenBabel {
             (atomDefine[atomCycle[cN][atomCycle[cN].size() - 1]]==0);
         };
         //        {now first atom in the cycle definition list must be inserted into the priority list early, and the last atom-no}
-        for (j=0;j<atomCycle[cN].size()-maxAtDef; j++) {
+        for (j=0;currNumDef < atomClean && j<atomCycle[cN].size()-maxAtDef; j++) {
           //          for each undefined atom from selected cycle}
           //atom is added to priority list}
           dsATN[currNumDef]=atomCycle[cN][maxAtDef+j];
@@ -2568,7 +2570,7 @@ namespace OpenBabel {
               ux1=getAtom(dsNA1[i])->rx-ux;
               uy1=getAtom(dsNA1[i])->ry-uy;
               //coordinates of all atoms for the cycle under study are calculated}
-
+              if ((nb + i) > dsATN.size()) nb=dsATN.size()-i; // Check added to avoid segfault below, see issue #1851
               for (j=0; j<nb; j++) {
                 getAtom(dsATN[i+j-0])->rx=ux+ux1*cos((j+1)*fi)+uy1*sin((j+1)*fi);
                 getAtom(dsATN[i+j-0])->ry=uy-ux1*sin((j+1)*fi)+uy1*cos((j+1)*fi);
@@ -3076,7 +3078,7 @@ namespace OpenBabel {
       TSingleBond* dblbond = sm.getBond(i);
       if (dblbond->bstereo_refs.empty())
         continue;
-    
+
       an1 = dblbond->at[0];
       an2 = dblbond->at[1];
 
@@ -5385,7 +5387,7 @@ namespace OpenBabel {
         };
     };
   };
-  
+
   void TemplateRedraw::rescaleSingleFragment(TSimpleMolecule * sm, std::vector<int>* atomList, PartFragmentDefinition& pf, double offset) {
     int i,n;
     double xMin,xMax,yMin,yMax;
@@ -5404,7 +5406,7 @@ namespace OpenBabel {
       if ((sm->getAtom(n)->ry > yMax) || (yMax == RUNDEF)) yMax=sm->getAtom(n)->ry;
     };
     // LPW: Nearly horizontal molecules were being scaled which resulted in
-    // some nonsensical structures.  This code ensures that coordinates with 
+    // some nonsensical structures.  This code ensures that coordinates with
     // "almost" horizontal or vertical geometries don't get scaled.
     bool Xeq = (fabs(xMax - xMin) < 0.01);
     bool Yeq = (fabs(yMax - yMin) < 0.01);
@@ -5751,11 +5753,11 @@ namespace OpenBabel {
               test=true;
               emTemplate=new TEditedMolecule();
 			  if (tm.getBond(i)->at[1] < nFound) {
-				templateAN=tm.getBond(i)->at[0]; 
-				fragmentAN=tm.getBond(i)->at[1]; 
+				templateAN=tm.getBond(i)->at[0];
+				fragmentAN=tm.getBond(i)->at[1];
 			  } else {
 			    templateAN=tm.getBond(i)->at[1];
-				fragmentAN=tm.getBond(i)->at[0]; 
+				fragmentAN=tm.getBond(i)->at[0];
 			  }
               templateAtomNumber.push_back(tm.getAtom(templateAN)->enumerator);  //in template....
               fragmentAtomNumber.push_back(tm.getAtom(fragmentAN)->enumerator);
@@ -5777,7 +5779,7 @@ namespace OpenBabel {
       atomClean=tm.nAtoms()-nFound;
       listAtomClean.resize(0);
       for (i=0; i<atomClean; i++) listAtomClean.push_back(nFound+i);
-      
+
       vector<int> listBondClean;
       bondClean=0;
       for (i=0; i<tm.nBonds(); i++) {
@@ -5983,7 +5985,7 @@ namespace OpenBabel {
       pf->fragID1=0;
       pf->fragID2=0;
       pf->fragID3=0;
-      pf->fragFirstAtomNo=nA+1;
+      pf->fragFirstAtomNo=nA; // Was nA+1, lead to off-by-one problems with fragments
       pf->fragmentCount=1;
       pf->fragWidth=xMax-xMin;
       pf->fragHeight=yMax-yMin;

@@ -22,6 +22,11 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h> // implements some OBMol methods
 #include <openbabel/ring.h>
+#include <openbabel/bond.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
+#include <openbabel/oberror.h>
 #include <openbabel/elements.h>
 
 using namespace std;
@@ -99,7 +104,7 @@ namespace OpenBabel
     OBRing *ring;
     vector<OBRing*>::iterator j;
 
-    //get Frèrejacque taking int account multiple possible spanning graphs
+    //get Frï¿½rejacque taking int account multiple possible spanning graphs
     int frj = DetermineFRJ(*this);
     if (frj)
       {
@@ -534,6 +539,13 @@ namespace OpenBabel
     mol.SetRingAtomsAndBondsPerceived(); // mol.SetFlag(OB_RINGFLAGS_MOL);
     mol.SetClosureBondsPerceived();      // mol.SetFlag(OB_CLOSURE_MOL);
 
+    FOR_ATOMS_OF_MOL(atom, mol)
+      atom->SetInRing(false);
+    FOR_BONDS_OF_MOL(bond, mol) {
+      bond->SetInRing(false);
+      bond->SetClosure(false);
+    }
+
     unsigned int bsize = mol.NumBonds()+1;
     unsigned char *bvisit = (unsigned char*)malloc(bsize);
     memset(bvisit,0,bsize);
@@ -615,15 +627,15 @@ namespace OpenBabel
         OBAtom *atom = mol->GetAtom(*i);
         switch (atom->GetAtomicNum()) {
         case OBElements::Sulfur:
-          if (atom->GetValence() == 2)
+          if (atom->GetExplicitDegree() == 2)
             return (*i);
           break;
         case OBElements::Oxygen:
-          if (atom->GetValence() == 2)
+          if (atom->GetExplicitDegree() == 2)
             return (*i);
           break;
         case OBElements::Nitrogen:
-          if (atom->BOSum() == atom->GetValence())
+          if (atom->GetExplicitValence() == atom->GetExplicitDegree())
             return (*i);
           break;
         }
@@ -634,12 +646,12 @@ namespace OpenBabel
 
   bool OBRing::IsMember(OBAtom *a)
   {
-    return(_pathset.BitIsOn(a->GetIdx()));
+    return(_pathset.BitIsSet(a->GetIdx()));
   }
 
   bool OBRing::IsMember(OBBond *b)
   {
-    return((_pathset.BitIsOn(b->GetBeginAtomIdx()))&&(_pathset.BitIsOn(b->GetEndAtomIdx())));
+    return((_pathset.BitIsSet(b->GetBeginAtomIdx()))&&(_pathset.BitIsSet(b->GetEndAtomIdx())));
   }
 
   OBRing::OBRing(vector<int> &path,int size) : _path(path)
@@ -714,7 +726,7 @@ namespace OpenBabel
                 }
           }
 
-        if (next.Empty())
+        if (next.IsEmpty())
           break;
         curr = next;
         level++;

@@ -8,7 +8,6 @@ set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  cmake_policy(SET CMP0005 OLD) # add_definitions need updating to set to NEW
   if(POLICY CMP0042)
     cmake_policy(SET CMP0042 OLD)
   endif()
@@ -19,9 +18,9 @@ include (CheckCXXCompilerFlag)
 # Version numbering - should be bumped for each release
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
-set(BABEL_MAJ_VER   2)
-set(BABEL_MIN_VER   4)
-set(BABEL_PATCH_VER 90)
+set(BABEL_MAJ_VER   3)
+set(BABEL_MIN_VER   0)
+set(BABEL_PATCH_VER 0a2)
 
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
@@ -32,9 +31,7 @@ if(EMBED_OPENBABEL)
 else()
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}")
 endif()
-set(BABEL_DATAROOTDIR "${CMAKE_INSTALL_PREFIX}/share"
-    CACHE PATH "Install dir for arch independent data")
-set(BABEL_DATADIR  "${BABEL_DATAROOTDIR}/openbabel")
+set(BABEL_DATADIR  "${CMAKE_INSTALL_PREFIX}/share/openbabel")
 
 option(ENABLE_VERSIONED_FORMATS
   "Enable versioning of the format plugin directory" ON)
@@ -231,6 +228,12 @@ check_library_exists(dl dlopen "" HAVE_LIBDL)
 set(CMAKE_EXTRA_INCLUDE_FILES time.h)
 check_type_size(clock_t CLOCK_T)
 
+# Cygwin may be missing an XDR function: https://www.gnu.org/software/gnulib/manual/html_node/xdrstdio_005fcreate.html
+if(CYGWIN)
+  set(HAVE_RPC_XDR_H FALSE)
+  message(STATUS "Disabling rpc/xdr.h for Cygwin")
+endif()
+
 # Get the GCC version - from KDE4 cmake files
 if(CMAKE_COMPILER_IS_GNUCXX)
   if(NOT(${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 4.0.0))
@@ -269,9 +272,7 @@ if(NOT MSVC)
     }
    " SCANDIR_NEEDS_CONST)
 
-  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}"
-      CACHE PATH "Set to system install for bindings only build")
-  add_definitions(-DOB_MODULE_PATH="\\"${OB_MODULE_PATH}\\"")
+  set(OB_MODULE_PATH "${CMAKE_INSTALL_PREFIX}/${OB_PLUGIN_INSTALL_DIR}")
 
   # Add some visibility support when using GCC
   # note: Altough MinGW g++ 4.4 passes this test, visibility can't be used
@@ -408,8 +409,7 @@ if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
-    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}"
-        CACHE PATH "Set sane rpath")
+    set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -459,6 +459,38 @@ else()
   endif()
 endif()
 #cjh
+
+
+find_package(Boost)
+if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+    option(WITH_MAEPARSER "Build Maestro support" ON)
+else()
+    option(WITH_MAEPARSER "Build Maestro support" OFF)
+endif()
+
+
+if(WITH_MAEPARSER)
+    set (CMAKE_CXX_STANDARD 11)
+
+    set(MAEPARSER_VERSION 1.1)
+    if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
+        file(DOWNLOAD "https://github.com/schrodinger/maeparser/archive/v${MAEPARSER_VERSION}.tar.gz"
+            "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.tar.gz" STATUS status)
+        execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
+            ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.tar.gz
+            WORKING_DIRECTORY ${openbabel_SOURCE_DIR}/external)
+        message(STATUS "Downloaded MaeParser to ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.")
+    endif()
+    set(MAEPARSER_DIR ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION})
+    add_subdirectory(${MAEPARSER_DIR})
+    include_directories(${MAEPARSER_DIR})
+    set(libs ${libs} maeparser)
+
+    message(STATUS "Maestro formats will be supported. Using MaeParser ${MAEPARSER_VERSION} at ${MAEPARSER_INCLUDE_DIRS}")
+else()
+    message(STATUS "Maestro formats will NOT be supported. Please install Boost to enable Maestro formats.")
+endif()
 
 option(WITH_JSON "Build JSON support" ON)
 option(OPENBABEL_USE_SYSTEM_RAPIDJSON "Use the system rapidjson if available." ON)

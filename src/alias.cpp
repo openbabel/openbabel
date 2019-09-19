@@ -12,16 +12,22 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
+#include <cstdlib>
 #include <sstream>
 #include <string>
 #include <openbabel/alias.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/op.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/builder.h>
+#include <openbabel/obiter.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/mcdlutil.h>
 #include <openbabel/shared_ptr.h>
 #include <openbabel/elements.h>
+#include <openbabel/generic.h>
 
 #define MARK_UNUSED(x) (void)(x)
 
@@ -111,7 +117,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   */
 
   OBAtom* XxAtom = mol.GetAtom(atomindex);
-/*  if(XxAtom->GetValence()>1)
+/*  if(XxAtom->GetExplicitDegree()>1)
   {
     obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obWarning);
     return false;

@@ -23,16 +23,23 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <sstream>
+#include <cstdlib>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+
 #include <openbabel/griddata.h>
 
 using namespace std;
 
 /// @warning seems that every position in cube files has always to be
 /// multiplied by this constant even if according to:
-/// reference: http://www.gaussian.com/g_ur/u_cubegen.htm
+/// reference: https://www.gaussian.com/cubegen/
 /// <Num points along first axis> > 0 means that the values
 /// are already in Angstroms.
 static const double BOHR_TO_ANGSTROM = 0.529177249;
@@ -69,7 +76,7 @@ namespace OpenBabel
     // I couldn't find it but close enough.
     virtual const char* SpecificationURL()
     {
-        return "http://www.gaussian.com/g_ur/u_cubegen.htm";
+        return "https://www.gaussian.com/cubegen/";
     }
 
     // Return MIME type, NULL in this case.
@@ -525,9 +532,14 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     pmol->EndModify();
 
     // clean out any remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-          (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     // Connect the dots and guess bond orders
     if (!pConv->IsOption("b", OBConversion::INOPTIONS))

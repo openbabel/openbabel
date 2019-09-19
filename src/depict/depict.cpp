@@ -18,7 +18,10 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/alias.h>
+#include <openbabel/generic.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
 #include <openbabel/elements.h>
@@ -247,7 +250,7 @@ namespace OpenBabel
 
     const double bias = -0.1; //towards left-alignment, which is more natural
     int alignment = 0;
-    if ((atom->GetValence() == 2) && (abs(direction.y()) > abs(direction.x()))) {
+    if ((atom->GetExplicitDegree() == 2) && (abs(direction.y()) > abs(direction.x()))) {
       if (direction.y() <= 0.0)
         alignment = Up;
       else
@@ -344,7 +347,7 @@ namespace OpenBabel
       else
         painter->SetPenColor(bondColor);
 
-      DrawRingBond(begin, end, center, ringBond->GetBO());
+      DrawRingBond(begin, end, center, ringBond->GetBondOrder());
       drawnBonds.SetBitOn(ringBond->GetId());
     }
   }
@@ -365,7 +368,7 @@ namespace OpenBabel
     if (spin)
       return spin == 2 ? TWO_DOT : ONE_DOT;
 
-    unsigned int actualvalence = atom->BOSum() + atom->GetImplicitHCount();
+    unsigned int actualvalence = atom->GetTotalValence();
     unsigned int typicalvalence = GetTypicalValence(atom->GetAtomicNum(), actualvalence, atom->GetFormalCharge());
     int diff = typicalvalence - actualvalence;
     if (diff <= 0)
@@ -521,7 +524,7 @@ namespace OpenBabel
           if (!ct->GetConfig().specified)
             crossed_dbl_bond = true;
         }
-        d->DrawSimpleBond(begin, end, bond->GetBO(), crossed_dbl_bond);
+        d->DrawSimpleBond(begin, end, bond->GetBondOrder(), crossed_dbl_bond);
       }
     }
 
@@ -619,9 +622,9 @@ namespace OpenBabel
       if (atom->GetAtomicNum() == OBElements::Carbon) {
         if(!(d->options & drawAllC))
         {
-          if (atom->GetValence() > 1)
+          if (atom->GetExplicitDegree() > 1)
             continue;
-          if ((atom->GetValence() == 1) && !(d->options & drawTermC))//!d->drawTerminalC)
+          if ((atom->GetExplicitDegree() == 1) && !(d->options & drawTermC))//!d->drawTerminalC)
             continue;
         }
       }
@@ -803,9 +806,9 @@ namespace OpenBabel
       bool useAsymmetricDouble = options & OBDepict::asymmetricDoubleBond;
       if (HasLabel(beginAtom) && HasLabel(endAtom))
         useAsymmetricDouble = false;
-      if (HasLabel(beginAtom) && endAtom->GetValence() == 3)
+      if (HasLabel(beginAtom) && endAtom->GetExplicitDegree() == 3)
         useAsymmetricDouble = false;
-      if (HasLabel(endAtom) && beginAtom->GetValence() == 3)
+      if (HasLabel(endAtom) && beginAtom->GetExplicitDegree() == 3)
         useAsymmetricDouble = false;
       if (crossed_dbl_bond)
         useAsymmetricDouble = false; // The bond looks very strange otherwise in the case of cis
@@ -1036,7 +1039,7 @@ namespace OpenBabel
   {
     if (atom->GetAtomicNum() != OBElements::Carbon)
       return true;
-    if ((options & OBDepict::drawAllC) || ((options & OBDepict::drawTermC) && (atom->GetValence() == 1)))
+    if ((options & OBDepict::drawAllC) || ((options & OBDepict::drawTermC) && (atom->GetExplicitDegree() == 1)))
       return true;
     return false;
   }
@@ -1045,8 +1048,8 @@ namespace OpenBabel
   {
     // Remove any existing wedge and hash bonds
     FOR_BONDS_OF_MOL(b,mol)  {
-      b->UnsetWedge();
-      b->UnsetHash();
+      b->SetWedge(false);
+      b->SetHash(false);
     }
 
     std::map<OBBond*, enum OBStereo::BondDirection> updown;

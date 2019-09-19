@@ -17,7 +17,15 @@ GNU General Public License for more details.
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+
 #include <openbabel/pointgroup.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
@@ -35,6 +43,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("g98",this);
       OBConversion::RegisterFormat("g03",this);
       OBConversion::RegisterFormat("g09",this);
+      OBConversion::RegisterFormat("g16",this);
     }
 
     virtual const char* Description() //required
@@ -47,7 +56,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    { return "http://www.gaussian.com/";};
+    { return "https://www.gaussian.com/"; };
 
     virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-log"; };
@@ -85,7 +94,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Gaussian 98/03 Input\n"
+        "Gaussian Input\n"
         "Write Options e.g. -xk\n"
         "  b               Output includes bonds\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
@@ -94,7 +103,7 @@ namespace OpenBabel
     };
 
     virtual const char* SpecificationURL()
-    {return "http://www.gaussian.com/g_ur/m_input.htm";};
+    { return "https://www.gaussian.com/input/"; };
 
     virtual const char* GetMIMEType()
     { return "chemical/x-gaussian-input"; };
@@ -132,7 +141,7 @@ namespace OpenBabel
     const char *keywordsEnable = pConv->IsOption("k",OBConversion::GENOPTIONS);
     const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
     bool writeUnitCell = (NULL != pConv->IsOption("u", OBConversion::OUTOPTIONS));
-    string defaultKeywords = "#Put Keywords Here, check Charge and Multiplicity.";
+    string defaultKeywords = "!Put Keywords Here, check Charge and Multiplicity.\n#";
 
     if(keywords)
       {
@@ -229,7 +238,7 @@ namespace OpenBabel
       // first, make begin.GetIdx < end.GetIdx
       OBBond* bond;
       OBAtom *atom;
-      vector<OBEdgeBase*>::iterator j;
+      vector<OBBond*>::iterator j;
       vector<OBNodeBase*>::iterator i;
       OBAtom *bgn, *end;
       for (bond = mol.BeginBond(j); bond; bond = mol.NextBond(j))

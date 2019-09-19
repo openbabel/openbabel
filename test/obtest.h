@@ -66,6 +66,18 @@ struct OBTestUtil
 
     return mol;
   }
+
+  static std::string ReadFileContent(const std::string &filename)
+  {
+    std::string fn = GetFilename(filename);
+
+    std::ifstream ifs(fn.c_str());
+    std::stringstream buffer;
+    buffer << ifs.rdbuf();
+    std::string content = buffer.str();
+
+    return content;
+  }
 };
 
 #endif // OB_TEST_H

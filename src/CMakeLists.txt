@@ -113,7 +113,6 @@ set(openbabel_srcs
   canon.cpp
   chains.cpp
   chargemodel.cpp
-  chiral.cpp
   data.cpp
   data_utilities.cpp
   descriptor.cpp
@@ -145,6 +144,7 @@ set(openbabel_srcs
   pointgroup.cpp
   query.cpp
   rand.cpp
+  reactionfacade.cpp
   residue.cpp
   ring.cpp
   rotamer.cpp

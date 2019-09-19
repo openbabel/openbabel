@@ -29,7 +29,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-
+  // Initialize the global obErrorLog declared in oberror.h
   OBMessageHandler obErrorLog;
 
   OBError::OBError( const string &method,

@@ -16,8 +16,20 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
+
 #include <openbabel/math/spacegroup.h>
 
 #include <sstream>
@@ -1322,7 +1334,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, *mol) {
 
       if ((atom->GetAtomicNum() == 7 || atom->GetAtomicNum() == 15)
-          && atom->BOSum() == 4) {
+          && atom->GetExplicitValence() == 4) {
         // check if we should make a positive charge?
         // i.e., 4 non-metal neighbors
         bool nonMetalNeighbors = true;
@@ -1349,7 +1361,7 @@ namespace OpenBabel
         continue;
 
       // If we're connected to anything besides H2O, keep going
-      if (atom->GetValence() != 0) {
+      if (atom->GetExplicitDegree() != 0) {
         int nonWaterBonds = 0;
         FOR_NBORS_OF_ATOM(neighbor, &*atom) {
           if (!CIFisWaterOxygen(&*neighbor)) {

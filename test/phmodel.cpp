@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
 #include <openbabel/phmodel.h>
+#include <cstdlib>
 
 using namespace std;
 using namespace OpenBabel;

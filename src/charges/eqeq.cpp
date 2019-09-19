@@ -20,6 +20,11 @@ GNU General Public License for more details.
 
 #include "eqeq.h"
 #include <openbabel/locale.h>
+#include <openbabel/oberror.h>
+#include <openbabel/atom.h>
+#include <openbabel/generic.h>
+
+
 
 using namespace std;
 

@@ -15,6 +15,14 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+#include <openbabel/data.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
+
 
 using namespace std;
 namespace OpenBabel
@@ -257,7 +265,7 @@ namespace OpenBabel
     OBAtom *nbr;
     vector<OBBond*>::iterator j;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
-      if (atom->GetValence())
+      if (atom->GetExplicitDegree())
         {
           snprintf(buffer,BUFF_SIZE,"CONECT%6d",atom->GetIdx());
           ofs << buffer;
@@ -272,7 +280,7 @@ namespace OpenBabel
           ofs << buffer;
           for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
             {
-              snprintf(buffer,BUFF_SIZE,"%6d",(*j)->GetBO());
+              snprintf(buffer,BUFF_SIZE,"%6d",(*j)->GetBondOrder());
               ofs << buffer;
             }
           ofs << endl;

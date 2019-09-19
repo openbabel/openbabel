@@ -7,7 +7,6 @@ areas. Most are designed as command-line utilies for any operating
 system.
 
 * obabel      Interconvert file formats; molecule manipulation, filtering, etc.
-* babel       Deprecated version of obabel
 * obchiral    Lists chiral centers in a molecule
 * obenergy    Forcefield calculation of the energy for a molecule
 * obminimize  Forcefield minimization of the energy of a molecule

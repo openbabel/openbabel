@@ -13,6 +13,15 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+
+#include <cstdlib>
+
 
 using namespace std;
 namespace OpenBabel
@@ -117,9 +126,14 @@ bool FHIaimsFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       mol.PerceiveBondOrders();
 
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-	  (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
+    {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
+    }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
 
     mol.EndModify();
     // Check if there are lattice vectors and add them

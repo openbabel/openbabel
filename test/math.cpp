@@ -26,6 +26,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obutil.h>
+#include "../src/rand.h"
+#include "../src/rand.cpp"
 
 #include <iostream>
 #include <stdlib.h>
@@ -298,6 +300,19 @@ void testInversion()
   VERIFY( result.isUnitMatrix() );
 }
 
+
+/*! The axis of the rotation will be uniformly distributed on
+  the unit sphere and the angle will be uniformly distributed in
+  the interval 0..360 degrees. */
+void randomRotation(matrix3x3 *mat, double rotAngle)
+{
+  vector3 v1;
+
+  v1.randomUnitVector();
+
+  mat->RotAboutAxisByAngle(v1, rotAngle);
+}
+
 // Test the eigenvalue finder. Set up a diagonal matrix and conjugate
 // by a rotation. That way we obtain a symmetric matrix that can be
 // diagonalized. Check if the eigenvalue finder reveals the original
@@ -316,7 +331,7 @@ void testEigenvalues()
   VERIFY( Diagonal.isDiagonal() );
 
   matrix3x3 rndRotation;
-  rndRotation.randomRotation(randomizer);
+  randomRotation(&rndRotation, 123);
 
   // check that rndRotation is really a rotation, i.e. that randomRotation() works
   VERIFY( rndRotation.isOrthogonal() );

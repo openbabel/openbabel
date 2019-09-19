@@ -23,11 +23,22 @@
  **********************************************************************/
 
 #include <openbabel/query.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
+#include <algorithm>
 
 using namespace std;
 
 namespace OpenBabel {
+
+  OBQuery::~OBQuery()
+  {
+    std::for_each(m_atoms.begin(), m_atoms.end(), DeleteObject());
+    std::for_each(m_bonds.begin(), m_bonds.end(), DeleteObject());
+  }
+
 
   OBQuery* CompileMoleculeQuery(OBMol *mol, const OBBitVec &mask)
   {

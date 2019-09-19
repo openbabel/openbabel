@@ -53,12 +53,14 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/forcefield.h>
 #ifndef _MSC_VER
   #include <unistd.h>
 #endif
-
+#include <cstdlib>
 using namespace std;
 using namespace OpenBabel;
 
@@ -71,7 +73,7 @@ int main(int argc,char **argv)
   OBMol mol;
   mol.Clear();
 
-  char commandline[100];
+  char commandline[BUFF_SIZE];
   vector<string> vs;
 
   cout << endl;
@@ -83,7 +85,7 @@ int main(int argc,char **argv)
   while (1) {
 
     cout << "command > ";
-    cin.getline(commandline, 100);
+    cin.getline(commandline, BUFF_SIZE - 1);
 
     //
     // commands with no parameters
@@ -100,6 +102,7 @@ int main(int argc,char **argv)
       cout << "save <filename>      save currently loaded molecule to filename" << endl;
       cout << "ff <forcefield>      select the force field" << endl;
       cout << "forcefields          print the available forcefields" << endl;
+      cout << "coord                read in a new set of coordinates" << endl;
       cout << endl;
       cout << "energy               calculate the energy" << endl;
       cout << "ebond                calculate the bond stretching energy" << endl;
@@ -109,6 +112,7 @@ int main(int argc,char **argv)
       cout << "etorsion             calculate the torsional energy" << endl;
       cout << "evdw                 calculate the Van der Waals energy" << endl;
       cout << "eeq                  calculate the electrostatic energy" << endl;
+      cout << "grad                 calculate the gradients at this point" << endl;
       cout << endl;
       cout << "sd <n>               steepest descent energy minimization for n steps" << endl;
       cout << "cg <n>               conjugate gradients energy minimization for n steps" << endl;
@@ -199,6 +203,44 @@ int main(int argc,char **argv)
       continue;
     }
 
+    if (EQn(commandline, "coord", 4)) {
+      do {
+        cin.getline(commandline, BUFF_SIZE - 1);
+        tokenize(vs, commandline);
+      } while(vs.size() == 0);
+      // okay now we read the new coordinates
+      for(unsigned int i = 0; i < mol.NumAtoms(); ++i) {
+        if (vs.size() < 3)
+          break;
+
+        double x = atof(vs[0].c_str());
+        double y = atof(vs[1].c_str());
+        double z = atof(vs[2].c_str());
+        mol.GetAtom(i+1)->SetVector(x, y, z);
+
+        cin.getline(commandline, BUFF_SIZE - 1);
+        tokenize(vs, commandline);        
+      }
+
+      pFF->SetCoordinates(mol);
+      continue;
+    }
+
+    if (EQn(commandline, "grad", 4)) {
+      if (mol.Empty()) {
+        cout << "no molecule loaded." << endl;
+        continue;
+      }
+      cout << endl << "  gradient " << endl;
+      pFF->Energy(true); // make sure gradients are calculated
+      FOR_ATOMS_OF_MOL(atom, mol) {
+        vector3 grad = pFF->GetGradient(&*atom);
+        cout << grad.x() << " " << grad.y() << " " << grad.z() << endl;
+      }
+      cout << endl;
+      continue;
+    }
+
     if (EQn(commandline, "addH", 4)) {
       int num1, num2;
       num1 = mol.NumAtoms();
@@ -261,11 +303,10 @@ int main(int argc,char **argv)
 
       if (!mol.Empty())
         if (!pFF->Setup(mol))
-          cout << "error while initializing the force field (" << vs[1] << ") for this molecule." <<endl;
+          cout << "Error while initializing the force field (" << vs[1] << ") for this molecule." <<endl;
 
       continue;
     }
-
 
     // load <filename>
     if (EQn(commandline, "load", 4)) {

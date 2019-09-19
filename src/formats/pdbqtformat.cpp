@@ -22,7 +22,17 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <openbabel/bond.h>
+#include <openbabel/data.h>
+#include <openbabel/obiter.h>
+#include <openbabel/typer.h>
 
+#include <algorithm>
+#include <cstdlib>
 #include <vector>
 #include <map>
 #include <set>
@@ -296,12 +306,18 @@ namespace OpenBabel
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
 
+    mol.SetChainsPerceived();
+
     // clean out remaining blank lines
-    while(ifs.peek() != EOF && ifs.good() &&
-      (ifs.peek() == '\n' || ifs.peek() == '\r'))
+    std::streampos ipos;
+    do
     {
+      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
     }
+    while(strlen(buffer) == 0 && !ifs.eof() );
+    ifs.seekg(ipos);
+
     mol.SetPartialChargesPerceived();
     return(true);
   }
@@ -664,7 +680,7 @@ namespace OpenBabel
 
   static bool IsImide(OBBond* querybond)
   {
-    if (querybond->GetBO() != 2)
+    if (querybond->GetBondOrder() != 2)
       return(false);
 
     OBAtom* bgn = querybond->GetBeginAtom();
@@ -674,11 +690,6 @@ namespace OpenBabel
       return(true);
 
     return(false);
-  }
-
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
   }
 
   static bool IsAmidine(OBBond* querybond)
@@ -701,7 +712,7 @@ namespace OpenBabel
     }
     if (!c || !n) return(false);
     if (querybond->GetBondOrder() != 1) return(false);
-    if (TotalNumberOfBonds(n) != 3) return false; // must be a degree 3 nitrogen
+    if (n->GetTotalDegree() != 3) return false; // must be a degree 3 nitrogen
 
     // Make sure C is attached to =N
     OBBond *bond;
@@ -724,7 +735,7 @@ namespace OpenBabel
     if ( the_bond->GetBondOrder() != 1 || the_bond->IsAromatic() || 
          the_bond->IsAmide() || IsAmidine(the_bond) || the_bond->IsInRing() )
       return false;
-    if ( ((the_bond->GetBeginAtom())->GetValence() == 1) || ((the_bond->GetEndAtom())->GetValence() == 1) ) {return false;}
+    if ( ((the_bond->GetBeginAtom())->GetExplicitDegree() == 1) || ((the_bond->GetEndAtom())->GetExplicitDegree() == 1) ) {return false;}
     return true;
   }
 
@@ -916,13 +927,14 @@ namespace OpenBabel
               if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != 0)
               {
                 snprintf(type_name,5,"%s",(char*)res->GetAtomID(rotBondTable[rotBondId][bondAtomNum]).c_str());
-                end=0;
+                // AtomIDs may start with space if read from a PDB file (rather than perceived)
+                end = isspace(type_name[0]) ? 1 : 0;
                 // Use sizeof() - 1 to ensure there's room for the NULL termination!
                 while (end < sizeof(type_name) - 1 && type_name[end] && !isspace(type_name[end]))
                   end++;
                 type_name[end] = '\0';
               }
-              snprintf(buffer, BUFF_SIZE, "%s_%d", type_name,
+              snprintf(buffer, BUFF_SIZE, "%s_%d", type_name + (isspace(type_name[0]) ? 1 : 0),
                 rotBondTable[rotBondId][bondAtomNum]->GetIdx());
               ofs << buffer;
               if (bondAtomNum == 0)
@@ -1178,15 +1190,17 @@ namespace OpenBabel
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
+    char icode = sbuf.substr(20,1)[0];
     OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
     if (res == NULL || res->GetName() != resname
-      || res->GetNumString() != resnum)
+      || res->GetNumString() != resnum || res->GetInsertionCode() != icode)
     {
       vector<OBResidue*>::iterator ri;
       for (res = mol.BeginResidue(ri) ; res ; res = mol.NextResidue(ri))
       if (res->GetName() == resname
         && res->GetNumString() == resnum
-        && static_cast<int>(res->GetChain()) == chain)
+        && static_cast<int>(res->GetChain()) == chain
+        && res-> GetInsertionCode() == icode)
         break;
 
       if (res == NULL)
@@ -1195,6 +1209,7 @@ namespace OpenBabel
         res->SetChain(chain);
         res->SetName(resname);
         res->SetNum(resnum);
+        res->SetInsertionCode(icode);
       }
     }
 

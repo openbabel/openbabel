@@ -484,7 +484,7 @@ namespace OpenBabel
     - OBPairData - Arbitrary text key/value data
     - OBPairTemplate - Arbitrary T key/value data
     - OBUnitCell - Storage and manipulation of crystal structure / reciprocal unit cells
-    - AliasData, OBAngleData, OBChiralData, OBCommentData, OBConformerData, OBDOSData, OBElectronicTransitionData,
+    - AliasData, OBAngleData, OBCommentData, OBConformerData, OBDOSData, OBElectronicTransitionData,
       OBExternalBondData, OBGridData, OBMatrixData, OBNasaThermoData, OBOrbitalEnergyData, OBPairData, OBRateData,
       OBRingData, OBRotamerList, OBRotationData, OBSerialNums, OBSetData, OBStereoBase, OBSymmetryData, OBTorsionData, OBUnitCell,
       OBVectorData, OBVibrationData, OBVirtualBond
@@ -567,7 +567,7 @@ namespace OpenBabel
   bonds. Previously only 2^16 atoms or bonds were possible.
 
   The OBNodeBase, OBEdgeBase, and OBGraphBase classes were
-  deprecated. Typedef declarations provide backwards compatibility by
+  deprecated. Typedef declarations provided backwards compatibility by
   mapping to OBAtom, OBBond, and OBMol, respectively.
 
   In addition, this page gives a general list of additions to the library.

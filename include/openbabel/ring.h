@@ -34,6 +34,7 @@ namespace OpenBabel
   class OBMol;
   class OBAtom;
   class OBBond;
+  class vector3;
 
   // class introduction in ring.cpp
   class OBAPI OBRing
@@ -87,7 +88,7 @@ namespace OpenBabel
     //! \return Whether @p i as an atom index is in this ring
     bool   IsInRing(int i)
     {
-      return(_pathset.BitIsOn(i));
+      return(_pathset.BitIsSet(i));
     }
 
     //! Set the parent of this ring to @p m

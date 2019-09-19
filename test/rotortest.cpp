@@ -2,6 +2,8 @@
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/rotor.h>
+#include <openbabel/bond.h>
+#include <openbabel/obutil.h>
 
 #include <iostream>
 #include <string>

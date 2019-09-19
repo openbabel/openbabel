@@ -8,7 +8,6 @@
 
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
@@ -52,6 +51,9 @@
 #include <openbabel/isomorphism.h>
 #include <openbabel/query.h>
 #include <openbabel/canon.h>
+
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 #ifdef HAVE_EIGEN
@@ -176,7 +178,6 @@ OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
 }
 %}
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
 CAST_GENERICDATA_TO(ExternalBondData)
@@ -204,7 +205,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators

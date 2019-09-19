@@ -13,6 +13,12 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+
 #include <openbabel/typer.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -463,8 +469,8 @@ namespace OpenBabel
 
       // Check that both atoms on the double bond have at least one
       // other neighbor, but not more than two other neighbors;
-      int v1 = source->GetValence();
-      int v2 = target->GetValence();
+      int v1 = source->GetExplicitDegree();
+      int v2 = target->GetExplicitDegree();
       if (v1 < 2 || v1 > 3 || v2 < 2 || v2 > 3)
         continue;
 

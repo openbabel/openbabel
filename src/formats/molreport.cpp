@@ -19,6 +19,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 
 using namespace std;
 namespace OpenBabel
@@ -134,7 +139,7 @@ namespace OpenBabel
                  bond->GetIdx(),
                  bond->GetBeginAtomIdx(),
                  bond->GetEndAtomIdx(),
-                 bond->GetBO());
+                 bond->GetBondOrder());
         ofs << buffer << "\n";
       }
 

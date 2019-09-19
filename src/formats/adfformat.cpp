@@ -34,6 +34,14 @@
 
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
+
 
 #include <openbabel/griddata.h>
 
@@ -604,7 +612,8 @@ namespace OpenBabel {
           pmol->SetData(cell);
         }
       }
-      else if (strcmp(buffer, "Energies") == 0) {
+      else if (strcmp(buffer, "Energies") == 0 ||
+               strcmp(buffer, "Energy Decomposition") == 0) {
         // Final energy line looks like this:
         // Total Energy (eV)                   -220.34976964
         while (ifs.getline(buffer, BUFF_SIZE)) {

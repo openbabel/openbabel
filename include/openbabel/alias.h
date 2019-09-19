@@ -16,11 +16,14 @@ GNU General Public License for more details.
 #define OB_ALIAS_H
 
 #include <vector>
+#include <openbabel/generic.h>
 #include <openbabel/shared_ptr.h>
-#include <openbabel/mol.h>
 
 namespace OpenBabel
 {
+  class OBSmartsPattern;
+  class OBMol;
+
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
 #ifndef OBCOMMON

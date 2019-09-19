@@ -31,7 +31,11 @@ GNU General Public License for more details.
 #include <map>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/chains.h>
+#include <openbabel/oberror.h>
+#include <openbabel/obiter.h>
 #include <openbabel/elements.h>
 
 using namespace std;
@@ -139,7 +143,10 @@ static char ChainsResName[RESIDMAX][4] = {
 
 namespace OpenBabel
 {
+  extern OBMessageHandler obErrorLog;
 
+
+  // Initialize the global chainsparser - declared in chains.h
   OBChainsParser chainsparser;
 
   //////////////////////////////////////////////////////////////////////////////
@@ -1019,7 +1026,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL (atom, mol) {
       idx = atom->GetIdx() - 1;
 
-      if (atom->GetHvyValence() == 0) {
+      if (atom->GetHvyDegree() == 0) {
         chains[idx] = ' ';
         resnos[idx] = resno;
         resno++;
@@ -1048,6 +1055,8 @@ namespace OpenBabel
     SetResidueInformation(mol, nukeSingleResidue);
     CleanupMol();
 
+    mol.SetChainsPerceived();
+
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::PerceiveChains", obAuditMsg);
 
@@ -1065,7 +1074,7 @@ namespace OpenBabel
 
     // find un-connected atoms (e.g., HOH oxygen atoms)
     for (atom = mol.BeginAtom(a) ; atom ; atom = mol.NextAtom(a)) {
-      if (atom->GetAtomicNum() == OBElements::Hydrogen || atom->GetHvyValence() != 0)
+      if (atom->GetAtomicNum() == OBElements::Hydrogen || atom->GetHvyDegree() != 0)
         continue;
 
       unsigned int idx = atom->GetIdx() - 1;
@@ -1237,7 +1246,7 @@ namespace OpenBabel
         bitmasks[idx] = 0;
         for ( i = 0 ; i < tmax ; i++ )
           if ( (static_cast<unsigned int>(templ[i].elem)  == atom->GetAtomicNum()) &&
-               (static_cast<unsigned int>(templ[i].count) == atom->GetHvyValence()))
+               (static_cast<unsigned int>(templ[i].count) == atom->GetHvyDegree()))
             bitmasks[idx] |= templ[i].flag;
       }
 

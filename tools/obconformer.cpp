@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
+#include <cstdlib>
+
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
@@ -39,7 +41,6 @@ using namespace std;
 using namespace OpenBabel;
 
 OBRotorList rl;
-OBRandom generator;
 
 int main(int argc,char *argv[])
 {
@@ -93,8 +94,10 @@ int main(int argc,char *argv[])
         pFF->UpdateCoordinates(mol);
         conv.Write(&mol);
       }
-      else
+      else {
         cerr << "Error! Cannot set up force field." << endl;
+        return 1;
+      }
     } // while reading molecules
 
   return(0);

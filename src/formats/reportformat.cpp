@@ -21,6 +21,12 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
 
 using namespace std;
 namespace OpenBabel
@@ -186,6 +192,19 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////////////////
 
+  static bool OldIsChiral(OBMol &mol)
+  {
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen)
+        && atom->GetHvyDegree() > 2
+        && atom->IsChiral())
+        return true;
+    }
+
+    return false;
+  }
+
+
   bool ReportFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
@@ -225,7 +244,7 @@ namespace OpenBabel
     WriteAngles(ofs, mol);
     ofs << "\n" << "\n" << "TORSION ANGLES" << "\n";
     WriteTorsions(ofs, mol);
-    if (mol.IsChiral())
+    if (OldIsChiral(mol)) // TODO: Replace with this current stereo approach
       {
         ofs << "\n" << "\n" << "CHIRAL ATOMS" << "\n";
         WriteChiral(ofs, mol);

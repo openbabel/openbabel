@@ -12,7 +12,11 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "openbabel/babelconfig.h"
-#include "openbabel/mol.h"
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 #include "openbabel/reaction.h"
 #include "openbabel/xml.h"
 #include "openbabel/kinetics.h"

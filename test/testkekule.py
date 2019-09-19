@@ -16,7 +16,7 @@ and so you can quickly develop the tests and try them out.
 
 import unittest
 
-from testbabel import run_exec, executable, log, BaseTest
+from testbabel import run_exec, executable, BaseTest
 
 class TestKekuleAssignment(BaseTest):
     """A series of tests relating to aromaticity/kekule"""
@@ -29,7 +29,7 @@ class TestKekuleAssignment(BaseTest):
         PR#1761638 Error in Aromaticity / Kekulize
         PR#2948661 Trunk fails aromaticity
         """
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # A series of aromatic strings, which should convert to themselves
         self.smiles = [
@@ -51,7 +51,7 @@ class TestKekuleAssignment(BaseTest):
             'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C'
             ]
         for i in range(0, len(self.smiles)):
-            output, error = run_exec(self.smiles[i], "babel -ismi -osmi")
+            output, error = run_exec(self.smiles[i], "obabel -ismi -osmi")
             self.assertEqual(output.rstrip(), self.smiles[i])
 
 class TestKekuleIsotope(BaseTest):
@@ -59,7 +59,7 @@ class TestKekuleIsotope(BaseTest):
 
     def testSMItoCAN(self):
         """PR#1842055- bad isotope canonicalization"""
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # A series of isotopamers, and their canonical forms
         self.smiles = [
@@ -82,7 +82,7 @@ class TestKekuleIsotope(BaseTest):
             '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
             ]
         for i in range(0, len(self.smiles)):
-            output, error = run_exec(self.smiles[i], "babel -ismi -ocan")
+            output, error = run_exec(self.smiles[i], "obabel -ismi -ocan")
             self.assertEqual(output.rstrip(), self.cansmis[i])
 
 class TestKekuleCrashers(BaseTest):
@@ -90,7 +90,7 @@ class TestKekuleCrashers(BaseTest):
 
     def testXYZtoXYZ(self):
         """PR#2956135- crash in kekulize"""
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # A series of isotopamers, and their canonical forms
         self.xyz = """39
@@ -135,7 +135,7 @@ H         -0.11977       -0.69915        5.13149
 H         -0.93979        0.86887        4.93917
 H          0.78936        0.80651        5.29109
 """
-        output, error = run_exec(self.xyz, "babel -ixyz -oxyz")
+        output, error = run_exec(self.xyz, "obabel -ixyz -oxyz")
         self.assertConverted(error, 1)
 
 if __name__ == "__main__":

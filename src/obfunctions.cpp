@@ -939,7 +939,7 @@ namespace OpenBabel
   // Set the count of implicit hydrogens according to typical valences.
   void OBAtomAssignTypicalImplicitHydrogens(OBAtom* atom)
   {
-    unsigned int bosum = atom->BOSum();
+    unsigned int bosum = atom->GetExplicitValence();
     unsigned int valence = GetTypicalValence(atom->GetAtomicNum(), bosum, atom->GetFormalCharge());
     atom->SetImplicitHCount(valence - bosum);
   }

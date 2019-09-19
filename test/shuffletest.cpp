@@ -1,6 +1,8 @@
 #include "obtest.h"
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/obiter.h>
+#include <openbabel/atom.h>
 
 #include <openbabel/graphsym.h>
 #include <openbabel/stereo/tetrahedral.h>
@@ -56,9 +58,9 @@ void compareMolecules(OBMol *mol1, OBMol *mol2)
       continue;
 
     OB_ASSERT( a1->GetAtomicNum() == a2->GetAtomicNum() );
-    OB_ASSERT( a1->GetValence() == a2->GetValence() );
-    OB_ASSERT( a1->GetHvyValence() == a2->GetHvyValence() );
-    OB_ASSERT( a1->GetHeteroValence() == a2->GetHeteroValence() );
+    OB_ASSERT( a1->GetExplicitDegree() == a2->GetExplicitDegree() );
+    OB_ASSERT( a1->GetHvyDegree() == a2->GetHvyDegree() );
+    OB_ASSERT( a1->GetHeteroDegree() == a2->GetHeteroDegree() );
     OB_ASSERT( a1->GetImplicitHCount() == a2->GetImplicitHCount() );
   }
 

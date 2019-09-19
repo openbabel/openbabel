@@ -6,6 +6,7 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/elements.h>
+#include <openbabel/atom.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -183,10 +184,10 @@ void test_IsOnSameAtom1()
   
   OB_ASSERT( mol.GetAtomById(1) );
   OB_ASSERT( mol.GetAtomById(1)->GetAtomicNum() == OBElements::Carbon );
-  OB_ASSERT( mol.GetAtomById(1)->GetValence() == 3);
+  OB_ASSERT( mol.GetAtomById(1)->GetExplicitDegree() == 3);
   OB_ASSERT( mol.GetAtomById(3) );
   OB_ASSERT( mol.GetAtomById(3)->GetAtomicNum() == OBElements::Carbon );
-  OB_ASSERT( mol.GetAtomById(3)->GetValence() == 3);
+  OB_ASSERT( mol.GetAtomById(3)->GetExplicitDegree() == 3);
 
   OB_ASSERT( mol.GetAtomById(4) );
   OB_ASSERT( mol.GetAtomById(4)->GetAtomicNum() == 9 );

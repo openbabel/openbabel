@@ -27,6 +27,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 
 #include <openbabel/babelconfig.h>
 #include <iostream>
+#include <cstdlib>
 #include<openbabel/op.h>
 #include<openbabel/mol.h>
 #include<openbabel/forcefield.h>
@@ -53,7 +54,8 @@ namespace OpenBabel
           "Typical usage: obabel infile.xxx -O outfile.yy --energy --log\n"
           " options:         description\n"
           " --log        output a log of the energies (default = no log)\n"
-          " --ff #       select a forcefield (default = Ghemical)\n"
+          " --epsilon #  set the dielectric constant for electrostatics\n"
+          " --ff #       select a forcefield (default = MMFF94)\n"
           " The hydrogens are always made explicit before energy evaluation.\n"
           " The energy is put in an OBPairData object \"Energy\" which is\n"
           "   accessible via an SDF or CML property or --append (to title).\n"
@@ -81,10 +83,14 @@ namespace OpenBabel
     bool log = false;
 
     string ff = "MMFF94";
+    double epsilon = 1.0;
     OpMap::const_iterator iter = pmap->find("ff");
     if(iter!=pmap->end())
       ff = iter->second;
     OBForceField* pFF = OBForceField::FindForceField(ff);
+    iter = pmap->find("epsilon");
+    if (iter!=pmap->end())
+      epsilon = atof(iter->second.c_str());
 
     iter = pmap->find("log");
     if(iter!=pmap->end())
@@ -94,6 +100,7 @@ namespace OpenBabel
     pFF->SetLogFile(&clog);
     pFF->SetLogLevel(log ? OBFF_LOGLVL_MEDIUM : OBFF_LOGLVL_NONE);
 
+    pFF->SetDielectricConstant(epsilon);
     if (!pFF->Setup(*pmol)) {
       cerr  << "Could not setup force field." << endl;
       return false;
@@ -134,6 +141,7 @@ namespace OpenBabel
           " --ff #       select a forcefield (default = Ghemical)\n"
           " --steps #    specify the maximum number of steps (default = 2500)\n"
           " --cut        use cut-off (default = don't use cut-off)\n"
+          " --epsilon #  relative dielectric constant (default = 1.0)\n"
           " --rvdw #     specify the VDW cut-off distance (default = 6.0)\n"
           " --rele #     specify the Electrostatic cut-off distance (default = 10.0)\n"
           " --freq #     specify the frequency to update the non-bonded pairs (default = 10)\n"
@@ -166,6 +174,7 @@ namespace OpenBabel
     bool sd = false;
     bool cut = false;
     bool newton = true;
+    double epsilon = 1.0;
     double rvdw = 6.0;
     double rele = 10.0;
     int freq = 10;
@@ -197,6 +206,10 @@ namespace OpenBabel
     if(iter!=pmap->end())
       steps = atoi(iter->second.c_str());
 
+    iter = pmap->find("epsilon");
+    if(iter!=pmap->end())
+      epsilon = atof(iter->second.c_str());
+
     iter = pmap->find("rvdw");
     if(iter!=pmap->end())
       rvdw = atof(iter->second.c_str());
@@ -225,6 +238,7 @@ namespace OpenBabel
     pFF->SetVDWCutOff(rvdw);
     pFF->SetElectrostaticCutOff(rele);
     pFF->SetUpdateFrequency(freq);
+    pFF->SetDielectricConstant(epsilon);
     pFF->EnableCutOff(cut);
 
     if (!pFF->Setup(*pmol)) {
