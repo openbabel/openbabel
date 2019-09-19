@@ -1,1 +1,0 @@
-/usr/bin/cc       CMakeFiles/cmTryCompileExec1641980965.dir/CheckIncludeFile.c.o  -o cmTryCompileExec1641980965 -rdynamic 
