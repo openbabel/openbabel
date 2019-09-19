@@ -71,7 +71,7 @@ set(origtests
     unitcell
     )
 set (atom_parts 1 2 3 4)
-set (ffmmff94_parts 1 2)
+set (ffmmff94_parts 1 2 3 4 5 6)
 set (math_parts 1 2 3 4)
 set (pdbreadfile_parts 1 2 3 4)
 
@@ -275,7 +275,7 @@ endif (PYTHON_BINDINGS)
 function(add_depict_test testname obfile image_file ref_image)
   set(depict_dir ${CMAKE_BINARY_DIR}/depict_test)
   add_test(NAME test_${testname} COMMAND ${CMAKE_SOURCE_DIR}/test/test_depiction.sh
-      ${CMAKE_BINARY_DIR}/bin/babel ${ImageMagick_convert_EXECUTABLE}
+      ${CMAKE_BINARY_DIR}/bin/obabel ${ImageMagick_convert_EXECUTABLE}
       ${ImageMagick_compare_EXECUTABLE} ${obfile} ${depict_dir}
       ${image_file} ${ref_image})
   set_tests_properties(test_${testname} PROPERTIES

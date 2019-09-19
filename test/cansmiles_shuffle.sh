@@ -7,11 +7,11 @@
 #
 #	  * Writes the SMILES (repeats it) N times
 #
-#	  * Runs the N repeated SMILES through "babel ... -o smi -xC", (the
+#	  * Runs the N repeated SMILES through "obabel ... -o smi -xC", (the
 #	    "anti-canonicalizer" option that generates randomly-ordered
 #	    SMILES) to generate N different but equivalent SMILES.
 #
-#	  * The N random SMILES are canonicalized using "babel ... -o can",
+#	  * The N random SMILES are canonicalized using "obabel ... -o can",
 #	    which in theory should result in N identical SMILES.
 #
 #	  * The N canonical smiles are run through "sort -u" (sort-unique),
@@ -54,10 +54,10 @@ while read -r smiles ; do
       /bin/echo $smiles
       i=`expr $i + 1`
    done
-  ) | babel -i smi -o smi -xC >$tmpfile 2>/dev/null 
+  ) | obabel -i smi -o smi -xC >$tmpfile 2>/dev/null 
 
   # Canonicalize them: They should all come out the same
-  babel $tmpfile -o can 2>/dev/null | sort -u >$canfile
+  obabel $tmpfile -o can 2>/dev/null | sort -u >$canfile
 
   # We should only have one SMILES now.  Any more (or zero) is an error.
   count=`wc --lines <$canfile`

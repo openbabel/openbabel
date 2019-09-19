@@ -711,11 +711,11 @@ namespace OpenBabel {
 
                     errorMsg << "To convert this input into multiple separate"
                              << " output files, with one molecule per file, try:\n"
-                             << "babel [input] [ouptut] -m\n\n";
+                             << "obabel [input] [output] -m\n\n";
 
                     errorMsg << "To pick one particular molecule"
                              << " (e.g., molecule 4), try:\n"
-                             << "babel -f 4 -l 4 [input] [output]" << endl;
+                             << "obabel -f 4 -l 4 [input] [output]" << endl;
 
                     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 

@@ -815,7 +815,7 @@ namespace OpenBabel
           continue;
       }
 
-      elecalc.qq = KCAL_TO_KJ * 332.17 * a->GetPartialCharge() * b->GetPartialCharge();
+      elecalc.qq = KCAL_TO_KJ * 332.17 * a->GetPartialCharge() * b->GetPartialCharge() / _epsilon;
 
       if (elecalc.qq) {
         elecalc.a = &*a;

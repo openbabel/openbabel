@@ -24,25 +24,25 @@ class TestSym(BaseTest):
 
     def testInChItoSMI(self):
         """Verify that the InChI is read correctly"""
-        output, error = run_exec(self.inchi, "babel -iinchi -ocan")
+        output, error = run_exec(self.inchi, "obabel -iinchi -ocan")
         self.assertEqual(output.rstrip(), self.cansmi)
 
     def testSMItoInChI(self):
         """Verify that all molecules give the same InChI"""
-        output, error = run_exec("\n".join(self.smiles), "babel -ismi -oinchi")
+        output, error = run_exec("\n".join(self.smiles), "obabel -ismi -oinchi")
         output = "\n".join([x.rstrip() for x in output.split("\n")])
         self.assertEqual(output.rstrip(), "\n".join([self.inchi] * len(self.smiles)))
 
     def testSMItoCAN(self):
         """Verify that all molecules give the same cansmi"""
-        output, error = run_exec("\n".join(self.smiles), "babel -ismi -ocan")
+        output, error = run_exec("\n".join(self.smiles), "obabel -ismi -ocan")
         output = "\n".join([x.rstrip() for x in output.split("\n")])
         self.assertEqual(output.rstrip(), "\n".join([self.cansmi] * len(self.smiles)))
 
     def testSMIthruXML(self):
         """Verify that roundtripping through CML preserves stereo"""
-        output, error = run_exec("\n".join(self.smiles), "babel -ismi -ocml tmp.cml")
-        output, error = run_exec(output.rstrip(), "babel -icml tmp.cml -ocan")
+        output, error = run_exec("\n".join(self.smiles), "obabel -ismi -O tmp.cml")
+        output, error = run_exec(output.rstrip(), "obabel -icml tmp.cml -ocan")
         output = "\n".join([x.rstrip() for x in output.split("\n")])
         self.assertEqual(output.rstrip(), "\n".join([self.cansmi] * len(self.smiles)))
         os.remove("tmp.cml")
@@ -51,7 +51,7 @@ class TestTetSym(TestSym):
     """A series of tests relating to tetrahedral symmetry"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # The following all represent the same molecule
         self.cansmi = "C[C@](Br)(Cl)F"
@@ -88,7 +88,7 @@ class TestCisTransSym(TestSym):
     """A series of tests relating to cistrans symmetry"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # The following all represent the same molecule
         self.cansmi = "Cl/C=C/C=C\\Br"
@@ -106,7 +106,7 @@ class TestLonePairTetSym(TestSym):
     """A series of tests relating to tet symmetry involving a lone pair"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # The following all represent the same molecule
         self.cansmi = "C[S@](=O)Cl"
@@ -122,7 +122,7 @@ class TestRingBondCisTransSym(TestSym):
     """A series of tests relating to tet symmetry involving a lone pair"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
 
         # The following all represent the same molecule
         self.cansmi = r"I/C=C/1\CN1"
@@ -138,7 +138,7 @@ class TestConversions(BaseTest):
     """A series of tests relating to file format conversions and symmetry"""
 
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
         self.data = [
 ('ClC=CF', 'FC=CCl',       'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H'),
 ('ClC=CF', 'FC=CCl',       'InChI=1S/C2H2ClF/c3-1-2-4/h1-2H'),
@@ -160,9 +160,9 @@ class TestConversions(BaseTest):
         # the InChI on the right.
         # The canonical smiles (in the middle) were derived from the SMILES.
         for smiles, can, inchi in self.data:
-            output, error = run_exec(smiles, "babel -ismi -oinchi")
+            output, error = run_exec(smiles, "obabel -ismi -oinchi")
             self.assertEqual(output.rstrip(), inchi)
-            output, error = run_exec(inchi, "babel -iinchi -ocan")
+            output, error = run_exec(inchi, "obabel -iinchi -ocan")
             self.assertEqual(output.rstrip(), can)
 
     def parseMDL(self, text):
@@ -207,7 +207,7 @@ class TestConversions(BaseTest):
 ]
         for i, (atompar, bondstereo) in enumerate(data):
             smiles, can = self.data[i][0:2]
-            output, error = run_exec(smiles, "babel -ismi -osdf --gen3d")
+            output, error = run_exec(smiles, "obabel -ismi -osdf --gen3d")
             atoms, bonds = self.parseMDL(output)
             parities = [atom['parity'] for atom in atoms]
             parities.sort()
@@ -246,12 +246,12 @@ class TestConversions(BaseTest):
             if i in [7, 8, 9]: continue # perception of S=O from XYZ fails
 
             smiles, can = self.data[i][0:2]
-            output, error = run_exec(smiles, "babel -ismi -oxyz --gen3d")
+            output, error = run_exec(smiles, "obabel -ismi -oxyz --gen3d")
 
-            canoutput, error = run_exec(output, "babel -ixyz -ocan")
+            canoutput, error = run_exec(output, "obabel -ixyz -ocan")
             self.assertEqual(canoutput.rstrip(), can)
 
-            sdfoutput, error = run_exec(output, "babel -ixyz -osdf")
+            sdfoutput, error = run_exec(output, "obabel -ixyz -osdf")
             atoms, bonds = self.parseMDL(sdfoutput)
             parities = [atom['parity'] for atom in atoms]
             parities.sort()
@@ -267,11 +267,11 @@ class TestConversions(BaseTest):
         # the SMILES strings in data[x][0] below.
         filename = self.getTestFile("testsym_2Dtests.sdf")
 
-        output, error = run_exec("babel -isdf %s -ocan" % filename)
+        output, error = run_exec("obabel -isdf %s -ocan" % filename)
         for i, smiles in enumerate(output.rstrip().split("\n")):
             self.assertEqual(smiles.rstrip(), self.data[i][1])
 
-        output, error = run_exec("babel -isdf %s -oinchi" % filename)
+        output, error = run_exec("obabel -isdf %s -oinchi" % filename)
         for i, inchi in enumerate(output.rstrip().split("\n")):
             self.assertEqual(inchi.rstrip(), self.data[i][2])
 
@@ -315,10 +315,10 @@ class TestConversions(BaseTest):
         for i, (atompar, bondstereo) in enumerate(data):
             if i == 3:
                 smiles, can = self.data[6][0:2]
-                output, error = run_exec(smiles, "babel -ismi -osdf -aS")
+                output, error = run_exec(smiles, "obabel -ismi -osdf -aS")
             else:
                 smiles, can = self.data[i + 4][0:2]
-                output, error = run_exec(smiles, "babel -ismi -osdf")
+                output, error = run_exec(smiles, "obabel -ismi -osdf")
             atoms, bonds = self.parseMDL(output)
             parities = [atom['parity'] for atom in atoms]
             parities.sort()
@@ -326,22 +326,22 @@ class TestConversions(BaseTest):
             stereos.sort()
             self.assertEqual(atompar, parities)
             self.assertEqual(bondstereo, stereos)
-            output, error = run_exec(output, "babel -isdf -as -ocan")
+            output, error = run_exec(output, "obabel -isdf -as -ocan")
             self.assertEqual(output.rstrip(), can)
 
 
 class TestStereoConversion(BaseTest):
     """Random tests relating to roundtripping stereochemistry"""
     def setUp(self):
-        self.canFindExecutable("babel")
+        self.canFindExecutable("obabel")
     def testInChIToSMILES_Bug(self):
         """PR#2101034- InChI <-> SMILES conv misrepresents stereo"""
         test_inchi = 'InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3+'
-        output, error = run_exec(test_inchi, "babel -iinchi -osmi")
+        output, error = run_exec(test_inchi, "obabel -iinchi -osmi")
         self.assertEqual(output.rstrip(), "C=C/C=C/c1ccccc1")
 
         test_smiles = "C=C\C=C/c1ccccc1"
-        output, error = run_exec(test_smiles, "babel -ismi -oinchi")
+        output, error = run_exec(test_smiles, "obabel -ismi -oinchi")
         self.assertEqual(output.rstrip(), "InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3-")
     def testChiralToLonePair(self):
         """PR#3058701 - Handle stereochemistry at lone pair on S"""
@@ -351,11 +351,11 @@ class TestStereoConversion(BaseTest):
         can = 'C[S@](=O)Cl'
         smiles = [can, '[S@](Cl)(=O)C', 'O=[S@](Cl)C']
         for smile in smiles:
-            output, error = run_exec(smile, "babel -ismi -ocan")
+            output, error = run_exec(smile, "obabel -ismi -ocan")
             self.assertEqual(output.rstrip(), can)
         # Check that regular chiral S still work fine
         smi = "[S@](=O)(=N)(C)O"
-        output, error = run_exec(smi, "babel -ismi -osmi")
+        output, error = run_exec(smi, "obabel -ismi -osmi")
         self.assertEqual(output.rstrip(), smi)
 
 del TestSym # remove base class to avoid tests
