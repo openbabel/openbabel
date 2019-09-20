@@ -67,9 +67,9 @@ else() # Windows - bin dir = lib dir to load libraries
   endif()
 endif()
 if(NOT DEFINED OB_INCLUDE_DIRS)
-  set(OB_INCLUDE_DIRS "include/openbabel-2.0")
+  set(OB_INCLUDE_DIRS "include/openbabel-3.0")
 endif()
-set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel2_EXPORTS.cmake")
+set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel3_EXPORTS.cmake")
 # Ensure a fresh file is made each time CMake is run
 file(REMOVE "${OB_EXPORTS_FILE}")
 
@@ -435,9 +435,9 @@ configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
   DESTINATION ${OB_INCLUDE_DIRS}/openbabel)
 if(NOT MSVC)
-  configure_file(${openbabel_SOURCE_DIR}/openbabel-2.0.pc.cmake
-    ${openbabel_BINARY_DIR}/openbabel-2.0.pc @ONLY)
-  install(FILES ${openbabel_BINARY_DIR}/openbabel-2.0.pc
+  configure_file(${openbabel_SOURCE_DIR}/openbabel-3.0.pc.cmake
+    ${openbabel_BINARY_DIR}/openbabel-3.0.pc @ONLY)
+  install(FILES ${openbabel_BINARY_DIR}/openbabel-3.0.pc
     DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 endif()
 
@@ -631,37 +631,37 @@ add_subdirectory(scripts)
 option(MINIMAL_BUILD "Disable full build" OFF)
 
 # Create the Config and ConfigVersion files in the build directory, useful to
-# build against an uninstalled OpenBabel build. Simply set OpenBabel2_DIR to
-# point at the build directory and call find_package(OpenBabel2)
-set(OpenBabel2_INCLUDE_DIRS
+# build against an uninstalled OpenBabel build. Simply set OpenBabel3_DIR to
+# point at the build directory and call find_package(OpenBabel3)
+set(OpenBabel3_INCLUDE_DIRS
   "${openbabel_SOURCE_DIR}/include"
   "${openbabel_BINARY_DIR}/include")
-configure_file("${openbabel_SOURCE_DIR}/OpenBabel2Config.cmake.in"
-  "${openbabel_BINARY_DIR}/OpenBabel2Config.cmake" @ONLY)
-configure_file("${openbabel_SOURCE_DIR}/OpenBabel2ConfigVersion.cmake.in"
-  "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake" @ONLY)
+configure_file("${openbabel_SOURCE_DIR}/OpenBabel3Config.cmake.in"
+  "${openbabel_BINARY_DIR}/OpenBabel3Config.cmake" @ONLY)
+configure_file("${openbabel_SOURCE_DIR}/OpenBabel3ConfigVersion.cmake.in"
+  "${openbabel_BINARY_DIR}/OpenBabel3ConfigVersion.cmake" @ONLY)
 
 # Now to configure the installed config file.
-set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/cmake/openbabel2")
-set(OpenBabel2_INCLUDE_DIRS "\${OpenBabel2_INSTALL_PREFIX}/${OB_INCLUDE_DIRS}")
+set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/cmake/openbabel3")
+set(OpenBabel3_INCLUDE_DIRS "\${OpenBabel3_INSTALL_PREFIX}/${OB_INCLUDE_DIRS}")
 set(OB_EXPORTS_FILE
-  "\${OpenBabel2_INSTALL_PREFIX}/${OB_CONFIG_DIR}/OpenBabel2_EXPORTS.cmake")
+  "\${OpenBabel3_INSTALL_PREFIX}/${OB_CONFIG_DIR}/OpenBabel3_EXPORTS.cmake")
 set(REL_REF)
 if(NOT WIN32)
   set(REL_REF "/../../..")
 endif()
-configure_file("${openbabel_SOURCE_DIR}/OpenBabel2Config.cmake.in"
-  "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake" @ONLY)
+configure_file("${openbabel_SOURCE_DIR}/OpenBabel3Config.cmake.in"
+  "${openbabel_BINARY_DIR}/OpenBabel3ConfigInstall.cmake" @ONLY)
 
 install(EXPORT openbabel-targets
   DESTINATION "${OB_CONFIG_DIR}"
-  FILE OpenBabel2_EXPORTS.cmake
+  FILE OpenBabel3_EXPORTS.cmake
   COMPONENT Development)
-install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigInstall.cmake"
+install(FILES "${openbabel_BINARY_DIR}/OpenBabel3ConfigInstall.cmake"
   DESTINATION ${OB_CONFIG_DIR}
   COMPONENT Development
-  RENAME OpenBabel2Config.cmake)
-install(FILES "${openbabel_BINARY_DIR}/OpenBabel2ConfigVersion.cmake"
+  RENAME OpenBabel3Config.cmake)
+install(FILES "${openbabel_BINARY_DIR}/OpenBabel3ConfigVersion.cmake"
   DESTINATION ${OB_CONFIG_DIR}
   COMPONENT Development)
 
