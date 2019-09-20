@@ -155,7 +155,7 @@ namespace OpenBabel {
         "  I  Inchified SMILES\n"
         "  h  Output explicit hydrogens as such\n"
         "  i  Do not include isotopic or chiral markings\n"
-        "  k  Create Kekule SMILES (the default is aromatic SMILES)\n"
+        "  k  Create Kekule SMILES instead of aromatic\n"
         "  n  No molecule name\n"
         "  r  Radicals lower case eg ethyl is Cc\n"
         "  t  Molecule name only\n"
