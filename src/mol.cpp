@@ -2227,10 +2227,6 @@ namespace OpenBabel
                 if(res) 
                 {
                   res->AddAtom(h);
-
-                  // Give the new atom a pointer back to the residue
-                  h->SetResidue(res);
-
                   res->SetAtomID(h,aname);
                   
                   //hydrogen should inherit hetatm status of heteroatom (default is false)
