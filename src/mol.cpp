@@ -2223,7 +2223,8 @@ namespace OpenBabel
                 string aname = "H";
 
                 // Add the new H atom to the appropriate residue list
-                OBResidue *res = atom->GetResidue();
+                //but avoid doing perception by checking for existence of residue
+                OBResidue *res = atom->HasResidue() ? atom->GetResidue() : NULL;
                 if(res) 
                 {
                   res->AddAtom(h);
