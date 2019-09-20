@@ -2217,14 +2217,16 @@ namespace OpenBabel
               }
             if(badh == 0 || badh < NumConformers()) 
               {
+                // Add the new H atom to the appropriate residue list
+                //but avoid doing perception by checking for existence of residue
+                //just in case perception is trigger, make sure GetResidue is called
+                //before adding the hydrogen to the molecule
+                OBResidue *res = atom->HasResidue() ? atom->GetResidue() : NULL;
                 h = NewAtom();
                 h->SetType("H");
                 h->SetAtomicNum(1);
                 string aname = "H";
 
-                // Add the new H atom to the appropriate residue list
-                //but avoid doing perception by checking for existence of residue
-                OBResidue *res = atom->HasResidue() ? atom->GetResidue() : NULL;
                 if(res) 
                 {
                   res->AddAtom(h);
