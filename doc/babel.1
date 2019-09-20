@@ -40,7 +40,7 @@ this only works when the option is the last on the line; with
 no such restriction applies. It further has a shortcut for entering SMILES
 strings, which can be used in place of an input file.
 .Pp
-Open Babel is also a complete programmers toolkit for developing 
+Open Babel is also a complete programmers toolkit for developing
 chemistry software. For more information, se the Open Babel web pages
 \%<\fBhttp://openbabel.org/\fR>.
 .Sh OPTIONS
@@ -52,8 +52,8 @@ Enter SMILES string and use it in place of an input file. The SMILES string
 should be enclosed in quotation marks. More than one can be used, and a molecule
 title can be included if enclosed in quotes.
 .It Fl a Ar options
-Format-specific input options. See 
-.Fl H Ar format-ID 
+Format-specific input options. See
+.Fl H Ar format-ID
 for options allowed by a particular format
 .It Fl -addtotitle
 Append text to the current molecule title
@@ -62,13 +62,13 @@ Append the molecular formula after the current molecule title
 .It Fl b
 Convert dative bonds: e.g., [N+]([O-])=O to N(=O)=O
 .It Fl c
-Center atomic coordinates at (0,0,0) 
+Center atomic coordinates at (0,0,0)
 .It Fl C
 Combine molecules in first file with others having the same name
 .It Fl e
 Continue after errors
 .It Fl d
-Delete Hydrogens 
+Delete Hydrogens
 .It Fl --errorlevel Ar 2
 Filter the level of errors and warnings displayed:
 .br
@@ -82,15 +82,15 @@ For multiple entry input, start import with molecule # as the first entry
 .It Fl F
 Output the available fingerprint types
 .It Fl h
-Add hydrogens 
+Add hydrogens
 .It Fl H
-Output usage information 
+Output usage information
 .It Fl H Ar format-ID
 Output formatting information and options for format specified
 .It Fl Hall
 Output formatting information and options for all formats
 .It Fl i<format-ID>
-Specifies input format, see below for the available formats 
+Specifies input format, see below for the available formats
 .It Fl j
 .It Fl -join
 Join all input molecules into a single output molecule entry
@@ -109,36 +109,36 @@ specified output format
 .It Fl l Ar #
 For multiple entry input, stop import with molecule # as the last entry
 .It Fl o Ar format-ID
-Specifies output format, see below for the available formats 
+Specifies output format, see below for the available formats
 .It Fl O Ar outfile
 Specify the output file. This option applies to
 .Nm obabel
 only.
 .It Fl p
 Add Hydrogens appropriate for pH (use transforms in phmodel.txt)
-.It Fl -property 
-Add or replace a property (e.g., in an MDL SD file) 
+.It Fl -property
+Add or replace a property (e.g., in an MDL SD file)
 .It Fl s Ar SMARTS
-Convert only molecules matching the SMARTS pattern specified 
+Convert only molecules matching the SMARTS pattern specified
 .It Fl -separate
 Separate disconnected fragments into individual molecular records
 .It Fl t
-All input files describe a single molecule 
+All input files describe a single molecule
 .It Fl -title Ar title
 Add or replace molecular title
 .It Fl x Ar options
-Format-specific output options. See 
+Format-specific output options. See
 .Fl H Ar format-ID
 for options allowed by a particular format
 .It Fl v Ar SMARTS
-Convert only molecules \fBNOT\fP matching SMARTS pattern specified 
+Convert only molecules \fBNOT\fP matching SMARTS pattern specified
 .It Fl V
-Output version number and exit 
+Output version number and exit
 .It Fl z
 Compress the output with gzip
 .El
 .Sh "FILE FORMATS"
-The following formats are currently supported by Open Babel: 
+The following formats are currently supported by Open Babel:
 .Bl -item -offset indent -compact
 .It
 acr -- Carine ASCI Crystal
@@ -193,12 +193,12 @@ csr -- Accelrys/MSI Quanta CSR format [Write-only]
 .It
 cssr -- CSD CSSR format [Write-only]
 .It
-ct -- ChemDraw Connection Table format 
+ct -- ChemDraw Connection Table format
 .It
 dmol -- DMol3 coordinates format
 .It
 ent -- Protein Data Bank format
-.It 
+.It
 fa -- FASTA format [Write-only]
 .It
 fasta -- FASTA format [Write-only]
@@ -346,11 +346,11 @@ yob -- YASARA.org YOB format
 zin -- ZINDO input format [Write-only]
 .El
 .Sh "FORMAT OPTIONS"
-Individual file formats may have additional formatting options. 
+Individual file formats may have additional formatting options.
 .Pp
-Input format options are preceded by 'a', e.g. \-as 
+Input format options are preceded by 'a', e.g. \-as
 .Pp
-Output format options are preceded by 'x', e.g. \-xn 
+Output format options are preceded by 'x', e.g. \-xn
 .Pp
 For further specific information and options, use \-H<format-type>
 .br
@@ -365,32 +365,32 @@ Split a multi-molecule file into new1.smi, new2.smi, etc.:
 .Sh SEE ALSO
 .Xr obenergy 1 ,
 .Xr obfit 1 ,
-.Xr obgrep 1 , 
-.Xr obminimize 1 , 
-.Xr obprop 1 , 
+.Xr obgrep 1 ,
+.Xr obminimize 1 ,
+.Xr obprop 1 ,
 .Xr obrotate 1 ,
 .Xr obrotamer 1 .
 The web pages for Open Babel can be found at:
-\%<\fBhttp://openbabel.org/\fR> 
+\%<\fBhttp://openbabel.org/\fR>
 .Sh AUTHORS
 .An -nosplit
 A cast of many, including the currrent maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
-.An Michael Banck , 
-and innumerable others who have contributed fixes and additions. 
-For more contributors to Open Babel, see 
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
 \%<\fBhttp://openbabel.org/wiki/THANKS\fR>
 .Sh COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. 
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 .br
-Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison 
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
 .Pp
- This program is free software; you can redistribute it and/or modify
+This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
 .Pp
- This program is distributed in the hope that it will be useful, but
+This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.
