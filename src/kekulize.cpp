@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/kekulize.h>
 #include <cstdlib>
+#include <cstring>
 
 namespace OpenBabel
 {
@@ -201,6 +202,7 @@ namespace OpenBabel
 
     // Create lookup of degrees
     unsigned int *degrees = (unsigned int*)malloc(sizeof(unsigned int)*atomArraySize);
+    memset(degrees, 0, sizeof(unsigned int)*atomArraySize);
     std::vector<OBAtom*> degreeOneAtoms;
     FOR_ATOMS_OF_MOL(atom, m_mol) {
       unsigned int atom_idx = atom->GetIdx();
