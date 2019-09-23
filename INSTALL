@@ -7,7 +7,7 @@ installation instructions, please see:
 
 Requirements
 ============
- -- CMake 2.8.10 or later
+ -- CMake 3.1 or later
  -- Eigen 3.0 or later (optional)
  -- libxml2 (optional)
  -- zlib (optional)
