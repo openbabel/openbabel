@@ -3,6 +3,8 @@ if(NOT EMBED_OPENBABEL)
   cmake_minimum_required(VERSION 3.1)
 endif()
 
+set(CMAKE_CXX_STANDARD 11)
+
 project(openbabel)
 set(CMAKE_MODULE_PATH ${openbabel_SOURCE_DIR}/cmake/modules)
 
