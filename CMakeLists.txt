@@ -67,7 +67,7 @@ else() # Windows - bin dir = lib dir to load libraries
   endif()
 endif()
 if(NOT DEFINED OB_INCLUDE_DIRS)
-  set(OB_INCLUDE_DIRS "include/openbabel-3.0")
+  set(OB_INCLUDE_DIRS "include/openbabel3")
 endif()
 set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel3_EXPORTS.cmake")
 # Ensure a fresh file is made each time CMake is run
@@ -435,9 +435,9 @@ configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
   DESTINATION ${OB_INCLUDE_DIRS}/openbabel)
 if(NOT MSVC)
-  configure_file(${openbabel_SOURCE_DIR}/openbabel-3.0.pc.cmake
-    ${openbabel_BINARY_DIR}/openbabel-3.0.pc @ONLY)
-  install(FILES ${openbabel_BINARY_DIR}/openbabel-3.0.pc
+  configure_file(${openbabel_SOURCE_DIR}/openbabel-3.pc.cmake
+    ${openbabel_BINARY_DIR}/openbabel-3.pc @ONLY)
+  install(FILES ${openbabel_BINARY_DIR}/openbabel-3.pc
     DESTINATION ${LIB_INSTALL_DIR}/pkgconfig)
 endif()
 
