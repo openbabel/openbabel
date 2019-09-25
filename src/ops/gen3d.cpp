@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #include <openbabel/distgeom.h>
 #include <openbabel/forcefield.h>
 
+#include <cstdlib> // needed for strtol and gcc 4.8
+
 namespace OpenBabel
 {
 
