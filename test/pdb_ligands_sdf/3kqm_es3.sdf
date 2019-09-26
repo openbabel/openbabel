@@ -1,0 +1,102 @@
+3KQM_ES3_A_290
+  RCSB PDB12061709293D
+Coordinates from PDB:3KQM:A:290 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   26.7400   42.5740   16.1100  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4980   44.2390   16.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2280   44.4040   17.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5990   45.6940   18.0070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1170   46.3290   16.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4400   45.4220   16.1210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+BR01
+A    2
+C02
+A    3
+C03
+A    4
+N04
+A    5
+C05
+A    6
+N06
+M  END
+>  <InstanceId>
+3KQM_ES3_A_290
+
+>  <ChemCompId>
+ES3
+
+>  <PdbId>
+3KQM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N2 Br
+
+>  <Name>
+4-bromo-1H-imidazole
+
+>  <SystematicName>
+4-bromo-1H-imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H3 Br N2
+
+>  <MolecularWeight>
+146.973
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H3BrN2/c4-3-1-5-2-6-3/h1-2H,(H,5,6)
+
+>  <InChIKey>
+FHZALEJIENDROK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc[nH]1)Br
+
+$$$$

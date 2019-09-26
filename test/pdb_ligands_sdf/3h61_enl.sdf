@@ -1,0 +1,131 @@
+3H61_ENL_A_0
+  RCSB PDB12061708503D
+Coordinates from PDB:3H61:A:0 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   27.3180   -1.9910   13.5910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2470   -2.3470   14.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6380   -3.5390   14.3620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9400   -1.3440   15.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6040    0.0950   14.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4940    1.0670   15.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3650    0.2590   15.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4140   -1.4190   16.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3720   -2.4940   16.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3430   -2.4520   16.2100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5200   -3.3970   17.7950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8020   -0.0280   16.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9190    1.0080   17.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O2
+A    2
+C8
+A    3
+O5
+A    4
+C4
+A    5
+C6
+A    6
+C5
+A    7
+O1
+A    8
+C3
+A    9
+C7
+A   10
+O4
+A   11
+O3
+A   12
+C2
+A   13
+C1
+M  END
+>  <InstanceId>
+3H61_ENL_A_0
+
+>  <ChemCompId>
+ENL
+
+>  <PdbId>
+3H61
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O5
+
+>  <Name>
+(1R,2S,3R,4S)-7-oxabicyclo[2.2.1]heptane-2,3-dicarboxylic acid
+
+>  <SystematicName>
+(1S,4R,5S,6R)-7-oxabicyclo[2.2.1]heptane-5,6-dicarboxylic acid
+
+>  <Synonyms>
+Endothall
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 O5
+
+>  <MolecularWeight>
+186.162
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10O5/c9-7(10)5-3-1-2-4(13-3)6(5)8(11)12/h3-6H,1-2H2,(H,9,10)(H,11,12)/t3-,4+,5-,6+
+
+>  <InChIKey>
+GXEKYRXVRROBEV-FBXFSONDSA-N
+
+>  <SMILES>
+C1C[C@@H]2[C@H]([C@H]([C@H]1O2)C(=O)O)C(=O)O
+
+$$$$

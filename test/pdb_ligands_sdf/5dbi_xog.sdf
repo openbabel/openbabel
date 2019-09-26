@@ -1,0 +1,125 @@
+5COB_XOG_A_1002
+  RCSB PDB12061717073D
+Coordinates from PDB:5COB:A:1002 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+  -13.9440  -10.5880    9.2100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7120  -10.3930    8.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8670  -10.6920    7.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7910  -11.9540    6.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5910  -13.0780    7.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9330  -12.2540    5.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2750  -11.1290    4.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2360  -11.4670    2.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1340  -10.9210    2.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1960  -10.0030    2.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1140  -11.2370    0.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2630  -10.6230   -0.0230   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  4  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+A    1
+O2
+A    2
+C8
+A    3
+C7
+A    4
+C6
+A    5
+C10
+A    6
+C5
+A    7
+C4
+A    8
+C3
+A    9
+C2
+A   10
+C9
+A   11
+C1
+A   12
+O1
+M  END
+>  <InstanceId>
+5COB_XOG_A_1002
+
+>  <ChemCompId>
+XOG
+
+>  <PdbId>
+5COB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+(2E,6E)-2,6-dimethylocta-2,6-dienedial
+
+>  <SystematicName>
+(2E,6E)-2,6-dimethylocta-2,6-dienedial
+
+>  <Synonyms>
+8-oxogeranial
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O2
+
+>  <MolecularWeight>
+166.217
+
+>  <ModifiedDate>
+2015-10-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O2/c1-9(6-7-11)4-3-5-10(2)8-12/h5-8H,3-4H2,1-2H3/b9-6+,10-5+
+
+>  <InChIKey>
+GRHWFPUCRVCMRY-TXFIJWAUSA-N
+
+>  <SMILES>
+C/C(=C\C=O)/CC/C=C(\C)/C=O
+
+$$$$

@@ -1,0 +1,101 @@
+1CP6_BUB_A_601
+  RCSB PDB12061702113D
+Coordinates from PDB:1CP6:A:601 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   36.3540   -3.4980   43.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1450   -2.8620   42.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3800   -2.9180   41.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9230   -3.9630   40.2040   B 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8070   -5.1570   40.8230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2260   -3.9100   39.7140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C2
+A    2
+C6
+A    3
+C9
+A    4
+B12
+A    5
+O15
+A    6
+O16
+M  END
+>  <InstanceId>
+1CP6_BUB_A_601
+
+>  <ChemCompId>
+BUB
+
+>  <PdbId>
+1CP6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C3 O2 B
+
+>  <Name>
+1-BUTANE BORONIC ACID
+
+>  <SystematicName>
+butylboronic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H11 B O2
+
+>  <MolecularWeight>
+101.94
+
+>  <ModifiedDate>
+2014-10-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H11BO2/c1-2-3-4-5(6)7/h6-7H,2-4H2,1H3
+
+>  <InChIKey>
+QPKFVRWIISEVCW-UHFFFAOYSA-N
+
+>  <SMILES>
+B(CCCC)(O)O
+
+$$$$

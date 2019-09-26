@@ -1,0 +1,142 @@
+1MOQ_GLP_A_609
+  RCSB PDB12061703193D
+Coordinates from PDB:1MOQ:A:609 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   28.6010   16.1110   -4.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8910   15.4320   -3.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4690   16.3310   -1.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1460   17.6830   -2.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8520   18.3080   -3.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7790   19.5210   -3.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2100   16.2670   -4.5550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2120   14.1670   -3.0350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8730   15.7090   -0.7040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6900   18.5990   -1.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1460   17.3920   -4.4350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1380   19.0410   -3.7440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4010   19.8890   -3.1820   P 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4310   21.1820   -3.9060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5520   19.0030   -3.3860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1520   20.2280   -1.7260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+N2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1MOQ_GLP_A_609
+
+>  <ChemCompId>
+GLP
+
+>  <PdbId>
+1MOQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+609
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O8 P
+
+>  <Name>
+GLUCOSAMINE 6-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4R,5R,6S)-5-amino-3,4,6-trihydroxy-oxan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H14 N O8 P
+
+>  <MolecularWeight>
+259.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14NO8P/c7-3-5(9)4(8)2(15-6(3)10)1-14-16(11,12)13/h2-6,8-10H,1,7H2,(H2,11,12,13)/t2-,3-,4-,5-,6+/m1/s1
+
+>  <InChIKey>
+XHMJOUIAFHJHBW-UKFBFLRUSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)O)N)O)O)OP(=O)(O)O
+
+$$$$

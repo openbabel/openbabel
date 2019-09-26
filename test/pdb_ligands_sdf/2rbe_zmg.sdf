@@ -1,0 +1,147 @@
+2RBE_ZMG_A_601
+  RCSB PDB12061706543D
+Coordinates from PDB:2RBE:A:601 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   37.1150    0.6990  159.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3990    2.0800  159.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6450    2.8820  158.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5930    2.2770  156.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3330    0.9050  156.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0830    0.1050  157.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3290    0.3460  155.5030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4270   -0.1450  154.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0380   -0.0160  155.6010   S 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7770   -0.8070  154.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6230   -1.1590  153.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4220   -0.7590  153.7210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7860    3.0250  155.8180   F 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8000   -1.7450  152.1620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8480    0.0050  153.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3870    1.3560  152.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0930    0.1990  154.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 11  2  0  0  0  0
+ 16 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 15 10  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 12  8  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  7  5  1  0  0  0  0
+ 13  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  1  2  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+S9
+A   10
+C10
+A   11
+C11
+A   12
+N12
+A   13
+F13
+A   14
+O14
+A   15
+C15
+A   16
+C16
+A   17
+C17
+M  END
+>  <InstanceId>
+2RBE_ZMG_A_601
+
+>  <ChemCompId>
+ZMG
+
+>  <PdbId>
+2RBE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O S F
+
+>  <Name>
+(5R)-2-[(2-fluorophenyl)amino]-5-(1-methylethyl)-1,3-thiazol-4(5H)-one
+
+>  <SystematicName>
+(5R)-2-[(2-fluorophenyl)amino]-5-propan-2-yl-1,3-thiazol-4-one
+
+>  <Synonyms>
+(R)-2-(2-fluorophenylamino)-5-isopropylthiazol-4(5H)-one
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 F N2 O S
+
+>  <MolecularWeight>
+252.308
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13FN2OS/c1-7(2)10-11(16)15-12(17-10)14-9-6-4-3-5-8(9)13/h3-7,10H,1-2H3,(H,14,15,16)/t10-/m1/s1
+
+>  <InChIKey>
+OJJBBNIYQKFZDK-SNVBAGLBSA-N
+
+>  <SMILES>
+CC(C)[C@@H]1C(=O)N=C(S1)Nc2ccccc2F
+
+$$$$

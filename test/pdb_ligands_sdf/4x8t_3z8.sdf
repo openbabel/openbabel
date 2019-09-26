@@ -1,0 +1,127 @@
+4X8T_3Z8_H_301
+  RCSB PDB12061716103D
+Coordinates from PDB:4X8T:H:301 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   10.9770   31.5150   29.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8170   34.1060   30.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9990   33.7720   28.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0340   33.1020   31.0740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5160   32.5240   28.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5190   34.6630   27.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4250   35.2050   30.5820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5570   32.2150   27.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5370   34.2940   26.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2620   31.7040   30.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0870   33.0990   26.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7010   35.2870   25.3140  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  9  1  0  0  0  0
+ 11  9  2  0  0  0  0
+ 11  8  1  0  0  0  0
+  9  6  1  0  0  0  0
+  8  5  2  0  0  0  0
+  6  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+  5  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  4  1  0  0  0  0
+ 10  4  1  0  0  0  0
+A    1
+C12
+A    2
+C1
+A    3
+C2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+O6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+CL
+M  END
+>  <InstanceId>
+4X8T_3Z8_H_301
+
+>  <ChemCompId>
+3Z8
+
+>  <PdbId>
+4X8T
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O Cl
+
+>  <Name>
+7-chloro-3,4-dihydroisoquinolin-1(2H)-one
+
+>  <SystematicName>
+7-chloranyl-3,4-dihydro-2H-isoquinolin-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 Cl N O
+
+>  <MolecularWeight>
+181.619
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8ClNO/c10-7-2-1-6-3-4-11-9(12)8(6)5-7/h1-2,5H,3-4H2,(H,11,12)
+
+>  <InChIKey>
+NMZRTRAYSHQMPR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)C(=O)NCC2
+
+$$$$

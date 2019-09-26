@@ -1,0 +1,127 @@
+2Q6N_1CI_A_501
+  RCSB PDB12061706443D
+Coordinates from PDB:2Q6N:A:501 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   90.5010  -30.2980   38.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.3890  -29.4300   39.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.6540  -29.8770   39.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   93.7700  -28.7920   40.5070  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   93.0280  -31.1910   39.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.1390  -32.0590   38.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.8760  -31.6110   38.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.0410  -32.4240   37.8590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.3600  -32.1250   36.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.6460  -33.1920   36.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.8840  -34.1520   37.2980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.7480  -33.6780   38.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C11
+A    2
+C10
+A    3
+C9
+A    4
+CL
+A    5
+C8
+A    6
+C7
+A    7
+C6
+A    8
+N1
+A    9
+C5
+A   10
+C4
+A   11
+N3
+A   12
+C2
+M  END
+>  <InstanceId>
+2Q6N_1CI_A_501
+
+>  <ChemCompId>
+1CI
+
+>  <PdbId>
+2Q6N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 Cl
+
+>  <Name>
+1-(4-CHLOROPHENYL)-1H-IMIDAZOLE
+
+>  <SystematicName>
+1-(4-chlorophenyl)imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Cl N2
+
+>  <MolecularWeight>
+178.618
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H7ClN2/c10-8-1-3-9(4-2-8)12-6-5-11-7-12/h1-7H
+
+>  <InChIKey>
+BARLRKAYTDVUIS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1n2ccnc2)Cl
+
+$$$$

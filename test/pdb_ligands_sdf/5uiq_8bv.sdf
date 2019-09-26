@@ -1,0 +1,130 @@
+5UIQ_8BV_A_501
+  RCSB PDB12061719523D
+Coordinates from PDB:5UIQ:A:501 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   29.2940   10.6160   -7.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5940    8.3140   -7.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0620   10.4650   -9.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3580    8.1440   -8.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6060    9.2320   -9.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8510    6.7610   -8.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1920   10.1050  -11.6070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8760   10.6400  -12.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0630    9.5440   -7.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7810   10.3070  -11.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8510    6.5700   -9.6620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3450    5.8480   -8.0970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3810    9.0690  -10.4910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 13  5  1  0  0  0  0
+ 11  6  1  0  0  0  0
+  5  3  2  0  0  0  0
+  5  4  1  0  0  0  0
+  3  1  1  0  0  0  0
+  6  4  1  0  0  0  0
+  6 12  2  0  0  0  0
+  4  2  2  0  0  0  0
+  1  9  2  0  0  0  0
+  2  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C9
+A   11
+N11
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+5UIQ_8BV_A_501
+
+>  <ChemCompId>
+8BV
+
+>  <PdbId>
+5UIQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+2-[(propan-2-yl)oxy]benzamide
+
+>  <SystematicName>
+2-propan-2-yloxybenzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O2
+
+>  <MolecularWeight>
+179.216
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO2/c1-7(2)13-9-6-4-3-5-8(9)10(11)12/h3-7H,1-2H3,(H2,11,12)
+
+>  <InChIKey>
+BTHLVVULQLRTBK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)Oc1ccccc1C(=O)N
+
+$$$$

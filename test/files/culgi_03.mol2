@@ -57,6 +57,9 @@ USER_CHARGES
      50 H           3.9016   -5.7193   -6.1525 H       1  UNL1        0.0000
      51 N           6.4700    1.5991   -3.2686 N.4     1  UNL1        0.0000
      52 H           6.0670    2.1716   -4.0197 H       1  UNL1        0.0000
+@<TRIPOS>UNITY_ATOM_ATTR
+51 1
+charge 1
 @<TRIPOS>BOND
      1     1     6   ar
      2     1     2   ar

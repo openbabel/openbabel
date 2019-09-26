@@ -1,0 +1,122 @@
+4I3P_1CW_A_203
+  RCSB PDB12061712573D
+Coordinates from PDB:4I3P:A:203 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -6.9840  -26.5470    4.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2440  -25.9220    5.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1750  -25.5280    6.6950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5510  -25.2130    6.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2100  -25.3780    7.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4150  -24.7280    7.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9950  -23.9140    6.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1260  -24.3780    5.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5260  -24.1790    3.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3350  -23.7310    5.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8400  -22.9370    4.4470   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  1  2  2  0  0  0  0
+  8 10  2  0  0  0  0
+  8  4  1  0  0  0  0
+ 10  7  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+O
+A    2
+C5
+A    3
+O1
+A    4
+C4
+A    5
+C3
+A    6
+C2
+A    7
+C1
+A    8
+C6
+A    9
+O2
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+4I3P_1CW_A_203
+
+>  <ChemCompId>
+1CW
+
+>  <PdbId>
+4I3P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+3-amino-2-hydroxybenzoic acid
+
+>  <SystematicName>
+3-azanyl-2-oxidanyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O3
+
+>  <MolecularWeight>
+153.135
+
+>  <ModifiedDate>
+2013-12-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO3/c8-5-3-1-2-4(6(5)9)7(10)11/h1-3,9H,8H2,(H,10,11)
+
+>  <InChIKey>
+IQGMRVWUTCYCST-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)N)O)C(=O)O
+
+$$$$

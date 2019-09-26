@@ -1,0 +1,138 @@
+4C4Y_7WI_A_1548
+  RCSB PDB12061711583D
+Coordinates from PDB:4C4Y:A:1548 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  102.1670  104.8670  100.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.6940  106.1570  101.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.3620  103.8240  100.3650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  103.4820  104.5440  101.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.5610  107.1000  101.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.4840  103.8780   99.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  104.3170  105.4990  101.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  103.8710  106.7940  101.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.9840  108.7200  101.9080  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  100.0870  102.6660   98.8810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  100.0970  104.9260   98.8070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   99.2100  102.4800   97.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.8720  101.6810   96.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.8820  100.8520   96.0810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   99.4230   99.9580   95.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  2  5  2  0  0  0  0
+  3  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7  8  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+CL9
+A   10
+N10
+A   11
+O11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+A   15
+C15
+M  END
+>  <InstanceId>
+4C4Y_7WI_A_1548
+
+>  <ChemCompId>
+7WI
+
+>  <PdbId>
+4C4Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1548
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 Cl
+
+>  <Name>
+1-(3-chlorophenyl)-3-(2-methoxyethyl)urea
+
+>  <SystematicName>
+1-(3-chlorophenyl)-3-(2-methoxyethyl)urea
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H13 Cl N2 O2
+
+>  <MolecularWeight>
+228.675
+
+>  <ModifiedDate>
+2014-09-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13ClN2O2/c1-15-6-5-12-10(14)13-9-4-2-3-8(11)7-9/h2-4,7H,5-6H2,1H3,(H2,12,13,14)
+
+>  <InChIKey>
+OCWOGWHGSTYVMJ-UHFFFAOYSA-N
+
+>  <SMILES>
+COCCNC(=O)Nc1cccc(c1)Cl
+
+$$$$

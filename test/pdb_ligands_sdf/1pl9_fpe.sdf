@@ -1,0 +1,121 @@
+1PHQ_FPE_A_301
+  RCSB PDB12061703393D
+Coordinates from PDB:1PHQ:A:301 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    5.5420   -8.0210   43.7700   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0730   -8.1770   42.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6210   -7.5640   41.5600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8360   -9.0580   42.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2330   -9.3740   41.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2500   -8.3230   39.9130   P 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6770   -8.4840   39.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0630   -6.7730   40.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9750   -8.7360   38.9510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2670   -9.5840   43.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7810   -9.3380   44.6250   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+O2'
+A    4
+C2
+A    5
+O5
+A    6
+P1
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+C3
+A   11
+F1
+M  END
+>  <InstanceId>
+1PHQ_FPE_A_301
+
+>  <ChemCompId>
+FPE
+
+>  <PdbId>
+1PHQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P F
+
+>  <Name>
+3-FLUORO-2-(PHOSPHONOOXY)PROPANOIC ACID
+
+>  <SystematicName>
+(2R)-3-fluoro-2-phosphonooxy-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H6 F O6 P
+
+>  <MolecularWeight>
+188.048
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H6FO6P/c4-1-2(3(5)6)10-11(7,8)9/h2H,1H2,(H,5,6)(H2,7,8,9)/t2-/m0/s1
+
+>  <InChIKey>
+BNOCDEBUFVJMQI-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)OP(=O)(O)O)F
+
+$$$$

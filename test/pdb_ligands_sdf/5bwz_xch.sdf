@@ -1,0 +1,142 @@
+5BWZ_XCH_A_404
+  RCSB PDB12061717003D
+Coordinates from PDB:5BWZ:A:404 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+  -20.2980   12.1190  -18.0350  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6110   10.4920  -17.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9060    9.8820  -18.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3690    8.6260  -18.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5990    7.9280  -19.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5510    8.0000  -17.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2570    8.6010  -16.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7920    9.8630  -16.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0120    6.7650  -17.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8230    5.7410  -16.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2360    4.4630  -17.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2820    3.3830  -17.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6530    2.0160  -17.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2980    1.4780  -18.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5460    1.4250  -16.0520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0450    0.1460  -16.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  6  1  0  0  0  0
+ 14 13  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  8  2  0  0  0  0
+  6  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+CL1
+A    2
+C8
+A    3
+C9
+A    4
+C10
+A    5
+C11
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+O3
+A   10
+C4
+A   11
+C3
+A   12
+C2
+A   13
+C1
+A   14
+O1
+A   15
+N1
+A   16
+O2
+M  END
+>  <InstanceId>
+5BWZ_XCH_A_404
+
+>  <ChemCompId>
+XCH
+
+>  <PdbId>
+5BWZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O3 Cl
+
+>  <Name>
+Droxinostat
+
+>  <SystematicName>
+4-(4-chloranyl-2-methyl-phenoxy)-N-oxidanyl-butanamide
+
+>  <Synonyms>
+4-(4-chloro-2-methylphenoxy)-N-hydroxybutanamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 Cl N O3
+
+>  <MolecularWeight>
+243.687
+
+>  <ModifiedDate>
+2016-06-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14ClNO3/c1-8-7-9(12)4-5-10(8)16-6-2-3-11(14)13-15/h4-5,7,15H,2-3,6H2,1H3,(H,13,14)
+
+>  <InChIKey>
+JHSXDAWGLCZYSM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(ccc1OCCCC(=O)NO)Cl
+
+$$$$

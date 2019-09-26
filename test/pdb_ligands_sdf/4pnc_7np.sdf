@@ -1,0 +1,135 @@
+4PNC_7NP_A_301
+  RCSB PDB12061714153D
+Coordinates from PDB:4PNC:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   23.2090   -0.8300    7.9330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1680   -0.3070    8.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6690    0.9180    7.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7110   -0.9410    9.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5070   -2.4020    9.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1230   -0.4840    9.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2250    1.0050    9.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7020    1.6090    8.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2130    2.8140    8.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7040    3.3350    6.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6680    2.6400    6.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1260    1.4340    6.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2350    3.2650    5.0520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2730    2.6010    4.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12  3  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+OAM
+A    2
+CAJ
+A    3
+CAB
+A    4
+CAI
+A    5
+CAN
+A    6
+CAH
+A    7
+CAG
+A    8
+CAC
+A    9
+CAD
+A   10
+CAE
+A   11
+CAF
+A   12
+CAA
+A   13
+OAK
+A   14
+CAL
+M  END
+>  <InstanceId>
+4PNC_7NP_A_301
+
+>  <ChemCompId>
+7NP
+
+>  <PdbId>
+4PNC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2
+
+>  <Name>
+(2S)-7-methoxy-2-methyl-3,4-dihydronaphthalen-1(2H)-one
+
+>  <SystematicName>
+(2S)-7-methoxy-2-methyl-3,4-dihydro-2H-naphthalen-1-one
+
+>  <Synonyms>
+Bound form of 7-METHOXY-2-(PIPERIDIN-1-YLMETHYL)-3,4-DIHYDRONAPHTHALEN-1(2H)-ONE HYDROCHLORDIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 O2
+
+>  <MolecularWeight>
+190.238
+
+>  <ModifiedDate>
+2014-07-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14O2/c1-8-3-4-9-5-6-10(14-2)7-11(9)12(8)13/h5-8H,3-4H2,1-2H3/t8-/m0/s1
+
+>  <InChIKey>
+YVPRDJIRFPVNJW-QMMMGPOBSA-N
+
+>  <SMILES>
+C[C@H]1CCc2ccc(cc2C1=O)OC
+
+$$$$

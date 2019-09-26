@@ -1,0 +1,139 @@
+1LCV_SNR_A_1
+  RCSB PDB12061703103D
+Coordinates from PDB:1LCV:A:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -4.4710   35.9010   11.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9740   35.3370   10.6470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8790   34.3120   10.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0580   34.3370   11.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6590   35.3770   12.0840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2420   32.8720   11.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5360   32.2450   11.7570   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1220   32.9400   10.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9090   36.7940   12.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0510   32.7380   13.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8670   31.4630   13.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6490   31.3290   14.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3930   30.0240   14.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8030   28.9830   14.6290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7040   29.9860   14.0730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  9  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+S7
+A    8
+C8
+A    9
+O11
+A   10
+C12
+A   11
+C13
+A   12
+C14
+A   13
+C15
+A   14
+O16
+A   15
+O17
+M  END
+>  <InstanceId>
+1LCV_SNR_A_1
+
+>  <ChemCompId>
+SNR
+
+>  <PdbId>
+1LCV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O3 S
+
+>  <Name>
+NORBIOTIN
+
+>  <SystematicName>
+4-[(3aS,4S,6aR)-2-oxo-1,3,3a,4,6,6a-hexahydrothieno[3,4-d]imidazol-4-yl]butanoic acid
+
+>  <Synonyms>
+4-(2-OXO-HEXAHYDRO-THIENO[3,4-D]IMIDAZOL-4-YL)-BUTYRIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H14 N2 O3 S
+
+>  <MolecularWeight>
+230.284
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14N2O3S/c12-7(13)3-1-2-6-8-5(4-15-6)10-9(14)11-8/h5-6,8H,1-4H2,(H,12,13)(H2,10,11,14)/t5-,6-,8-/m0/s1
+
+>  <InChIKey>
+AINAXQHKYSZESH-HAFWLYHUSA-N
+
+>  <SMILES>
+C1[C@H]2[C@@H]([C@@H](S1)CCCC(=O)O)NC(=O)N2
+
+$$$$

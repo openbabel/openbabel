@@ -1,0 +1,138 @@
+5JF2_SF7_A_301
+  RCSB PDB12061718253D
+Coordinates from PDB:5JF2:A:301 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -4.4050   -2.1710   12.8400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4410   -2.6070   12.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5070   -3.7830   11.7370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3930   -4.5890   11.6110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7280   -1.8180   12.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8040   -0.7980   11.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1190   -1.4880    9.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6830   -0.6630    8.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1500   -1.3370    7.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1500   -0.3730    6.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8890    0.2180   11.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1740    0.4690   11.5000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4410    1.6830   11.9530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3140    2.1880   12.4120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3370    1.2830   12.2520   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6 11  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 11 15  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 15 14  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+A    1
+O4
+A    2
+C3
+A    3
+N1
+A    4
+O2
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C12
+A   12
+O13
+A   13
+N15
+A   14
+C16
+A   15
+N14
+M  END
+>  <InstanceId>
+5JF2_SF7_A_301
+
+>  <ChemCompId>
+SF7
+
+>  <PdbId>
+5JF2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+8
+
+>  <ObservedFormula>
+C9 N3 O3
+
+>  <Name>
+(3R)-3-{3-[(4-fluorophenyl)methyl]-1,2,4-oxadiazol-5-yl}-N-hydroxyheptanamide
+
+>  <SystematicName>
+(3~{R})-3-[3-[(4-fluorophenyl)methyl]-1,2,4-oxadiazol-5-yl]-~{N}-oxidanyl-heptanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H20 F N3 O3
+
+>  <MolecularWeight>
+321.347
+
+>  <ModifiedDate>
+2016-11-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H20FN3O3/c1-2-3-4-12(10-15(21)19-22)16-18-14(20-23-16)9-11-5-7-13(17)8-6-11/h5-8,12,22H,2-4,9-10H2,1H3,(H,19,21)/t12-/m1/s1
+
+>  <InChIKey>
+NPHICFLHFQUZKX-GFCCVEGCSA-N
+
+>  <SMILES>
+CCCC[C@H](CC(=O)NO)c1nc(no1)Cc2ccc(cc2)F
+
+$$$$

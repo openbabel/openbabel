@@ -1,0 +1,135 @@
+4Y3N_45V_A_402
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3N:A:402 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   35.2760    7.5260  123.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0850    9.8820  123.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7400   11.2070  123.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8950    8.8330  123.6620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2700    8.9350  123.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0730    8.0550  124.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5500    6.9100  124.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3680    6.0570  125.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8230    5.0140  126.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4580    4.7980  126.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6330    5.6250  125.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1620    6.6730  124.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8750    9.7380  123.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9150    6.7370  122.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 13  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  4  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 12  7  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+C11
+A   10
+C12
+A   11
+C13
+A   12
+C14
+A   13
+O1
+A   14
+C3
+M  END
+>  <InstanceId>
+4Y3N_45V_A_402
+
+>  <ChemCompId>
+45V
+
+>  <PdbId>
+4Y3N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+5
+
+>  <ObservedFormula>
+C12 N O
+
+>  <Name>
+2-[(1S)-2-acetyl-1,2-dihydroisoquinolin-1-yl]-N,N-dimethylacetamide
+
+>  <SystematicName>
+2-[(1S)-2-ethanoyl-1H-isoquinolin-1-yl]-N,N-dimethyl-ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H18 N2 O2
+
+>  <MolecularWeight>
+258.316
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H18N2O2/c1-11(18)17-9-8-12-6-4-5-7-13(12)14(17)10-15(19)16(2)3/h4-9,14H,10H2,1-3H3/t14-/m0/s1
+
+>  <InChIKey>
+FYMMJTVLNAKHEX-AWEZNQCLSA-N
+
+>  <SMILES>
+CC(=O)N1C=Cc2ccccc2[C@@H]1CC(=O)N(C)C
+
+$$$$

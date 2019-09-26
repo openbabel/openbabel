@@ -1,0 +1,131 @@
+5P9U_7JL_A_303
+  RCSB PDB12061719203D
+Coordinates from PDB:5P9U:A:303 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   35.3560   -8.0580   -6.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4560   -5.9790   -6.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3030   -6.8130   -6.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2250   -5.1820   -8.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5000   -6.4380   -5.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4660   -7.7030   -5.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3490   -8.5410   -5.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8300   -8.3490   -4.1160  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1930   -8.7870   -6.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2270   -6.3510   -7.5110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3350   -4.2750   -7.9140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4170   -4.6930   -7.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3320   -3.8290   -7.0350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4 11  1  0  0  0  0
+  4 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 10  3  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  1  1  0  0  0  0
+  2  5  1  0  0  0  0
+  9  1  1  0  0  0  0
+  1  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C4
+A    2
+C7
+A    3
+C8
+A    4
+C10
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+BR5
+A    9
+O6
+A   10
+N9
+A   11
+N11
+A   12
+C12
+A   13
+O13
+M  END
+>  <InstanceId>
+5P9U_7JL_A_303
+
+>  <ChemCompId>
+7JL
+
+>  <PdbId>
+5P9U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 Br
+
+>  <Name>
+6-bromanyl-8-oxidanyl-3~{H}-quinazolin-4-one
+
+>  <SystematicName>
+6-bromanyl-8-oxidanyl-3~{H}-quinazolin-4-one
+
+>  <Synonyms>
+6-bromo-8-hydroxy-3H-quinazolin-4-one
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H5 Br N2 O2
+
+>  <MolecularWeight>
+241.041
+
+>  <ModifiedDate>
+2017-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H5BrN2O2/c9-4-1-5-7(6(12)2-4)10-3-11-8(5)13/h1-3,12H,(H,10,11,13)
+
+>  <InChIKey>
+AUPAGWVOMYPVRN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c2c1C(=O)NC=N2)O)Br
+
+$$$$

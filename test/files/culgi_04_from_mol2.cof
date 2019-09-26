@@ -74,8 +74,8 @@ bond	1	13	1.0
 bond	2	3	1.0
 bond	2	4	1.0
 bond	2	23	1.0
-bond	4	5	1.0
-bond	4	22	2.0
+bond	4	5	2.0
+bond	4	22	1.0
 bond	6	7	1.0
 bond	6	16	1.0
 bond	6	17	1.0
@@ -90,6 +90,7 @@ bond	15	23	1.0
 bond	19	25	1.0
 bond	23	24	1.0
 bond	25	26	1.0
-formalq	5	-1
+formalq	22	-1
 formalq	23	1
+formalq	25	1
 end_molecule

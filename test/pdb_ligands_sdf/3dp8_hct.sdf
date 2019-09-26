@@ -1,0 +1,129 @@
+3DP8_HCT_A_511
+  RCSB PDB12061708213D
+Coordinates from PDB:3DP8:A:511 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   -4.9030  -35.9020   67.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8400  -35.8510   65.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5960  -36.8400   65.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5440  -36.1340   64.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0640  -34.8240   65.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3920  -34.3890   65.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6400  -37.2650   66.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5120  -35.6200   68.2670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1280  -36.1320   66.8260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6870  -33.3470   65.9360   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1550  -35.0810   64.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9800  -38.3430   66.6850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4980  -36.4160   67.6960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+3DP8_HCT_A_511
+
+>  <ChemCompId>
+HCT
+
+>  <PdbId>
+3DP8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+511
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O6
+
+>  <Name>
+(2R)-butane-1,2,4-tricarboxylic acid
+
+>  <SystematicName>
+(2R)-butane-1,2,4-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 O6
+
+>  <MolecularWeight>
+190.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10O6/c8-5(9)2-1-4(7(12)13)3-6(10)11/h4H,1-3H2,(H,8,9)(H,10,11)(H,12,13)/t4-/m1/s1
+
+>  <InChIKey>
+LOGBRYZYTBQBTB-SCSAIBSYSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@H](CC(=O)O)C(=O)O
+
+$$$$

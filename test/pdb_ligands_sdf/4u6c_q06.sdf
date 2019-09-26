@@ -1,0 +1,130 @@
+4U6C_Q06_A_404
+  RCSB PDB12061715033D
+Coordinates from PDB:4U6C:A:404 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   22.1400   -2.2300   12.4160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4250   -2.4610   11.0310   P 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2720   -1.2070   10.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0030   -3.0490   11.1970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2870   -3.5930    9.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6130   -3.1450    9.5080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1150   -4.5890   11.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3410   -5.2490   11.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3740   -6.4380   10.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0580   -7.1200   10.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4690   -8.5520    9.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7250   -8.7550   10.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0500   -7.4460   11.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O2
+A    2
+P
+A    3
+O
+A    4
+O1
+A    5
+C
+A    6
+N
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C7
+A   11
+C6
+A   12
+C5
+A   13
+C4
+M  END
+>  <InstanceId>
+4U6C_Q06_A_404
+
+>  <ChemCompId>
+Q06
+
+>  <PdbId>
+4U6C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 P
+
+>  <Name>
+[(1R)-1-amino-3-cyclopentylpropyl]phosphonic acid
+
+>  <SystematicName>
+[(1R)-1-azanyl-3-cyclopentyl-propyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 N O3 P
+
+>  <MolecularWeight>
+207.207
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18NO3P/c9-8(13(10,11)12)6-5-7-3-1-2-4-7/h7-8H,1-6,9H2,(H2,10,11,12)/t8-/m1/s1
+
+>  <InChIKey>
+ZLDKOVICXZHRSD-MRVPVSSYSA-N
+
+>  <SMILES>
+C1CCC(C1)CC[C@H](N)P(=O)(O)O
+
+$$$$

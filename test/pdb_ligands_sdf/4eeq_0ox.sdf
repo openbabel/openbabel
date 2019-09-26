@@ -1,0 +1,143 @@
+4EEQ_0OX_A_404
+  RCSB PDB12061712223D
+Coordinates from PDB:4EEQ:A:404 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   18.6650   31.5450   49.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9760   32.6700   50.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3260   33.0400   50.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5670   37.3530   52.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7140   38.1660   52.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5070   38.0140   54.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4210   36.9570   54.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6570   30.7340   49.1630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5180   31.3470   49.2120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5870   34.0550   51.6410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5980   34.7460   52.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8870   35.7800   53.0910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2500   36.2430   53.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3050   34.4400   52.0230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9450   33.4380   51.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5960   33.1640   51.0010   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  1  1  0  0  0  0
+  9  1  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 15  1  0  0  0  0
+  3 10  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 15 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 14 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+C2
+A    2
+C4
+A    3
+C5
+A    4
+C10
+A    5
+C11
+A    6
+C12
+A    7
+C13
+A    8
+N1
+A    9
+O3
+A   10
+N6
+A   11
+C7
+A   12
+O8
+A   13
+C9
+A   14
+N14
+A   15
+C15
+A   16
+N16
+M  END
+>  <InstanceId>
+4EEQ_0OX_A_404
+
+>  <ChemCompId>
+0OX
+
+>  <PdbId>
+4EEQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O2
+
+>  <Name>
+4-amino-2-(cyclopentyloxy)pyrimidine-5-carboxamide
+
+>  <SystematicName>
+4-azanyl-2-cyclopentyloxy-pyrimidine-5-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N4 O2
+
+>  <MolecularWeight>
+222.244
+
+>  <ModifiedDate>
+2013-03-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N4O2/c11-8-7(9(12)15)5-13-10(14-8)16-6-3-1-2-4-6/h5-6H,1-4H2,(H2,12,15)(H2,11,13,14)
+
+>  <InChIKey>
+YTVJKSRJMDSHEP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c(nc(n1)OC2CCCC2)N)C(=O)N
+
+$$$$

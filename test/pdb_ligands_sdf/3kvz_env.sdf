@@ -1,0 +1,121 @@
+3KVZ_ENV_B_201
+  RCSB PDB12061709313D
+Coordinates from PDB:3KVZ:B:201 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   33.9870   -3.2800   -5.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7170   -2.7640   -4.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8050   -2.5340   -6.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2100   -3.1750   -3.0220   F 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3610   -4.3420   -5.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0270   -1.9340   -7.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7880   -2.0730   -8.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6680   -1.1340   -8.2340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3650   -0.2270   -9.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2510   -0.1940  -10.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4420    0.5690   -9.1290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  1  1  0  0  0  0
+  3  6  1  0  0  0  0
+  5  1  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11  9  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+F4
+A    5
+O5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+C9
+A   10
+C10
+A   11
+O11
+M  END
+>  <InstanceId>
+3KVZ_ENV_B_201
+
+>  <ChemCompId>
+ENV
+
+>  <PdbId>
+3KVZ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+11
+
+>  <ObservedFormula>
+C7 N O2 F
+
+>  <Name>
+(2R)-N-{3-[(5-fluoro-4-oxopentyl)amino]-3-oxopropyl}-2,4-dihydroxy-3,3-dimethylbutanamide
+
+>  <SystematicName>
+(2R)-N-[3-[(5-fluoro-4-oxo-pentyl)amino]-3-oxo-propyl]-2,4-dihydroxy-3,3-dimethyl-butanamide
+
+>  <Synonyms>
+Fluoroacetyl carba(dethia)-pantetheine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H25 F N2 O5
+
+>  <MolecularWeight>
+320.357
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H25FN2O5/c1-14(2,9-18)12(21)13(22)17-7-5-11(20)16-6-3-4-10(19)8-15/h12,18,21H,3-9H2,1-2H3,(H,16,20)(H,17,22)/t12-/m0/s1
+
+>  <InChIKey>
+FTHCNOQGZZPFFG-LBPRGKRZSA-N
+
+>  <SMILES>
+CC(C)(CO)[C@H](C(=O)NCCC(=O)NCCCC(=O)CF)O
+
+$$$$

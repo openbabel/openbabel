@@ -1,0 +1,135 @@
+5X4M_7ZF_A_801
+  RCSB PDB12061720133D
+Coordinates from PDB:5X4M:A:801 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   39.4130   -8.3110  -15.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1060   -6.2250  -13.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8880   -7.4400  -10.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7930   -7.5650  -14.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0450   -8.6880   -9.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9470   -8.8070  -11.2660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.6650   -6.3980  -15.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3520   -7.7320  -15.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0430   -5.6410  -14.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8970   -8.1660  -11.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9900   -8.0270   -9.2560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8860   -7.4650  -11.3660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0840   -9.3130   -9.1960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8450   -8.2190  -13.3370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  8  1  1  0  0  0  0
+  7  9  1  0  0  0  0
+  1  4  2  0  0  0  0
+  9  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4 14  1  0  0  0  0
+ 14 10  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 10  6  1  0  0  0  0
+ 12  3  1  0  0  0  0
+  6  5  2  0  0  0  0
+  3 11  2  0  0  0  0
+  5 11  1  0  0  0  0
+  5 13  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+N12
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C9
+A   11
+N10
+A   12
+N11
+A   13
+N13
+A   14
+N14
+M  END
+>  <InstanceId>
+5X4M_7ZF_A_801
+
+>  <ChemCompId>
+7ZF
+
+>  <PdbId>
+5X4M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5
+
+>  <Name>
+N-phenyl-1,3,5-triazine-2,4-diamine
+
+>  <SystematicName>
+~{N}2-phenyl-1,3,5-triazine-2,4-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N5
+
+>  <MolecularWeight>
+187.201
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9N5/c10-8-11-6-12-9(14-8)13-7-4-2-1-3-5-7/h1-6H,(H3,10,11,12,13,14)
+
+>  <InChIKey>
+YMFGJWGABDOFID-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)Nc2ncnc(n2)N
+
+$$$$

@@ -1,0 +1,126 @@
+2POQ_ISD_X_500
+  RCSB PDB12061706403D
+Coordinates from PDB:2POQ:X:500 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -15.4620  -47.8030    2.6370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8510  -46.8260    3.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7920  -46.7720    4.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2030  -47.8320    5.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3490  -45.5140    4.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4850  -45.1570    5.7440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2980  -45.5250    2.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8980  -44.5310    3.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9920  -43.3640    3.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8600  -42.9860    3.9670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7240  -42.0410    2.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0470  -41.8130    1.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O6
+A    2
+C5
+A    3
+C4
+A    4
+O8
+A    5
+C3
+A    6
+O7
+A    7
+O1
+A    8
+C2
+A    9
+C9
+A   10
+O11
+A   11
+C13
+A   12
+O14
+M  END
+>  <InstanceId>
+2POQ_ISD_X_500
+
+>  <ChemCompId>
+ISD
+
+>  <PdbId>
+2POQ
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+(5R)-5-[(1R)-1,2-DIHYDROXYETHYL]-3,4-DIHYDROXYFURAN-2(5H)-ONE
+
+>  <SystematicName>
+(5R)-5-[(1R)-1,2-dihydroxyethyl]-3,4-dihydroxy-5H-furan-2-one
+
+>  <Synonyms>
+ISOASCORBIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 O6
+
+>  <MolecularWeight>
+176.124
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H8O6/c7-1-2(8)5-3(9)4(10)6(11)12-5/h2,5,7-10H,1H2/t2-,5-/m1/s1
+
+>  <InChIKey>
+CIWBSHSKHKDKBQ-DUZGATOHSA-N
+
+>  <SMILES>
+C([C@H]([C@@H]1C(=C(C(=O)O1)O)O)O)O
+
+$$$$

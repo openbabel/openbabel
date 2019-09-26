@@ -1,0 +1,146 @@
+2QZS_250_A_488
+  RCSB PDB12061706523D
+Coordinates from PDB:2QZS:A:488 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   24.7520   -4.6430   26.5010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9820   -4.0970   27.1060   S 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9860   -3.8130   26.0570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6650   -2.8260   27.7940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6860   -5.1890   28.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7310   -5.6870   29.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4070   -5.8530   28.6980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7640   -4.7340   30.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1730   -5.4670   31.5330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7710   -5.2170   31.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5060   -5.7290   33.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9120   -7.1350   33.2860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0500   -7.6200   32.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9730   -6.4230   32.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1730   -8.0890   34.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0370   -8.2000   35.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2070   -8.4860   36.4950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O1
+A    2
+S1
+A    3
+O2
+A    4
+O3
+A    5
+C1
+A    6
+C2
+A    7
+O4
+A    8
+C3
+A    9
+N1
+A   10
+C7
+A   11
+C6
+A   12
+N2
+A   13
+C5
+A   14
+C4
+A   15
+C8
+A   16
+C9
+A   17
+O5
+M  END
+>  <InstanceId>
+2QZS_250_A_488
+
+>  <ChemCompId>
+250
+
+>  <PdbId>
+2QZS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+488
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5 S
+
+>  <Name>
+(2R)-2-hydroxy-3-[4-(2-hydroxyethyl)piperazin-1-yl]propane-1-sulfonic acid
+
+>  <SystematicName>
+(2R)-2-hydroxy-3-[4-(2-hydroxyethyl)piperazin-1-yl]propane-1-sulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 N2 O5 S
+
+>  <MolecularWeight>
+268.331
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H20N2O5S/c12-6-5-10-1-3-11(4-2-10)7-9(13)8-17(14,15)16/h9,12-13H,1-8H2,(H,14,15,16)/t9-/m1/s1
+
+>  <InChIKey>
+GIZQLVPDAOBAFN-SECBINFHSA-N
+
+>  <SMILES>
+C1CN(CCN1CCO)C[C@H](CS(=O)(=O)O)O
+
+$$$$

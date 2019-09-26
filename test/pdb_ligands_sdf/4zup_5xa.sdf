@@ -1,0 +1,113 @@
+4ZUP_5XA_A_405
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZUP:A:405 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+    0.8130   23.5570   31.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4700   24.2680   30.0280   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6970   24.5940   30.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1750   24.2610   31.4250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4510   25.3190   29.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1640   26.8000   29.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8350   27.3010   27.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8850   28.8110   27.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8090   29.1950   26.8220   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  3  4  2  0  0  0  0
+A    1
+O8
+A    2
+N7
+A    3
+C6
+A    4
+O9
+A    5
+C5
+A    6
+C4
+A    7
+C3
+A    8
+C2
+A    9
+N1
+M  END
+>  <InstanceId>
+4ZUP_5XA_A_405
+
+>  <ChemCompId>
+5XA
+
+>  <PdbId>
+4ZUP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O2
+
+>  <Name>
+5-amino-N-hydroxypentanamide
+
+>  <SystematicName>
+5-azanyl-N-oxidanyl-pentanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N2 O2
+
+>  <MolecularWeight>
+132.161
+
+>  <ModifiedDate>
+2015-07-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N2O2/c6-4-2-1-3-5(8)7-9/h9H,1-4,6H2,(H,7,8)
+
+>  <InChIKey>
+YEOWNCJWBHIJNK-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCN)CC(=O)NO
+
+$$$$

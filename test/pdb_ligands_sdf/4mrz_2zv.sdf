@@ -1,0 +1,123 @@
+4MRZ_2ZV_A_900
+  RCSB PDB12061713473D
+Coordinates from PDB:4MRZ:A:900 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    5.2330  -30.3280  -34.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6130  -28.9480  -34.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4580  -28.4010  -36.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8930  -27.1380  -36.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4920  -26.4490  -35.1970   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6190  -26.9480  -33.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1760  -26.2220  -32.9090   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1780  -28.2240  -33.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3170  -28.7110  -32.5000   N 0  3  0  0  0  0  0  0  0  0  0  0
+    5.2490  -29.4710  -32.2600   O 0  5  0  0  0  0  0  0  0  0  0  0
+    3.5820  -28.3930  -31.5700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+M  CHG  2   9   1  10  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+N9
+A   10
+O10
+A   11
+O11
+M  END
+>  <InstanceId>
+4MRZ_2ZV_A_900
+
+>  <ChemCompId>
+2ZV
+
+>  <PdbId>
+4MRZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O2
+
+>  <Name>
+4-methyl-3-nitropyridin-2-amine
+
+>  <SystematicName>
+4-methyl-3-nitro-pyridin-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N3 O2
+
+>  <MolecularWeight>
+153.139
+
+>  <ModifiedDate>
+2014-05-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N3O2/c1-4-2-3-8-6(7)5(4)9(10)11/h2-3H,1H3,(H2,7,8)
+
+>  <InChIKey>
+IKMZGACFMXZAAT-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccnc(c1[N+](=O)[O-])N
+
+$$$$

@@ -1,0 +1,145 @@
+1YCL_KRI_A_401
+  RCSB PDB12061704443D
+Coordinates from PDB:1YCL:A:401 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+  -19.3920   33.9870  -15.6880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4090   33.0930  -14.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0140   33.3340  -13.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9200   31.6960  -15.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3260   30.7040  -14.2990   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4440   31.6380  -15.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1330   32.5300  -16.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9570   32.5070  -15.9820   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3000   30.8050  -16.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0050   30.7630  -17.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1850   31.4150  -18.8880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2630   29.3180  -18.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1000   28.6780  -17.3810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9600   29.3060  -19.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1210   29.6970  -19.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1950   28.8050  -20.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2340   29.7680  -21.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CG
+A    8
+SD
+A    9
+C5
+A   10
+C4
+A   11
+O4
+A   12
+C3
+A   13
+O3
+A   14
+C2
+A   15
+O2
+A   16
+C1
+A   17
+O1
+M  END
+>  <InstanceId>
+1YCL_KRI_A_401
+
+>  <ChemCompId>
+KRI
+
+>  <PdbId>
+1YCL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O6 S
+
+>  <Name>
+(S)-2-AMINO-4-[(2S,3R)-2,3,5-TRIHYDROXY-4-OXO-PENTYL]MERCAPTO-BUTYRIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-4-[(2S,3R)-2,3,5-trihydroxy-4-oxo-pentyl]sulfanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O6 S
+
+>  <MolecularWeight>
+267.299
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO6S/c10-5(9(15)16)1-2-17-4-7(13)8(14)6(12)3-11/h5,7-8,11,13-14H,1-4,10H2,(H,15,16)/t5-,7+,8-/m0/s1
+
+>  <InChIKey>
+QFXXRJSDEMCBPH-ARDNSNSESA-N
+
+>  <SMILES>
+C(CSC[C@H]([C@H](C(=O)CO)O)O)[C@@H](C(=O)O)N
+
+$$$$

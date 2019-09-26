@@ -1,0 +1,145 @@
+3BKI_FQX_P_264
+  RCSB PDB12061708023D
+Coordinates from PDB:3BKI:P:264 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+    2.8330   -1.5850    5.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2500   -2.4660    6.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1390   -3.1940    5.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6040   -3.0340    4.7220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5550   -4.1890    6.6180   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0590   -4.4810    7.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4720   -5.4820    8.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0220   -5.7400    9.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6820   -6.6080   10.9060   N 0  3  0  0  0  0  0  0  0  0  0  0
+   -0.4100   -7.5080   10.7260   O 0  5  0  0  0  0  0  0  0  0  0  0
+    1.5550   -6.4730   12.0230   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4510   -5.4400   11.6630   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1250   -5.0170   10.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7190   -4.0110    9.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1780   -3.7480    8.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7540   -2.7590    7.5720   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  5  1  0  0  0  0
+  2 16  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 16 15  1  0  0  0  0
+  6 15  1  0  0  0  0
+  6  7  2  0  0  0  0
+ 15 14  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  8 13  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 11  1  0  0  0  0
+M  CHG  2   9   1  10  -1
+A    1
+OAA
+A    2
+CAJ
+A    3
+CAK
+A    4
+OAB
+A    5
+NAH
+A    6
+CAN
+A    7
+CAE
+A    8
+CAO
+A    9
+NAP
+A   10
+OAC
+A   11
+OAI
+A   12
+NAF
+A   13
+CAL
+A   14
+CAD
+A   15
+CAM
+A   16
+NAG
+M  END
+>  <InstanceId>
+3BKI_FQX_P_264
+
+>  <ChemCompId>
+FQX
+
+>  <PdbId>
+3BKI
+
+>  <ChainId>
+P
+
+>  <ResidueNumber>
+264
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O4
+
+>  <Name>
+[1,2,5]oxadiazolo[3,4-g]quinoxaline-6,7(5H,8H)-dione 1-oxide
+
+>  <SystematicName>
+3-oxido-5,8-dihydropyrazino[5,6-f][2,1,3]benzoxadiazol-3-ium-6,7-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H4 N4 O4
+
+>  <MolecularWeight>
+220.142
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H4N4O4/c13-7-8(14)10-4-2-6-5(1-3(4)9-7)11-16-12(6)15/h1-2H,(H,9,13)(H,10,14)
+
+>  <InChIKey>
+GBLOKWQVACPFGV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c(cc3c1NC(=O)C(=O)N3)[n+](on2)[O-]
+
+$$$$

@@ -1,0 +1,122 @@
+4YJG_4DD_A_401
+  RCSB PDB12061716263D
+Coordinates from PDB:4YJG:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   22.8910   16.4060   10.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2040   15.7390   11.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9730   14.2540   11.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8940   15.4240   10.2720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1070   17.4080    9.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2100   13.4530   11.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4570   14.0230   11.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5340   13.2250   12.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3740   11.8500   12.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1310   11.2820   12.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0530   12.0820   11.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  1  1  0  0  0  0
+  4  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  6  1  0  0  0  0
+  6 11  2  0  0  0  0
+  6  7  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N
+A    5
+C
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+M  END
+>  <InstanceId>
+4YJG_4DD_A_401
+
+>  <ChemCompId>
+4DD
+
+>  <PdbId>
+4YJG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N
+
+>  <Name>
+(2R)-4-phenylbutan-2-amine
+
+>  <SystematicName>
+(2R)-4-phenylbutan-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N
+
+>  <MolecularWeight>
+149.233
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N/c1-9(11)7-8-10-5-3-2-4-6-10/h2-6,9H,7-8,11H2,1H3/t9-/m1/s1
+
+>  <InChIKey>
+WECUIGDEWBNQJJ-SECBINFHSA-N
+
+>  <SMILES>
+C[C@H](CCc1ccccc1)N
+
+$$$$

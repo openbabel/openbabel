@@ -1,0 +1,126 @@
+1P0P_BCH_A_604
+  RCSB PDB12061703373D
+Coordinates from PDB:1P0P:A:604 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+  134.9290  111.3590   42.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.5350  112.0010   43.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.2390  112.8240   43.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.3590  114.0160   42.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.9480  115.0580   42.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  132.5530  113.8490   40.8180   S 0  0  0  0  0  0  0  0  0  0  0  0
+  132.9600  115.4070   39.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.9180  116.8340   40.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.3480  118.0200   39.7290   N 0  3  0  0  0  0  0  0  0  0  0  0
+  133.3000  117.7660   38.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.7270  118.4110   40.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.4380  119.1050   40.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 12  1  0  0  0  0
+M  CHG  1   9   1
+A    1
+C21
+A    2
+C20
+A    3
+C19
+A    4
+C18
+A    5
+O12
+A    6
+S17
+A    7
+C16
+A    8
+C15
+A    9
+N14
+A   10
+C13
+A   11
+C22
+A   12
+C11
+M  END
+>  <InstanceId>
+1P0P_BCH_A_604
+
+>  <ChemCompId>
+BCH
+
+>  <PdbId>
+1P0P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+604
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O S
+
+>  <Name>
+2-(BUTYRYLSULFANYL)-N,N,N-TRIMETHYLETHANAMINIUM
+
+>  <SystematicName>
+2-butanoylsulfanylethyl-trimethyl-azanium
+
+>  <Synonyms>
+BUTYRYLTHIOCHOLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 N O S
+
+>  <MolecularWeight>
+190.326
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20NOS/c1-5-6-9(11)12-8-7-10(2,3)4/h5-8H2,1-4H3/q+1
+
+>  <InChIKey>
+AWBGQVBMGBZGLS-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCC(=O)SCC[N+](C)(C)C
+
+$$$$

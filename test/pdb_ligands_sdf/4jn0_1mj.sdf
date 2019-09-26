@@ -1,0 +1,123 @@
+4JN0_1MJ_A_302
+  RCSB PDB12061713123D
+Coordinates from PDB:4JN0:A:302 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   30.2750   90.9480   47.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1340   90.8570   48.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2500   90.1920   48.2160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1390   89.8570   46.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9130   90.3100   46.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5510   90.0970   45.1660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3650   89.4380   44.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6170   88.9500   44.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9890   89.1690   46.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5160   88.2030   43.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8710   88.7180   42.8110   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  6  5  2  0  0  0  0
+  9  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  5  1  1  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+N03
+A    4
+C04
+A    5
+C05
+A    6
+N06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+O11
+M  END
+>  <InstanceId>
+4JN0_1MJ_A_302
+
+>  <ChemCompId>
+1MJ
+
+>  <PdbId>
+4JN0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+1H-pyrrolo[3,2-b]pyridine-6-carbaldehyde
+
+>  <SystematicName>
+1H-pyrrolo[3,2-b]pyridine-6-carbaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 N2 O
+
+>  <MolecularWeight>
+146.146
+
+>  <ModifiedDate>
+2013-04-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N2O/c11-5-6-3-8-7(10-4-6)1-2-9-8/h1-5,9H
+
+>  <InChIKey>
+HRLUESWIQOAEBQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c[nH]c2c1ncc(c2)C=O
+
+$$$$

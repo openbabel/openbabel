@@ -1,0 +1,130 @@
+3PCW_FBF_A_2001
+  RCSB PDB12061710143D
+Coordinates from PDB:3PCW:A:2001 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    0.7700    7.2090   10.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5670    8.5670   10.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3390    9.3280    9.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3540    8.7260    8.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5530    7.3720    8.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8140    6.6190    9.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1360    5.1510   10.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5130    4.4680    8.9590   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9840    4.6130   11.2020   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1990   10.8620    9.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1090   11.1880   10.1480   F 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2830   11.5170    9.9260   F 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1040   11.2230    8.1360   F 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  2  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+ 10  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 13 10  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+N9
+A   10
+C10
+A   11
+F11
+A   12
+F12
+A   13
+F13
+M  END
+>  <InstanceId>
+3PCW_FBF_A_2001
+
+>  <ChemCompId>
+FBF
+
+>  <PdbId>
+3PCW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 F3
+
+>  <Name>
+4-(trifluoromethyl)benzenecarboximidamide
+
+>  <SystematicName>
+4-(trifluoromethyl)benzenecarboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 F3 N2
+
+>  <MolecularWeight>
+188.15
+
+>  <ModifiedDate>
+2011-10-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7F3N2/c9-8(10,11)6-3-1-5(2-4-6)7(12)13/h1-4H,(H3,12,13)
+
+>  <InChIKey>
+XFLGYXVBXUAGQV-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/c1ccc(cc1)C(F)(F)F)\N
+
+$$$$

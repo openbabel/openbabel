@@ -1,0 +1,126 @@
+1DM6_PH3_A_1780
+  RCSB PDB12061702173D
+Coordinates from PDB:1DM6:A:1780 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   13.0450   12.2270   33.6920  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5120   12.4610   32.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3190   11.1760   32.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8110   11.1050   32.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3540   12.2380   33.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5940   13.3980   33.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2070   13.4880   33.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0970   12.5420   32.4440   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4550   11.9510   31.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0700   11.3240   30.3810   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1500   11.9640   31.4670   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4780   10.7550   29.3470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+CL
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+NE
+A    9
+CZ
+A   10
+NH1
+A   11
+NH2
+A   12
+OH
+M  END
+>  <InstanceId>
+1DM6_PH3_A_1780
+
+>  <ChemCompId>
+PH3
+
+>  <PdbId>
+1DM6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1780
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O Cl
+
+>  <Name>
+N-(CHLOROPHENYL)-N'-HYDROXYGUANIDINE
+
+>  <SystematicName>
+1-(4-chlorophenyl)-3-hydroxy-guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 Cl N3 O
+
+>  <MolecularWeight>
+185.611
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8ClN3O/c8-5-1-3-6(4-2-5)10-7(9)11-12/h1-4,12H,(H3,9,10,11)
+
+>  <InChIKey>
+JYBXKTLYOMPMQY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1NC(=N)NO)Cl
+
+$$$$

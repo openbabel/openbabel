@@ -1,0 +1,114 @@
+1NEM_BDR_A_29
+  RCSB PDB12061703243D
+Coordinates from PDB:1NEM:A:29 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    2.4230   -1.8700    1.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2130   -1.7610    0.2990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1010   -0.4250   -0.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3970    0.2860    0.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4170    0.0490   -0.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6680   -0.4460    1.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0070   -0.3880    2.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2770   -2.8980    2.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0910   -4.2300    1.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C4
+A    2
+O
+A    3
+C1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C5
+A    9
+O5
+M  END
+>  <InstanceId>
+1NEM_BDR_A_29
+
+>  <ChemCompId>
+BDR
+
+>  <PdbId>
+1NEM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+29
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+BETA-D-RIBOFURANOSYL
+
+>  <SystematicName>
+(2R,3R,4S,5R)-5-(hydroxymethyl)oxolane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-1-2-3(7)4(8)5(9)10-2/h2-9H,1H2/t2-,3-,4-,5-/m1/s1
+
+>  <InChIKey>
+HMFHBZSHGGEWLO-TXICZTDVSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@H]([C@@H](O1)O)O)O)O
+
+$$$$

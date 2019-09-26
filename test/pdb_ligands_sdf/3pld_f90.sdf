@@ -1,0 +1,126 @@
+3PLD_F90_A_2001
+  RCSB PDB12061710163D
+Coordinates from PDB:3PLD:A:2001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    1.5670    8.9170    8.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8330    7.4360    8.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5470    6.8580   10.4330   S 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0740    5.1830   10.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4630    4.6340    9.1890   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8300    4.5260   11.4370   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3590    9.5820    8.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2970   10.9640    8.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4100   11.7020    9.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2780   13.4080    9.3270  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6100   11.0750    9.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6750    9.6890    9.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  2  0  0  0  0
+  2  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+S3
+A    4
+C4
+A    5
+N5
+A    6
+N6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+CL10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+3PLD_F90_A_2001
+
+>  <ChemCompId>
+F90
+
+>  <PdbId>
+3PLD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 S Cl
+
+>  <Name>
+4-chlorobenzyl carbamimidothioate
+
+>  <SystematicName>
+(4-chlorophenyl)methyl carbamimidothioate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 Cl N2 S
+
+>  <MolecularWeight>
+200.688
+
+>  <ModifiedDate>
+2011-10-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9ClN2S/c9-7-3-1-6(2-4-7)5-12-8(10)11/h1-4H,5H2,(H3,10,11)
+
+>  <InChIKey>
+YOCWIHYZDHPSHD-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/SCc1ccc(cc1)Cl
+
+$$$$

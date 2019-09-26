@@ -1,0 +1,114 @@
+1XIJ_THE_A_389
+  RCSB PDB12061704383D
+Coordinates from PDB:1XIJ:A:389 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   32.4760   31.8650   57.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4920   33.0420   57.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9860   32.4760   57.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8340   33.6130   57.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5980   31.0880   56.4420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1870   33.7970   58.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3910   31.8410   58.7920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7150   34.7270   57.5090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8740   33.6740   56.4410   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  8  2  0  0  0  0
+  4  9  1  0  0  0  0
+M  CHG  1   9  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+O1
+A    6
+O2
+A    7
+O3
+A    8
+O4
+A    9
+O5
+M  END
+>  <InstanceId>
+1XIJ_THE_A_389
+
+>  <ChemCompId>
+THE
+
+>  <PdbId>
+1XIJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+389
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O5
+
+>  <Name>
+THREONATE ION
+
+>  <SystematicName>
+(2S,3R)-2,3,4-trihydroxybutanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H7 O5
+
+>  <MolecularWeight>
+135.095
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O5/c5-1-2(6)3(7)4(8)9/h2-3,5-7H,1H2,(H,8,9)/p-1/t2-,3+/m1/s1
+
+>  <InChIKey>
+JPIJQSOTBSSVTP-GBXIJSLDSA-M
+
+>  <SMILES>
+C([C@H]([C@@H](C(=O)[O-])O)O)O
+
+$$$$

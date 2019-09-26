@@ -1,0 +1,134 @@
+3IOG_SDF_A_311
+  RCSB PDB12061709063D
+Coordinates from PDB:3IOG:A:311 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    3.5350    2.5540   68.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6000    4.5680   70.3450   P 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9150    2.9580   68.4820   S 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9390    4.2650   66.8790  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5970    2.7150   67.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5680   -0.8290   67.5930  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5060    1.6960   67.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3600    0.4530   67.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2770    0.2490   68.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3620    1.2810   69.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5570    3.6650   68.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9810    5.1630   70.5320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5550    5.6410   70.1640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3110    3.5760   71.4580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 11  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2 12  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  1  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  5  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11  2  1  0  0  0  0
+ 13  2  2  0  0  0  0
+A    1
+C1
+A    2
+P1
+A    3
+S1
+A    4
+CL1
+A    5
+C2
+A    6
+CL2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+A   12
+O11
+A   13
+O12
+A   14
+O13
+M  END
+>  <InstanceId>
+3IOG_SDF_A_311
+
+>  <ChemCompId>
+SDF
+
+>  <PdbId>
+3IOG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3 P S Cl2
+
+>  <Name>
+[(R)-(2,4-dichlorophenyl)(sulfanyl)methyl]phosphonic acid
+
+>  <SystematicName>
+[(2,4-dichlorophenyl)-sulfanyl-methyl]phosphonic acid
+
+>  <Synonyms>
+alpha-Sulfanyl(2,4-dichlorobenzyl)phosphonic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 Cl2 O3 P S
+
+>  <MolecularWeight>
+273.073
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7Cl2O3PS/c8-4-1-2-5(6(9)3-4)7(14)13(10,11)12/h1-3,7,14H,(H2,10,11,12)/t7-/m1/s1
+
+>  <InChIKey>
+WJVBVZOYOCLGPI-SSDOTTSWSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)Cl)C(P(=O)(O)O)S
+
+$$$$

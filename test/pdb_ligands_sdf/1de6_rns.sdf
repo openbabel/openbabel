@@ -1,0 +1,121 @@
+1DE6_RNS_A_1462
+  RCSB PDB12061702153D
+Coordinates from PDB:1DE6:A:1462 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   31.0650   26.1690   63.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5660   25.9360   63.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2320   25.8180   64.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3870   24.9850   65.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0820   24.6710   66.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1330   24.2850   67.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1150   25.8230   62.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6800   24.7540   62.4430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6400   25.5010   64.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8900   23.8330   64.8340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9850   25.7980   67.1320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+M  END
+>  <InstanceId>
+1DE6_RNS_A_1462
+
+>  <ChemCompId>
+RNS
+
+>  <PdbId>
+1DE6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1462
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+L-RHAMNOSE
+
+>  <SystematicName>
+(2R,3R,4S,5S)-2,3,4,5-tetrahydroxyhexanal
+
+>  <Synonyms>
+
+
+>  <Type>
+L-SACCHARIDE
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c1-3(8)5(10)6(11)4(9)2-7/h2-6,8-11H,1H3/t3-,4-,5-,6-/m0/s1
+
+>  <InChIKey>
+PNNNRSAQSRJVSB-BXKVDMCESA-N
+
+>  <SMILES>
+C[C@@H]([C@@H]([C@H]([C@H](C=O)O)O)O)O
+
+$$$$

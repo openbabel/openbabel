@@ -1,0 +1,126 @@
+3K1X_DBX_A_131
+  RCSB PDB12061709223D
+Coordinates from PDB:3K1X:A:131 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   39.5560   40.0640   57.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1910   38.4990   56.0840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1430   38.5430   57.2200   S 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6890   40.7230   58.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3730   37.9960   58.3520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8000   40.7110   56.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4180   37.7560   57.0480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2930   42.7310   57.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4770   40.0680   59.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1700   42.0420   56.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3900   42.6740   54.8660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0410   42.0630   58.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  2  0  0  0  0
+  3  1  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  7  2  0  0  0  0
+  3  5  1  0  0  0  0
+  9  4  1  0  0  0  0
+  4 12  1  0  0  0  0
+  6 10  2  0  0  0  0
+ 12  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+S1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+C5
+A   11
+O5
+A   12
+C6
+M  END
+>  <InstanceId>
+3K1X_DBX_A_131
+
+>  <ChemCompId>
+DBX
+
+>  <PdbId>
+3K1X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+131
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5 S
+
+>  <Name>
+2,5-dihydroxybenzenesulfonic acid
+
+>  <SystematicName>
+2,5-dihydroxybenzenesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O5 S
+
+>  <MolecularWeight>
+190.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O5S/c7-4-1-2-5(8)6(3-4)12(9,10)11/h1-3,7-8H,(H,9,10,11)
+
+>  <InChIKey>
+IKQCSJBQLWJEPU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)S(=O)(=O)O)O
+
+$$$$

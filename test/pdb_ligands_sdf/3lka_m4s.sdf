@@ -1,0 +1,126 @@
+3LKA_M4S_A_1
+  RCSB PDB12061709373D
+Coordinates from PDB:3LKA:A:1 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    2.5270   -5.5670    7.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5500   -5.1900    4.1660   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4310   -6.2350    9.7660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9130   -6.0750    5.1750   S 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3880   -5.6130    8.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8930   -7.4750    4.6600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6400   -6.2080    8.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5000   -5.6780    5.4410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0640   -6.7450    7.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9190   -6.1190    6.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6490   -6.9730    9.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1900   -6.7080    6.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4  8  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 12  2  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+O1
+A    4
+S1
+A    5
+C2
+A    6
+O2
+A    7
+C3
+A    8
+O3
+A    9
+C4
+A   10
+C5
+A   11
+C6
+A   12
+C7
+M  END
+>  <InstanceId>
+3LKA_M4S_A_1
+
+>  <ChemCompId>
+M4S
+
+>  <PdbId>
+3LKA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3 S
+
+>  <Name>
+4-methoxybenzenesulfonamide
+
+>  <SystematicName>
+4-methoxybenzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N O3 S
+
+>  <MolecularWeight>
+187.216
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9NO3S/c1-11-6-2-4-7(5-3-6)12(8,9)10/h2-5H,1H3,(H2,8,9,10)
+
+>  <InChIKey>
+MSFQEZBRFPAFEX-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)S(=O)(=O)N
+
+$$$$

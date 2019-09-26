@@ -1,0 +1,110 @@
+3GDN_HBX_A_530
+  RCSB PDB12061708443D
+Coordinates from PDB:3GDN:A:530 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   59.7010   -1.6020  -25.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3200   -2.7730  -25.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.1140   -0.5780  -26.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5750    0.7700  -26.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0300    1.7420  -27.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0250    1.3710  -28.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5630    0.0230  -28.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.1050   -0.9520  -27.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  8  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+M  END
+>  <InstanceId>
+3GDN_HBX_A_530
+
+>  <ChemCompId>
+HBX
+
+>  <PdbId>
+3GDN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+530
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O
+
+>  <Name>
+benzaldehyde
+
+>  <SystematicName>
+benzaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O
+
+>  <MolecularWeight>
+106.122
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O/c8-6-7-4-2-1-3-5-7/h1-6H
+
+>  <InChIKey>
+HUMNYLRZRPPJDN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C=O
+
+$$$$

@@ -1,0 +1,126 @@
+4Y3S_46L_A_403
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3S:A:403 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   25.9190    3.3400  113.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9220    4.7260  113.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6640    5.4870  114.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2870    4.7450  113.4960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1280    5.3780  113.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6600    6.7070  114.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5940    4.7520  114.2740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0980    2.6550  113.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2550    3.4090  113.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5010    2.8020  113.1850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5780    3.5620  112.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6090    1.3580  113.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  1  2  0  0  0  0
+  5  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  6  2  0  0  0  0
+  3  7  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+O1
+A    7
+O
+A    8
+C3
+A    9
+C2
+A   10
+N
+A   11
+C1
+A   12
+C
+M  END
+>  <InstanceId>
+4Y3S_46L_A_403
+
+>  <ChemCompId>
+46L
+
+>  <PdbId>
+4Y3S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2
+
+>  <Name>
+6-(dimethylamino)pyridine-3-carboxylic acid
+
+>  <SystematicName>
+6-(dimethylamino)pyridine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N2 O2
+
+>  <MolecularWeight>
+166.177
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N2O2/c1-10(2)7-4-3-6(5-9-7)8(11)12/h3-5H,1-2H3,(H,11,12)
+
+>  <InChIKey>
+XWMLEYINWKGSAC-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)c1ccc(cn1)C(=O)O
+
+$$$$

@@ -1,0 +1,107 @@
+2YCT_9PO_A_1459
+  RCSB PDB12061707363D
+Coordinates from PDB:2YCT:A:1459 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   26.9230   81.7790   10.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8880   82.1090   11.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0080   84.1740   11.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0030   83.8350   10.8260   N 0  3  0  0  0  0  0  0  0  0  0  0
+   28.9660   84.6110   10.6670   O 0  5  0  0  0  0  0  0  0  0  0  0
+   27.9810   82.6720   10.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9200   83.3210   11.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  7  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4  3  1  0  0  0  0
+M  CHG  2   4   1   5  -1
+A    1
+C4
+A    2
+C5
+A    3
+C1
+A    4
+N2
+A    5
+O8
+A    6
+C3
+A    7
+C6
+M  END
+>  <InstanceId>
+2YCT_9PO_A_1459
+
+>  <ChemCompId>
+9PO
+
+>  <PdbId>
+2YCT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1459
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O
+
+>  <Name>
+PYRIDINE-N-OXIDE
+
+>  <SystematicName>
+1-oxidanidylpyridin-1-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N O
+
+>  <MolecularWeight>
+95.099
+
+>  <ModifiedDate>
+2011-09-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5NO/c7-6-4-2-1-3-5-6/h1-5H
+
+>  <InChIKey>
+ILVXOBCQQYKLDS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc[n+](cc1)[O-]
+
+$$$$

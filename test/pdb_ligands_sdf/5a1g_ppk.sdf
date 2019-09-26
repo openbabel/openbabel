@@ -1,0 +1,129 @@
+1RG9_PPK_A_384
+  RCSB PDB12061703533D
+Coordinates from PDB:1RG9:A:384 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    2.2410   13.5150   -7.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7590   13.0810   -7.6960   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1630   13.9440   -6.7740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8260   11.9880   -6.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0130   12.2040   -8.8110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2700   12.6770   -9.6990   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7260   11.4960  -10.6050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3450   13.0460   -8.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0260   13.9430  -10.6780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5140   15.3880  -10.2660   P 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9090   15.2840   -9.6720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4620   15.9670   -9.1960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4730   16.3520  -11.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  2  0  0  0  0
+A    1
+O1G
+A    2
+PG
+A    3
+O2G
+A    4
+O3G
+A    5
+N3B
+A    6
+PB
+A    7
+O1B
+A    8
+O2B
+A    9
+O3A
+A   10
+PA
+A   11
+O1A
+A   12
+O2A
+A   13
+O4A
+M  END
+>  <InstanceId>
+1RG9_PPK_A_384
+
+>  <ChemCompId>
+PPK
+
+>  <PdbId>
+1RG9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+384
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+N O9 P3
+
+>  <Name>
+(DIPHOSPHONO)AMINOPHOSPHONIC ACID
+
+>  <SystematicName>
+[(hydroxy-phosphonooxy-phosphoryl)amino]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+H6 N O9 P3
+
+>  <MolecularWeight>
+256.97
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/H6NO9P3/c2-11(3,4)1-12(5,6)10-13(7,8)9/h(H2,7,8,9)(H4,1,2,3,4,5,6)
+
+>  <InChIKey>
+PELPUMGXMYVGSQ-UHFFFAOYSA-N
+
+>  <SMILES>
+N(P(=O)(O)O)[P@](=O)(O)OP(=O)(O)O
+
+$$$$

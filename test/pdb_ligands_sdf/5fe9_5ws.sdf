@@ -1,0 +1,151 @@
+5FE9_5WS_A_901
+  RCSB PDB12061717403D
+Coordinates from PDB:5FE9:A:901 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+  -12.2620   17.6810   76.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2730   18.3300   76.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5890   19.3730   76.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6070   20.0820   76.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0390   20.9960   76.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2900   19.7830   78.2640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2090   20.6000   78.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9430   18.7580   78.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6320   18.4140   80.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9500   18.0070   78.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6020   16.9640   78.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2710   16.6540   80.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2820   17.3740   80.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9610   17.0800   82.1620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7130   15.9580   82.4560   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9090   14.7220   81.5760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3360   16.5670   82.1710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7940   15.5680   84.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 18 15  1  0  0  0  0
+ 17 15  2  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13  9  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  6  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAA
+A    2
+CAL
+A    3
+CAI
+A    4
+CAN
+A    5
+OAD
+A    6
+NAQ
+A    7
+CAB
+A    8
+CAP
+A    9
+CAJ
+A   10
+CAO
+A   11
+CAH
+A   12
+CAG
+A   13
+CAM
+A   14
+NAK
+A   15
+SAR
+A   16
+OAE
+A   17
+OAF
+A   18
+CAC
+M  END
+>  <InstanceId>
+5FE9_5WS_A_901
+
+>  <ChemCompId>
+5WS
+
+>  <PdbId>
+5FE9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O3 S
+
+>  <Name>
+~{N}-(1,4-dimethyl-2-oxidanylidene-quinolin-7-yl)methanesulfonamide
+
+>  <SystematicName>
+~{N}-(1,4-dimethyl-2-oxidanylidene-quinolin-7-yl)methanesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 N2 O3 S
+
+>  <MolecularWeight>
+266.316
+
+>  <ModifiedDate>
+2016-01-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O3S/c1-8-6-12(15)14(2)11-7-9(4-5-10(8)11)13-18(3,16)17/h4-7,13H,1-3H3
+
+>  <InChIKey>
+LJTKZAIXTKZSBU-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CC(=O)N(c2c1ccc(c2)NS(=O)(=O)C)C
+
+$$$$

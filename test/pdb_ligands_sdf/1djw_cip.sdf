@@ -1,0 +1,139 @@
+1DJW_CIP_A_1
+  RCSB PDB12061702163D
+Coordinates from PDB:1DJW:A:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  124.9550   40.6820   18.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.7530   39.1360   18.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.5020   38.5000   17.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.9300   39.0020   17.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.8510   40.5280   16.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.3680   41.1980   18.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.9900   38.4730   19.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.7420   40.9040   20.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  125.4330   37.0940   17.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+  127.2120   38.4890   15.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  128.1170   41.0590   16.5970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  126.3080   42.5550   17.8320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  125.5590   39.7900   20.8640   P 0  0  0  0  0  0  0  0  0  0  0  0
+  125.1260   39.7010   22.4300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  127.1710   39.9970   20.8350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+M  END
+>  <InstanceId>
+1DJW_CIP_A_1
+
+>  <ChemCompId>
+CIP
+
+>  <PdbId>
+1DJW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7 P
+
+>  <Name>
+INOSITOL-2-METHYLENE-1,2-CYCLIC-MONOPHOSPHATE
+
+>  <SystematicName>
+(1R,2R,3S,4R,5S,6R,8R)-8-hydroxy-8-oxo-9-oxa-8$l^{5}-phosphabicyclo[4.3.0]nonane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 O7 P
+
+>  <MolecularWeight>
+240.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13O7P/c8-3-2-1-15(12,13)14-7(2)6(11)5(10)4(3)9/h2-11H,1H2,(H,12,13)/t2-,3+,4-,5+,6-,7-/m1/s1
+
+>  <InChIKey>
+HSPMBPCIFXNUBY-YXVPSNDASA-N
+
+>  <SMILES>
+C1[C@@H]2[C@@H]([C@H]([C@@H]([C@H]([C@@H]2O[P@]1(=O)O)O)O)O)O
+
+$$$$

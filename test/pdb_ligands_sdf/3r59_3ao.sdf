@@ -1,0 +1,118 @@
+3R59_3AO_A_301
+  RCSB PDB12061710313D
+Coordinates from PDB:3R59:A:301 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -2.2270   15.9380   18.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4620   15.5590   23.6530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6410   14.9470   20.6170   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8620   16.5960   20.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1630   16.3430   21.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5740   16.3340   19.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1290   15.5590   21.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8270   15.5210   19.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1670   15.8230   22.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4360   15.8120   20.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6 10  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+CAA
+A    2
+NAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+M  END
+>  <InstanceId>
+3R59_3AO_A_301
+
+>  <ChemCompId>
+3AO
+
+>  <PdbId>
+3R59
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O
+
+>  <Name>
+1-(3-aminophenyl)ethanone
+
+>  <SystematicName>
+1-(3-aminophenyl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O
+
+>  <MolecularWeight>
+135.163
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO/c1-6(10)7-3-2-4-8(9)5-7/h2-5H,9H2,1H3
+
+>  <InChIKey>
+CKQHAYFOPRIUOM-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)c1cccc(c1)N
+
+$$$$

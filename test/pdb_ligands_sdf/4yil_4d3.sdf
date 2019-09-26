@@ -1,0 +1,138 @@
+4YIL_4D3_A_404
+  RCSB PDB12061716263D
+Coordinates from PDB:4YIL:A:404 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    5.6270   35.6440   -8.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3190   35.3240   -9.2840   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1190   35.7170  -10.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9940   36.1600  -11.3140   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6690   35.5530  -10.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1610   35.9610  -12.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0470   36.5060  -13.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7380   36.9430  -14.1390   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8230   35.7530  -12.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2200   36.5410  -13.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1030   36.3230  -13.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8170   35.3170  -13.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1160   35.1220  -13.7040   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2210   34.5160  -12.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1040   34.7310  -12.0600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  3  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 12 14  2  0  0  0  0
+  7  6  1  0  0  0  0
+  9  6  1  0  0  0  0
+  9 15  2  0  0  0  0
+ 14 15  1  0  0  0  0
+  6  5  2  0  0  0  0
+  4  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAM
+A    2
+OAK
+A    3
+CAJ
+A    4
+OAL
+A    5
+CAI
+A    6
+CAH
+A    7
+CAN
+A    8
+NAO
+A    9
+CAE
+A   10
+CAD
+A   11
+CAC
+A   12
+CAB
+A   13
+FAG
+A   14
+CAA
+A   15
+CAF
+M  END
+>  <InstanceId>
+4YIL_4D3_A_404
+
+>  <ChemCompId>
+4D3
+
+>  <PdbId>
+4YIL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 F
+
+>  <Name>
+methyl (2Z)-3-cyano-3-(4-fluorophenyl)prop-2-enoate
+
+>  <SystematicName>
+methyl (Z)-3-cyano-3-(4-fluorophenyl)prop-2-enoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H8 F N O2
+
+>  <MolecularWeight>
+205.185
+
+>  <ModifiedDate>
+2016-01-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H8FNO2/c1-15-11(14)6-9(7-13)8-2-4-10(12)5-3-8/h2-6H,1H3/b9-6+
+
+>  <InChIKey>
+SKAOSLYCNKRRPS-RMKNXTFCSA-N
+
+>  <SMILES>
+COC(=O)/C=C(\C#N)/c1ccc(cc1)F
+
+$$$$

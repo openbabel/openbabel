@@ -1,0 +1,138 @@
+5ENH_5QB_A_1501
+  RCSB PDB12061717313D
+Coordinates from PDB:5ENH:A:1501 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -27.2280    3.8530   -6.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1280    3.4330   -5.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1930    2.0930   -4.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3680    1.1670   -5.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4730    1.5850   -6.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7720    6.1080   -5.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1090    3.1920   -9.5340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0330    3.5400   -8.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7310    3.9550   -7.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1040    3.5700   -7.5630   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4640    3.3720   -8.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3910    2.9360   -6.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6280    0.7470   -7.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4670   -0.5830   -6.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0680    5.1610   -6.6460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13  5  1  0  0  0  0
+ 12  5  2  0  0  0  0
+ 12  1  1  0  0  0  0
+ 15  1  1  0  0  0  0
+ 15  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+O2
+A    8
+C1
+A    9
+C
+A   10
+N
+A   11
+C2
+A   12
+C3
+A   13
+O
+A   14
+C9
+A   15
+O1
+M  END
+>  <InstanceId>
+5ENH_5QB_A_1501
+
+>  <ChemCompId>
+5QB
+
+>  <PdbId>
+5ENH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O3
+
+>  <Name>
+~{N}-[(2,6-dimethoxyphenyl)methyl]ethanamide
+
+>  <SystematicName>
+~{N}-[(2,6-dimethoxyphenyl)methyl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 N O3
+
+>  <MolecularWeight>
+209.242
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15NO3/c1-8(13)12-7-9-10(14-2)5-4-6-11(9)15-3/h4-6H,7H2,1-3H3,(H,12,13)
+
+>  <InChIKey>
+KOFRPILEEFGDBE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCc1c(cccc1OC)OC
+
+$$$$

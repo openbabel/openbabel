@@ -1,0 +1,134 @@
+4C4X_W9M_A_1548
+  RCSB PDB12061711583D
+Coordinates from PDB:4C4X:A:1548 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   12.1440  -19.1530   46.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7980  -18.9820   44.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2810  -18.1790   46.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3790  -20.5890   47.1150  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5990  -17.8240   44.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8690  -20.1960   44.3400  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0990  -17.0050   45.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7450  -16.8430   44.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2250  -15.9900   46.3800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3370  -15.2780   47.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3730  -14.2050   47.7720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1940  -15.4740   48.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3030  -13.8650   46.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4050  -13.3760   48.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+CL4
+A    5
+C5
+A    6
+CL6
+A    7
+C7
+A    8
+C8
+A    9
+N9
+A   10
+C10
+A   11
+N11
+A   12
+O12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+4C4X_W9M_A_1548
+
+>  <ChemCompId>
+W9M
+
+>  <PdbId>
+4C4X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1548
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O Cl2
+
+>  <Name>
+3-(3,4-dichlorophenyl)-1,1-dimethyl-urea
+
+>  <SystematicName>
+3-(3,4-dichlorophenyl)-1,1-dimethyl-urea
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H10 Cl2 N2 O
+
+>  <MolecularWeight>
+233.094
+
+>  <ModifiedDate>
+2014-09-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10Cl2N2O/c1-13(2)9(14)12-6-3-4-7(10)8(11)5-6/h3-5H,1-2H3,(H,12,14)
+
+>  <InChIKey>
+XMTQQYYKAHVGBJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)C(=O)Nc1ccc(c(c1)Cl)Cl
+
+$$$$

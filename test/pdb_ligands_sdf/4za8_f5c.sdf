@@ -1,0 +1,142 @@
+4ZA8_F5C_A_606
+  RCSB PDB12061716363D
+Coordinates from PDB:4ZA8:A:606 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   17.6080   12.5190   25.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5810   12.7110   26.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9410   11.4360   26.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6130   11.4830   28.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8090   12.6440   28.5480   F 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8780   10.2150   26.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2500    9.9910   25.1630   F 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0690   10.4280   28.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7390   10.5910   29.9180   F 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2460    9.0670   26.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0970    7.8070   26.6310   F 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8670    9.1750   28.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2930    8.0540   28.8910   F 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0330   13.8010   24.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5950   14.9530   24.4890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9180   13.6030   23.8060   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  7  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  3  2  0  0  0  0
+  6 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 10 12  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+ 12  8  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+CG
+A    4
+CD1
+A    5
+FD1
+A    6
+CD2
+A    7
+FD2
+A    8
+CE1
+A    9
+FE1
+A   10
+CE2
+A   11
+FE2
+A   12
+CZ
+A   13
+FZ
+A   14
+C
+A   15
+O
+A   16
+OXT
+M  END
+>  <InstanceId>
+4ZA8_F5C_A_606
+
+>  <ChemCompId>
+F5C
+
+>  <PdbId>
+4ZA8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+606
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2 F5
+
+>  <Name>
+penta-fluorocinnamic acid
+
+>  <SystematicName>
+(E)-3-[2,3,4,5,6-pentakis(fluoranyl)phenyl]prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H3 F5 O2
+
+>  <MolecularWeight>
+238.111
+
+>  <ModifiedDate>
+2015-06-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H3F5O2/c10-5-3(1-2-4(15)16)6(11)8(13)9(14)7(5)12/h1-2H,(H,15,16)/b2-1+
+
+>  <InChIKey>
+IUUKDBLGVZISGW-OWOJBTEDSA-N
+
+>  <SMILES>
+C(=C/C(=O)O)\c1c(c(c(c(c1F)F)F)F)F
+
+$$$$

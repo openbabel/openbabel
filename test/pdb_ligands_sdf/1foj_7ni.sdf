@@ -1,0 +1,128 @@
+1FOJ_7NI_A_1750
+  RCSB PDB12061702313D
+Coordinates from PDB:1FOJ:A:1750 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    5.5730   11.2500   30.1330   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2050   10.6490   29.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6630   10.6040   29.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7560   11.4410   31.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5290   12.0550   32.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2710   12.4370   33.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2030   12.2050   32.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4120   11.5750   31.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6890   11.1960   30.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9840   12.5750   32.7020   N 0  3  0  0  0  0  0  0  0  0  0  0
+    4.8060   13.1230   33.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0400   12.3690   31.9680   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+M  CHG  2  10   1  12  -1
+A    1
+N1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+N10
+A   11
+O11
+A   12
+O12
+M  END
+>  <InstanceId>
+1FOJ_7NI_A_1750
+
+>  <ChemCompId>
+7NI
+
+>  <PdbId>
+1FOJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1750
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O2
+
+>  <Name>
+7-NITROINDAZOLE
+
+>  <SystematicName>
+7-nitro-1H-indazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N3 O2
+
+>  <MolecularWeight>
+163.133
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5N3O2/c11-10(12)6-3-1-2-5-4-8-9-7(5)6/h1-4H,(H,8,9)
+
+>  <InChIKey>
+PQCAUHUKTBHUSA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cn[nH]c2c(c1)[N+](=O)[O-]
+
+$$$$

@@ -1,0 +1,121 @@
+1T4T_DIR_A_1000
+  RCSB PDB12061704043D
+Coordinates from PDB:1T4T:A:1000 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   -5.2790   47.6760   10.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3950   46.5260    9.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2300   48.6240    9.0650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5220   48.4720   11.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4760   45.3100   10.4840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6390   44.2220   10.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2660   48.1650   12.4550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0600   49.6450   10.8090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6590   44.1590    9.3820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9290   43.1400   11.0370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9300   43.0550    9.3000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  2  0  0  0  0
+  6 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+N
+A    4
+C
+A    5
+NG
+A    6
+CD
+A    7
+OXT
+A    8
+O
+A    9
+NH1
+A   10
+NH2
+A   11
+OH1
+M  END
+>  <InstanceId>
+1T4T_DIR_A_1000
+
+>  <ChemCompId>
+DIR
+
+>  <PdbId>
+1T4T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N4 O3
+
+>  <Name>
+3-{[(E)-AMINO(HYDROXYIMINO)METHYL]AMINO}ALANINE
+
+>  <SystematicName>
+(2S)-2-amino-3-[(N'-hydroxycarbamimidoyl)amino]propanoic acid
+
+>  <Synonyms>
+DINOR-N(OMEGA)-HYDROXY-L-ARGININE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H10 N4 O3
+
+>  <MolecularWeight>
+162.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+ARG
+
+>  <OneLetterCode>
+R
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10N4O3/c5-2(3(9)10)1-7-4(6)8-11/h2,11H,1,5H2,(H,9,10)(H3,6,7,8)/t2-/m0/s1
+
+>  <InChIKey>
+RPHCSGPGZUWMRV-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)N)N/C(=N/O)/N
+
+$$$$

@@ -1,0 +1,90 @@
+1AO7_EMC_B_100
+  RCSB PDB12061702003D
+Coordinates from PDB:1AO7:B:100 Model:1 without hydrogens
+  3  2  0  0  0  0            999 V2000
+   61.0220   10.7690   20.9430  Hg 0  3  0  0  0  0  0  0  0  0  0  0
+   62.3360    9.9730   19.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7460   10.0720   18.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+HG
+A    2
+C1
+A    3
+C2
+M  END
+>  <InstanceId>
+1AO7_EMC_B_100
+
+>  <ChemCompId>
+EMC
+
+>  <PdbId>
+1AO7
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+100
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+3
+
+>  <ObservedFormula>
+C2
+
+>  <Name>
+ETHYL MERCURY ION
+
+>  <SystematicName>
+ethylmercury
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H5 Hg
+
+>  <MolecularWeight>
+229.651
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H5.Hg/c1-2;/h1H2,2H3;/q;+1
+
+>  <InChIKey>
+MJOUBOKSWBMNGQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC[Hg+]
+
+$$$$

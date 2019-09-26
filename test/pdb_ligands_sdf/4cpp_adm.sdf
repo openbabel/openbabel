@@ -1,0 +1,120 @@
+3CP4_ADM_A_416
+  RCSB PDB12061708123D
+Coordinates from PDB:3CP4:A:416 Model:1 without hydrogens
+ 10 12  0  0  0  0            999 V2000
+   46.0740   44.7880   15.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6660   44.3810   14.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7750   43.2180   13.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7500   43.6460   12.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1800   44.0300   13.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7590   42.7900   13.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8130   42.3460   15.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6470   43.5200   16.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0080   45.2240   14.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3960   41.9790   14.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+M  END
+>  <InstanceId>
+3CP4_ADM_A_416
+
+>  <ChemCompId>
+ADM
+
+>  <PdbId>
+3CP4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+416
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+ADAMANTANE
+
+>  <SystematicName>
+adamantane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16
+
+>  <MolecularWeight>
+136.234
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16/c1-7-2-9-4-8(1)5-10(3-7)6-9/h7-10H,1-6H2/t7-,8+,9-,10+
+
+>  <InChIKey>
+ORILYTVJVMAKLC-YNFQOJQRSA-N
+
+>  <SMILES>
+C1C2CC3CC1CC(C2)C3
+
+$$$$

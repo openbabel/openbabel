@@ -1,0 +1,127 @@
+4BDF_H3R_A_1513
+  RCSB PDB12061711493D
+Coordinates from PDB:4BDF:A:1513 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -36.5720   34.9990    7.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.8500   35.6710    8.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.4110   33.9140    7.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.2190   32.8080    4.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.6940   31.3980    6.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.0100   31.8010    4.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.4930   30.3990    5.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.1540   30.6010    4.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.7370   33.6990    6.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.1450   34.6190    5.5960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5520   32.6190    5.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.4370   35.4000    6.4660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1 12  2  0  0  0  0
+  3  9  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  7  2  0  0  0  0
+  5 11  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+C11
+A    9
+C12
+A   10
+N13
+A   11
+C4
+A   12
+N3
+M  END
+>  <InstanceId>
+4BDF_H3R_A_1513
+
+>  <ChemCompId>
+H3R
+
+>  <PdbId>
+4BDF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1513
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2
+
+>  <Name>
+5-METHYL-3-PHENYL-1H-PYRAZOLE
+
+>  <SystematicName>
+3-methyl-5-phenyl-1H-pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H10 N2
+
+>  <MolecularWeight>
+158.2
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2/c1-8-7-10(12-11-8)9-5-3-2-4-6-9/h2-7H,1H3,(H,11,12)
+
+>  <InChIKey>
+QHRSESMSOJZMCO-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc([nH]n1)c2ccccc2
+
+$$$$

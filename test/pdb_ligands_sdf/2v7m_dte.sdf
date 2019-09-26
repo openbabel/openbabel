@@ -1,0 +1,143 @@
+2V7M_DTE_A_1360
+  RCSB PDB12061707033D
+Coordinates from PDB:2V7M:A:1360 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    8.4560   -9.7160   29.2380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5430   -8.9070   28.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1480   -7.4310   28.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9140   -6.5970   28.0970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8610   -9.0740   29.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8060   -8.6400   30.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3640   -7.4980   31.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2320   -9.3170   31.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3870   -8.6680   33.0580   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0700   -7.5520   32.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4910   -6.5370   33.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2150   -5.4540   33.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5120   -5.4000   31.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0900   -6.4230   30.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0580   -7.0680   29.0080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0930   -6.6690   35.3550  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 15  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  7 14  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+OXT
+A    5
+CB
+A    6
+CG
+A    7
+CD2
+A    8
+CD1
+A    9
+NE1
+A   10
+CE2
+A   11
+CZ2
+A   12
+CH2
+A   13
+CZ3
+A   14
+CE3
+A   15
+O
+A   16
+CL
+M  END
+>  <InstanceId>
+2V7M_DTE_A_1360
+
+>  <ChemCompId>
+DTE
+
+>  <PdbId>
+2V7M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1360
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2 Cl
+
+>  <Name>
+7-CL-D-TRYPTOPHAN
+
+>  <SystematicName>
+(2R)-2-amino-3-(7-chloro-1H-indol-3-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H11 Cl N2 O2
+
+>  <MolecularWeight>
+238.67
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H11ClN2O2/c12-8-3-1-2-7-6(5-14-10(7)8)4-9(13)11(15)16/h1-3,5,9,14H,4,13H2,(H,15,16)/t9-/m1/s1
+
+>  <InChIKey>
+DMQFGLHRDFQKNR-SECBINFHSA-N
+
+>  <SMILES>
+c1cc2c(c[nH]c2c(c1)Cl)C[C@H](C(=O)O)N
+
+$$$$

@@ -1,0 +1,131 @@
+2BUA_007_A_1767
+  RCSB PDB12061705103D
+Coordinates from PDB:2BUA:A:1767 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   -5.9900   21.2360    4.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0320   22.7600    4.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2930   20.7280    4.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4930   23.1630    4.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2910   21.8740    4.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8350   19.3700    4.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9200   18.4100    3.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2290   19.0520    4.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3840   17.2000    2.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6880   17.8370    3.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7680   16.9150    2.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0280   20.5710    6.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0990   19.1890    6.7340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+M  END
+>  <InstanceId>
+2BUA_007_A_1767
+
+>  <ChemCompId>
+007
+
+>  <PdbId>
+2BUA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1767
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N
+
+>  <Name>
+1-METHYLAMINE-1-BENZYL-CYCLOPENTANE
+
+>  <SystematicName>
+(1-phenylcyclopentyl)methanamine
+
+>  <Synonyms>
+1-(1-PHENYLCYCLOPENTYL)METHANAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H17 N
+
+>  <MolecularWeight>
+175.27
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H17N/c13-10-12(8-4-5-9-12)11-6-2-1-3-7-11/h1-3,6-7H,4-5,8-10,13H2
+
+>  <InChIKey>
+SJWOFBVBNFLWLP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C2(CCCC2)CN
+
+$$$$

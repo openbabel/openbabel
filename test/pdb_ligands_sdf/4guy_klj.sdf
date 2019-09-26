@@ -1,0 +1,154 @@
+3RTU_KLJ_A_1
+  RCSB PDB12061710373D
+Coordinates from PDB:3RTU:A:1 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+    2.9740   -5.4250    6.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1180   -4.6960    3.6700   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4880   -7.1700    9.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2130   -5.8970    4.7650   S 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0510   -5.9790    7.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1340   -1.6050    5.3550   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7470   -2.4250    3.9810   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9120   -6.3250    8.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1290   -6.7800    4.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0750   -6.7640    9.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0570   -1.0630    6.2300   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3650   -6.7700    8.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4410   -6.5540    4.4420   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3260   -5.9750    6.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5000   -6.3750    7.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4440   -5.5550    6.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7860   -7.3350    8.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5820   -2.4150    4.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5510   -3.3770    3.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 16  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2 19  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4 16  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7 18  2  0  0  0  0
+  8 10  2  0  0  0  0
+  9  4  2  0  0  0  0
+ 12  3  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 13  4  2  0  0  0  0
+ 14  5  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 12  2  0  0  0  0
+ 17  3  1  0  0  0  0
+ 18  6  1  0  0  0  0
+ 19 18  1  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+O1
+A    4
+S1
+A    5
+C2
+A    6
+N2
+A    7
+O2
+A    8
+C3
+A    9
+O3
+A   10
+C4
+A   11
+O4
+A   12
+C5
+A   13
+O5
+A   14
+C6
+A   15
+C7
+A   16
+C8
+A   17
+C9
+A   18
+C10
+A   19
+C11
+M  END
+>  <InstanceId>
+3RTU_KLJ_A_1
+
+>  <ChemCompId>
+KLJ
+
+>  <PdbId>
+3RTU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O5 S
+
+>  <Name>
+N-hydroxy-N~2~-{[2-(4-methoxyphenyl)ethyl]sulfonyl}glycinamide
+
+>  <SystematicName>
+2-[2-(4-methoxyphenyl)ethylsulfonylamino]-N-oxidanyl-ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N2 O5 S
+
+>  <MolecularWeight>
+288.32
+
+>  <ModifiedDate>
+2012-06-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N2O5S/c1-18-10-4-2-9(3-5-10)6-7-19(16,17)12-8-11(14)13-15/h2-5,12,15H,6-8H2,1H3,(H,13,14)
+
+>  <InChIKey>
+LMKSZZKXCRCXFM-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)CCS(=O)(=O)NCC(=O)NO
+
+$$$$

@@ -1,0 +1,135 @@
+4B0B_54F_A_1172
+  RCSB PDB12061711453D
+Coordinates from PDB:4B0B:A:1172 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   22.5810   18.3240   14.5760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2150   17.0220   14.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9120   16.3600   15.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9480   17.0370   16.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2420   18.3870   16.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5060   19.0500   15.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7900   17.0730    9.3640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6470   17.0950   10.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6080   16.7310   11.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4290   16.7940   12.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2600   17.0820   11.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2890   17.4690   10.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4960   17.5250    9.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3300   16.2540   13.4010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N8
+A    8
+C9
+A    9
+C10
+A   10
+C11
+A   11
+C12
+A   12
+C13
+A   13
+C14
+A   14
+OAK
+M  END
+>  <InstanceId>
+4B0B_54F_A_1172
+
+>  <ChemCompId>
+54F
+
+>  <PdbId>
+4B0B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1172
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+3-(pyridin-2-yloxy)aniline
+
+>  <SystematicName>
+3-pyridin-2-yloxyaniline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2 O
+
+>  <MolecularWeight>
+186.21
+
+>  <ModifiedDate>
+2012-11-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O/c12-9-4-3-5-10(8-9)14-11-6-1-2-7-13-11/h1-8H,12H2
+
+>  <InChIKey>
+CLQMOPKXIBQKKG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)Oc2cccc(c2)N
+
+$$$$

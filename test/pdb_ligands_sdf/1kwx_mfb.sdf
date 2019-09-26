@@ -1,0 +1,122 @@
+1KWX_MFB_A_501
+  RCSB PDB12061703073D
+Coordinates from PDB:1KWX:A:501 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   45.8200   -4.8660   22.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3160   -4.6630   22.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0470   -4.2750   23.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8730   -3.0440   24.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3580   -3.2930   23.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2290   -2.0650   24.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0610   -5.2230   20.7370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6260   -5.8620   21.9650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6700   -3.9950   23.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4160   -1.9190   23.3800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5130   -3.6770   22.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+M  END
+>  <InstanceId>
+1KWX_MFB_A_501
+
+>  <ChemCompId>
+MFB
+
+>  <PdbId>
+1KWX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+BETA-L-METHYL-FUCOSE
+
+>  <SystematicName>
+(2S,3S,4R,5S,6S)-2-methoxy-6-methyl-oxane-3,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+L-SACCHARIDE
+
+>  <Formula>
+C7 H14 O5
+
+>  <MolecularWeight>
+178.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O5/c1-3-4(8)5(9)6(10)7(11-2)12-3/h3-10H,1-2H3/t3-,4+,5+,6-,7-/m0/s1
+
+>  <InChIKey>
+OHWCAVRRXKJCRB-XUVCUMPTSA-N
+
+>  <SMILES>
+C[C@H]1[C@H]([C@H]([C@@H]([C@H](O1)OC)O)O)O
+
+$$$$

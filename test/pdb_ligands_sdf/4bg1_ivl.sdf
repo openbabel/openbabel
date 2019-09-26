@@ -1,0 +1,127 @@
+4BG1_IVL_A_901
+  RCSB PDB12061711503D
+Coordinates from PDB:4BG1:A:901 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   21.9340   33.1590   87.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8010   33.1980   86.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8190   32.0870   86.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9090   31.8790   87.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5100   32.5920   89.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5730   31.0740   88.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8110   29.7500   88.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1390   28.7540   87.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6300   27.4540   88.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5310   32.1420   88.2900   N 0  3  0  0  0  0  0  0  0  0  0  0
+   20.8920   26.5750   88.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9340   27.3330   88.2630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  4 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 10  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9 11  2  0  0  0  0
+M  CHG  1  10   1
+A    1
+CAF
+A    2
+CAE
+A    3
+CAD
+A    4
+CAA
+A    5
+CAH
+A    6
+CAJ
+A    7
+CAK
+A    8
+CAL
+A    9
+CAM
+A   10
+N3
+A   11
+OAB
+A   12
+OAC
+M  END
+>  <InstanceId>
+4BG1_IVL_A_901
+
+>  <ChemCompId>
+IVL
+
+>  <PdbId>
+4BG1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2
+
+>  <Name>
+1-(3-carboxypropyl)-1-methylpyrrolidin-1-ium
+
+>  <SystematicName>
+4-(1-methylpyrrolidin-1-ium-1-yl)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H18 N O2
+
+>  <MolecularWeight>
+172.245
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO2/c1-10(6-2-3-7-10)8-4-5-9(11)12/h2-8H2,1H3/p+1
+
+>  <InChIKey>
+MXRVDXQFAGJLAO-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+]1(CCCC1)CCCC(=O)O
+
+$$$$

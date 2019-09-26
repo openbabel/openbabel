@@ -1,0 +1,138 @@
+3P6G_IZP_A_133
+  RCSB PDB12061710133D
+Coordinates from PDB:3P6G:A:133 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    5.4520    5.8630   15.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3860    5.4530   16.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3350    8.6880   21.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2600    5.1780   15.1000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2780    7.4720   22.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8160    7.0560   22.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9910    7.7590   23.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7310    7.3840   15.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0010    7.7250   15.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9500    7.7200   17.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9870    8.3730   18.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1320    8.6780   19.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2620    8.3130   20.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2820    7.6270   19.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1120    7.3110   18.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  2  0  0  0  0
+  1  8  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 13  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 15  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 15 14  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+C10
+A   13
+C11
+A   14
+C12
+A   15
+C13
+M  END
+>  <InstanceId>
+3P6G_IZP_A_133
+
+>  <ChemCompId>
+IZP
+
+>  <PdbId>
+3P6G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+133
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O2
+
+>  <Name>
+(2R)-2-[4-(2-methylpropyl)phenyl]propanoic acid
+
+>  <SystematicName>
+(2R)-2-[4-(2-methylpropyl)phenyl]propanoic acid
+
+>  <Synonyms>
+(R)-Ibuprofen
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H18 O2
+
+>  <MolecularWeight>
+206.281
+
+>  <ModifiedDate>
+2011-07-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H18O2/c1-9(2)8-11-4-6-12(7-5-11)10(3)13(14)15/h4-7,9-10H,8H2,1-3H3,(H,14,15)/t10-/m1/s1
+
+>  <InChIKey>
+HEFNNWSXXWATRW-SNVBAGLBSA-N
+
+>  <SMILES>
+C[C@H](c1ccc(cc1)CC(C)C)C(=O)O
+
+$$$$

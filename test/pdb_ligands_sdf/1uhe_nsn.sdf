@@ -1,0 +1,130 @@
+1UHE_NSN_A_25
+  RCSB PDB12061704133D
+Coordinates from PDB:1UHE:A:25 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -16.3970   84.9570   16.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0900   84.6000   14.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3610   83.3220   14.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6010   83.2750   13.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5410   85.6830   13.8900   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -14.5580   86.9850   14.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0300   87.3500   12.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9420   86.4340   12.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4600   85.5440   13.0410   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -12.5400   86.6370   11.1360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6000   88.0290   14.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0810   88.9710   15.2810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7700   87.7770   14.3520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+M  CHG  2   5   1   9  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O1
+A    5
+N1
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+O2
+A   10
+O3
+A   11
+C7
+A   12
+N2
+A   13
+O4
+M  END
+>  <InstanceId>
+1UHE_NSN_A_25
+
+>  <ChemCompId>
+NSN
+
+>  <PdbId>
+1UHE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 N2 O4
+
+>  <Name>
+N~2~-(2-AMINO-1-METHYL-2-OXOETHYLIDENE)ASPARAGINATE
+
+>  <SystematicName>
+(3S)-4-amino-3-(1-amino-1-oxo-propan-2-ylidene)azaniumyl-4-oxo-butanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N3 O4
+
+>  <MolecularWeight>
+201.18
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11N3O4/c1-3(6(8)13)10-4(7(9)14)2-5(11)12/h4H,2H2,1H3,(H2,8,13)(H2,9,14)(H,11,12)/b10-3+/t4-/m0/s1
+
+>  <InChIKey>
+YZKQNDLOQTXCHV-BNTYAIEMSA-N
+
+>  <SMILES>
+CC(=[NH+][C@@H](CC(=O)[O-])C(=O)N)C(=O)N
+
+$$$$

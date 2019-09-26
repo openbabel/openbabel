@@ -1,0 +1,117 @@
+4DHW_0L1_A_201
+  RCSB PDB12061712123D
+Coordinates from PDB:4DHW:A:201 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   13.3080   14.3940   -1.6100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1570   13.4370   -2.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9100   13.2130   -3.3800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8700   12.6040   -2.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5400   12.2690   -0.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3320   13.0750   -0.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6300   13.7010    1.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4970   12.7230    2.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3420   11.7940    2.2510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8880   13.1310    3.2230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+O4
+A   10
+O3
+M  END
+>  <InstanceId>
+4DHW_0L1_A_201
+
+>  <ChemCompId>
+0L1
+
+>  <PdbId>
+4DHW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O4
+
+>  <Name>
+hexanedioic acid
+
+>  <SystematicName>
+hexanedioic acid
+
+>  <Synonyms>
+Adipic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 O4
+
+>  <MolecularWeight>
+146.141
+
+>  <ModifiedDate>
+2012-02-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O4/c7-5(8)3-1-2-4-6(9)10/h1-4H2,(H,7,8)(H,9,10)
+
+>  <InChIKey>
+WNLRTRBMVRJNCN-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCC(=O)O)CC(=O)O
+
+$$$$

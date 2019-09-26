@@ -1,0 +1,151 @@
+2XD9_XD9_A_200
+  RCSB PDB12061707253D
+Coordinates from PDB:2XD9:A:200 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+  -26.8140   48.3580   18.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7720   48.2530   17.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0810   48.2810   16.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1040   48.2110   15.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3320   48.2550   14.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4050   47.9920   15.6880   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0490   48.0310   14.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2250   48.1720   13.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1500   48.2120   11.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3120   49.1050   11.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1320   50.3390   11.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4170   48.5140   11.2210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3510   46.9460   11.1440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7790   48.7240   11.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6130   47.9280   11.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3620   48.5350   11.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6530   47.9420   13.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8670   46.9130   14.1780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 17  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+CAA
+A    2
+CAG
+A    3
+CAH
+A    4
+CAM
+A    5
+CAI
+A    6
+SAK
+A    7
+CAO
+A    8
+CAN
+A    9
+CAR
+A   10
+CAL
+A   11
+OAC
+A   12
+OAB
+A   13
+OAF
+A   14
+CAJ
+A   15
+CAP
+A   16
+OAD
+A   17
+CAQ
+A   18
+OAE
+M  END
+>  <InstanceId>
+2XD9_XD9_A_200
+
+>  <ChemCompId>
+XD9
+
+>  <PdbId>
+2XD9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O5 S
+
+>  <Name>
+(4R,6R,7S)-4,6,7-TRIHYDROXY-2-[(1E)-PROP-1-EN-1-YL]-4,5,6,7-TETRAHYDRO-1-BENZOTHIOPHENE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+(4R,6R,7S)-4,6,7-trihydroxy-2-[(E)-prop-1-enyl]-6,7-dihydro-5H-1-benzothiophene-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H14 O5 S
+
+>  <MolecularWeight>
+270.302
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14O5S/c1-2-3-6-4-7-10(18-6)9(14)8(13)5-12(7,17)11(15)16/h2-4,8-9,13-14,17H,5H2,1H3,(H,15,16)/b3-2+/t8-,9+,12-/m1/s1
+
+>  <InChIKey>
+XBFFFFBWIVSOII-PJMUFDJCSA-N
+
+>  <SMILES>
+C\C=C\c1cc2c(s1)[C@H]([C@@H](C[C@@]2(C(=O)O)O)O)O
+
+$$$$

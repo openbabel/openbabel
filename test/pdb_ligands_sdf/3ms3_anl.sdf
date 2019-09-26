@@ -1,0 +1,106 @@
+1AEE_ANL_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEE:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   33.1160   93.0330   47.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4010   93.1170   46.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1790   93.7490   46.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6260   94.3360   47.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3460   94.2500   49.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5770   93.6100   49.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4050   92.4120   48.0990   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N
+M  END
+>  <InstanceId>
+1AEE_ANL_A_296
+
+>  <ChemCompId>
+ANL
+
+>  <PdbId>
+1AEE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N
+
+>  <Name>
+ANILINE
+
+>  <SystematicName>
+aniline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N
+
+>  <MolecularWeight>
+93.126
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N/c7-6-4-2-1-3-5-6/h1-5H,7H2
+
+>  <InChIKey>
+PAYRUJLWNCNPSJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)N
+
+$$$$

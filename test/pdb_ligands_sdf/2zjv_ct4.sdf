@@ -1,0 +1,139 @@
+2ZJV_CT4_A_301
+  RCSB PDB12061707453D
+Coordinates from PDB:2ZJV:A:301 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   30.8480  -27.0810  -28.5190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0040  -27.3870  -27.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6110  -26.9700  -26.2840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8410  -27.9650  -27.7360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5540  -27.3640  -29.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1890  -26.1590  -30.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8990  -26.3320  -26.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7710  -26.3170  -32.3990   S 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5470  -24.6300  -32.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7510  -23.9410  -31.3700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1210  -24.8210  -30.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0740  -23.8930  -33.9390  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9500  -28.2990  -26.7700   N 0  3  0  0  0  0  0  0  0  0  0  0
+   26.8880  -28.8470  -27.1360   O 0  5  0  0  0  0  0  0  0  0  0  0
+   28.1910  -28.0530  -25.5610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+M  CHG  2  13   1  14  -1
+A    1
+N
+A    2
+C
+A    3
+N1
+A    4
+N2
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+S
+A    9
+C4
+A   10
+N4
+A   11
+C5
+A   12
+CL
+A   13
+N5
+A   14
+O1
+A   15
+O2
+M  END
+>  <InstanceId>
+2ZJV_CT4_A_301
+
+>  <ChemCompId>
+CT4
+
+>  <PdbId>
+2ZJV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5 O2 S Cl
+
+>  <Name>
+1-[(2-chloro-1,3-thiazol-5-yl)methyl]-3-methyl-2-nitroguanidine
+
+>  <SystematicName>
+1-[(2-chloro-1,3-thiazol-5-yl)methyl]-3-methyl-2-nitro-guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 Cl N5 O2 S
+
+>  <MolecularWeight>
+249.678
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8ClN5O2S/c1-8-6(11-12(13)14)10-3-4-2-9-5(7)15-4/h2H,3H2,1H3,(H2,8,10,11)
+
+>  <InChIKey>
+PGOOBECODWQEAB-UHFFFAOYSA-N
+
+>  <SMILES>
+CN/C(=N\[N+](=O)[O-])/NCc1cnc(s1)Cl
+
+$$$$

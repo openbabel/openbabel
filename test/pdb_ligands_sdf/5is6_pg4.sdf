@@ -1,0 +1,129 @@
+1C3V_PG4_B_2000
+  RCSB PDB12061702083D
+Coordinates from PDB:1C3V:B:2000 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  117.2190   34.4370   12.7970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  115.8540   34.6780   12.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  115.7810   36.1990   12.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  114.4070   36.5530   11.8860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  113.5650   35.3950   11.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.4510   35.7750   10.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.9480   35.3570    9.5940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  111.9200   34.5890    8.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.4940   34.2790    7.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.2240   32.8870    7.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  113.4590   32.1740    7.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  113.6780   31.4740    6.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  114.9120   30.7630    6.3080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+C4
+A    7
+O3
+A    8
+C5
+A    9
+C6
+A   10
+O4
+A   11
+C7
+A   12
+C8
+A   13
+O5
+M  END
+>  <InstanceId>
+1C3V_PG4_B_2000
+
+>  <ChemCompId>
+PG4
+
+>  <PdbId>
+1C3V
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+2000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O5
+
+>  <Name>
+TETRAETHYLENE GLYCOL
+
+>  <SystematicName>
+2-[2-[2-(2-hydroxyethoxy)ethoxy]ethoxy]ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 O5
+
+>  <MolecularWeight>
+194.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18O5/c9-1-3-11-5-7-13-8-6-12-4-2-10/h9-10H,1-8H2
+
+>  <InChIKey>
+UWHCKJMYHZGTIT-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COCCOCCOCCO)O
+
+$$$$

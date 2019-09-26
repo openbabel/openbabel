@@ -1,0 +1,105 @@
+2E49_MH6_A_352
+  RCSB PDB12061705243D
+Coordinates from PDB:2E49:A:352 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+    6.7390   57.9850   15.6380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0570   57.9710   16.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4400   59.2320   17.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9310   56.6450   17.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5140   56.3870   17.7890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8360   59.2040   18.8440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3540   60.3400   17.0400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+CB
+A    5
+OG
+A    6
+O
+A    7
+OXT
+M  END
+>  <InstanceId>
+2E49_MH6_A_352
+
+>  <ChemCompId>
+MH6
+
+>  <PdbId>
+2E49
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+352
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O3
+
+>  <Name>
+3-hydroxy-2-iminopropanoic acid
+
+>  <SystematicName>
+3-hydroxy-2-imino-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+PEPTIDE LINKING
+
+>  <Formula>
+C3 H5 N O3
+
+>  <MolecularWeight>
+103.077
+
+>  <ModifiedDate>
+2011-11-17
+
+>  <Parent>
+SER
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5NO3/c4-2(1-5)3(6)7/h4-5H,1H2,(H,6,7)/b4-2+
+
+>  <InChIKey>
+MUHXUPVPXJXCGV-DUXPYHPUSA-N
+
+>  <SMILES>
+[H]/N=C(\CO)/C(=O)O
+
+$$$$

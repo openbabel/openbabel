@@ -1,0 +1,131 @@
+5DQ4_5HQ_A_402
+  RCSB PDB12061717213D
+Coordinates from PDB:5DQ4:A:402 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   -3.7630    0.2020   10.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9250   -0.6580   10.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0820   -1.9960   10.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9140    1.5130   10.9930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4530   -2.2660   11.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0320   -1.0990   11.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8300    2.2940   10.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4520    3.5150    9.1610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4220    2.7770   10.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5770    1.8380   10.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5480   -0.3550   10.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4590    0.4840   10.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1200   -0.0790   11.2540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 10  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10  7  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  3  2  2  0  0  0  0
+  3  5  1  0  0  0  0
+  7  4  1  0  0  0  0
+  2 13  1  0  0  0  0
+  5  6  2  0  0  0  0
+ 13  6  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+N
+A    9
+C
+A   10
+C1
+A   11
+C3
+A   12
+C2
+A   13
+O
+M  END
+>  <InstanceId>
+5DQ4_5HQ_A_402
+
+>  <ChemCompId>
+5HQ
+
+>  <PdbId>
+5DQ4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O
+
+>  <Name>
+1-[6-(furan-2-yl)pyridin-3-yl]methanamine
+
+>  <SystematicName>
+[6-(furan-2-yl)pyridin-3-yl]methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O
+
+>  <MolecularWeight>
+174.199
+
+>  <ModifiedDate>
+2016-09-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O/c11-6-8-3-4-9(12-7-8)10-2-1-5-13-10/h1-5,7H,6,11H2
+
+>  <InChIKey>
+WEPDEUMTQHBFOQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1)c2ccc(cn2)CN
+
+$$$$

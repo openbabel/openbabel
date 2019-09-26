@@ -1,0 +1,114 @@
+3WGT_QSC_A_402
+  RCSB PDB12061711223D
+Coordinates from PDB:3WGT:A:402 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   24.6300   16.0110   10.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6300   11.6550   12.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1120   12.9140   11.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2550   11.4540   12.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2500   13.9490   11.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3880   12.4970   11.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6810   14.5100   11.0420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8840   13.7450   11.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0320   14.8460   11.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+CAE
+A    2
+CAT
+A    3
+CAY
+A    4
+CAZ
+A    5
+CBE
+A    6
+CBF
+A    7
+NBR
+A    8
+CCI
+A    9
+CCL
+M  END
+>  <InstanceId>
+3WGT_QSC_A_402
+
+>  <ChemCompId>
+QSC
+
+>  <PdbId>
+3WGT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N
+
+>  <Name>
+(1R)-1-phenylethanamine
+
+>  <SystematicName>
+(1R)-1-phenylethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N
+
+>  <MolecularWeight>
+121.18
+
+>  <ModifiedDate>
+2012-11-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N/c1-7(9)8-5-3-2-4-6-8/h2-7H,9H2,1H3/t7-/m1/s1
+
+>  <InChIKey>
+RQEUFEKYXDPUSK-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@H](c1ccccc1)N
+
+$$$$

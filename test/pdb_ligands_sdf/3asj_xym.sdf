@@ -1,0 +1,121 @@
+3ASJ_XYM_B_1000
+  RCSB PDB12061707553D
+Coordinates from PDB:3ASJ:B:1000 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   32.9670  -42.0160  -14.6320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4340  -40.6840  -15.5990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3270  -41.2420  -16.6860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9950  -42.8620  -15.8760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8080  -42.3750  -13.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9860  -40.2840  -14.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4770  -39.7570  -15.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3560  -39.9860  -13.7080   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9560  -41.1270  -15.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1440  -41.7060  -15.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3500  -41.4830  -14.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3  9  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+SAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3ASJ_XYM_B_1000
+
+>  <ChemCompId>
+XYM
+
+>  <PdbId>
+3ASJ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5 S
+
+>  <Name>
+(2Z)-3-[(carboxymethyl)sulfanyl]-2-hydroxyprop-2-enoic acid
+
+>  <SystematicName>
+(Z)-3-(carboxymethylsulfanyl)-2-hydroxy-prop-2-enoic acid
+
+>  <Synonyms>
+(2Z)-2-hydroxy-3-(carboxymethylthio)propenoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 O5 S
+
+>  <MolecularWeight>
+178.163
+
+>  <ModifiedDate>
+2011-09-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6O5S/c6-3(5(9)10)1-11-2-4(7)8/h1,6H,2H2,(H,7,8)(H,9,10)/b3-1-
+
+>  <InChIKey>
+IXLZHTPCCBDKBW-IWQZZHSRSA-N
+
+>  <SMILES>
+C(C(=O)O)S/C=C(/C(=O)O)\O
+
+$$$$

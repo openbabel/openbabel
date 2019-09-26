@@ -1,0 +1,131 @@
+4CR9_OTW_A_1489
+  RCSB PDB12061712053D
+Coordinates from PDB:4CR9:A:1489 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   49.6750   23.0710   11.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9300   21.6020   11.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8390   20.7680   11.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0270   19.4100   11.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2450   18.8590   11.7770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   51.3080   19.6710   11.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2010   21.0540   11.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3300   21.8510   11.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5870   21.2750   11.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7030   19.9050   11.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5750   19.1240   11.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7520   22.0450   11.9860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8810   18.6090   11.7190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+N12
+A   13
+N13
+M  END
+>  <InstanceId>
+4CR9_OTW_A_1489
+
+>  <ChemCompId>
+OTW
+
+>  <PdbId>
+4CR9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1489
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3
+
+>  <Name>
+4-methylquinoline-2,6-diamine
+
+>  <SystematicName>
+4-methylquinoline-2,6-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H11 N3
+
+>  <MolecularWeight>
+173.214
+
+>  <ModifiedDate>
+2015-02-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3/c1-6-4-10(12)13-9-3-2-7(11)5-8(6)9/h2-5H,11H2,1H3,(H2,12,13)
+
+>  <InChIKey>
+RTLBVOMPQYBAQP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc2c1cc(cc2)N)N
+
+$$$$

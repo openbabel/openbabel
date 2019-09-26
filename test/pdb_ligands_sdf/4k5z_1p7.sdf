@@ -1,0 +1,123 @@
+4K5Z_1P7_A_703
+  RCSB PDB12061713173D
+Coordinates from PDB:4K5Z:A:703 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   60.1760   59.7810    1.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7710   60.6480    0.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6800   61.9900    0.5660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   61.5630   62.6650   -0.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7110   60.3480   -0.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.1290   59.1300   -1.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.0440   59.1440   -2.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.5750   57.6260   -2.9510  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   62.2120   61.5580   -1.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1250   61.5560   -2.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.5410   60.3480   -2.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+ 11  7  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  6  5  2  0  0  0  0
+  9  5  1  0  0  0  0
+  9  4  1  0  0  0  0
+  5  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  2  0  0  0  0
+A    1
+O9
+A    2
+C8
+A    3
+N7
+A    4
+C6
+A    5
+C10
+A    6
+C11
+A    7
+C2
+A    8
+CL1
+A    9
+C5
+A   10
+C4
+A   11
+C3
+M  END
+>  <InstanceId>
+4K5Z_1P7_A_703
+
+>  <ChemCompId>
+1P7
+
+>  <PdbId>
+4K5Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+703
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O Cl
+
+>  <Name>
+6-chloro-2,3-dihydro-1H-isoindol-1-one
+
+>  <SystematicName>
+6-chloranyl-2,3-dihydroisoindol-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 Cl N O
+
+>  <MolecularWeight>
+167.592
+
+>  <ModifiedDate>
+2013-05-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6ClNO/c9-6-2-1-5-4-10-8(11)7(5)3-6/h1-3H,4H2,(H,10,11)
+
+>  <InChIKey>
+VCEOKEOSVQLRNW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)C(=O)NC2
+
+$$$$

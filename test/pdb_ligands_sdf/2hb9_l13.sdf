@@ -1,0 +1,135 @@
+2HB9_L13_A_500
+  RCSB PDB12061705463D
+Coordinates from PDB:2HB9:A:500 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   11.1150   28.9820   30.8130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2480   29.6670   30.6620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6460   30.7230   31.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7670   31.5530   32.6420   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8390   31.1480   30.9240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1670   30.2500   29.8740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1580   29.3370   29.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9880   28.2210   28.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3790   28.5770   27.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1300   27.6210   26.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4880   26.2970   26.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0770   25.9390   28.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3250   26.9050   29.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9620   26.5020   30.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+N14
+A    2
+N5
+A    3
+C1
+A    4
+S6
+A    5
+N2
+A    6
+N3
+A    7
+C4
+A    8
+C7
+A    9
+C12
+A   10
+C11
+A   11
+C10
+A   12
+C9
+A   13
+C8
+A   14
+C13
+M  END
+>  <InstanceId>
+2HB9_L13_A_500
+
+>  <ChemCompId>
+L13
+
+>  <PdbId>
+2HB9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 S
+
+>  <Name>
+4-AMINO-5-(2-METHYLPHENYL)-2,4-DIHYDRO-3H-1,2,4-TRIAZOLE-3-THIONE
+
+>  <SystematicName>
+4-amino-5-(2-methylphenyl)-2H-1,2,4-triazole-3-thione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 N4 S
+
+>  <MolecularWeight>
+206.267
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N4S/c1-6-4-2-3-5-7(6)8-11-12-9(14)13(8)10/h2-5H,10H2,1H3,(H,12,14)
+
+>  <InChIKey>
+CUEYNOAJNUCBAP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccccc1C2=NNC(=S)N2N
+
+$$$$

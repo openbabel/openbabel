@@ -1,0 +1,147 @@
+3S4J_UNV_A_901
+  RCSB PDB12061710403D
+Coordinates from PDB:3S4J:A:901 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   13.3980   31.5850   -9.8290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1990   30.5780   -8.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0450   31.9050   -8.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4070   29.7290   -8.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5020   30.2340   -9.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1790   32.3870   -9.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8690   32.9780   -7.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2210   33.8890   -9.1710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6470   35.7880   -7.6230   P 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6030   34.1760   -8.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8390   34.1410   -9.8440   P 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0270   35.8410   -6.9870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5330   35.7240   -6.6160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4440   36.8310   -8.7030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5540   32.8610  -10.6040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1790   34.1410   -9.1420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5820   35.3950  -10.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  2  0  0  0  0
+  1  6  1  0  0  0  0
+  4  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  6  3  2  0  0  0  0
+  3  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  6  1  0  0  0  0
+ 10  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 14  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 17 11  2  0  0  0  0
+ 15 11  1  0  0  0  0
+ 11 16  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C10
+A    9
+P11
+A   10
+C14
+A   11
+P17
+A   12
+O18
+A   13
+O19
+A   14
+O20
+A   15
+O21
+A   16
+O22
+A   17
+O23
+M  END
+>  <InstanceId>
+3S4J_UNV_A_901
+
+>  <ChemCompId>
+UNV
+
+>  <PdbId>
+3S4J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O6 P2
+
+>  <Name>
+6,7-dihydro-5H-cyclopenta[b]pyridine-6,6-diylbis(phosphonic acid)
+
+>  <SystematicName>
+(6-phosphono-5,7-dihydrocyclopenta[b]pyridin-6-yl)phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O6 P2
+
+>  <MolecularWeight>
+279.124
+
+>  <ModifiedDate>
+2011-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO6P2/c10-16(11,12)8(17(13,14)15)4-6-2-1-3-9-7(6)5-8/h1-3H,4-5H2,(H2,10,11,12)(H2,13,14,15)
+
+>  <InChIKey>
+BKUBDCZNHKIXPI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(nc1)CC(C2)(P(=O)(O)O)P(=O)(O)O
+
+$$$$

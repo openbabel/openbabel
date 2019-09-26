@@ -1,0 +1,144 @@
+2W0U_C7C_A_1364
+  RCSB PDB12061707113D
+Coordinates from PDB:2W0U:A:1364 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  -40.9800   26.8980   25.4490  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.5220   26.0920   25.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -43.7310   26.6190   25.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.9250   25.9940   25.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.5070   24.9390   26.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -43.7010   24.3150   27.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.9100   24.8420   26.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.3670   24.0800   26.9830   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.6040   24.1780   28.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.7050   23.5250   29.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.7220   22.7080   28.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.8360   22.8360   27.4960   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -49.4340   21.9140   29.3860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.5950   25.0460   29.7970   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.5010   24.6250   31.1720   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.6020   23.8010   30.7920   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 16  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+M  CHG  1  12  -1
+A    1
+CL
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C6
+A    6
+C5
+A    7
+C4
+A    8
+S8
+A    9
+C9
+A   10
+C13
+A   11
+C14
+A   12
+O15
+A   13
+O16
+A   14
+S10
+A   15
+N11
+A   16
+N12
+M  END
+>  <InstanceId>
+2W0U_C7C_A_1364
+
+>  <ChemCompId>
+C7C
+
+>  <PdbId>
+2W0U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1364
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2 S2 Cl
+
+>  <Name>
+5-[(4-chlorophenyl)sulfanyl]-1,2,3-thiadiazole-4-carboxylate
+
+>  <SystematicName>
+5-(4-chlorophenyl)sulfanyl-1,2,3-thiadiazole-4-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H4 Cl N2 O2 S2
+
+>  <MolecularWeight>
+271.723
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H5ClN2O2S2/c10-5-1-3-6(4-2-5)15-9-7(8(13)14)11-12-16-9/h1-4H,(H,13,14)/p-1
+
+>  <InChIKey>
+NDYKFFAREALEPX-UHFFFAOYSA-M
+
+>  <SMILES>
+c1cc(ccc1Sc2c(nns2)C(=O)[O-])Cl
+
+$$$$

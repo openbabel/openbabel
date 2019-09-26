@@ -1,0 +1,121 @@
+2AY7_CLT_B_414
+  RCSB PDB12061705033D
+Coordinates from PDB:2AY7:B:414 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  103.2640   46.0900   12.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.5500   46.3080   10.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.0320   46.2220   10.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.5360   44.8920   11.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.6980   43.7460   10.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.2370   42.5160   11.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.4440   43.5660   13.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.6130   42.4250   12.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.9120   47.1340   13.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  103.0390   46.8410   14.3570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  102.5020   48.2500   12.7720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+CA
+A    2
+CB1
+A    3
+CG
+A    4
+CD
+A    5
+CE1
+A    6
+CZ1
+A    7
+CZ2
+A    8
+CH
+A    9
+CB2
+A   10
+OG1
+A   11
+OG2
+M  END
+>  <InstanceId>
+2AY7_CLT_B_414
+
+>  <ChemCompId>
+CLT
+
+>  <PdbId>
+2AY7
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+4-PHENYL-BUTANOIC ACID
+
+>  <SystematicName>
+4-phenylbutanoic acid
+
+>  <Synonyms>
+GAMMA-PHENYL-BUTYRIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O2
+
+>  <MolecularWeight>
+164.201
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O2/c11-10(12)8-4-7-9-5-2-1-3-6-9/h1-3,5-6H,4,7-8H2,(H,11,12)
+
+>  <InChIKey>
+OBKXEAXTFZPCHS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CCCC(=O)O
+
+$$$$

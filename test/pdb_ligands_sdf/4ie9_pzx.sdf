@@ -1,0 +1,143 @@
+4IE9_PZX_A_401
+  RCSB PDB12061713003D
+Coordinates from PDB:4IE9:A:401 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   25.0550   -8.1450    1.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0200   -8.9190    1.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2630   -9.2340    1.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7640   -9.3640   -0.2250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7960   -9.8900   -0.6800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7290   -9.8620    0.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1480  -10.4160    0.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5100  -11.1630   -0.6960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0140   -9.8960    1.1200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3070  -10.4530    1.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7560  -10.3330    2.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8640  -10.4640    3.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3570  -10.3110    5.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7380  -10.0840    5.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5490   -9.9870    4.2330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1170  -10.0730    2.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  4  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  6  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 16  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 15 14  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C7
+A    2
+C16
+A    3
+C6
+A    4
+N8
+A    5
+N12
+A    6
+C9
+A    7
+C10
+A    8
+O14
+A    9
+O13
+A   10
+C5
+A   11
+C11
+A   12
+C3
+A   13
+C2
+A   14
+C1
+A   15
+N15
+A   16
+C4
+M  END
+>  <InstanceId>
+4IE9_PZX_A_401
+
+>  <ChemCompId>
+PZX
+
+>  <PdbId>
+4IE9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2
+
+>  <Name>
+pyridin-3-ylmethyl 5-methyl-1H-pyrazole-3-carboxylate
+
+>  <SystematicName>
+pyridin-3-ylmethyl 5-methyl-1H-pyrazole-3-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N3 O2
+
+>  <MolecularWeight>
+217.224
+
+>  <ModifiedDate>
+2013-04-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11N3O2/c1-8-5-10(14-13-8)11(15)16-7-9-3-2-4-12-6-9/h2-6H,7H2,1H3,(H,13,14)
+
+>  <InChIKey>
+VPQUTEUTVVBFOS-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(n[nH]1)C(=O)OCc2cccnc2
+
+$$$$

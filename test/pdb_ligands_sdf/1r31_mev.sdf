@@ -1,0 +1,118 @@
+1QAY_MEV_A_1002
+  RCSB PDB12061703453D
+Coordinates from PDB:1QAY:A:1002 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   85.2220  127.6650  109.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.5190  128.9060  109.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8350  127.2560  108.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8520  125.7290  108.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.5580  125.4460  106.9370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.5590  125.0790  109.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.5280  123.5520  109.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.7930  122.8690  108.4430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.2570  123.0260  110.5520   O 0  5  0  0  0  0  0  0  0  0  0  0
+   84.4040  125.2310  107.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+M  CHG  1   9  -1
+A    1
+C8
+A    2
+O8
+A    3
+C2
+A    4
+C3
+A    5
+O7
+A    6
+C4
+A    7
+C5
+A    8
+O3
+A    9
+O4
+A   10
+C6
+M  END
+>  <InstanceId>
+1QAY_MEV_A_1002
+
+>  <ChemCompId>
+MEV
+
+>  <PdbId>
+1QAY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O4
+
+>  <Name>
+(R)-MEVALONATE
+
+>  <SystematicName>
+(3R)-3,5-dihydroxy-3-methyl-pentanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 O4
+
+>  <MolecularWeight>
+147.149
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O4/c1-6(10,2-3-7)4-5(8)9/h7,10H,2-4H2,1H3,(H,8,9)/p-1/t6-/m1/s1
+
+>  <InChIKey>
+KJTLQQUUPVSXIM-ZCFIWIBFSA-M
+
+>  <SMILES>
+C[C@@](CCO)(CC(=O)[O-])O
+
+$$$$

@@ -1,0 +1,149 @@
+1MVN_PCO_A_1001
+  RCSB PDB12061703203D
+Coordinates from PDB:1MVN:A:1001 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   68.7950   15.7150  -16.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.6500   15.1980  -16.1110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   67.3510   13.8830  -16.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.9730   13.5440  -15.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.8380   12.1900  -14.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4150   11.0850  -15.4690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   65.6990   10.0220  -15.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4580    8.9440  -16.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.0610    8.8790  -18.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.8970    7.7710  -18.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.7490    6.4550  -18.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.5350    8.5510  -18.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.3200   10.2500  -18.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.8780    9.2200  -16.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.4990    9.9010  -15.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1230   12.9720  -16.4010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   69.0570   17.0320  -16.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.9650   18.3160  -15.9780   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 17  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 16  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 15  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+C23
+A    2
+N19
+A    3
+C17
+A    4
+C16
+A    5
+C15
+A    6
+N14
+A    7
+C12
+A    8
+C10
+A    9
+C7
+A   10
+C6
+A   11
+O5
+A   12
+C8
+A   13
+C9
+A   14
+O11
+A   15
+O13
+A   16
+O18
+A   17
+C24
+A   18
+S25
+M  END
+>  <InstanceId>
+1MVN_PCO_A_1001
+
+>  <ChemCompId>
+PCO
+
+>  <PdbId>
+1MVN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4 S
+
+>  <Name>
+2,4-DIHYDROXY-N-[2-(2-MERCAPTO-VINYLCARBAMOYL)-ETHYL]-3,3-DIMETHYL-BUTYRAMIDE
+
+>  <SystematicName>
+(2R)-2,4-dihydroxy-3,3-dimethyl-N-[3-oxo-3-[[(Z)-2-sulfanylethenyl]amino]propyl]butanamide
+
+>  <Synonyms>
+PANTOTHENOYLAMINOETHENETHIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H20 N2 O4 S
+
+>  <MolecularWeight>
+276.353
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H20N2O4S/c1-11(2,7-14)9(16)10(17)13-4-3-8(15)12-5-6-18/h5-6,9,14,16,18H,3-4,7H2,1-2H3,(H,12,15)(H,13,17)/b6-5-/t9-/m0/s1
+
+>  <InChIKey>
+GVPONLWGQFZYSV-UDIARPCQSA-N
+
+>  <SMILES>
+CC(C)(CO)[C@H](C(=O)NCCC(=O)N\C=C/S)O
+
+$$$$

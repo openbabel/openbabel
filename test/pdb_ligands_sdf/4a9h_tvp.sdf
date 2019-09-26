@@ -1,0 +1,135 @@
+4A9H_TVP_A_1189
+  RCSB PDB12061711383D
+Coordinates from PDB:4A9H:A:1189 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   20.9300    8.5430   -7.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8760    9.0220   -8.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7610    9.2250   -7.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6840    9.3850   -9.5810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8600    9.2320  -10.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9590    7.8150  -11.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4750    9.9440  -10.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6020   11.0870  -10.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9960   11.5350  -11.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8050   10.2950  -11.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2120    9.4430   -9.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0730   10.0540  -10.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1940   11.1550  -11.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4620   11.6620  -11.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O
+A    2
+C11
+A    3
+C12
+A    4
+N
+A    5
+C2
+A    6
+C1
+A    7
+C10
+A    8
+C5
+A    9
+C4
+A   10
+C3
+A   11
+C9
+A   12
+C8
+A   13
+C7
+A   14
+C6
+M  END
+>  <InstanceId>
+4A9H_TVP_A_1189
+
+>  <ChemCompId>
+TVP
+
+>  <PdbId>
+4A9H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1189
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O
+
+>  <Name>
+(2S)-1-ACETYL-2-METHYL-1,2,3,4-TETRAHYDROQUINOLINE
+
+>  <SystematicName>
+1-[(2S)-2-methyl-3,4-dihydro-2H-quinolin-1-yl]ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H15 N O
+
+>  <MolecularWeight>
+189.254
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H15NO/c1-9-7-8-11-5-3-4-6-12(11)13(9)10(2)14/h3-6,9H,7-8H2,1-2H3/t9-/m0/s1
+
+>  <InChIKey>
+IJTWYLGCGAIGAQ-VIFPVBQESA-N
+
+>  <SMILES>
+C[C@H]1CCc2ccccc2N1C(=O)C
+
+$$$$

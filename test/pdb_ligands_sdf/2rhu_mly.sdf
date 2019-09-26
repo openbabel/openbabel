@@ -1,0 +1,125 @@
+2R58_MLY_A_436
+  RCSB PDB12061706533D
+Coordinates from PDB:2R58:A:436 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+  -27.4310  -20.9950  -15.7020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1070  -20.7590  -17.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8200  -19.9430  -17.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6240  -19.4670  -18.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5780  -18.3710  -18.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1050  -18.2510  -20.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2310  -17.0770  -20.3810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9850  -16.8360  -21.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9540  -17.3240  -19.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9690  -22.0410  -17.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2410  -22.9510  -17.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5670  -22.2100  -18.9990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+CE
+A    7
+NZ
+A    8
+CH1
+A    9
+CH2
+A   10
+C
+A   11
+O
+A   12
+OXT
+M  END
+>  <InstanceId>
+2R58_MLY_A_436
+
+>  <ChemCompId>
+MLY
+
+>  <PdbId>
+2R58
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+436
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2
+
+>  <Name>
+N-DIMETHYL-LYSINE
+
+>  <SystematicName>
+(2S)-2-amino-6-dimethylamino-hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C8 H18 N2 O2
+
+>  <MolecularWeight>
+174.241
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18N2O2/c1-10(2)6-4-3-5-7(9)8(11)12/h7H,3-6,9H2,1-2H3,(H,11,12)/t7-/m0/s1
+
+>  <InChIKey>
+XXEWFEBMSGLYBY-ZETCQYMHSA-N
+
+>  <SMILES>
+CN(C)CCCC[C@@H](C(=O)O)N
+
+$$$$

@@ -1,0 +1,134 @@
+1GKL_FER_A_3086
+  RCSB PDB12061702363D
+Coordinates from PDB:1GKL:A:3086 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   11.9650  113.4570   16.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5670  114.7000   15.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7060  114.7930   14.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5170  112.3180   15.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6570  112.4040   14.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2390  113.6370   14.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6000  109.9370   15.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3120  113.6590   13.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8160  114.7840   12.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8730  114.7460   11.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4960  113.6740   10.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4860  115.8570   10.9440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8190  113.3250   17.4850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9590  111.1360   16.3130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 14  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C3
+A    5
+C2
+A    6
+C1
+A    7
+C10
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+O1
+A   12
+O2
+A   13
+O4
+A   14
+O3
+M  END
+>  <InstanceId>
+1GKL_FER_A_3086
+
+>  <ChemCompId>
+FER
+
+>  <PdbId>
+1GKL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3086
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4
+
+>  <Name>
+3-(4-HYDROXY-3-METHOXYPHENYL)-2-PROPENOIC ACID
+
+>  <SystematicName>
+(E)-3-(4-hydroxy-3-methoxy-phenyl)prop-2-enoic acid
+
+>  <Synonyms>
+FERULIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O4
+
+>  <MolecularWeight>
+194.184
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O4/c1-14-9-6-7(2-4-8(9)11)3-5-10(12)13/h2-6,11H,1H3,(H,12,13)/b5-3+
+
+>  <InChIKey>
+KSEBMYQBYZTDHS-HWKANZROSA-N
+
+>  <SMILES>
+COc1cc(ccc1O)\C=C\C(=O)O
+
+$$$$

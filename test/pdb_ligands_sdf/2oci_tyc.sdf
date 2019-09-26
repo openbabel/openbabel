@@ -1,0 +1,130 @@
+2OCI_TYC_A_401
+  RCSB PDB12061706293D
+Coordinates from PDB:2OCI:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -25.2190  173.1690  -25.1190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9400  171.8520  -25.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6160  171.0180  -23.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1480  171.5470  -22.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5240  171.1630  -26.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0200  171.9430  -27.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1830  172.9050  -28.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3210  171.7180  -28.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6470  173.6440  -29.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7880  172.4550  -29.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4000  174.1330  -31.0070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9520  173.4210  -29.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6540  169.5020  -24.0600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CD2
+A    9
+CE1
+A   10
+CE2
+A   11
+OH
+A   12
+CZ
+A   13
+NXT
+M  END
+>  <InstanceId>
+2OCI_TYC_A_401
+
+>  <ChemCompId>
+TYC
+
+>  <PdbId>
+2OCI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+L-TYROSINAMIDE
+
+>  <SystematicName>
+(2S)-2-amino-3-(4-hydroxyphenyl)propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O2
+
+>  <MolecularWeight>
+180.204
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2O2/c10-8(9(11)13)5-6-1-3-7(12)4-2-6/h1-4,8,12H,5,10H2,(H2,11,13)/t8-/m0/s1
+
+>  <InChIKey>
+PQFMNVGMJJMLAE-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@@H](C(=O)N)N)O
+
+$$$$

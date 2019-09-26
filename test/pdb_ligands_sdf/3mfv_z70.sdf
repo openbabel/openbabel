@@ -1,0 +1,130 @@
+3MFV_Z70_A_0
+  RCSB PDB12061709443D
+Coordinates from PDB:3MFV:A:0 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -19.5010   16.4710   -5.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9540   16.8970   -5.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2620   12.6300   -5.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2510   10.4610   -5.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2420   12.2430   -6.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2760   14.9430   -5.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5410   14.1040   -5.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1230   17.0290   -4.0280   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8500   11.5140   -5.0490   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2840   10.8510   -6.5770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5650    9.1430   -5.3650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.5310   16.5360   -6.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6040   17.6250   -4.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  6  1  1  0  0  0  0
+  1  8  1  0  0  0  0
+ 13  2  2  0  0  0  0
+  2 12  1  0  0  0  0
+  5  3  2  0  0  0  0
+  3  7  1  0  0  0  0
+  3  9  1  0  0  0  0
+ 10  4  2  0  0  0  0
+  4 11  1  0  0  0  0
+  4  9  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N
+A    9
+N2
+A   10
+N3
+A   11
+N4
+A   12
+OXT
+A   13
+O
+M  END
+>  <InstanceId>
+3MFV_Z70_A_0
+
+>  <ChemCompId>
+Z70
+
+>  <PdbId>
+3MFV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N4 O2
+
+>  <Name>
+(2S)-2-amino-4-(2-amino-1H-imidazol-5-yl)butanoic acid
+
+>  <SystematicName>
+(2S)-2-azanyl-4-(2-azanyl-1H-imidazol-5-yl)butanoic acid
+
+>  <Synonyms>
+2-aminohomohistidine
+
+>  <Type>
+L-peptide linking
+
+>  <Formula>
+C7 H12 N4 O2
+
+>  <MolecularWeight>
+184.196
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+HIS
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H12N4O2/c8-5(6(12)13)2-1-4-3-10-7(9)11-4/h3,5H,1-2,8H2,(H,12,13)(H3,9,10,11)/t5-/m0/s1
+
+>  <InChIKey>
+FXIIKDXCDODGRI-YFKPBYRVSA-N
+
+>  <SMILES>
+c1c([nH]c(n1)N)CC[C@@H](C(=O)O)N
+
+$$$$

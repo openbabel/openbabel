@@ -1,0 +1,121 @@
+4AI8_DZA_A_1358
+  RCSB PDB12061711403D
+Coordinates from PDB:4AI8:A:1358 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   17.9010   24.4170   27.7210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0340   24.9420   28.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1220   25.3240   29.5850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3640   25.6400   29.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4010   24.7400   28.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7030   25.5500   28.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7870   26.6790   28.9400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7330   24.8630   28.0050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7060   25.4240   27.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5390   24.5780   28.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0980   25.5210   26.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+O10
+A    2
+C09
+A    3
+O11
+A    4
+C08
+A    5
+C07
+A    6
+C02
+A    7
+O01
+A    8
+N03
+A    9
+N04
+A   10
+C06
+A   11
+C05
+M  END
+>  <InstanceId>
+4AI8_DZA_A_1358
+
+>  <ChemCompId>
+DZA
+
+>  <PdbId>
+4AI8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1358
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O3
+
+>  <Name>
+DAMINOZIDE
+
+>  <SystematicName>
+4-(2,2-dimethylhydrazinyl)-4-oxidanylidene-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H12 N2 O3
+
+>  <MolecularWeight>
+160.171
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12N2O3/c1-8(2)7-5(9)3-4-6(10)11/h3-4H2,1-2H3,(H,7,9)(H,10,11)
+
+>  <InChIKey>
+NOQGZXFMHARMLW-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)NC(=O)CCC(=O)O
+
+$$$$

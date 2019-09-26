@@ -1,0 +1,126 @@
+5FEP_41K_A_409
+  RCSB PDB12061717403D
+Coordinates from PDB:5FEP:A:409 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   43.5150    4.3950   10.9610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7010    4.6750   11.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5650    4.1140   10.5760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0190    5.7020   12.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0480    6.8710   12.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3670    6.2570   11.9670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0600    4.9550   13.8480   S 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6570    5.6320   14.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9290    6.7300   13.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3600    7.1320   13.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0920    6.6740   12.3070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7430    7.9850   13.9690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  5  4  1  0  0  0  0
+  7  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+OAA
+A    2
+CAE
+A    3
+OAD
+A    4
+CAF
+A    5
+CAB
+A    6
+N
+A    7
+SAK
+A    8
+CB
+A    9
+CA
+A   10
+C
+A   11
+O
+A   12
+OXT
+M  END
+>  <InstanceId>
+5FEP_41K_A_409
+
+>  <ChemCompId>
+41K
+
+>  <PdbId>
+5FEP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4 S
+
+>  <Name>
+(2R,4R)-2-methyl-1,3-thiazolidine-2,4-dicarboxylic acid
+
+>  <SystematicName>
+(2R,4R)-2-methyl-1,3-thiazolidine-2,4-dicarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 N O4 S
+
+>  <MolecularWeight>
+191.205
+
+>  <ModifiedDate>
+2015-02-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9NO4S/c1-6(5(10)11)7-3(2-12-6)4(8)9/h3,7H,2H2,1H3,(H,8,9)(H,10,11)/t3-,6+/m0/s1
+
+>  <InChIKey>
+JCAKCGQZNBEITC-BBIVZNJYSA-N
+
+>  <SMILES>
+C[C@]1(N[C@@H](CS1)C(=O)O)C(=O)O
+
+$$$$

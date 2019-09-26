@@ -468,7 +468,7 @@ namespace OpenBabel {
       void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask)
       {
         m_startTime = time(NULL);
-
+        if(m_query->NumAtoms() == 0) return;
         // set all atoms to 1 if the mask is empty
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())

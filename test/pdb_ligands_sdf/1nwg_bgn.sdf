@@ -1,0 +1,146 @@
+1JNA_BGN_?_807
+  RCSB PDB12061702583D
+Coordinates from PDB:1JNA:?:807 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+    2.5790   -3.9320   17.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8550   -4.7370   19.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9300   -3.9420   20.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3710   -3.6630   20.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1280   -2.9590   19.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6360   -2.8460   19.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0250   -6.1520   18.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5100   -6.1100   17.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7400   -6.6290   16.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1960   -5.5970   15.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4260   -4.9690   18.6360   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5340   -4.6470   16.7590   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2560   -4.6770   21.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4320   -2.7980   21.8400   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9300   -3.7130   18.3220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2470   -4.1420   19.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6540   -7.1600   17.9010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  1 15  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 13  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 15  1  0  0  0  0
+  6 16  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7 17  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N2
+A   12
+O1
+A   13
+O3
+A   14
+O4
+A   15
+O5
+A   16
+O6
+A   17
+O7
+M  END
+>  <InstanceId>
+1JNA_BGN_?_807
+
+>  <ChemCompId>
+BGN
+
+>  <PdbId>
+1JNA
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+807
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O6
+
+>  <Name>
+N-BUTANOYL-2-AMINO-2-DEOXY-GLUCOPYRANOSIDE
+
+>  <SystematicName>
+N-[(2R,3R,4R,5S,6R)-2,4,5-trihydroxy-6-(hydroxymethyl)oxan-3-yl]butanamide
+
+>  <Synonyms>
+N-BUTANOYL-GLUCOSAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H19 N O6
+
+>  <MolecularWeight>
+249.261
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H19NO6/c1-2-3-6(13)11-7-9(15)8(14)5(4-12)17-10(7)16/h5,7-10,12,14-16H,2-4H2,1H3,(H,11,13)/t5-,7-,8-,9-,10-/m1/s1
+
+>  <InChIKey>
+RPJMPMDUKSRLLF-QXOHVQIXSA-N
+
+>  <SMILES>
+CCCC(=O)N[C@@H]1[C@H]([C@@H]([C@H](O[C@H]1O)CO)O)O
+
+$$$$

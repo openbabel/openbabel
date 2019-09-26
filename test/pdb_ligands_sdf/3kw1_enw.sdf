@@ -1,0 +1,121 @@
+3KW1_ENW_D_140
+  RCSB PDB12061709313D
+Coordinates from PDB:3KW1:D:140 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   18.9460    5.3500   39.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4900    4.5960   40.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7540    3.9990   40.6670   F 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6610    5.1790   39.1910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6230    6.1240   38.8520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0540    6.2290   38.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6400    5.8180   38.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3860    6.1920   36.7120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3830    5.7450   35.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3980    4.7380   36.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3020    6.1630   34.8180   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  1  2  0  0  0  0
+  6  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11  9  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+F4
+A    4
+O4
+A    5
+O5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+C9
+A   10
+C10
+A   11
+O11
+M  END
+>  <InstanceId>
+3KW1_ENW_D_140
+
+>  <ChemCompId>
+ENW
+
+>  <PdbId>
+3KW1
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+140
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+11
+
+>  <ObservedFormula>
+C6 N O3 F
+
+>  <Name>
+2-({N-[(2S)-2,4-dihydroxy-3,3-dimethylbutanoyl]-beta-alanyl}amino)ethyl fluoroacetate
+
+>  <SystematicName>
+2-[3-[[(2S)-2,4-dihydroxy-3,3-dimethyl-butanoyl]amino]propanoylamino]ethyl 2-fluoroethanoate
+
+>  <Synonyms>
+Fluoroacetyl oxa(dethia)-pantetheine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H23 F N2 O6
+
+>  <MolecularWeight>
+322.33
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H23FN2O6/c1-13(2,8-17)11(20)12(21)16-4-3-9(18)15-5-6-22-10(19)7-14/h11,17,20H,3-8H2,1-2H3,(H,15,18)(H,16,21)/t11-/m1/s1
+
+>  <InChIKey>
+ONWRIDRSVIZQIL-LLVKDONJSA-N
+
+>  <SMILES>
+CC(C)(CO)[C@@H](C(=O)NCCC(=O)NCCOC(=O)CF)O
+
+$$$$

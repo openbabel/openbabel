@@ -1,0 +1,109 @@
+1CZE_SIN_A_414
+  RCSB PDB12061702133D
+Coordinates from PDB:1CZE:A:414 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   24.5500   10.2780  -10.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1320   10.1920   -9.7980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6880   10.6540  -11.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6390    9.9020  -12.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2590   10.0180  -13.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2680   11.3430  -14.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7840   11.3420  -15.3880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7700   12.3310  -13.8240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+O3
+A    8
+O4
+M  END
+>  <InstanceId>
+1CZE_SIN_A_414
+
+>  <ChemCompId>
+SIN
+
+>  <PdbId>
+1CZE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O4
+
+>  <Name>
+SUCCINIC ACID
+
+>  <SystematicName>
+butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O4
+
+>  <MolecularWeight>
+118.088
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O4/c5-3(6)1-2-4(7)8/h1-2H2,(H,5,6)(H,7,8)
+
+>  <InChIKey>
+KDYFGRWQOYBRFD-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CC(=O)O)C(=O)O
+
+$$$$

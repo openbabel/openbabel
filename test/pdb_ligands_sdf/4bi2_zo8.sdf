@@ -1,0 +1,132 @@
+4BI2_ZO8_A_1797
+  RCSB PDB12061711513D
+Coordinates from PDB:4BI2:A:1797 Model:1 without hydrogens
+ 13 15  0  0  0  0            999 V2000
+   -0.7210   42.1430   17.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8360   42.5490   18.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7300   41.8230   19.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3460   40.4460   17.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5190   41.0510   16.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3610   43.7010   14.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5160   42.7290   14.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1470   42.8850   16.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7870   44.0140   16.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6940   44.3970   18.0430   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7580   44.8220   15.5790   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0870   43.6730   18.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4680   40.8000   18.7840   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  8  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  2  0  0  0  0
+  3 13  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4 13  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+CAO
+A    2
+CAN
+A    3
+CAH
+A    4
+CAF
+A    5
+CAL
+A    6
+CAC
+A    7
+CAG
+A    8
+CAM
+A    9
+CAJ
+A   10
+NAC
+A   11
+SAK
+A   12
+CAK
+A   13
+N
+M  END
+>  <InstanceId>
+4BI2_ZO8_A_1797
+
+>  <ChemCompId>
+ZO8
+
+>  <PdbId>
+4BI2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1797
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 S
+
+>  <Name>
+thieno[2,3-c][2,7]naphthyridine
+
+>  <SystematicName>
+thieno[2,3-c][2,7]naphthyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H6 N2 S
+
+>  <MolecularWeight>
+186.233
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6N2S/c1-3-11-5-7-6-12-10-9(8(1)7)2-4-13-10/h1-6H
+
+>  <InChIKey>
+QHMIKZNQCBVQNW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cncc2c1c3ccsc3nc2
+
+$$$$

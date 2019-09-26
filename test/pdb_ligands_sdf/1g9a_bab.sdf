@@ -1,0 +1,132 @@
+1C1S_BAB_A_246
+  RCSB PDB12061702083D
+Coordinates from PDB:1C1S:A:246 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   45.3020   24.8560   51.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8430   19.3370   53.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2970   19.0150   51.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9530   20.0050   50.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1960   21.2990   51.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7120   21.6350   52.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0620   20.6980   53.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1740   18.3600   54.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3830   23.3710   51.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9880   18.6780   54.9660   N 0  3  0  0  0  0  0  0  0  0  0  0
+   45.6660   17.1620   53.8940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9950   22.4170   50.6550   N 0  3  0  0  0  0  0  0  0  0  0  0
+   45.8570   22.9320   52.6340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  1  0  0  0  0
+  9 12  2  0  0  0  0
+  9 13  1  0  0  0  0
+M  CHG  2  10   1  12   1
+A    1
+C9
+A    2
+C1'
+A    3
+C2'
+A    4
+C3'
+A    5
+C4'
+A    6
+C5'
+A    7
+C6'
+A    8
+C7'
+A    9
+C8'
+A   10
+N1'
+A   11
+N2'
+A   12
+N3'
+A   13
+N4'
+M  END
+>  <InstanceId>
+1C1S_BAB_A_246
+
+>  <ChemCompId>
+BAB
+
+>  <PdbId>
+1C1S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+246
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+12
+
+>  <ObservedFormula>
+C9 N4
+
+>  <Name>
+BIS(5-AMIDINO-BENZIMIDAZOLYL)METHANE
+
+>  <SystematicName>
+[amino-[2-[[6-(amino-azaniumylidene-methyl)-1H-benzimidazol-3-ium-2-yl]methyl]-3H-benzimidazol-5-yl]methylidene]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C17 H19 N8
+
+>  <MolecularWeight>
+335.386
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C17H16N8/c18-16(19)8-1-3-10-12(5-8)24-14(22-10)7-15-23-11-4-2-9(17(20)21)6-13(11)25-15/h1-6H,7H2,(H3,18,19)(H3,20,21)(H,22,24)(H,23,25)/p+3
+
+>  <InChIKey>
+QZKOOEFIMWKZPK-UHFFFAOYSA-Q
+
+>  <SMILES>
+c1cc2c(cc1C(=[NH2+])N)[nH]c([nH+]2)Cc3[nH]c4cc(ccc4n3)C(=[NH2+])N
+
+$$$$

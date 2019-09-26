@@ -1,0 +1,147 @@
+5ALX_DUL_A_1550
+  RCSB PDB12061716513D
+Coordinates from PDB:5ALX:A:1550 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   20.0250    8.8350   13.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0870   10.2410   12.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5730   10.9590   13.1820   S 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2420   10.5020   11.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7880   10.4010   12.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8130   10.0430   11.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2160    9.7070    9.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6090    9.8460    9.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5880   10.2150   10.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2000    9.4630    8.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4700    9.6720    8.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9530    9.2330    6.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1220    8.5930    6.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5160    8.5250    6.9470   S 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7380    8.1130    4.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4910    8.7660    4.2010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4550    6.8860    4.4620   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+S3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+S14
+A   15
+C15
+A   16
+O16
+A   17
+N17
+M  END
+>  <InstanceId>
+5ALX_DUL_A_1550
+
+>  <ChemCompId>
+DUL
+
+>  <PdbId>
+5ALX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1550
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O S2
+
+>  <Name>
+5-(3-ethylsulfanylphenyl)thiophene-2-carboxamide
+
+>  <SystematicName>
+5-(3-ethylsulfanylphenyl)thiophene-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H13 N O S2
+
+>  <MolecularWeight>
+263.378
+
+>  <ModifiedDate>
+2015-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13NOS2/c1-2-16-10-5-3-4-9(8-10)11-6-7-12(17-11)13(14)15/h3-8H,2H2,1H3,(H2,14,15)
+
+>  <InChIKey>
+TYROLWYYLFWJEG-UHFFFAOYSA-N
+
+>  <SMILES>
+CCSc1cccc(c1)c2ccc(s2)C(=O)N
+
+$$$$

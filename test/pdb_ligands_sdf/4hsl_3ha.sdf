@@ -1,0 +1,122 @@
+1U1W_3HA_A_700
+  RCSB PDB12061704103D
+Coordinates from PDB:1U1W:A:700 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    8.1600   30.2580   23.6940   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5910   31.1680   23.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1890   32.2360   23.6110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3090   31.0160   21.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7550   32.1210   20.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4140   31.9890   19.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6280   30.8120   18.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1940   29.7280   19.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3980   28.5410   18.9400   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5530   29.8180   20.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1880   28.6840   21.4980   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O8
+A    2
+C7
+A    3
+O9
+A    4
+C2
+A    5
+C1
+A    6
+C6
+A    7
+C5
+A    8
+C4
+A    9
+O11
+A   10
+C3
+A   11
+N10
+M  END
+>  <InstanceId>
+1U1W_3HA_A_700
+
+>  <ChemCompId>
+3HA
+
+>  <PdbId>
+1U1W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+3-HYDROXYANTHRANILIC ACID
+
+>  <SystematicName>
+2-amino-3-hydroxy-benzoic acid
+
+>  <Synonyms>
+2-AMINO-3-HYDROXYBENZOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O3
+
+>  <MolecularWeight>
+153.135
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO3/c8-6-4(7(10)11)2-1-3-5(6)9/h1-3,9H,8H2,(H,10,11)
+
+>  <InChIKey>
+WJXSWCUQABXPFS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)O)N)C(=O)O
+
+$$$$

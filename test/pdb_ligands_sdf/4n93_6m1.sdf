@@ -1,0 +1,122 @@
+4N93_6M1_A_503
+  RCSB PDB12061713513D
+Coordinates from PDB:4N93:A:503 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -20.1290  -27.1490   16.1630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9600  -25.9540   15.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8040  -24.9990   16.5730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0250  -25.6040   14.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7650  -26.5600   13.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3800  -27.9810   13.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8510  -26.2220   11.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1720  -24.9130   11.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4310  -23.9520   12.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3650  -24.3010   13.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6060  -23.3690   14.7870   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  7  5  1  0  0  0  0
+  9 10  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAC
+A    2
+CAH
+A    3
+OAD
+A    4
+CAK
+A    5
+CAI
+A    6
+CAA
+A    7
+CAF
+A    8
+CAE
+A    9
+CAG
+A   10
+CAJ
+A   11
+NAB
+M  END
+>  <InstanceId>
+4N93_6M1_A_503
+
+>  <ChemCompId>
+6M1
+
+>  <PdbId>
+4N93
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+2-amino-6-methylbenzoic acid
+
+>  <SystematicName>
+2-azanyl-6-methyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O2
+
+>  <MolecularWeight>
+151.163
+
+>  <ModifiedDate>
+2014-04-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO2/c1-5-3-2-4-6(9)7(5)8(10)11/h2-4H,9H2,1H3,(H,10,11)
+
+>  <InChIKey>
+XHYVBIXKORFHFM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1C(=O)O)N
+
+$$$$

@@ -1,0 +1,105 @@
+1V6D_TBF_B_9
+  RCSB PDB12061704183D
+Coordinates from PDB:1V6D:B:9 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   -1.7030   -4.5880   54.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4410   -4.2380   54.4420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5180   -5.0590   55.1390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0810   -5.7220   56.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0100   -6.7950   56.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5470   -4.6270   57.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3410   -6.3130   56.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+O
+A    4
+C'
+A    5
+C1
+A    6
+C2
+A    7
+C3
+M  END
+>  <InstanceId>
+1V6D_TBF_B_9
+
+>  <ChemCompId>
+TBF
+
+>  <PdbId>
+1V6D
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+9
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O2
+
+>  <Name>
+TERT-BUTYL FORMATE
+
+>  <SystematicName>
+tert-butyl methanoate
+
+>  <Synonyms>
+TERTIARY BUTOXY CARBONYL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 O2
+
+>  <MolecularWeight>
+102.132
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O2/c1-5(2,3)7-4-6/h4H,1-3H3
+
+>  <InChIKey>
+RUPAXCPQAAOIPB-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)OC=O
+
+$$$$

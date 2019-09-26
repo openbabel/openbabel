@@ -1,0 +1,103 @@
+1AET_1MZ_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AET:A:296 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   -9.5780   52.4910  110.8370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9400   53.6570  111.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2250   53.8100  111.0970   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -11.6860   52.7780  110.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6090   51.9000  110.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1800   51.9070  110.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+M  CHG  1   3   1
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+CM1
+M  END
+>  <InstanceId>
+1AET_1MZ_A_296
+
+>  <ChemCompId>
+1MZ
+
+>  <PdbId>
+1AET
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2
+
+>  <Name>
+1-METHYLIMIDAZOLE
+
+>  <SystematicName>
+1-methylimidazol-3-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H7 N2
+
+>  <MolecularWeight>
+83.112
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N2/c1-6-3-2-5-4-6/h2-4H,1H3/p+1
+
+>  <InChIKey>
+MCTWTZJPVLRJOU-UHFFFAOYSA-O
+
+>  <SMILES>
+Cn1cc[nH+]c1
+
+$$$$

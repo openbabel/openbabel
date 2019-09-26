@@ -1,0 +1,143 @@
+2VKU_DBE_A_1446
+  RCSB PDB12061707073D
+Coordinates from PDB:2VKU:A:1446 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    6.5450   46.7740   56.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7050   46.0790   57.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4410   43.9560   57.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2920   44.6400   56.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3530   46.0400   56.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6490   44.6650   57.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9320   42.6690   57.7370   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8610   43.8580   58.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9870   44.3900   58.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2560   43.7210   59.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2890   44.2060   59.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0810   45.3540   60.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8450   46.0280   60.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7920   45.5510   59.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2430   46.6700   56.2410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0890   45.8080   61.4300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  6  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5 15  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  6  3  2  0  0  0  0
+  9 14  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 11 10  2  0  0  0  0
+A    1
+C5
+A    2
+C4
+A    3
+C10
+A    4
+C1
+A    5
+C6
+A    6
+C12
+A    7
+O10
+A    8
+C11
+A    9
+C13
+A   10
+C18
+A   11
+C17
+A   12
+C16
+A   13
+C15
+A   14
+C14
+A   15
+O23
+A   16
+O24
+M  END
+>  <InstanceId>
+2VKU_DBE_A_1446
+
+>  <ChemCompId>
+DBE
+
+>  <PdbId>
+2VKU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1446
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O3
+
+>  <Name>
+bis(4-hydroxyphenyl)methanone
+
+>  <SystematicName>
+bis(4-hydroxyphenyl)methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C13 H10 O3
+
+>  <MolecularWeight>
+214.217
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C13H10O3/c14-11-5-1-9(2-6-11)13(16)10-3-7-12(15)8-4-10/h1-8,14-15H
+
+>  <InChIKey>
+RXNYJUSEXLAVNQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)c2ccc(cc2)O)O
+
+$$$$

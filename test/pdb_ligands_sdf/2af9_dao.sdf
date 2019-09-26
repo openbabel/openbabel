@@ -1,0 +1,133 @@
+1AYM_DAO_1_7009
+  RCSB PDB12061702023D
+Coordinates from PDB:1AYM:1:7009 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   36.0570    6.6830  127.9590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1690    6.6560  127.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9900    6.3710  127.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6740    5.5690  125.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7390    5.7310  124.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9760    4.4300  123.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3070    4.4660  123.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1070    3.1370  123.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4960    3.1220  122.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6870    3.1910  123.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7590    2.0660  123.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9400    2.2410  124.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1960    1.3770  123.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0200   -0.1070  124.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+C10
+A   13
+C11
+A   14
+C12
+M  END
+>  <InstanceId>
+1AYM_DAO_1_7009
+
+>  <ChemCompId>
+DAO
+
+>  <PdbId>
+1AYM
+
+>  <ChainId>
+1
+
+>  <ResidueNumber>
+7009
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2
+
+>  <Name>
+LAURIC ACID
+
+>  <SystematicName>
+dodecanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H24 O2
+
+>  <MolecularWeight>
+200.318
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H24O2/c1-2-3-4-5-6-7-8-9-10-11-12(13)14/h2-11H2,1H3,(H,13,14)
+
+>  <InChIKey>
+POULHZVOKOAJMA-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCC(=O)O
+
+$$$$

@@ -1,0 +1,143 @@
+4MK2_28B_A_306
+  RCSB PDB12061713453D
+Coordinates from PDB:4MK2:A:306 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    9.0400   19.7670   -8.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5940   20.4300   -9.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0510   21.7500   -8.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8610   22.2290   -7.6990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6940   22.5550   -9.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8930   22.0060  -11.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5590   22.8120  -12.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5840   23.6860  -11.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1840   24.4320  -12.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7630   24.3090  -14.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7370   23.4330  -14.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2690   23.2820  -16.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8900   23.1460  -17.0990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1310   22.6830  -13.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4500   20.6910  -11.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8040   19.9010  -10.5440   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  3  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 14  7  2  0  0  0  0
+  9  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 15  6  2  0  0  0  0
+ 15 16  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 16  2  1  0  0  0  0
+  5  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  2  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+O04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+A   14
+C14
+A   15
+C15
+A   16
+N16
+M  END
+>  <InstanceId>
+4MK2_28B_A_306
+
+>  <ChemCompId>
+28B
+
+>  <PdbId>
+4MK2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+306
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2
+
+>  <Name>
+3-(5-hydroxy-6-oxo-1,6-dihydropyridin-3-yl)benzonitrile
+
+>  <SystematicName>
+3-(5-oxidanyl-6-oxidanylidene-1H-pyridin-3-yl)benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H8 N2 O2
+
+>  <MolecularWeight>
+212.204
+
+>  <ModifiedDate>
+2013-09-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H8N2O2/c13-6-8-2-1-3-9(4-8)10-5-11(15)12(16)14-7-10/h1-5,7,15H,(H,14,16)
+
+>  <InChIKey>
+IRHCHFJUGCVFNF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)C2=CNC(=O)C(=C2)O)C#N
+
+$$$$

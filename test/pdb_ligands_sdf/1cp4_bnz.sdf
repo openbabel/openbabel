@@ -1,0 +1,102 @@
+181L_BNZ_A_400
+  RCSB PDB12061701563D
+Coordinates from PDB:181L:A:400 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   25.9780    5.3270    4.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3950    5.0740    3.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3400    5.8600    2.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8370    6.9210    3.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4200    7.1960    4.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4980    6.3790    5.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+M  END
+>  <InstanceId>
+181L_BNZ_A_400
+
+>  <ChemCompId>
+BNZ
+
+>  <PdbId>
+181L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6
+
+>  <Name>
+BENZENE
+
+>  <SystematicName>
+benzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6
+
+>  <MolecularWeight>
+78.112
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6/c1-2-4-6-5-3-1/h1-6H
+
+>  <InChIKey>
+UHOVQNZJYSORNB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccccc1
+
+$$$$

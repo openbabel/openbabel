@@ -37,7 +37,7 @@ namespace OpenBabel
       OBBondPrivate() {}
   };
 
-  extern OBAromaticTyper  aromtyper;
+  extern THREAD_LOCAL OBAromaticTyper  aromtyper;
   extern OBMessageHandler obErrorLog;
 
   /** \class OBBond bond.h <openbabel/bond.h>

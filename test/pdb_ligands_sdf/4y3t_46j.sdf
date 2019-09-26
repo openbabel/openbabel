@@ -1,0 +1,135 @@
+4Y3T_46J_A_416
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3T:A:416 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   28.9420    6.3870   59.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5880    5.6800   59.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7550    8.6180   59.6790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5780    4.4050   58.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2810    7.6480   61.0480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9590    7.5990   60.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8460    9.8580   60.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3100   11.0070   59.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0340   11.1050   58.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0300    9.7720   57.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5560    8.6710   58.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0760    5.4170   59.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0150    4.2140   58.6510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7200    3.4990   58.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+  4 14  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 11  3  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  1  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N1
+A    4
+C3
+A    5
+O
+A    6
+C
+A    7
+C10
+A    8
+C9
+A    9
+C8
+A   10
+C7
+A   11
+C6
+A   12
+C5
+A   13
+N
+A   14
+C4
+M  END
+>  <InstanceId>
+4Y3T_46J_A_416
+
+>  <ChemCompId>
+46J
+
+>  <PdbId>
+4Y3T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+416
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+(3R)-piperidin-3-yl(piperidin-1-yl)methanone
+
+>  <SystematicName>
+piperidin-1-yl-[(3R)-piperidin-3-yl]methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H20 N2 O
+
+>  <MolecularWeight>
+196.289
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H20N2O/c14-11(10-5-4-6-12-9-10)13-7-2-1-3-8-13/h10,12H,1-9H2/t10-/m1/s1
+
+>  <InChIKey>
+OSZRYTYCKGZYLB-SNVBAGLBSA-N
+
+>  <SMILES>
+C1CCN(CC1)C(=O)[C@@H]2CCCNC2
+
+$$$$

@@ -1,0 +1,135 @@
+5NF5_8VN_B_303
+  RCSB PDB12061719103D
+Coordinates from PDB:5NF5:B:303 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -0.2410  -33.3070  -17.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1210  -31.3580  -17.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4930  -33.1140  -19.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4720  -32.0060  -18.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2400  -32.8300  -19.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8880  -32.9700  -18.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6310  -29.9000  -17.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7260  -33.9350  -20.0400   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4860  -34.0200  -18.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3540  -29.4700  -17.1670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2500  -29.1690  -18.6070   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0340  -32.1700  -17.0290   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0580  -34.1590  -19.6060   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3740  -31.8280  -18.2990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  1  5  1  0  0  0  0
+ 12  2  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 11  7  2  0  0  0  0
+  8 13  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2  4  1  0  0  0  0
+ 13  3  2  0  0  0  0
+  7 10  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  6  1  0  0  0  0
+ 14  6  2  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+N1
+A   13
+N2
+A   14
+O2
+M  END
+>  <InstanceId>
+5NF5_8VN_B_303
+
+>  <ChemCompId>
+8VN
+
+>  <PdbId>
+5NF5
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O5
+
+>  <Name>
+(3~{a}~{S},4~{S},6~{a}~{R})-4,5,6,6~{a}-tetrahydro-3~{a}~{H}-pyrrolo[3,4-d][1,2]oxazole-3,4-dicarboxylic acid
+
+>  <SystematicName>
+(3~{a}~{S},4~{S},6~{a}~{R})-4,5,6,6~{a}-tetrahydro-3~{a}~{H}-pyrrolo[3,4-d][1,2]oxazole-3,4-dicarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N2 O5
+
+>  <MolecularWeight>
+200.149
+
+>  <ModifiedDate>
+2017-07-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O5/c10-6(11)4-3-2(1-8-4)14-9-5(3)7(12)13/h2-4,8H,1H2,(H,10,11)(H,12,13)/t2-,3-,4-/m0/s1
+
+>  <InChIKey>
+JMTZNIDIUDLCMK-HZLVTQRSSA-N
+
+>  <SMILES>
+C1[C@H]2[C@@H]([C@H](N1)C(=O)O)C(=NO2)C(=O)O
+
+$$$$

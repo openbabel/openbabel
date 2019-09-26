@@ -1,0 +1,142 @@
+2Y1B_I3C_A_1133
+  RCSB PDB12061707333D
+Coordinates from PDB:2Y1B:A:1133 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   21.5550    9.9560    7.4530   I 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4450    6.5780    2.5550   I 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6960    5.6220    7.5120   I 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1530    7.5450    9.4760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9820    8.7360    8.8430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5880    5.2660    4.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2610    8.8860    4.6040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5630    7.7270    7.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5740    8.4310    6.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2210    8.1640    5.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8830    7.1350    4.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8980    6.4370    5.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2130    6.7210    6.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9350    8.0400    8.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7430    5.3170    4.0950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8880    4.2290    4.6070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3 13  1  0  0  0  0
+  4 14  2  0  0  0  0
+  5 14  1  0  0  0  0
+  6 12  1  0  0  0  0
+  6 15  1  0  0  0  0
+  6 16  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+I3
+A    2
+I2
+A    3
+I1
+A    4
+O8
+A    5
+O9
+A    6
+C10
+A    7
+N13
+A    8
+C1
+A    9
+C6
+A   10
+C5
+A   11
+C4
+A   12
+C3
+A   13
+C2
+A   14
+C7
+A   15
+O11
+A   16
+O12
+M  END
+>  <InstanceId>
+2Y1B_I3C_A_1133
+
+>  <ChemCompId>
+I3C
+
+>  <PdbId>
+2Y1B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1133
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4 I3
+
+>  <Name>
+5-amino-2,4,6-triiodobenzene-1,3-dicarboxylic acid
+
+>  <SystematicName>
+5-amino-2,4,6-triiodo-benzene-1,3-dicarboxylic acid
+
+>  <Synonyms>
+5-Amino-2,4,6-triiodoisophthalic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H4 I3 N O4
+
+>  <MolecularWeight>
+558.835
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H4I3NO4/c9-3-1(7(13)14)4(10)6(12)5(11)2(3)8(15)16/h12H2,(H,13,14)(H,15,16)
+
+>  <InChIKey>
+JEZJSNULLBSYHV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1(c(c(c(c(c1I)N)I)C(=O)O)I)C(=O)O
+
+$$$$

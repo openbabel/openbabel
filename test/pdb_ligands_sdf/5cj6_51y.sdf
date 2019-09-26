@@ -1,0 +1,151 @@
+5CJ6_51Y_A_1001
+  RCSB PDB12061717063D
+Coordinates from PDB:5CJ6:A:1001 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+  -27.7140    3.4670   -4.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7160    2.5430   -4.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4510    4.8180   -4.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3480    2.0010   -5.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4370    2.9890   -4.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1750    4.3400   -4.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1720    5.2580   -4.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9190    1.1540   -4.6900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1510    0.6940   -4.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.2800    0.5610   -5.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.3150    1.4080   -4.6490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9270    0.9130   -6.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.7910   -0.8520   -5.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1050   -1.5250   -3.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8950   -0.6920   -3.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5750    4.8970   -5.2360  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8740    6.6540   -4.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6650    7.8000   -4.7310   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 10  1  0  0  0  0
+ 16  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 18 17  3  0  0  0  0
+  8  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 17  7  1  0  0  0  0
+  7  3  2  0  0  0  0
+  2  1  2  0  0  0  0
+  3  1  1  0  0  0  0
+  9 15  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+C1
+A    4
+C5
+A    5
+C4
+A    6
+C3
+A    7
+C2
+A    8
+N8
+A    9
+C9
+A   10
+C10
+A   11
+O11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+CL1
+A   17
+C17
+A   18
+N18
+M  END
+>  <InstanceId>
+5CJ6_51Y_A_1001
+
+>  <ChemCompId>
+51Y
+
+>  <PdbId>
+5CJ6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O Cl
+
+>  <Name>
+2-chloro-4-{[(1R,2R)-2-hydroxy-2-methylcyclopentyl]amino}-3-methylbenzonitrile
+
+>  <SystematicName>
+2-chloranyl-3-methyl-4-[[(1R,2R)-2-methyl-2-oxidanyl-cyclopentyl]amino]benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H17 Cl N2 O
+
+>  <MolecularWeight>
+264.751
+
+>  <ModifiedDate>
+2015-12-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H17ClN2O/c1-9-11(6-5-10(8-16)13(9)15)17-12-4-3-7-14(12,2)18/h5-6,12,17-18H,3-4,7H2,1-2H3/t12-,14-/m1/s1
+
+>  <InChIKey>
+CXFSVKGROITHRY-TZMCWYRMSA-N
+
+>  <SMILES>
+Cc1c(ccc(c1Cl)C#N)N[C@@H]2CCC[C@@]2(C)O
+
+$$$$

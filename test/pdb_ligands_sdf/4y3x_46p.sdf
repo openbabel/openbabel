@@ -1,0 +1,131 @@
+4Y3X_46P_A_401
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3X:A:401 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   45.9420    3.3070   63.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9450    3.0170   62.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5960    1.8650   63.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1310    4.9430   64.0950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5160    1.0800   64.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9190    3.9370   62.6860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3150    2.0600   63.7090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4620    4.8020   64.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2920    5.5940   64.6550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2240    3.5250   63.1100   S 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7870    4.1300   63.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5980    5.2010   64.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6670    5.9540   65.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  6  1  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  3  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  1  7  1  0  0  0  0
+ 11 12  2  0  0  0  0
+  7  5  1  0  0  0  0
+  8  4  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 12  9  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+N2
+A    7
+N3
+A    8
+C2
+A    9
+N
+A   10
+S
+A   11
+C3
+A   12
+C1
+A   13
+C
+M  END
+>  <InstanceId>
+4Y3X_46P_A_401
+
+>  <ChemCompId>
+46P
+
+>  <PdbId>
+4Y3X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 S
+
+>  <Name>
+4-methyl-5-(1-methyl-1H-imidazol-2-yl)-1,3-thiazol-2-amine
+
+>  <SystematicName>
+4-methyl-5-(1-methylimidazol-2-yl)-1,3-thiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N4 S
+
+>  <MolecularWeight>
+194.257
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N4S/c1-5-6(13-8(9)11-5)7-10-3-4-12(7)2/h3-4H,1-2H3,(H2,9,11)
+
+>  <InChIKey>
+MHYCRLDCEBMUQM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(sc(n1)N)c2nccn2C
+
+$$$$

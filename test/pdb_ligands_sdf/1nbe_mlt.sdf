@@ -1,0 +1,113 @@
+1AMZ_MLT_A_702
+  RCSB PDB12061702003D
+Coordinates from PDB:1AMZ:A:702 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   14.4320   -5.6740   -1.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2370   -5.4240   -2.1150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3080   -5.4300   -2.7980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9370   -6.1630   -0.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1520   -6.8830   -0.7640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8030   -6.9160    0.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3630   -8.2580   -0.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8480   -8.6960   -1.5490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5840   -8.9080    0.2810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+O3
+A    6
+C3
+A    7
+C4
+A    8
+O4
+A    9
+O5
+M  END
+>  <InstanceId>
+1AMZ_MLT_A_702
+
+>  <ChemCompId>
+MLT
+
+>  <PdbId>
+1AMZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+702
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O5
+
+>  <Name>
+D-MALATE
+
+>  <SystematicName>
+(2R)-2-oxidanylbutanedioic acid
+
+>  <Synonyms>
+(2R)-2-HYDROXYBUTANEDIOIC ACID; 2-HYDROXY-SUCCINIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O5
+
+>  <MolecularWeight>
+134.087
+
+>  <ModifiedDate>
+2013-02-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O5/c5-2(4(8)9)1-3(6)7/h2,5H,1H2,(H,6,7)(H,8,9)/t2-/m1/s1
+
+>  <InChIKey>
+BJEPYKJPYRNKOW-UWTATZPHSA-N
+
+>  <SMILES>
+C([C@H](C(=O)O)O)C(=O)O
+
+$$$$

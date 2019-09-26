@@ -1,0 +1,122 @@
+1E0Y_FCR_B_601
+  RCSB PDB12061702203D
+Coordinates from PDB:1E0Y:B:601 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   94.0340   24.9720   41.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.8020   25.4830   41.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.1400   26.5630   41.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.7040   27.1640   42.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   93.9170   26.6670   43.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.5610   25.5940   42.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.6720   23.8270   40.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.0370   28.2110   43.4110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   94.9360   23.8200   39.5840   F 0  0  0  0  0  0  0  0  0  0  0  0
+   95.8660   23.5270   41.4770   F 0  0  0  0  0  0  0  0  0  0  0  0
+   93.8710   22.7660   41.0250   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O4
+A    9
+F1
+A   10
+F2
+A   11
+F3
+M  END
+>  <InstanceId>
+1E0Y_FCR_B_601
+
+>  <ChemCompId>
+FCR
+
+>  <PdbId>
+1E0Y
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O F3
+
+>  <Name>
+ALPHA,ALPHA,ALPHA-TRIFLUORO-P-CRESOL
+
+>  <SystematicName>
+4-(trifluoromethyl)phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 F3 O
+
+>  <MolecularWeight>
+162.109
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5F3O/c8-7(9,10)5-1-3-6(11)4-2-5/h1-4,11H
+
+>  <InChIKey>
+BAYGVMXZJBFEMB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(F)(F)F)O
+
+$$$$

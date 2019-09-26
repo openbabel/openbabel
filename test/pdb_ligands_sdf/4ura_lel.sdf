@@ -1,0 +1,135 @@
+4URA_LEL_A_4000
+  RCSB PDB12061715183D
+Coordinates from PDB:4URA:A:4000 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -24.4790  -22.3290  -25.9670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4460  -22.0310  -24.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2830  -21.8460  -24.1130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5980  -21.8590  -23.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5860  -22.8360  -23.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6370  -20.7470  -23.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7640  -20.6870  -22.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7020  -21.6690  -22.2920   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.6390  -22.6940  -23.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0200  -19.6210  -21.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2860  -19.4080  -20.6030   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2570  -18.3660  -19.8470   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9990  -17.8130  -19.9100   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1900  -18.5730  -20.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  9  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+O1
+A    2
+C5
+A    3
+O
+A    4
+C4
+A    5
+C
+A    6
+C3
+A    7
+C2
+A    8
+N7
+A    9
+C1
+A   10
+C6
+A   11
+N3
+A   12
+N2
+A   13
+N1
+A   14
+C7
+M  END
+>  <InstanceId>
+4URA_LEL_A_4000
+
+>  <ChemCompId>
+LEL
+
+>  <PdbId>
+4URA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O2
+
+>  <Name>
+2-(2H-1,2,3-triazol-4-yl)pyridine-4-carboxylic acid
+
+>  <SystematicName>
+2-(2H-1,2,3-triazol-4-yl)pyridine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H6 N4 O2
+
+>  <MolecularWeight>
+190.159
+
+>  <ModifiedDate>
+2015-06-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N4O2/c13-8(14)5-1-2-9-6(3-5)7-4-10-12-11-7/h1-4H,(H,13,14)(H,10,11,12)
+
+>  <InChIKey>
+XGBRXPYFGYDEMS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnc(cc1C(=O)O)c2cn[nH]n2
+
+$$$$

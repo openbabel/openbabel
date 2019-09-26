@@ -1,0 +1,126 @@
+1GTZ_DHK_A_1162
+  RCSB PDB12061702383D
+Coordinates from PDB:1GTZ:A:1162 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    0.6440  -16.6000   38.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7580  -15.2300   38.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5120  -14.9610   40.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3650  -14.2660   37.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9380  -13.3540   38.7630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3310  -14.8420   37.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2940  -17.0350   37.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7870  -16.0340   36.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8390  -18.2890   36.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3290  -18.2960   35.6980   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7710  -19.2830   37.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4840  -13.8920   36.0920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+O3
+A    4
+C4
+A    5
+O4
+A    6
+C5
+A    7
+C1
+A    8
+C6
+A    9
+C
+A   10
+O1
+A   11
+O2
+A   12
+O5
+M  END
+>  <InstanceId>
+1GTZ_DHK_A_1162
+
+>  <ChemCompId>
+DHK
+
+>  <PdbId>
+1GTZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1162
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O5
+
+>  <Name>
+3-DEHYDROSHIKIMATE
+
+>  <SystematicName>
+(1S,4S,5R)-3,4,5-trihydroxycyclohex-2-ene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 O5
+
+>  <MolecularWeight>
+174.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10O5/c8-4-1-3(7(11)12)2-5(9)6(4)10/h1,3,5-6,8-10H,2H2,(H,11,12)/t3-,5-,6-/m1/s1
+
+>  <InChIKey>
+YVYKOQWMJZXRRM-UYFOZJQFSA-N
+
+>  <SMILES>
+C1[C@@H](C=C([C@H]([C@@H]1O)O)O)C(=O)O
+
+$$$$

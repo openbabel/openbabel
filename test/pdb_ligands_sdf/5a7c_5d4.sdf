@@ -1,0 +1,133 @@
+5A7C_5D4_A_500
+  RCSB PDB12061716453D
+Coordinates from PDB:5A7C:A:500 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   12.1780  -36.1760   34.0430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6520  -36.4800   32.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0480  -35.4060   32.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8150  -37.7220   32.5550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4090  -38.9150   33.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5500  -39.6180   34.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8970  -39.7570   33.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3340  -41.2150   33.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6270  -41.2970   32.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8640  -42.6850   31.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8890  -42.7900   30.1490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0630  -42.2280   29.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1550  -42.6150   28.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9830  -41.1740   29.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+O1
+A    2
+C8
+A    3
+C9
+A    4
+N1
+A    5
+C7
+A    6
+C6
+A    7
+C5
+A    8
+C4
+A    9
+C3
+A   10
+C2
+A   11
+N
+A   12
+C1
+A   13
+O
+A   14
+C
+M  END
+>  <InstanceId>
+5A7C_5D4_A_500
+
+>  <ChemCompId>
+5D4
+
+>  <PdbId>
+5A7C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+N-(6-ACETAMIDOHEXYL)ACETAMIDE
+
+>  <SystematicName>
+N-(6-acetamidohexyl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H20 N2 O2
+
+>  <MolecularWeight>
+200.278
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20N2O2/c1-9(13)11-7-5-3-4-6-8-12-10(2)14/h3-8H2,1-2H3,(H,11,13)(H,12,14)
+
+>  <InChIKey>
+BNQSTAOJRULKNX-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCCCCCNC(=O)C
+
+$$$$

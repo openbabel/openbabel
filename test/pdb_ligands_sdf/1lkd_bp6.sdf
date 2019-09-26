@@ -1,0 +1,143 @@
+1LKD_BP6_A_300
+  RCSB PDB12061703113D
+Coordinates from PDB:1LKD:A:300 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   22.5130   21.8300   16.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1540   22.0200   16.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5990   23.2740   16.1860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2850   20.9350   16.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9570   21.2270   15.7270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7760   19.6100   16.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1470   19.3970   16.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0080   20.5060   16.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3830   23.0370   16.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2300   23.7830   18.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0220   24.9270   18.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9880   25.3570   17.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1650   24.6370   16.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3730   23.4930   15.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0870   23.3850   19.3270  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7260   22.7330   14.4020  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+CA1
+A    2
+CA2
+A    3
+OA2
+A    4
+CA3
+A    5
+OA3
+A    6
+CA4
+A    7
+CA5
+A    8
+CA6
+A    9
+CB1
+A   10
+CB2
+A   11
+CB3
+A   12
+CB4
+A   13
+CB5
+A   14
+CB6
+A   15
+CL1
+A   16
+CL2
+M  END
+>  <InstanceId>
+1LKD_BP6_A_300
+
+>  <ChemCompId>
+BP6
+
+>  <PdbId>
+1LKD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2 Cl2
+
+>  <Name>
+2',6'-DICHLORO-BIPHENYL-2,6-DIOL
+
+>  <SystematicName>
+3-(2,6-dichlorophenyl)benzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H8 Cl2 O2
+
+>  <MolecularWeight>
+255.097
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H8Cl2O2/c13-8-4-2-5-9(14)11(8)7-3-1-6-10(15)12(7)16/h1-6,15-16H
+
+>  <InChIKey>
+MCZUCSAAGDCHHN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)O)O)c2c(cccc2Cl)Cl
+
+$$$$

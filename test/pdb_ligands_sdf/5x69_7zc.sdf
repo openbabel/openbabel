@@ -1,0 +1,139 @@
+5X69_7ZC_A_401
+  RCSB PDB12061720133D
+Coordinates from PDB:5X69:A:401 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -28.1620   25.0270  -29.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4470   26.0900  -30.4910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1060   25.9790  -31.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1110   25.0820  -32.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8080   24.9820  -33.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5320   25.8200  -34.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4470   25.9440  -36.1030   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3230   26.8630  -36.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0200   27.3920  -35.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1060   28.4690  -35.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8010   28.8160  -34.3460   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1460   29.2500  -34.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.0810   29.8120  -33.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5000   26.7130  -34.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7890   26.7920  -32.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  7  6  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  6 14  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 15  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C1
+A    2
+O2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+M  END
+>  <InstanceId>
+5X69_7ZC_A_401
+
+>  <ChemCompId>
+7ZC
+
+>  <PdbId>
+5X69
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+1-(5-methoxy-1H-indol-3-yl)-N,N-dimethyl-methanamine
+
+>  <SystematicName>
+1-(5-methoxy-1~{H}-indol-3-yl)-~{N},~{N}-dimethyl-methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H16 N2 O
+
+>  <MolecularWeight>
+204.268
+
+>  <ModifiedDate>
+2017-06-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H16N2O/c1-14(2)8-9-7-13-12-5-4-10(15-3)6-11(9)12/h4-7,13H,8H2,1-3H3
+
+>  <InChIKey>
+GOERTRUXQHDLHC-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)Cc1c[nH]c2c1cc(cc2)OC
+
+$$$$

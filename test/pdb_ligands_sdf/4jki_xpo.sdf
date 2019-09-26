@@ -1,0 +1,105 @@
+3RBO_XPO_A_701
+  RCSB PDB12061710323D
+Coordinates from PDB:3RBO:A:701 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   20.7630   25.1720   73.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1040   24.5860   72.3440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6720   26.3490   75.3890   P 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4950   26.8980   76.0830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4520   25.0690   74.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1890   27.3130   74.4120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7300   26.0990   76.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  1  5  1  0  0  0  0
+  6  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+A    1
+C
+A    2
+O
+A    3
+P
+A    4
+O1
+A    5
+O2
+A    6
+O3
+A    7
+O4
+M  END
+>  <InstanceId>
+3RBO_XPO_A_701
+
+>  <ChemCompId>
+XPO
+
+>  <PdbId>
+3RBO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C O5 P
+
+>  <Name>
+formyl phosphate
+
+>  <SystematicName>
+phosphono methanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C H3 O5 P
+
+>  <MolecularWeight>
+126.005
+
+>  <ModifiedDate>
+2011-12-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/CH3O5P/c2-1-6-7(3,4)5/h1H,(H2,3,4,5)
+
+>  <InChIKey>
+TVISEJUYYBUVNV-UHFFFAOYSA-N
+
+>  <SMILES>
+C(=O)OP(=O)(O)O
+
+$$$$

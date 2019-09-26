@@ -1,0 +1,126 @@
+4Y3W_46Q_A_402
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3W:A:402 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   36.1150    1.5720    9.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4310    0.1260    7.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9660   -1.1800    7.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1940    0.5200    8.7240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0960   -0.6820    7.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6130    0.6350    8.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4960    0.4860   10.0960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6450    1.7110    9.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0970    2.9760    8.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9680    1.7990   10.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3630    2.2780   11.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3420   -1.0780    6.6660   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  3  1  0  0  0  0
+ 12  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  4  1  0  0  0  0
+  9  8  1  0  0  0  0
+  4  8  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N
+A    8
+C2
+A    9
+C3
+A   10
+C1
+A   11
+C
+A   12
+O
+M  END
+>  <InstanceId>
+4Y3W_46Q_A_402
+
+>  <ChemCompId>
+46Q
+
+>  <PdbId>
+4Y3W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+(2R)-2-methyl-2-(morpholin-4-yl)butan-1-amine
+
+>  <SystematicName>
+(2R)-2-methyl-2-morpholin-4-yl-butan-1-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 N2 O
+
+>  <MolecularWeight>
+172.268
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20N2O/c1-3-9(2,8-10)11-4-6-12-7-5-11/h3-8,10H2,1-2H3/t9-/m1/s1
+
+>  <InChIKey>
+RNGALZNABGSEIF-SECBINFHSA-N
+
+>  <SMILES>
+CC[C@](C)(CN)N1CCOCC1
+
+$$$$

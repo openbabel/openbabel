@@ -1,0 +1,122 @@
+5NOY_93K_A_201
+  RCSB PDB12061719123D
+Coordinates from PDB:5NOY:A:201 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -3.1090   21.2750   -7.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2130   19.8930   -7.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3250   19.2500   -7.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3080   19.9860   -8.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2050   21.3670   -8.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0990   22.0120   -7.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8320   23.1830   -6.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9490   21.9760   -6.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0730   21.2580   -5.9040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1890   22.0890   -9.0190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3470   19.3510   -8.9490   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  5  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  1  2  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O
+A    8
+C
+A    9
+N
+A   10
+N2
+A   11
+N1
+M  END
+>  <InstanceId>
+5NOY_93K_A_201
+
+>  <ChemCompId>
+93K
+
+>  <PdbId>
+5NOY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O
+
+>  <Name>
+3,4-bis(azanyl)benzamide
+
+>  <SystematicName>
+3,4-bis(azanyl)benzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N3 O
+
+>  <MolecularWeight>
+151.166
+
+>  <ModifiedDate>
+2017-07-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N3O/c8-5-2-1-4(7(10)11)3-6(5)9/h1-3H,8-9H2,(H2,10,11)
+
+>  <InChIKey>
+RGJXMMUQTCONEI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1C(=O)N)N)N
+
+$$$$

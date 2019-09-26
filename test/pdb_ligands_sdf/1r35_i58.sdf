@@ -1,0 +1,133 @@
+1R35_I58_A_800
+  RCSB PDB12061703513D
+Coordinates from PDB:1R35:A:800 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  121.3720  116.1420   35.8100   N 0  0  0  0  0  0  0  0  0  0  0  0
+  122.6680  117.5740   37.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.5570  117.9140   38.3210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  121.7950  118.4490   36.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  122.5610  116.1580   36.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.7660  115.7990   35.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.2550  114.3300   35.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.6300  114.3810   35.6450   F 0  0  0  0  0  0  0  0  0  0  0  0
+  123.6250  113.5070   34.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.3620  113.6620   33.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.2130  115.0090   32.7740   N 0  0  0  0  0  0  0  0  0  0  0  0
+  124.9890  115.3960   31.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.6510  116.4760   30.9680   N 0  0  0  0  0  0  0  0  0  0  0  0
+  126.2990  114.5470   31.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+N
+A    2
+C
+A    3
+O
+A    4
+OXT
+A    5
+CA
+A    6
+CB
+A    7
+CG
+A    8
+F
+A    9
+CD
+A   10
+CE
+A   11
+NZ
+A   12
+CX
+A   13
+NX
+A   14
+CT
+M  END
+>  <InstanceId>
+1R35_I58_A_800
+
+>  <ChemCompId>
+I58
+
+>  <PdbId>
+1R35
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O2 F
+
+>  <Name>
+4R-FLUORO-N6-ETHANIMIDOYL-L-LYSINE
+
+>  <SystematicName>
+(2S,4R)-2-amino-6-(ethanimidoylamino)-4-fluoro-hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C8 H16 F N3 O2
+
+>  <MolecularWeight>
+205.23
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16FN3O2/c1-5(10)12-3-2-6(9)4-7(11)8(13)14/h6-7H,2-4,11H2,1H3,(H2,10,12)(H,13,14)/t6-,7+/m1/s1
+
+>  <InChIKey>
+LTCJJIZTKXNFGK-RQJHMYQMSA-N
+
+>  <SMILES>
+[H]/N=C(/C)\NCC[C@H](C[C@@H](C(=O)O)N)F
+
+$$$$

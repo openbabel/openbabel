@@ -827,7 +827,7 @@ namespace OpenBabel
     _resnum   = "";
     _resname  = "";
     _vdata.clear();
-_insertioncode=0;
+    _insertioncode=0;
   }
 
   OBResidue::OBResidue(const OBResidue &src) :

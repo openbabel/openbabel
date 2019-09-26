@@ -1,0 +1,113 @@
+4H85_HRI_A_404
+  RCSB PDB12061712493D
+Coordinates from PDB:4H85:A:404 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   -8.7350  -31.0400   14.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3470  -31.8950   15.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3640  -32.1380   16.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7200  -31.5000   16.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8450  -32.1030   18.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1470  -31.6130   13.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6110  -31.3190   12.2730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1860  -32.4140   13.5380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1850  -29.4090   14.8780  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+CZ
+A    2
+CH1
+A    3
+CF1
+A    4
+CI1
+A    5
+CI2
+A    6
+CH2
+A    7
+OF2
+A    8
+OF3
+A    9
+CL
+M  END
+>  <InstanceId>
+4H85_HRI_A_404
+
+>  <ChemCompId>
+HRI
+
+>  <PdbId>
+4H85
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2 Cl
+
+>  <Name>
+ALPHA-CHLOROISOCAPROIC ACID
+
+>  <SystematicName>
+2-chloro-4-methyl-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 Cl O2
+
+>  <MolecularWeight>
+150.603
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11ClO2/c1-4(2)3-5(7)6(8)9/h4-5H,3H2,1-2H3,(H,8,9)/t5-/m1/s1
+
+>  <InChIKey>
+CBQBIPRPIHIKPW-RXMQYKEDSA-N
+
+>  <SMILES>
+CC(C)CC(C(=O)O)Cl
+
+$$$$

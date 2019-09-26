@@ -1,0 +1,122 @@
+4OWU_5M0_A_404
+  RCSB PDB12061714073D
+Coordinates from PDB:4OWU:A:404 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -17.9050  -36.3420   17.8530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5120  -35.2780   18.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2200  -35.2160   19.1600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4160  -34.1520   17.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1540  -33.0690   17.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1730  -31.8820   17.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9730  -30.9040   17.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4450  -31.7260   15.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6910  -32.8080   15.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6720  -34.0120   16.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9600  -35.0560   15.6850   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  8  6  1  0  0  0  0
+ 10  4  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAC
+A    2
+CAH
+A    3
+OAD
+A    4
+CAK
+A    5
+CAG
+A    6
+CAI
+A    7
+CAA
+A    8
+CAE
+A    9
+CAF
+A   10
+CAJ
+A   11
+NAB
+M  END
+>  <InstanceId>
+4OWU_5M0_A_404
+
+>  <ChemCompId>
+5M0
+
+>  <PdbId>
+4OWU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+2-azanyl-5-methyl-benzoic acid
+
+>  <SystematicName>
+2-azanyl-5-methyl-benzoic acid
+
+>  <Synonyms>
+5-methylanthranilate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O2
+
+>  <MolecularWeight>
+151.163
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO2/c1-5-2-3-7(9)6(4-5)8(10)11/h2-4H,9H2,1H3,(H,10,11)
+
+>  <InChIKey>
+NBUUUJWWOARGNW-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1)C(=O)O)N
+
+$$$$

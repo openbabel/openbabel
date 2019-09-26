@@ -1,0 +1,131 @@
+5WC5_AJV_R_1005
+  RCSB PDB12191704053D
+Coordinates from PDB:5WC5:R:1005 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    0.0070   -3.6050   13.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0690   -2.8900   13.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9510   -4.2890   15.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4320   -1.8090   14.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1570   -3.1120   14.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3640   -5.4380   14.5090   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0780   -3.5720   12.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0690   -4.1140   15.6430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0200   -4.9600   12.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9890   -5.7700   13.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1600   -5.1080   13.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2680   -7.0400   12.7990   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5890   -1.4800   15.6960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  3  2  0  0  0  0
+ 13  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  5  1  0  0  0  0
+  6 11  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  1  2  0  0  0  0
+ 11  1  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  2  7  2  0  0  0  0
+  9  7  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+N
+A    7
+C
+A    8
+O
+A    9
+C1
+A   10
+C2
+A   11
+C3
+A   12
+F
+A   13
+O1
+M  END
+>  <InstanceId>
+5WC5_AJV_R_1005
+
+>  <ChemCompId>
+AJV
+
+>  <PdbId>
+5WC5
+
+>  <ChainId>
+R
+
+>  <ResidueNumber>
+1005
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 F
+
+>  <Name>
+7-fluoro-3-(hydroxyamino)-2H-indol-2-one
+
+>  <SystematicName>
+7-fluoranyl-3-(oxidanylamino)indol-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H5 F N2 O2
+
+>  <MolecularWeight>
+180.136
+
+>  <ModifiedDate>
+2017-12-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H5FN2O2/c9-5-3-1-2-4-6(5)10-8(12)7(4)11-13/h1-3,13H,(H,10,11,12)
+
+>  <InChIKey>
+NTVMSTRPGVBVRX-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=CC2=C(C(=O)N=C2C(=C1)F)NO
+
+$$$$

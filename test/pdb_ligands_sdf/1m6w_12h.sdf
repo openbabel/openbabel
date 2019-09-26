@@ -1,0 +1,137 @@
+1M6W_12H_A_4378
+  RCSB PDB12061703153D
+Coordinates from PDB:1M6W:A:4378 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   57.2000   20.0490   -1.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3790   19.9260    0.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8960   20.2160   -0.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.5220   21.6790    0.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7750   22.1350    1.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3940   23.5300    1.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7410   24.4010    2.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6090   25.2510    2.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6460   26.6860    2.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7520   27.6080    1.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1100   29.0720    1.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.8160   29.8770    1.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.6860   19.2110   -2.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0830   31.1790    1.8420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.5640   29.3540    1.6230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 12 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+1M6W_12H_A_4378
+
+>  <ChemCompId>
+12H
+
+>  <PdbId>
+1M6W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4378
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O3
+
+>  <Name>
+12-HYDROXYDODECANOIC ACID
+
+>  <SystematicName>
+12-hydroxydodecanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H24 O3
+
+>  <MolecularWeight>
+216.317
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H24O3/c13-11-9-7-5-3-1-2-4-6-8-10-12(14)15/h13H,1-11H2,(H,14,15)
+
+>  <InChIKey>
+ZDHCZVWCTKTBRY-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCCCCC(=O)O)CCCCCO
+
+$$$$

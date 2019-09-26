@@ -1,0 +1,122 @@
+1Q9X_3DR_E_912
+  RCSB PDB12061703453D
+Coordinates from PDB:1Q9X:E:912 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   45.9720   66.1100  156.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5160   65.9510  155.9720   P 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1310   64.9100  156.8350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6270   65.8450  154.4970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9700   64.8890  160.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3200   65.0830  157.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2170   65.5740  158.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4160   64.4330  158.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.9490   63.8840  159.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6080   66.1550  159.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4690   66.8360  160.0730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O5'
+A    2
+P
+A    3
+OP1
+A    4
+OP2
+A    5
+C2'
+A    6
+C5'
+A    7
+C4'
+A    8
+O4'
+A    9
+C1'
+A   10
+C3'
+A   11
+O3'
+M  END
+>  <InstanceId>
+1Q9X_3DR_E_912
+
+>  <ChemCompId>
+3DR
+
+>  <PdbId>
+1Q9X
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+912
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O5 P
+
+>  <Name>
+1',2'-DIDEOXYRIBOFURANOSE-5'-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S)-3-hydroxyoxolan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+ABASIC DIDEOXYRIBOSE
+
+>  <Type>
+DNA LINKING
+
+>  <Formula>
+C5 H11 O6 P
+
+>  <MolecularWeight>
+198.111
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+N
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11O6P/c6-4-1-2-10-5(4)3-11-12(7,8)9/h4-6H,1-3H2,(H2,7,8,9)/t4-,5+/m0/s1
+
+>  <InChIKey>
+BVOBPNSQIRMLCA-CRCLSJGQSA-N
+
+>  <SMILES>
+C1CO[C@@H]([C@H]1O)COP(=O)(O)O
+
+$$$$

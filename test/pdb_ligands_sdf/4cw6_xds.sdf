@@ -1,0 +1,139 @@
+4CW2_XDS_A_1303
+  RCSB PDB12061712063D
+Coordinates from PDB:4CW2:A:1303 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   27.9210   27.4670   37.5340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0810   27.1030   37.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8200   27.2810   36.3070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1400   26.9950   36.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7160   27.0810   35.0420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6420   26.4080   38.5680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8920   26.1580   38.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7010   25.3810   39.2350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3070   24.7930   40.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8660   26.6760   37.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0840   28.1320   37.7970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6340   28.2960   39.1550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0350   25.8620   37.4380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9490   25.1860   38.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8460   24.4880   39.1240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+N2
+A    4
+C3
+A    5
+O3
+A    6
+N3
+A    7
+C5
+A    8
+N
+A    9
+C
+A   10
+C2
+A   11
+O1
+A   12
+O2
+A   13
+N1
+A   14
+C1
+A   15
+O
+M  END
+>  <InstanceId>
+4CW2_XDS_A_1303
+
+>  <ChemCompId>
+XDS
+
+>  <PdbId>
+4CW2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O5
+
+>  <Name>
+(5S)-5-(dioxidanyl)-9-methyl-7H-purine-2,6,8-trione
+
+>  <SystematicName>
+(5S)-5-(dioxidanyl)-9-methyl-7H-purine-2,6,8-trione
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H6 N4 O5
+
+>  <MolecularWeight>
+214.136
+
+>  <ModifiedDate>
+2014-10-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N4O5/c1-10-2-6(15-14,9-5(10)13)3(11)8-4(12)7-2/h14H,1H3,(H,9,13)(H,8,11,12)/t6-/m0/s1
+
+>  <InChIKey>
+JQXTWGOGXIASQD-LURJTMIESA-N
+
+>  <SMILES>
+CN1C2=NC(=O)NC(=O)[C@@]2(NC1=O)OO
+
+$$$$

@@ -1,0 +1,139 @@
+5J9O_6H8_A_404
+  RCSB PDB12061718233D
+Coordinates from PDB:5J9O:A:404 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   12.6140   19.0340   90.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2040   18.5540   92.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3850   18.3760   94.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5790   18.5410   92.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5920   19.7280   88.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7150   18.7360   91.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9820   19.0520   90.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5090   18.7890   95.2440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2370   18.1030   95.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2500   18.3920   93.3420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4820   18.7740   91.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3870   19.4600   88.6960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5850   19.4900   89.1110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7930   20.2360   87.0130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7180   20.4930   86.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14  5  1  0  0  0  0
+  5 12  1  0  0  0  0
+  5 13  2  0  0  0  0
+ 12  1  1  0  0  0  0
+ 13  7  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  6  1  0  0  0  0
+  7 11  1  0  0  0  0
+  6  2  2  0  0  0  0
+ 11  4  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2 10  1  0  0  0  0
+ 10  3  1  0  0  0  0
+  3  8  2  0  0  0  0
+  3  9  1  0  0  0  0
+A    1
+C2
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C1
+A    6
+C3
+A    7
+C8
+A    8
+N4
+A    9
+N3
+A   10
+N2
+A   11
+C7
+A   12
+N1
+A   13
+N5
+A   14
+N
+A   15
+C
+M  END
+>  <InstanceId>
+5J9O_6H8_A_404
+
+>  <ChemCompId>
+6H8
+
+>  <PdbId>
+5J9O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N6
+
+>  <Name>
+N-[2-(methylamino)-1H-benzimidazol-6-yl]guanidine
+
+>  <SystematicName>
+1-[2-(methylamino)-3~{H}-benzimidazol-5-yl]guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N6
+
+>  <MolecularWeight>
+204.232
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N6/c1-12-9-14-6-3-2-5(13-8(10)11)4-7(6)15-9/h2-4H,1H3,(H4,10,11,13)(H2,12,14,15)
+
+>  <InChIKey>
+VXGAAYFONQATFF-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\Nc1ccc2c(c1)[nH]c(n2)NC
+
+$$$$

@@ -1,0 +1,134 @@
+4M72_M72_A_402
+  RCSB PDB12061713413D
+Coordinates from PDB:4M72:A:402 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   -7.7030   13.0860  -21.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3310   14.1290  -21.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2280   15.1960  -21.1300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2550   14.1040  -23.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4970   14.4510  -24.2800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6370   14.8920  -23.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4810   13.9720  -22.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1590   13.7220  -20.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8980   12.8230  -19.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9810   12.1470  -20.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2980   12.3520  -21.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5400   13.2310  -22.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6460   16.2920  -22.5640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6060   17.1930  -23.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  6 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 12  7  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+O3
+A    2
+C
+A    3
+O
+A    4
+CA
+A    5
+OA
+A    6
+CB
+A    7
+CG
+A    8
+CD2
+A    9
+CE2
+A   10
+CZ
+A   11
+CE1
+A   12
+CD1
+A   13
+O1
+A   14
+C1
+M  END
+>  <InstanceId>
+4M72_M72_A_402
+
+>  <ChemCompId>
+M72
+
+>  <PdbId>
+4M72
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4
+
+>  <Name>
+(2R,3R)-2-hydroxy-3-methoxy-3-phenylpropanoic acid
+
+>  <SystematicName>
+(2R,3R)-3-methoxy-2-oxidanyl-3-phenyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O4
+
+>  <MolecularWeight>
+196.2
+
+>  <ModifiedDate>
+2014-06-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O4/c1-14-9(8(11)10(12)13)7-5-3-2-4-6-7/h2-6,8-9,11H,1H3,(H,12,13)/t8-,9-/m1/s1
+
+>  <InChIKey>
+GXFJZAOTDOMEEI-RKDXNWHRSA-N
+
+>  <SMILES>
+CO[C@H](c1ccccc1)[C@H](C(=O)O)O
+
+$$$$

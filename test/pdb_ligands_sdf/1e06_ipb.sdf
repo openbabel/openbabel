@@ -1,0 +1,122 @@
+1E06_IPB_A_600
+  RCSB PDB12061702193D
+Coordinates from PDB:1E06:A:600 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -0.3210   26.5360   12.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8400   25.3960   12.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1600   25.3250   13.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8440   26.4530   13.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2690   27.6790   13.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0940   27.7760   12.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0310   26.6190   11.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1540   26.4090   14.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6470   29.0110   12.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1090   25.7470   12.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9270   26.2790   10.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C8
+A    8
+C7
+A    9
+O
+A   10
+C9
+A   11
+C10
+M  END
+>  <InstanceId>
+1E06_IPB_A_600
+
+>  <ChemCompId>
+IPB
+
+>  <PdbId>
+1E06
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+5-METHYL-2-(1-METHYLETHYL)PHENOL
+
+>  <SystematicName>
+5-methyl-2-propan-2-yl-phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O
+
+>  <MolecularWeight>
+150.218
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O/c1-7(2)9-5-4-8(3)6-10(9)11/h4-7,11H,1-3H3
+
+>  <InChIKey>
+MGSRCZKZVOBKFT-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1)O)C(C)C
+
+$$$$

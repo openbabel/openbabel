@@ -1,0 +1,110 @@
+1E42_DTD_A_950
+  RCSB PDB12061702203D
+Coordinates from PDB:1E42:A:950 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+    3.6330  -10.1420   28.7700   S 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5570  -11.6010   29.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9430  -12.1420   30.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7660  -13.3080   30.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8780  -11.2210   30.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1090  -11.9220   31.1180   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2290   -9.9260   30.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7630   -8.9230   29.9330   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+S1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+S4
+M  END
+>  <InstanceId>
+1E42_DTD_A_950
+
+>  <ChemCompId>
+DTD
+
+>  <PdbId>
+1E42
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+950
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2 S2
+
+>  <Name>
+DITHIANE DIOL
+
+>  <SystematicName>
+(4R,5R)-1,2-dithiane-4,5-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O2 S2
+
+>  <MolecularWeight>
+152.235
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O2S2/c5-3-1-7-8-2-4(3)6/h3-6H,1-2H2/t3-,4-/m0/s1
+
+>  <InChIKey>
+YPGMOWHXEQDBBV-IMJSIDKUSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H](CSS1)O)O
+
+$$$$

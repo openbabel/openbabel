@@ -1,0 +1,121 @@
+2A85_HOC_A_462
+  RCSB PDB12061704583D
+Coordinates from PDB:2A85:A:462 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   69.2840   90.7570   21.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.0460   89.8980   21.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.4990   84.8650   23.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   70.6820   85.7030   21.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.7630   84.9730   22.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.4290   85.6740   22.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.3870   85.9500   21.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.1030   87.4580   21.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.3040   88.4240   21.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.7580   86.3600   21.9290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   70.5190   85.7020   20.1560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C8
+A    2
+C7
+A    3
+OH
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O1A
+A   11
+O1B
+M  END
+>  <InstanceId>
+2A85_HOC_A_462
+
+>  <ChemCompId>
+HOC
+
+>  <PdbId>
+2A85
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+462
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+(2S)-2-HYDROXYOCTANOIC ACID
+
+>  <SystematicName>
+(2S)-2-hydroxyoctanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 O3
+
+>  <MolecularWeight>
+160.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16O3/c1-2-3-4-5-6-7(9)8(10)11/h7,9H,2-6H2,1H3,(H,10,11)/t7-/m0/s1
+
+>  <InChIKey>
+JKRDADVRIYVCCY-ZETCQYMHSA-N
+
+>  <SMILES>
+CCCCCC[C@@H](C(=O)O)O
+
+$$$$

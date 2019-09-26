@@ -1,0 +1,114 @@
+5FXV_MN1_A_2347
+  RCSB PDB12061717463D
+Coordinates from PDB:5FXV:A:2347 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -14.4560    4.6820  -22.8520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9000    4.1900  -23.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6960    3.5300  -24.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0530    3.4160  -24.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9350    2.6670  -25.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5580    1.4620  -25.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0040    3.1660  -26.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6170    3.9450  -23.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7770    4.5940  -22.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C
+A    6
+O1
+A    7
+O2
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+5FXV_MN1_A_2347
+
+>  <ChemCompId>
+MN1
+
+>  <PdbId>
+5FXV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2347
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2
+
+>  <Name>
+4-CARBOXYPIPERIDINE
+
+>  <SystematicName>
+piperidine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 N O2
+
+>  <MolecularWeight>
+129.157
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11NO2/c8-6(9)5-1-3-7-4-2-5/h5,7H,1-4H2,(H,8,9)
+
+>  <InChIKey>
+SRJOCJYGOFTFLH-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CNCCC1C(=O)O
+
+$$$$

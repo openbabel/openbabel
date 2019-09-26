@@ -1,0 +1,127 @@
+3QYO_Q24_A_161
+  RCSB PDB12061710293D
+Coordinates from PDB:3QYO:A:161 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    1.9310   -5.2360  -10.9840   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1210   -5.4320  -11.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0440   -4.3660  -11.8750   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7920   -3.1180  -11.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4690   -1.3620  -10.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3400   -1.3580   -8.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2470   -2.4860   -8.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2980   -3.7920   -9.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6080   -2.7480  -10.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6370   -3.9190  -10.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3660   -6.5690  -12.1910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7190   -2.2610  -11.6460   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C4A
+A   10
+C8A
+A   11
+NA2
+A   12
+NA4
+M  END
+>  <InstanceId>
+3QYO_Q24_A_161
+
+>  <ChemCompId>
+Q24
+
+>  <PdbId>
+3QYO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+161
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4
+
+>  <Name>
+quinazoline-2,4-diamine
+
+>  <SystematicName>
+quinazoline-2,4-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N4
+
+>  <MolecularWeight>
+160.176
+
+>  <ModifiedDate>
+2012-01-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N4/c9-7-5-3-1-2-4-6(5)11-8(10)12-7/h1-4H,(H4,9,10,11,12)
+
+>  <InChIKey>
+XELRMPRLCPFTBH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(nc(n2)N)N
+
+$$$$

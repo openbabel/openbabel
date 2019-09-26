@@ -1,0 +1,121 @@
+1CB8_MFU_A_2004
+  RCSB PDB12061702093D
+Coordinates from PDB:1CB8:A:2004 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   37.6560    4.3270   37.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4320    4.6350   39.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0860    4.0690   39.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1390    2.5470   39.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4040    2.2240   38.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5210    0.7320   37.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4520    6.0740   39.4970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8930    4.3810   41.1170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1880    2.0180   40.4160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6440    2.8550   37.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6740    6.4340   40.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O5
+A   11
+CM
+M  END
+>  <InstanceId>
+1CB8_MFU_A_2004
+
+>  <ChemCompId>
+MFU
+
+>  <PdbId>
+1CB8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2004
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 O4
+
+>  <Name>
+ALPHA-L-METHYL-FUCOSE
+
+>  <SystematicName>
+(2R,3S,4R,5S,6S)-2-methoxy-6-methyl-oxane-3,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+L-SACCHARIDE
+
+>  <Formula>
+C7 H14 O5
+
+>  <MolecularWeight>
+178.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O5/c1-3-4(8)5(9)6(10)7(11-2)12-3/h3-10H,1-2H3/t3-,4+,5+,6-,7+/m0/s1
+
+>  <InChIKey>
+OHWCAVRRXKJCRB-CXNFULCWSA-N
+
+>  <SMILES>
+C[C@H]1[C@H]([C@H]([C@@H]([C@@H](O1)OC)O)O)O
+
+$$$$

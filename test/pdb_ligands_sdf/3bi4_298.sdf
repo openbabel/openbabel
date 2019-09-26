@@ -1,0 +1,133 @@
+3BI4_298_A_1001
+  RCSB PDB12061708013D
+Coordinates from PDB:3BI4:A:1001 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   18.7340   30.8420   16.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9100   29.5080   16.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6250   28.6590   17.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8130   27.3230   17.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3150   26.8190   15.9300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9030   26.4570   16.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3800   25.7400   14.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1930   24.4770   14.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6050   23.7090   13.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4000   22.5030   13.1190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3860   22.7960   12.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3220   21.8460   11.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3020   20.5320   12.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3310   20.0910   13.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+N10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+3BI4_298_A_1001
+
+>  <ChemCompId>
+298
+
+>  <PdbId>
+3BI4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+N-[(1E,2Z)-but-2-en-1-ylidene]-N'-[(2E)-but-2-en-1-ylidene]butane-1,4-diamine
+
+>  <SystematicName>
+(Z)-N-[4-[[(E)-but-2-enylidene]amino]butyl]but-2-en-1-imine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H20 N2
+
+>  <MolecularWeight>
+192.301
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H20N2/c1-3-5-9-13-11-7-8-12-14-10-6-4-2/h3-6,9-10H,7-8,11-12H2,1-2H3/b5-3-,6-4+,13-9+,14-10?
+
+>  <InChIKey>
+GWPFNFBITHRYML-AQVGAVBMSA-N
+
+>  <SMILES>
+C\C=C\C=NCCCC/N=C/C=C\C
+
+$$$$

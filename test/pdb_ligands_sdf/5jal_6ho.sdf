@@ -1,0 +1,135 @@
+5JAL_6HO_A_505
+  RCSB PDB12061718233D
+Coordinates from PDB:5JAL:A:505 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   16.2520    5.2770   -5.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8010    6.4910   -5.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9050    7.4400   -4.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3490    6.1910   -4.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4940    5.0980   -4.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7020    5.9570   -3.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7930    5.1660   -2.9160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0880    6.3710   -3.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0210    7.0730   -4.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3910    7.6200   -5.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9550    7.2320   -5.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4290    4.1990   -5.2220   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6380    7.5860   -5.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7860    6.6000   -4.3380   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  2 13  2  0  0  0  0
+  2  1  1  0  0  0  0
+ 13  3  1  0  0  0  0
+ 12  1  1  0  0  0  0
+  1  5  2  0  0  0  0
+  3  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+ 14  6  1  0  0  0  0
+ 14  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+O9
+A    8
+C11
+A    9
+C12
+A   10
+C13
+A   11
+C14
+A   12
+F1
+A   13
+C4
+A   14
+N10
+M  END
+>  <InstanceId>
+5JAL_6HO_A_505
+
+>  <ChemCompId>
+6HO
+
+>  <PdbId>
+5JAL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+505
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O F
+
+>  <Name>
+(2,5-dihydro-1H-pyrrol-1-yl)(3-fluorophenyl)methanone
+
+>  <SystematicName>
+2,5-dihydropyrrol-1-yl-(3-fluorophenyl)methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 F N O
+
+>  <MolecularWeight>
+191.202
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10FNO/c12-10-5-3-4-9(8-10)11(14)13-6-1-2-7-13/h1-5,8H,6-7H2
+
+>  <InChIKey>
+IGCBBGNMEVMXTB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)F)C(=O)N2CC=CC2
+
+$$$$

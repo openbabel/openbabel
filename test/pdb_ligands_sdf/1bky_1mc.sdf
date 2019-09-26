@@ -1,0 +1,114 @@
+1BKY_1MC_A_600
+  RCSB PDB12061702053D
+Coordinates from PDB:1BKY:A:600 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   18.4620   14.3930   19.9330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5980   13.0500   19.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7750   14.4510   21.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8510   15.1680   22.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5970   14.9970   20.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5310   16.3820   20.6740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4340   12.4620   19.0680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7940   12.3450   20.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9210   13.1190   21.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N3
+A    2
+C4
+A    3
+N1
+A    4
+CN1
+A    5
+C2
+A    6
+O2
+A    7
+N4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+1BKY_1MC_A_600
+
+>  <ChemCompId>
+1MC
+
+>  <PdbId>
+1BKY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 O
+
+>  <Name>
+1-METHYLCYTOSINE
+
+>  <SystematicName>
+4-amino-1-methyl-pyrimidin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N3 O
+
+>  <MolecularWeight>
+125.129
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7N3O/c1-8-3-2-4(6)7-5(8)9/h2-3H,1H3,(H2,6,7,9)
+
+>  <InChIKey>
+HWPZZUQOWRWFDB-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1C=CC(=NC1=O)N
+
+$$$$

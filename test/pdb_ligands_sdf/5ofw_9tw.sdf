@@ -1,0 +1,122 @@
+5OFW_9TW_B_401
+  RCSB PDB12061719183D
+Coordinates from PDB:5OFW:B:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -26.4130   14.6760    6.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9030   13.4240    6.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9260   13.2460    7.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5770   14.2420    8.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1130   15.5130    7.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0560   15.7260    6.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3730   12.1170    5.2210  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3840   12.0190    7.3490   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6800   17.0730    6.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3460   17.2590    5.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4510   18.0400    7.4940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  3  1  0  0  0  0
+  3  2  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6  1  2  0  0  0  0
+  9 10  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  7  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+CL1
+A    8
+F1
+A    9
+C7
+A   10
+O1
+A   11
+N1
+M  END
+>  <InstanceId>
+5OFW_9TW_B_401
+
+>  <ChemCompId>
+9TW
+
+>  <PdbId>
+5OFW
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O F Cl
+
+>  <Name>
+3-chloranyl-4-fluoranyl-benzamide
+
+>  <SystematicName>
+3-chloranyl-4-fluoranyl-benzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 Cl F N O
+
+>  <MolecularWeight>
+173.572
+
+>  <ModifiedDate>
+2017-08-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5ClFNO/c8-5-3-4(7(10)11)1-2-6(5)9/h1-3H,(H2,10,11)
+
+>  <InChIKey>
+AEYMQEMBMKCNEG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1C(=O)N)Cl)F
+
+$$$$

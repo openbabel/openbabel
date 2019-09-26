@@ -1,0 +1,122 @@
+2J75_NOY_A_1446
+  RCSB PDB12061706003D
+Coordinates from PDB:2J75:A:1446 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -1.6710   10.6170    6.8920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1700   10.4880    8.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4290   11.7620    8.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6620   12.0020    7.7220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1360   11.6520   10.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8990   11.2140   10.9700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7170   10.0580   10.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3230   10.2650    9.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2310    9.1000    8.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5860   12.9450   10.3860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5760    7.8160    8.9700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C3
+A    4
+O3
+A    5
+C2
+A    6
+N
+A    7
+C7
+A    8
+C5
+A    9
+C6
+A   10
+O2
+A   11
+O6
+M  END
+>  <InstanceId>
+2J75_NOY_A_1446
+
+>  <ChemCompId>
+NOY
+
+>  <PdbId>
+2J75
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1446
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+(2R,3S,4R,5R)-5-(HYDROXYMETHYL)PIPERIDINE-2,3,4-TRIOL
+
+>  <SystematicName>
+(2R,3S,4R,5R)-5-(hydroxymethyl)piperidine-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4
+
+>  <MolecularWeight>
+163.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H13NO4/c8-2-3-1-7-6(11)5(10)4(3)9/h3-11H,1-2H2/t3-,4-,5+,6-/m1/s1
+
+>  <InChIKey>
+BHOYFRIRWXBNHP-ARQDHWQXSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H](N1)O)O)O)CO
+
+$$$$

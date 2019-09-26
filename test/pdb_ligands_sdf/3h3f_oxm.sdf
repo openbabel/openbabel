@@ -1,0 +1,101 @@
+1A5Z_OXM_A_355
+  RCSB PDB12061701573D
+Coordinates from PDB:1A5Z:A:355 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   89.1380   32.8130   62.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.7740   32.3740   60.9260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8600   32.8150   62.0070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   89.9180   33.2740   63.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.5160   32.4360   63.9290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   90.0020   34.5070   63.4820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+O1
+A    4
+C2
+A    5
+O2
+A    6
+O3
+M  END
+>  <InstanceId>
+1A5Z_OXM_A_355
+
+>  <ChemCompId>
+OXM
+
+>  <PdbId>
+1A5Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+355
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O3
+
+>  <Name>
+OXAMIC ACID
+
+>  <SystematicName>
+2-amino-2-oxo-ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H3 N O3
+
+>  <MolecularWeight>
+89.05
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H3NO3/c3-1(4)2(5)6/h(H2,3,4)(H,5,6)
+
+>  <InChIKey>
+SOWBFZRMHSNYGE-UHFFFAOYSA-N
+
+>  <SMILES>
+C(=O)(C(=O)O)N
+
+$$$$

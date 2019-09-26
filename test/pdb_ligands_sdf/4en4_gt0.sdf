@@ -1,0 +1,130 @@
+4EN4_GT0_A_405
+  RCSB PDB12061712253D
+Coordinates from PDB:4EN4:A:405 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   28.7310    8.1240   39.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6260    8.8260   38.7490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5670    8.1510   37.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6380    6.7330   38.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7430    6.0070   38.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7760    6.7140   39.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8430    4.4610   38.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3720    4.0110   40.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7940    4.2420   40.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7890    5.9660   40.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9230    6.8900   41.2710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4980    8.9620   37.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5700    6.0480   37.2300   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  3  1  0  0  0  0
+ 13  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+  5  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  1  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C8
+A    2
+N1
+A    3
+C7
+A    4
+C4
+A    5
+C6
+A    6
+C2
+A    7
+C1
+A    8
+O3
+A    9
+C3
+A   10
+C5
+A   11
+O2
+A   12
+C9
+A   13
+O1
+M  END
+>  <InstanceId>
+4EN4_GT0_A_405
+
+>  <ChemCompId>
+GT0
+
+>  <PdbId>
+4EN4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+5-(hydroxymethyl)-4-(methoxymethyl)-2-methylpyridin-3-ol
+
+>  <SystematicName>
+5-(hydroxymethyl)-4-(methoxymethyl)-2-methyl-pyridin-3-ol
+
+>  <Synonyms>
+ginkgotoxin
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N O3
+
+>  <MolecularWeight>
+183.204
+
+>  <ModifiedDate>
+2012-04-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13NO3/c1-6-9(12)8(5-13-2)7(4-11)3-10-6/h3,11-12H,4-5H2,1-2H3
+
+>  <InChIKey>
+SVINQHQHARVZFF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)CO)COC)O
+
+$$$$

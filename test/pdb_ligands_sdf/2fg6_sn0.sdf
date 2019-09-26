@@ -1,0 +1,137 @@
+2FG6_SN0_X_345
+  RCSB PDB12061705333D
+Coordinates from PDB:2FG6:X:345 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   17.9340  -80.2170   -4.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0760  -81.4040   -4.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6540  -82.4290   -4.9800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8360  -81.2920   -4.4290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0520  -80.6740   -3.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5930  -81.3850   -1.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7860  -81.8840   -1.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1960  -79.0240   -3.6960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1770  -77.8830   -4.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8030  -77.7300   -5.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3240  -76.8150   -3.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5420  -75.4190   -4.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3140  -74.5850   -4.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6570  -74.7150   -3.0250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9890  -73.7790   -4.9840   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+OXT
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+N1
+A    9
+C1
+A   10
+O1
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+OD1
+A   15
+OD2
+M  END
+>  <InstanceId>
+2FG6_SN0_X_345
+
+>  <ChemCompId>
+SN0
+
+>  <PdbId>
+2FG6
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+345
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O5
+
+>  <Name>
+N-(3-CARBOXYPROPANOYL)-L-NORVALINE
+
+>  <SystematicName>
+(2S)-2-[(4-hydroxy-4-oxo-butanoyl)amino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H15 N O5
+
+>  <MolecularWeight>
+217.219
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15NO5/c1-2-3-6(9(14)15)10-7(11)4-5-8(12)13/h6H,2-5H2,1H3,(H,10,11)(H,12,13)(H,14,15)/t6-/m0/s1
+
+>  <InChIKey>
+HRAPDLBXHOBAKA-LURJTMIESA-N
+
+>  <SMILES>
+CCC[C@@H](C(=O)O)NC(=O)CCC(=O)O
+
+$$$$

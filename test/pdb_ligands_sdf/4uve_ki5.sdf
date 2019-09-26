@@ -1,0 +1,126 @@
+4UVE_KI5_A_1272
+  RCSB PDB12061715193D
+Coordinates from PDB:4UVE:A:1272 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   51.8500   53.2940    9.6970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2360   53.2370   11.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3350   54.1730   11.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3150   53.1900   12.7400   S 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5230   52.4250   11.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.4450   52.6930   10.4060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3620   52.0850    9.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3010   52.3800    8.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3230   51.2480   10.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4180   51.6400   12.3430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3280   51.0510   11.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3250   50.1540   12.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O
+A    2
+C6
+A    3
+C5
+A    4
+S
+A    5
+C4
+A    6
+N
+A    7
+C3
+A    8
+C7
+A    9
+C2
+A   10
+N1
+A   11
+C1
+A   12
+C
+M  END
+>  <InstanceId>
+4UVE_KI5_A_1272
+
+>  <ChemCompId>
+KI5
+
+>  <PdbId>
+4UVE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1272
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O S
+
+>  <Name>
+2-(4,6-DIMETHYLPYRIMIDIN-2-YL)SULFANYLETHANOL
+
+>  <SystematicName>
+2-(4,6-dimethylpyrimidin-2-yl)sulfanylethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 N2 O S
+
+>  <MolecularWeight>
+184.259
+
+>  <ModifiedDate>
+2015-09-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12N2OS/c1-6-5-7(2)10-8(9-6)12-4-3-11/h5,11H,3-4H2,1-2H3
+
+>  <InChIKey>
+DSRGZRHOYJEVPF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc(n1)SCCO)C
+
+$$$$

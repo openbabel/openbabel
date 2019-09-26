@@ -1,0 +1,133 @@
+1PVY_5RP_A_501
+  RCSB PDB12061703423D
+Coordinates from PDB:1PVY:A:501 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+    2.0490   -3.2740   15.0600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3200   -4.4060   14.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1920   -4.3500   14.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7280   -5.6850   14.0500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6290   -3.3890   13.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0350   -3.3880   12.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0500   -3.7090   11.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1740   -5.1110   11.5340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7500   -5.9240   10.5090   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5790   -5.3030    9.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2780   -7.4350   10.5590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1730   -5.8450   10.8760   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9340   -5.3650   13.9650   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8820   -2.0660   14.2980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9 12  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C5
+A    4
+O13
+A    5
+C6
+A    6
+O14
+A    7
+C7
+A    8
+O8
+A    9
+P9
+A   10
+O12
+A   11
+O11
+A   12
+O10
+A   13
+O4
+A   14
+O1
+M  END
+>  <InstanceId>
+1PVY_5RP_A_501
+
+>  <ChemCompId>
+5RP
+
+>  <PdbId>
+1PVY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P
+
+>  <Name>
+RIBULOSE-5-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3R)-2,3,5-trihydroxy-4-oxo-pentyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H11 O8 P
+
+>  <MolecularWeight>
+230.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11O8P/c6-1-3(7)5(9)4(8)2-13-14(10,11)12/h4-6,8-9H,1-2H2,(H2,10,11,12)/t4-,5+/m1/s1
+
+>  <InChIKey>
+FNZLKVNUWIIPSJ-UHNVWZDZSA-N
+
+>  <SMILES>
+C([C@H]([C@H](C(=O)CO)O)O)OP(=O)(O)O
+
+$$$$

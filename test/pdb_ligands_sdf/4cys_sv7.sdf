@@ -1,0 +1,118 @@
+4CXS_SV7_A_1531
+  RCSB PDB12061712073D
+Coordinates from PDB:4CXS:A:1531 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -14.6950  -14.6130   21.9850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2070  -15.6040   20.9370   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3610  -16.0870   21.6530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4720  -14.7460   19.8070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9240  -16.7960   20.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2210  -18.1580   20.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2440  -19.0990   19.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9610  -18.6740   19.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6650  -17.2910   19.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6390  -16.3510   20.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+OAA
+A    2
+PAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+M  END
+>  <InstanceId>
+4CXS_SV7_A_1531
+
+>  <ChemCompId>
+SV7
+
+>  <PdbId>
+4CXS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1531
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3 P
+
+>  <Name>
+phenylphosphonic acid
+
+>  <SystematicName>
+phenylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H7 O3 P
+
+>  <MolecularWeight>
+158.092
+
+>  <ModifiedDate>
+2015-04-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7O3P/c7-10(8,9)6-4-2-1-3-5-6/h1-5H,(H2,7,8,9)
+
+>  <InChIKey>
+QLZHNIAADXEJJP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)P(=O)(O)O
+
+$$$$

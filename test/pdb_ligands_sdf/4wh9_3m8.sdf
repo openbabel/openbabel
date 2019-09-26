@@ -1,0 +1,146 @@
+4WH9_3M8_A_601
+  RCSB PDB12061715583D
+Coordinates from PDB:4WH9:A:601 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   17.4910   -6.5850   -1.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4160   -5.6570   -1.8030   S 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7190   -5.8250   -1.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8970   -4.2620   -1.6760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4760   -6.0250   -3.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1430   -7.4140   -3.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9160   -8.1720   -5.1790   S 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2820   -8.6470   -4.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8960   -9.7670   -4.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5710  -10.1770   -4.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2750  -11.3320   -3.4070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4960   -9.5380   -4.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9010   -8.3630   -5.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9600   -7.7010   -6.0550   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2320   -7.9420   -5.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4990   -6.8380   -6.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7220   -5.9070   -6.8270   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 16  3  0  0  0  0
+ 16 15  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 13  2  0  0  0  0
+ 15  8  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 12 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  2  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAQ
+A    2
+SAN
+A    3
+OAO
+A    4
+OAP
+A    5
+CAM
+A    6
+CAL
+A    7
+SAK
+A    8
+CAB
+A    9
+CAC
+A   10
+CAD
+A   11
+OAI
+A   12
+CAE
+A   13
+CAF
+A   14
+FAH
+A   15
+CAA
+A   16
+CAG
+A   17
+NAJ
+M  END
+>  <InstanceId>
+4WH9_3M8_A_601
+
+>  <ChemCompId>
+3M8
+
+>  <PdbId>
+4WH9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 S2 F
+
+>  <Name>
+2-[(2-cyano-3-fluoro-5-hydroxyphenyl)sulfanyl]ethanesulfonic acid
+
+>  <SystematicName>
+2-(2-cyano-3-fluoranyl-5-oxidanyl-phenyl)sulfanylethanesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 F N O4 S2
+
+>  <MolecularWeight>
+277.293
+
+>  <ModifiedDate>
+2014-12-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8FNO4S2/c10-8-3-6(12)4-9(7(8)5-11)16-1-2-17(13,14)15/h3-4,12H,1-2H2,(H,13,14,15)
+
+>  <InChIKey>
+ZFJOGPQOJAOGAK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1F)C#N)SCCS(=O)(=O)O)O
+
+$$$$

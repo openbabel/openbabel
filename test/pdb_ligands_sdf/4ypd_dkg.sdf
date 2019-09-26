@@ -1,0 +1,106 @@
+4YPD_DKG_A_303
+  RCSB PDB12061716283D
+Coordinates from PDB:4YPD:A:303 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   23.9870    5.1760    8.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0020    5.1150    9.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9340    4.1560   10.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0390    6.0400    9.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9700    6.0210   10.6090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8930    5.0590   11.6190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9070    4.1510   11.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  3  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+C7
+A    2
+C4
+A    3
+C5
+A    4
+C3
+A    5
+N2
+A    6
+N1
+A    7
+C6
+M  END
+>  <InstanceId>
+4YPD_DKG_A_303
+
+>  <ChemCompId>
+DKG
+
+>  <PdbId>
+4YPD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2
+
+>  <Name>
+4-methylpyridazine
+
+>  <SystematicName>
+4-methylpyridazine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 N2
+
+>  <MolecularWeight>
+94.115
+
+>  <ModifiedDate>
+2015-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2/c1-5-2-3-6-7-4-5/h2-4H,1H3
+
+>  <InChIKey>
+AIKUBOPKWKZULG-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccnnc1
+
+$$$$

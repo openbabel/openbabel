@@ -1,0 +1,101 @@
+3P1C_ALY_A_1
+  RCSB PDB12061710113D
+Coordinates from PDB:3P1C:A:1 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   33.8680   -4.8380   -0.0560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9230   -4.1590    0.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8930   -4.7830    1.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7130   -2.8860   -0.0060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6240   -2.1550   -0.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4670   -0.6170   -0.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+OH
+A    2
+CH
+A    3
+CH3
+A    4
+NZ
+A    5
+CE
+A    6
+CD
+M  END
+>  <InstanceId>
+3P1C_ALY_A_1
+
+>  <ChemCompId>
+ALY
+
+>  <PdbId>
+3P1C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+7
+
+>  <ObservedFormula>
+C4 N O
+
+>  <Name>
+N(6)-ACETYLLYSINE
+
+>  <SystematicName>
+(2S)-6-acetamido-2-amino-hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C8 H16 N2 O3
+
+>  <MolecularWeight>
+188.224
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O3/c1-6(11)10-5-3-2-4-7(9)8(12)13/h7H,2-5,9H2,1H3,(H,10,11)(H,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+DTERQYGMUDWYAZ-ZETCQYMHSA-N
+
+>  <SMILES>
+CC(=O)NCCCC[C@@H](C(=O)O)N
+
+$$$$

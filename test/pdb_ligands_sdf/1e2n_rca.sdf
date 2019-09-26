@@ -1,0 +1,163 @@
+1E2N_RCA_A_500
+  RCSB PDB12061702203D
+Coordinates from PDB:1E2N:A:500 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   42.9340   35.0230    1.9530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2780   35.5490    1.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3400   36.6850    2.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3690   35.1850    0.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0990   33.3610   -0.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2960   34.1070   -0.1380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0040   34.8270    1.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.9640   33.7310    0.4490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0790   32.4270   -1.1030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0940   35.8380    1.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3170   32.9590    1.7190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7240   33.6120   -0.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.1550   34.8870    2.2220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4570   33.7720    1.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7100   36.7520    0.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6600   38.0720    1.1320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8960   34.9790    1.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6960   33.5570    0.2050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4240   34.1590    0.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7090   35.8840    0.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5080   33.9950    2.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  7  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 20  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 10 15  1  0  0  0  0
+ 10 17  1  0  0  0  0
+ 11 14  2  0  0  0  0
+ 12 19  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 18  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 17 20  1  0  0  0  0
+ 17 21  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+O2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C1
+A    6
+N1
+A    7
+C2
+A    8
+N2
+A    9
+O1
+A   10
+C11
+A   11
+O4
+A   12
+O3
+A   13
+N4
+A   14
+C10
+A   15
+C12
+A   16
+O5
+A   17
+C7
+A   18
+N3
+A   19
+C9
+A   20
+C6
+A   21
+C8
+M  END
+>  <InstanceId>
+1E2N_RCA_A_500
+
+>  <ChemCompId>
+RCA
+
+>  <PdbId>
+1E2N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N4 O5
+
+>  <Name>
+6-{[4-(HYDROXYMETHYL)-5-METHYL-2,6-DIOXOHEXAHYDROPYRIMIDIN-5-YL]METHYL}-5-METHYLPYRIMIDINE-2,4(1H,3H)-DIONE
+
+>  <SystematicName>
+6-[[(4R,5R)-4-(hydroxymethyl)-5-methyl-2,6-dioxo-1,3-diazinan-5-yl]methyl]-5-methyl-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+HYDROXYMETHYL-HYDROTHYMYL-THYMINE; 5-[THYMIN-6-YL]METHYL-6-HYDRO-6-HYDROXYMETHYL-THYMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H16 N4 O5
+
+>  <MolecularWeight>
+296.279
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H16N4O5/c1-5-6(13-10(20)15-8(5)18)3-12(2)7(4-17)14-11(21)16-9(12)19/h7,17H,3-4H2,1-2H3,(H2,13,15,18,20)(H2,14,16,19,21)/t7-,12+/m0/s1
+
+>  <InChIKey>
+KBBKHMIEEMSXSM-JVXZTZIISA-N
+
+>  <SMILES>
+CC1=C(NC(=O)NC1=O)C[C@@]2([C@@H](NC(=O)NC2=O)CO)C
+
+$$$$

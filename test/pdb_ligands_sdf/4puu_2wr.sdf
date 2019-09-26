@@ -1,0 +1,138 @@
+4PUU_2WR_A_402
+  RCSB PDB12061714183D
+Coordinates from PDB:4PUU:A:402 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   15.8790   -9.3490   40.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8880   -9.6900   39.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6480   -8.8620   38.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5940   -7.5180   38.4620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2440   -9.3940   37.4270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1460  -10.7860   38.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4090  -11.5480   39.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4130  -11.2050   41.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7110  -11.9320   42.0270   F 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1470  -10.1090   41.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6590   -8.2700   41.1180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2130   -7.4990   42.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0370   -6.6880   41.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3780   -6.1600   42.8250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7400   -6.5270   40.6300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6  2  2  0  0  0  0
+  6  7  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 15 13  2  0  0  0  0
+  1 11  1  0  0  0  0
+  1 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N4
+A    5
+O7
+A    6
+C8
+A    7
+C10
+A    8
+C12
+A    9
+F13
+A   10
+C14
+A   11
+O16
+A   12
+C17
+A   13
+C18
+A   14
+O19
+A   15
+O21
+M  END
+>  <InstanceId>
+4PUU_2WR_A_402
+
+>  <ChemCompId>
+2WR
+
+>  <PdbId>
+4PUU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 F
+
+>  <Name>
+(2-carbamoyl-5-fluorophenoxy)acetic acid
+
+>  <SystematicName>
+2-(2-aminocarbonyl-5-fluoranyl-phenoxy)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 F N O4
+
+>  <MolecularWeight>
+213.163
+
+>  <ModifiedDate>
+2015-04-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8FNO4/c10-5-1-2-6(9(11)14)7(3-5)15-4-8(12)13/h1-3H,4H2,(H2,11,14)(H,12,13)
+
+>  <InChIKey>
+PCNZVPHJJYWUKQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1F)OCC(=O)O)C(=O)N
+
+$$$$

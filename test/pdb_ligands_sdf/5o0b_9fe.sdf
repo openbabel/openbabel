@@ -1,0 +1,131 @@
+5O0B_9FE_A_201
+  RCSB PDB12061719153D
+Coordinates from PDB:5O0B:A:201 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    9.5320   31.7230  -16.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0000   32.1970  -15.5350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1850   33.1510  -15.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5350   34.3470  -15.5020   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7650   32.8410  -16.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7110   33.6510  -15.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4080   33.3260  -16.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0940   33.8790  -15.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6660   35.4340  -14.7990  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2400   33.1070  -16.4760   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8500   32.1290  -17.0800   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1760   32.2020  -16.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2370   31.4010  -17.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7 12  2  0  0  0  0
+  6  5  2  0  0  0  0
+  2  3  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  1  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 13  1  2  0  0  0  0
+A    1
+C13
+A    2
+O01
+A    3
+C02
+A    4
+O03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+BR
+A   10
+N09
+A   11
+N10
+A   12
+C11
+A   13
+C12
+M  END
+>  <InstanceId>
+5O0B_9FE_A_201
+
+>  <ChemCompId>
+9FE
+
+>  <PdbId>
+5O0B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 Br
+
+>  <Name>
+3-bromanyl-1~{H}-indazole-5-carboxylic acid
+
+>  <SystematicName>
+3-bromanyl-1~{H}-indazole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H5 Br N2 O2
+
+>  <MolecularWeight>
+241.041
+
+>  <ModifiedDate>
+2017-06-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H5BrN2O2/c9-7-5-3-4(8(12)13)1-2-6(5)10-11-7/h1-3H,(H,10,11)(H,12,13)
+
+>  <InChIKey>
+RWQMEUDBXGKAER-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1C(=O)O)c(n[nH]2)Br
+
+$$$$

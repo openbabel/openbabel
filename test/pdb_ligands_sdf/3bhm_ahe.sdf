@@ -1,0 +1,165 @@
+1MC5_AHE_A_404
+  RCSB PDB12061703163D
+Coordinates from PDB:1MC5:A:404 Model:1 without hydrogens
+ 22 21  0  0  0  0            999 V2000
+   48.7380   22.8250    0.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0100   22.3740    1.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.3820   22.9100    2.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4880   22.0670    1.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.8440   22.5700    1.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0890   22.6790    2.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7800   22.9120    0.8770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.1430   23.3180    1.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.1680   22.7040    0.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.1580   20.8960    0.4430   S 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5760   20.4820   -0.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.1820   19.4930   -1.5420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.2130   24.8330    1.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.8420   25.4180    0.3800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.5430   25.5260    2.2040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3390   26.9820    2.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.9880   27.2780    1.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2530   26.3690    1.1650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6050   28.5520    1.3430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9430   22.9080    2.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3180   23.9040    2.2360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6860   22.2850    3.6970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 20  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  2  0  0  0  0
+ 20 21  1  0  0  0  0
+ 20 22  2  0  0  0  0
+A    1
+N1
+A    2
+CA1
+A    3
+CB1
+A    4
+CG1
+A    5
+CD1
+A    6
+OE1
+A    7
+N2
+A    8
+CA2
+A    9
+CB2
+A   10
+SG2
+A   11
+CD2
+A   12
+OE2
+A   13
+C2
+A   14
+O2
+A   15
+N3
+A   16
+CA3
+A   17
+C3
+A   18
+O31
+A   19
+O32
+A   20
+C1
+A   21
+O11
+A   22
+O12
+M  END
+>  <InstanceId>
+1MC5_AHE_A_404
+
+>  <ChemCompId>
+AHE
+
+>  <PdbId>
+1MC5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O7 S
+
+>  <Name>
+2-AMINO-4-[1-CARBOXYMETHYL-CARBAMOYL)-2-HYDROXYMETHYLSULFANYL-ETHYLCARBAMOYL]-BUTYRIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-5-[[(2R)-1-(carboxymethylamino)-3-(hydroxymethylsulfanyl)-1-oxo-propan-2-yl]amino]-5-oxo-pentanoic acid
+
+>  <Synonyms>
+S-HYDROXYMETHYL GLUTATHIONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H19 N3 O7 S
+
+>  <MolecularWeight>
+337.349
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H19N3O7S/c12-6(11(20)21)1-2-8(16)14-7(4-22-5-15)10(19)13-3-9(17)18/h6-7,15H,1-5,12H2,(H,13,19)(H,14,16)(H,17,18)(H,20,21)/t6-,7-/m0/s1
+
+>  <InChIKey>
+PIUSLWSYOYFRFR-BQBZGAKWSA-N
+
+>  <SMILES>
+C(CC(=O)N[C@@H](CSCO)C(=O)NCC(=O)O)[C@@H](C(=O)O)N
+
+$$$$

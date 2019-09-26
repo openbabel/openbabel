@@ -1,0 +1,154 @@
+2F12_HTM_A_1001
+  RCSB PDB12061705303D
+Coordinates from PDB:2F12:A:1001 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+    8.8730   14.5520   24.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5910   13.5930   24.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0050   13.7770   26.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8210   12.7010   26.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2080   13.1420   28.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1740   14.1010   28.7980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0670   15.3450   27.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8750   17.6170   27.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7960   18.5950   27.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4690   18.3180   27.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0450   14.2400   31.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7460   14.7010   32.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6480   14.4540   30.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8920   12.5180   24.0220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3410   11.9360   28.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6280   14.9190   26.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0220   16.3650   28.3620   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4330   19.1220   27.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8170   13.6220   31.4550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3 16  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 15  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7 16  1  0  0  0  0
+  7 17  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 17  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 18  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 19  2  0  0  0  0
+A    1
+O1A
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+N5
+A   14
+O1B
+A   15
+O4
+A   16
+O6
+A   17
+O7
+A   18
+O9
+A   19
+O10
+M  END
+>  <InstanceId>
+2F12_HTM_A_1001
+
+>  <ChemCompId>
+HTM
+
+>  <PdbId>
+2F12
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O7
+
+>  <Name>
+6-(3-HYDROXYPROPOXY)-5-ACETAMIDO-5,6-DIHYDRO-4-HYDROXY-4H-PYRAN-2-CARBOXYLIC ACID
+
+>  <SystematicName>
+(4S,5R,6R)-5-acetamido-4-hydroxy-6-(3-hydroxypropoxy)-5,6-dihydro-4H-pyran-2-carboxylic acid
+
+>  <Synonyms>
+3-HYDROXYPROPYL ETHER MIMETIC
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 N O7
+
+>  <MolecularWeight>
+275.255
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17NO7/c1-6(14)12-9-7(15)5-8(10(16)17)19-11(9)18-4-2-3-13/h5,7,9,11,13,15H,2-4H2,1H3,(H,12,14)(H,16,17)/t7-,9+,11+/m0/s1
+
+>  <InChIKey>
+MLEYNFMNPJIWGP-JVUFJMBOSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H](C=C(O[C@H]1OCCCO)C(=O)O)O
+
+$$$$

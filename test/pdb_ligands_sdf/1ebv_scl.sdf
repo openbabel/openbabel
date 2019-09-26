@@ -1,0 +1,134 @@
+1EBV_SCL_A_700
+  RCSB PDB12061702223D
+Coordinates from PDB:1EBV:A:700 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   25.8300   34.3910  199.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9260   33.8560  198.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8310   34.3930  196.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6370   35.4690  196.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5350   36.0170  197.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6500   35.4950  198.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8720   33.7700  200.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8610   31.5320  202.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7490   30.9490  203.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0380   33.2350  201.0470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1030   32.7950  198.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8420   33.7350  201.3190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9850   32.6410  202.3550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5680   31.1450  201.6160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7 10  1  0  0  0  0
+  7 12  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  8 14  2  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+N1
+A   11
+O1
+A   12
+O2
+A   13
+O3
+A   14
+O4
+M  END
+>  <InstanceId>
+1EBV_SCL_A_700
+
+>  <ChemCompId>
+SCL
+
+>  <PdbId>
+1EBV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4
+
+>  <Name>
+ACETIC ACID SALICYLOYL-AMINO-ESTER
+
+>  <SystematicName>
+[(2-hydroxyphenyl)carbonylamino] ethanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O4
+
+>  <MolecularWeight>
+195.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO4/c1-6(11)14-10-9(13)7-4-2-3-5-8(7)12/h2-5,12H,1H3,(H,10,13)
+
+>  <InChIKey>
+PCFWLDHLJWUGSU-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)ONC(=O)c1ccccc1O
+
+$$$$

@@ -1,0 +1,144 @@
+4G6N_EK0_A_401
+  RCSB PDB12061712393D
+Coordinates from PDB:4G6N:A:401 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   24.1910    9.2000   11.2820  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5900    7.9050   12.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2820    7.4870   12.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8020    6.4760   12.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6200    5.8860   13.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9340    6.3280   14.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4250    7.3330   13.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1060    4.8040   14.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8480    4.7180   15.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6890    5.6710   15.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7330    5.2500   16.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4230    3.7620   16.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6800    2.9160   16.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8220    3.4680   16.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0360    2.8610   15.7540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8070    3.6860   14.9890   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  8 16  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 16 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CL
+A    2
+C1
+A    3
+C6
+A    4
+C5
+A    5
+C4
+A    6
+C3
+A    7
+C2
+A    8
+C7
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C8
+A   15
+N2
+A   16
+N1
+M  END
+>  <InstanceId>
+4G6N_EK0_A_401
+
+>  <ChemCompId>
+EK0
+
+>  <PdbId>
+4G6N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 Cl
+
+>  <Name>
+3-(4-chlorophenyl)-4,5,6,7-tetrahydro-1H-indazole
+
+>  <SystematicName>
+3-(4-chlorophenyl)-4,5,6,7-tetrahydro-1H-indazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H13 Cl N2
+
+>  <MolecularWeight>
+232.709
+
+>  <ModifiedDate>
+2012-09-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13ClN2/c14-10-7-5-9(6-8-10)13-11-3-1-2-4-12(11)15-16-13/h5-8H,1-4H2,(H,15,16)
+
+>  <InChIKey>
+KVEOBXMMMLVLKY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2c3c([nH]n2)CCCC3)Cl
+
+$$$$

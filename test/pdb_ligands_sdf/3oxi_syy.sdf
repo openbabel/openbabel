@@ -1,0 +1,151 @@
+3OXI_SYY_A_1
+  RCSB PDB12061710113D
+Coordinates from PDB:3OXI:A:1 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+    1.8160   -1.6330  -29.3460   S 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0620   -2.8060  -31.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9070   -1.3110  -32.0950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3960    0.5210  -30.0000   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1590   -1.7480  -31.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2060    1.0350  -28.5700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6190    1.2370  -34.2240   S 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4330   -0.9710  -30.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6620   -2.9490  -33.6310   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0100   -2.8640  -30.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3010    0.2010  -29.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5830    2.2240  -28.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2560   -1.9560  -33.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4540   -1.4610  -33.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0560   -0.2110  -33.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9130    0.0820  -32.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1860    1.4540  -32.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5620    2.2280  -33.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3 13  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  8  2  0  0  0  0
+  6 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7 15  1  0  0  0  0
+  7 18  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  2  0  0  0  0
+A    1
+S
+A    2
+C1
+A    3
+N1
+A    4
+O1
+A    5
+C2
+A    6
+O2
+A    7
+S2
+A    8
+C3
+A    9
+O3
+A   10
+C5
+A   11
+C6
+A   12
+C9
+A   13
+C11
+A   14
+C12
+A   15
+C14
+A   16
+C15
+A   17
+C16
+A   18
+C17
+M  END
+>  <InstanceId>
+3OXI_SYY_A_1
+
+>  <ChemCompId>
+SYY
+
+>  <PdbId>
+3OXI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O3 S2
+
+>  <Name>
+methyl 3-[(thiophen-2-ylacetyl)amino]thiophene-2-carboxylate
+
+>  <SystematicName>
+methyl 3-(2-thiophen-2-ylethanoylamino)thiophene-2-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H11 N O3 S2
+
+>  <MolecularWeight>
+281.351
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11NO3S2/c1-16-12(15)11-9(4-6-18-11)13-10(14)7-8-3-2-5-17-8/h2-6H,7H2,1H3,(H,13,14)
+
+>  <InChIKey>
+CXOCENPNQSXLGZ-UHFFFAOYSA-N
+
+>  <SMILES>
+COC(=O)c1c(ccs1)NC(=O)Cc2cccs2
+
+$$$$

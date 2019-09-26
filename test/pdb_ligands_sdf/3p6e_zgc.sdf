@@ -1,0 +1,130 @@
+3P6E_ZGC_A_133
+  RCSB PDB12061710133D
+Coordinates from PDB:3P6E:A:133 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    3.9840    6.3150   22.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3190    6.8370   21.5900   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2330    7.0540   20.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8440    4.9730   15.2850   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9650    6.6490   19.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5470    7.1750   15.2520   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9190    6.8240   18.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4540    7.6440   20.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4250    7.7860   19.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1610    7.3980   18.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2370    7.5950   17.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3880    6.3450   16.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1770    6.1460   15.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  3  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4 13  1  0  0  0  0
+  7  5  1  0  0  0  0
+  6 13  2  0  0  0  0
+  7 10  2  0  0  0  0
+  9  8  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+C10
+M  END
+>  <InstanceId>
+3P6E_ZGC_A_133
+
+>  <ChemCompId>
+ZGC
+
+>  <PdbId>
+3P6E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+133
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O3
+
+>  <Name>
+3-(4-methoxyphenyl)propanoic acid
+
+>  <SystematicName>
+3-(4-methoxyphenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O3
+
+>  <MolecularWeight>
+180.2
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O3/c1-13-9-5-2-8(3-6-9)4-7-10(11)12/h2-3,5-6H,4,7H2,1H3,(H,11,12)
+
+>  <InChIKey>
+FIUFLISGGHNPSM-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)CCC(=O)O
+
+$$$$

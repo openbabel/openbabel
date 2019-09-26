@@ -1,0 +1,134 @@
+2E4V_2CG_A_1001
+  RCSB PDB12061705243D
+Coordinates from PDB:2E4V:A:1001 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   19.5540   -5.3550   50.7490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5400   -4.2290   50.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3920   -3.5490   49.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8860   -2.4130   49.1460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7920   -4.1480   48.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9490   -4.7940   50.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2260   -5.1070   52.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2330   -6.2120   52.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9640   -7.2300   53.0210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3320   -6.1070   51.7680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8580   -3.9000   51.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1740   -2.6580   52.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5360   -1.9060   51.3780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2930   -2.3730   53.3610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+ 14 12  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11  6  1  0  0  0  0
+  6  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OXT
+A    6
+CB
+A    7
+CG1
+A    8
+CD1
+A    9
+O11
+A   10
+O12
+A   11
+CG2
+A   12
+CD2
+A   13
+O21
+A   14
+O22
+M  END
+>  <InstanceId>
+2E4V_2CG_A_1001
+
+>  <ChemCompId>
+2CG
+
+>  <PdbId>
+2E4V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O6
+
+>  <Name>
+(1R,2R)-3-[(S)-amino(carboxy)methyl]cyclopropane-1,2-dicarboxylic acid
+
+>  <SystematicName>
+(1R,2R)-3-[(1S)-1-amino-2-hydroxy-2-oxo-ethyl]cyclopropane-1,2-dicarboxylic acid
+
+>  <Synonyms>
+(2S,2'R,3'R)-2-(2',3'-dicarboxycyclopropyl)glycine, DCG IV
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N O6
+
+>  <MolecularWeight>
+203.149
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H9NO6/c8-4(7(13)14)1-2(5(9)10)3(1)6(11)12/h1-4H,8H2,(H,9,10)(H,11,12)(H,13,14)/t2-,3-,4+/m1/s1
+
+>  <InChIKey>
+MATPZHBYOVDBLI-JJYYJPOSSA-N
+
+>  <SMILES>
+C1([C@H]([C@@H]1C(=O)O)C(=O)O)[C@@H](C(=O)O)N
+
+$$$$

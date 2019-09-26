@@ -1,0 +1,133 @@
+3HCH_RSM_A_1000
+  RCSB PDB12061708523D
+Coordinates from PDB:3HCH:A:1000 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   39.5330   16.4520   79.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0480   15.9080   80.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8750   14.7490   80.7570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7450   16.7220   81.2760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2130   16.2390   82.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7460   16.1020   82.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3280   14.8600   82.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2500   13.3880   82.8330   S 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7460   13.4840   84.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3080   12.3930   82.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5820   17.1170   83.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9730   17.1410   84.8290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5310   17.8310   83.2250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6600   18.7770   83.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C2
+A    2
+C
+A    3
+O
+A    4
+N
+A    5
+CA
+A    6
+CB
+A    7
+CG
+A    8
+SD
+A    9
+OD1
+A   10
+CE
+A   11
+C3
+A   12
+O3
+A   13
+N2
+A   14
+C1
+M  END
+>  <InstanceId>
+3HCH_RSM_A_1000
+
+>  <ChemCompId>
+RSM
+
+>  <PdbId>
+3HCH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O3 S
+
+>  <Name>
+(2S)-2-(acetylamino)-N-methyl-4-[(R)-methylsulfinyl]butanamide
+
+>  <SystematicName>
+(2S)-2-acetamido-N-methyl-4-[(R)-methylsulfinyl]butanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N2 O3 S
+
+>  <MolecularWeight>
+220.289
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O3S/c1-6(11)10-7(8(12)9-2)4-5-14(3)13/h7H,4-5H2,1-3H3,(H,9,12)(H,10,11)/t7-,14+/m0/s1
+
+>  <InChIKey>
+HOKSMYPIXLKSMM-JKYUHCHBSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CC[S@](=O)C)C(=O)NC
+
+$$$$

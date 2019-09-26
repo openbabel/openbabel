@@ -1,0 +1,163 @@
+2ZNT_DYH_A_1
+  RCSB PDB12061707453D
+Coordinates from PDB:2ZNT:A:1 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   20.1240    0.8320   14.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4030    1.4660   13.9610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5790    1.0120   14.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8100    1.8490   14.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9270    1.8970   12.9140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1210    1.2810   14.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2840   -0.0710   14.4180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2680   -1.0020   14.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3330   -2.2850   14.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8470   -0.5090   14.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6080   -0.8350   13.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5340   -1.8870   12.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5020   -1.4140   11.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5490   -0.1820   11.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1600   -2.3010   11.0940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6620   -3.0660   12.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9450   -2.8420   10.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5120   -4.2310   10.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3060   -4.4090   10.1780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4090   -5.0950   10.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7470   -2.0030   11.1830   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 21  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 18 20  1  0  0  0  0
+A    1
+CAA
+A    2
+NH
+A    3
+CAH
+A    4
+CAG
+A    5
+OAC
+A    6
+CAP
+A    7
+OAQ
+A    8
+CAR
+A    9
+CAS
+A   10
+CAI
+A   11
+OAJ
+A   12
+CAK
+A   13
+CAE
+A   14
+OAB
+A   15
+OAF
+A   16
+CB
+A   17
+CA
+A   18
+C
+A   19
+OXT
+A   20
+O
+A   21
+N
+M  END
+>  <InstanceId>
+2ZNT_DYH_A_1
+
+>  <ChemCompId>
+DYH
+
+>  <PdbId>
+2ZNT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O7
+
+>  <Name>
+(2R,3aR,6S,7R,7aR)-2-[(2S)-2-amino-2-carboxyethyl]-6-hydroxy-7-(methylamino)hexahydro-2H-furo[3,2-b]pyran-2-carboxylic acid
+
+>  <SystematicName>
+(2R,3aR,6S,7R,7aR)-2-[(2S)-2-amino-3-hydroxy-3-oxo-propyl]-6-hydroxy-7-methylamino-3,3a,5,6,7,7a-hexahydrofuro[4,5-b]pyran-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H20 N2 O7
+
+>  <MolecularWeight>
+304.296
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H20N2O7/c1-14-8-6(15)4-20-7-3-12(11(18)19,21-9(7)8)2-5(13)10(16)17/h5-9,14-15H,2-4,13H2,1H3,(H,16,17)(H,18,19)/t5-,6+,7+,8+,9-,12+/m0/s1
+
+>  <InChIKey>
+YUSZFKPLFIQTGF-FDNSHYBFSA-N
+
+>  <SMILES>
+CN[C@@H]1[C@@H](CO[C@H]2[C@@H]1O[C@@](C2)(C[C@@H](C(=O)O)N)C(=O)O)O
+
+$$$$

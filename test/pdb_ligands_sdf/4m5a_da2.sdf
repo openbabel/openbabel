@@ -1,0 +1,133 @@
+4A4G_DA2_A_1148
+  RCSB PDB12061711363D
+Coordinates from PDB:4A4G:A:1148 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+    9.7290   -1.5210    1.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0350   -3.6920    0.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8110   -8.0090   -0.9830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3100   -7.4700    0.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9870   -5.9690    0.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3010   -5.3420    1.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9780   -3.8640    1.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5680   -3.6490    1.4650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8380   -2.6250    1.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3350   -1.6400    2.5440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5860   -2.6100    1.5060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6600   -8.2320    1.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3620   -8.8570    2.1840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4300   -8.2790    1.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 11  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N
+A    4
+CA
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+NE
+A    9
+CZ
+A   10
+NH2
+A   11
+NH1
+A   12
+C
+A   13
+O
+A   14
+OXT
+M  END
+>  <InstanceId>
+4A4G_DA2_A_1148
+
+>  <ChemCompId>
+DA2
+
+>  <PdbId>
+4A4G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1148
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O2
+
+>  <Name>
+NG,NG-DIMETHYL-L-ARGININE
+
+>  <SystematicName>
+(2S)-2-amino-5-[(N,N-dimethylcarbamimidoyl)amino]pentanoic acid
+
+>  <Synonyms>
+ADMA
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C8 H18 N4 O2
+
+>  <MolecularWeight>
+202.254
+
+>  <ModifiedDate>
+2013-10-29
+
+>  <Parent>
+ARG
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18N4O2/c1-12(2)8(10)11-5-3-4-6(9)7(13)14/h6H,3-5,9H2,1-2H3,(H2,10,11)(H,13,14)/t6-/m0/s1
+
+>  <InChIKey>
+YDGMGEXADBMOMJ-LURJTMIESA-N
+
+>  <SMILES>
+[H]/N=C(/NCCC[C@@H](C(=O)O)N)\N(C)C
+
+$$$$

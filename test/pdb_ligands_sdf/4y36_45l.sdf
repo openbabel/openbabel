@@ -1,0 +1,122 @@
+4Y36_45L_A_406
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y36:A:406 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    1.0880   10.7990   11.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2350    9.4260   11.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9800   11.6730    8.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2630    5.2800    9.0720   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1170    7.2830   10.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0110    6.6560   11.4390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3430    6.6820    9.2180   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9560    8.7680   10.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6590   11.5180   10.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3740   10.8850    9.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5170    9.5060    9.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3 10  1  0  0  0  0
+  4  7  1  0  0  0  0
+  7  5  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  9  1  2  0  0  0  0
+  8  5  1  0  0  0  0
+  8  2  2  0  0  0  0
+  5  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+O
+A    7
+N
+A    8
+C
+A    9
+C3
+A   10
+C2
+A   11
+C1
+M  END
+>  <InstanceId>
+4Y36_45L_A_406
+
+>  <ChemCompId>
+45L
+
+>  <PdbId>
+4Y36
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+406
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+3-methylbenzohydrazide
+
+>  <SystematicName>
+3-methylbenzohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N2 O
+
+>  <MolecularWeight>
+150.178
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N2O/c1-6-3-2-4-7(5-6)8(11)10-9/h2-5H,9H2,1H3,(H,10,11)
+
+>  <InChIKey>
+XFNNAMBYJSQXKF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1)C(=O)NN
+
+$$$$

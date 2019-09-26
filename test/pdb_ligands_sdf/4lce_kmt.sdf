@@ -1,0 +1,113 @@
+1V2E_KMT_A_520
+  RCSB PDB12061704173D
+Coordinates from PDB:1V2E:A:520 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   68.4630   56.7990   14.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2690   56.6050   14.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1050   56.0090   13.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   67.7300   58.0820   14.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2440   59.0310   13.4970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4750   58.2060   14.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.8650   58.3350   16.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.5360   58.4800   17.4820   S 0  0  0  0  0  0  0  0  0  0  0  0
+   64.5170   59.8280   16.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+O5
+A    6
+C3
+A    7
+C4
+A    8
+S1
+A    9
+C5
+M  END
+>  <InstanceId>
+1V2E_KMT_A_520
+
+>  <ChemCompId>
+KMT
+
+>  <PdbId>
+1V2E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+520
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O3 S
+
+>  <Name>
+4-(METHYLSULFANYL)-2-OXOBUTANOIC ACID
+
+>  <SystematicName>
+4-methylsulfanyl-2-oxo-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 O3 S
+
+>  <MolecularWeight>
+148.18
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8O3S/c1-9-3-2-4(6)5(7)8/h2-3H2,1H3,(H,7,8)
+
+>  <InChIKey>
+SXFSQZDSUWACKX-UHFFFAOYSA-N
+
+>  <SMILES>
+CSCCC(=O)C(=O)O
+
+$$$$

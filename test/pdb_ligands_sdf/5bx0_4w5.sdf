@@ -1,0 +1,135 @@
+5BX0_4W5_A_4000
+  RCSB PDB12061717003D
+Coordinates from PDB:5BX0:A:4000 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   18.2100  -28.6860   -2.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5260  -29.8950   -2.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4000  -27.6720   -2.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6010  -28.8230   -2.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1600  -27.2520   -2.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0690  -28.4250   -3.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8070  -28.5290   -4.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8450  -26.4020   -3.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4620  -26.2870   -3.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6390  -27.4150   -2.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7700  -29.4540   -2.7250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6860  -28.0930   -2.8490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5200  -28.4340   -2.8160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5970  -26.1750   -2.6960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  6 13  1  0  0  0  0
+  3 12  2  0  0  0  0
+  3  4  1  0  0  0  0
+ 10  5  1  0  0  0  0
+ 10  1  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13  5  1  0  0  0  0
+  5 14  2  0  0  0  0
+  4  1  1  0  0  0  0
+  4  2  2  0  0  0  0
+ 11  2  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C8
+A    4
+C9
+A    5
+C10
+A    6
+C13
+A    7
+C14
+A    8
+C1
+A    9
+C2
+A   10
+C3
+A   11
+N6
+A   12
+N7
+A   13
+O11
+A   14
+O12
+M  END
+>  <InstanceId>
+5BX0_4W5_A_4000
+
+>  <ChemCompId>
+4W5
+
+>  <PdbId>
+5BX0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+ethyl 2H-indazole-5-carboxylate
+
+>  <SystematicName>
+ethyl 2H-indazole-5-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O2
+
+>  <MolecularWeight>
+190.199
+
+>  <ModifiedDate>
+2015-12-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O2/c1-2-14-10(13)7-3-4-9-8(5-7)6-11-12-9/h3-6H,2H2,1H3,(H,11,12)
+
+>  <InChIKey>
+SKABXDPLIJIWLR-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1ccc2c(c1)c[nH]n2
+
+$$$$

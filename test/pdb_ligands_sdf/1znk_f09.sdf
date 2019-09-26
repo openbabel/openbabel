@@ -1,0 +1,117 @@
+1K4C_F09_A_2001
+  RCSB PDB12061703023D
+Coordinates from PDB:1K4C:A:2001 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  156.5570  133.7090  -38.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  157.1820  133.0640  -37.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  156.6250  131.6600  -36.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  155.2460  131.6830  -36.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  155.3190  131.7990  -34.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  155.7160  130.4740  -33.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  155.6690  130.5250  -32.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  156.1030  129.1840  -31.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  156.0830  129.1700  -30.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  156.8500  129.8820  -29.6970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+OXT
+M  END
+>  <InstanceId>
+1K4C_F09_A_2001
+
+>  <ChemCompId>
+F09
+
+>  <PdbId>
+1K4C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O
+
+>  <Name>
+NONAN-1-OL
+
+>  <SystematicName>
+nonan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 O
+
+>  <MolecularWeight>
+144.254
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20O/c1-2-3-4-5-6-7-8-9-10/h10H,2-9H2,1H3
+
+>  <InChIKey>
+ZWRUINPWMLAQRD-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCO
+
+$$$$

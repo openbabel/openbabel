@@ -1,0 +1,147 @@
+3UXM_0DN_A_800
+  RCSB PDB12061711073D
+Coordinates from PDB:3UXM:A:800 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    7.3710    2.2970   16.4310   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7330    1.3690   16.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9540    0.5230   16.2800   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3060   -0.5000   16.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5900   -1.2910   16.2430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4230   -0.6690   18.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7370   -1.7810   19.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2230    0.2190   19.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8420    1.2320   18.3980   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7090    2.1650   19.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0890    3.0570   20.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2150    3.1800   21.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9960    4.3460   20.9050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7000    1.3810   19.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0880    1.9450   20.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0310    0.8580   22.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7270    0.5670   22.3690   F 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  4  6  1  0  0  0  0
+  2  9  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 15 12  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O4
+A    2
+C6
+A    3
+N2
+A    4
+C7
+A    5
+O3
+A    6
+C8
+A    7
+C10
+A    8
+C9
+A    9
+N1
+A   10
+C4
+A   11
+C3
+A   12
+C2
+A   13
+O2
+A   14
+O1
+A   15
+C1
+A   16
+C5
+A   17
+F1
+M  END
+>  <InstanceId>
+3UXM_0DN_A_800
+
+>  <ChemCompId>
+0DN
+
+>  <PdbId>
+3UXM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4 F
+
+>  <Name>
+5'-deoxy-5'-fluorothymidine
+
+>  <SystematicName>
+1-[(2R,4S,5S)-5-(fluoranylmethyl)-4-oxidanyl-oxolan-2-yl]-5-methyl-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 F N2 O4
+
+>  <MolecularWeight>
+244.22
+
+>  <ModifiedDate>
+2012-01-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13FN2O4/c1-5-4-13(10(16)12-9(5)15)8-2-6(14)7(3-11)17-8/h4,6-8,14H,2-3H2,1H3,(H,12,15,16)/t6-,7+,8+/m0/s1
+
+>  <InChIKey>
+MYWVPKQWFIVGJZ-XLPZGREQSA-N
+
+>  <SMILES>
+CC1=CN(C(=O)NC1=O)[C@H]2C[C@@H]([C@H](O2)CF)O
+
+$$$$

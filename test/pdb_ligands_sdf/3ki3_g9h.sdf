@@ -1,0 +1,152 @@
+3KI3_G9H_A_1
+  RCSB PDB12061709263D
+Coordinates from PDB:3KI3:A:1 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+   -0.8470    6.9150   -7.4250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3730    4.8550   -9.9710   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4650    5.9370  -10.4670   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2490    5.9130  -11.8940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5380    5.7540   -6.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2420    8.1210   -6.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1000    4.5810  -13.6350   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0060    2.2610  -12.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1710    2.9470  -12.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9330    2.8190  -11.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8720    6.3610  -10.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4860    7.0070  -10.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1250    7.1240   -8.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6740    4.8890  -12.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4270    4.2050  -11.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6660    5.9690   -9.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6740    4.0760  -10.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4850    4.7700  -11.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  1  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+ 17  2  1  0  0  0  0
+  2 16  2  0  0  0  0
+ 18  3  1  0  0  0  0
+  3 12  1  0  0  0  0
+  3 16  1  0  0  0  0
+ 14  4  1  0  0  0  0
+  4 11  1  0  0  0  0
+  7 14  2  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 15  1  0  0  0  0
+ 10 17  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 16 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 18  2  0  0  0  0
+ 18 17  1  0  0  0  0
+A    1
+N11
+A    2
+N12
+A    3
+N13
+A    4
+N14
+A    5
+CAA
+A    6
+CAB
+A    7
+OAC
+A    8
+CAD
+A    9
+CAE
+A   10
+CAF
+A   11
+CAG
+A   12
+CAH
+A   13
+CAI
+A   14
+CAL
+A   15
+CAM
+A   16
+CAN
+A   17
+CAO
+A   18
+CAP
+M  END
+>  <InstanceId>
+3KI3_G9H_A_1
+
+>  <ChemCompId>
+G9H
+
+>  <PdbId>
+3KI3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N4 O
+
+>  <Name>
+2-[(dimethylamino)methyl]-5,6-dihydroimidazo[4,5,1-jk][1,4]benzodiazepin-7(4H)-one
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+1-Dimethylaminomethyl-8,9-dihydro-7H-2,7,9a-triaza-benzo[cd]azulen-6-one
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H16 N4 O
+
+>  <MolecularWeight>
+244.292
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H16N4O/c1-16(2)8-11-15-10-5-3-4-9-12(10)17(11)7-6-14-13(9)18/h3-5H,6-8H2,1-2H3,(H,14,18)
+
+>  <InChIKey>
+QRQMULXVGGGLGB-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)Cc1nc2cccc3c2n1CCNC3=O
+
+$$$$

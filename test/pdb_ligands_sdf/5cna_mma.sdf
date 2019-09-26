@@ -1,0 +1,130 @@
+1BXH_MMA_A_242
+  RCSB PDB12061702073D
+Coordinates from PDB:1BXH:A:242 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   50.3780   47.8170    5.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.7450   49.0760    6.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2530   49.1360    6.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7120   47.8540    7.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2810   46.6310    6.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6000   45.3420    7.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9860   47.3750    3.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9420   47.8540    4.6900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0930   49.0410    8.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5610   50.2690    7.7520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1230   47.8530    7.7910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.8510   46.6460    6.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2110   44.2090    6.8150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1BXH_MMA_A_242
+
+>  <ChemCompId>
+MMA
+
+>  <PdbId>
+1BXH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+242
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O6
+
+>  <Name>
+O1-METHYL-MANNOSE
+
+>  <SystematicName>
+(2R,3S,4S,5S,6S)-2-(hydroxymethyl)-6-methoxy-oxane-3,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C7 H14 O6
+
+>  <MolecularWeight>
+194.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O6/c1-12-7-6(11)5(10)4(9)3(2-8)13-7/h3-11H,2H2,1H3/t3-,4-,5+,6+,7+/m1/s1
+
+>  <InChIKey>
+HOVAGTYPODGVJG-VEIUFWFVSA-N
+
+>  <SMILES>
+CO[C@@H]1[C@H]([C@H]([C@@H]([C@H](O1)CO)O)O)O
+
+$$$$

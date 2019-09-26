@@ -1,0 +1,126 @@
+3DX2_MZB_A_1048
+  RCSB PDB12061708223D
+Coordinates from PDB:3DX2:A:1048 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   28.2600   65.2430    8.8500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0250   66.3980    7.8910   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5970   65.8650    6.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7270   65.8680    7.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1830   65.7400    9.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9620   64.4100    9.9360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6860   66.1090    9.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4900   64.9800    9.7260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0060   66.6360    7.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6370   65.6110    7.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6320   66.9930    7.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6310   67.1620    5.9810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9  7  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11  4  1  0  0  0  0
+ 11  9  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+O6
+A    2
+S6
+A    3
+C7
+A    4
+C1
+A    5
+C5
+A    6
+N5
+A    7
+C4
+A    8
+O4
+A    9
+C3
+A   10
+O3
+A   11
+C2
+A   12
+O2
+M  END
+>  <InstanceId>
+3DX2_MZB_A_1048
+
+>  <ChemCompId>
+MZB
+
+>  <PdbId>
+3DX2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1048
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4 S
+
+>  <Name>
+(1R,2R,3R,4S,5R)-4-amino-5-[(R)-methylsulfinyl]cyclopentane-1,2,3-triol
+
+>  <SystematicName>
+(1R,2R,3R,4S,5R)-4-amino-5-[(R)-methylsulfinyl]cyclopentane-1,2,3-triol
+
+>  <Synonyms>
+MANNOSTATIN B
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4 S
+
+>  <MolecularWeight>
+195.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO4S/c1-12(11)6-2(7)3(8)4(9)5(6)10/h2-6,8-10H,7H2,1H3/t2-,3+,4+,5+,6+,12+/m0/s1
+
+>  <InChIKey>
+ZJFKRRRXLLAUHQ-DMRLTRFVSA-N
+
+>  <SMILES>
+C[S@@](=O)[C@@H]1[C@H]([C@H]([C@H]([C@H]1O)O)O)N
+
+$$$$

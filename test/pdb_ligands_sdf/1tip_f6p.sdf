@@ -1,0 +1,142 @@
+1CNQ_F6P_A_338
+  RCSB PDB12061702113D
+Coordinates from PDB:1CNQ:A:338 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   -4.5070   28.7180   15.5690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1220   29.7270   14.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6710   29.2500   13.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6880   28.1980   13.2690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7790   28.7080   12.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9960   29.2760   12.7190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4630   29.1710   10.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3640   28.1200    9.8380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1920   30.0080   10.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1870   30.3710   12.3430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9870   31.0600    9.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6390   31.5550    9.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8810   31.6360    8.0380   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4650   33.0340    7.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7480   31.1770    6.9260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3480   30.8090    8.0870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+A   11
+C6
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1CNQ_F6P_A_338
+
+>  <ChemCompId>
+F6P
+
+>  <PdbId>
+1CNQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+338
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O9 P
+
+>  <Name>
+FRUCTOSE-6-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4S,5R)-3,4,5-trihydroxy-5-(hydroxymethyl)oxolan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H13 O9 P
+
+>  <MolecularWeight>
+260.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13O9P/c7-2-6(10)5(9)4(8)3(15-6)1-14-16(11,12)13/h3-5,7-10H,1-2H2,(H2,11,12,13)/t3-,4-,5+,6-/m1/s1
+
+>  <InChIKey>
+BGWGXPAPYGQALX-ARQDHWQXSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@](O1)(CO)O)O)O)OP(=O)(O)O
+
+$$$$

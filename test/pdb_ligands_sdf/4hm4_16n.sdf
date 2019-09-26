@@ -1,0 +1,115 @@
+4HM4_16N_A_1006
+  RCSB PDB12061712533D
+Coordinates from PDB:4HM4:A:1006 Model:1 without hydrogens
+  9 10  0  0  0  0            999 V2000
+   14.0890   51.0580   78.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6190   49.8140   79.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7430   51.7240   80.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1450   53.0840   80.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2060   53.4350   81.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3700   52.1710   82.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8470   51.2050   81.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3660   49.9540   81.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7670   49.2810   80.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  1  0  0  0  0
+  9  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C5
+A    8
+C4
+A    9
+C3
+M  END
+>  <InstanceId>
+4HM4_16N_A_1006
+
+>  <ChemCompId>
+16N
+
+>  <PdbId>
+4HM4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1006
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9
+
+>  <Name>
+2,3-dihydro-1H-indene
+
+>  <SystematicName>
+2,3-dihydro-1H-indene
+
+>  <Synonyms>
+indan
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10
+
+>  <MolecularWeight>
+118.176
+
+>  <ModifiedDate>
+2013-10-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10/c1-2-5-9-7-3-6-8(9)4-1/h1-2,4-5H,3,6-7H2
+
+>  <InChIKey>
+PQNFLJBBNBOBRQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)CCC2
+
+$$$$

@@ -1,0 +1,122 @@
+1QX1_FMF_A_2003
+  RCSB PDB12061703493D
+Coordinates from PDB:1QX1:A:2003 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   30.3870   66.4620    7.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2910   65.9040    9.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3520   65.3690    9.6520   F 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7010   66.6330    7.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9650   66.0100    7.2230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6790   66.6650    6.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7960   67.8420    5.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3220   66.4620    6.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0570   66.5860    6.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3670   65.1950    7.8500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1960   64.8820    8.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C5
+A    2
+C2
+A    3
+F2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+O4
+A    8
+C6
+A    9
+O6
+A   10
+O
+A   11
+C1
+M  END
+>  <InstanceId>
+1QX1_FMF_A_2003
+
+>  <ChemCompId>
+FMF
+
+>  <PdbId>
+1QX1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 O4 F
+
+>  <Name>
+2-DEOXY-2-FLUOROHEXOPYRANOSYL FLUORIDE
+
+>  <SystematicName>
+(2R,3S,4S,5S,6S)-5,6-difluoro-2-(hydroxymethyl)oxane-3,4-diol
+
+>  <Synonyms>
+2-DEOXY-2-FLUORO-ALPHA-D-MANNOSYL FLUORIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 F2 O4
+
+>  <MolecularWeight>
+184.138
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10F2O4/c7-3-5(11)4(10)2(1-9)12-6(3)8/h2-6,9-11H,1H2/t2-,3+,4-,5-,6?/m1/s1
+
+>  <InChIKey>
+YZRDPODBASCWCK-CBPJZXOFSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@@H]([C@@H](O1)F)F)O)O)O
+
+$$$$

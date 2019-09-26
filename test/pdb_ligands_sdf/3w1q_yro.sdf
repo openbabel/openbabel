@@ -1,0 +1,146 @@
+3W1Q_YRO_A_403
+  RCSB PDB12061711183D
+Coordinates from PDB:3W1Q:A:403 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   40.2530  -15.7660  -14.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4510  -14.7840  -14.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2230  -14.9300  -14.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9430  -13.4270  -14.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4360  -12.5420  -15.3270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8570  -11.2170  -15.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3590  -10.4060  -16.1780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7180  -10.7650  -14.3140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2150  -11.6020  -13.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9610  -11.0490  -12.4970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8340  -12.9690  -13.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3330  -13.8510  -12.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7770  -13.4470  -10.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2240  -13.5350  -10.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9550  -13.2100   -9.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5510  -12.4530  -11.5350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5130  -14.8730  -11.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4 11  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 17 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+OAD
+A    2
+CAL
+A    3
+OAG
+A    4
+CAN
+A    5
+NAJ
+A    6
+CAO
+A    7
+OAE
+A    8
+NAK
+A    9
+CAP
+A   10
+OAF
+A   11
+CAM
+A   12
+CAH
+A   13
+CAI
+A   14
+CAQ
+A   15
+CAB
+A   16
+CAC
+A   17
+CAA
+M  END
+>  <InstanceId>
+3W1Q_YRO_A_403
+
+>  <ChemCompId>
+YRO
+
+>  <PdbId>
+3W1Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4
+
+>  <Name>
+5-(3,3-dimethylbutyl)-2,6-dioxo-1,2,3,6-tetrahydropyrimidine-4-carboxylic acid
+
+>  <SystematicName>
+5-(3,3-dimethylbutyl)-2,4-bis(oxidanylidene)-1H-pyrimidine-6-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N2 O4
+
+>  <MolecularWeight>
+240.256
+
+>  <ModifiedDate>
+2013-11-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N2O4/c1-11(2,3)5-4-6-7(9(15)16)12-10(17)13-8(6)14/h4-5H2,1-3H3,(H,15,16)(H2,12,13,14,17)
+
+>  <InChIKey>
+HROWFJPIAGSCKL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)CCC1=C(NC(=O)NC1=O)C(=O)O
+
+$$$$

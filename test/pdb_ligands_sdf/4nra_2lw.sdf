@@ -1,0 +1,148 @@
+4NRA_2LW_A_2006
+  RCSB PDB12061713563D
+Coordinates from PDB:4NRA:A:2006 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+   67.5520   40.8620   -0.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.6830   41.1270   -1.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.7200   40.1010   -1.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.9660   40.1470   -1.7350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   71.6390   39.0280   -1.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.9090   38.6920   -1.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.4350   37.4590   -1.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.6020   36.6060   -0.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.2570   35.1080   -0.0760  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   71.2800   37.0090   -0.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.8110   38.2030   -0.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.6230   38.8670   -0.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.4190   38.4900    0.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.2840   39.4470   -0.4070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   66.1610   39.0660   -0.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1830   39.7620   -1.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.9470   37.5020   -0.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7  8  2  0  0  0  0
+  3 12  2  0  0  0  0
+ 16 15  2  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14  1  1  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+CAH
+A    2
+CAG
+A    3
+CAM
+A    4
+NAJ
+A    5
+CAO
+A    6
+CAE
+A    7
+CAD
+A    8
+CAL
+A    9
+CL
+A   10
+CAF
+A   11
+CAP
+A   12
+CAN
+A   13
+CAI
+A   14
+NAQ
+A   15
+CAK
+A   16
+OAB
+A   17
+CAA
+M  END
+>  <InstanceId>
+4NRA_2LW_A_2006
+
+>  <ChemCompId>
+2LW
+
+>  <PdbId>
+4NRA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2006
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O Cl
+
+>  <Name>
+1-(8-chloro-1,3,4,5-tetrahydro-2H-pyrido[4,3-b]indol-2-yl)ethanone
+
+>  <SystematicName>
+1-(8-chloranyl-1,3,4,5-tetrahydropyrido[4,3-b]indol-2-yl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H13 Cl N2 O
+
+>  <MolecularWeight>
+248.708
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13ClN2O/c1-8(17)16-5-4-13-11(7-16)10-6-9(14)2-3-12(10)15-13/h2-3,6,15H,4-5,7H2,1H3
+
+>  <InChIKey>
+SHHTZAIHGFNPTK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)N1CCc2c(c3cc(ccc3[nH]2)Cl)C1
+
+$$$$

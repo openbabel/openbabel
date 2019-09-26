@@ -1,0 +1,143 @@
+5UEP_88P_A_501
+  RCSB PDB12061719513D
+Coordinates from PDB:5UEP:A:501 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  -12.7680   11.1580    0.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6150   11.9690   -0.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8120   13.4330    0.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8300   10.5400    0.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9700    9.8600   -0.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9040   11.3970    2.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9250   11.5900    0.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1350   10.3690    1.4290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0090   12.9590    1.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6200   13.5870    1.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1150    8.9310   -1.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0040   11.8280    4.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2190    9.5170    0.1590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5490   11.5400   -0.5400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7850    9.3320    1.3370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5370   11.4680    2.1430   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  5  1  0  0  0  0
+ 14  2  2  0  0  0  0
+  5  1  2  0  0  0  0
+  5 13  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  1  7  1  0  0  0  0
+ 13  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  7  4  2  0  0  0  0
+  7  9  1  0  0  0  0
+  4  8  1  0  0  0  0
+ 15  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8 16  1  0  0  0  0
+ 16  6  1  0  0  0  0
+  6 12  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+C3
+A    8
+C9
+A    9
+C2
+A   10
+C1
+A   11
+C12
+A   12
+C11
+A   13
+N13
+A   14
+O14
+A   15
+O16
+A   16
+O15
+M  END
+>  <InstanceId>
+5UEP_88P_A_501
+
+>  <ChemCompId>
+88P
+
+>  <PdbId>
+5UEP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O3
+
+>  <Name>
+ethyl 3-methyl-4-oxo-4,5,6,7-tetrahydro-2H-isoindole-1-carboxylate
+
+>  <SystematicName>
+ethyl 3-methyl-4-oxidanylidene-2,5,6,7-tetrahydroisoindole-1-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H15 N O3
+
+>  <MolecularWeight>
+221.252
+
+>  <ModifiedDate>
+2017-06-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H15NO3/c1-3-16-12(15)11-8-5-4-6-9(14)10(8)7(2)13-11/h13H,3-6H2,1-2H3
+
+>  <InChIKey>
+QMQMLKBVJSOVCI-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1c2c(c([nH]1)C)C(=O)CCC2
+
+$$$$

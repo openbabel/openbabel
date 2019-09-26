@@ -1,0 +1,130 @@
+4KZ8_1U6_A_401
+  RCSB PDB12061713273D
+Coordinates from PDB:4KZ8:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   23.8700    8.7590   16.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4040    7.3540   16.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5960    6.7670   15.2370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2530    6.8820   15.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6770    7.5320   16.4230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4420    6.3360   14.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0130    5.6870   13.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2750    5.2090   12.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3550    5.5810   13.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8720    4.8830   12.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1160    5.6950   10.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1630    6.1230   14.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8340    6.0130   14.0840   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  7  2  0  0  0  0
+  9  7  1  0  0  0  0
+  9 12  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12  3  1  0  0  0  0
+  6  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  2  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+N03
+A    4
+C04
+A    5
+O05
+A    6
+C06
+A    7
+C07
+A    8
+O08
+A    9
+N09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+S13
+M  END
+>  <InstanceId>
+4KZ8_1U6_A_401
+
+>  <ChemCompId>
+1U6
+
+>  <PdbId>
+4KZ8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 S
+
+>  <Name>
+1,3-diethyl-2-thioxodihydropyrimidine-4,6(1H,5H)-dione
+
+>  <SystematicName>
+1,3-diethyl-2-sulfanylidene-1,3-diazinane-4,6-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 N2 O2 S
+
+>  <MolecularWeight>
+200.258
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12N2O2S/c1-3-9-6(11)5-7(12)10(4-2)8(9)13/h3-5H2,1-2H3
+
+>  <InChIKey>
+SHBTUGJAKBRBBJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CCN1C(=O)CC(=O)N(C1=S)CC
+
+$$$$

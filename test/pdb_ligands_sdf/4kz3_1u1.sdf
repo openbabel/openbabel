@@ -1,0 +1,130 @@
+4KZ3_1U1_A_401
+  RCSB PDB12061713273D
+Coordinates from PDB:4KZ3:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   23.3320    6.2570   10.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2480    5.8210    9.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5220    4.8390   10.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1480    4.4870   11.6350   S 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4120    5.6440   11.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5210    5.8440   12.7080  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2940    3.9780    9.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6900    3.4150   10.4900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9920    4.0420    8.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9560    6.4890    7.9240   S 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9510    7.4790    7.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5980    6.8840    7.8010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2860    5.3180    6.7870   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 12 10  2  0  0  0  0
+ 10  2  1  0  0  0  0
+  9  7  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  7  3  1  0  0  0  0
+  7  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  1  5  2  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+S04
+A    5
+C05
+A    6
+CL6
+A    7
+C07
+A    8
+O08
+A    9
+O09
+A   10
+S10
+A   11
+O11
+A   12
+O12
+A   13
+N13
+M  END
+>  <InstanceId>
+4KZ3_1U1_A_401
+
+>  <ChemCompId>
+1U1
+
+>  <PdbId>
+4KZ3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4 S2 Cl
+
+>  <Name>
+5-chloro-3-sulfamoylthiophene-2-carboxylic acid
+
+>  <SystematicName>
+5-chloranyl-3-sulfamoyl-thiophene-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 Cl N O4 S2
+
+>  <MolecularWeight>
+241.673
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4ClNO4S2/c6-3-1-2(13(7,10)11)4(12-3)5(8)9/h1H,(H,8,9)(H2,7,10,11)
+
+>  <InChIKey>
+DLCJPZJBDWBNQJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c(sc1Cl)C(=O)O)S(=O)(=O)N
+
+$$$$

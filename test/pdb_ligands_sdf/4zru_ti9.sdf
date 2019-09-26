@@ -1,0 +1,131 @@
+4ZRU_TI9_A_303
+  RCSB PDB12061716413D
+Coordinates from PDB:4ZRU:A:303 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   43.7590   -4.0630   59.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5100   -3.9460   58.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6780   -5.0940   59.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2250   -5.5830   60.4480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1930   -4.6080   60.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4580   -3.5780   61.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7440   -2.8540   62.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7510   -2.0510   63.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1210   -0.9490   63.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1080   -0.2760   64.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4540   -2.4500   62.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5260   -1.7910   63.6140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8290   -0.7230   64.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  6  7  3  0  0  0  0
+  7  8  1  0  0  0  0
+  8 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C13
+A    2
+C12
+A    3
+C11
+A    4
+N10
+A    5
+C9
+A    6
+C8
+A    7
+C7
+A    8
+C5
+A    9
+C6
+A   10
+C1
+A   11
+C4
+A   12
+N3
+A   13
+C2
+M  END
+>  <InstanceId>
+4ZRU_TI9_A_303
+
+>  <ChemCompId>
+TI9
+
+>  <PdbId>
+4ZRU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2
+
+>  <Name>
+3-[(2S)-pyrrolidin-2-ylethynyl]pyridine
+
+>  <SystematicName>
+3-[2-[(2S)-pyrrolidin-2-yl]ethynyl]pyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N2
+
+>  <MolecularWeight>
+172.226
+
+>  <ModifiedDate>
+2015-05-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2/c1-3-10(9-12-7-1)5-6-11-4-2-8-13-11/h1,3,7,9,11,13H,2,4,8H2/t11-/m0/s1
+
+>  <InChIKey>
+YOOCTKCKTOXZCT-NSHDSACASA-N
+
+>  <SMILES>
+c1cc(cnc1)C#C[C@@H]2CCCN2
+
+$$$$

@@ -1,0 +1,155 @@
+3WCD_RWY_A_401
+  RCSB PDB12061711203D
+Coordinates from PDB:3WCD:A:401 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+   17.0100  -26.4870    3.8860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1270  -27.1940    3.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7360  -36.8980   -2.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8530  -36.5780   -3.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9500  -35.9960   -1.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1410  -35.3850   -3.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2470  -34.7970   -1.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9230  -31.5050    0.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0720  -32.2800    1.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1230  -32.1260   -0.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2510  -32.9250    0.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8300  -31.0210    3.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7320  -29.8010    3.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7030  -30.9190    2.6860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3310  -33.5670   -2.1120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8530  -28.2120    3.5940   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9090  -31.5580    1.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3000  -34.5070   -2.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2890  -32.8370   -0.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  3  0  0  0  0
+ 16  2  1  0  0  0  0
+  5  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+ 18  6  1  0  0  0  0
+  7 18  2  0  0  0  0
+ 17  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+  9 17  1  0  0  0  0
+ 19 10  2  0  0  0  0
+ 11 19  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 16 13  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 18 15  1  0  0  0  0
+ 19 15  1  0  0  0  0
+A    1
+NAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+OAN
+A   15
+OAO
+A   16
+SAP
+A   17
+CAQ
+A   18
+CAR
+A   19
+CAS
+M  END
+>  <InstanceId>
+3WCD_RWY_A_401
+
+>  <ChemCompId>
+RWY
+
+>  <PdbId>
+3WCD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N O2 S
+
+>  <Name>
+2-(4-phenoxyphenoxy)ethyl thiocyanate
+
+>  <SystematicName>
+2-(4-phenoxyphenoxy)ethyl thiocyanate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H13 N O2 S
+
+>  <MolecularWeight>
+271.334
+
+>  <ModifiedDate>
+2012-04-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H13NO2S/c16-12-19-11-10-17-13-6-8-15(9-7-13)18-14-4-2-1-3-5-14/h1-9H,10-11H2
+
+>  <InChIKey>
+YQZHGQYIMXWEHI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)Oc2ccc(cc2)OCCSC#N
+
+$$$$

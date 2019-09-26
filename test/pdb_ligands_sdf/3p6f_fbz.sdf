@@ -1,0 +1,126 @@
+3P6F_FBZ_A_133
+  RCSB PDB12061710133D
+Coordinates from PDB:3P6F:A:133 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    7.3190    8.7070   17.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6350    7.1090   15.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9260    4.9390   15.4900   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0040    7.7920   22.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1310    8.5230   21.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9790    7.0280   21.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2060    8.5210   20.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0510    7.0210   20.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5230    6.3570   17.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9880    6.1290   15.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1840    7.7700   19.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2410    7.7660   17.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3 10  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  8  6  2  0  0  0  0
+ 11  7  2  0  0  0  0
+ 11  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+M  END
+>  <InstanceId>
+3P6F_FBZ_A_133
+
+>  <ChemCompId>
+FBZ
+
+>  <PdbId>
+3P6F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+133
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+(3S)-3-phenylbutanoic acid
+
+>  <SystematicName>
+(3S)-3-phenylbutanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O2
+
+>  <MolecularWeight>
+164.201
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O2/c1-8(7-10(11)12)9-5-3-2-4-6-9/h2-6,8H,7H2,1H3,(H,11,12)/t8-/m0/s1
+
+>  <InChIKey>
+ZZEWMYILWXCRHZ-QMMMGPOBSA-N
+
+>  <SMILES>
+C[C@@H](CC(=O)O)c1ccccc1
+
+$$$$

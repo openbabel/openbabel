@@ -1,0 +1,126 @@
+4ZA7_4LV_A_606
+  RCSB PDB12061716363D
+Coordinates from PDB:4ZA7:A:606 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   16.5980   12.2740   25.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8840   15.0390   24.7570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7480   14.4830   24.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7930   15.0600   24.3850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6950   13.1100   25.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7090   12.8500   26.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0360   11.5680   27.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7330   10.4180   26.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0450    9.1090   26.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8220    9.0960   28.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1390   10.2970   28.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7450   11.5140   28.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+  7 12  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+C1
+A    2
+O
+A    3
+C
+A    4
+OXT
+A    5
+CA
+A    6
+CB
+A    7
+CG
+A    8
+CD2
+A    9
+CE2
+A   10
+CZ
+A   11
+CE1
+A   12
+CD1
+M  END
+>  <InstanceId>
+4ZA7_4LV_A_606
+
+>  <ChemCompId>
+4LV
+
+>  <PdbId>
+4ZA7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+606
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+(2E)-2-methyl-3-phenylprop-2-enoic acid
+
+>  <SystematicName>
+(E)-2-methyl-3-phenyl-prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O2
+
+>  <MolecularWeight>
+162.185
+
+>  <ModifiedDate>
+2015-06-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O2/c1-8(10(11)12)7-9-5-3-2-4-6-9/h2-7H,1H3,(H,11,12)/b8-7+
+
+>  <InChIKey>
+XNCRUNXWPDJHGV-BQYQJAHWSA-N
+
+>  <SMILES>
+C/C(=C\c1ccccc1)/C(=O)O
+
+$$$$

@@ -1,0 +1,131 @@
+2D0E_NQ_A_409
+  RCSB PDB12061705183D
+Coordinates from PDB:2D0E:A:409 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -24.3900  -34.0450  116.5160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2310  -34.2130  115.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8740  -34.1040  114.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5680  -33.7770  113.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2140  -33.6540  112.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1710  -33.8560  111.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4770  -34.1830  111.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8310  -34.3090  113.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1410  -34.6280  113.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.9850  -34.8340  112.7750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4950  -34.7330  114.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5420  -34.5230  115.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9000  -34.5980  117.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAB
+A    2
+CAK
+A    3
+CAM
+A    4
+CAG
+A    5
+CAE
+A    6
+CAD
+A    7
+CAF
+A    8
+CAL
+A    9
+CAJ
+A   10
+OAA
+A   11
+CAH
+A   12
+CAI
+A   13
+OAC
+M  END
+>  <InstanceId>
+2D0E_NQ_A_409
+
+>  <ChemCompId>
+NQ
+
+>  <PdbId>
+2D0E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O3
+
+>  <Name>
+2-HYDROXYNAPHTHOQUINONE
+
+>  <SystematicName>
+2-hydroxynaphthalene-1,4-dione
+
+>  <Synonyms>
+2-HYDROXY-1,4-NAPHTHOQUINONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H6 O3
+
+>  <MolecularWeight>
+174.153
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6O3/c11-8-5-9(12)10(13)7-4-2-1-3-6(7)8/h1-5,12H
+
+>  <InChIKey>
+CSFWPUWCSPOLJW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C(=O)C=C(C2=O)O
+
+$$$$

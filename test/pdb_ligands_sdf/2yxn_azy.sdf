@@ -1,0 +1,143 @@
+2YXN_AZY_A_501
+  RCSB PDB12061707403D
+Coordinates from PDB:2YXN:A:501 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    4.7590   28.4790   15.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4710   28.3070   16.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0740   28.1950   17.7880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9840   28.2370   16.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2890   27.7450   15.0430   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5660   29.6390   16.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0970   29.5980   16.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7820   28.9300   17.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7950   30.1660   15.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1820   30.0450   15.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8640   29.3640   16.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2120   29.1970   16.3760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1680   28.8090   17.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8020   28.1770   18.5150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9160   28.0420   18.5270   N 0  3  0  0  0  0  0  0  0  0  0  0
+   14.0280   27.8980   18.5450   N 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  2  0  0  0  0
+M  CHG  2  15   1  16  -1
+A    1
+OXT
+A    2
+C
+A    3
+O
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CG
+A    8
+CD2
+A    9
+CD1
+A   10
+CE1
+A   11
+CZ
+A   12
+OH
+A   13
+CE2
+A   14
+N1
+A   15
+N2
+A   16
+N3
+M  END
+>  <InstanceId>
+2YXN_AZY_A_501
+
+>  <ChemCompId>
+AZY
+
+>  <PdbId>
+2YXN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O3
+
+>  <Name>
+3-AZIDO-L-TYROSINE
+
+>  <SystematicName>
+(2S)-2-amino-3-(3-azido-4-hydroxy-phenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H10 N4 O3
+
+>  <MolecularWeight>
+222.201
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+Y
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N4O3/c10-6(9(15)16)3-5-1-2-8(14)7(4-5)12-13-11/h1-2,4,6,14H,3,10H2,(H,15,16)/t6-/m0/s1
+
+>  <InChIKey>
+VGCRDUSYLLNJSS-LURJTMIESA-N
+
+>  <SMILES>
+c1cc(c(cc1C[C@@H](C(=O)O)N)N=[N+]=[N-])O
+
+$$$$

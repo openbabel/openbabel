@@ -1,0 +1,139 @@
+1T93_FLV_A_431
+  RCSB PDB12061704053D
+Coordinates from PDB:1T93:A:431 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   49.5360   69.5380   61.9230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6960   69.9170   61.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2710   69.9460   60.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5370   69.5140   59.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.1230   69.4990   58.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.4270   69.0150   57.0710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4370   69.9230   57.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1730   70.3550   59.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4660   70.7400   58.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5910   70.3650   60.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3330   70.7570   61.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4970   71.1340   61.3240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7580   70.7270   62.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4400   70.3070   62.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.8780   70.2570   64.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+OAB
+A    2
+CAM
+A    3
+CAN
+A    4
+CAH
+A    5
+CAI
+A    6
+OAC
+A    7
+CAF
+A    8
+CAK
+A    9
+OAE
+A   10
+CAO
+A   11
+CAL
+A   12
+OAA
+A   13
+CAG
+A   14
+CAJ
+A   15
+OAD
+M  END
+>  <InstanceId>
+1T93_FLV_A_431
+
+>  <ChemCompId>
+FLV
+
+>  <PdbId>
+1T93
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+431
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O5
+
+>  <Name>
+FLAVIOLIN
+
+>  <SystematicName>
+2,5,7-trihydroxynaphthalene-1,4-dione
+
+>  <Synonyms>
+2,5,7-TRIHYDROXYNAPHTHOQUINONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H6 O5
+
+>  <MolecularWeight>
+206.152
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6O5/c11-4-1-5-9(6(12)2-4)7(13)3-8(14)10(5)15/h1-3,11-12,14H
+
+>  <InChIKey>
+RROPNRTUMVVUED-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c2c1C(=O)C(=CC2=O)O)O)O
+
+$$$$

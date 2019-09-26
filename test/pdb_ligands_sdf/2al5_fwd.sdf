@@ -1,0 +1,138 @@
+1MQI_FWD_A_401
+  RCSB PDB12061703193D
+Coordinates from PDB:1MQI:A:401 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   16.3460    1.7690   15.4420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4520    0.4720   14.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4860   -0.5540   15.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5110    0.4660   13.4730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4800    1.5440   12.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5550    1.4430   11.4210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3720    2.8640   13.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3160    3.9720   12.5750   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2890    2.8890   14.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2070    1.8990   16.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8860    1.3810   17.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7800    2.3630   17.1840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9390    1.0120   18.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1300    1.5030   19.6780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9070    0.2240   19.2430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+F5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+N8
+A   13
+C9
+A   14
+O91
+A   15
+O92
+M  END
+>  <InstanceId>
+1MQI_FWD_A_401
+
+>  <ChemCompId>
+FWD
+
+>  <PdbId>
+1MQI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O4 F
+
+>  <Name>
+2-AMINO-3-(5-FLUORO-2,4-DIOXO-3,4-DIHYDRO-2H-PYRIMIDIN-1-YL)-PROPIONIC ACID
+
+>  <SystematicName>
+(2S)-2-azanyl-3-[5-fluoranyl-2,4-bis(oxidanylidene)pyrimidin-1-yl]propanoic acid
+
+>  <Synonyms>
+FLUORO-WILLARDIINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 F N3 O4
+
+>  <MolecularWeight>
+217.155
+
+>  <ModifiedDate>
+2014-07-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8FN3O4/c8-3-1-11(2-4(9)6(13)14)7(15)10-5(3)12/h1,4H,2,9H2,(H,13,14)(H,10,12,15)/t4-/m0/s1
+
+>  <InChIKey>
+DBWPFHJYSTVBCZ-BYPYZUCNSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1C[C@@H](C(=O)O)N)F
+
+$$$$

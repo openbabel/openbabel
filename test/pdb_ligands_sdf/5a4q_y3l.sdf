@@ -1,0 +1,135 @@
+5A4Q_Y3L_A_1482
+  RCSB PDB12061716453D
+Coordinates from PDB:5A4Q:A:1482 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -6.9890  -30.2850    9.4110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1550  -29.3330   10.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2500  -28.5960   10.6070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2940  -27.6400   11.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1420  -27.4580   12.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0650  -26.2980   13.6830  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0230  -28.2340   12.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0560  -29.1410   11.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8510  -30.1620   10.6170   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7730  -30.8580    9.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4230  -31.7970    8.5470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2220  -32.4590    8.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9500  -33.3050    7.7290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1700  -32.1840    9.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+NAG
+A    2
+CAM
+A    3
+CAE
+A    4
+CAD
+A    5
+CAK
+A    6
+CLAC
+A    7
+CAF
+A    8
+CAN
+A    9
+SAI
+A   10
+CAL
+A   11
+NAH
+A   12
+CAJ
+A   13
+OAB
+A   14
+CAA
+M  END
+>  <InstanceId>
+5A4Q_Y3L_A_1482
+
+>  <ChemCompId>
+Y3L
+
+>  <PdbId>
+5A4Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1482
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O S Cl
+
+>  <Name>
+N-(5-CHLORANYL-1,3-BENZOTHIAZOL-2-YL)ETHANAMIDE
+
+>  <SystematicName>
+N-(6-chloranyl-1,3-benzothiazol-2-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H7 Cl N2 O S
+
+>  <MolecularWeight>
+226.683
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7ClN2OS/c1-5(13)11-9-12-7-3-2-6(10)4-8(7)14-9/h2-4H,1H3,(H,11,12,13)
+
+>  <InChIKey>
+BCQXILHHRAEBLY-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1nc2ccc(cc2s1)Cl
+
+$$$$

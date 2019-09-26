@@ -1,0 +1,114 @@
+4HM6_16Q_A_503
+  RCSB PDB12061712533D
+Coordinates from PDB:4HM6:A:503 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   13.2320   52.4140   82.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1470   53.4200   81.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2410   52.7660   80.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8180   51.5460   80.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1340   51.1740   78.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0370   50.7020   81.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6300   49.4730   80.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9590   49.0980   79.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7250   49.9610   78.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  5  2  0  0  0  0
+  9  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  6  2  0  0  0  0
+  3  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C9
+A    2
+C8
+A    3
+O7
+A    4
+C1
+A    5
+C2
+A    6
+C6
+A    7
+C5
+A    8
+C4
+A    9
+C3
+M  END
+>  <InstanceId>
+4HM6_16Q_A_503
+
+>  <ChemCompId>
+16Q
+
+>  <PdbId>
+4HM6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O
+
+>  <Name>
+ethoxybenzene
+
+>  <SystematicName>
+ethoxybenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 O
+
+>  <MolecularWeight>
+122.164
+
+>  <ModifiedDate>
+2013-10-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10O/c1-2-9-8-6-4-3-5-7-8/h3-7H,2H2,1H3
+
+>  <InChIKey>
+DLRJIFUOBPOJNS-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOc1ccccc1
+
+$$$$

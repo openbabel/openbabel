@@ -1,0 +1,133 @@
+3BI2_297_A_1001
+  RCSB PDB12061708013D
+Coordinates from PDB:3BI2:A:1001 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   73.5150  -28.4380   56.8490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   72.3550  -27.9180   57.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.3980  -26.3890   57.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.3510  -25.8400   56.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.0220  -26.1280   55.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.8800  -25.2660   56.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.4360  -25.6820   57.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5110  -24.6300   58.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.2660  -24.3690   57.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4170  -23.2620   57.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1330  -22.9840   57.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.4220  -22.4950   55.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.1480  -21.9920   54.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1500  -23.0680   54.8330   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+N14
+M  END
+>  <InstanceId>
+3BI2_297_A_1001
+
+>  <ChemCompId>
+297
+
+>  <PdbId>
+3BI2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+dodecane-1,12-diamine
+
+>  <SystematicName>
+dodecane-1,12-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H28 N2
+
+>  <MolecularWeight>
+200.364
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H28N2/c13-11-9-7-5-3-1-2-4-6-8-10-12-14/h1-14H2
+
+>  <InChIKey>
+QFTYSVGGYOXFRQ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCCCCCN)CCCCCN
+
+$$$$

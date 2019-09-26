@@ -1,0 +1,114 @@
+5HIS_60P_A_403
+  RCSB PDB12061718013D
+Coordinates from PDB:5HIS:A:403 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -16.2880    3.2910  -11.5040   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1630    2.1650  -12.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1700    2.6590  -13.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5130    3.8750  -13.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9310    4.3700  -12.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8460    1.9700  -14.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7420    0.9020  -11.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5530    0.1880  -12.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3610    0.5210  -10.7280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  3  2  2  0  0  0  0
+  5  1  1  0  0  0  0
+  8  7  2  0  0  0  0
+  2  7  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+S01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+O08
+A    9
+O09
+M  END
+>  <InstanceId>
+5HIS_60P_A_403
+
+>  <ChemCompId>
+60P
+
+>  <PdbId>
+5HIS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2 S
+
+>  <Name>
+3-methylthiophene-2-carboxylic acid
+
+>  <SystematicName>
+3-methylthiophene-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O2 S
+
+>  <MolecularWeight>
+142.176
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O2S/c1-4-2-3-9-5(4)6(7)8/h2-3H,1H3,(H,7,8)
+
+>  <InChIKey>
+IFLKEBSJTZGCJG-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccsc1C(=O)O
+
+$$$$

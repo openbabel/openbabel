@@ -1,0 +1,130 @@
+3PAH_XDE_A_700
+  RCSB PDB12061710143D
+Coordinates from PDB:3PAH:A:700 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   -5.1290   25.3450    4.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8640   24.9550    4.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6510   25.1960    5.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7350   25.8180    6.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9670   26.1990    6.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1460   25.9750    6.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3790   24.8380    4.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6050   26.0520    7.0570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2890   25.1560    2.7930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2520   24.4080    6.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0740   25.8470    6.0950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6140   26.0800    4.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4750   25.0710    4.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13  1  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+  7  3  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+C9
+A   11
+N1
+A   12
+C8
+A   13
+C7
+M  END
+>  <InstanceId>
+3PAH_XDE_A_700
+
+>  <ChemCompId>
+XDE
+
+>  <PdbId>
+3PAH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+4-[(1S)-1-hydroxy-2-(methylamino)ethyl]benzene-1,2-diol
+
+>  <SystematicName>
+4-[(1S)-2-(methylamino)-1-oxidanyl-ethyl]benzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N O3
+
+>  <MolecularWeight>
+183.204
+
+>  <ModifiedDate>
+2013-03-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13NO3/c1-10-5-9(13)6-2-3-7(11)8(12)4-6/h2-4,9-13H,5H2,1H3/t9-/m1/s1
+
+>  <InChIKey>
+UCTWMZQNUQWSLP-SECBINFHSA-N
+
+>  <SMILES>
+CNC[C@H](c1ccc(c(c1)O)O)O
+
+$$$$

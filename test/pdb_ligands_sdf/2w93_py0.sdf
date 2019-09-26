@@ -1,0 +1,106 @@
+2W93_PY0_A_603
+  RCSB PDB12061707123D
+Coordinates from PDB:2W93:A:603 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   -2.2690  -20.2300   18.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0270  -20.1820   19.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7700  -21.3740   20.2810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4720  -20.3820   19.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4910  -21.1080   18.1180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0440  -20.9950   20.3240   O 0  5  0  0  0  0  0  0  0  0  0  0
+   -5.2360  -19.1760   19.0910   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+M  CHG  1   6  -1
+A    1
+C3
+A    2
+C2
+A    3
+O3
+A    4
+C1
+A    5
+O1
+A    6
+O2
+A    7
+N
+M  END
+>  <InstanceId>
+2W93_PY0_A_603
+
+>  <ChemCompId>
+PY0
+
+>  <PdbId>
+2W93
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+603
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O3
+
+>  <Name>
+(1S,2S)-1-amino-1,2-dihydroxypropan-1-olate
+
+>  <SystematicName>
+(1S,2S)-1-amino-1,2-dihydroxy-propan-1-olate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C3 H8 N O3
+
+>  <MolecularWeight>
+106.101
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H8NO3/c1-2(5)3(4,6)7/h2,5-6H,4H2,1H3/q-1/t2-,3+/m0/s1
+
+>  <InChIKey>
+ISJWJWXATCJUBY-STHAYSLISA-N
+
+>  <SMILES>
+C[C@@H]([C@@](N)(O)[O-])O
+
+$$$$

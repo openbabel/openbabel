@@ -1,0 +1,143 @@
+3G5I_DNB_A_502
+  RCSB PDB12061708423D
+Coordinates from PDB:3G5I:A:502 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   44.4570    6.2900   29.4940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8410    6.0630   29.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0840    4.5440   29.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0470    3.7370   29.6540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8000    6.5760   30.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3490    5.3440   30.7750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4230    4.3140   29.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6320    4.4570   28.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.8380    4.5290   29.5610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9720    7.4310   29.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7940    7.9100   30.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9160    8.7000   30.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2670    9.0130   29.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4920    8.5500   28.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.8880    8.8960   26.9870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3480    7.7420   28.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 16  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  2  0  0  0  0
+A    1
+O2'
+A    2
+C2'
+A    3
+C3'
+A    4
+O3'
+A    5
+C1'
+A    6
+N4'
+A    7
+C4'
+A    8
+C5'
+A    9
+O5'
+A   10
+C1
+A   11
+C6
+A   12
+C5
+A   13
+C4
+A   14
+C3
+A   15
+N3
+A   16
+C2
+M  END
+>  <InstanceId>
+3G5I_DNB_A_502
+
+>  <ChemCompId>
+DNB
+
+>  <PdbId>
+3G5I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C11 N2 O3
+
+>  <Name>
+(2S,3S,4R,5R)-2-(3,4-diaminophenyl)-5-(hydroxymethyl)pyrrolidine-3,4-diol
+
+>  <SystematicName>
+(2S,3S,4R,5R)-2-(3,4-diaminophenyl)-5-(hydroxymethyl)pyrrolidine-3,4-diol
+
+>  <Synonyms>
+Diaminophenyl iminoribitol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 N3 O3
+
+>  <MolecularWeight>
+239.271
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17N3O3/c12-6-2-1-5(3-7(6)13)9-11(17)10(16)8(4-15)14-9/h1-3,8-11,14-17H,4,12-13H2/t8-,9+,10-,11+/m1/s1
+
+>  <InChIKey>
+YAYMFJWCRXEXGZ-YTWAJWBKSA-N
+
+>  <SMILES>
+c1cc(c(cc1[C@H]2[C@@H]([C@@H]([C@H](N2)CO)O)O)N)N
+
+$$$$

@@ -1,0 +1,127 @@
+3ZNP_SE2_A_360
+  RCSB PDB12061711313D
+Coordinates from PDB:3ZNP:A:360 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   -4.5580   -5.0040  -13.3420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6980   -5.9520  -14.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9290   -6.0330  -15.2740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0810   -7.0810  -16.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3090   -7.1760  -17.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4900   -8.2530  -18.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4360   -9.2490  -17.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2320   -9.1940  -16.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0900   -8.1390  -15.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8740   -8.0610  -14.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7090   -6.9980  -13.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4640   -6.9080  -12.7190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O8
+A    2
+C8
+A    3
+O1
+A    4
+C11
+A    5
+C10
+A    6
+C1
+A    7
+C2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C7
+A   12
+O11
+M  END
+>  <InstanceId>
+3ZNP_SE2_A_360
+
+>  <ChemCompId>
+SE2
+
+>  <PdbId>
+3ZNP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+360
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+3-HYDROXY-2H-CHROMEN-2-ONE
+
+>  <SystematicName>
+3-oxidanylchromen-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H6 O3
+
+>  <MolecularWeight>
+162.142
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6O3/c10-7-5-6-3-1-2-4-8(6)12-9(7)11/h1-5,10H
+
+>  <InChIKey>
+MJKVTPMWOKAVMS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C=C(C(=O)O2)O
+
+$$$$

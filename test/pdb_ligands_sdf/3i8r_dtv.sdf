@@ -1,0 +1,109 @@
+1NYT_DTV_A_1405
+  RCSB PDB12061703283D
+Coordinates from PDB:1NYT:A:1405 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   63.3370   24.7570   24.0560   S 0  0  0  0  0  0  0  0  0  0  0  0
+   61.8340   23.7660   23.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.5810   24.4490   23.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4730   25.8810   23.2760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1960   23.8350   22.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7590   24.4150   20.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7100   24.0620   21.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5420   22.7870   22.3380   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+S1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+S4
+M  END
+>  <InstanceId>
+1NYT_DTV_A_1405
+
+>  <ChemCompId>
+DTV
+
+>  <PdbId>
+1NYT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2 S2
+
+>  <Name>
+(2S,3S)-1,4-DIMERCAPTOBUTANE-2,3-DIOL
+
+>  <SystematicName>
+(2S,3S)-1,4-bis-sulfanylbutane-2,3-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 O2 S2
+
+>  <MolecularWeight>
+154.251
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10O2S2/c5-3(1-7)4(6)2-8/h3-8H,1-2H2/t3-,4-/m1/s1
+
+>  <InChIKey>
+VHJLVAABSRFDPM-QWWZWVQMSA-N
+
+>  <SMILES>
+C([C@H]([C@@H](CS)O)O)S
+
+$$$$

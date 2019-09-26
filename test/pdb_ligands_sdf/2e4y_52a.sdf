@@ -1,0 +1,126 @@
+2E4Y_52A_A_1001
+  RCSB PDB12061705243D
+Coordinates from PDB:2E4Y:A:1001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   19.7840    6.9510   53.3510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0060    7.7330   53.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9250    8.4220   51.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2180    9.6230   51.7080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5640    7.7730   50.8130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2380    6.8380   53.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1970    8.7610   54.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2600    7.7740   53.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5480    8.5700   54.8480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3330    6.9710   54.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3700    7.5400   54.9160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1520    5.7530   54.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OXT
+A    6
+CB1
+A    7
+CB2
+A    8
+CG1
+A    9
+NG2
+A   10
+CD
+A   11
+OE1
+A   12
+OE2
+M  END
+>  <InstanceId>
+2E4Y_52A_A_1001
+
+>  <ChemCompId>
+52A
+
+>  <PdbId>
+2E4Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O4
+
+>  <Name>
+(2R,4R)-4-aminopyrrolidine-2,4-dicarboxylic acid
+
+>  <SystematicName>
+(2R,4R)-4-aminopyrrolidine-2,4-dicarboxylic acid
+
+>  <Synonyms>
+2R,4R-APDC
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N2 O4
+
+>  <MolecularWeight>
+174.155
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H10N2O4/c7-6(5(11)12)1-3(4(9)10)8-2-6/h3,8H,1-2,7H2,(H,9,10)(H,11,12)/t3-,6-/m1/s1
+
+>  <InChIKey>
+XZFMJVJDSYRWDQ-AWFVSMACSA-N
+
+>  <SMILES>
+C1[C@@H](NC[C@]1(C(=O)O)N)C(=O)O
+
+$$$$

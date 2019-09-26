@@ -1,0 +1,125 @@
+5HKO_62W_A_425
+  RCSB PDB12061718013D
+Coordinates from PDB:5HKO:A:425 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   -7.8010  -23.1390    7.3960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9940  -24.2670    7.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7980  -23.8270    6.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9940  -22.9250    7.0390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1790  -23.1120    4.9190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8620  -24.0540    4.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0030  -22.4810    4.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9630  -23.4560    3.9000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3640  -21.8520    2.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2090  -21.1280    2.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5480  -20.9080    2.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9500  -20.3720    1.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAA
+A    2
+CAG
+A    3
+CAI
+A    4
+OAC
+A    5
+CAK
+A    6
+OAE
+A    7
+CAL
+A    8
+OAF
+A    9
+CAJ
+A   10
+OAD
+A   11
+CAH
+A   12
+OAB
+M  END
+>  <InstanceId>
+5HKO_62W_A_425
+
+>  <ChemCompId>
+62W
+
+>  <PdbId>
+5HKO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+425
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+L-glucitol
+
+>  <SystematicName>
+(2~{S},3~{S},4~{S},5~{R})-hexane-1,2,3,4,5,6-hexol
+
+>  <Synonyms>
+L-sorbitol; D-gulitol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O6
+
+>  <MolecularWeight>
+182.172
+
+>  <ModifiedDate>
+2016-01-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O6/c7-1-3(9)5(11)6(12)4(10)2-8/h3-12H,1-2H2/t3-,4+,5-,6-/m0/s1
+
+>  <InChIKey>
+FBPFZTCFMRRESA-FSIIMWSLSA-N
+
+>  <SMILES>
+C([C@H]([C@@H]([C@H]([C@H](CO)O)O)O)O)O
+
+$$$$

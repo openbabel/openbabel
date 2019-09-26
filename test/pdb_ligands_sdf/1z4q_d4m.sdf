@@ -1,0 +1,159 @@
+1Z4Q_D4M_A_1489
+  RCSB PDB12061704503D
+Coordinates from PDB:1Z4Q:A:1489 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+   17.1530   38.8480   28.3320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4960   40.0730   29.0090   P 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6430   41.1810   29.1840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8680   39.8710   30.4000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3700   40.5740   27.9440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1890   41.2700   28.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9210   42.3520   27.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4800   41.6390   26.1760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7830   43.2590   27.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8290   43.2240   26.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2070   42.2680   25.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1630   41.2340   25.5440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7030   40.4030   26.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7280   39.4350   26.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3050   38.5260   27.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1640   39.2810   25.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3020   38.4300   24.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6020   40.1080   24.0660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5820   41.0620   24.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8930   41.7420   23.2690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 19  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 19 20  2  0  0  0  0
+A    1
+OP2
+A    2
+P
+A    3
+OP1
+A    4
+OP3
+A    5
+O5'
+A    6
+C5'
+A    7
+C4'
+A    8
+O4'
+A    9
+C3'
+A   10
+C2'
+A   11
+C1'
+A   12
+N1
+A   13
+C6
+A   14
+C5
+A   15
+C5M
+A   16
+C4
+A   17
+O4
+A   18
+N3
+A   19
+C2
+A   20
+O2
+M  END
+>  <InstanceId>
+1Z4Q_D4M_A_1489
+
+>  <ChemCompId>
+D4M
+
+>  <PdbId>
+1Z4Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1489
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O7 P
+
+>  <Name>
+[(5R)-5-(5-METHYL-2,4-DIOXO-3,4-DIHYDROPYRIMIDIN-1(2H)-YL)-2,5-DIHYDROFURAN-2-YL]METHYL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+[(2S,5R)-5-(5-methyl-2,4-dioxo-pyrimidin-1-yl)-2,5-dihydrofuran-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+2',3'-DIDEOXY-2',3-DIDEHYDROTHYMIDINE 5'-MONOPHOSPHATE, 2',3'-DEHYDRO-2',3'-DEOXY-THYMIDINE 5'-MONOPHOSPHATE
+
+>  <Type>
+DNA LINKING
+
+>  <Formula>
+C10 H13 N2 O7 P
+
+>  <MolecularWeight>
+304.193
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+DT
+
+>  <OneLetterCode>
+T
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13N2O7P/c1-6-4-12(10(14)11-9(6)13)8-3-2-7(19-8)5-18-20(15,16)17/h2-4,7-8H,5H2,1H3,(H,11,13,14)(H2,15,16,17)/t7-,8+/m0/s1
+
+>  <InChIKey>
+XLPGURCDSRIXFL-JGVFFNPUSA-N
+
+>  <SMILES>
+CC1=CN(C(=O)NC1=O)[C@H]2C=C[C@H](O2)COP(=O)(O)O
+
+$$$$

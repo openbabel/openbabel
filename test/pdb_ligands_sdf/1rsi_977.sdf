@@ -1,0 +1,139 @@
+1RSI_977_A_1001
+  RCSB PDB12061703553D
+Coordinates from PDB:1RSI:A:1001 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   47.8010   44.9010   78.9940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8660   45.6470   77.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9410   45.5550   77.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0550   46.3020   75.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0250   47.1780   75.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1460   48.2120   73.8810  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8040   47.2640   76.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8350   48.0110   76.1340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8000   46.4920   77.5330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2730   46.1180   75.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.2510   47.1380   75.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3990   46.9520   74.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5650   45.7410   73.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.5910   44.7120   73.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.4480   44.8940   74.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 15  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+BR6
+A    7
+C7
+A    8
+O8
+A    9
+N9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+M  END
+>  <InstanceId>
+1RSI_977_A_1001
+
+>  <ChemCompId>
+977
+
+>  <PdbId>
+1RSI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O Br
+
+>  <Name>
+2-AMINO-5-BROMO-6-PHENYLPYRIMIDIN-4-OL
+
+>  <SystematicName>
+2-amino-5-bromo-6-phenyl-pyrimidin-4-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 Br N3 O
+
+>  <MolecularWeight>
+266.094
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8BrN3O/c11-7-8(6-4-2-1-3-5-6)13-10(12)14-9(7)15/h1-5H,(H3,12,13,14,15)
+
+>  <InChIKey>
+CIUUIPMOFZIWIZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2c(c(nc(n2)N)O)Br
+
+$$$$

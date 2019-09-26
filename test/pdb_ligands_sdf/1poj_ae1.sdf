@@ -1,0 +1,149 @@
+1POJ_AE1_A_401
+  RCSB PDB12061703413D
+Coordinates from PDB:1POJ:A:401 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+  112.9820   34.1260  114.2160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  112.2090   33.0610  114.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.2270   32.0830  113.7000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  111.3050   33.1210  115.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  111.8840   32.3810  116.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.0240   30.9450  116.5510   N 0  0  0  0  0  0  0  0  0  0  0  0
+  110.7360   32.4380  118.3080   P 0  0  0  0  0  0  0  0  0  0  0  0
+  109.3820   32.5500  117.7280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  110.9940   33.7350  119.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  110.6890   30.9080  119.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  111.3990   30.8710  120.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.7170   31.6250  120.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  113.0800   32.2090  121.8600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  113.4040   31.6980  119.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  111.7150   29.3960  121.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  111.8570   29.0830  122.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.2050   27.5530  122.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.5610   29.3460  123.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  1  0  0  0  0
+A    1
+O1
+A    2
+C3
+A    3
+O2
+A    4
+C2
+A    5
+C1
+A    6
+N
+A    7
+P
+A    8
+O1P
+A    9
+O2P
+A   10
+C8
+A   11
+C6
+A   12
+C7
+A   13
+O4
+A   14
+O3
+A   15
+C5
+A   16
+C16
+A   17
+C17
+A   18
+C18
+M  END
+>  <InstanceId>
+1POJ_AE1_A_401
+
+>  <ChemCompId>
+AE1
+
+>  <PdbId>
+1POJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O6 P
+
+>  <Name>
+2-{[[(1S)-1-AMINO-2-CARBOXYETHYL](DIHYDROXY)PHOSPHORANYL]METHYL}-4-METHYLPENTANOIC ACID
+
+>  <SystematicName>
+(2S)-2-[[[(1R)-1-amino-3-hydroxy-3-oxo-propyl]-hydroxy-phosphoryl]methyl]-4-methyl-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H20 N O6 P
+
+>  <MolecularWeight>
+281.243
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20NO6P/c1-6(2)3-7(10(14)15)5-18(16,17)8(11)4-9(12)13/h6-8H,3-5,11H2,1-2H3,(H,12,13)(H,14,15)(H,16,17)/t7-,8-/m1/s1
+
+>  <InChIKey>
+UCHSLOWIDRXYFJ-HTQZYQBOSA-N
+
+>  <SMILES>
+CC(C)C[C@H](C[P@@](=O)([C@H](CC(=O)O)N)O)C(=O)O
+
+$$$$

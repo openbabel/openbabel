@@ -1,0 +1,122 @@
+3PPO_DCK_A_401
+  RCSB PDB12061710183D
+Coordinates from PDB:3PPO:A:401 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   -1.7850   28.8330   10.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2470   29.6110    9.3430   N 0  3  0  0  0  0  0  0  0  0  0  0
+    0.1040   29.1220    9.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0410   29.2940    8.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1380   31.0360    9.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0710   32.1070    9.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3200   31.9090    8.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7240   33.5170    9.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9330   34.3940    9.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0310   34.0050    9.7900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5970   35.6490    9.4650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+M  CHG  1   2   1
+A    1
+C01
+A    2
+N02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+O07
+A    8
+C08
+A    9
+C09
+A   10
+O10
+A   11
+O11
+M  END
+>  <InstanceId>
+3PPO_DCK_A_401
+
+>  <ChemCompId>
+DCK
+
+>  <PdbId>
+3PPO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+(2S)-3-carboxy-2-hydroxy-N,N,N-trimethylpropan-1-aminium
+
+>  <SystematicName>
+[(2S)-2,4-dihydroxy-4-oxo-butyl]-trimethyl-azanium
+
+>  <Synonyms>
+D-carnitine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H16 N O3
+
+>  <MolecularWeight>
+162.207
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO3/c1-8(2,3)5-6(9)4-7(10)11/h6,9H,4-5H2,1-3H3/p+1/t6-/m0/s1
+
+>  <InChIKey>
+PHIQHXFUZVPYII-LURJTMIESA-O
+
+>  <SMILES>
+C[N+](C)(C)C[C@H](CC(=O)O)O
+
+$$$$

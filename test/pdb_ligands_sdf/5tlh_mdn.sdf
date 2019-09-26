@@ -1,0 +1,113 @@
+1HUZ_MDN_A_338
+  RCSB PDB12061702463D
+Coordinates from PDB:1HUZ:A:338 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   35.6650   22.5050   16.6600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6910   21.6210   17.5060   P 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1890   20.4890   16.6780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7340   22.8050   18.0330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7520   21.3290   18.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2660   22.3000   19.6660   P 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9180   23.8130   19.3370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6360   21.7490   20.8520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7170   22.0400   19.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+O3
+A    2
+P1
+A    3
+O1
+A    4
+O2
+A    5
+C4
+A    6
+P5
+A    7
+O6
+A    8
+O7
+A    9
+O8
+M  END
+>  <InstanceId>
+1HUZ_MDN_A_338
+
+>  <ChemCompId>
+MDN
+
+>  <PdbId>
+1HUZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+338
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C O6 P2
+
+>  <Name>
+METHYLENEDIPHOSPHONIC ACID
+
+>  <SystematicName>
+phosphonomethylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C H6 O6 P2
+
+>  <MolecularWeight>
+176.002
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/CH6O6P2/c2-8(3,4)1-9(5,6)7/h1H2,(H2,2,3,4)(H2,5,6,7)
+
+>  <InChIKey>
+MBKDYNNUVRNNRF-UHFFFAOYSA-N
+
+>  <SMILES>
+C(P(=O)(O)O)P(=O)(O)O
+
+$$$$

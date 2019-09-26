@@ -1,0 +1,127 @@
+4J71_1JX_A_501
+  RCSB PDB12061713073D
+Coordinates from PDB:4J71:A:501 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -35.2490   30.2830   20.2310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.8890   29.4100   19.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1060   29.5550   18.2680   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8260   28.5910   17.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8470   28.6170   16.2140   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5700   27.6490   15.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.2690   26.6590   16.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.2440   26.6370   17.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5180   27.6100   18.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.4740   27.6160   19.6450   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.3750   28.3060   20.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8460   28.7670   21.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4  3  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+NAG
+A    4
+CAK
+A    5
+NAF
+A    6
+CAD
+A    7
+CAC
+A    8
+CAE
+A    9
+CAJ
+A   10
+N
+A   11
+CA
+A   12
+CB
+M  END
+>  <InstanceId>
+4J71_1JX_A_501
+
+>  <ChemCompId>
+1JX
+
+>  <PdbId>
+4J71
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O
+
+>  <Name>
+(2R)-2-methyl-1,4-dihydropyrido[2,3-b]pyrazin-3(2H)-one
+
+>  <SystematicName>
+(2R)-2-methyl-2,4-dihydro-1H-pyrido[2,3-b]pyrazin-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N3 O
+
+>  <MolecularWeight>
+163.177
+
+>  <ModifiedDate>
+2013-03-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9N3O/c1-5-8(12)11-7-6(10-5)3-2-4-9-7/h2-5,10H,1H3,(H,9,11,12)/t5-/m1/s1
+
+>  <InChIKey>
+XMOQIVFMYHKHRR-RXMQYKEDSA-N
+
+>  <SMILES>
+C[C@@H]1C(=O)Nc2c(cccn2)N1
+
+$$$$

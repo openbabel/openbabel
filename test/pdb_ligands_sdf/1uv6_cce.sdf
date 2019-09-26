@@ -1,0 +1,118 @@
+1UV6_CCE_C_1206
+  RCSB PDB12061704153D
+Coordinates from PDB:1UV6:C:1206 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  138.2390  125.0330   87.5690   N 0  3  0  0  0  0  0  0  0  0  0  0
+  138.5130  124.8230   86.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  138.5250  123.3600   85.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  138.8370  123.2630   84.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  137.9650  122.5310   83.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  138.3260  122.4610   82.2050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  137.0350  124.2980   88.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  139.4300  124.6350   88.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  137.9670  126.4770   87.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.8360  121.9630   83.7780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+O4
+A    5
+C5
+A    6
+O7
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+N6
+M  END
+>  <InstanceId>
+1UV6_CCE_C_1206
+
+>  <ChemCompId>
+CCE
+
+>  <PdbId>
+1UV6
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1206
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2
+
+>  <Name>
+2-[(AMINOCARBONYL)OXY]-N,N,N-TRIMETHYLETHANAMINIUM
+
+>  <SystematicName>
+2-aminocarbonyloxyethyl-trimethyl-azanium
+
+>  <Synonyms>
+CARBAMYL-CHOLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H15 N2 O2
+
+>  <MolecularWeight>
+147.195
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N2O2/c1-8(2,3)4-5-10-6(7)9/h4-5H2,1-3H3,(H-,7,9)/p+1
+
+>  <InChIKey>
+VPJXQGSRWJZDOB-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(C)CCOC(=O)N
+
+$$$$

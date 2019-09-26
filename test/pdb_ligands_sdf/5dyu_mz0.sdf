@@ -1,0 +1,106 @@
+2YOR_MZ0_A_354
+  RCSB PDB12061707393D
+Coordinates from PDB:2YOR:A:354 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+    5.1360    5.9270  146.8660   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9050    4.6320  147.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6980    4.5590  147.8440   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1890    5.7980  147.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0850    6.6560  147.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9130    8.1350  147.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1740    8.3130  145.8410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+M  END
+>  <InstanceId>
+2YOR_MZ0_A_354
+
+>  <ChemCompId>
+MZ0
+
+>  <PdbId>
+2YOR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+354
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O
+
+>  <Name>
+1H-imidazol-5-ylmethanol
+
+>  <SystematicName>
+1H-imidazol-5-ylmethanol
+
+>  <Synonyms>
+4(5)-(hydroxymethyl)imidazole
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N2 O
+
+>  <MolecularWeight>
+98.103
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N2O/c7-2-4-1-5-3-6-4/h1,3,7H,2H2,(H,5,6)
+
+>  <InChIKey>
+QDYTUZCWBJRHKK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c([nH]cn1)CO
+
+$$$$

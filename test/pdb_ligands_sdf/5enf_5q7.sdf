@@ -1,0 +1,126 @@
+5ENF_5Q7_A_1503
+  RCSB PDB12061717313D
+Coordinates from PDB:5ENF:A:1503 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -31.9880    5.4040   -7.5060   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0740    3.0530   -7.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.7680    4.2120   -8.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.0220    4.8880   -7.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1590    4.1670   -9.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1210    3.5650   -7.2780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3840    4.6180  -10.7660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0250    3.3860   -9.2970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9690    2.2530   -7.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5750    2.5710   -7.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5030    1.7710   -7.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2790    4.0660   -7.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  3  2  0  0  0  0
+  8  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2  6  2  0  0  0  0
+  4  1  3  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+N
+A    7
+N2
+A    8
+O
+A    9
+C3
+A   10
+C1
+A   11
+C2
+A   12
+C
+M  END
+>  <InstanceId>
+5ENF_5Q7_A_1503
+
+>  <ChemCompId>
+5Q7
+
+>  <PdbId>
+5ENF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O
+
+>  <Name>
+5-azanyl-2-(2-methylpropyl)-1,3-oxazole-4-carbonitrile
+
+>  <SystematicName>
+5-azanyl-2-(2-methylpropyl)-1,3-oxazole-4-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N3 O
+
+>  <MolecularWeight>
+165.192
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N3O/c1-5(2)3-7-11-6(4-9)8(10)12-7/h5H,3,10H2,1-2H3
+
+>  <InChIKey>
+SLPCJMOIVJSWSS-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)Cc1nc(c(o1)N)C#N
+
+$$$$

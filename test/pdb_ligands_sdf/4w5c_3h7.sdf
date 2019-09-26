@@ -1,0 +1,127 @@
+4W5C_3H7_B_301
+  RCSB PDB12061715553D
+Coordinates from PDB:4W5C:B:301 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    9.5320   30.7750   25.5400   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3050   31.0450   26.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2810   30.2050   26.5090   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2040   30.7360   27.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0170   30.0260   27.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8170   28.7280   27.3480   F 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0240   30.7050   28.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1600   32.0590   28.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2150   32.7230   29.2770   F 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3150   32.7340   28.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3320   32.0730   27.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8800   32.5750   26.8910   S 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  7  5  2  0  0  0  0
+ 11  4  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 12  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+N01
+A    2
+C02
+A    3
+N03
+A    4
+C04
+A    5
+C05
+A    6
+F06
+A    7
+C07
+A    8
+C08
+A    9
+F09
+A   10
+C10
+A   11
+C11
+A   12
+S12
+M  END
+>  <InstanceId>
+4W5C_3H7_B_301
+
+>  <ChemCompId>
+3H7
+
+>  <PdbId>
+4W5C
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 S F2
+
+>  <Name>
+4,6-difluoro-1,3-benzothiazol-2-amine
+
+>  <SystematicName>
+4,6-bis(fluoranyl)-1,3-benzothiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 F2 N2 S
+
+>  <MolecularWeight>
+186.182
+
+>  <ModifiedDate>
+2015-04-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4F2N2S/c8-3-1-4(9)6-5(2-3)12-7(10)11-6/h1-2H,(H2,10,11)
+
+>  <InChIKey>
+DDKKXSCVPKDRRS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc2c(c1F)nc(s2)N)F
+
+$$$$

@@ -1,0 +1,131 @@
+4NYB_2QC_A_101
+  RCSB PDB12061713583D
+Coordinates from PDB:4NYB:A:101 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    7.7520  -17.8590   -1.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6180  -16.5740   -0.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4400  -15.8620   -0.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3580  -14.5320   -0.4720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4000  -13.7870   -1.3020   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3850  -16.4490   -1.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5160  -17.7370   -2.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7000  -18.4410   -1.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8490  -19.6350   -2.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8020  -20.3190   -2.9160   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9910  -21.3540   -3.3480   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6200  -21.7160   -3.2530   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0300  -20.2440   -2.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAE
+A    2
+CAF
+A    3
+CAK
+A    4
+CAL
+A    5
+NAM
+A    6
+CAJ
+A    7
+CAI
+A    8
+CAD
+A    9
+CAC
+A   10
+NAB
+A   11
+NAA
+A   12
+SAG
+A   13
+CAH
+M  END
+>  <InstanceId>
+4NYB_2QC_A_101
+
+>  <ChemCompId>
+2QC
+
+>  <PdbId>
+4NYB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 S
+
+>  <Name>
+1-[4-(1,2,3-thiadiazol-4-yl)phenyl]methanamine
+
+>  <SystematicName>
+[4-(1,2,3-thiadiazol-4-yl)phenyl]methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N3 S
+
+>  <MolecularWeight>
+191.253
+
+>  <ModifiedDate>
+2014-05-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9N3S/c10-5-7-1-3-8(4-2-7)9-6-13-12-11-9/h1-4,6H,5,10H2
+
+>  <InChIKey>
+FWSCINFUBQNPJM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CN)c2csnn2
+
+$$$$

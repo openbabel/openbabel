@@ -1,0 +1,114 @@
+1HLD_BRB_A_1003
+  RCSB PDB12061702443D
+Coordinates from PDB:1HLD:A:1003 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    5.2340   64.2790   11.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9310   64.5480   12.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9360   63.5240   13.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2580   62.2060   13.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5540   61.9390   12.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5380   62.9640   11.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2030   65.3400   10.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3010   60.9670   14.8410  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6180   64.8520    9.4530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+BR4
+A    9
+O1
+M  END
+>  <InstanceId>
+1HLD_BRB_A_1003
+
+>  <ChemCompId>
+BRB
+
+>  <PdbId>
+1HLD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O Br
+
+>  <Name>
+PARA-BROMOBENZYL ALCOHOL
+
+>  <SystematicName>
+(4-bromophenyl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 Br O
+
+>  <MolecularWeight>
+187.034
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7BrO/c8-7-3-1-6(5-9)2-4-7/h1-4,9H,5H2
+
+>  <InChIKey>
+VEDDBHYQWFOITD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CO)Br
+
+$$$$

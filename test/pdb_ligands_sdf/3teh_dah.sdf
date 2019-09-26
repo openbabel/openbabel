@@ -1,0 +1,134 @@
+3TEG_DAH_A_416
+  RCSB PDB12061710523D
+Coordinates from PDB:3TEG:A:416 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    5.4940   19.3250   12.9490   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0280   19.6900   11.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7840   21.2160   11.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7070   21.8760   12.4850   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6960   18.9670   11.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9360   17.4460   11.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5800   16.8630   10.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5030   16.6000   12.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5390   15.2840   10.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6040   15.2540   12.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2060   14.5540   11.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0900   14.4860   13.4780   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1740   13.1530   11.1310   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9810   21.8600   10.2750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CD2
+A    9
+CE1
+A   10
+CE2
+A   11
+CZ
+A   12
+OE2
+A   13
+OZ
+A   14
+OXT
+M  END
+>  <InstanceId>
+3TEG_DAH_A_416
+
+>  <ChemCompId>
+DAH
+
+>  <PdbId>
+3TEG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+416
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4
+
+>  <Name>
+3,4-DIHYDROXYPHENYLALANINE
+
+>  <SystematicName>
+(2S)-2-azanyl-3-[3,4-bis(oxidanyl)phenyl]propanoic acid
+
+>  <Synonyms>
+L-DOPA
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H11 N O4
+
+>  <MolecularWeight>
+197.188
+
+>  <ModifiedDate>
+2011-08-19
+
+>  <Parent>
+PHE
+
+>  <OneLetterCode>
+F
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11NO4/c10-6(9(13)14)3-5-1-2-7(11)8(12)4-5/h1-2,4,6,11-12H,3,10H2,(H,13,14)/t6-/m0/s1
+
+>  <InChIKey>
+WTDRDQBEARUVNC-LURJTMIESA-N
+
+>  <SMILES>
+c1cc(c(cc1C[C@@H](C(=O)O)N)O)O
+
+$$$$

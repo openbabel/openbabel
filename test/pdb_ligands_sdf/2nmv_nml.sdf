@@ -1,0 +1,97 @@
+2NMV_NML_D_103
+  RCSB PDB12061706243D
+Coordinates from PDB:2NMV:D:103 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   -7.1260   -5.5810  -15.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0550   -5.1760  -17.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9910   -4.0860  -17.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9860   -6.1060  -17.4730   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0400   -6.0900  -18.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C3
+M  END
+>  <InstanceId>
+2NMV_NML_D_103
+
+>  <ChemCompId>
+NML
+
+>  <PdbId>
+2NMV
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+103
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O
+
+>  <Name>
+N-METHYLACETAMIDE
+
+>  <SystematicName>
+N-methylethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 N O
+
+>  <MolecularWeight>
+73.094
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C3H7NO/c1-3(5)4-2/h1-2H3,(H,4,5)
+
+>  <InChIKey>
+OHLUUHNLEMFGTQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NC
+
+$$$$

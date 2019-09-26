@@ -1,0 +1,113 @@
+1QY5_M2M_A_401
+  RCSB PDB12061703493D
+Coordinates from PDB:1QY5:A:401 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+    9.7130    4.7910   61.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6090    4.4870   62.3670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0780    3.4430   63.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0740    3.2210   64.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3060    2.8490   63.6870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2600    2.6820   64.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4910    2.3140   63.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2340    1.1420   63.2780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4000    0.7800   62.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+O2
+A    6
+C4
+A    7
+C5
+A    8
+O3
+A    9
+C6
+M  END
+>  <InstanceId>
+1QY5_M2M_A_401
+
+>  <ChemCompId>
+M2M
+
+>  <PdbId>
+1QY5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+1-METHOXY-2-(2-METHOXYETHOXY)ETHANE
+
+>  <SystematicName>
+1-methoxy-2-(2-methoxyethoxy)ethane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O3
+
+>  <MolecularWeight>
+134.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O3/c1-7-3-5-9-6-4-8-2/h3-6H2,1-2H3
+
+>  <InChIKey>
+SBZXBUIDTXKZTM-UHFFFAOYSA-N
+
+>  <SMILES>
+COCCOCCOC
+
+$$$$

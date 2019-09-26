@@ -1,0 +1,114 @@
+1AJQ_SPA_B_559
+  RCSB PDB12061701593D
+Coordinates from PDB:1AJQ:B:559 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   10.7570   34.9240   34.3440   S 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8600   36.1590   33.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4740   36.7610   32.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3000   36.1760   32.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7890   35.2230   32.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0850   36.5220   34.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7140   37.8140   35.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0650   38.7630   35.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5080   37.7870   36.5060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+S1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+M  END
+>  <InstanceId>
+1AJQ_SPA_B_559
+
+>  <ChemCompId>
+SPA
+
+>  <PdbId>
+1AJQ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+559
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2 S
+
+>  <Name>
+THIOPHENEACETIC ACID
+
+>  <SystematicName>
+2-thiophen-2-ylethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O2 S
+
+>  <MolecularWeight>
+142.176
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O2S/c7-6(8)4-5-2-1-3-9-5/h1-3H,4H2,(H,7,8)
+
+>  <InChIKey>
+SMJRBWINMFUUDS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1)CC(=O)O
+
+$$$$

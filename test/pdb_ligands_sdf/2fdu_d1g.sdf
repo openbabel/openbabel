@@ -1,0 +1,139 @@
+2FDU_D1G_A_501
+  RCSB PDB12061705333D
+Coordinates from PDB:2FDU:A:501 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   56.0800   77.5020   60.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.5120   76.1540   60.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8580   75.9290   61.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7390   77.0660   61.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3320   78.3220   61.0060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0420   78.5430   60.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7500   77.7860   60.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6470   76.9970   60.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5620   77.8640   59.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0890   79.1440   59.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4210   79.1370   59.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4880   80.4590   59.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7740   80.8910   57.9150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1610   81.0130   57.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2540   80.0130   56.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C_1
+A    2
+C_2
+A    3
+C_3
+A    4
+C_4
+A    5
+N_1
+A    6
+C_5
+A    7
+C_6
+A    8
+C_7
+A    9
+C_8
+A   10
+C_9
+A   11
+O_1
+A   12
+C10
+A   13
+N_2
+A   14
+C11
+A   15
+C12
+M  END
+>  <InstanceId>
+2FDU_D1G_A_501
+
+>  <ChemCompId>
+D1G
+
+>  <PdbId>
+2FDU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+N,N-DIMETHYL(5-(PYRIDIN-3-YL)FURAN-2-YL)METHANAMINE
+
+>  <SystematicName>
+N,N-dimethyl-1-(5-pyridin-3-ylfuran-2-yl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 N2 O
+
+>  <MolecularWeight>
+202.252
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14N2O/c1-14(2)9-11-5-6-12(15-11)10-4-3-7-13-8-10/h3-8H,9H2,1-2H3
+
+>  <InChIKey>
+PJHSLLRNPASXIS-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)Cc1ccc(o1)c2cccnc2
+
+$$$$

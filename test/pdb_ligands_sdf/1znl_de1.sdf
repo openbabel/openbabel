@@ -1,0 +1,121 @@
+1ZNL_DE1_A_400
+  RCSB PDB12061704533D
+Coordinates from PDB:1ZNL:A:400 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   44.8690   28.5550   41.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2850   28.4970   41.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5640   27.1250   42.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8550   26.5210   41.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5960   25.7310   40.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1330   24.3020   40.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6460   24.2390   40.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2070   22.9100   40.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6580   23.0520   41.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3390   21.6880   41.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.8910   21.0430   42.6560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+CAA
+A    2
+CAC
+A    3
+CAE
+A    4
+CAG
+A    5
+CAI
+A    6
+CAK
+A    7
+CAJ
+A    8
+CAH
+A    9
+CAF
+A   10
+CAD
+A   11
+OAB
+M  END
+>  <InstanceId>
+1ZNL_DE1_A_400
+
+>  <ChemCompId>
+DE1
+
+>  <PdbId>
+1ZNL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+DECAN-1-OL
+
+>  <SystematicName>
+decan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H22 O
+
+>  <MolecularWeight>
+158.281
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H22O/c1-2-3-4-5-6-7-8-9-10-11/h11H,2-10H2,1H3
+
+>  <InChIKey>
+MWKFXSUHUHTGQN-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCO
+
+$$$$

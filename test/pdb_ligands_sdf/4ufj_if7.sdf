@@ -1,0 +1,122 @@
+4UFJ_IF7_A_1001
+  RCSB PDB12061715063D
+Coordinates from PDB:4UFJ:A:1001 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   75.9280   90.8550   19.7240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.9860   90.2920   19.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.0820   90.3150   20.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.5270   90.1090   21.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.1660   89.2790   20.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.6830   87.9810   20.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.5990   89.3380   18.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.7100   88.3550   18.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.2020   88.5400   17.1210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   78.4030   89.0370   17.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1760   89.7290   18.2410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O
+A    2
+C2
+A    3
+C3
+A    4
+O3
+A    5
+C4
+A    6
+O2
+A    7
+C5
+A    8
+C6
+A    9
+O1
+A   10
+C1
+A   11
+N
+M  END
+>  <InstanceId>
+4UFJ_IF7_A_1001
+
+>  <ChemCompId>
+IF7
+
+>  <PdbId>
+4UFJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+(3S,4S,5R)-5-(hydroxymethyl)-3,4-bis(oxidanyl)piperidin-2-one
+
+>  <SystematicName>
+(3S,4S,5R)-5-(hydroxymethyl)-3,4-bis(oxidanyl)piperidin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H11 N O4
+
+>  <MolecularWeight>
+161.156
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+ISO-GALACTO-FAGOMINE LACTAM
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11NO4/c8-2-3-1-7-6(11)5(10)4(3)9/h3-5,8-10H,1-2H2,(H,7,11)/t3-,4+,5+/m1/s1
+
+>  <InChIKey>
+ARBXEMIAJIJEQI-WISUUJSJSA-N
+
+>  <SMILES>
+C1[C@@H]([C@@H]([C@@H](C(=O)N1)O)O)CO
+
+$$$$

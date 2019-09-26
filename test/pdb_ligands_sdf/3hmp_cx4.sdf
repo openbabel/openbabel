@@ -1,0 +1,144 @@
+3HMP_CX4_A_1
+  RCSB PDB12061708553D
+Coordinates from PDB:3HMP:A:1 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+  -33.9980  -15.4210   -5.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.9880  -16.5700   -5.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.6760  -15.5890   -7.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.7660  -16.1340   -8.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5750  -16.9000   -9.0850   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.1530  -16.3300  -10.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.9620  -17.0620  -11.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2030  -18.4320  -10.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0090  -19.1190  -11.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5780  -18.4260  -12.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5940  -19.2230  -13.9780  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3420  -17.0630  -13.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.5340  -16.3780  -12.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.3040  -15.0660  -12.2780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.5360  -14.4130  -11.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.9700  -15.0170  -10.3850   N 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  1  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  2  0  0  0  0
+ 16  6  1  0  0  0  0
+ 13  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 10  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+CAF
+A    2
+CAG
+A    3
+CAP
+A    4
+CAH
+A    5
+NAK
+A    6
+C6
+A    7
+C5
+A    8
+CAD
+A    9
+CAB
+A   10
+CAL
+A   11
+CLAA
+A   12
+CAE
+A   13
+C4
+A   14
+N3
+A   15
+C2
+A   16
+N1
+M  END
+>  <InstanceId>
+3HMP_CX4_A_1
+
+>  <ChemCompId>
+CX4
+
+>  <PdbId>
+3HMP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 Cl
+
+>  <Name>
+7-chloro-N-(cyclopropylmethyl)quinazolin-4-amine
+
+>  <SystematicName>
+7-chloro-N-(cyclopropylmethyl)quinazolin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 Cl N3
+
+>  <MolecularWeight>
+233.697
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12ClN3/c13-9-3-4-10-11(5-9)15-7-16-12(10)14-6-8-1-2-8/h3-5,7-8H,1-2,6H2,(H,14,15,16)
+
+>  <InChIKey>
+ZXFUVGWLRJOTTC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)ncnc2NCC3CC3
+
+$$$$

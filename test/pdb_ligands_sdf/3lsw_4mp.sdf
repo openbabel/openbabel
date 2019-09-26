@@ -1,0 +1,143 @@
+2AL5_4MP_A_801
+  RCSB PDB12061705013D
+Coordinates from PDB:2AL5:A:801 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   21.7420   78.1590   29.7690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9840   80.0620   29.0590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6390   76.7420   24.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7830   79.3420   30.2670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0340   78.7310   30.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3090   78.9340   31.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2000   79.6590   32.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2630   80.0250   31.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0360   79.4380   29.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4730   78.7470   27.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4950   77.3230   27.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8960   76.6950   26.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2800   77.4770   25.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2590   78.9080   25.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8570   79.5380   26.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0520   77.4170   23.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  2  0  0  0  0
+  2  9  2  0  0  0  0
+  3 13  1  0  0  0  0
+  3 16  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+O3
+A    4
+N1
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+A   12
+C8
+A   13
+C9
+A   14
+C10
+A   15
+C11
+A   16
+C12
+M  END
+>  <InstanceId>
+2AL5_4MP_A_801
+
+>  <ChemCompId>
+4MP
+
+>  <PdbId>
+2AL5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O3
+
+>  <Name>
+1-(4-METHOXYBENZOYL)-2-PYRROLIDINONE
+
+>  <SystematicName>
+1-(4-methoxyphenyl)carbonylpyrrolidin-2-one
+
+>  <Synonyms>
+ANIRACETAM, 1-P-ANISOYL-2-PYRROLIDINONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 N O3
+
+>  <MolecularWeight>
+219.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13NO3/c1-16-10-6-4-9(5-7-10)12(15)13-8-2-3-11(13)14/h4-7H,2-3,8H2,1H3
+
+>  <InChIKey>
+ZXNRTKGTQJPIJK-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)C(=O)N2CCCC2=O
+
+$$$$

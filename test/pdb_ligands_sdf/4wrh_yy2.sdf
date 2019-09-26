@@ -1,0 +1,158 @@
+4WRH_YY2_A_402
+  RCSB PDB12061716033D
+Coordinates from PDB:4WRH:A:402 Model:1 without hydrogens
+ 20 20  0  0  0  0            999 V2000
+   -3.3370  -11.0600  -15.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5550   -9.6930  -15.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7330   -9.8440  -14.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3380   -9.2710  -14.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8720   -8.6360  -16.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0450   -8.3720  -17.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9900   -8.9670  -17.4870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5320   -7.2460  -18.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9320   -6.9850  -17.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3130   -5.6710  -17.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8000   -5.0140  -18.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8790   -5.8820  -20.3600  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2010   -3.6800  -18.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1110   -3.0200  -17.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4910   -1.6930  -17.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7670   -1.4380  -18.0620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6180   -3.7000  -16.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2180   -5.0360  -16.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7220   -5.8030  -15.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9750   -5.4760  -14.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8  6  1  0  0  0  0
+ 16 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 18  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 17  2  0  0  0  0
+  7  6  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 18 19  1  0  0  0  0
+  5  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 19 20  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+CAQ
+A    2
+CAP
+A    3
+CAR
+A    4
+CAS
+A    5
+NAO
+A    6
+CAM
+A    7
+OAN
+A    8
+CAL
+A    9
+OAG
+A   10
+CAF
+A   11
+CAE
+A   12
+CL1
+A   13
+CAD
+A   14
+CAC
+A   15
+CAK
+A   16
+NAT
+A   17
+CAB
+A   18
+CAA
+A   19
+OAH
+A   20
+CAI
+M  END
+>  <InstanceId>
+4WRH_YY2_A_402
+
+>  <ChemCompId>
+YY2
+
+>  <PdbId>
+4WRH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O3 Cl
+
+>  <Name>
+2-[4-(aminomethyl)-2-chloro-6-methoxyphenoxy]-N-tert-butylacetamide
+
+>  <SystematicName>
+2-[4-(aminomethyl)-2-chloranyl-6-methoxy-phenoxy]-N-tert-butyl-ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H21 Cl N2 O3
+
+>  <MolecularWeight>
+300.781
+
+>  <ModifiedDate>
+2014-10-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H21ClN2O3/c1-14(2,3)17-12(18)8-20-13-10(15)5-9(7-16)6-11(13)19-4/h5-6H,7-8,16H2,1-4H3,(H,17,18)
+
+>  <InChIKey>
+HEOFBSUCMHLHRB-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)NC(=O)COc1c(cc(cc1Cl)CN)OC
+
+$$$$

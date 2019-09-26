@@ -39,11 +39,16 @@ namespace OpenBabel
   public:
     //Register this format type ID
     PDBFormat()
-    {
+    { 
       OBConversion::RegisterFormat("pdb",this, "chemical/x-pdb");
       OBConversion::RegisterFormat("ent",this, "chemical/x-pdb");
 
-      OBConversion::RegisterOptionParam("o", this);
+      OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("b", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("c", this, 0, OBConversion::INOPTIONS);
+
+      OBConversion::RegisterOptionParam("o", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("n", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description() //required
@@ -56,6 +61,7 @@ namespace OpenBabel
         "  c  Ignore CONECT records\n\n"
 
         "Write Options, e.g. -xo\n"
+        "  n  Do not write duplicate CONECT records to indicate bond order\n"
         "  o  Write origin in space group label (CRYST1 section)\n\n";
     };
 
@@ -125,7 +131,7 @@ namespace OpenBabel
     const char* title = pConv->GetTitle();
 
     int chainNum = 1;
-    char buffer[BUFF_SIZE];
+    char buffer[BUFF_SIZE] = {0,};
     string line, key, value;
     OBPairData *dp;
 
@@ -135,13 +141,17 @@ namespace OpenBabel
     mol.SetChainsPerceived();
 
     mol.BeginModify();
+    bool ateend = false;
     while (ifs.good() && ifs.getline(buffer,BUFF_SIZE))
       {
-        if (EQn(buffer,"ENDMDL",6))
+        if (EQn(buffer,"ENDMDL",6)) {
+          ateend = true;
           break;
+        }
         if (EQn(buffer,"END",3)) {
           // eat anything until the next ENDMDL
           while (ifs.getline(buffer,BUFF_SIZE) && !EQn(buffer,"ENDMDL",6));
+          ateend = true;
           break;
         }
         if (EQn(buffer,"TER",3)) {
@@ -222,7 +232,7 @@ namespace OpenBabel
 
     if (!mol.NumAtoms()) { // skip the rest of this processing
       mol.EndModify();
-      return(false);
+      return ateend; //explictly empty molecules are not invalid
     }
 
     resdat.AssignBonds(mol);
@@ -768,17 +778,27 @@ namespace OpenBabel
         int currentValence = 0;
         for (nbr = atom->BeginNbrAtom(k);nbr;nbr = atom->NextNbrAtom(k))
           {
-            if ((currentValence % 4) == 0) {
-              if (currentValence > 0) 
-                // Add the trailing space to finish the previous record
-                ofs << "                                       \n";
-              // write the start of a new CONECT record
-              snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
+            OBBond *bond = mol.GetBond(atom, nbr);
+            if(!bond) continue;
+            unsigned bondorder = bond->GetBondOrder();
+            if(bondorder == 0 || pConv->IsOption("n", OBConversion::OUTOPTIONS)) 
+              bondorder = 1;
+            //a non-standard convention is to store bond orders by
+            //replicating conect records
+            for(unsigned bo = 0; bo < bondorder; bo++) {
+              if ((currentValence % 4) == 0) {
+                if (currentValence > 0) {
+                  // Add the trailing space to finish the previous record
+                  ofs << "                                       \n";
+                }
+                // write the start of a new CONECT record
+                snprintf(buffer, BUFF_SIZE, "CONECT%5d", i);
+                ofs << buffer;
+              }
+              currentValence++;
+              snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
               ofs << buffer;
             }
-            currentValence++;
-            snprintf(buffer, BUFF_SIZE, "%5d", nbr->GetIdx());
-            ofs << buffer;
           }
 
         // Add trailing spaces
@@ -895,7 +915,6 @@ namespace OpenBabel
     /* insertion code */
     char insertioncode = sbuf.substr(27-6-1,1)[0];
     if (' '==insertioncode) insertioncode=0;
-
     /* element */
     string element = "  ";
     if (sbuf.size() > 71)

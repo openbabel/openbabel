@@ -1,0 +1,131 @@
+5IF2_6B1_A_801
+  RCSB PDB12061718103D
+Coordinates from PDB:5IF2:A:801 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -30.6880  -44.3150   61.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.3030  -45.6520   61.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6420  -46.1070   62.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5440  -43.7170   60.0660  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.4070  -43.4470   62.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.9090  -41.7300   62.4790  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3650  -45.2320   63.7980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.7450  -43.8980   63.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1610  -47.3190   63.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.6010  -47.2170   64.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7290  -45.9410   64.7510   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.9370  -48.3280   65.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3200  -47.7490   66.2540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  8  2  0  0  0  0
+  3  9  1  0  0  0  0
+  3  7  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C12
+A    2
+C11
+A    3
+C10
+A    4
+CL2
+A    5
+C02
+A    6
+CL1
+A    7
+C04
+A    8
+C03
+A    9
+N09
+A   10
+C06
+A   11
+N05
+A   12
+C07
+A   13
+O08
+M  END
+>  <InstanceId>
+5IF2_6B1_A_801
+
+>  <ChemCompId>
+6B1
+
+>  <PdbId>
+5IF2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O Cl2
+
+>  <Name>
+(5,6-dichloro-1H-benzimidazol-2-yl)methanol
+
+>  <SystematicName>
+[5,6-bis(chloranyl)-1~{H}-benzimidazol-2-yl]methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 Cl2 N2 O
+
+>  <MolecularWeight>
+217.052
+
+>  <ModifiedDate>
+2017-02-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6Cl2N2O/c9-4-1-6-7(2-5(4)10)12-8(3-13)11-6/h1-2,13H,3H2,(H,11,12)
+
+>  <InChIKey>
+GOUGSJWBRLTBDO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c(cc(c1Cl)Cl)nc([nH]2)CO
+
+$$$$

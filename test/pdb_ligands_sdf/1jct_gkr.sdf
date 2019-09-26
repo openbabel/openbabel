@@ -1,0 +1,134 @@
+1JCT_GKR_A_499
+  RCSB PDB12061702563D
+Coordinates from PDB:1JCT:A:499 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   19.1790   49.3820   54.0980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4330   47.5880   54.3900   O 0  5  0  0  0  0  0  0  0  0  0  0
+   19.4380   48.1690   53.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5510   47.3900   52.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9940   45.9440   52.8260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4740   48.0790   51.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7720   48.1950   51.0120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4740   47.3840   50.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6650   47.7590   49.2530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7700   48.3470   52.2090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9900   47.6090   50.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2220   46.3020   50.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7290   45.2490   50.4960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0670   46.2850   51.5100   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+M  CHG  2   2  -1  14  -1
+A    1
+O1B
+A    2
+O1A
+A    3
+C1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+O5
+A   11
+C5
+A   12
+C6
+A   13
+O6A
+A   14
+O6B
+M  END
+>  <InstanceId>
+1JCT_GKR_A_499
+
+>  <ChemCompId>
+GKR
+
+>  <PdbId>
+1JCT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+499
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O8
+
+>  <Name>
+D-GLUCARATE
+
+>  <SystematicName>
+(2R,3S,4S,5S)-2,3,4,5-tetrahydroxyhexanedioate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 O8
+
+>  <MolecularWeight>
+208.123
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O8/c7-1(3(9)5(11)12)2(8)4(10)6(13)14/h1-4,7-10H,(H,11,12)(H,13,14)/p-2/t1-,2-,3-,4+/m0/s1
+
+>  <InChIKey>
+DSLZVSRJTYRBFB-LLEIAEIESA-L
+
+>  <SMILES>
+[C@H]([C@@H]([C@@H](C(=O)[O-])O)O)([C@H](C(=O)[O-])O)O
+
+$$$$

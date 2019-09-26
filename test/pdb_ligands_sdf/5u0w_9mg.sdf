@@ -1,0 +1,127 @@
+1RRW_9MG_A_1001
+  RCSB PDB12061703553D
+Coordinates from PDB:1RRW:A:1001 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   51.2670   45.6840   74.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0290   46.4900   74.5330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6010   47.4500   73.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4430   47.9600   74.0280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0550   47.3390   75.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9480   47.4370   76.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9320   48.3240   75.8400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9150   46.6380   77.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9310   45.7480   77.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8780   44.9530   78.6640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9830   45.6350   76.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0770   46.3980   75.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+N8
+A    9
+C9
+A   10
+N10
+A   11
+N11
+A   12
+C12
+M  END
+>  <InstanceId>
+1RRW_9MG_A_1001
+
+>  <ChemCompId>
+9MG
+
+>  <PdbId>
+1RRW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5 O
+
+>  <Name>
+9-METHYLGUANINE
+
+>  <SystematicName>
+2-amino-9-methyl-purin-6-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N5 O
+
+>  <MolecularWeight>
+165.153
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N5O/c1-11-2-8-3-4(11)9-6(7)10-5(3)12/h2H,1H3,(H3,7,9,10,12)
+
+>  <InChIKey>
+UUWJNBOCAPUTBK-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1cnc2c1nc(nc2O)N
+
+$$$$

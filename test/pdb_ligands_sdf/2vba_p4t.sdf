@@ -1,0 +1,143 @@
+2VBA_P4T_A_1405
+  RCSB PDB12061707043D
+Coordinates from PDB:2VBA:A:1405 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   41.8960   69.6860   64.7120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5730   69.9040   64.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5920   69.0510   65.0340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6290   70.7010   64.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7210   71.7270   63.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0220   73.0310   62.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1270   70.7420   64.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6590   67.8230   65.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5050   67.3760   66.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5070   66.1550   67.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6590   65.3730   67.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7940   65.8160   66.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8070   67.0340   65.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0450   71.3360   63.7750   S 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4480   73.4440   62.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1070   73.7350   62.4680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6 15  1  0  0  0  0
+  6 16  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+N7
+A    2
+C8
+A    3
+N9
+A    4
+C5
+A    5
+C4
+A    6
+C3
+A    7
+C6
+A    8
+C10
+A    9
+C16
+A   10
+C15
+A   11
+C14
+A   12
+C13
+A   13
+C12
+A   14
+S4
+A   15
+C2
+A   16
+O8
+M  END
+>  <InstanceId>
+2VBA_P4T_A_1405
+
+>  <ChemCompId>
+P4T
+
+>  <PdbId>
+2VBA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O S
+
+>  <Name>
+2-PHENYLAMINO-4-METHYL-5-ACETYL THIAZOLE
+
+>  <SystematicName>
+1-(4-methyl-2-phenylazanyl-1,3-thiazol-5-yl)ethanone
+
+>  <Synonyms>
+1-[4-methyl-2-(phenylamino)-1,3-thiazol-5-yl]ethanone
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H12 N2 O S
+
+>  <MolecularWeight>
+232.301
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C12H12N2OS/c1-8-11(9(2)15)16-12(13-8)14-10-6-4-3-5-7-10/h3-7H,1-2H3,(H,13,14)
+
+>  <InChIKey>
+UIIUOFPGDKBCEZ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(sc(n1)Nc2ccccc2)C(=O)C
+
+$$$$

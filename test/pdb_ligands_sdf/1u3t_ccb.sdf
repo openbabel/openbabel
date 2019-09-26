@@ -1,0 +1,127 @@
+1U3T_CCB_A_1378
+  RCSB PDB12061704113D
+Coordinates from PDB:1U3T:A:1378 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   10.6130   -0.5220    0.8190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6510   -0.6070   -0.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3060   -1.6340   -0.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1810   -1.6540    1.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9460    0.7210    0.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9570   -2.3640    1.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5490   -3.1810    2.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1740   -2.5130    3.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9130   -1.3120    3.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6140    1.6940    1.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7930    2.4240    0.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6420    1.1210    0.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O3
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+C20
+A   11
+C21
+A   12
+C22
+M  END
+>  <InstanceId>
+1U3T_CCB_A_1378
+
+>  <ChemCompId>
+CCB
+
+>  <PdbId>
+1U3T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1378
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+CYCLOBUTYL(CYCLOPENTYL)FORMAMIDE
+
+>  <SystematicName>
+N-cyclobutyl-N-cyclopentyl-methanamide
+
+>  <Synonyms>
+N-CYCLOPENTYL-N-CYCLOBUTYLFORMAMIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H17 N O
+
+>  <MolecularWeight>
+167.248
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H17NO/c12-8-11(10-6-3-7-10)9-4-1-2-5-9/h8-10H,1-7H2
+
+>  <InChIKey>
+DWGVYBRKKSJLNS-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(C1)N(C=O)C2CCC2
+
+$$$$

@@ -1,0 +1,135 @@
+5A3X_QIV_A_1482
+  RCSB PDB12061716453D
+Coordinates from PDB:5A3X:A:1482 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    3.1570   24.4550   15.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5140   24.3170   15.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8140   29.9100    9.4170   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7820   28.2190   10.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6150   27.2450   11.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4430   28.6520   10.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1980   27.3170   12.4960   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3120   25.8700   14.0820   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9590   25.9060   13.4210   S 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4600   24.8770   14.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6780   28.9430   10.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3490   26.3470   13.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3250   27.6990   11.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4160   27.0010   12.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+ 10  2  2  0  0  0  0
+ 11  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 11  4  1  0  0  0  0
+ 14  5  1  0  0  0  0
+ 13  6  1  0  0  0  0
+  6 11  2  0  0  0  0
+ 12  7  2  0  0  0  0
+  7 13  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8 12  1  0  0  0  0
+ 12  9  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+NAG
+A    8
+NAH
+A    9
+SAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+M  END
+>  <InstanceId>
+5A3X_QIV_A_1482
+
+>  <ChemCompId>
+QIV
+
+>  <PdbId>
+5A3X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1482
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2 S
+
+>  <Name>
+N-(5-oxidanyl-1,3-benzothiazol-2-yl)ethanamide
+
+>  <SystematicName>
+N-(5-oxidanyl-1,3-benzothiazol-2-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2 O2 S
+
+>  <MolecularWeight>
+208.237
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2O2S/c1-5(12)10-9-11-7-4-6(13)2-3-8(7)14-9/h2-4,13H,1H3,(H,10,11,12)
+
+>  <InChIKey>
+YOMAHEQEXVNJNF-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1nc2cc(ccc2s1)O
+
+$$$$

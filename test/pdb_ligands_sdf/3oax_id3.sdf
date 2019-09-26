@@ -1,0 +1,134 @@
+3OAX_ID3_A_6025
+  RCSB PDB12061710033D
+Coordinates from PDB:3OAX:A:6025 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   -3.1540   43.5970   18.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4580   46.2260   13.4380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6550   42.4270   19.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7290   41.0100   19.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0420   40.9720   17.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2060   42.3220   16.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7380   43.5260   17.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7540   44.8420   16.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1300   44.9540   15.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0030   46.2120   14.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6460   43.6170   18.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8600   44.8870   19.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8510   42.2700   15.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4590   47.5100   15.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 12  1  0  0  0  0
+ 10  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 14  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C16
+A   12
+C17
+A   13
+C18
+A   14
+C19
+M  END
+>  <InstanceId>
+3OAX_ID3_A_6025
+
+>  <ChemCompId>
+ID3
+
+>  <PdbId>
+3OAX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+6025
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O
+
+>  <Name>
+(3E)-4-(2,6,6-trimethylcyclohex-1-en-1-yl)but-3-en-2-one
+
+>  <SystematicName>
+(E)-4-(2,6,6-trimethylcyclohexen-1-yl)but-3-en-2-one
+
+>  <Synonyms>
+beta-ionone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H20 O
+
+>  <MolecularWeight>
+192.297
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H20O/c1-10-6-5-9-13(3,4)12(10)8-7-11(2)14/h7-8H,5-6,9H2,1-4H3/b8-7+
+
+>  <InChIKey>
+PSQYTAPXSHCGMF-BQYQJAHWSA-N
+
+>  <SMILES>
+CC1=C(C(CCC1)(C)C)/C=C/C(=O)C
+
+$$$$

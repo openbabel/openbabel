@@ -1,0 +1,127 @@
+4TY8_3AV_A_601
+  RCSB PDB12061714513D
+Coordinates from PDB:4TY8:A:601 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    7.0680  -23.9150  -22.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2420  -24.6810  -21.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5160  -24.9830  -22.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6480  -24.6870  -19.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9420  -23.7880  -19.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4760  -23.8540  -20.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6850  -24.0710  -18.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9670  -24.9800  -20.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7430  -24.1710  -22.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2290  -24.1010  -20.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7520  -24.7390  -23.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3930  -24.9690  -18.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  3  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  1  9  1  0  0  0  0
+  3  2  1  0  0  0  0
+  9  6  2  0  0  0  0
+  2  8  1  0  0  0  0
+  2 10  2  0  0  0  0
+  6 10  1  0  0  0  0
+  8  4  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  4 12  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  7  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+O01
+A    9
+C08
+A   10
+C09
+A   11
+C
+A   12
+O
+M  END
+>  <InstanceId>
+4TY8_3AV_A_601
+
+>  <ChemCompId>
+3AV
+
+>  <PdbId>
+4TY8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+6-methyl-2H-chromen-2-one
+
+>  <SystematicName>
+6-methylchromen-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 O2
+
+>  <MolecularWeight>
+160.169
+
+>  <ModifiedDate>
+2015-05-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8O2/c1-7-2-4-9-8(6-7)3-5-10(11)12-9/h2-6H,1H3
+
+>  <InChIKey>
+FXFYOPQLGGEACP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2c(c1)C=CC(=O)O2
+
+$$$$

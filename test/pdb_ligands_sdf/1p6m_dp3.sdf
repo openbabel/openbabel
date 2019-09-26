@@ -1,0 +1,146 @@
+1P6I_DP3_A_793
+  RCSB PDB12061703373D
+Coordinates from PDB:1P6I:A:793 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+    4.5850    2.2200   27.5200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2710    2.2600   26.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6200    0.8510   25.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0270    0.4130   25.8750   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5780   -0.5830   24.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1320   -0.7460   24.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4420   -2.0590   25.6250   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8290   -0.7890   23.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1630    0.5970   22.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2080    1.3820   23.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4740    0.5800   23.9700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5450    0.6160   23.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5720   -0.2070   23.5510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5630    1.4520   22.1200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5730    1.4130   21.1740   N 0  3  0  0  0  0  0  0  0  0  0  0
+   14.4990    2.2180   20.1850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5630    0.6200   21.2470   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+M  CHG  2  15   1  17  -1
+A    1
+N2'
+A    2
+C2'
+A    3
+C1'
+A    4
+N1'
+A    5
+C
+A    6
+CA
+A    7
+N
+A    8
+CB
+A    9
+CG
+A   10
+CD
+A   11
+NE
+A   12
+CZ
+A   13
+NH2
+A   14
+NH1
+A   15
+NO
+A   16
+O2
+A   17
+O3
+M  END
+>  <InstanceId>
+1P6I_DP3_A_793
+
+>  <ChemCompId>
+DP3
+
+>  <PdbId>
+1P6I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+793
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N7 O2
+
+>  <Name>
+N-{(4S)-4-AMINO-5-[(2-AMINOETHYL)AMINO]PENTYL}-N'-NITROGUANIDINE
+
+>  <SystematicName>
+1-[(4S)-4-amino-5-(2-aminoethylamino)pentyl]-3-nitro-guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H21 N7 O2
+
+>  <MolecularWeight>
+247.298
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H21N7O2/c9-3-5-12-6-7(10)2-1-4-13-8(11)14-15(16)17/h7,12H,1-6,9-10H2,(H3,11,13,14)/t7-/m0/s1
+
+>  <InChIKey>
+RMSWBHUVFNFNIZ-ZETCQYMHSA-N
+
+>  <SMILES>
+C(C[C@@H](CNCCN)N)CNC(=N)N[N+](=O)[O-]
+
+$$$$

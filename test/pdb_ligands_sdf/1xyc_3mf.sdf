@@ -1,0 +1,129 @@
+1XYC_3MF_A_950
+  RCSB PDB12061704413D
+Coordinates from PDB:1XYC:A:950 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   15.7250    4.5250  -13.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9370    5.7480  -12.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3630    6.0380  -12.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2350    6.5580  -10.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5210    6.3710   -9.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5300    7.1340   -8.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1960    6.4830  -13.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7490    4.6990  -14.6110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9760    6.4480  -12.5620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0380    6.9690  -13.1020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8050    7.9070  -10.7560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7670    5.0320   -9.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2280    7.2800   -8.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1XYC_3MF_A_950
+
+>  <ChemCompId>
+3MF
+
+>  <PdbId>
+1XYC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+950
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O6
+
+>  <Name>
+3-O-METHYLFRUCTOSE IN LINEAR FORM
+
+>  <SystematicName>
+(3S,4R,5R)-1,4,5,6-tetrahydroxy-3-methoxy-hexan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C7 H14 O6
+
+>  <MolecularWeight>
+194.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O6/c1-13-7(5(11)3-9)6(12)4(10)2-8/h4,6-10,12H,2-3H2,1H3/t4-,6-,7-/m1/s1
+
+>  <InChIKey>
+OFSVCCCZZQKHKQ-QPPQHZFASA-N
+
+>  <SMILES>
+CO[C@@H]([C@@H]([C@@H](CO)O)O)C(=O)CO
+
+$$$$

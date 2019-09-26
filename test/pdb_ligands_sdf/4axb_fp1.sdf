@@ -1,0 +1,118 @@
+2VB4_FP1_A_1536
+  RCSB PDB12061707043D
+Coordinates from PDB:2VB4:A:1536 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    2.7300   68.7470   62.4830   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0980   68.9650   62.2130   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5910   69.3160   63.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9500   69.6310   64.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3110   69.8830   64.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8330   70.2340   65.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9170   70.3150   66.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5310   70.0460   66.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0510   69.6770   65.4080   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5940   69.4420   65.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+N2
+A    3
+C6
+A    4
+C5
+A    5
+C4
+A    6
+C3
+A    7
+C2
+A    8
+C1
+A    9
+N1
+A   10
+C7
+M  END
+>  <InstanceId>
+2VB4_FP1_A_1536
+
+>  <ChemCompId>
+FP1
+
+>  <PdbId>
+2VB4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1536
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O
+
+>  <Name>
+N-hydroxy-1-(1-methylpyridin-2(1H)-ylidene)methanamine
+
+>  <SystematicName>
+N-[(Z)-(1-methylpyridin-2-ylidene)methyl]hydroxylamine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H10 N2 O
+
+>  <MolecularWeight>
+138.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H10N2O/c1-9-5-3-2-4-7(9)6-8-10/h2-6,8,10H,1H3/b7-6-
+
+>  <InChIKey>
+YDWKOUCMHAMECR-SREVYHEPSA-N
+
+>  <SMILES>
+CN\1C=CC=C/C1=C/NO
+
+$$$$

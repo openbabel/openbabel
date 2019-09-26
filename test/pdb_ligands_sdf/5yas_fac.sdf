@@ -1,0 +1,121 @@
+5YAS_FAC_A_300
+  RCSB PDB12061720183D
+Coordinates from PDB:5YAS:A:300 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   13.4120   52.1240   16.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4770   52.5560   15.1330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7090   50.7370   16.5120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4100   52.9090   17.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9910   52.2480   16.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2210   52.6940   18.6690   F 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2660   54.2390   17.0130   F 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6550   52.4860   16.9860   F 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7910   51.6630   18.2030   F 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3150   51.5850   16.0350   F 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5650   53.5450   16.9630   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5 11  1  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+O2
+A    4
+C1
+A    5
+C2
+A    6
+F1
+A    7
+F2
+A    8
+F3
+A    9
+F4
+A   10
+F5
+A   11
+F6
+M  END
+>  <InstanceId>
+5YAS_FAC_A_300
+
+>  <ChemCompId>
+FAC
+
+>  <PdbId>
+5YAS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O2 F6
+
+>  <Name>
+1,1,1,3,3,3-HEXAFLUOROPROPANEDIOL
+
+>  <SystematicName>
+1,1,1,3,3,3-hexafluoropropane-2,2-diol
+
+>  <Synonyms>
+HEXAFLUOROACETONE HYDRATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H2 F6 O2
+
+>  <MolecularWeight>
+184.037
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H2F6O2/c4-2(5,6)1(10,11)3(7,8)9/h10-11H
+
+>  <InChIKey>
+AKVXSYUWYXOLMY-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(F)(F)F)(C(F)(F)F)(O)O
+
+$$$$

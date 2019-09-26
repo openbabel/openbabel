@@ -1,0 +1,146 @@
+5CBT_4ZL_A_201
+  RCSB PDB12061717043D
+Coordinates from PDB:5CBT:A:201 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   -1.4860   -6.5930    4.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1290   -7.5190    5.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4970   -7.9110    5.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1390   -7.4980    4.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4570   -6.6330    3.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1850   -6.1270    3.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5810   -5.2080    2.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2120   -4.0600    3.5230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1830   -3.2980    3.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4690   -3.4940    1.9300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1310   -2.1520    3.8270   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0380   -1.3310    3.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0390   -2.0660    4.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8150   -2.8350    5.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2130   -1.4090    4.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3560   -1.7450    5.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6260   -1.0550    4.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  1  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  4  3  2  0  0  0  0
+ 15 13  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 13 14  2  0  0  0  0
+  1  2  2  0  0  0  0
+ 17 16  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+CAI
+A   10
+OAO
+A   11
+NAJ
+A   12
+CAK
+A   13
+CAL
+A   14
+OAQ
+A   15
+OAM
+A   16
+CAN
+A   17
+CAP
+M  END
+>  <InstanceId>
+5CBT_4ZL_A_201
+
+>  <ChemCompId>
+4ZL
+
+>  <PdbId>
+5CBT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O3
+
+>  <Name>
+ethyl N-(benzylcarbamoyl)glycinate
+
+>  <SystematicName>
+ethyl 2-[(phenylmethyl)carbamoylamino]ethanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H16 N2 O3
+
+>  <MolecularWeight>
+236.267
+
+>  <ModifiedDate>
+2016-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H16N2O3/c1-2-17-11(15)9-14-12(16)13-8-10-6-4-3-5-7-10/h3-7H,2,8-9H2,1H3,(H2,13,14,16)
+
+>  <InChIKey>
+JOGHOEBNQXZSDF-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)CNC(=O)NCc1ccccc1
+
+$$$$

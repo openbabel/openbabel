@@ -1,0 +1,143 @@
+1YSG_4FC_A_1000
+  RCSB PDB12061704483D
+Coordinates from PDB:1YSG:A:1000 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    3.9900   -9.7100   -4.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3080   -8.7090   -5.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7180   -7.3810   -5.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7950   -7.0610   -4.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4700   -8.0650   -3.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0680   -9.3840   -3.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7230   -6.4450   -2.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6150   -7.7250   -2.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5650   -8.6900   -2.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6280   -8.3760   -1.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7420   -7.0920   -1.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7840   -6.1280   -1.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2640   -9.0220   -6.2580   F 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8720   -6.7560   -0.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3970   -5.6660   -0.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3140   -7.5660    0.3390   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+F1
+A   14
+C13
+A   15
+O1
+A   16
+O2
+M  END
+>  <InstanceId>
+1YSG_4FC_A_1000
+
+>  <ChemCompId>
+4FC
+
+>  <PdbId>
+1YSG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O2 F
+
+>  <Name>
+4'-FLUORO-1,1'-BIPHENYL-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+4-(4-fluorophenyl)benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H9 F O2
+
+>  <MolecularWeight>
+216.208
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H9FO2/c14-12-7-5-10(6-8-12)9-1-3-11(4-2-9)13(15)16/h1-8H,(H,15,16)
+
+>  <InChIKey>
+LXWNTLBMNCXRQN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2ccc(cc2)F)C(=O)O
+
+$$$$

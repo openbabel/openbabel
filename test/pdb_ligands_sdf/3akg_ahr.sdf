@@ -1,0 +1,114 @@
+1GYE_AHR_B_801
+  RCSB PDB12061702393D
+Coordinates from PDB:1GYE:B:801 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   61.1440   16.6320   36.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1170   16.1960   35.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1720   17.1300   34.8490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.6820   16.2980   36.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0400   15.0390   36.6500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9550   17.0470   35.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7950   17.6870   35.9020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0600   18.0100   35.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8210   18.7560   33.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C5'
+A    2
+C4'
+A    3
+O4'
+A    4
+C3'
+A    5
+O3'
+A    6
+C2'
+A    7
+O2'
+A    8
+C1'
+A    9
+O1'
+M  END
+>  <InstanceId>
+1GYE_AHR_B_801
+
+>  <ChemCompId>
+AHR
+
+>  <PdbId>
+1GYE
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+ALPHA-L-ARABINOFURANOSE
+
+>  <SystematicName>
+(2R,3R,4R,5S)-5-(hydroxymethyl)oxolane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+L-SACCHARIDE
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-1-2-3(7)4(8)5(9)10-2/h2-9H,1H2/t2-,3-,4+,5+/m0/s1
+
+>  <InChIKey>
+HMFHBZSHGGEWLO-QMKXCQHVSA-N
+
+>  <SMILES>
+C([C@H]1[C@@H]([C@H]([C@@H](O1)O)O)O)O
+
+$$$$

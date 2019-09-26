@@ -1,0 +1,143 @@
+3IU9_T07_A_288
+  RCSB PDB12061709073D
+Coordinates from PDB:3IU9:A:288 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  -10.8170   43.8280   -4.3810   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9410   49.1270   -3.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1450   43.8390   -3.7660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7360   46.7360   -6.2830  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0700   47.3530   -5.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1860   43.7230   -1.5830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7920   50.7880   -3.4710  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0750   46.5420   -4.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0240   43.8800   -2.5770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1840   45.1440   -5.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5310   43.6660   -1.9910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9170   48.6720   -4.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9780   47.0060   -3.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8740   48.2940   -3.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3950   43.8240   -2.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4170   43.7770   -3.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2 12  2  0  0  0  0
+  2 14  1  0  0  0  0
+  3 15  1  0  0  0  0
+  3 16  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  2  0  0  0  0
+  5 12  1  0  0  0  0
+  6 11  1  0  0  0  0
+  6 15  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 15  1  0  0  0  0
+ 11 16  2  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+S
+A    2
+C1
+A    3
+N1
+A    4
+CL1
+A    5
+C2
+A    6
+N2
+A    7
+CL2
+A    8
+C3
+A    9
+N3
+A   10
+C4
+A   11
+N4
+A   12
+C5
+A   13
+C6
+A   14
+C7
+A   15
+C8
+A   16
+C9
+M  END
+>  <InstanceId>
+3IU9_T07_A_288
+
+>  <ChemCompId>
+T07
+
+>  <PdbId>
+3IU9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+288
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 S Cl2
+
+>  <Name>
+5-[(2,4-dichlorobenzyl)sulfanyl]-4H-1,2,4-triazol-3-amine
+
+>  <SystematicName>
+5-[(2,4-dichlorophenyl)methylsulfanyl]-4H-1,2,4-triazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 Cl2 N4 S
+
+>  <MolecularWeight>
+275.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8Cl2N4S/c10-6-2-1-5(7(11)3-6)4-16-9-13-8(12)14-15-9/h1-3H,4H2,(H3,12,13,14,15)
+
+>  <InChIKey>
+ZOVIHJUPKVOGKF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)Cl)CSc2[nH]c(nn2)N
+
+$$$$

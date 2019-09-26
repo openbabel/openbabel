@@ -1,0 +1,117 @@
+2AIR_AL0_A_805
+  RCSB PDB12061705003D
+Coordinates from PDB:2AIR:A:805 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   81.1800   33.6600   -3.1220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   79.8970   34.4120   -3.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.2730   35.8520   -3.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.4400   36.2080   -3.6800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0800   34.5220   -2.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.6700   33.1790   -1.5050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4210   32.8750   -1.4200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.6590   32.4400   -1.1830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2540   31.2190   -0.7140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.3360   36.5480   -4.3200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+NG
+A    7
+OD1
+A    8
+ND2
+A    9
+OE
+A   10
+OXT
+M  END
+>  <InstanceId>
+2AIR_AL0_A_805
+
+>  <ChemCompId>
+AL0
+
+>  <PdbId>
+2AIR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+805
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N3 O4
+
+>  <Name>
+3-[HYDROXY(NITROSO)AMINO]-L-ALANINE
+
+>  <SystematicName>
+(2S)-2-amino-3-(hydroxy-nitroso-amino)propanoic acid
+
+>  <Synonyms>
+L-ALANOSINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 N3 O4
+
+>  <MolecularWeight>
+149.105
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7N3O4/c4-2(3(7)8)1-6(10)5-9/h2,10H,1,4H2,(H,7,8)/t2-/m0/s1
+
+>  <InChIKey>
+MLFKVJCWGUZWNV-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)N)N(N=O)O
+
+$$$$

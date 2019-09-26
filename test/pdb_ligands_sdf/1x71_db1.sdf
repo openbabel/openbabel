@@ -1,0 +1,122 @@
+1X71_DB1_A_201
+  RCSB PDB12061704363D
+Coordinates from PDB:1X71:A:201 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   28.4570   78.8540   64.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6520   77.3470   63.3850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0970   82.8110   63.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6990   81.1540   64.6500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7420   79.4360   63.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7190   78.5880   62.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9270   79.1120   61.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1300   80.4410   61.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0950   81.2500   61.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9170   80.7610   62.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9430   81.6600   63.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3 11  2  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O1
+A    2
+O4
+A    3
+O7
+A    4
+N1
+A    5
+C1
+A    6
+C4
+A    7
+C7
+A    8
+C10
+A    9
+C13
+A   10
+C16
+A   11
+C19
+M  END
+>  <InstanceId>
+1X71_DB1_A_201
+
+>  <ChemCompId>
+DB1
+
+>  <PdbId>
+1X71
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+2,3-DIHYDROXYBENZAMIDE
+
+>  <SystematicName>
+2,3-dihydroxybenzamide
+
+>  <Synonyms>
+TRENCAM-3,2-HOPO
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O3
+
+>  <MolecularWeight>
+153.135
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO3/c8-7(11)4-2-1-3-5(9)6(4)10/h1-3,9-10H,(H2,8,11)
+
+>  <InChIKey>
+QCIDBNKTKNBPKM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)O)O)C(=O)N
+
+$$$$

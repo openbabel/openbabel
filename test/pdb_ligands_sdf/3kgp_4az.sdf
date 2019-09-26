@@ -1,0 +1,122 @@
+3KGP_4AZ_A_4069
+  RCSB PDB12061709263D
+Coordinates from PDB:3KGP:A:4069 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -26.8620   86.4380  -12.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0450   85.9370  -11.2960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.9970   86.9950  -11.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.0180   89.9830  -10.9120   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2980   86.9990  -10.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4900   87.5790   -9.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.3970   88.1590  -10.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.1070   88.1560  -12.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9210   87.5800  -12.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.6800   88.7790  -10.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3340   86.3040  -13.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  1  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  9  3  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+C
+A    2
+O
+A    3
+C1
+A    4
+N1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+OXT
+M  END
+>  <InstanceId>
+3KGP_4AZ_A_4069
+
+>  <ChemCompId>
+4AZ
+
+>  <PdbId>
+3KGP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4069
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+4-(aminomethyl)benzoic acid
+
+>  <SystematicName>
+4-(aminomethyl)benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O2
+
+>  <MolecularWeight>
+151.163
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO2/c9-5-6-1-3-7(4-2-6)8(10)11/h1-4H,5,9H2,(H,10,11)
+
+>  <InChIKey>
+QCTBMLYLENLHLA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CN)C(=O)O
+
+$$$$

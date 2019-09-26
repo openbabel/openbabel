@@ -1,0 +1,125 @@
+1V1A_KDG_A_1302
+  RCSB PDB12061704173D
+Coordinates from PDB:1V1A:A:1302 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   28.2860   42.7670   26.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6640   41.9590   27.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5250   41.9820   28.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4550   41.2750   27.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9120   41.3830   29.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0770   42.0190   30.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7650   41.5270   30.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1220   43.8210   30.4720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7580   42.6450   30.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2890   42.2930   30.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9890   41.2730   29.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4280   43.0500   30.8270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+A    1
+O1B
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O5
+A    9
+C5
+A   10
+C6
+A   11
+O6A
+A   12
+O6B
+M  END
+>  <InstanceId>
+1V1A_KDG_A_1302
+
+>  <ChemCompId>
+KDG
+
+>  <PdbId>
+1V1A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+2-KETO-3-DEOXYGLUCONATE
+
+>  <SystematicName>
+(4S,5R)-4,5,6-trihydroxy-2-oxo-hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 O6
+
+>  <MolecularWeight>
+178.14
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O6/c7-2-5(10)3(8)1-4(9)6(11)12/h3,5,7-8,10H,1-2H2,(H,11,12)/t3-,5+/m0/s1
+
+>  <InChIKey>
+WPAMZTWLKIDIOP-WVZVXSGGSA-N
+
+>  <SMILES>
+C([C@@H]([C@@H](CO)O)O)C(=O)C(=O)O
+
+$$$$

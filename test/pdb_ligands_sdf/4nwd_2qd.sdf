@@ -1,0 +1,141 @@
+4NWD_2QD_A_301
+  RCSB PDB12061713583D
+Coordinates from PDB:4NWD:A:301 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   -1.0890   30.8760  -13.9390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2190   31.1580  -13.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4940   32.1900  -12.7830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3550   30.1580  -13.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5560   30.6520  -12.9950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5980   29.8990  -15.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3130   28.5590  -15.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6190   27.3810  -14.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3580   27.3680  -14.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3700   26.5340  -14.2470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3790   28.2400  -16.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6670   28.7240  -17.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8840   28.6660  -16.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3070   27.5800  -16.2940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4100   29.8880  -16.4750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6010   29.9590  -15.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11  7  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 15 16  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  6  4  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+  1  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CG
+A    8
+CD2
+A    9
+OAG
+A   10
+OAD
+A   11
+CD1
+A   12
+CAH
+A   13
+CAN
+A   14
+OAE
+A   15
+NAK
+A   16
+CAA
+M  END
+>  <InstanceId>
+4NWD_2QD_A_301
+
+>  <ChemCompId>
+2QD
+
+>  <PdbId>
+4NWD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5
+
+>  <Name>
+(4R)-4-[3-(methylamino)-3-oxopropyl]-L-glutamic acid
+
+>  <SystematicName>
+(2S,4R)-2-azanyl-4-[3-(methylamino)-3-oxidanylidene-propyl]pentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H16 N2 O5
+
+>  <MolecularWeight>
+232.234
+
+>  <ModifiedDate>
+2014-08-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N2O5/c1-11-7(12)3-2-5(8(13)14)4-6(10)9(15)16/h5-6H,2-4,10H2,1H3,(H,11,12)(H,13,14)(H,15,16)/t5-,6+/m1/s1
+
+>  <InChIKey>
+NIJAFEMYFNBSBE-RITPCOANSA-N
+
+>  <SMILES>
+CNC(=O)CC[C@H](C[C@@H](C(=O)O)N)C(=O)O
+
+$$$$
