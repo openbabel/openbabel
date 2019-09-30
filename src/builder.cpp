@@ -46,6 +46,7 @@ GNU General Public License for more details.
  * - practically speaking, this means they are ordered by the number of atoms
  * */
 
+#include <iterator>
 using namespace std;
 
 namespace OpenBabel
@@ -1027,6 +1028,32 @@ namespace OpenBabel
     return fragment;
   }
 
+  // Get fragment and atom indices in the original molecule
+  vector<OBMol> getFragmentWithIndex(OBMol& mol, std::vector<std::vector<unsigned int> > *atomIndices) {
+    vector<OBMol> result;
+
+    OBMolAtomDFSIter iter(mol);
+    OBMol newMol;
+    atomIndices->clear();
+    while(iter) {
+      OBBitVec infragment(mol.NumAtoms()+1);
+      OBBitVec bondsToExclude(mol.NumAtoms()+1);
+
+      do { //for each atom in fragment
+        infragment.SetBitOn(iter->GetIdx());
+      } while ((iter++).next());
+
+      std::vector<unsigned int> atomorder, bondorder;
+      mol.CopySubstructure(newMol, &infragment, &bondsToExclude, 1, &atomorder, &bondorder);
+
+      result.push_back(newMol);
+      atomIndices->push_back(atomorder);
+      newMol.Clear();
+    }
+
+    return result;
+  }
+
   // First we find the most complex fragments in our molecule. Once we have a match,
   // vfrag is set for all the atoms in the fragment. A second match (smaller, more
   // simple part of the 1st match) is ignored.
@@ -1052,6 +1079,7 @@ namespace OpenBabel
 
     OBConversion conv;
     conv.SetOutFormat("can"); // Canonical SMILES
+    conv.SetOptions("O", conv.OUTOPTIONS);
 
     // Trigger hybridisation perception now so it will be copied to workMol
     mol.GetFirstAtom()->GetHyb();
@@ -1095,10 +1123,12 @@ namespace OpenBabel
 
     // Generate fragments by copy
     OBMol mol_copy;
-    mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
+    std::vector<unsigned int> atomorder, bondorder;
+    mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude, 1, &atomorder, &bondorder);
 
     // Separate each disconnected fragments as different molecules
-    vector<OBMol> fragments = mol_copy.Separate();
+    vector<vector<unsigned int> > atomIndices;
+    vector<OBMol> fragments = getFragmentWithIndex(mol_copy, &atomIndices);
 
     // datafile is read only on first use of Build()
     if(_rigid_fragments.empty())
@@ -1106,47 +1136,51 @@ namespace OpenBabel
 
 
     for(vector<OBMol>::iterator f = fragments.begin(); f != fragments.end(); ++f) {
+      int fragmentIndex = distance(fragments.begin(), f);
+      vector<unsigned int> atomIndex = atomIndices[fragmentIndex];
+      // get canonical SMILES and atom order
       std::string fragment_smiles = conv.WriteString(&*f, true);
+      OBPairData *pd = dynamic_cast<OBPairData*>((*f).GetData("SMILES Atom Order"));
+      istringstream iss(pd->GetValue());
+      vector<unsigned int> canonical_order;
+      canonical_order.clear();
+      copy(istream_iterator<unsigned int>(iss),
+          istream_iterator<unsigned int>(),
+          back_inserter<vector<unsigned int> >(canonical_order));
+
       bool isMatchRigid = false;
       // if rigid fragment is in database
       if (_rigid_fragments_index.count(fragment_smiles) > 0) {
-        OBSmartsPattern sp;
-        if (!sp.Init(fragment_smiles)) {
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from fragment", obInfo);
-        } else if (sp.Match(mol)) { // for all matches
-          isMatchRigid = true;
-          mlist = sp.GetUMapList();
-          for (j = mlist.begin(); j != mlist.end(); ++j) {
-            // Have any atoms of this match already been added?
-            bool alreadydone = false;
-            for (k = j->begin(); k != j->end(); ++k)
-              if (vfrag.BitIsSet(*k)) {
-                alreadydone = true;
-                break;
-              }
-            if (alreadydone) continue;
+        isMatchRigid = true;
+        // Have any atoms of this match already been added?
+        bool alreadydone = false;
+        for (size_t k = 0; k < atomIndices.size(); ++k) {
+          if (vfrag.BitIsSet(atomIndex[k])) {
+            alreadydone = true;
+            break;
+          }
+          if (alreadydone) continue;
+        }
 
-            for (k = j->begin(); k != j->end(); ++k)
-              vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+        for (size_t k = 0; k < atomIndex.size(); ++k) {
+          vfrag.SetBitOn(atomIndex[k]); // Set vfrag for all atoms of fragment
+        }
 
-            int counter;
-            std::vector<vector3> coords = GetFragmentCoord(fragment_smiles);
-            for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
-              // set coordinates for atoms
-              OBAtom *atom = workMol.GetAtom(*k);
-              atom->SetVector(coords[counter]);
-            }
+        std::vector<vector3> coords = GetFragmentCoord(fragment_smiles);
+        for (size_t k = 0; k < canonical_order.size(); ++k) {
+          // set coordinates for atoms
+          OBAtom *atom = workMol.GetAtom(atomIndex[canonical_order[k]-1]);
+          atom->SetVector(coords[k]);
+        }
 
-            // add the bonds for the fragment
-            for (k = j->begin(); k != j->end(); ++k) {
-              OBAtom *atom1 = mol.GetAtom(*k);
-              for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                OBAtom *atom2 = mol.GetAtom(*k2);
-                OBBond *bond = atom1->GetBond(atom2);
-                if (bond != NULL) {
-                  workMol.AddBond(*bond);
-                }
-              }
+        // add the bonds for the fragment
+        for (size_t k = 0; k < atomIndex.size(); ++k) {
+          OBAtom *atom1 = mol.GetAtom(atomIndex[k]);
+          for (size_t k2 = 0; k2 < atomIndex.size(); ++k2) {
+            OBAtom *atom2 = mol.GetAtom(atomIndex[k2]);
+            OBBond *bond = atom1->GetBond(atom2);
+            if (bond != NULL) {
+              workMol.AddBond(*bond);
             }
           }
         }
