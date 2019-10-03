@@ -269,16 +269,16 @@ if (DO_R_BINDINGS)
 		 add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp
 			 COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/R
 			 COMMAND ${SWIG_EXECUTABLE} -r -package openbabelR  -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
-			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
+			 # COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
 			 MAIN_DEPENDENCY openbabel-R.i
       )
     endif (RUN_SWIG)
 
 	 add_library(bindings_R MODULE ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp)
 	 if(BINDINGS_ONLY)
-		 target_link_libraries(bindings_R R ${BABEL_SYSTEM_LIBRARY})
+		 target_link_libraries(bindings_R ${BABEL_SYSTEM_LIBRARY})
 	 else()
-		 target_link_libraries(bindings_R R ${BABEL_LIBRARY})
+		 target_link_libraries(bindings_R ${BABEL_LIBRARY})
 	 endif()
 
 	 set_target_properties(bindings_R PROPERTIES
@@ -286,7 +286,6 @@ if (DO_R_BINDINGS)
     if(NOT BINDINGS_ONLY)
 		 add_dependencies(bindings_R openbabel)
     endif()
-	 add_dependencies(bindings_R R)
 
 	 install(TARGETS bindings_R
             LIBRARY DESTINATION ${LIB_INSTALL_DIR}
@@ -472,7 +471,7 @@ if (DO_CSHARP_BINDINGS)
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNetAssemblyInfo.cs ${openbabel_SOURCE_DIR}/scripts/csharp/src
           COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_SOURCE_DIR}/scripts/csharp/src -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
-          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp/src ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/scripts/csharp/obdotnet.snk /optimize /out:${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}/OBDotNet.dll *.cs
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp/src ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/scripts/csharp/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
           MAIN_DEPENDENCY openbabel-csharp.i
           WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts
