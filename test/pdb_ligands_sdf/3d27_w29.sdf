@@ -1,0 +1,139 @@
+3D27_W29_A_265
+  RCSB PDB12061708153D
+Coordinates from PDB:3D27:A:265 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    1.3330   14.4750    9.5170   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0100   14.1980    9.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4300   13.8760    8.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4590   13.8440    7.0270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7720   13.5850    7.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9010   14.2360   10.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2480   13.9450   10.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6900   13.6180    8.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1310   13.3110    8.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4990   11.9530    7.5870   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2250   12.1260    7.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5180   13.2350    8.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4220   13.9340    9.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5440   15.1530    9.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5740   14.7080   11.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  8  2  0  0  0  0
+  7  6  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O2
+A    2
+C10
+A    3
+C05
+A    4
+O1
+A    5
+C03
+A    6
+C06
+A    7
+C04
+A    8
+C01
+A    9
+C02
+A   10
+S
+A   11
+C07
+A   12
+C09
+A   13
+C08
+A   14
+C11
+A   15
+C12
+M  END
+>  <InstanceId>
+3D27_W29_A_265
+
+>  <ChemCompId>
+W29
+
+>  <PdbId>
+3D27
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+265
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2 S
+
+>  <Name>
+4-(3-ethylthiophen-2-yl)benzene-1,2-diol
+
+>  <SystematicName>
+4-(3-ethylthiophen-2-yl)benzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 O2 S
+
+>  <MolecularWeight>
+220.287
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12O2S/c1-2-8-5-6-15-12(8)9-3-4-10(13)11(14)7-9/h3-7,13-14H,2H2,1H3
+
+>  <InChIKey>
+VXLXQOMDQVQQLA-UHFFFAOYSA-N
+
+>  <SMILES>
+CCc1ccsc1c2ccc(c(c2)O)O
+
+$$$$

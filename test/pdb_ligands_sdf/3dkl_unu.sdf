@@ -1,0 +1,114 @@
+2XG3_UNU_A_1253
+  RCSB PDB12061707263D
+Coordinates from PDB:2XG3:A:1253 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -15.8410    7.6400   -3.4740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4830    8.2180   -2.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4240    8.4940   -1.4520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1270    8.8430   -2.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0120   10.0600   -1.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9810    8.2060   -2.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7280    8.7880   -2.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6070   10.0050   -1.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7560   10.6330   -1.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+O08
+A    2
+C07
+A    3
+N09
+A    4
+C06
+A    5
+C01
+A    6
+C05
+A    7
+C04
+A    8
+C03
+A    9
+C02
+M  END
+>  <InstanceId>
+2XG3_UNU_A_1253
+
+>  <ChemCompId>
+UNU
+
+>  <PdbId>
+2XG3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1253
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O
+
+>  <Name>
+BENZAMIDE
+
+>  <SystematicName>
+benzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O
+
+>  <MolecularWeight>
+121.137
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H7NO/c8-7(9)6-4-2-1-3-5-6/h1-5H,(H2,8,9)
+
+>  <InChIKey>
+KXDAEFPNCMNJSK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C(=O)N
+
+$$$$

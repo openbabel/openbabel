@@ -1,0 +1,139 @@
+5A4T_AJG_A_1482
+  RCSB PDB12061716453D
+Coordinates from PDB:5A4T:A:1482 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    8.3640  -15.0320   48.1050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4390  -14.8710   47.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6170  -13.8320   46.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7120  -13.8100   45.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6740  -14.8920   45.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7920  -14.9310   43.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0640  -14.9710   43.0110   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5450  -15.9500   45.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3830  -15.9210   46.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4590  -16.9840   46.7040   S 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0350  -16.1870   48.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0000  -16.5170   48.8990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7110  -17.6770   48.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5990  -17.8940   49.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4080  -18.7630   47.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  2  0  0  0  0
+  6  7  3  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+NAH
+A    2
+CAN
+A    3
+CAF
+A    4
+CAE
+A    5
+CAL
+A    6
+CAD
+A    7
+NAB
+A    8
+CAG
+A    9
+CAO
+A   10
+SAJ
+A   11
+CAM
+A   12
+NAI
+A   13
+CAK
+A   14
+OAC
+A   15
+CAA
+M  END
+>  <InstanceId>
+5A4T_AJG_A_1482
+
+>  <ChemCompId>
+AJG
+
+>  <PdbId>
+5A4T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1482
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O S
+
+>  <Name>
+N-(6-CYANO-3H-1,3-BENZOTHIAZOL-2-YLIDENE)ETHANAMIDE
+
+>  <SystematicName>
+N-(6-cyano-3H-1,3-benzothiazol-2-ylidene)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H7 N3 O S
+
+>  <MolecularWeight>
+217.247
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7N3OS/c1-6(14)12-10-13-8-3-2-7(5-11)4-9(8)15-10/h2-4H,1H3,(H,12,13,14)
+
+>  <InChIKey>
+JGSLDMQYARUFDJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)N=C1Nc2ccc(cc2S1)C#N
+
+$$$$

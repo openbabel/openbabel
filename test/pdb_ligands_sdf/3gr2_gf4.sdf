@@ -1,0 +1,135 @@
+3G2Y_GF4_A_1
+  RCSB PDB12061708413D
+Coordinates from PDB:3G2Y:A:1 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -4.7180   51.2260   12.9010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0650   52.3720   12.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4500   52.7950   12.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7130   51.9910   12.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6210   52.7230   13.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2620   54.1980   11.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3330   55.1550   11.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9390   54.4860   11.6350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2550   53.3720   12.1380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9250   53.3350   12.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1770   53.5420   11.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8590   53.4260   11.6160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9140   53.1440   12.9910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2620   53.0950   13.3680   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  3  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9  2  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 14  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O11
+A    2
+C3
+A    3
+C4
+A    4
+C12
+A    5
+C13
+A    6
+C5
+A    7
+C14
+A    8
+N1
+A    9
+N2
+A   10
+C6
+A   11
+N10
+A   12
+N9
+A   13
+N8
+A   14
+N7
+M  END
+>  <InstanceId>
+3G2Y_GF4_A_1
+
+>  <ChemCompId>
+GF4
+
+>  <PdbId>
+3G2Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N6 O
+
+>  <Name>
+4-ethyl-5-methyl-2-(1H-tetrazol-5-yl)-1,2-dihydro-3H-pyrazol-3-one
+
+>  <SystematicName>
+4-ethyl-5-methyl-2-(1H-1,2,3,4-tetrazol-5-yl)-1H-pyrazol-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N6 O
+
+>  <MolecularWeight>
+194.194
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10N6O/c1-3-5-4(2)10-13(6(5)14)7-8-11-12-9-7/h10H,3H2,1-2H3,(H,8,9,11,12)
+
+>  <InChIKey>
+WAVWUEFMWJZZFB-UHFFFAOYSA-N
+
+>  <SMILES>
+CCC1=C(NN(C1=O)c2[nH]nnn2)C
+
+$$$$

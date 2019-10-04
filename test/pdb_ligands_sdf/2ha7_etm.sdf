@@ -1,0 +1,106 @@
+1QWZ_ETM_A_245
+  RCSB PDB12061703493D
+Coordinates from PDB:1QWZ:A:245 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   17.8930  -21.0400   33.7730   S 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6230  -21.0440   34.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2660  -21.1180   33.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7560  -22.5370   33.9450   N 0  3  0  0  0  0  0  0  0  0  0  0
+   15.7300  -23.5940   33.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5540  -22.6970   33.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3220  -22.8210   35.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+M  CHG  1   4   1
+A    1
+SD
+A    2
+C1
+A    3
+C2
+A    4
+N1
+A    5
+C3
+A    6
+C4
+A    7
+C5
+M  END
+>  <InstanceId>
+1QWZ_ETM_A_245
+
+>  <ChemCompId>
+ETM
+
+>  <PdbId>
+1QWZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+245
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N S
+
+>  <Name>
+2-(TRIMETHYLAMMONIUM)ETHYL THIOL
+
+>  <SystematicName>
+trimethyl-(2-sulfanylethyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H14 N S
+
+>  <MolecularWeight>
+120.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H13NS/c1-6(2,3)4-5-7/h4-5H2,1-3H3/p+1
+
+>  <InChIKey>
+VFUGTBZQGUVGEX-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(C)CCS
+
+$$$$

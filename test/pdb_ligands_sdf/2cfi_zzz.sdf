@@ -1,0 +1,135 @@
+2CFI_ZZZ_A_1311
+  RCSB PDB12061705143D
+Coordinates from PDB:2CFI:A:1311 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   31.7880   11.3830   17.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1210   12.6740   18.0640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4060   13.0140   18.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7710   14.2890   18.4640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0880   14.5950   18.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4450   15.8900   18.8560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4410   11.9640   18.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8380   12.3870   18.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0660   13.6830   18.5360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7950   11.5770   18.2280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0550   10.6280   17.8970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6410   10.2500   18.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2140   10.1020   19.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0550    9.6900   19.7130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+C7
+A    2
+N8
+A    3
+C9
+A    4
+N1
+A    5
+C2
+A    6
+N2
+A    7
+C10
+A    8
+C4
+A    9
+N3
+A   10
+O4
+A   11
+N5
+A   12
+C6
+A   13
+C6A
+A   14
+O6A
+M  END
+>  <InstanceId>
+2CFI_ZZZ_A_1311
+
+>  <ChemCompId>
+ZZZ
+
+>  <PdbId>
+2CFI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O2
+
+>  <Name>
+6-FORMYLTETRAHYDROPTERIN
+
+>  <SystematicName>
+(6R)-2-amino-4-oxo-5,6,7,8-tetrahydro-3H-pteridine-6-carbaldehyde
+
+>  <Synonyms>
+(6S)-2-AMINO-4-OXO-3,4,5,6,7,8-HEXAHYDROPTERIDINE-6-CARBALDEHYDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N5 O2
+
+>  <MolecularWeight>
+195.179
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N5O2/c8-7-11-5-4(6(14)12-7)10-3(2-13)1-9-5/h2-3,10H,1H2,(H4,8,9,11,12,14)/t3-/m1/s1
+
+>  <InChIKey>
+LBARDZPDAYELSB-GSVOUGTGSA-N
+
+>  <SMILES>
+C1[C@@H](NC2=C(N1)N=C(NC2=O)N)C=O
+
+$$$$

@@ -1,0 +1,122 @@
+5SXD_71F_B_701
+  RCSB PDB12061719283D
+Coordinates from PDB:5SXD:B:701 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   59.2480   44.9740   71.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5030   44.6400   72.7280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3860   45.4780   73.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5510   44.9520   75.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.4260   45.7850   76.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.1300   47.1450   76.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9620   47.6770   74.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0890   46.8500   73.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8550   43.4820   75.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0260   43.0600   75.1440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9170   42.7010   75.5600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  8  3  2  0  0  0  0
+  8  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  6  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  9 11  1  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+O9
+A   11
+O11
+M  END
+>  <InstanceId>
+5SXD_71F_B_701
+
+>  <ChemCompId>
+71F
+
+>  <PdbId>
+5SXD
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+2-methoxybenzoic acid
+
+>  <SystematicName>
+2-methoxybenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2017-02-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O3/c1-11-7-5-3-2-4-6(7)8(9)10/h2-5H,1H3,(H,9,10)
+
+>  <InChIKey>
+ILUJQPXNXACGAN-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccccc1C(=O)O
+
+$$$$

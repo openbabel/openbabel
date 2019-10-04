@@ -1,0 +1,149 @@
+4BB3_KKA_A_1333
+  RCSB PDB12061711493D
+Coordinates from PDB:4BB3:A:1333 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   15.7330   36.4870    5.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6070   36.6170    7.3880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7190   39.7870    6.6790   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2520   43.5380    6.9620   S 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1720   37.7100    5.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0600   39.9260    4.5370   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1360   39.8480    2.5740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7510   38.0250    5.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4980   39.7840    4.2050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3380   39.3380    4.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3680   36.2260    4.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9860   39.7250    5.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1050   36.6800    6.2590   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6820   40.2380    4.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5420   41.7350    5.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1490   42.0490    5.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7470   39.9300    3.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1750   36.4590    5.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  1  1  0  0  0  0
+ 18  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 12  3  2  0  0  0  0
+ 16  4  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 14  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 17  7  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  9 17  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 18 11  1  0  0  0  0
+ 13 18  2  0  0  0  0
+ 17 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+S
+A    5
+C1
+A    6
+N1
+A    7
+O1
+A    8
+C2
+A    9
+O2
+A   10
+C3
+A   11
+O3
+A   12
+C4
+A   13
+O4
+A   14
+C5
+A   15
+C6
+A   16
+C7
+A   17
+C8
+A   18
+C9
+M  END
+>  <InstanceId>
+4BB3_KKA_A_1333
+
+>  <ChemCompId>
+KKA
+
+>  <PdbId>
+4BB3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1333
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O5 S
+
+>  <Name>
+(2S)-2-azanyl-6-oxidanylidene-6-[[(2S)-1-oxidanyl-1-oxidanylidene-4-sulfanyl-butan-2-yl]amino]hexanoic acid
+
+>  <SystematicName>
+(2S)-2-azanyl-6-oxidanylidene-6-[[(2S)-1-oxidanyl-1-oxidanylidene-4-sulfanyl-butan-2-yl]amino]hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 N2 O5 S
+
+>  <MolecularWeight>
+278.325
+
+>  <ModifiedDate>
+2013-04-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18N2O5S/c11-6(9(14)15)2-1-3-8(13)12-7(4-5-18)10(16)17/h6-7,18H,1-5,11H2,(H,12,13)(H,14,15)(H,16,17)/t6-,7-/m0/s1
+
+>  <InChIKey>
+SDIJIFRHLPSENI-BQBZGAKWSA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)N)CC(=O)N[C@@H](CCS)C(=O)O
+
+$$$$

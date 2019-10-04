@@ -1,0 +1,114 @@
+2OLN_6PC_A_5001
+  RCSB PDB12061706313D
+Coordinates from PDB:2OLN:A:5001 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -13.8330  -20.9950  -14.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8150  -21.7380  -15.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1160  -20.6010  -14.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2270  -21.2510  -13.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8330  -19.6240  -13.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1900  -19.8100  -13.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6780  -22.4250  -13.6360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9270  -20.2990  -13.2310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1600  -21.9540  -14.7690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  5  2  0  0  0  0
+  4  7  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C1
+A    2
+C3
+A    3
+C4
+A    4
+C2
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+N2
+M  END
+>  <InstanceId>
+2OLN_6PC_A_5001
+
+>  <ChemCompId>
+6PC
+
+>  <PdbId>
+2OLN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2
+
+>  <Name>
+PYRIDINE-2-CARBOXYLIC ACID
+
+>  <SystematicName>
+pyridine-2-carboxylic acid
+
+>  <Synonyms>
+PICOLINIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 N O2
+
+>  <MolecularWeight>
+123.109
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5NO2/c8-6(9)5-3-1-2-4-7-5/h1-4H,(H,8,9)
+
+>  <InChIKey>
+SIOXPEMLGUPBBT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)C(=O)O
+
+$$$$

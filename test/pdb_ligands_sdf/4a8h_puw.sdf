@@ -1,0 +1,129 @@
+4A8H_PUW_A_1341
+  RCSB PDB12061711373D
+Coordinates from PDB:4A8H:A:1341 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    9.0580   54.3000   38.8030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9680   53.2570   38.9570   P 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5340   53.0440   40.3750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8360   53.4510   37.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7640   51.6840   38.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9820   50.4900   38.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9170   50.1890   38.4600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5160   49.7910   39.9800   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9370   48.6080   40.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0630   48.7740   42.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7030   47.4830   42.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8130   47.6220   44.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7170   46.3030   44.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O3P
+A    2
+P
+A    3
+O1P
+A    4
+O2P
+A    5
+C1P
+A    6
+C1
+A    7
+O1
+A    8
+NE
+A    9
+CD
+A   10
+CG
+A   11
+CB
+A   12
+CA
+A   13
+N
+M  END
+>  <InstanceId>
+4A8H_PUW_A_1341
+
+>  <ChemCompId>
+PUW
+
+>  <PdbId>
+4A8H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1341
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O4 P
+
+>  <Name>
+N-(PHOSPHONOACETYL)-PUTRESCINE
+
+>  <SystematicName>
+[2-(4-azanylbutylamino)-2-oxidanylidene-ethyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H15 N2 O4 P
+
+>  <MolecularWeight>
+210.168
+
+>  <ModifiedDate>
+2014-05-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H15N2O4P/c7-3-1-2-4-8-6(9)5-13(10,11)12/h1-5,7H2,(H,8,9)(H2,10,11,12)
+
+>  <InChIKey>
+VJPDOEGJBRLVCO-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCNC(=O)CP(=O)(O)O)CN
+
+$$$$

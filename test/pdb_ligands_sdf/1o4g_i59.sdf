@@ -1,0 +1,143 @@
+1O4G_I59_A_300
+  RCSB PDB12061703303D
+Coordinates from PDB:1O4G:A:300 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   21.8620   29.4050   15.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7960   28.7990   17.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5400   28.3900   17.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3210   28.5830   16.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4290   29.2090   15.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7030   29.6120   15.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4670   27.7650   18.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2250   27.3110   19.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0460   27.4800   18.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0530   28.1140   17.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8120   28.2920   16.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4530   27.1220   15.6900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4140   29.0300   17.3630   P 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8490   30.5200   17.5180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0960   28.3870   18.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2020   29.0850   16.4470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+O12
+A   13
+P13
+A   14
+O15
+A   15
+O16
+A   16
+O17
+M  END
+>  <InstanceId>
+1O4G_I59_A_300
+
+>  <ChemCompId>
+I59
+
+>  <PdbId>
+1O4G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4 P
+
+>  <Name>
+HYDROXY(1-NAPHTHYL)METHYLPHOSPHONIC ACID
+
+>  <SystematicName>
+[(S)-hydroxy-naphthalen-1-yl-methyl]phosphonic acid
+
+>  <Synonyms>
+DPI59
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 O4 P
+
+>  <MolecularWeight>
+238.176
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11O4P/c12-11(16(13,14)15)10-7-3-5-8-4-1-2-6-9(8)10/h1-7,11-12H,(H2,13,14,15)/t11-/m0/s1
+
+>  <InChIKey>
+AXIBZLYWMBUYRV-NSHDSACASA-N
+
+>  <SMILES>
+c1ccc2c(c1)cccc2[C@@H](O)P(=O)(O)O
+
+$$$$

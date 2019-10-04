@@ -1,0 +1,126 @@
+2X0V_X0V_B_1290
+  RCSB PDB12061707213D
+Coordinates from PDB:2X0V:B:1290 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  125.0250   99.5760  -47.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.0340   99.6280  -48.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.0450  100.8170  -50.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.9630  100.7580  -49.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  122.1860   99.7440  -50.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.1830   98.5590  -48.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.3060   99.6670  -46.2680   F 0  0  0  0  0  0  0  0  0  0  0  0
+  125.7440   98.3780  -47.5100   F 0  0  0  0  0  0  0  0  0  0  0  0
+  125.9220  100.6460  -47.5500   F 0  0  0  0  0  0  0  0  0  0  0  0
+  122.2570   98.6120  -49.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  122.9800  101.9580  -51.2420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  121.2530   99.8150  -51.7040   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  6  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3 11  1  0  0  0  0
+  5 10  2  0  0  0  0
+  5 12  1  0  0  0  0
+  6 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C6
+A    6
+C7
+A    7
+F1
+A    8
+F2
+A    9
+F3
+A   10
+C8
+A   11
+N1
+A   12
+N2
+M  END
+>  <InstanceId>
+2X0V_X0V_B_1290
+
+>  <ChemCompId>
+X0V
+
+>  <PdbId>
+2X0V
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 F3
+
+>  <Name>
+4-(TRIFLUOROMETHYL)BENZENE-1,2-DIAMINE
+
+>  <SystematicName>
+4-(trifluoromethyl)benzene-1,2-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H7 F3 N2
+
+>  <MolecularWeight>
+176.139
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7F3N2/c8-7(9,10)4-1-2-5(11)6(12)3-4/h1-3H,11-12H2
+
+>  <InChIKey>
+RQWJHUJJBYMJMN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1C(F)(F)F)N)N
+
+$$$$

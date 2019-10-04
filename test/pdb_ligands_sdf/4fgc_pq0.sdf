@@ -1,0 +1,131 @@
+1IT8_PQ0_A_602
+  RCSB PDB12061702523D
+Coordinates from PDB:1IT8:A:602 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   34.5090   36.9820   79.3280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5940   37.8440   79.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0060   38.6450   78.6030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3450   38.6590   77.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3030   37.8450   77.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8380   36.9380   78.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9050   36.2080   77.8770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9550   38.1640   75.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9210   37.5810   74.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1510   37.0260   74.1530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8070   39.0970   75.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6090   39.3710   76.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1600   37.8200   80.7110   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  3  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O6
+A    8
+C7
+A    9
+C10
+A   10
+N11
+A   11
+C8
+A   12
+N9
+A   13
+N2
+M  END
+>  <InstanceId>
+1IT8_PQ0_A_602
+
+>  <ChemCompId>
+PQ0
+
+>  <PdbId>
+1IT8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O
+
+>  <Name>
+2-AMINO-4-OXO-4,7-DIHYDRO-3H-PYRROLO[2,3-D]PYRIMIDINE-5-CARBONITRILE
+
+>  <SystematicName>
+2-amino-4-oxo-3,7-dihydropyrrolo[5,4-d]pyrimidine-5-carbonitrile
+
+>  <Synonyms>
+7-DEAZA-7-CYANO-GUANINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N5 O
+
+>  <MolecularWeight>
+175.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5N5O/c8-1-3-2-10-5-4(3)6(13)12-7(9)11-5/h2H,(H4,9,10,11,12,13)
+
+>  <InChIKey>
+FMKSMYDYKXQYRV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c2c([nH]1)N=C(NC2=O)N)C#N
+
+$$$$

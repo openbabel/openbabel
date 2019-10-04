@@ -1,0 +1,159 @@
+4DHN_0KC_A_307
+  RCSB PDB12061712123D
+Coordinates from PDB:4DHN:A:307 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+   22.0450    8.2410   -8.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9120    7.2950   -9.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9890    7.1440  -10.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1530    7.9790  -11.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0020    8.2550  -10.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6070    9.6000  -10.2700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9270    9.7320  -10.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6890    8.7700  -10.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5820   11.1120  -10.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4700   12.0250  -10.8160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6680   13.3690  -10.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9430   13.9550  -10.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0320   15.3580  -10.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8760   16.1250  -10.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6020   15.5170  -10.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5280   14.1350  -10.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8300   13.4050  -10.4070   P 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8300   12.1700   -9.4600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6210   12.9540  -11.8810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8330   14.4520   -9.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 19 17  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  7  2  0  0  0  0
+  9  7  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 15  2  0  0  0  0
+ 17 20  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 13 14  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  5  1  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAS
+A    2
+CAR
+A    3
+CAQ
+A    4
+CAT
+A    5
+CAP
+A    6
+NAN
+A    7
+CAM
+A    8
+OAO
+A    9
+CAL
+A   10
+OAK
+A   11
+CAB
+A   12
+CAA
+A   13
+CAF
+A   14
+CAE
+A   15
+CAD
+A   16
+CAC
+A   17
+PAG
+A   18
+OAI
+A   19
+OAJ
+A   20
+OAH
+M  END
+>  <InstanceId>
+4DHN_0KC_A_307
+
+>  <ChemCompId>
+0KC
+
+>  <PdbId>
+4DHN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+307
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O5 P
+
+>  <Name>
+{2-[2-(cyclopentylamino)-2-oxoethoxy]phenyl}phosphonic acid
+
+>  <SystematicName>
+[2-[2-(cyclopentylamino)-2-oxidanylidene-ethoxy]phenyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H18 N O5 P
+
+>  <MolecularWeight>
+299.259
+
+>  <ModifiedDate>
+2013-07-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H18NO5P/c15-13(14-10-5-1-2-6-10)9-19-11-7-3-4-8-12(11)20(16,17)18/h3-4,7-8,10H,1-2,5-6,9H2,(H,14,15)(H2,16,17,18)
+
+>  <InChIKey>
+OUYPHOGRFCIRMR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)OCC(=O)NC2CCCC2)P(=O)(O)O
+
+$$$$

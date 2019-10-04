@@ -1,0 +1,122 @@
+4WKV_3QK_C_801
+  RCSB PDB12061715593D
+Coordinates from PDB:4WKV:C:801 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   24.6820   32.9880    9.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5990   31.8540    9.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1810   30.4800    9.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5320   30.2100    7.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0160   28.8740    7.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5360   28.5550    6.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6580   27.6360    5.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0100   27.6970    3.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4150   26.3430    2.9470   B 0  5  0  0  0  0  0  0  0  0  0  0
+   22.7750   26.2450    3.0940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7570   26.3000    1.3320   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+M  CHG  1   9  -1
+A    1
+C6
+A    2
+C7
+A    3
+C8
+A    4
+C9
+A    5
+C10
+A    6
+C11
+A    7
+C12
+A    8
+C13
+A    9
+B1
+A   10
+O2
+A   11
+O3
+M  END
+>  <InstanceId>
+4WKV_3QK_C_801
+
+>  <ChemCompId>
+3QK
+
+>  <PdbId>
+4WKV
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 O2 B
+
+>  <Name>
+trihydroxy(octyl)borate(1-)
+
+>  <SystematicName>
+octyl-tris(oxidanyl)boranuide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H20 B O3
+
+>  <MolecularWeight>
+175.054
+
+>  <ModifiedDate>
+2014-11-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H20BO3/c1-2-3-4-5-6-7-8-9(10,11)12/h10-12H,2-8H2,1H3/q-1
+
+>  <InChIKey>
+UFILDBLRNSLDDP-UHFFFAOYSA-N
+
+>  <SMILES>
+[B-](CCCCCCCC)(O)(O)O
+
+$$$$

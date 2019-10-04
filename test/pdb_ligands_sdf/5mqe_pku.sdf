@@ -1,0 +1,118 @@
+5MQE_PKU_A_1201
+  RCSB PDB12061719043D
+Coordinates from PDB:5MQE:A:1201 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -20.4620  -25.0520  -12.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4520  -29.9460  -14.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8070  -27.8860  -14.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0130  -27.0720  -13.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4190  -29.1050  -14.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1310  -27.9950  -14.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5010  -26.0050  -12.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5070  -29.2610  -14.3040   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2260  -27.2540  -13.6670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6230  -29.6620  -15.3420  Br 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  5  1  0  0  0  0
+  5  2  2  0  0  0  0
+  5  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  6  2  0  0  0  0
+  8  6  1  0  0  0  0
+  6  4  1  0  0  0  0
+  9  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  7  1  1  0  0  0  0
+A    1
+CAA
+A    2
+CAD
+A    3
+CAE
+A    4
+CAH
+A    5
+CAI
+A    6
+CAJ
+A    7
+NAF
+A    8
+NAG
+A    9
+OAB
+A   10
+BR
+M  END
+>  <InstanceId>
+5MQE_PKU_A_1201
+
+>  <ChemCompId>
+PKU
+
+>  <PdbId>
+5MQE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O Br
+
+>  <Name>
+4-bromanyl-~{N}-methyl-1~{H}-pyrrole-2-carboxamide
+
+>  <SystematicName>
+4-bromanyl-~{N}-methyl-1~{H}-pyrrole-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 Br N2 O
+
+>  <MolecularWeight>
+203.037
+
+>  <ModifiedDate>
+2017-04-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7BrN2O/c1-8-6(10)5-2-4(7)3-9-5/h2-3,9H,1H3,(H,8,10)
+
+>  <InChIKey>
+HQGRBJIXXLIGLE-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=O)c1cc(c[nH]1)Br
+
+$$$$

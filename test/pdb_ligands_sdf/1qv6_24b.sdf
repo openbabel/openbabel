@@ -1,0 +1,118 @@
+1QV6_24B_A_378
+  RCSB PDB12061703493D
+Coordinates from PDB:1QV6:A:378 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    2.0110   -2.6530   21.4130   F 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9770   -1.4900   16.9990   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1950   -3.8990   20.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2160   -2.2410   19.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6600   -2.3170   20.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5830   -2.0790   19.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0980   -1.7410   17.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7380   -1.6530   17.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2130   -1.8980   18.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7470   -2.5470   21.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+F2
+A    2
+F4
+A    3
+O1
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+M  END
+>  <InstanceId>
+1QV6_24B_A_378
+
+>  <ChemCompId>
+24B
+
+>  <PdbId>
+1QV6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+378
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O F2
+
+>  <Name>
+(2,4-DIFLUOROPHENYL)METHANOL
+
+>  <SystematicName>
+(2,4-difluorophenyl)methanol
+
+>  <Synonyms>
+2,4-DIFLUOROBENZYL ALCOHOL 2,4-DIFLUORO-1-(HYDROXYMETHYL)BENZENE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 F2 O
+
+>  <MolecularWeight>
+144.119
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6F2O/c8-6-2-1-5(4-10)7(9)3-6/h1-3,10H,4H2
+
+>  <InChIKey>
+NIJZBWHOHNWJBX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1F)F)CO
+
+$$$$

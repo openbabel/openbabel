@@ -1,0 +1,134 @@
+1RTW_MP5_A_1213
+  RCSB PDB12061703553D
+Coordinates from PDB:1RTW:A:1213 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   23.2380   43.3170   58.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3140   43.9570   59.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4650   44.0200   57.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6590   45.2510   59.3530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0470   43.2680   60.6050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7250   41.9730   60.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5540   41.2570   61.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6680   41.2740   60.2620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9560   41.9810   59.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9820   43.8870   56.6670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3010   45.2170   55.8190   P 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5270   44.5340   55.0670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0400   46.3880   56.6410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2190   45.6500   55.0290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N1
+A    5
+N2
+A    6
+C4
+A    7
+C5
+A    8
+N3
+A    9
+C6
+A   10
+O1
+A   11
+P1
+A   12
+O2
+A   13
+O3
+A   14
+O4
+M  END
+>  <InstanceId>
+1RTW_MP5_A_1213
+
+>  <ChemCompId>
+MP5
+
+>  <PdbId>
+1RTW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1213
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O4 P
+
+>  <Name>
+(4-AMINO-2-METHYLPYRIMIDIN-5-YL)METHYL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+(4-amino-2-methyl-pyrimidin-5-yl)methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N3 O4 P
+
+>  <MolecularWeight>
+219.135
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10N3O4P/c1-4-8-2-5(6(7)9-4)3-13-14(10,11)12/h2H,3H2,1H3,(H2,7,8,9)(H2,10,11,12)
+
+>  <InChIKey>
+PKYFHKIYHBRTPI-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ncc(c(n1)N)COP(=O)(O)O
+
+$$$$

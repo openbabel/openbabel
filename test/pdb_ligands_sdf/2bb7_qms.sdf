@@ -1,0 +1,139 @@
+2BB7_QMS_A_305
+  RCSB PDB12061705063D
+Coordinates from PDB:2BB7:A:305 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -2.8350    1.5100   10.7030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0670    1.0680   10.0430   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9790    0.6440   11.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7920    2.2890    9.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6400   -0.1290    9.0770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4000   -0.6850    8.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7230   -0.2570    7.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8470   -1.7050    7.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5570   -2.1500    7.4830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0470   -3.1180    6.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8090   -3.7120    5.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1150   -3.2830    5.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6430   -2.2790    6.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9560   -1.8430    6.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5020   -0.8510    6.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7 15  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+O2
+A    2
+S1
+A    3
+O1
+A    4
+C7
+A    5
+N1
+A    6
+C3
+A    7
+C2
+A    8
+C4
+A    9
+N2
+A   10
+C8
+A   11
+C9
+A   12
+C10
+A   13
+C5
+A   14
+C6
+A   15
+C1
+M  END
+>  <InstanceId>
+2BB7_QMS_A_305
+
+>  <ChemCompId>
+QMS
+
+>  <PdbId>
+2BB7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+305
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 S
+
+>  <Name>
+N-(QUINOLIN-8-YL)METHANESULFONAMIDE
+
+>  <SystematicName>
+N-quinolin-8-ylmethanesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O2 S
+
+>  <MolecularWeight>
+222.264
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O2S/c1-15(13,14)12-9-6-2-4-8-5-3-7-11-10(8)9/h2-7,12H,1H3
+
+>  <InChIKey>
+XYEPUTZVZYUENX-UHFFFAOYSA-N
+
+>  <SMILES>
+CS(=O)(=O)Nc1cccc2c1nccc2
+
+$$$$

@@ -1,0 +1,146 @@
+4GCH_DMC_G_246
+  RCSB PDB12061712413D
+Coordinates from PDB:4GCH:G:246 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   36.7650   76.1440   83.6440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2170   76.4890   84.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5190   76.4960   86.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6810   77.0740   87.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1940   75.9670   86.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4370   77.2280   88.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4880   77.7180   89.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3350   77.7870   90.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1270   77.4090   91.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1210   76.9090   90.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2550   76.8050   89.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4430   78.0540   89.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9620   77.4920   92.8180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5670   77.3930   93.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3490   78.5180   93.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3270   77.1860   93.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7120   79.1760   92.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+CA
+A    4
+CB1
+A    5
+CB2
+A    6
+CG
+A    7
+CD1
+A    8
+CE1
+A    9
+CZ
+A   10
+CE2
+A   11
+CD2
+A   12
+OH
+A   13
+N
+A   14
+CH1
+A   15
+CH2
+A   16
+CM1
+A   17
+CM2
+M  END
+>  <InstanceId>
+4GCH_DMC_G_246
+
+>  <ChemCompId>
+DMC
+
+>  <PdbId>
+4GCH
+
+>  <ChainId>
+G
+
+>  <ResidueNumber>
+246
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C14 N O2
+
+>  <Name>
+3-(4-DIETHYLAMINO-2-HYDROXY-PHENYL)-2-METHYL-PROPIONIC ACID
+
+>  <SystematicName>
+(E)-3-(4-diethylamino-2-hydroxy-phenyl)-2-methyl-prop-2-enoic acid
+
+>  <Synonyms>
+PARA-DIETHYLAMINO-O-HYDROXY-ALPHA-METHYL CINNAMIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H19 N O3
+
+>  <MolecularWeight>
+249.306
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H19NO3/c1-4-15(5-2)12-7-6-11(13(16)9-12)8-10(3)14(17)18/h6-9,16H,4-5H2,1-3H3,(H,17,18)/b10-8+
+
+>  <InChIKey>
+JAEWDFYDSACHDN-CSKARUKUSA-N
+
+>  <SMILES>
+CCN(CC)c1ccc(c(c1)O)\C=C(/C)\C(=O)O
+
+$$$$

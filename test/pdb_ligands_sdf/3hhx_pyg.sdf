@@ -1,0 +1,114 @@
+1TI4_PYG_A_950
+  RCSB PDB12061704063D
+Coordinates from PDB:1TI4:A:950 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   22.6960  -80.8140  -37.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8870  -80.9250  -38.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1020  -81.8760  -39.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1250  -82.7200  -39.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9080  -82.6350  -37.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6750  -81.7010  -36.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6130  -79.3990  -37.2980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8400  -80.1200  -39.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1260  -82.1620  -41.0980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+M  END
+>  <InstanceId>
+1TI4_PYG_A_950
+
+>  <ChemCompId>
+PYG
+
+>  <PdbId>
+1TI4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+950
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+BENZENE-1,2,3-TRIOL
+
+>  <SystematicName>
+benzene-1,2,3-triol
+
+>  <Synonyms>
+PYROGALLOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O3
+
+>  <MolecularWeight>
+126.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O3/c7-4-2-1-3-5(8)6(4)9/h1-3,7-9H
+
+>  <InChIKey>
+WQGWDDDVZFFDIG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)O)O)O
+
+$$$$

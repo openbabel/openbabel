@@ -1,0 +1,121 @@
+5DCU_TEG_A_902
+  RCSB PDB12061717153D
+Coordinates from PDB:5DCU:A:902 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   -3.8480   33.3880  -10.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5130   33.5520  -11.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0050   35.2930  -10.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4550   36.6380  -11.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6860   37.0520  -10.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0290   38.3190  -11.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7970   32.3350   -9.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5050   34.4740   -9.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8670   34.9040  -11.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3010   37.0780  -10.1760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4420   38.3960  -12.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  6  1  0  0  0  0
+  9  2  1  0  0  0  0
+  9  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5 10  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  8  1  0  0  0  0
+A    1
+CAB
+A    2
+CAC
+A    3
+CAF
+A    4
+CAG
+A    5
+CAI
+A    6
+CAJ
+A    7
+OAA
+A    8
+OAD
+A    9
+OAE
+A   10
+OAH
+A   11
+OAK
+M  END
+>  <InstanceId>
+5DCU_TEG_A_902
+
+>  <ChemCompId>
+TEG
+
+>  <PdbId>
+5DCU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+[2-(2-hydroxyethoxy)ethoxy]acetic acid
+
+>  <SystematicName>
+2-[2-(2-hydroxyethyloxy)ethoxy]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2015-10-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c7-1-2-10-3-4-11-5-6(8)9/h7H,1-5H2,(H,8,9)
+
+>  <InChIKey>
+PRBXPAHXMGDVNQ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COCCOCC(=O)O)O
+
+$$$$

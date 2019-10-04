@@ -1,0 +1,122 @@
+3PCF_FHB_M_550
+  RCSB PDB12061710143D
+Coordinates from PDB:3PCF:M:550 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   14.8930   12.3540   40.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4850   11.3370   39.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0210   10.0430   39.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6060    9.0630   39.2210   F 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8990    9.7510   40.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4700    8.4410   40.7650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3060   10.7350   41.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7930   12.0510   41.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4750   13.7500   40.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4050   14.0100   39.8250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9870   14.6510   41.2430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+F3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+3PCF_FHB_M_550
+
+>  <ChemCompId>
+FHB
+
+>  <PdbId>
+3PCF
+
+>  <ChainId>
+M
+
+>  <ResidueNumber>
+550
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3 F
+
+>  <Name>
+3-FLUORO-4-HYDROXYBENZOIC ACID
+
+>  <SystematicName>
+3-fluoro-4-hydroxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 F O3
+
+>  <MolecularWeight>
+156.111
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5FO3/c8-5-3-4(7(10)11)1-2-6(5)9/h1-3,9H,(H,10,11)
+
+>  <InChIKey>
+IUSDEKNMCOUBEE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1C(=O)O)F)O
+
+$$$$

@@ -1,0 +1,148 @@
+5HRW_64E_A_801
+  RCSB PDB12061718033D
+Coordinates from PDB:5HRW:A:801 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+   14.8500   -9.5440   -7.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2900   -9.5950   -9.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5330   -8.6220   -9.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9360   -8.6570  -11.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0490   -9.6780  -11.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7710  -10.6580  -10.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3900  -10.6340   -9.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1110  -11.6470   -8.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3560  -12.6010   -8.6070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6780  -11.5820   -7.1450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5300  -10.5040   -6.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1960  -10.2880   -5.6850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8560   -9.2610   -5.8050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7140   -8.7680   -7.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4060   -7.4920   -7.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2240   -7.0090   -6.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9500   -5.6880   -6.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  7  2  0  0  0  0
+  3  2  2  0  0  0  0
+  7  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+  1 14  1  0  0  0  0
+  1 11  2  0  0  0  0
+ 15 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 13 12  1  0  0  0  0
+A    1
+CAG
+A    2
+CAD
+A    3
+CAC
+A    4
+CAB
+A    5
+CAA
+A    6
+CAF
+A    7
+CAE
+A    8
+CAJ
+A    9
+OAK
+A   10
+OAI
+A   11
+CAH
+A   12
+NAN
+A   13
+NAM
+A   14
+CAL
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+M  END
+>  <InstanceId>
+5HRW_64E_A_801
+
+>  <ChemCompId>
+64E
+
+>  <PdbId>
+5HRW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O2
+
+>  <Name>
+1-propylisochromeno[3,4-c]pyrazol-5(3H)-one
+
+>  <SystematicName>
+1-propyl-3~{H}-isochromeno[3,4-c]pyrazol-5-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H12 N2 O2
+
+>  <MolecularWeight>
+228.247
+
+>  <ModifiedDate>
+2016-10-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H12N2O2/c1-2-5-10-11-8-6-3-4-7-9(8)13(16)17-12(11)15-14-10/h3-4,6-7H,2,5H2,1H3,(H,14,15)
+
+>  <InChIKey>
+URRDWILHXUGXPV-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCc1c-2c([nH]n1)OC(=O)c3c2cccc3
+
+$$$$

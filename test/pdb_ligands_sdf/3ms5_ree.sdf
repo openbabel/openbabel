@@ -1,0 +1,118 @@
+3MS5_REE_A_391
+  RCSB PDB12061709483D
+Coordinates from PDB:3MS5:A:391 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   21.4780   27.2900   88.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8490   30.5560   87.9770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7250   27.2920   88.0060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7030   28.4420   87.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4660   31.8070   87.5960   N 0  3  0  0  0  0  0  0  0  0  0  0
+   20.7640   26.3200   88.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4610   29.6580   86.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6400   32.5730   88.8550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8320   31.5590   87.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6880   32.5620   86.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  3  1  2  0  0  0  0
+  1  6  1  0  0  0  0
+  7  2  1  0  0  0  0
+  5  2  1  0  0  0  0
+  7  4  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  9  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+M  CHG  1   5   1
+A    1
+C1
+A    2
+N1
+A    3
+O1
+A    4
+C2
+A    5
+N2
+A    6
+O2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+M  END
+>  <InstanceId>
+3MS5_REE_A_391
+
+>  <ChemCompId>
+REE
+
+>  <PdbId>
+3MS5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+391
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2
+
+>  <Name>
+2-(2-carboxyethyl)-1,1,1-trimethyldiazanium
+
+>  <SystematicName>
+(2-carboxyethylamino)-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H15 N2 O2
+
+>  <MolecularWeight>
+147.195
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N2O2/c1-8(2,3)7-5-4-6(9)10/h7H,4-5H2,1-3H3/p+1
+
+>  <InChIKey>
+PVBQYTCFVWZSJK-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(C)NCCC(=O)O
+
+$$$$

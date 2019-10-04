@@ -1,0 +1,127 @@
+2B0W_203_B_602
+  RCSB PDB12061705043D
+Coordinates from PDB:2B0W:B:602 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  177.3350    3.0950   23.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  176.7770    2.3270   24.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  176.2370    2.7090   25.8630   N 0  0  0  0  0  0  0  0  0  0  0  0
+  176.6870    0.8420   24.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  176.0830   -0.1070   25.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  175.4850    0.1280   26.3540   N 0  0  0  0  0  0  0  0  0  0  0  0
+  175.4580    1.6350   26.9570   S 0  0  0  0  0  0  0  0  0  0  0  0
+  175.9080    1.7270   28.4430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  173.9080    2.0950   27.1440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  176.1640   -1.3030   24.5340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  176.8220   -0.9770   23.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  177.2190    0.3480   23.1300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O19
+A    2
+C18
+A    3
+N17
+A    4
+C13
+A    5
+C14
+A    6
+N15
+A    7
+S16
+A    8
+O20
+A    9
+O21
+A   10
+N10
+A   11
+C11
+A   12
+N12
+M  END
+>  <InstanceId>
+2B0W_203_B_602
+
+>  <ChemCompId>
+203
+
+>  <PdbId>
+2B0W
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N4 O3 S
+
+>  <Name>
+1,5-DIHYDROIMIDAZO[4,5-C][1,2,6]THIADIAZIN-4(3H)-ONE 2,2-DIOXIDE
+
+>  <SystematicName>
+2,2-dioxo-1,5-dihydroimidazo[5,4-d][1,2,6]thiadiazin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H4 N4 O3 S
+
+>  <MolecularWeight>
+188.165
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H4N4O3S/c9-4-2-3(6-1-5-2)7-12(10,11)8-4/h1,7H,(H,5,6)(H,8,9)
+
+>  <InChIKey>
+BSAXWMSAVVOOHO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)NS(=O)(=O)NC2=O
+
+$$$$

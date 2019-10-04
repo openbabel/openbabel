@@ -1,0 +1,147 @@
+4HWK_SFY_A_807
+  RCSB PDB12061712553D
+Coordinates from PDB:4HWK:A:807 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   33.0510  -39.2370  -13.8260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0760  -39.6970  -14.8410   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7040  -39.4200  -14.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3040  -38.9080  -16.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9000  -39.4800  -17.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0960  -38.8000  -18.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7010  -37.5420  -18.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9130  -36.8160  -19.9150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1100  -36.9670  -17.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9120  -37.6490  -16.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2420  -41.2750  -15.0930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4320  -41.8810  -15.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5490  -41.1740  -15.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7520  -41.8400  -16.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8140  -43.2090  -15.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6770  -43.8750  -15.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5290  -43.2110  -15.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 17 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  1  2  2  0  0  0  0
+ 11  2  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  7  1  0  0  0  0
+ 10  4  1  0  0  0  0
+  7  6  2  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+A    1
+OAB
+A    2
+SAQ
+A    3
+OAC
+A    4
+CAP
+A    5
+CAJ
+A    6
+CAH
+A    7
+CAN
+A    8
+NAA
+A    9
+CAI
+A   10
+CAK
+A   11
+NAM
+A   12
+CAO
+A   13
+CAG
+A   14
+CAE
+A   15
+CAD
+A   16
+CAF
+A   17
+NAL
+M  END
+>  <InstanceId>
+4HWK_SFY_A_807
+
+>  <ChemCompId>
+SFY
+
+>  <PdbId>
+4HWK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+807
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2 S
+
+>  <Name>
+4-amino-N-(pyridin-2-yl)benzenesulfonamide
+
+>  <SystematicName>
+4-azanyl-N-pyridin-2-yl-benzenesulfonamide
+
+>  <Synonyms>
+Sulfapyridine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N3 O2 S
+
+>  <MolecularWeight>
+249.289
+
+>  <ModifiedDate>
+2013-05-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11N3O2S/c12-9-4-6-10(7-5-9)17(15,16)14-11-3-1-2-8-13-11/h1-8H,12H2,(H,13,14)
+
+>  <InChIKey>
+GECHUMIMRBOMGK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)NS(=O)(=O)c2ccc(cc2)N
+
+$$$$

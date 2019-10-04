@@ -1,0 +1,123 @@
+1JDJ_CFP_A_367
+  RCSB PDB12061702563D
+Coordinates from PDB:1JDJ:A:367 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   33.1880   55.0960   30.8680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8130   55.9020   31.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1160   55.6990   31.9000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3780   54.6930   30.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5720   53.9840   30.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8160   54.1920   31.0460  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4470   53.0080   29.5770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2200   52.7380   29.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0450   53.3380   29.3490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1880   54.3050   30.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1770   52.0260   28.3270   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+N9
+A    2
+C8
+A    3
+N7
+A    4
+C5
+A    5
+C6
+A    6
+CL6
+A    7
+N1
+A    8
+C2
+A    9
+N3
+A   10
+C4
+A   11
+F2
+M  END
+>  <InstanceId>
+1JDJ_CFP_A_367
+
+>  <ChemCompId>
+CFP
+
+>  <PdbId>
+1JDJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+367
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 F Cl
+
+>  <Name>
+6-CHLORO-2-FLUOROPURINE
+
+>  <SystematicName>
+6-chloro-2-fluoro-9H-purine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H2 Cl F N4
+
+>  <MolecularWeight>
+172.548
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H2ClFN4/c6-3-2-4(9-1-8-2)11-5(7)10-3/h1H,(H,8,9,10,11)
+
+>  <InChIKey>
+UNRIYCIDCQDGQE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)c(nc(n2)F)Cl
+
+$$$$

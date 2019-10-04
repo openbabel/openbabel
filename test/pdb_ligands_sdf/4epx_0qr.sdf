@@ -1,0 +1,151 @@
+4EPX_0QR_A_203
+  RCSB PDB12061712253D
+Coordinates from PDB:4EPX:A:203 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   26.6560   -0.2720   13.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3610   -0.8030   14.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4640   -1.9100   14.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0900   -2.5010   15.9370   F 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9070   -2.4740   13.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2320   -1.9320   12.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1040   -0.8210   12.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5770   -0.0910   10.8240   S 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8850   -0.7730   10.3390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8030    1.3890   11.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4150   -0.4720    9.6880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2920    0.3090    9.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4410   -0.0320    8.5370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9900    1.4170   10.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7870    2.1580   10.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9160    1.7380    9.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3010    0.6460    8.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5750    0.1910    7.2710   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 18 17  1  0  0  0  0
+ 17 13  2  0  0  0  0
+ 17 16  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 16 15  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 11  8  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  2  0  0  0  0
+  8  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  5  3  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+CAD
+A    2
+CAE
+A    3
+CAF
+A    4
+FAG
+A    5
+CAH
+A    6
+CAI
+A    7
+CAC
+A    8
+SAB
+A    9
+OAA
+A   10
+OAR
+A   11
+NA2
+A   12
+CAK
+A   13
+NA3
+A   14
+CAQ
+A   15
+CAP
+A   16
+CAO
+A   17
+CAM
+A   18
+NA1
+M  END
+>  <InstanceId>
+4EPX_0QR_A_203
+
+>  <ChemCompId>
+0QR
+
+>  <PdbId>
+4EPX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2 S F
+
+>  <Name>
+N-(6-aminopyridin-2-yl)-4-fluorobenzenesulfonamide
+
+>  <SystematicName>
+N-(6-azanylpyridin-2-yl)-4-fluoranyl-benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 F N3 O2 S
+
+>  <MolecularWeight>
+267.279
+
+>  <ModifiedDate>
+2012-05-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10FN3O2S/c12-8-4-6-9(7-5-8)18(16,17)15-11-3-1-2-10(13)14-11/h1-7H,(H3,13,14,15)
+
+>  <InChIKey>
+RMLZUMIBXDAAKA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(nc(c1)NS(=O)(=O)c2ccc(cc2)F)N
+
+$$$$

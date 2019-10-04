@@ -1,0 +1,123 @@
+5H4I_7HQ_B_201
+  RCSB PDB12061717563D
+Coordinates from PDB:5H4I:B:201 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   -5.7150    4.9540  -17.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0490    5.0220  -18.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7430    4.6790  -19.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0630    4.2820  -19.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6610    4.2370  -18.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9890    4.5670  -17.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8120    4.4280  -15.9910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9890    4.0130  -16.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8980    3.8940  -17.7670   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0360    3.4510  -18.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6150    3.0310  -19.9080   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  2  1  2  0  0  0  0
+  5  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  9  8  1  0  0  0  0
+  1  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+A    1
+CAI
+A    2
+CAK
+A    3
+CAJ
+A    4
+CAF
+A    5
+CAD
+A    6
+CAE
+A    7
+NAC
+A    8
+CAG
+A    9
+NAB
+A   10
+CAH
+A   11
+OAA
+M  END
+>  <InstanceId>
+5H4I_7HQ_B_201
+
+>  <ChemCompId>
+7HQ
+
+>  <PdbId>
+5H4I
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+benzimidazol-1-ylmethanol
+
+>  <SystematicName>
+benzimidazol-1-ylmethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N2 O
+
+>  <MolecularWeight>
+148.162
+
+>  <ModifiedDate>
+2016-12-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N2O/c11-6-10-5-9-7-3-1-2-4-8(7)10/h1-5,11H,6H2
+
+>  <InChIKey>
+IWCRZZKSGBFRSJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ncn2CO
+
+$$$$

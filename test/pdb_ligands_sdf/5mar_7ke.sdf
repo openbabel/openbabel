@@ -1,0 +1,143 @@
+5MAR_7KE_A_403
+  RCSB PDB12061719003D
+Coordinates from PDB:5MAR:A:403 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    4.9540  -35.6850    0.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1120  -36.4570    0.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1570  -36.1580    2.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2570  -36.9830    2.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8430  -37.2950    6.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2660  -38.5330    5.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9840  -36.2250    4.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4090  -37.4610    4.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0490  -38.6170    5.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2010  -36.1410    5.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0720  -37.5470    3.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4070  -38.6580    3.6850   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3570  -36.4950    3.5140   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2930  -38.2970    3.0500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9530  -35.8990   -1.2130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4120  -37.1820    6.8450  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 15  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4 14  1  0  0  0  0
+  4 13  2  0  0  0  0
+ 14 12  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11  8  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  9  6  2  0  0  0  0
+ 10  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+  5 16  1  0  0  0  0
+A    1
+C15
+A    2
+C14
+A    3
+C13
+A    4
+C11
+A    5
+C06
+A    6
+C05
+A    7
+C02
+A    8
+C03
+A    9
+C04
+A   10
+C01
+A   11
+C08
+A   12
+N09
+A   13
+N12
+A   14
+O10
+A   15
+O16
+A   16
+CL7
+M  END
+>  <InstanceId>
+5MAR_7KE_A_403
+
+>  <ChemCompId>
+7KE
+
+>  <PdbId>
+5MAR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2 Cl
+
+>  <Name>
+3-[3-(4-chlorophenyl)-1,2,4-oxadiazol-5-yl]propan-1-ol
+
+>  <SystematicName>
+3-[3-(4-chlorophenyl)-1,2,4-oxadiazol-5-yl]propan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 Cl N2 O2
+
+>  <MolecularWeight>
+238.67
+
+>  <ModifiedDate>
+2017-03-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11ClN2O2/c12-9-5-3-8(4-6-9)11-13-10(16-14-11)2-1-7-15/h3-6,15H,1-2,7H2
+
+>  <InChIKey>
+BTURSBZSHDJVMU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2nc(on2)CCCO)Cl
+
+$$$$

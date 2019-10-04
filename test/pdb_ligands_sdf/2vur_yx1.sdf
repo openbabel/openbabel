@@ -1,0 +1,150 @@
+2VUR_YX1_A_1626
+  RCSB PDB12061707093D
+Coordinates from PDB:2VUR:A:1626 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   64.4780   72.2000   14.1780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1810   71.7080   14.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2060   70.1630   14.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4520   69.7150   13.2110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.8880   69.5760   15.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.6900   68.0340   15.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7540   67.4420   15.8330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.8350   69.9590   16.5350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7380   71.4240   16.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7680   71.6410   18.1640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.9170   72.1900   16.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7650   73.6660   16.1210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7010   74.3560   15.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7240   73.7830   15.2060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.7730   75.7040   15.8670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6570   76.5470   15.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.8800   76.2690   16.4360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1670   77.4870   15.7840   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+O3
+A    2
+C3
+A    3
+C4
+A    4
+O4
+A    5
+C5
+A    6
+C6
+A    7
+O6
+A    8
+O5
+A    9
+C1
+A   10
+O1
+A   11
+C2
+A   12
+N2
+A   13
+CAM
+A   14
+OAG
+A   15
+NAN
+A   16
+CAH
+A   17
+NAO
+A   18
+OAP
+M  END
+>  <InstanceId>
+2VUR_YX1_A_1626
+
+>  <ChemCompId>
+YX1
+
+>  <PdbId>
+2VUR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1626
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O7
+
+>  <Name>
+2-deoxy-2-{[(2-hydroxy-1-methylhydrazino)carbonyl]amino}-beta-D-glucopyranose
+
+>  <SystematicName>
+1-(hydroxyamino)-1-methyl-3-[(2R,3R,4R,5S,6R)-2,4,5-trihydroxy-6-(hydroxymethyl)oxan-3-yl]urea
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H17 N3 O7
+
+>  <MolecularWeight>
+267.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H17N3O7/c1-11(10-17)8(16)9-4-6(14)5(13)3(2-12)18-7(4)15/h3-7,10,12-15,17H,2H2,1H3,(H,9,16)/t3-,4-,5-,6-,7-/m1/s1
+
+>  <InChIKey>
+LUNQAAUVSFIVKD-NYMZXIIRSA-N
+
+>  <SMILES>
+CN(C(=O)N[C@@H]1[C@H]([C@@H]([C@H](O[C@H]1O)CO)O)O)NO
+
+$$$$

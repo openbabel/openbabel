@@ -1,0 +1,127 @@
+5ALV_6TZ_A_1550
+  RCSB PDB12061716513D
+Coordinates from PDB:5ALV:A:1550 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -13.3720  -13.7240   19.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1980  -13.0600   18.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8250  -11.8940   18.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6190  -11.3840   20.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7910  -12.0610   21.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1640  -13.2270   20.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5760  -11.5860   22.2710   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6720  -11.2050   17.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1960   -9.9450   17.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9330   -9.8590   16.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8860  -10.9620   16.0300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1190  -11.7430   16.7960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+F7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+A   12
+N12
+M  END
+>  <InstanceId>
+5ALV_6TZ_A_1550
+
+>  <ChemCompId>
+6TZ
+
+>  <PdbId>
+5ALV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1550
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 F
+
+>  <Name>
+3-(3-fluorophenyl)-1H-pyrazole
+
+>  <SystematicName>
+3-(3-fluorophenyl)-1H-pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 F N2
+
+>  <MolecularWeight>
+162.164
+
+>  <ModifiedDate>
+2015-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7FN2/c10-8-3-1-2-7(6-8)9-4-5-11-12-9/h1-6H,(H,11,12)
+
+>  <InChIKey>
+WKIRCCSDGDQJJF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)F)c2cc[nH]n2
+
+$$$$

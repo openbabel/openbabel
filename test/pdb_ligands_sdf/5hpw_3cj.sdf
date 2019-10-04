@@ -1,0 +1,122 @@
+4QYQ_3CJ_A_607
+  RCSB PDB12061714323D
+Coordinates from PDB:4QYQ:A:607 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    3.5320   29.9520   11.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5940   28.9170   12.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2230   27.7830   11.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7690   27.4310   10.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2940   27.6510   11.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4980   26.8320    9.7750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7580   26.4730    9.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0080   25.7270    7.8910   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7940   26.6670   10.2550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5780   27.2520   11.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6380   27.4390   12.2760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  6  4  1  0  0  0  0
+  9 10  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 10  5  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+C5
+A    4
+C2
+A    5
+C3
+A    6
+N1
+A    7
+C1
+A    8
+S1
+A    9
+N2
+A   10
+C4
+A   11
+O1
+M  END
+>  <InstanceId>
+4QYQ_3CJ_A_607
+
+>  <ChemCompId>
+3CJ
+
+>  <PdbId>
+4QYQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+607
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O S
+
+>  <Name>
+6-propyl-2-thioxo-2,3-dihydropyrimidin-4(1H)-one
+
+>  <SystematicName>
+6-propyl-2-sulfanylidene-1H-pyrimidin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N2 O S
+
+>  <MolecularWeight>
+170.232
+
+>  <ModifiedDate>
+2014-08-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10N2OS/c1-2-3-5-4-6(10)9-7(11)8-5/h4H,2-3H2,1H3,(H2,8,9,10,11)
+
+>  <InChIKey>
+KNAHARQHSZJURB-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCC1=CC(=O)NC(=S)N1
+
+$$$$

@@ -1,0 +1,126 @@
+4Y3M_45Y_A_405
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3M:A:405 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -22.0870  -11.9690   17.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.5030  -13.1980   17.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9960   -9.4590   17.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5850   -6.2640   16.4360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6650   -8.4020   16.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1870   -8.3980   15.6080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.7970   -7.4750   17.1300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3510  -10.7960   17.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0130  -10.8820   17.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4140  -12.1030   16.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1800  -13.2280   16.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5990  -14.4360   16.7070   F 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  3  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  9  8  2  0  0  0  0
+  2  1  2  0  0  0  0
+  8  1  1  0  0  0  0
+  8  3  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+O
+A    7
+N
+A    8
+C3
+A    9
+C2
+A   10
+C1
+A   11
+C
+A   12
+F
+M  END
+>  <InstanceId>
+4Y3M_45Y_A_405
+
+>  <ChemCompId>
+45Y
+
+>  <PdbId>
+4Y3M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O F
+
+>  <Name>
+2-(4-fluorophenyl)acetohydrazide
+
+>  <SystematicName>
+2-(4-fluorophenyl)ethanehydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 F N2 O
+
+>  <MolecularWeight>
+168.168
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9FN2O/c9-7-3-1-6(2-4-7)5-8(12)11-10/h1-4H,5,10H2,(H,11,12)
+
+>  <InChIKey>
+PFBNINAURUGQRR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CC(=O)NN)F
+
+$$$$

@@ -1,0 +1,137 @@
+3UTD_0CJ_A_318
+  RCSB PDB12061711063D
+Coordinates from PDB:3UTD:A:318 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -28.9690    1.7820  -14.5560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1840    0.7780  -13.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.5550    0.6440  -13.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1430   -0.2310  -13.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4140   -1.5800  -14.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2890   -2.5610  -14.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1060   -2.1840  -14.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0840   -1.8700  -16.3670   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6510   -2.1100  -16.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0940   -2.7330  -16.9790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6190   -0.3590  -16.5520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7770    0.9620  -16.6280   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4470    1.2230  -18.0930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5370    0.9260  -15.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6840    2.0340  -16.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  2  0  0  0  0
+ 10  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  1  2  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+O25
+A    2
+C13
+A    3
+C22
+A    4
+C30
+A    5
+C27
+A    6
+C28
+A    7
+O29
+A    8
+P13
+A    9
+O15
+A   10
+O14
+A   11
+O16
+A   12
+P17
+A   13
+O20
+A   14
+O18
+A   15
+O19
+M  END
+>  <InstanceId>
+3UTD_0CJ_A_318
+
+>  <ChemCompId>
+0CJ
+
+>  <PdbId>
+3UTD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+318
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P2
+
+>  <Name>
+4-oxopentyl trihydrogen diphosphate
+
+>  <SystematicName>
+4-oxidanylidenepentyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O8 P2
+
+>  <MolecularWeight>
+262.092
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O8P2/c1-5(6)3-2-4-12-15(10,11)13-14(7,8)9/h2-4H2,1H3,(H,10,11)(H2,7,8,9)
+
+>  <InChIKey>
+KREMOGYKSOVBKI-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)CCCOP(=O)(O)OP(=O)(O)O
+
+$$$$

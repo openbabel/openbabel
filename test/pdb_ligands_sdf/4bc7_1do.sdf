@@ -1,0 +1,129 @@
+2CFZ_1DO_A_1655
+  RCSB PDB12061705153D
+Coordinates from PDB:2CFZ:A:1655 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   39.5530   29.9640  169.6360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0430   31.1470  170.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7010   30.8480  170.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9300   32.1340  171.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0680   32.6790  170.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7580   31.9200  169.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5520   32.8500  169.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2690   32.0490  170.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4400   32.5740  171.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9910   32.1320  171.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0360   33.3130  171.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3120   33.4480  169.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0440   34.9070  169.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O2S
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+C12
+M  END
+>  <InstanceId>
+2CFZ_1DO_A_1655
+
+>  <ChemCompId>
+1DO
+
+>  <PdbId>
+2CFZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1655
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O
+
+>  <Name>
+1-DODECANOL
+
+>  <SystematicName>
+dodecan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H26 O
+
+>  <MolecularWeight>
+186.334
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H26O/c1-2-3-4-5-6-7-8-9-10-11-12-13/h13H,2-12H2,1H3
+
+>  <InChIKey>
+LQZZUXJYWNFBMV-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCO
+
+$$$$

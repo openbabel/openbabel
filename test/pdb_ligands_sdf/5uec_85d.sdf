@@ -1,0 +1,123 @@
+5UEC_85D_A_505
+  RCSB PDB12061719513D
+Coordinates from PDB:5UEC:A:505 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   29.1130  -24.1200   10.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9630  -22.6030   10.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2840  -21.9860   11.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2690  -22.0600    9.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0700  -22.8470   12.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1470  -20.5130   11.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3080  -23.7980    8.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2970  -24.4720   10.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0990  -23.4980    7.0690  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1240  -23.4760    9.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7400  -22.1570    9.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  1  0  0  0  0
+  7 10  1  0  0  0  0
+  4 11  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  8  2  0  0  0  0
+ 11  3  1  0  0  0  0
+  8  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+C3
+A    9
+BR1
+A   10
+C2
+A   11
+C1
+M  END
+>  <InstanceId>
+5UEC_85D_A_505
+
+>  <ChemCompId>
+85D
+
+>  <PdbId>
+5UEC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+505
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 Br
+
+>  <Name>
+(1S,5R)-2-(bromomethyl)-6,6-dimethylbicyclo[3.1.1]hept-2-ene
+
+>  <SystematicName>
+(1~{S},5~{R})-2-(bromomethyl)-6,6-dimethyl-bicyclo[3.1.1]hept-2-ene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 Br
+
+>  <MolecularWeight>
+215.13
+
+>  <ModifiedDate>
+2017-04-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15Br/c1-10(2)8-4-3-7(6-11)9(10)5-8/h3,8-9H,4-6H2,1-2H3/t8-,9-/m1/s1
+
+>  <InChIKey>
+SNAIDRDMHGKCAX-RKDXNWHRSA-N
+
+>  <SMILES>
+CC1([C@@H]2CC=C([C@H]1C2)CBr)C
+
+$$$$

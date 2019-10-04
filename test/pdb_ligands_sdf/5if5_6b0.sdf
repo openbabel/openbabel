@@ -1,0 +1,118 @@
+5IF5_6B0_A_805
+  RCSB PDB12061718103D
+Coordinates from PDB:5IF5:A:805 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -32.0210  -42.1310   62.1530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6470  -42.0010   62.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.0630  -43.3840   62.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.5760  -43.6780   63.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.0500  -44.9310   64.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9970  -45.8910   63.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4820  -45.6000   61.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3950  -46.8770   60.6980  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.0180  -44.3430   61.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6590  -43.9360   60.0550  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  2  0  0  0  0
+  9  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  6  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+CL1
+A    9
+C09
+A   10
+CL2
+M  END
+>  <InstanceId>
+5IF5_6B0_A_805
+
+>  <ChemCompId>
+6B0
+
+>  <PdbId>
+5IF5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+805
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O Cl2
+
+>  <Name>
+(2,3-dichlorophenyl)methanol
+
+>  <SystematicName>
+[2,3-bis(chloranyl)phenyl]methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 Cl2 O
+
+>  <MolecularWeight>
+177.028
+
+>  <ModifiedDate>
+2017-03-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6Cl2O/c8-6-3-1-2-5(4-10)7(6)9/h1-3,10H,4H2
+
+>  <InChIKey>
+STVBVTWXWZMRPZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)Cl)Cl)CO
+
+$$$$

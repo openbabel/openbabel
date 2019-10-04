@@ -1,0 +1,121 @@
+1E00_DHM_A_600
+  RCSB PDB12061702193D
+Coordinates from PDB:1E00:A:600 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    1.3800   23.8270    9.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7000   24.4500   10.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4410   25.9270   10.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5910   26.2120   12.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8610   26.3940   11.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5420   27.4100   12.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3440   26.7260   13.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6250   26.9260   15.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3040   25.2650   13.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7700   26.5980   11.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7730   27.1630   14.0030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 11  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+C5
+A    4
+C4
+A    5
+C3
+A    6
+C2
+A    7
+C1
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+O1
+M  END
+>  <InstanceId>
+1E00_DHM_A_600
+
+>  <ChemCompId>
+DHM
+
+>  <PdbId>
+1E00
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+2,6-DIMETHYL-7-OCTEN-2-OL
+
+>  <SystematicName>
+(6R)-2,6-dimethyloct-7-en-2-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H20 O
+
+>  <MolecularWeight>
+156.265
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20O/c1-5-9(2)7-6-8-10(3,4)11/h5,9,11H,1,6-8H2,2-4H3/t9-/m0/s1
+
+>  <InChIKey>
+XSNQECSCDATQEL-VIFPVBQESA-N
+
+>  <SMILES>
+C[C@H](CCCC(C)(C)O)C=C
+
+$$$$

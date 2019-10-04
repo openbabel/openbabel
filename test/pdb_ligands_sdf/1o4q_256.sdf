@@ -1,0 +1,134 @@
+1O4Q_256_A_300
+  RCSB PDB12061703303D
+Coordinates from PDB:1O4Q:A:300 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   19.2570   25.6420   20.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2100   24.7790   19.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2820   25.1710   19.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4230   26.4420   18.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5210   27.2830   18.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4480   26.8930   19.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3750   26.9920   17.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8680   27.1890   16.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4340   26.0580   15.3950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4940   28.4450   18.0420   S 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4060   28.5190   16.8500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4130   28.1450   15.5810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3730   29.6100   17.9990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9320   28.2490   19.3570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 10 14  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+O9
+A   10
+S10
+A   11
+O12
+A   12
+O13
+A   13
+O14
+A   14
+O15
+M  END
+>  <InstanceId>
+1O4Q_256_A_300
+
+>  <ChemCompId>
+256
+
+>  <PdbId>
+1O4Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O5 S
+
+>  <Name>
+PHENYL(SULFO)ACETIC ACID
+
+>  <SystematicName>
+(2R)-2-phenyl-2-sulfo-ethanoic acid
+
+>  <Synonyms>
+RU79256
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O5 S
+
+>  <MolecularWeight>
+216.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O5S/c9-8(10)7(14(11,12)13)6-4-2-1-3-5-6/h1-5,7H,(H,9,10)(H,11,12,13)/t7-/m1/s1
+
+>  <InChIKey>
+USNMCXDGQQVYSW-SSDOTTSWSA-N
+
+>  <SMILES>
+c1ccc(cc1)[C@H](C(=O)O)S(=O)(=O)O
+
+$$$$

@@ -1,0 +1,126 @@
+1AJP_OMD_A_210
+  RCSB PDB12061701593D
+Coordinates from PDB:1AJP:A:210 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   13.5720   37.5200   36.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0180   36.1080   35.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9820   36.0200   34.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0720   36.8510   33.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1100   36.7580   32.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0650   37.5080   31.5210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0380   35.8730   32.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9510   35.0620   33.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9200   35.1270   34.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7660   34.4250   35.6340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4340   37.7030   36.9520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1420   38.5030   35.4930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  2  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C1'
+A    4
+C2'
+A    5
+C3'
+A    6
+O3'
+A    7
+C4'
+A    8
+C5'
+A    9
+C6'
+A   10
+O6'
+A   11
+O1
+A   12
+O2
+M  END
+>  <InstanceId>
+1AJP_OMD_A_210
+
+>  <ChemCompId>
+OMD
+
+>  <PdbId>
+1AJP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+210
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O4
+
+>  <Name>
+2-(3,6-DIHYDROXYPHENYL)ACETIC ACID
+
+>  <SystematicName>
+2-(2,5-dihydroxyphenyl)ethanoic acid
+
+>  <Synonyms>
+HOMOGENTISIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O4
+
+>  <MolecularWeight>
+168.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O4/c9-6-1-2-7(10)5(3-6)4-8(11)12/h1-3,9-10H,4H2,(H,11,12)
+
+>  <InChIKey>
+IGMNYECMUMZDDF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)CC(=O)O)O
+
+$$$$

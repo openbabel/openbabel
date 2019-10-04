@@ -1,0 +1,122 @@
+4JGC_1RT_D_417
+  RCSB PDB12061713093D
+Coordinates from PDB:4JGC:D:417 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  347.2510  -70.2370  434.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  346.2610  -71.2300  434.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  346.5650  -72.4170  434.3200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  345.0040  -70.8980  433.6370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  344.6750  -69.6260  433.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  343.4000  -69.3750  432.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+  345.6370  -68.6290  433.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  346.9280  -68.9680  433.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  345.3260  -67.1990  433.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  344.1270  -66.8450  432.8410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  346.3090  -66.4100  432.9050   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+  9  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  4  2  0  0  0  0
+  7  8  2  0  0  0  0
+  4  2  1  0  0  0  0
+  8  1  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+N4
+A    7
+C5
+A    8
+C6
+A    9
+C21
+A   10
+O22
+A   11
+O23
+M  END
+>  <InstanceId>
+4JGC_1RT_D_417
+
+>  <ChemCompId>
+1RT
+
+>  <PdbId>
+4JGC
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+417
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 O3
+
+>  <Name>
+4-amino-2-oxo-1,2-dihydropyrimidine-5-carboxylic acid
+
+>  <SystematicName>
+4-azanyl-2-oxidanylidene-1H-pyrimidine-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N3 O3
+
+>  <MolecularWeight>
+155.111
+
+>  <ModifiedDate>
+2013-05-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5N3O3/c6-3-2(4(9)10)1-7-5(11)8-3/h1H,(H,9,10)(H3,6,7,8,11)
+
+>  <InChIKey>
+BLQMCTXZEMGOJM-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(C(=NC(=O)N1)N)C(=O)O
+
+$$$$

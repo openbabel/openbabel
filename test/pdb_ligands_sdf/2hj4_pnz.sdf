@@ -1,0 +1,123 @@
+2C70_PNZ_A_601
+  RCSB PDB12061705133D
+Coordinates from PDB:2C70:A:601 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   51.8040  154.4970   27.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.7670  153.1320   27.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.3710  152.6930   25.8550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.9970  153.6090   24.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0370  154.9700   25.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4360  155.4060   26.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.4200  151.7750   23.4320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6460  153.1250   23.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.1940  154.9610   28.5510   N 0  3  0  0  0  0  0  0  0  0  0  0
+   51.1670  156.1540   28.8200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6790  154.1710   29.3400   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+M  CHG  2   9   1  11  -1
+A    1
+C6
+A    2
+C7
+A    3
+C8
+A    4
+C9
+A    5
+C4
+A    6
+C5
+A    7
+N2
+A    8
+C3
+A    9
+N10
+A   10
+O11
+A   11
+O12
+M  END
+>  <InstanceId>
+2C70_PNZ_A_601
+
+>  <ChemCompId>
+PNZ
+
+>  <PdbId>
+2C70
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O2
+
+>  <Name>
+P-NITRO-BENZYLAMINE
+
+>  <SystematicName>
+(4-nitrophenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+L-peptide COOH carboxy terminus
+
+>  <Formula>
+C7 H8 N2 O2
+
+>  <MolecularWeight>
+152.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O2/c8-5-6-1-3-7(4-2-6)9(10)11/h1-4H,5,8H2
+
+>  <InChIKey>
+ODVBBZFQPGORMJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CN)[N+](=O)[O-]
+
+$$$$

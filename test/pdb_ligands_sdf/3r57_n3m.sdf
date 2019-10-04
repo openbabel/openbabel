@@ -1,0 +1,122 @@
+3R57_N3M_A_302
+  RCSB PDB12061710313D
+Coordinates from PDB:3R57:A:302 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -3.4720   15.2080   18.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2040   15.2470   23.7510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6720   14.8020   21.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1720   16.6370   20.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2420   16.2190   21.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9890   16.4690   19.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0530   15.4740   21.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2370   15.7530   19.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4090   15.2340   20.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1310   15.6410   22.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1300   15.8880   20.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  9  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7 10  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+CAA
+A    2
+NAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3R57_N3M_A_302
+
+>  <ChemCompId>
+N3M
+
+>  <PdbId>
+3R57
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+N-(3-aminophenyl)acetamide
+
+>  <SystematicName>
+N-(3-aminophenyl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N2 O
+
+>  <MolecularWeight>
+150.178
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N2O/c1-6(11)10-8-4-2-3-7(9)5-8/h2-5H,9H2,1H3,(H,10,11)
+
+>  <InChIKey>
+PEMGGJDINLGTON-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1cccc(c1)N
+
+$$$$

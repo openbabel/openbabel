@@ -1,0 +1,114 @@
+3Q9K_FTE_A_598
+  RCSB PDB12061710233D
+Coordinates from PDB:3Q9K:A:598 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    2.2770    5.8620   30.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8510    4.7130   30.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0410    3.7470   31.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6670    3.9530   31.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0930    5.1080   30.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8990    6.0660   30.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2320    4.5020   30.5150   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5280    3.8230   29.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7610    3.1750   28.3600   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N13
+A    8
+C15
+A    9
+S17
+M  END
+>  <InstanceId>
+3Q9K_FTE_A_598
+
+>  <ChemCompId>
+FTE
+
+>  <PdbId>
+3Q9K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+598
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N S
+
+>  <Name>
+phenylisothiocyanate
+
+>  <SystematicName>
+isothiocyanatobenzene
+
+>  <Synonyms>
+isothiocyanatobenzene
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N S
+
+>  <MolecularWeight>
+135.186
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5NS/c9-6-8-7-4-2-1-3-5-7/h1-5H
+
+>  <InChIKey>
+QKFJKGMPGYROCL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)N=C=S
+
+$$$$

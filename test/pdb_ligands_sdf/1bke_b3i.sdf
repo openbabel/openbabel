@@ -1,0 +1,126 @@
+1BKE_B3I_A_2001
+  RCSB PDB12061702053D
+Coordinates from PDB:1BKE:A:2001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   35.1250   14.5740    9.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9630   15.3920    8.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0150   16.0340    7.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1870   15.2520    8.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8580   13.7400   10.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8700   12.4890   10.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0540   14.3030   11.0620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7190   14.5140    9.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3910   16.1160    7.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9440   13.5040   11.2550   I 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0030   15.5260    9.2300   I 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1760   17.0350    6.1120   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  8  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  2  0  0  0  0
+  3 12  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C5
+A    4
+C6
+A    5
+C
+A    6
+O1
+A    7
+O2
+A    8
+C1
+A    9
+C4
+A   10
+I1
+A   11
+I2
+A   12
+I3
+M  END
+>  <InstanceId>
+1BKE_B3I_A_2001
+
+>  <ChemCompId>
+B3I
+
+>  <PdbId>
+1BKE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2 I3
+
+>  <Name>
+2,3,5-TRIIODOBENZOIC ACID
+
+>  <SystematicName>
+2,3,5-triiodobenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H3 I3 O2
+
+>  <MolecularWeight>
+499.811
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H3I3O2/c8-3-1-4(7(11)12)6(10)5(9)2-3/h1-2H,(H,11,12)
+
+>  <InChIKey>
+ZMZGFLUUZLELNE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1C(=O)O)I)I)I
+
+$$$$

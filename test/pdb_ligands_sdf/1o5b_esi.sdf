@@ -1,0 +1,132 @@
+1C5N_ESI_H_522
+  RCSB PDB12061702083D
+Coordinates from PDB:1C5N:H:522 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   10.8040  -12.0750   24.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6090  -12.2200   23.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1720  -13.1280   24.9620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7500  -10.8640   25.0200   N 0  3  0  0  0  0  0  0  0  0  0  0
+   12.4820  -10.7990   22.8680   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2420  -11.7990   21.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8000  -13.1180   21.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9090  -13.3260   22.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1420  -11.3940   20.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6270  -12.3380   19.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2030  -13.6740   19.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2780  -14.0870   20.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5840  -16.0470   20.9790   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+M  CHG  1   4   1
+A    1
+C0
+A    2
+C1
+A    3
+N1
+A    4
+N2
+A    5
+S2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+I9
+M  END
+>  <InstanceId>
+1C5N_ESI_H_522
+
+>  <ChemCompId>
+ESI
+
+>  <PdbId>
+1C5N
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+522
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 S I
+
+>  <Name>
+4-IODOBENZO[B]THIOPHENE-2-CARBOXAMIDINE
+
+>  <SystematicName>
+[amino-(4-iodo-1-benzothiophen-2-yl)methylidene]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 I N2 S
+
+>  <MolecularWeight>
+303.143
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7IN2S/c10-6-2-1-3-7-5(6)4-8(13-7)9(11)12/h1-4H,(H3,11,12)/p+1
+
+>  <InChIKey>
+YERQOXAYAFWFEJ-UHFFFAOYSA-O
+
+>  <SMILES>
+c1cc2c(cc(s2)C(=[NH2+])N)c(c1)I
+
+$$$$

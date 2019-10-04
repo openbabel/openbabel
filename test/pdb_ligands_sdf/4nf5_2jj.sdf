@@ -1,0 +1,125 @@
+5EHS_2JJ_A_301
+  RCSB PDB12061717283D
+Coordinates from PDB:5EHS:A:301 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   52.8290   39.5160    7.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1870   38.1900    6.8480   P 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9080   38.2690    6.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1320   37.1540    6.2360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6480   37.4130    8.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.3070   37.8820    9.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1370   37.9620   10.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9950   37.1420   11.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3880   36.1270   10.2990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   49.5270   36.3380   12.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6530   36.5510   12.9100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7340   35.4510   12.8590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 12 10  2  0  0  0  0
+  5  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+A    1
+OAC
+A    2
+PAL
+A    3
+OAE
+A    4
+OAF
+A    5
+CAI
+A    6
+CAG
+A    7
+CB
+A    8
+CA
+A    9
+N
+A   10
+C
+A   11
+O
+A   12
+OXT
+M  END
+>  <InstanceId>
+5EHS_2JJ_A_301
+
+>  <ChemCompId>
+2JJ
+
+>  <PdbId>
+5EHS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O5 P
+
+>  <Name>
+5-phosphono-D-norvaline
+
+>  <SystematicName>
+(2R)-2-azanyl-5-phosphono-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+D-PEPTIDE LINKING
+
+>  <Formula>
+C5 H12 N O5 P
+
+>  <MolecularWeight>
+197.126
+
+>  <ModifiedDate>
+2014-03-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12NO5P/c6-4(5(7)8)2-1-3-12(9,10)11/h4H,1-3,6H2,(H,7,8)(H2,9,10,11)/t4-/m1/s1
+
+>  <InChIKey>
+VOROEQBFPPIACJ-SCSAIBSYSA-N
+
+>  <SMILES>
+C(C[C@H](C(=O)O)N)CP(=O)(O)O
+
+$$$$

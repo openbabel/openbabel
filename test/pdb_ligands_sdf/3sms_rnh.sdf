@@ -1,0 +1,165 @@
+3SMS_RNH_A_374
+  RCSB PDB12061710453D
+Coordinates from PDB:3SMS:A:374 Model:1 without hydrogens
+ 22 21  0  0  0  0            999 V2000
+   36.0250    8.3250  -16.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5170   14.9290   -5.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6370   15.1860   -6.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6410   10.5240  -10.2850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7320   12.1260   -6.5870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3820   12.8530   -5.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8610    9.0140  -15.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3490    9.9220  -14.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1860   10.6810  -13.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5470    9.8210  -12.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2060   10.8400   -8.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6740   11.7220   -9.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1640   15.2920   -4.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9100   10.6370  -11.8000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6880   11.7060   -7.4790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2260   14.5960   -3.1890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5170   10.9120  -10.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5080   12.2850   -6.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7990   13.1040   -5.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0430   14.6210   -5.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5120    7.4830  -17.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6830    6.9760  -18.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  1 21  1  0  0  0  0
+  2 20  1  0  0  0  0
+  3 20  1  0  0  0  0
+  4 17  2  0  0  0  0
+  5 18  2  0  0  0  0
+  6 19  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 16  1  0  0  0  0
+ 13 20  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 15 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 21 22  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+OAD
+A    5
+OAE
+A    6
+OAG
+A    7
+CAJ
+A    8
+CAK
+A    9
+CAL
+A   10
+CAM
+A   11
+CAN
+A   12
+CAO
+A   13
+CAP
+A   14
+NAQ
+A   15
+NAR
+A   16
+OAS
+A   17
+CAT
+A   18
+CAU
+A   19
+CAV
+A   20
+CAW
+A   21
+CAY
+A   22
+CAZ
+M  END
+>  <InstanceId>
+3SMS_RNH_A_374
+
+>  <ChemCompId>
+RNH
+
+>  <PdbId>
+3SMS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+374
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C16 N2 O4
+
+>  <Name>
+(2R)-N-[3-(heptylamino)-3-oxopropyl]-2,4-dihydroxy-3,3-dimethylbutanamide
+
+>  <SystematicName>
+(2R)-N-[3-(heptylamino)-3-oxidanylidene-propyl]-3,3-dimethyl-2,4-bis(oxidanyl)butanamide
+
+>  <Synonyms>
+N-heptylpantothenamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H32 N2 O4
+
+>  <MolecularWeight>
+316.436
+
+>  <ModifiedDate>
+2011-07-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H32N2O4/c1-4-5-6-7-8-10-17-13(20)9-11-18-15(22)14(21)16(2,3)12-19/h14,19,21H,4-12H2,1-3H3,(H,17,20)(H,18,22)/t14-/m0/s1
+
+>  <InChIKey>
+HHAVGBXLGVYXFF-AWEZNQCLSA-N
+
+>  <SMILES>
+CCCCCCCNC(=O)CCNC(=O)[C@@H](C(C)(C)CO)O
+
+$$$$

@@ -1,0 +1,129 @@
+4BDA_VFB_A_1515
+  RCSB PDB12061711493D
+Coordinates from PDB:4BDA:A:1515 Model:1 without hydrogens
+ 12 14  0  0  0  0            999 V2000
+  -38.0500   33.8920    5.3340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.3030   31.6980    5.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1530   30.6970    7.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5540   32.7730    5.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.4160   31.7780    8.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1640   35.6640    7.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2960   34.6090    6.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.5450   35.6930    6.3090   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.5980   34.6550    8.3340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.5860   30.6560    6.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1110   32.8070    7.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3430   33.9440    7.4190   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2 10  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3 10  2  0  0  0  0
+  4 11  1  0  0  0  0
+  5 11  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+M  CHG  1  12   1
+A    1
+N1
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+NAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+NAL
+M  END
+>  <InstanceId>
+4BDA_VFB_A_1515
+
+>  <ChemCompId>
+VFB
+
+>  <PdbId>
+4BDA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1515
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4
+
+>  <Name>
+3,4-dihydro[1,2,4]triazolo[1,5-a][3,1]benzimidazol-9-ium
+
+>  <SystematicName>
+3,4-dihydro-[1,2,4]triazolo[1,5-a]benzimidazol-9-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N4
+
+>  <MolecularWeight>
+159.168
+
+>  <ModifiedDate>
+2013-06-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N4/c1-2-4-7-6(3-1)11-8-9-5-10-12(7)8/h1-5H,(H,9,10,11)/p+1
+
+>  <InChIKey>
+UHMYOSZMUIJCFW-UHFFFAOYSA-O
+
+>  <SMILES>
+c1ccc2c(c1)[nH]c3[n+]2nc[nH]3
+
+$$$$

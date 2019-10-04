@@ -1,0 +1,82 @@
+4ZFX_TH_A_201
+  RCSB PDB12061716373D
+Coordinates from PDB:4ZFX:A:201 Model:1 without hydrogens
+  1  0  0  0  0  0            999 V2000
+   28.7350   77.1680   66.2600  Th 0  0  0  0  0  0  0  0  0  0  0  0
+M  CHG  1   1   4
+A    1
+TH
+M  END
+>  <InstanceId>
+4ZFX_TH_A_201
+
+>  <ChemCompId>
+TH
+
+>  <PdbId>
+4ZFX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+Th
+
+>  <Name>
+THORIUM ION
+
+>  <SystematicName>
+Thorium(+4) cation
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+Th
+
+>  <MolecularWeight>
+232.038
+
+>  <ModifiedDate>
+2015-07-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/Th/q+4
+
+>  <InChIKey>
+ZSLUVFAKFWKJRC-UHFFFAOYSA-N
+
+>  <SMILES>
+[Th+4]
+
+$$$$

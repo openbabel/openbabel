@@ -1,0 +1,122 @@
+1UZ1_IFL_A_1446
+  RCSB PDB12061704163D
+Coordinates from PDB:1UZ1:A:1446 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -1.5610   10.6260    6.7960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1240   10.5480    8.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4190   11.8890    8.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8280   12.0360    7.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1070   12.0550    9.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6710   11.2010   10.8100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5830   10.0950   10.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2760   10.3720    9.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2460    9.2490    8.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5440    8.0100    8.9160   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6250   12.9670   10.2500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C3
+A    4
+O3
+A    5
+C2
+A    6
+N
+A    7
+C7
+A    8
+C5
+A    9
+C6
+A   10
+O6
+A   11
+O2
+M  END
+>  <InstanceId>
+1UZ1_IFL_A_1446
+
+>  <ChemCompId>
+IFL
+
+>  <PdbId>
+1UZ1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1446
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+(3S,4R,5R)-3,4-DIHYDROXY-5-(HYDROXYMETHYL)PIPERIDIN-2-ONE
+
+>  <SystematicName>
+(3S,4R,5R)-3,4-dihydroxy-5-(hydroxymethyl)piperidin-2-one
+
+>  <Synonyms>
+ISOFAGOMINE LACTAM
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 N O4
+
+>  <MolecularWeight>
+161.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11NO4/c8-2-3-1-7-6(11)5(10)4(3)9/h3-5,8-10H,1-2H2,(H,7,11)/t3-,4-,5+/m1/s1
+
+>  <InChIKey>
+ARBXEMIAJIJEQI-WDCZJNDASA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H](C(=O)N1)O)O)CO
+
+$$$$

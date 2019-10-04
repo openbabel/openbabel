@@ -1,0 +1,106 @@
+4XHB_17Y_A_701
+  RCSB PDB12061716133D
+Coordinates from PDB:4XHB:A:701 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   -8.9510  -27.0970  -27.1710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2440  -27.5940  -27.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4510  -28.5760  -26.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8780  -28.4540  -25.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4120  -27.1970  -26.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1970  -26.4480  -26.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6200  -25.6450  -25.9150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+OAA
+A    2
+CAF
+A    3
+CAD
+A    4
+CAC
+A    5
+CAE
+A    6
+CAG
+A    7
+OAB
+M  END
+>  <InstanceId>
+4XHB_17Y_A_701
+
+>  <ChemCompId>
+17Y
+
+>  <PdbId>
+4XHB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O2
+
+>  <Name>
+(1R,2S)-cyclopentane-1,2-diol
+
+>  <SystematicName>
+(1R,2S)-cyclopentane-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 O2
+
+>  <MolecularWeight>
+102.132
+
+>  <ModifiedDate>
+2016-01-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O2/c6-4-2-1-3-5(4)7/h4-7H,1-3H2/t4-,5+
+
+>  <InChIKey>
+VCVOSERVUCJNPR-SYDPRGILSA-N
+
+>  <SMILES>
+C1C[C@H]([C@H](C1)O)O
+
+$$$$

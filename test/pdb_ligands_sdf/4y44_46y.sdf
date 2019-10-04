@@ -1,0 +1,118 @@
+4Y44_46Y_A_403
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y44:A:403 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   53.8060    8.9380   73.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.6620    8.1150   74.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0360    8.4470   74.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3390   10.0470   73.3250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5590    7.2470   73.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1140    6.9420   75.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9280    6.0100   76.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5150    8.6550   73.6200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   51.9960    7.5230   74.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7760    6.6730   74.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  8  1  1  0  0  0  0
+  8  9  2  0  0  0  0
+  1  2  2  0  0  0  0
+  5  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+ 10  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N2
+A    5
+C14
+A    6
+C1
+A    7
+C
+A    8
+N
+A    9
+C3
+A   10
+C2
+M  END
+>  <InstanceId>
+4Y44_46Y_A_403
+
+>  <ChemCompId>
+46Y
+
+>  <PdbId>
+4Y44
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+10
+
+>  <ObservedFormula>
+C8 N2
+
+>  <Name>
+4,6-dimethyl-2-{[3-(morpholin-4-yl)propyl]amino}pyridine-3-carbonitrile
+
+>  <SystematicName>
+4,6-dimethyl-2-(3-morpholin-4-ylpropylamino)pyridine-3-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H22 N4 O
+
+>  <MolecularWeight>
+274.361
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H22N4O/c1-12-10-13(2)18-15(14(12)11-16)17-4-3-5-19-6-8-20-9-7-19/h10H,3-9H2,1-2H3,(H,17,18)
+
+>  <InChIKey>
+IFGDZGMJCVOVLP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc(c1C#N)NCCCN2CCOCC2)C
+
+$$$$

@@ -1,0 +1,139 @@
+5BZN_4XD_A_202
+  RCSB PDB12061717013D
+Coordinates from PDB:5BZN:A:202 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   12.0820   -6.1020    0.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7300   -4.8900    0.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9510   -4.3330   -0.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5670   -3.4320   -1.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8410   -2.8580   -2.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4940   -3.1540   -2.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8730   -4.0660   -2.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5380   -4.3620   -2.1870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5870   -4.6490   -0.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9190   -5.5600   -0.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6330   -5.9040    1.1920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0810   -7.0630    1.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6210   -6.9060    2.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8450   -7.2770    1.1890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4370   -7.2430    1.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  9  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAI
+A    2
+CAG
+A    3
+CAM
+A    4
+CAE
+A    5
+CAC
+A    6
+CAD
+A    7
+CAL
+A    8
+NAB
+A    9
+CAN
+A   10
+CAJ
+A   11
+NAO
+A   12
+CAH
+A   13
+CAF
+A   14
+OAK
+A   15
+CAA
+M  END
+>  <InstanceId>
+5BZN_4XD_A_202
+
+>  <ChemCompId>
+4XD
+
+>  <PdbId>
+5BZN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+2-(2-methoxyethyl)-1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <SystematicName>
+2-(2-methoxyethyl)-3,4-dihydro-1H-isoquinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H18 N2 O
+
+>  <MolecularWeight>
+206.284
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18N2O/c1-15-8-7-14-6-5-10-3-2-4-12(13)11(10)9-14/h2-4H,5-9,13H2,1H3
+
+>  <InChIKey>
+IJXQCLYAKMPTMJ-UHFFFAOYSA-N
+
+>  <SMILES>
+COCCN1CCc2cccc(c2C1)N
+
+$$$$

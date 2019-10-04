@@ -1,0 +1,121 @@
+1U3W_FXY_A_1378
+  RCSB PDB12061704113D
+Coordinates from PDB:1U3W:A:1378 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -51.5500  -59.9370   45.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.5670  -59.1920   45.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -49.3400  -59.5400   45.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.9720  -60.9380   44.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.3900  -61.4650   46.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.9260  -60.8450   43.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.4820  -62.1930   43.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.7900  -61.9290   41.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.5000  -62.7070   41.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.0620  -62.6490   40.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -43.6070  -62.2650   40.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O10
+A    2
+C9
+A    3
+N8
+A    4
+C1
+A    5
+C25
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+M  END
+>  <InstanceId>
+1U3W_FXY_A_1378
+
+>  <ChemCompId>
+FXY
+
+>  <PdbId>
+1U3W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1378
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O
+
+>  <Name>
+1-METHYLHEPTYLFORMAMIDE
+
+>  <SystematicName>
+N-[(2R)-octan-2-yl]methanamide
+
+>  <Synonyms>
+N-1-METHYLHEPTYLFORMAMIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H19 N O
+
+>  <MolecularWeight>
+157.253
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H19NO/c1-3-4-5-6-7-9(2)10-8-11/h8-9H,3-7H2,1-2H3,(H,10,11)/t9-/m1/s1
+
+>  <InChIKey>
+YWFHDUFNGSJLTL-SECBINFHSA-N
+
+>  <SMILES>
+CCCCCC[C@@H](C)NC=O
+
+$$$$

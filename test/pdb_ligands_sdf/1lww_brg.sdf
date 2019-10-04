@@ -1,0 +1,127 @@
+1LWW_BRG_A_328
+  RCSB PDB12061703133D
+Coordinates from PDB:1LWW:A:328 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   20.6450   23.8500   33.9320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5020   24.0390   32.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4320   25.2290   31.9500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3190   25.0880   30.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2530   26.1750   29.8620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2670   23.8690   29.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3340   22.6310   30.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2810   21.5940   29.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4640   22.7700   32.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5800   21.8040   33.0250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7070   22.4940   34.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9940   21.6770   35.8620  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N9
+A    2
+C4
+A    3
+N3
+A    4
+C2
+A    5
+N2
+A    6
+N1
+A    7
+C6
+A    8
+O6
+A    9
+C5
+A   10
+N7
+A   11
+C8
+A   12
+BR
+M  END
+>  <InstanceId>
+1LWW_BRG_A_328
+
+>  <ChemCompId>
+BRG
+
+>  <PdbId>
+1LWW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+328
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 O Br
+
+>  <Name>
+8-BROMOGUANINE
+
+>  <SystematicName>
+2-amino-8-bromo-1,7-dihydropurin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 Br N5 O
+
+>  <MolecularWeight>
+230.022
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4BrN5O/c6-4-8-1-2(9-4)10-5(7)11-3(1)12/h(H4,7,8,9,10,11,12)
+
+>  <InChIKey>
+CRYCZDRIXVHNQB-UHFFFAOYSA-N
+
+>  <SMILES>
+c12c(nc([nH]1)Br)N=C(NC2=O)N
+
+$$$$

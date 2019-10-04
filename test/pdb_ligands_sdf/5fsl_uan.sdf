@@ -1,0 +1,131 @@
+5FSL_UAN_A_1157
+  RCSB PDB12061717453D
+Coordinates from PDB:5FSL:A:1157 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   17.4620   19.5730    6.1990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0380   20.1520    5.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8180   21.0510    4.4630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7010   20.0070    4.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6750   19.1270    4.9140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7420   19.4290    4.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1480   20.3200    3.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3760   20.7410    1.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3960   20.7310    3.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1930   21.5770    2.7980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3800   21.7330    3.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2760   22.4970    2.7340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9760   23.3280    1.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O
+A    2
+C2
+A    3
+N1
+A    4
+C3
+A    5
+N4
+A    6
+C5
+A    7
+N3
+A    8
+C6
+A    9
+C4
+A   10
+N2
+A   11
+C1
+A   12
+N
+A   13
+C
+M  END
+>  <InstanceId>
+5FSL_UAN_A_1157
+
+>  <ChemCompId>
+UAN
+
+>  <PdbId>
+5FSL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1157
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O
+
+>  <Name>
+9-METHYL-2-(METHYLAMINO)-1H-PURIN-6-ONE
+
+>  <SystematicName>
+9-methyl-2-(methylamino)-1H-purin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H9 N5 O
+
+>  <MolecularWeight>
+179.179
+
+>  <ModifiedDate>
+2016-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N5O/c1-8-7-10-5-4(6(13)11-7)9-3-12(5)2/h3H,1-2H3,(H2,8,10,11,13)
+
+>  <InChIKey>
+VUUPVSDSPZJFFN-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC1=Nc2c(ncn2C)C(=O)N1
+
+$$$$

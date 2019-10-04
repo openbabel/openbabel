@@ -1,0 +1,81 @@
+4CR5_0TU_A_1489
+  RCSB PDB12061712053D
+Coordinates from PDB:4CR5:A:1489 Model:1 without hydrogens
+  1  0  0  0  0  0            999 V2000
+  -20.6930  -45.1470  -12.4050  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+A    1
+CL
+M  END
+>  <InstanceId>
+4CR5_0TU_A_1489
+
+>  <ChemCompId>
+0TU
+
+>  <PdbId>
+4CR5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1489
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+11
+
+>  <ObservedFormula>
+Cl
+
+>  <Name>
+6-chloroquinolin-2(1H)-one
+
+>  <SystematicName>
+6-chloranyl-1H-quinolin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 Cl N O
+
+>  <MolecularWeight>
+179.603
+
+>  <ModifiedDate>
+2015-02-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6ClNO/c10-7-2-3-8-6(5-7)1-4-9(12)11-8/h1-5H,(H,11,12)
+
+>  <InChIKey>
+OJEBWFGRUPIVSD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)C=CC(=O)N2
+
+$$$$

@@ -1,0 +1,126 @@
+4BDB_ODO_A_1515
+  RCSB PDB12061711493D
+Coordinates from PDB:4BDB:A:1515 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -35.1630   35.0470   10.2520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.3080   36.2210    8.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.5730   34.7940    8.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5160   33.9530    7.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.1380   35.1290    5.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.6580   34.0810    6.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.3620   33.1360    5.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.9380   32.0490    6.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.5500   31.0720    5.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.8500   31.9280    7.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1550   32.8740    8.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.0500   34.2180    9.5410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O11
+A    2
+C8
+A    3
+C7
+A    4
+C2
+A    5
+O10
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+O12
+A   10
+C6
+A   11
+C1
+A   12
+N
+M  END
+>  <InstanceId>
+4BDB_ODO_A_1515
+
+>  <ChemCompId>
+ODO
+
+>  <PdbId>
+4BDB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1515
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+4-[(E)-C-methyl-N-oxidanyl-carbonimidoyl]benzene-1,3-diol
+
+>  <SystematicName>
+4-[(E)-C-methyl-N-oxidanyl-carbonimidoyl]benzene-1,3-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H9 N O3
+
+>  <MolecularWeight>
+167.162
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO3/c1-5(9-12)7-3-2-6(10)4-8(7)11/h2-4,10-12H,1H3/b9-5+
+
+>  <InChIKey>
+FQPRUMXSHZSJGM-WEVVVXLNSA-N
+
+>  <SMILES>
+C/C(=N\O)/c1ccc(cc1O)O
+
+$$$$

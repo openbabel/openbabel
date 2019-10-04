@@ -1,0 +1,118 @@
+1OE6_HMU_A_1282
+  RCSB PDB12061703323D
+Coordinates from PDB:1OE6:A:1282 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    4.3480   20.9780   42.9670   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2560   22.3410   42.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1670   23.2740   42.9470   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1430   22.5280   41.6260   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2500   21.4960   41.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1610   18.8090   39.9440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3110   21.6510   40.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4210   20.0860   41.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5230   18.8690   41.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4970   19.9200   42.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O3
+A    7
+O4
+A    8
+C5
+A    9
+CM5
+A   10
+C6
+M  END
+>  <InstanceId>
+1OE6_HMU_A_1282
+
+>  <ChemCompId>
+HMU
+
+>  <PdbId>
+1OE6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1282
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O3
+
+>  <Name>
+5-HYDROXYMETHYL URACIL
+
+>  <SystematicName>
+5-(hydroxymethyl)-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+5-(HYDROXYMETHYL)PYRIMIDINE-2,4(1H,3H)-DIONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 N2 O3
+
+>  <MolecularWeight>
+142.113
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2O3/c8-2-3-1-6-5(10)7-4(3)9/h1,8H,2H2,(H2,6,7,9,10)
+
+>  <InChIKey>
+JDBGXEHEIRGOBU-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1)CO
+
+$$$$

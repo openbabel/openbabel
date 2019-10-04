@@ -1,0 +1,135 @@
+3U8M_09R_A_211
+  RCSB PDB12061711013D
+Coordinates from PDB:3U8M:A:211 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -33.1880   76.5370  -26.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.9820   76.3340  -27.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.1270   75.8480  -28.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3370   75.5880  -27.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.4010   75.8380  -26.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3420   76.3050  -25.7300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.7820   75.5320  -25.4170  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.7320   76.6090  -28.2690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.8270   77.5110  -27.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.9070   78.2590  -28.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6710   79.2140  -29.3310   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1700   78.7390  -30.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5940   77.2590  -30.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.3370   76.2710  -29.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2  1  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+N1
+A    7
+BR1
+A    8
+N2
+A    9
+C6
+A   10
+C7
+A   11
+N3
+A   12
+C8
+A   13
+C9
+A   14
+C10
+M  END
+>  <InstanceId>
+3U8M_09R_A_211
+
+>  <ChemCompId>
+09R
+
+>  <PdbId>
+3U8M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+211
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 Br
+
+>  <Name>
+1-(6-bromopyridin-3-yl)-1,4-diazepane
+
+>  <SystematicName>
+1-(6-bromanylpyridin-3-yl)-1,4-diazepane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 Br N3
+
+>  <MolecularWeight>
+256.142
+
+>  <ModifiedDate>
+2011-12-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14BrN3/c11-10-3-2-9(8-13-10)14-6-1-4-12-5-7-14/h2-3,8,12H,1,4-7H2
+
+>  <InChIKey>
+JRNYLCIPPWHNEJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1N2CCCNCC2)Br
+
+$$$$

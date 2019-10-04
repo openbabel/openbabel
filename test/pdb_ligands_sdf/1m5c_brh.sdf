@@ -1,0 +1,130 @@
+1M5C_BRH_A_611
+  RCSB PDB12061703153D
+Coordinates from PDB:1M5C:A:611 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   43.5150   15.7520   18.9240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7280   14.7930   18.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1870   13.9780   19.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4210   14.6000   17.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4380   13.5120   16.8750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9060   15.9490   16.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2670   16.2440   15.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.5630   16.6960   14.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7860   17.1200   13.9400  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5980   16.7580   12.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4120   17.1220   11.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7990   16.3510   13.5190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6040   16.0490   14.8060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+O2
+A    4
+C2
+A    5
+N1
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+BR1
+A   10
+C6
+A   11
+O3
+A   12
+N2
+A   13
+O4
+M  END
+>  <InstanceId>
+1M5C_BRH_A_611
+
+>  <ChemCompId>
+BRH
+
+>  <PdbId>
+1M5C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+611
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O4 Br
+
+>  <Name>
+(S)-2-AMINO-3-(4-BROMO-3-HYDROXY-ISOXAZOL-5-YL)PROPIONIC ACID
+
+>  <SystematicName>
+2-amino-3-(4-bromo-3-hydroxy-1,2-oxazol-5-yl)propanoic acid
+
+>  <Synonyms>
+BR-HIBO
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 Br N2 O4
+
+>  <MolecularWeight>
+251.035
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7BrN2O4/c7-4-3(13-9-5(4)10)1-2(8)6(11)12/h2H,1,8H2,(H,9,10)(H,11,12)
+
+>  <InChIKey>
+JRTOQOAGTSUNHA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(c1c(c(no1)O)Br)C(C(=O)O)N
+
+$$$$

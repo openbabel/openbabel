@@ -1,0 +1,135 @@
+4CV8_3D7_A_1795
+  RCSB PDB12061712063D
+Coordinates from PDB:4CV8:A:1795 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -0.6370  -22.8600  -47.6290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1290  -22.5870  -46.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5130  -21.1770  -46.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0430  -20.1100  -47.0410   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6400  -23.6580  -45.9170   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4450  -23.4460  -44.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7700  -22.1530  -44.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3080  -20.9940  -45.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5000  -21.9520  -43.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4500  -20.9230  -42.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9060  -21.0340  -41.5260   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2630  -22.1250  -41.0180   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5150  -22.6070  -39.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3990  -22.7050  -41.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+O
+A    2
+C4
+A    3
+C
+A    4
+N
+A    5
+N1
+A    6
+C3
+A    7
+C2
+A    8
+C1
+A    9
+C5
+A   10
+C7
+A   11
+N3
+A   12
+N2
+A   13
+C8
+A   14
+C6
+M  END
+>  <InstanceId>
+4CV8_3D7_A_1795
+
+>  <ChemCompId>
+3D7
+
+>  <PdbId>
+4CV8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1795
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O
+
+>  <Name>
+3-amino-5-(1-methyl-1H-pyrazol-4-yl)pyridin-2(1H)-one
+
+>  <SystematicName>
+3-azanyl-5-(1-methylpyrazol-4-yl)-1H-pyridin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H10 N4 O
+
+>  <MolecularWeight>
+190.202
+
+>  <ModifiedDate>
+2015-04-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N4O/c1-13-5-7(4-12-13)6-2-8(10)9(14)11-3-6/h2-5H,10H2,1H3,(H,11,14)
+
+>  <InChIKey>
+ZGGRJKLRPVNTDT-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1cc(cn1)C2=CNC(=O)C(=C2)N
+
+$$$$

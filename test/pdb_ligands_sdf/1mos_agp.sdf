@@ -1,0 +1,141 @@
+1HOR_AGP_A_268
+  RCSB PDB12061702453D
+Coordinates from PDB:1HOR:A:268 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   22.4470   -7.2640   23.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2150   -7.0860   22.3210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2800   -5.9430   24.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5720   -5.4820   24.6940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2730   -6.0880   25.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9950   -6.4690   24.9010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7540   -7.1470   26.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1560   -8.4180   26.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3420   -6.7020   27.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0320   -5.4840   28.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6750   -7.7920   28.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0640   -8.0400   28.8980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4680   -9.4770   29.3820   P 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9310   -9.2760   29.5200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6820   -9.7670   30.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0780  -10.3000   28.2240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+N2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+A   11
+C6
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+1HOR_AGP_A_268
+
+>  <ChemCompId>
+AGP
+
+>  <PdbId>
+1HOR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+268
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O8 P
+
+>  <Name>
+2-DEOXY-2-AMINO GLUCITOL-6-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4R,5S)-5-amino-2,3,4,6-tetrahydroxy-hexyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H16 N O8 P
+
+>  <MolecularWeight>
+261.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H16NO8P/c7-3(1-8)5(10)6(11)4(9)2-15-16(12,13)14/h3-6,8-11H,1-2,7H2,(H2,12,13,14)/t3-,4+,5+,6+/m0/s1
+
+>  <InChIKey>
+LBNVXZROMBUNNQ-SLPGGIOYSA-N
+
+>  <SMILES>
+C([C@@H]([C@H]([C@@H]([C@@H](COP(=O)(O)O)O)O)O)N)O
+
+$$$$

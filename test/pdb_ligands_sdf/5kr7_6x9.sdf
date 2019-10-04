@@ -1,0 +1,143 @@
+5KR7_6X9_A_403
+  RCSB PDB12061718393D
+Coordinates from PDB:5KR7:A:403 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   32.8530   48.3770    8.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8910   46.9120   10.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8730   48.0610   11.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9030   48.6780    9.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8000   47.5290    9.3400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7830   46.0760   10.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2060   46.1400    9.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0090   49.6410    9.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0430   48.7860    8.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9810   48.3130   12.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8750   45.4830    8.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3510   45.1720   11.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9290   47.1590   11.4450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9680   44.4220   12.4450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8410   47.0640    8.6820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8170   48.8490    7.7680   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16  1  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 15  5  1  0  0  0  0
+ 15  7  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  4  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  5  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  4  1  0  0  0  0
+  4  3  2  0  0  0  0
+  2  6  2  0  0  0  0
+  2 13  1  0  0  0  0
+  6 12  1  0  0  0  0
+  3 13  1  0  0  0  0
+  3 10  1  0  0  0  0
+ 12 14  3  0  0  0  0
+A    1
+C1
+A    2
+C3
+A    3
+C5
+A    4
+C6
+A    5
+N2
+A    6
+C7
+A    7
+C8
+A    8
+C11
+A    9
+C12
+A   10
+C13
+A   11
+C14
+A   12
+C15
+A   13
+N4
+A   14
+N16
+A   15
+N9
+A   16
+O10
+M  END
+>  <InstanceId>
+5KR7_6X9_A_403
+
+>  <ChemCompId>
+6X9
+
+>  <PdbId>
+5KR7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O
+
+>  <Name>
+6-ethyl-2,5-dimethyl-7-oxidanylidene-4~{H}-pyrazolo[1,5-a]pyrimidine-3-carbonitrile
+
+>  <SystematicName>
+6-ethyl-2,5-dimethyl-7-oxidanylidene-4~{H}-pyrazolo[1,5-a]pyrimidine-3-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N4 O
+
+>  <MolecularWeight>
+216.239
+
+>  <ModifiedDate>
+2016-08-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N4O/c1-4-8-6(2)13-10-9(5-12)7(3)14-15(10)11(8)16/h13H,4H2,1-3H3
+
+>  <InChIKey>
+ZCAHZFVKTFERAJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CCC1=C(Nc2c(c(nn2C1=O)C)C#N)C
+
+$$$$

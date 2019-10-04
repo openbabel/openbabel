@@ -1,0 +1,139 @@
+4NJH_2K8_A_303
+  RCSB PDB12061713543D
+Coordinates from PDB:4NJH:A:303 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -11.6960   83.2860   23.7440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8350   84.0250   23.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8580   85.2710   23.1900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6460   83.3370   22.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2900   82.2300   23.4010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9470   81.9500   23.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4950   84.3270   22.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1460   83.7670   22.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9000   82.7020   23.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5920   82.4570   23.3090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3650   81.4320   24.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1120   81.1100   24.4530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3620   80.6680   24.6680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7090   80.8610   24.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5460   80.1040   24.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  1  0  0  0  0
+  7  4  1  0  0  0  0
+  8  9  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  6  2  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+O6A
+A    2
+C6A
+A    3
+O6B
+A    4
+C6
+A    5
+N5
+A    6
+C4A
+A    7
+C7
+A    8
+N8
+A    9
+C8A
+A   10
+N1
+A   11
+C2
+A   12
+N2
+A   13
+N3
+A   14
+C4
+A   15
+O4
+M  END
+>  <InstanceId>
+4NJH_2K8_A_303
+
+>  <ChemCompId>
+2K8
+
+>  <PdbId>
+4NJH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O3
+
+>  <Name>
+(6R)-2-amino-4-oxo-3,4,5,6,7,8-hexahydropteridine-6-carboxylic acid
+
+>  <SystematicName>
+(6R)-2-azanyl-4-oxidanylidene-5,6,7,8-tetrahydro-3H-pteridine-6-carboxylic acid
+
+>  <Synonyms>
+6-carboxy-5,6,7,8-tetrahydropterin
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N5 O3
+
+>  <MolecularWeight>
+211.178
+
+>  <ModifiedDate>
+2014-06-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N5O3/c8-7-11-4-3(5(13)12-7)10-2(1-9-4)6(14)15/h2,10H,1H2,(H,14,15)(H4,8,9,11,12,13)/t2-/m1/s1
+
+>  <InChIKey>
+QSIYONWVWDSRRO-UWTATZPHSA-N
+
+>  <SMILES>
+C1[C@@H](NC2=C(N1)N=C(NC2=O)N)C(=O)O
+
+$$$$

@@ -1,0 +1,113 @@
+1MT1_AG2_A_7005
+  RCSB PDB12061703193D
+Coordinates from PDB:1MT1:A:7005 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   15.5900   -3.5450    4.9800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0150   -3.8460    5.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8780   -3.7100    4.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3690   -3.6710    4.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1130   -3.2240    3.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5330   -2.0050    2.5080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2110   -0.8930    2.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5160   -0.8250    2.4750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5840    0.1480    1.7080   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+NE
+A    7
+CZ
+A    8
+NH1
+A    9
+NH2
+M  END
+>  <InstanceId>
+1MT1_AG2_A_7005
+
+>  <ChemCompId>
+AG2
+
+>  <PdbId>
+1MT1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+7005
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4
+
+>  <Name>
+AGMATINE
+
+>  <SystematicName>
+1-(4-aminobutyl)guanidine
+
+>  <Synonyms>
+(4-AMINOBUTYL)GUANIDINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H14 N4
+
+>  <MolecularWeight>
+130.191
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H14N4/c6-3-1-2-4-9-5(7)8/h1-4,6H2,(H4,7,8,9)
+
+>  <InChIKey>
+QYPPJABKJHAVHS-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCNC(=N)N)CN
+
+$$$$

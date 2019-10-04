@@ -1,0 +1,114 @@
+1BIO_SOA_A_244
+  RCSB PDB12061702053D
+Coordinates from PDB:1BIO:A:244 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    5.7960    6.1640    1.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9310    7.2920    1.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5380    7.1320    1.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0040    5.8500    1.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2520    4.8810    1.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8540    4.7270    1.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4260    8.5250    1.0370   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3320    6.3120    1.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0200    7.4990    0.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C4
+A    2
+C3
+A    3
+C2
+A    4
+C1
+A    5
+C5
+A    6
+C6
+A    7
+N11
+A    8
+C12
+A    9
+O1
+M  END
+>  <InstanceId>
+1BIO_SOA_A_244
+
+>  <ChemCompId>
+SOA
+
+>  <PdbId>
+1BIO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+244
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O
+
+>  <Name>
+ISATOIC ANHYDRIDE
+
+>  <SystematicName>
+(2-aminophenyl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N O
+
+>  <MolecularWeight>
+123.152
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9NO/c8-7-4-2-1-3-6(7)5-9/h1-4,9H,5,8H2
+
+>  <InChIKey>
+VYFOAVADNIHPTR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)CO)N
+
+$$$$

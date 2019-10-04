@@ -1,0 +1,98 @@
+3BW3_NIE_A_371
+  RCSB PDB12061708043D
+Coordinates from PDB:3BW3:A:371 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+    9.3960   71.2510  -60.4300   N 0  3  0  0  0  0  0  0  0  0  0  0
+    9.9270   70.1110  -62.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7990   69.9850  -61.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2860   71.3470  -59.9340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1620   72.2030  -60.3950   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+M  CHG  2   1   1   5  -1
+A    1
+N3
+A    2
+C1
+A    3
+C2
+A    4
+O4
+A    5
+O5
+M  END
+>  <InstanceId>
+3BW3_NIE_A_371
+
+>  <ChemCompId>
+NIE
+
+>  <PdbId>
+3BW3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+371
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O2
+
+>  <Name>
+nitroethane
+
+>  <SystematicName>
+1-nitroethane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H5 N O2
+
+>  <MolecularWeight>
+75.067
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H5NO2/c1-2-3(4)5/h2H2,1H3
+
+>  <InChIKey>
+MCSAJNNLRCFZED-UHFFFAOYSA-N
+
+>  <SMILES>
+CC[N+](=O)[O-]
+
+$$$$

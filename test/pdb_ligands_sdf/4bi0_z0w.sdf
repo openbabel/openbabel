@@ -1,0 +1,132 @@
+4BI0_Z0W_A_1797
+  RCSB PDB12061711513D
+Coordinates from PDB:4BI0:A:1797 Model:1 without hydrogens
+ 13 15  0  0  0  0            999 V2000
+    1.5750   45.3090   16.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4960   44.7630   15.2540   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7040   43.6860   15.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0040   43.1910   16.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9680   44.9140   17.5980   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1530   43.8440   17.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7010   43.0480   18.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9280   43.0820   19.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3180   42.0360   17.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1640   41.0930   18.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3740   41.1550   19.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7600   42.1370   20.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8900   42.1330   16.3390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C2
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+N1
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C12
+A   10
+C11
+A   11
+C10
+A   12
+C9
+A   13
+N2
+M  END
+>  <InstanceId>
+4BI0_Z0W_A_1797
+
+>  <ChemCompId>
+Z0W
+
+>  <PdbId>
+4BI0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1797
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3
+
+>  <Name>
+5H-pyrimido[5,4-b]indole
+
+>  <SystematicName>
+5H-pyrimido[5,4-b]indole
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H7 N3
+
+>  <MolecularWeight>
+169.183
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7N3/c1-2-4-8-7(3-1)10-9(13-8)5-11-6-12-10/h1-6,13H
+
+>  <InChIKey>
+IADMQABXGAXDPF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c3c([nH]2)cncn3
+
+$$$$

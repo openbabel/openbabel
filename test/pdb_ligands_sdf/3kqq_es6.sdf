@@ -1,0 +1,118 @@
+3KQQ_ES6_A_290
+  RCSB PDB12061709293D
+Coordinates from PDB:3KQQ:A:290 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   28.9190   46.7350   16.9160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6210   45.6290   17.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9960   45.1890   18.5250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7800   44.7090   16.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2310   45.1910   15.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4730   44.3430   14.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2730   43.0120   14.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8140   42.5560   16.0290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5630   43.3750   16.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1080   42.8900   17.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+N08
+A    9
+C09
+A   10
+O10
+M  END
+>  <InstanceId>
+3KQQ_ES6_A_290
+
+>  <ChemCompId>
+ES6
+
+>  <PdbId>
+3KQQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3
+
+>  <Name>
+2-oxo-1,2-dihydropyridine-3-carboxylic acid
+
+>  <SystematicName>
+2-oxo-1H-pyridine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 N O3
+
+>  <MolecularWeight>
+139.109
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5NO3/c8-5-4(6(9)10)2-1-3-7-5/h1-3H,(H,7,8)(H,9,10)
+
+>  <InChIKey>
+UEYQJQVBUVAELZ-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=CNC(=O)C(=C1)C(=O)O
+
+$$$$

@@ -1,0 +1,134 @@
+2IMA_GB4_A_600
+  RCSB PDB12061705563D
+Coordinates from PDB:2IMA:A:600 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   -5.0600   -6.0420   21.5510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4400   -6.6520   22.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9430   -5.9910   23.4490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0630   -4.6040   23.5210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1600   -8.0950   22.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4460   -8.6720   21.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1450  -10.1000   20.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3540  -10.5370   19.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0020   -9.4700   18.1250  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0760  -11.8160   18.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6130  -11.0170   21.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3240  -12.3260   21.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5660  -12.7170   19.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2190  -14.3620   19.2950  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O12
+A    2
+C11
+A    3
+N13
+A    4
+O14
+A    5
+C10
+A    6
+C9
+A    7
+C1
+A    8
+C6
+A    9
+CL8
+A   10
+C5
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+CL7
+M  END
+>  <InstanceId>
+2IMA_GB4_A_600
+
+>  <ChemCompId>
+GB4
+
+>  <PdbId>
+2IMA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 Cl2
+
+>  <Name>
+(2E)-3-(2,4-DICHLOROPHENYL)-N-HYDROXYACRYLAMIDE
+
+>  <SystematicName>
+(E)-3-(2,4-dichlorophenyl)-N-hydroxy-prop-2-enamide
+
+>  <Synonyms>
+2,4-DICHLOROCINNAMYLHYDROXAMATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 Cl2 N O2
+
+>  <MolecularWeight>
+232.063
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H7Cl2NO2/c10-7-3-1-6(8(11)5-7)2-4-9(13)12-14/h1-5,14H,(H,12,13)/b4-2+
+
+>  <InChIKey>
+LHTLDFWBUPYUDR-DUXPYHPUSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)Cl)\C=C\C(=O)NO
+
+$$$$

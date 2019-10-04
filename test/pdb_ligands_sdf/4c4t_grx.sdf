@@ -1,0 +1,146 @@
+4C4S_GRX_A_1219
+  RCSB PDB12061711583D
+Coordinates from PDB:4C4S:A:1219 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+  -18.1460   -8.6980  -12.2890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8660   -9.1360  -11.7320   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5370   -8.6450  -10.3690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5410  -10.5700  -11.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6680   -8.2900  -12.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7960   -8.7820  -14.1530   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1900   -8.4060  -12.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5830   -7.1750  -12.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1920   -7.1070  -12.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7250   -5.6830  -12.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5530   -4.7390  -11.8240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3700   -8.1400  -13.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0130   -7.9950  -12.5650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9300   -9.4900  -12.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1410  -10.4960  -13.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3750   -9.6170  -13.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9070  -10.9160  -12.6610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 16  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O1P
+A    2
+P
+A    3
+O2P
+A    4
+O3P
+A    5
+C7
+A    6
+F1
+A    7
+C1
+A    8
+O5
+A    9
+C5
+A   10
+C6
+A   11
+O6
+A   12
+C4
+A   13
+O4
+A   14
+C3
+A   15
+O3
+A   16
+C2
+A   17
+O2
+M  END
+>  <InstanceId>
+4C4S_GRX_A_1219
+
+>  <ChemCompId>
+GRX
+
+>  <PdbId>
+4C4S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1219
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O8 P F
+
+>  <Name>
+(S)-1-beta-phosphonofluoromethylene-1-deoxy-D-glucopyranose
+
+>  <SystematicName>
+[(S)-fluoranyl-[(2R,3R,4S,5S,6R)-6-(hydroxymethyl)-3,4,5-tris(oxidanyl)oxan-2-yl]methyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H14 F O8 P
+
+>  <MolecularWeight>
+276.153
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14FO8P/c8-7(17(13,14)15)6-5(12)4(11)3(10)2(1-9)16-6/h2-7,9-12H,1H2,(H2,13,14,15)/t2-,3-,4+,5-,6-,7+/m1/s1
+
+>  <InChIKey>
+BUPRWODHUABASJ-GEGSFZHJSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@@H](O1)[C@@H](F)P(=O)(O)O)O)O)O)O
+
+$$$$

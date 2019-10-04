@@ -1,0 +1,135 @@
+5G44_SWX_A_1511
+  RCSB PDB12061717483D
+Coordinates from PDB:5G44:A:1511 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -24.0900    6.9140  -14.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2210    6.1860  -16.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9500    8.2230  -14.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0810    7.4900  -16.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1040    3.5790  -15.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8800    4.0260  -13.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7420    1.9650  -13.9790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2290    5.8810  -15.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3940    4.5070  -14.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9470    8.5150  -16.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.7940    9.9090  -16.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3010    2.3030  -15.1500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0280    2.7620  -13.1750   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4590   10.8420  -15.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  2  2  0  0  0  0
+  4 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 14  1  0  0  0  0
+  2  8  1  0  0  0  0
+ 10  3  2  0  0  0  0
+  5 12  2  0  0  0  0
+  5  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8  1  2  0  0  0  0
+ 12  7  1  0  0  0  0
+  9  6  2  0  0  0  0
+  3  1  1  0  0  0  0
+  7 13  2  0  0  0  0
+  6 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+N12
+A   13
+N13
+A   14
+O14
+M  END
+>  <InstanceId>
+5G44_SWX_A_1511
+
+>  <ChemCompId>
+SWX
+
+>  <PdbId>
+5G44
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1511
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+(4-pyrimidin-5-ylphenyl)methanol
+
+>  <SystematicName>
+(4-pyrimidin-5-ylphenyl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2 O
+
+>  <MolecularWeight>
+186.21
+
+>  <ModifiedDate>
+2016-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O/c14-7-9-1-3-10(4-2-9)11-5-12-8-13-6-11/h1-6,8,14H,7H2
+
+>  <InChIKey>
+QPOIDCHBWLGFGU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CO)c2cncnc2
+
+$$$$

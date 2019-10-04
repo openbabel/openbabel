@@ -1,0 +1,118 @@
+1GQT_RIB_A_1311
+  RCSB PDB12061702383D
+Coordinates from PDB:1GQT:A:1311 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   15.6810    2.7950   80.3880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7460    3.4240   81.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3760    3.9640   81.9990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5180    2.8800   82.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3440    4.9000   83.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3770    6.2240   82.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0660    4.5330   83.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0500    5.5000   83.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5910    3.2440   83.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5380    3.5300   82.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O5'
+A    2
+C5'
+A    3
+C4'
+A    4
+O4'
+A    5
+C3'
+A    6
+O3'
+A    7
+C2'
+A    8
+O2'
+A    9
+C1'
+A   10
+O1'
+M  END
+>  <InstanceId>
+1GQT_RIB_A_1311
+
+>  <ChemCompId>
+RIB
+
+>  <PdbId>
+1GQT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+RIBOSE
+
+>  <SystematicName>
+(2S,3R,4S,5R)-5-(hydroxymethyl)oxolane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-1-2-3(7)4(8)5(9)10-2/h2-9H,1H2/t2-,3-,4-,5+/m1/s1
+
+>  <InChIKey>
+HMFHBZSHGGEWLO-AIHAYLRMSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@H]([C@H](O1)O)O)O)O
+
+$$$$

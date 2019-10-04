@@ -1,0 +1,129 @@
+1A82_DNN_A_801
+  RCSB PDB12061701583D
+Coordinates from PDB:1A82:A:801 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   -6.5030   28.3430    6.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7950   29.2060    6.4050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3710   27.6910    6.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2890   28.0930    8.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6430   26.7380    8.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0590   26.6730   10.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6310   25.2650   10.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6500   25.1570   11.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8450   23.8830   12.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7890   22.6320   11.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9650   21.7660   11.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9290   23.8170   13.6680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5110   21.8520   11.7340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+N7
+A   13
+N8
+M  END
+>  <InstanceId>
+1A82_DNN_A_801
+
+>  <ChemCompId>
+DNN
+
+>  <PdbId>
+1A82
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2
+
+>  <Name>
+7,8-DIAMINO-NONANOIC ACID
+
+>  <SystematicName>
+(7R,8S)-7,8-diaminononanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 N2 O2
+
+>  <MolecularWeight>
+188.267
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20N2O2/c1-7(10)8(11)5-3-2-4-6-9(12)13/h7-8H,2-6,10-11H2,1H3,(H,12,13)/t7-,8+/m0/s1
+
+>  <InChIKey>
+KCEGBPIYGIWCDH-JGVFFNPUSA-N
+
+>  <SMILES>
+C[C@@H]([C@@H](CCCCCC(=O)O)N)N
+
+$$$$

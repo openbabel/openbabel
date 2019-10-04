@@ -1,0 +1,139 @@
+5LZ2_7BX_A_503
+  RCSB PDB12061718553D
+Coordinates from PDB:5LZ2:A:503 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   25.4730    4.9660   -2.7160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3080    3.7330   -2.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9670    3.0660   -2.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1060    2.4730   -2.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1110    7.3260   -2.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0430    7.7700   -5.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2950    8.7660   -4.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4510    9.0500   -3.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6710   10.0890   -2.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3690    8.3190   -2.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6770    6.1420   -0.7210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2690    6.4090   -1.9960   S 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5090    7.1120   -2.0650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9500    7.0500   -4.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0540   10.9120   -1.9810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5 10  2  0  0  0  0
+  5 12  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 14  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  9 15  3  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+N4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+C11
+A    8
+C12
+A    9
+C13
+A   10
+C15
+A   11
+O1
+A   12
+S2
+A   13
+O3
+A   14
+C9
+A   15
+N14
+M  END
+>  <InstanceId>
+5LZ2_7BX_A_503
+
+>  <ChemCompId>
+7BX
+
+>  <PdbId>
+5LZ2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 S
+
+>  <Name>
+3-cyano-~{N}-cyclopropyl-benzenesulfonamide
+
+>  <SystematicName>
+3-cyano-~{N}-cyclopropyl-benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O2 S
+
+>  <MolecularWeight>
+222.264
+
+>  <ModifiedDate>
+2016-12-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O2S/c11-7-8-2-1-3-10(6-8)15(13,14)12-9-4-5-9/h1-3,6,9,12H,4-5H2
+
+>  <InChIKey>
+IQBVFUJHLUVSIM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)S(=O)(=O)NC2CC2)C#N
+
+$$$$

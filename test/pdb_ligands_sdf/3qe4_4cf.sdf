@@ -1,0 +1,134 @@
+3QE4_4CF_A_313
+  RCSB PDB12061710243D
+Coordinates from PDB:3QE4:A:313 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   11.5440    0.5410   28.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7900    1.1930   29.6290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1870    1.7210   29.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1940   -5.1730   28.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9910   -5.9810   28.2260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9600    0.0830   29.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0030   -1.2070   29.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0780   -2.1880   29.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1140   -4.1430   28.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4550   -2.4240   28.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6730   -2.9210   30.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5100   -3.4100   27.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6630   -3.9420   30.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7630   -0.2080   28.0780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  2  0  0  0  0
+ 14  1  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  6  1  0  0  0  0
+  5  4  3  0  0  0  0
+  4  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  8 11  1  0  0  0  0
+ 12  9  2  0  0  0  0
+  9 13  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 13 11  2  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+C1
+A    5
+N1
+A    6
+CA
+A    7
+CB
+A    8
+CG
+A    9
+CZ
+A   10
+CD1
+A   11
+CD2
+A   12
+CE1
+A   13
+CE2
+A   14
+OXT
+M  END
+>  <InstanceId>
+3QE4_4CF_A_313
+
+>  <ChemCompId>
+4CF
+
+>  <PdbId>
+3QE4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+313
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+4-cyano-L-phenylalanine
+
+>  <SystematicName>
+(2S)-2-azanyl-3-(4-cyanophenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C10 H10 N2 O2
+
+>  <MolecularWeight>
+190.199
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+PHE
+
+>  <OneLetterCode>
+F
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O2/c11-6-8-3-1-7(2-4-8)5-9(12)10(13)14/h1-4,9H,5,12H2,(H,13,14)/t9-/m0/s1
+
+>  <InChIKey>
+KWIPUXXIFQQMKN-VIFPVBQESA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@@H](C(=O)O)N)C#N
+
+$$$$

@@ -1,0 +1,117 @@
+5A5Z_WJZ_A_304
+  RCSB PDB12061716453D
+Coordinates from PDB:5A5Z:A:304 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   12.2740   57.2860   -5.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5340   54.5350   -7.7450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8730   51.0880   -7.6610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5020   56.1100   -4.6780   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0710   56.0080   -5.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5190   52.1800   -8.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4940   55.8280   -7.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8000   56.7990   -7.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1780   53.3800   -6.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5420   52.1460   -7.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  1  1  0  0  0  0
+  2  7  1  0  0  0  0
+  2  9  1  0  0  0  0
+ 10  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  6 10  2  0  0  0  0
+  8  7  2  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+C01
+A    2
+N01
+A    3
+O01
+A    4
+S01
+A    5
+C02
+A    6
+O02
+A    7
+C03
+A    8
+O03
+A    9
+C04
+A   10
+C05
+M  END
+>  <InstanceId>
+5A5Z_WJZ_A_304
+
+>  <ChemCompId>
+WJZ
+
+>  <PdbId>
+5A5Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O3 S
+
+>  <Name>
+TIOPRONIN
+
+>  <SystematicName>
+2-[[(2S)-2-sulfanylpropanoyl]amino]ethanoic acid
+
+>  <Synonyms>
+THIOLA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N O3 S
+
+>  <MolecularWeight>
+163.195
+
+>  <ModifiedDate>
+2015-07-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO3S/c1-3(10)5(9)6-2-4(7)8/h3,10H,2H2,1H3,(H,6,9)(H,7,8)/t3-/m0/s1
+
+>  <InChIKey>
+YTGJWQPHMWSCST-VKHMYHEASA-N
+
+>  <SMILES>
+C[C@@H](C(=O)NCC(=O)O)S
+
+$$$$

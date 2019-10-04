@@ -1,0 +1,131 @@
+3QYL_7ME_A_160
+  RCSB PDB12061710293D
+Coordinates from PDB:3QYL:A:160 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    2.0410   -5.1480  -10.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1590   -5.4160  -11.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0720   -4.4390  -11.8520   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8720   -3.1750  -11.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5210   -1.5010  -10.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5550   -1.4920   -8.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3010   -2.3220   -9.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5780   -3.7510   -9.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5780   -2.3010   -7.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7520   -2.9000  -10.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8300   -3.9190  -10.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3410   -6.6780  -12.1380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8090   -2.2280  -11.6300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4 10  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C13
+A   10
+C4A
+A   11
+C8A
+A   12
+NA2
+A   13
+NA4
+M  END
+>  <InstanceId>
+3QYL_7ME_A_160
+
+>  <ChemCompId>
+7ME
+
+>  <PdbId>
+3QYL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+160
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4
+
+>  <Name>
+(7S)-7-methyl-5,6,7,8-tetrahydroquinazoline-2,4-diamine
+
+>  <SystematicName>
+(7S)-7-methyl-5,6,7,8-tetrahydroquinazoline-2,4-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H14 N4
+
+>  <MolecularWeight>
+178.234
+
+>  <ModifiedDate>
+2012-01-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14N4/c1-5-2-3-6-7(4-5)12-9(11)13-8(6)10/h5H,2-4H2,1H3,(H4,10,11,12,13)/t5-/m0/s1
+
+>  <InChIKey>
+GXOHKQZNOVLQOK-YFKPBYRVSA-N
+
+>  <SMILES>
+C[C@H]1CCc2c(nc(nc2N)N)C1
+
+$$$$

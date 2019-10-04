@@ -1,0 +1,130 @@
+1AFA_MBG_1_1
+  RCSB PDB12061701593D
+Coordinates from PDB:1AFA:1:1 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   48.1220   -2.4430   21.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6810   -2.5300   21.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6080   -3.4720   23.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2490   -4.8190   22.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6510   -4.6350   22.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2320   -5.9600   21.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.5130   -1.3100   19.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1800   -1.5760   20.3170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2230   -1.2470   22.3170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2570   -3.6860   23.5010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4500   -5.5220   21.8850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5960   -3.7520   21.1000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6430   -5.8930   21.6610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1AFA_MBG_1_1
+
+>  <ChemCompId>
+MBG
+
+>  <PdbId>
+1AFA
+
+>  <ChainId>
+1
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O6
+
+>  <Name>
+METHYL-BETA-GALACTOSE
+
+>  <SystematicName>
+(2R,3R,4S,5R,6R)-2-(hydroxymethyl)-6-methoxy-oxane-3,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C7 H14 O6
+
+>  <MolecularWeight>
+194.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O6/c1-12-7-6(11)5(10)4(9)3(2-8)13-7/h3-11H,2H2,1H3/t3-,4+,5+,6-,7-/m1/s1
+
+>  <InChIKey>
+HOVAGTYPODGVJG-VOQCIKJUSA-N
+
+>  <SMILES>
+CO[C@H]1[C@@H]([C@H]([C@H]([C@H](O1)CO)O)O)O
+
+$$$$

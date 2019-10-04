@@ -1,0 +1,142 @@
+5AES_5B0_A_306
+  RCSB PDB12061716483D
+Coordinates from PDB:5AES:A:306 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   24.9660  -60.4920   53.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1780  -60.2760   52.4560   P 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0070  -59.3880   51.4870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9130  -61.6090   51.8230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6300  -59.4270   52.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8000  -58.8220   51.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6290  -58.0410   52.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6000  -56.6580   52.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5580  -55.9540   52.5960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5390  -56.5700   53.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3910  -55.7650   53.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5080  -57.9340   53.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4350  -58.5110   54.0280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5780  -58.7010   52.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6070  -60.1860   53.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4060  -60.8440   53.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 14  2  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+OAE
+A    2
+PAP
+A    3
+OAF
+A    4
+OAC
+A    5
+CAJ
+A    6
+CAI
+A    7
+CAN
+A    8
+CAH
+A    9
+NAK
+A   10
+CAL
+A   11
+CAA
+A   12
+CAM
+A   13
+OAD
+A   14
+CAO
+A   15
+C1
+A   16
+O2
+M  END
+>  <InstanceId>
+5AES_5B0_A_306
+
+>  <ChemCompId>
+5B0
+
+>  <PdbId>
+5AES
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+306
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O5 P
+
+>  <Name>
+{2-[5-hydroxy-4-(hydroxymethyl)-6-methylpyridin-3-yl]ethyl}phosphonic acid
+
+>  <SystematicName>
+2-[4-(hydroxymethyl)-6-methyl-5-oxidanyl-pyridin-3-yl]ethylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H14 N O5 P
+
+>  <MolecularWeight>
+247.185
+
+>  <ModifiedDate>
+2015-03-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14NO5P/c1-6-9(12)8(5-11)7(4-10-6)2-3-16(13,14)15/h4,11-12H,2-3,5H2,1H3,(H2,13,14,15)
+
+>  <InChIKey>
+JWJVWJVYBWLXDN-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)CCP(=O)(O)O)CO)O
+
+$$$$

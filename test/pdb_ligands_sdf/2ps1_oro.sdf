@@ -1,0 +1,122 @@
+1D3G_ORO_A_399
+  RCSB PDB12061702143D
+Coordinates from PDB:1D3G:A:399 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   41.8640   32.7670    4.7110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8570   33.6560    5.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2440   34.3140    4.2250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5850   33.7630    6.4100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2090   33.0800    7.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8850   33.2370    8.5970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2430   32.1590    7.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5250   32.0660    5.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5650   31.0790    5.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6470   30.9220    5.7420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0700   30.4560    4.2220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+O71
+A   11
+O72
+M  END
+>  <InstanceId>
+1D3G_ORO_A_399
+
+>  <ChemCompId>
+ORO
+
+>  <PdbId>
+1D3G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+399
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O4
+
+>  <Name>
+OROTIC ACID
+
+>  <SystematicName>
+2,6-dioxo-3H-pyrimidine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N2 O4
+
+>  <MolecularWeight>
+156.096
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N2O4/c8-3-1-2(4(9)10)6-5(11)7-3/h1H,(H,9,10)(H2,6,7,8,11)
+
+>  <InChIKey>
+PXQPEWDEAKTCGB-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(NC(=O)NC1=O)C(=O)O
+
+$$$$

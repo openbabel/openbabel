@@ -1,0 +1,114 @@
+4YJF_98B_A_404
+  RCSB PDB12061716263D
+Coordinates from PDB:4YJF:A:404 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   23.0970   14.4780   11.1730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4520   14.8430   10.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6820   16.2970   11.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4240   13.8810   11.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0890   12.5330   11.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9950   11.6220   12.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2460   12.0450   12.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5850   13.3890   12.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6780   14.2970   11.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  9  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+N
+A    2
+C
+A    3
+C7
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+4YJF_98B_A_404
+
+>  <ChemCompId>
+98B
+
+>  <PdbId>
+4YJF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N
+
+>  <Name>
+(1S)-1-phenylethanamine
+
+>  <SystematicName>
+(1S)-1-phenylethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N
+
+>  <MolecularWeight>
+121.18
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N/c1-7(9)8-5-3-2-4-6-8/h2-7H,9H2,1H3/t7-/m0/s1
+
+>  <InChIKey>
+RQEUFEKYXDPUSK-ZETCQYMHSA-N
+
+>  <SMILES>
+C[C@@H](c1ccccc1)N
+
+$$$$

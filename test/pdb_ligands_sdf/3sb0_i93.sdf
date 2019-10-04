@@ -1,0 +1,146 @@
+3SB0_I93_A_802
+  RCSB PDB12061710423D
+Coordinates from PDB:3SB0:A:802 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   30.9260   75.4860   60.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2210   75.6340   61.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6740   74.6150   62.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8640   74.7240   62.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6580   75.8830   62.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8160   75.9680   63.5570   F 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2480   76.9360   62.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0950   78.1710   61.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3740   78.5240   60.6950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9200   78.6940   62.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7470   79.7680   62.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7470   80.5560   61.7230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8540   80.0620   63.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6960   79.7370   65.1020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0360   80.0260   63.4430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0420   76.7780   61.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5670   78.0730   60.3070  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+ 16  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  7  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 16  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 15 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 17 16  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+F06
+A    7
+C07
+A    8
+C08
+A    9
+O09
+A   10
+C10
+A   11
+C11
+A   12
+O12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+A   16
+C16
+A   17
+CL17
+M  END
+>  <InstanceId>
+3SB0_I93_A_802
+
+>  <ChemCompId>
+I93
+
+>  <PdbId>
+3SB0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4 F Cl
+
+>  <Name>
+4-(2-chloro-6-fluoro-3-methylphenyl)-2,4-dioxobutanoic acid
+
+>  <SystematicName>
+4-(2-chloranyl-6-fluoranyl-3-methyl-phenyl)-2,4-bis(oxidanylidene)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H8 Cl F O4
+
+>  <MolecularWeight>
+258.63
+
+>  <ModifiedDate>
+2012-11-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H8ClFO4/c1-5-2-3-6(13)9(10(5)12)7(14)4-8(15)11(16)17/h2-3H,4H2,1H3,(H,16,17)
+
+>  <InChIKey>
+ZIEFMRIMKUUCBZ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1Cl)C(=O)CC(=O)C(=O)O)F
+
+$$$$

@@ -1,0 +1,135 @@
+3ODK_ODK_A_165
+  RCSB PDB12061710033D
+Coordinates from PDB:3ODK:A:165 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   39.1820  -19.0240   11.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4670  -20.1900   12.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8350  -20.1000   13.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9030  -18.8500   14.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6140  -17.7400   13.8070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2690  -17.7990   12.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9520  -16.6370   11.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3940  -15.3930   12.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7500  -14.6630   11.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8770  -13.1520   10.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7900  -12.6950    9.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0780  -12.3840   11.8270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9570  -15.4450   10.3890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0740  -16.6040   10.8070   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 14  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 13  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C12
+A    2
+C14
+A    3
+C13
+A    4
+C11
+A    5
+N8
+A    6
+C7
+A    7
+C4
+A    8
+C2
+A    9
+C1
+A   10
+C6
+A   11
+O10
+A   12
+O9
+A   13
+N5
+A   14
+N3
+M  END
+>  <InstanceId>
+3ODK_ODK_A_165
+
+>  <ChemCompId>
+ODK
+
+>  <PdbId>
+3ODK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+165
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O2
+
+>  <Name>
+3-pyridin-2-yl-1H-pyrazole-5-carboxylic acid
+
+>  <SystematicName>
+3-pyridin-2-yl-1H-pyrazole-5-carboxylic acid
+
+>  <Synonyms>
+5-Pyridin-2-yl-2H-pyrazole-3-carboxylic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N3 O2
+
+>  <MolecularWeight>
+189.171
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7N3O2/c13-9(14)8-5-7(11-12-8)6-3-1-2-4-10-6/h1-5H,(H,11,12)(H,13,14)
+
+>  <InChIKey>
+SJBWHTBPIJXUFP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)c2cc([nH]n2)C(=O)O
+
+$$$$

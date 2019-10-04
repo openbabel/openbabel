@@ -1,0 +1,147 @@
+5U11_7PS_A_301
+  RCSB PDB12061719473D
+Coordinates from PDB:5U11:A:301 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    9.5110    0.5780   24.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8280    0.1630   25.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3040    1.4910   23.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6330    1.4970   25.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0580   -0.8790   25.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2460   -2.8030   22.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0630   -3.8240   20.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7930   -1.7940   23.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9050    0.6090   26.3830   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9140   -0.7390   26.1910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3810    1.9470   24.4420   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3740   -0.0970   24.1270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7540    2.0040   26.3320   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4300   -2.7000   21.4780   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1880   -3.5890   22.7160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0380    1.9410   22.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6660   -1.9340   25.2410   S 0  0  0  0  0  0  0  0  0  0  0  0
+  7 14  1  0  0  0  0
+ 14  6  1  0  0  0  0
+ 16  3  2  0  0  0  0
+  6 15  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8 17  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3  1  1  0  0  0  0
+ 12  1  1  0  0  0  0
+ 12  5  2  0  0  0  0
+ 11  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  5 17  1  0  0  0  0
+  5 10  1  0  0  0  0
+  4 13  1  0  0  0  0
+  4  9  2  0  0  0  0
+  2 10  1  0  0  0  0
+  2  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N9
+A   10
+N10
+A   11
+N11
+A   12
+N12
+A   13
+N13
+A   14
+N14
+A   15
+O15
+A   16
+O16
+A   17
+S17
+M  END
+>  <InstanceId>
+5U11_7PS_A_301
+
+>  <ChemCompId>
+7PS
+
+>  <PdbId>
+5U11
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N6 O2 S
+
+>  <Name>
+2-[(2-amino-6-oxo-6,9-dihydro-1H-purin-8-yl)sulfanyl]-N-methylacetamide
+
+>  <SystematicName>
+2-[(2-azanyl-6-oxidanylidene-1,9-dihydropurin-8-yl)sulfanyl]-~{N}-methyl-ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N6 O2 S
+
+>  <MolecularWeight>
+254.269
+
+>  <ModifiedDate>
+2017-12-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N6O2S/c1-10-3(15)2-17-8-11-4-5(13-8)12-7(9)14-6(4)16/h2H2,1H3,(H,10,15)(H4,9,11,12,13,14,16)
+
+>  <InChIKey>
+MKEVUZQIEYSSFO-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=O)CSc1[nH]c2c(n1)C(=O)NC(=N2)N
+
+$$$$

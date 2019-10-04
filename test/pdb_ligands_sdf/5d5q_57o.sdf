@@ -1,0 +1,134 @@
+5D5Q_57O_A_201
+  RCSB PDB12061717133D
+Coordinates from PDB:5D5Q:A:201 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   16.4280    4.5110   15.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3780    5.0460   12.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7960    4.2570   12.8160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4830    4.7160   11.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9130    6.8970   10.1280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5450    6.3180    8.4690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1230    6.1140    9.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8470    4.7750   10.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8120    4.5180   11.5560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4510    4.4490   12.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7690    4.5800   13.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4020    4.7790   13.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6890    4.9110   15.0340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7440    4.8480   12.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  2  0  0  0  0
+  7  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  4  1  0  0  0  0
+  4  9  1  0  0  0  0
+  4 14  2  0  0  0  0
+  9 10  2  0  0  0  0
+  2 14  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 10  3  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11  1  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+OAE
+A    4
+CAM
+A    5
+OAD
+A    6
+OAC
+A    7
+CAI
+A    8
+CAG
+A    9
+NAH
+A   10
+CAL
+A   11
+CAJ
+A   12
+CAN
+A   13
+OAF
+A   14
+CAK
+M  END
+>  <InstanceId>
+5D5Q_57O_A_201
+
+>  <ChemCompId>
+57O
+
+>  <PdbId>
+5D5Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4
+
+>  <Name>
+(4,6-dihydroxy-3,5-dimethylpyridin-2-yl)acetic acid
+
+>  <SystematicName>
+2-[3,5-dimethyl-4,6-bis(oxidanyl)pyridin-2-yl]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N O4
+
+>  <MolecularWeight>
+197.188
+
+>  <ModifiedDate>
+2016-10-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11NO4/c1-4-6(3-7(11)12)10-9(14)5(2)8(4)13/h3H2,1-2H3,(H,11,12)(H2,10,13,14)
+
+>  <InChIKey>
+AVBVBQSPVBVXPJ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(nc(c(c1O)C)O)CC(=O)O
+
+$$$$

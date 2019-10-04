@@ -1,0 +1,139 @@
+2NZ5_226_A_431
+  RCSB PDB12061706263D
+Coordinates from PDB:2NZ5:A:431 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -24.9350  -15.2860   21.3810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8830  -15.6490   20.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7550  -16.6320   21.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5620  -17.2080   22.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4390  -18.1880   22.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2460  -18.7520   24.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.5040  -18.5890   22.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.6990  -18.0130   20.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.7270  -18.4450   20.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8270  -17.0300   20.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0270  -16.4370   19.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9790  -16.7450   18.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1380  -15.4590   18.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0690  -15.0670   19.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2010  -14.1250   18.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  2 14  2  0  0  0  0
+  2  3  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  7  2  0  0  0  0
+ 13 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  8  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+OAB
+A    2
+CAM
+A    3
+CAN
+A    4
+CAH
+A    5
+CAI
+A    6
+OAC
+A    7
+CAF
+A    8
+CAK
+A    9
+OAE
+A   10
+CAO
+A   11
+CAL
+A   12
+OAA
+A   13
+CAG
+A   14
+CAJ
+A   15
+OAD
+M  END
+>  <InstanceId>
+2NZ5_226_A_431
+
+>  <ChemCompId>
+226
+
+>  <PdbId>
+2NZ5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+431
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O5
+
+>  <Name>
+naphthalene-1,2,4,5,7-pentol
+
+>  <SystematicName>
+naphthalene-1,2,4,5,7-pentol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 O5
+
+>  <MolecularWeight>
+208.168
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C10H8O5/c11-4-1-5-9(6(12)2-4)7(13)3-8(14)10(5)15/h1-3,11-15H
+
+>  <InChIKey>
+IISYZEMBGRNYTH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c2c1c(c(cc2O)O)O)O)O
+
+$$$$

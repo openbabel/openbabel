@@ -1,0 +1,134 @@
+5HO7_63L_A_701
+  RCSB PDB12061718023D
+Coordinates from PDB:5HO7:A:701 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   41.0060   14.9350    2.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1030   14.3910    3.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3310   16.3590    2.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2200   13.0740    4.0140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2190   15.3430    4.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1740   18.7970    3.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8040   14.1930    2.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0060   15.4030    3.8200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5040   16.5830    3.3100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4370   17.6280    2.0430   S 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8230   14.8040    1.8840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6970   13.0070    2.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9770   16.4630    4.4790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6300   14.2900    4.8380   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  7  1  0  0  0  0
+ 10  3  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  7 12  2  0  0  0  0
+  7  1  1  0  0  0  0
+  3  1  1  0  0  0  0
+  3  9  2  0  0  0  0
+  1  2  2  0  0  0  0
+  9  8  1  0  0  0  0
+  2  8  1  0  0  0  0
+  2  4  1  0  0  0  0
+  8  5  1  0  0  0  0
+  5 13  1  0  0  0  0
+  5 14  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N6
+A    5
+C11
+A    6
+C12
+A    7
+C4
+A    8
+N5
+A    9
+N7
+A   10
+S8
+A   11
+N9
+A   12
+O10
+A   13
+N13
+A   14
+O14
+M  END
+>  <InstanceId>
+5HO7_63L_A_701
+
+>  <ChemCompId>
+63L
+
+>  <PdbId>
+5HO7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5 O2 S
+
+>  <Name>
+5-amino-3-(methylsulfanyl)-1H-pyrazole-1,4-dicarboxamide
+
+>  <SystematicName>
+5-azanyl-3-methylsulfanyl-pyrazole-1,4-dicarboxamide
+
+>  <Synonyms>
+5-Amino-3-methylsulfanyl-pyrazole-1,4-dicarboxylicacid diamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 N5 O2 S
+
+>  <MolecularWeight>
+215.233
+
+>  <ModifiedDate>
+2016-06-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9N5O2S/c1-14-5-2(4(8)12)3(7)11(10-5)6(9)13/h7H2,1H3,(H2,8,12)(H2,9,13)
+
+>  <InChIKey>
+TUVCBRIDRHWVLF-UHFFFAOYSA-N
+
+>  <SMILES>
+CSc1c(c(n(n1)C(=O)N)N)C(=O)N
+
+$$$$

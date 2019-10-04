@@ -1,0 +1,138 @@
+4Y43_46T_A_403
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y43:A:403 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   34.2920    2.6920   -0.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1290    2.3930   -0.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9170    3.1150   -0.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2390    5.9750    1.8080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6210    4.3100   -0.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4410    5.1240    0.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7340    4.9990    1.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4410    7.1650    2.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3370    8.3800    2.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6750    6.9470    3.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6510    3.8110    0.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7860    3.9390    1.4300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8180    2.8930    1.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6730    2.9980    2.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6440    3.0630    0.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  3  5  2  0  0  0  0
+  2  1  2  0  0  0  0
+  5  6  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 15 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 11  7  1  0  0  0  0
+ 11 12  2  0  0  0  0
+  7  4  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  4  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+C11
+A   10
+C12
+A   11
+C3
+A   12
+N
+A   13
+C1
+A   14
+C2
+A   15
+C
+M  END
+>  <InstanceId>
+4Y43_46T_A_403
+
+>  <ChemCompId>
+46T
+
+>  <PdbId>
+4Y43
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2
+
+>  <Name>
+(1E,2E)-N,N'-di(propan-2-yl)cyclohepta-3,5-diene-1,2-diimine
+
+>  <SystematicName>
+N1,N2-di(propan-2-yl)cyclohepta-3,5-diene-1,2-diimine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H20 N2
+
+>  <MolecularWeight>
+204.311
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H20N2/c1-10(2)14-12-8-6-5-7-9-13(12)15-11(3)4/h5-8,10-11H,9H2,1-4H3/b14-12+,15-13+
+
+>  <InChIKey>
+WTKTZDHSCKRTLA-QUMQEAAQSA-N
+
+>  <SMILES>
+CC(C)/N=C/1\CC=CC=C\C1=N/C(C)C
+
+$$$$

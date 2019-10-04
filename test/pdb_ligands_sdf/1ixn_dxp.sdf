@@ -1,0 +1,129 @@
+1IXN_DXP_A_2001
+  RCSB PDB12061702533D
+Coordinates from PDB:1IXN:A:2001 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   -1.0450  -16.5700   -4.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3680  -15.7620   -5.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0470  -14.3510   -4.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9940  -13.2450   -5.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5040  -11.9740   -4.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1430  -16.2760   -6.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1870  -14.0590   -5.6190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0710  -12.9860   -6.4850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3830  -10.8530   -4.6170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8600   -9.5970   -3.9850   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5870   -9.7580   -2.5160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8290   -8.4750   -4.1800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3280   -9.2610   -4.5290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O2
+A    7
+O3
+A    8
+O4
+A    9
+O5
+A   10
+P
+A   11
+O2P
+A   12
+O1P
+A   13
+O3P
+M  END
+>  <InstanceId>
+1IXN_DXP_A_2001
+
+>  <ChemCompId>
+DXP
+
+>  <PdbId>
+1IXN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O7 P
+
+>  <Name>
+1-DEOXY-D-XYLULOSE-5-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S)-2,3-dihydroxy-4-oxo-pentyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 O7 P
+
+>  <MolecularWeight>
+214.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11O7P/c1-3(6)5(8)4(7)2-12-13(9,10)11/h4-5,7-8H,2H2,1H3,(H2,9,10,11)/t4-,5-/m1/s1
+
+>  <InChIKey>
+AJPADPZSRRUGHI-RFZPGFLSSA-N
+
+>  <SMILES>
+CC(=O)[C@H]([C@@H](COP(=O)(O)O)O)O
+
+$$$$

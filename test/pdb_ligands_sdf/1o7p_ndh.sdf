@@ -1,0 +1,127 @@
+1O7P_NDH_A_1450
+  RCSB PDB12061703313D
+Coordinates from PDB:1O7P:A:1450 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   11.7010   53.0100   78.8580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9460   52.6390   79.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9700   53.5890   80.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7480   54.3710   80.6920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1040   52.8270   82.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4380   51.5030   82.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9080   50.7460   80.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6960   51.2980   79.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0960   50.6380   78.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5780   49.5210   80.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0030   48.8750   79.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7590   49.4220   78.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+OH2
+A    2
+C1
+A    3
+C2
+A    4
+OH1
+A    5
+C3
+A    6
+C4
+A    7
+C4A
+A    8
+C8A
+A    9
+C8
+A   10
+C5
+A   11
+C6
+A   12
+C7
+M  END
+>  <InstanceId>
+1O7P_NDH_A_1450
+
+>  <ChemCompId>
+NDH
+
+>  <PdbId>
+1O7P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1450
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+(1R, 2S)-CIS 1,2 DIHYDROXY-1,2-DIHYDRONAPHTHALENE
+
+>  <SystematicName>
+(1R,2S)-1,2-dihydronaphthalene-1,2-diol
+
+>  <Synonyms>
+(1R,2S)-1,2-DIHYDRONAPHTHALENE-1,2-DIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O2
+
+>  <MolecularWeight>
+162.185
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O2/c11-9-6-5-7-3-1-2-4-8(7)10(9)12/h1-6,9-12H/t9-,10+/m0/s1
+
+>  <InChIKey>
+QPUHWUSUBHNZCG-VHSXEESVSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C=C[C@@H]([C@@H]2O)O
+
+$$$$

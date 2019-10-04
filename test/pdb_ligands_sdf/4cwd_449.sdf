@@ -1,0 +1,123 @@
+4CWD_449_A_1385
+  RCSB PDB12061712063D
+Coordinates from PDB:4CWD:A:1385 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -38.8900   -3.5730  -47.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5510   -4.2960  -47.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0150   -3.5100  -49.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.2940   -2.8460  -49.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.9210   -2.3230  -48.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.6010   -5.1150  -48.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.7090   -5.7680  -49.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.3260   -1.7790  -48.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.5780   -0.5800  -48.3350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.2300   -2.5450  -49.0510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.9640   -4.6820  -48.7610   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+M  CHG  1  11   1
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+OAI
+A   10
+OAJ
+A   11
+NAK
+M  END
+>  <InstanceId>
+4CWD_449_A_1385
+
+>  <ChemCompId>
+449
+
+>  <PdbId>
+4CWD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1385
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+4-carboxy-1,1-dimethylpiperidin-1-ium
+
+>  <SystematicName>
+1,1-dimethylpiperidin-1-ium-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N O2
+
+>  <MolecularWeight>
+158.218
+
+>  <ModifiedDate>
+2014-09-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO2/c1-9(2)5-3-7(4-6-9)8(10)11/h7H,3-6H2,1-2H3/p+1
+
+>  <InChIKey>
+ZUZDUOOCVXTRAU-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+]1(CCC(CC1)C(=O)O)C
+
+$$$$

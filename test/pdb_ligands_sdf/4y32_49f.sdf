@@ -1,0 +1,114 @@
+4Y32_49F_C_301
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y32:C:301 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    6.6400    9.9660    4.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7950    9.2160    5.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2370    9.7830    7.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5430   10.4380    6.9450   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9790   10.0790    5.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9850   11.0650    4.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5390   12.5310    5.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3130   13.4640    4.1600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7100   13.1500    2.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+CAC
+A    2
+CAD
+A    3
+CAE
+A    4
+NAA
+A    5
+CAB
+A    6
+CAF
+A    7
+CAG
+A    8
+OAH
+A    9
+CAI
+M  END
+>  <InstanceId>
+4Y32_49F_C_301
+
+>  <ChemCompId>
+49F
+
+>  <PdbId>
+4Y32
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O
+
+>  <Name>
+(2S)-2-(2-methoxyethyl)pyrrolidine
+
+>  <SystematicName>
+(2S)-2-(2-methoxyethyl)pyrrolidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 N O
+
+>  <MolecularWeight>
+129.2
+
+>  <ModifiedDate>
+2015-12-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO/c1-9-6-4-7-3-2-5-8-7/h7-8H,2-6H2,1H3/t7-/m0/s1
+
+>  <InChIKey>
+XSVHOPJZMMLWKO-ZETCQYMHSA-N
+
+>  <SMILES>
+COCC[C@@H]1CCCN1
+
+$$$$

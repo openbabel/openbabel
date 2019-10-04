@@ -1,0 +1,118 @@
+4BGK_RTK_A_401
+  RCSB PDB12061711503D
+Coordinates from PDB:4BGK:A:401 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   20.6950   26.5190   88.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5610   27.6810   87.7730   P 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9950   27.2710   87.4950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4330   28.9260   89.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3920   30.0910   88.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9370   30.9200   87.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7000   32.1780   87.4370   N 0  3  0  0  0  0  0  0  0  0  0  0
+   24.1220   31.9360   87.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6270   33.0900   88.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0420   32.8190   86.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+M  CHG  1   7   1
+A    1
+O7
+A    2
+P5
+A    3
+O4
+A    4
+C6
+A    5
+C3
+A    6
+C2
+A    7
+N1
+A    8
+C28
+A    9
+C9
+A   10
+C8
+M  END
+>  <InstanceId>
+4BGK_RTK_A_401
+
+>  <ChemCompId>
+RTK
+
+>  <PdbId>
+4BGK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2 P
+
+>  <Name>
+trimethyl(3-oxidanylphosphonoylpropyl)azanium
+
+>  <SystematicName>
+trimethyl(3-oxidanylphosphonoylpropyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H17 N O2 P
+
+>  <MolecularWeight>
+166.178
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H16NO2P/c1-7(2,3)5-4-6-10(8)9/h10H,4-6H2,1-3H3/p+1
+
+>  <InChIKey>
+WOSBPQBJRYGKCZ-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(C)CCCP(=O)O
+
+$$$$

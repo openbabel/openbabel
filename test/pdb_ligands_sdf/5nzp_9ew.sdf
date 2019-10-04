@@ -1,0 +1,119 @@
+5NZP_9EW_B_301
+  RCSB PDB12061719153D
+Coordinates from PDB:5NZP:B:301 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+  -26.3660   12.5280    6.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6240   13.8830    6.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1380   14.6650    7.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5940   16.0000    6.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2880   16.0350    5.7770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5640   11.9810    7.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3740   14.1230    8.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0770   12.7680    8.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3600   14.6690    5.2730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3300   17.0150    7.7270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  8  6  1  0  0  0  0
+  7  3  1  0  0  0  0
+  6  1  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+ 10  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  2  9  1  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+N1
+A    6
+C3
+A    7
+C1
+A    8
+C2
+A    9
+O1
+A   10
+O2
+M  END
+>  <InstanceId>
+5NZP_9EW_B_301
+
+>  <ChemCompId>
+9EW
+
+>  <PdbId>
+5NZP
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+1,2-benzoxazol-3-ol
+
+>  <SystematicName>
+1,2-benzoxazol-3-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N O2
+
+>  <MolecularWeight>
+135.12
+
+>  <ModifiedDate>
+2017-06-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5NO2/c9-7-5-3-1-2-4-6(5)10-8-7/h1-4H,(H,8,9)
+
+>  <InChIKey>
+QLDQYRDCPNBPII-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(no2)O
+
+$$$$

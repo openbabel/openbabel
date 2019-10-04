@@ -1,0 +1,136 @@
+3ZV7_NHG_A_1541
+  RCSB PDB12061711333D
+Coordinates from PDB:3ZV7:A:1541 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+    4.8490   65.3380   62.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0400   66.3360   63.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8840   67.8070   62.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4270   67.9780   61.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1690   68.5790   63.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0610   68.6620   64.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6820   69.1500   64.7100   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8880   68.3240   63.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4050   67.1090   64.4600   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1100   66.0300   64.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9960   64.7140   64.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8030   63.7130   64.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7380   64.0270   63.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5700   63.0680   62.5570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CW2
+A    2
+CW3
+A    3
+CW7
+A    4
+CK2
+A    5
+CW9
+A    6
+CK1
+A    7
+NW2
+A    8
+CW8
+A    9
+NW1
+A   10
+CW4
+A   11
+CW5
+A   12
+CW6
+A   13
+CW1
+A   14
+OW1
+M  END
+>  <InstanceId>
+3ZV7_NHG_A_1541
+
+>  <ChemCompId>
+NHG
+
+>  <PdbId>
+3ZV7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1541
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+BIS-NORESEROLINE
+
+>  <SystematicName>
+(3aR,8bS)-8b-methyl-2,3,3a,4-tetrahydro-1H-pyrrolo[2,3-b]indol-7-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H14 N2 O
+
+>  <MolecularWeight>
+190.242
+
+>  <ModifiedDate>
+2014-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14N2O/c1-11-4-5-12-10(11)13-9-3-2-7(14)6-8(9)11/h2-3,6,10,12-14H,4-5H2,1H3/t10-,11+/m1/s1
+
+>  <InChIKey>
+BLEHTFVVORLVPX-MNOVXSKESA-N
+
+>  <SMILES>
+C[C@@]12CCN[C@@H]1Nc3c2cc(cc3)O
+
+$$$$

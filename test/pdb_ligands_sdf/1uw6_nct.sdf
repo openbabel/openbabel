@@ -1,0 +1,127 @@
+1OL8_NCT_A_1207
+  RCSB PDB12061703343D
+Coordinates from PDB:1OL8:A:1207 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   31.1790   23.8160   26.6670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9470   22.8180   27.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6240   21.8560   26.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5390   21.9030   25.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7710   22.8970   24.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0870   23.8570   25.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4490   21.3560   28.2120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4580   20.7650   27.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5710   19.7980   28.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4920   19.3220   29.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3540   20.5630   29.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8280   21.1970   27.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+N2
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+C10
+M  END
+>  <InstanceId>
+1OL8_NCT_A_1207
+
+>  <ChemCompId>
+NCT
+
+>  <PdbId>
+1OL8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1207
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2
+
+>  <Name>
+(S)-3-(1-METHYLPYRROLIDIN-2-YL)PYRIDINE
+
+>  <SystematicName>
+3-[(1R,2S)-1-methylpyrrolidin-2-yl]pyridine
+
+>  <Synonyms>
+(S)-(-)-NICOTINE, 3-[(2S)-1-METHYL-2-PYRROLIDINYL] PYRIDINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2
+
+>  <MolecularWeight>
+162.232
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2/c1-12-7-3-5-10(12)9-4-2-6-11-8-9/h2,4,6,8,10H,3,5,7H2,1H3/t10-/m0/s1
+
+>  <InChIKey>
+SNICXCGAKADSCV-JTQLQIEISA-N
+
+>  <SMILES>
+C[N@@]1CCC[C@H]1c2cccnc2
+
+$$$$

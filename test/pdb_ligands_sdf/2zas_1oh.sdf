@@ -1,0 +1,143 @@
+2ZAS_1OH_A_460
+  RCSB PDB12061707433D
+Coordinates from PDB:2ZAS:A:460 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   16.5670   23.4480   42.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2750   24.7520   42.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1420   25.3580   42.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8560   26.6920   42.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1220   25.4780   41.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8410   26.8040   40.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7020   27.4270   41.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4160   28.8740   41.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4640   29.7570   41.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0620   29.3260   41.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4480   29.0210   39.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6270   29.3760   38.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6470   29.4930   37.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4890   29.2540   36.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3140   28.8950   37.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2960   28.7700   38.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 16 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5  2  1  0  0  0  0
+  7  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+A    1
+O2
+A    2
+C13
+A    3
+C14
+A    4
+C15
+A    5
+C12
+A    6
+C11
+A    7
+C4
+A    8
+C2
+A    9
+C5
+A   10
+C3
+A   11
+C1
+A   12
+C6
+A   13
+C7
+A   14
+C8
+A   15
+C9
+A   16
+C10
+M  END
+>  <InstanceId>
+2ZAS_1OH_A_460
+
+>  <ChemCompId>
+1OH
+
+>  <PdbId>
+2ZAS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+460
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 O
+
+>  <Name>
+4-(1-methyl-1-phenylethyl)phenol
+
+>  <SystematicName>
+4-(2-phenylpropan-2-yl)phenol
+
+>  <Synonyms>
+2-(4'-Hydroxyphenyl)-2-phenylpropane, 4-alpha-Cumylphenol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H16 O
+
+>  <MolecularWeight>
+212.287
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H16O/c1-15(2,12-6-4-3-5-7-12)13-8-10-14(16)11-9-13/h3-11,16H,1-2H3
+
+>  <InChIKey>
+QBDSZLJBMIMQRS-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(c1ccccc1)c2ccc(cc2)O
+
+$$$$

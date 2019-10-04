@@ -1,0 +1,147 @@
+1GZF_NIR_C_1252
+  RCSB PDB12061702403D
+Coordinates from PDB:1GZF:C:1252 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    6.5540   33.4360   37.7810   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2750   34.0140   40.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0580   32.7800   40.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8010   32.6260   38.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9700   31.8780   38.1210   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5330   33.0200   42.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4850   34.1400   42.0190   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6250   35.5000   42.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5470   36.3140   43.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3460   36.1740   44.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8560   37.7450   43.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0910   31.6060   40.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6410   38.4780   42.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4090   37.5480   41.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3620   31.8520   42.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8130   36.2990   41.2860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8740   37.5160   41.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 15  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 16  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 17  1  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+O6
+A    6
+C8
+A    7
+N9
+A    8
+C1'
+A    9
+C2'
+A   10
+O2'
+A   11
+C3'
+A   12
+C4N
+A   13
+O3'
+A   14
+C4'
+A   15
+C5N
+A   16
+O4'
+A   17
+C5'
+M  END
+>  <InstanceId>
+1GZF_NIR_C_1252
+
+>  <ChemCompId>
+NIR
+
+>  <PdbId>
+1GZF
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1252
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4
+
+>  <Name>
+3-(AMINOCARBONYL)-1-[(3R,4S,5R)-3,4-DIHYDROXY-5-METHYLTETRAHYDRO-2-FURANYL]PYRIDINIUM
+
+>  <SystematicName>
+1-[(3R,4S,5R)-3,4-dihydroxy-5-methyl-oxolan-2-yl]-3,6-dihydro-2H-pyridine-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H18 N2 O4
+
+>  <MolecularWeight>
+242.272
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H18N2O4/c1-6-8(14)9(15)11(17-6)13-4-2-3-7(5-13)10(12)16/h2-3,6-9,11,14-15H,4-5H2,1H3,(H2,12,16)/t6-,7+,8-,9-,11+/m1/s1
+
+>  <InChIKey>
+MYKCTORFOIHUSG-LALMQGGXSA-N
+
+>  <SMILES>
+C[C@@H]1[C@H]([C@H](C(O1)N2CC=CC(C2)C(=O)N)O)O
+
+$$$$

@@ -1,0 +1,141 @@
+1MBU_YBT_A_143
+  RCSB PDB12061703163D
+Coordinates from PDB:1MBU:A:143 Model:1 without hydrogens
+ 15 18  0  0  0  0            999 V2000
+   33.0450   15.4070   14.1010   Y 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3950   17.0660   13.9180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0020   14.3520   13.5590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1280   16.9230   16.5130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3830   13.6270   15.5840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7580   16.7260   15.8900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2910   15.3890   16.1150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9620   15.6530   15.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0710   16.9400   14.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7960   14.4810   14.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6590   15.6140   16.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3840   14.0980   16.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2290   13.0380   16.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6700   16.5340   17.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1640   16.5970   17.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6 15  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7 14  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+Y1
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+A    6
+O5
+A    7
+N1
+A    8
+C1
+A    9
+C2
+A   10
+C3
+A   11
+C4
+A   12
+C5
+A   13
+C6
+A   14
+C7
+A   15
+C8
+M  END
+>  <InstanceId>
+1MBU_YBT_A_143
+
+>  <ChemCompId>
+YBT
+
+>  <PdbId>
+1MBU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+143
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+15
+
+>  <ObservedFormula>
+C8 N O5 Y
+
+>  <Name>
+BIS-(2-HYDROXYETHYL)AMINO-TRIS(HYDROXYMETHYL)METHANE YTTRIUM
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H19 N O5 Y
+
+>  <MolecularWeight>
+298.146
+
+>  <ModifiedDate>
+2008-10-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+Y
+
+>  <InChI>
+InChI=1/C8H19NO5.Y/c10-3-1-9(2-4-11)8(5-12,6-13)7-14;/h10-14H,1-7H2;/rC8H19NO5Y/c10-5-8-6-13-15(14-7-8)9(8,1-3-11-15)2-4-12-15/h10-14H,1-7H2
+
+>  <InChIKey>
+KSJVCBJVYSTBHB-UXIAQZODAR
+
+>  <SMILES>
+C1C[O@@H][Y]234[N]1(CC[O@@H]2)C(C[OH]3)(C[O@@H]4)CO
+
+$$$$

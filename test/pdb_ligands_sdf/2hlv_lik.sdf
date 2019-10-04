@@ -1,0 +1,133 @@
+2HLV_LIK_A_999
+  RCSB PDB12061705483D
+Coordinates from PDB:2HLV:A:999 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   20.0750   42.2770    3.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7010   43.4270    3.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9670   44.5050    3.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9910   43.5400    5.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5340   43.2140    5.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8080   42.8900    4.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8680   43.2970    6.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8650   43.2820    7.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7730   42.0600    7.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3160   40.8800    7.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1970   42.1810    8.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1810   41.4370    7.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5310   41.2100    7.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4040   40.3130    7.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O1
+A    2
+C21
+A    3
+O2
+A    4
+C14
+A    5
+C12
+A    6
+CC1
+A    7
+C7
+A    8
+C1
+A    9
+C2
+A   10
+CC3
+A   11
+C3
+A   12
+C4
+A   13
+C5
+A   14
+C6
+M  END
+>  <InstanceId>
+2HLV_LIK_A_999
+
+>  <ChemCompId>
+LIK
+
+>  <PdbId>
+2HLV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2
+
+>  <Name>
+3,6-BIS(METHYLENE)DECANOIC ACID
+
+>  <SystematicName>
+3,6-dimethylidenedecanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H20 O2
+
+>  <MolecularWeight>
+196.286
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H20O2/c1-4-5-6-10(2)7-8-11(3)9-12(13)14/h2-9H2,1H3,(H,13,14)
+
+>  <InChIKey>
+YOHXQMVSYCADHX-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCC(=C)CCC(=C)CC(=O)O
+
+$$$$

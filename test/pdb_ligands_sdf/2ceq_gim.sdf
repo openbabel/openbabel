@@ -1,0 +1,136 @@
+2CEQ_GIM_A_1492
+  RCSB PDB12061705143D
+Coordinates from PDB:2CEQ:A:1492 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  118.9130   38.7800   63.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  118.5790   37.6730   62.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  119.9260   39.6620   63.2380   N 0  3  0  0  0  0  0  0  0  0  0  0
+  119.5740   37.6740   61.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  119.9650   39.0960   60.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  120.8360   39.6450   62.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  121.4240   41.0210   61.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  118.8620   40.1580   65.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  119.8950   40.5350   64.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  118.2650   39.0740   64.5300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  118.9550   37.0080   60.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  118.6610   36.3960   63.0810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  120.6820   39.0350   59.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  120.3640   41.9800   61.6180   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 14  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+M  CHG  1   3   1
+A    1
+C1
+A    2
+C2
+A    3
+N10
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+N1
+A   11
+O3
+A   12
+O2
+A   13
+O4
+A   14
+O6
+M  END
+>  <InstanceId>
+2CEQ_GIM_A_1492
+
+>  <ChemCompId>
+GIM
+
+>  <PdbId>
+2CEQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1492
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+GLUCOIMIDAZOLE
+
+>  <SystematicName>
+(5R,6R,7S,8S)-5-(hydroxymethyl)-5,6,7,8-tetrahydro-1H-imidazo[2,1-f]pyridin-4-ium-6,7,8-triol
+
+>  <Synonyms>
+(5S,6S,7R,8R)-5-(HYDROXYMETHYL)-1,5,6,7,8,8A-HEXAHYDROIMIDAZO[1,2-A]PYRIDINE-6,7,8-TRIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N2 O4
+
+>  <MolecularWeight>
+201.2
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12N2O4/c11-3-4-5(12)6(13)7(14)8-9-1-2-10(4)8/h1-2,4-7,11-14H,3H2/p+1/t4-,5-,6+,7-/m1/s1
+
+>  <InChIKey>
+RZRDQZQPTISYKY-MVIOUDGNSA-O
+
+>  <SMILES>
+c1c[n+]2c([nH]1)[C@@H]([C@H]([C@@H]([C@H]2CO)O)O)O
+
+$$$$

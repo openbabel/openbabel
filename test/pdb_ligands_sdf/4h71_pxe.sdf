@@ -1,0 +1,130 @@
+3MHN_PXE_A_604
+  RCSB PDB12061709453D
+Coordinates from PDB:3MHN:A:604 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    0.2940  -12.8740   -3.2660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5680  -12.1300   -2.6090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7920  -11.9790   -3.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9680  -11.6390   -4.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2310  -11.5180   -4.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2690  -11.6520   -4.0810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1030  -11.8970   -2.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8840  -12.0790   -2.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3820  -11.5390   -4.4650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8970  -12.3880   -0.8260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6050  -11.1540   -6.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4600  -11.0850   -7.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0560   -9.7700   -6.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+OAA
+A    2
+NAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+OAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+M  END
+>  <InstanceId>
+3MHN_PXE_A_604
+
+>  <ChemCompId>
+PXE
+
+>  <PdbId>
+3MHN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+604
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+2-methyl-5-(1-methylethyl)cyclohexa-2,5-diene-1,4-dione 1-oxime
+
+>  <SystematicName>
+4-hydroxyimino-5-methyl-2-propan-2-yl-cyclohexa-2,5-dien-1-one
+
+>  <Synonyms>
+(E)-4-(hydroxyimino)-2-isopropyl-5-methylcyclohexa-2,5-dienone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O2
+
+>  <MolecularWeight>
+179.216
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO2/c1-6(2)8-5-9(11-13)7(3)4-10(8)12/h4-6,13H,1-3H3/b11-9+
+
+>  <InChIKey>
+LFDOSYRMCCGDBT-PKNBQFBNSA-N
+
+>  <SMILES>
+CC1=CC(=O)C(=CC1=NO)C(C)C
+
+$$$$

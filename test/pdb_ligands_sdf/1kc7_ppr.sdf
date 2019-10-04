@@ -1,0 +1,117 @@
+1KC7_PPR_A_1000
+  RCSB PDB12061703043D
+Coordinates from PDB:1KC7:A:1000 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   12.2140    8.4000    4.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8380    8.8970    3.2100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9970    8.4700    4.3360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0990    7.7160    5.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4390    7.5000    5.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4330    7.2480    6.3020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5980    5.6080    4.7980   P 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9860    5.4370    4.1140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4770    5.3690    3.9050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5940    4.8220    6.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2'
+A    4
+C2
+A    5
+C3
+A    6
+O2
+A    7
+P
+A    8
+O1P
+A    9
+O2P
+A   10
+O3P
+M  END
+>  <InstanceId>
+1KC7_PPR_A_1000
+
+>  <ChemCompId>
+PPR
+
+>  <PdbId>
+1KC7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+PHOSPHONOPYRUVATE
+
+>  <SystematicName>
+2-oxo-3-phosphono-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 O6 P
+
+>  <MolecularWeight>
+168.042
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5O6P/c4-2(3(5)6)1-10(7,8)9/h1H2,(H,5,6)(H2,7,8,9)
+
+>  <InChIKey>
+CHDDAVCOAOFSLD-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)C(=O)O)P(=O)(O)O
+
+$$$$

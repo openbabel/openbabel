@@ -1,0 +1,139 @@
+4ZHX_C2Z_E_401
+  RCSB PDB12061716383D
+Coordinates from PDB:4ZHX:E:401 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   73.3210   16.5080   30.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.7690   16.0170   29.3530   P 0  0  0  0  0  0  0  0  0  0  0  0
+   72.7480   14.8370   28.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.4160   12.1860   33.2120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.4650   15.5000   29.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.0700   14.7940   30.2310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.3100   15.7520   28.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4790   15.1920   28.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.3310   14.6070   29.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.2650   13.9170   30.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.1080   13.4400   31.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.4510   13.5570   29.9600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   80.0920   12.8240   30.9770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2220   12.7890   32.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.4180   17.2350   28.3660   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 10  2  0  0  0  0
+ 13 14  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  9  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 14  4  1  0  0  0  0
+ 14 11  2  0  0  0  0
+  5  7  2  0  0  0  0
+  9  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+OAB
+A    2
+PAO
+A    3
+OAD
+A    4
+OAA
+A    5
+CAN
+A    6
+OAJ
+A    7
+CAF
+A    8
+CAE
+A    9
+CAM
+A   10
+CAL
+A   11
+CAG
+A   12
+NAH
+A   13
+OAI
+A   14
+CAK
+A   15
+OAC
+M  END
+>  <InstanceId>
+4ZHX_C2Z_E_401
+
+>  <ChemCompId>
+C2Z
+
+>  <PdbId>
+4ZHX
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O6 P
+
+>  <Name>
+5-(5-hydroxyl-isoxazol-3-yl)-furan-2-phosphonic acid
+
+>  <SystematicName>
+[5-(5-oxidanyl-1,2-oxazol-3-yl)furan-2-yl]phosphonic acid
+
+>  <Synonyms>
+[5-(5-hydroxy-1,2-oxazol-3-yl)furan-2-yl]phosphonic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 N O6 P
+
+>  <MolecularWeight>
+231.099
+
+>  <ModifiedDate>
+2016-03-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6NO6P/c9-6-3-4(8-14-6)5-1-2-7(13-5)15(10,11)12/h1-3,9H,(H2,10,11,12)
+
+>  <InChIKey>
+BRLJHMCTDKAUAY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1c2cc(on2)O)P(=O)(O)O
+
+$$$$

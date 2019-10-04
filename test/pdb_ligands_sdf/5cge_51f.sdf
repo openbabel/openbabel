@@ -1,0 +1,114 @@
+5CGE_51F_A_301
+  RCSB PDB12061717053D
+Coordinates from PDB:5CGE:A:301 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    1.9380  -23.2670   23.3200   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8220  -21.9470   23.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5850  -21.3400   23.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7310  -21.2390   21.7050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5230  -20.3280   21.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4120  -20.5380   19.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4890  -21.5360   19.4500   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2280  -21.9270   20.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7930  -22.9870   21.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  8  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  8  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+OAB
+A    2
+CAE
+A    3
+CAF
+A    4
+NAI
+A    5
+CAD
+A    6
+CAC
+A    7
+NAG
+A    8
+CAH
+A    9
+CAA
+M  END
+>  <InstanceId>
+5CGE_51F_A_301
+
+>  <ChemCompId>
+51F
+
+>  <PdbId>
+5CGE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O
+
+>  <Name>
+2-(2-methyl-1H-imidazol-1-yl)ethanol
+
+>  <SystematicName>
+2-(2-methylimidazol-1-yl)ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N2 O
+
+>  <MolecularWeight>
+126.156
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10N2O/c1-6-7-2-3-8(6)4-5-9/h2-3,9H,4-5H2,1H3
+
+>  <InChIKey>
+JJWKKSUCSNDHNJ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1nccn1CCO
+
+$$$$

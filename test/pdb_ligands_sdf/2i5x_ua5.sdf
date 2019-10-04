@@ -1,0 +1,130 @@
+2I5X_UA5_A_701
+  RCSB PDB12061705533D
+Coordinates from PDB:2I5X:A:701 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   18.0510   -7.1440   29.1890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5270   -7.1390   29.2680   S 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0840   -8.3470   28.6330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9970   -6.9760   30.6680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9940   -5.8450   28.4310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2920   -5.4400   28.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7320   -4.5010   29.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0620   -4.0770   29.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9570   -4.5910   28.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4090   -4.1410   28.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6000   -2.9660   27.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5170   -5.5260   27.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1860   -5.9450   27.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 13  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+O3
+A    2
+S1
+A    3
+O1
+A    4
+O2
+A    5
+N1
+A    6
+C3
+A    7
+C6
+A    8
+C2
+A    9
+C5
+A   10
+C7
+A   11
+C8
+A   12
+C4
+A   13
+C1
+M  END
+>  <InstanceId>
+2I5X_UA5_A_701
+
+>  <ChemCompId>
+UA5
+
+>  <PdbId>
+2I5X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S
+
+>  <Name>
+(4-ETHYLPHENYL)SULFAMIC ACID
+
+>  <SystematicName>
+(4-ethylphenyl)sulfamic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O3 S
+
+>  <MolecularWeight>
+201.243
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H11NO3S/c1-2-7-3-5-8(6-4-7)9-13(10,11)12/h3-6,9H,2H2,1H3,(H,10,11,12)
+
+>  <InChIKey>
+HXARYYGNSVTEFC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCc1ccc(cc1)NS(=O)(=O)O
+
+$$$$

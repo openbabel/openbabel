@@ -1,0 +1,126 @@
+1ZWH_RDE_A_1001
+  RCSB PDB12061704553D
+Coordinates from PDB:1ZWH:A:1001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   19.7790   -2.2300   -6.9670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7410   -2.2440   -6.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7270   -1.5570   -6.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6870   -3.1780   -5.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7070   -2.9750   -4.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6340   -3.8100   -2.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4200   -3.5180   -1.7870  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5420   -4.8520   -2.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4660   -5.6790   -1.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5260   -5.0560   -3.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6010   -4.2200   -4.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5700   -4.4280   -5.8430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+OAQ
+A    2
+CAR
+A    3
+OAE
+A    4
+CAX
+A    5
+CAK
+A    6
+CAV
+A    7
+CLAH
+A    8
+CAT
+A    9
+OAF
+A   10
+CAI
+A   11
+CAU
+A   12
+OAG
+M  END
+>  <InstanceId>
+1ZWH_RDE_A_1001
+
+>  <ChemCompId>
+RDE
+
+>  <PdbId>
+1ZWH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+15
+
+>  <ObservedFormula>
+C7 O4 Cl
+
+>  <Name>
+2-(3-AMINO-2,5,6-TRIMETHOXYPHENYL)ETHYL 5-CHLORO-2,4-DIHYDROXYBENZOATE
+
+>  <SystematicName>
+2-(3-amino-2,5,6-trimethoxy-phenyl)ethyl 5-chloro-2,4-dihydroxy-benzoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C18 H20 Cl N O7
+
+>  <MolecularWeight>
+397.807
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C18H20ClNO7/c1-24-15-7-12(20)16(25-2)9(17(15)26-3)4-5-27-18(23)10-6-11(19)14(22)8-13(10)21/h6-8,21-22H,4-5,20H2,1-3H3
+
+>  <InChIKey>
+DFYGLJKFZQGYPA-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(c(c(c1OC)CCOC(=O)c2cc(c(cc2O)O)Cl)OC)N
+
+$$$$

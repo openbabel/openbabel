@@ -1,0 +1,144 @@
+4Y3D_45N_A_401
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3D:A:401 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   -3.1230   -0.2520   10.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4290    0.1010   10.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5200   -0.9290   10.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9910   -0.5780    8.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0620   -0.3060    7.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7050   -1.1900    6.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1690   -2.3940    6.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3580   -1.9040    7.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2690    1.9150   10.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3350    2.8160   10.4780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4470    2.0250   10.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7300    2.4030   11.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8210    0.6060   10.0060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1550    0.7250   10.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7080    1.4270   11.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5700   -0.6390    9.6580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  4  1  0  0  0  0
+  4 16  1  0  0  0  0
+ 16  3  1  0  0  0  0
+ 13  9  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 14  1  1  0  0  0  0
+ 14 11  2  0  0  0  0
+  1  2  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2 15  1  0  0  0  0
+ 12 15  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+C11
+A    9
+C12
+A   10
+O1
+A   11
+C2
+A   12
+C1
+A   13
+O
+A   14
+C3
+A   15
+C
+A   16
+N
+M  END
+>  <InstanceId>
+4Y3D_45N_A_401
+
+>  <ChemCompId>
+45N
+
+>  <PdbId>
+4Y3D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O2
+
+>  <Name>
+N-(1,3-benzodioxol-5-ylmethyl)cyclopentanamine
+
+>  <SystematicName>
+N-(1,3-benzodioxol-5-ylmethyl)cyclopentanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H17 N O2
+
+>  <MolecularWeight>
+219.28
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H17NO2/c1-2-4-11(3-1)14-8-10-5-6-12-13(7-10)16-9-15-12/h5-7,11,14H,1-4,8-9H2
+
+>  <InChIKey>
+LOYZMUZNAPZSOX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1CNC3CCCC3)OCO2
+
+$$$$

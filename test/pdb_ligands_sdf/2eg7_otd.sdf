@@ -1,0 +1,130 @@
+2EG7_OTD_A_410
+  RCSB PDB12061705263D
+Coordinates from PDB:2EG7:A:410 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   26.3330   38.8610   73.3320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7630   40.3600   72.2640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5910   41.4710   72.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7890   41.3490   73.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1900   39.9630   73.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9890   38.6480   72.8760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6510   39.6490   73.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3680   40.4210   74.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1280   42.8190   72.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8460   43.8340   72.2450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0210   42.7850   71.4300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1320   39.0690   72.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4370   38.0750   72.4690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  9  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9 11  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+N1
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+O61
+A    7
+C61
+A    8
+O62
+A    9
+C41
+A   10
+O42
+A   11
+O41
+A   12
+C2
+A   13
+O2
+M  END
+>  <InstanceId>
+2EG7_OTD_A_410
+
+>  <ChemCompId>
+OTD
+
+>  <PdbId>
+2EG7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+410
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O5
+
+>  <Name>
+2-OXO-1,2,3,6-TETRAHYDROPYRIMIDINE-4,6-DICARBOXYLIC ACID
+
+>  <SystematicName>
+(4R)-2-oxo-3,4-dihydro-1H-pyrimidine-4,6-dicarboxylic acid
+
+>  <Synonyms>
+HDDP
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N2 O5
+
+>  <MolecularWeight>
+186.122
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H6N2O5/c9-4(10)2-1-3(5(11)12)8-6(13)7-2/h1-2H,(H,9,10)(H,11,12)(H2,7,8,13)/t2-/m1/s1
+
+>  <InChIKey>
+WVCOMWPLPGATRR-UWTATZPHSA-N
+
+>  <SMILES>
+C1=C(NC(=O)N[C@H]1C(=O)O)C(=O)O
+
+$$$$

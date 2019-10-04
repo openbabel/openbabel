@@ -1,0 +1,134 @@
+5O1N_9H8_A_1001
+  RCSB PDB12061719153D
+Coordinates from PDB:5O1N:A:1001 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   19.4710   87.9400  163.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7600   87.2090  162.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1290   88.3260  161.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1260   89.4070  161.7700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7640   89.3390  163.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7470   88.7600  162.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0900   89.6680  161.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1040   90.8340  161.7390   S 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4560   91.1650  163.0800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0520   91.8520  160.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4680   90.1900  161.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3010   89.2180  160.9490   F 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5780   91.1390  161.5850   F 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2270   89.7010  163.0370   F 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  8  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 13 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8 11  1  0  0  0  0
+  8  9  2  0  0  0  0
+  4  5  1  0  0  0  0
+ 11 14  1  0  0  0  0
+  2  1  1  0  0  0  0
+  5  1  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N1
+A    5
+C4
+A    6
+C5
+A    7
+N2
+A    8
+S1
+A    9
+O1
+A   10
+O2
+A   11
+C6
+A   12
+F1
+A   13
+F2
+A   14
+F3
+M  END
+>  <InstanceId>
+5O1N_9H8_A_1001
+
+>  <ChemCompId>
+9H8
+
+>  <PdbId>
+5O1N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2 S F3
+
+>  <Name>
+1,1,1-tris(fluoranyl)-~{N}-[[(2~{S})-pyrrolidin-2-yl]methyl]methanesulfonamide
+
+>  <SystematicName>
+1,1,1-tris(fluoranyl)-~{N}-[[(2~{S})-pyrrolidin-2-yl]methyl]methanesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 F3 N2 O2 S
+
+>  <MolecularWeight>
+232.224
+
+>  <ModifiedDate>
+2017-05-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11F3N2O2S/c7-6(8,9)14(12,13)11-4-5-2-1-3-10-5/h5,10-11H,1-4H2/t5-/m0/s1
+
+>  <InChIKey>
+RIWFUAUXWIEOTK-YFKPBYRVSA-N
+
+>  <SMILES>
+C1C[C@H](NC1)CNS(=O)(=O)C(F)(F)F
+
+$$$$

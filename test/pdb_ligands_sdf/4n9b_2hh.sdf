@@ -1,0 +1,139 @@
+4N9B_2HH_A_602
+  RCSB PDB12061713513D
+Coordinates from PDB:4N9B:A:602 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   16.9700  -15.7290   -2.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5340  -15.4500   -2.0400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6860  -15.6970   -0.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4370  -15.2700   -1.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6310  -14.7880   -2.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8970  -14.9240   -3.0220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0330  -16.3040    0.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9270  -17.1270    0.4080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3380  -15.9280    1.4210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4890  -16.3510    2.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6150  -15.7980    3.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6920  -16.1570    5.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6500  -17.0690    5.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4750  -17.5960    4.5150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4210  -17.2690    3.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 11 10  2  0  0  0  0
+ 15 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+N6
+A    7
+C7
+A    8
+O8
+A    9
+N9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+N14
+A   15
+C15
+M  END
+>  <InstanceId>
+4N9B_2HH_A_602
+
+>  <ChemCompId>
+2HH
+
+>  <PdbId>
+4N9B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O
+
+>  <Name>
+1-methyl-N-(pyridin-3-yl)-1H-pyrazole-5-carboxamide
+
+>  <SystematicName>
+2-methyl-N-pyridin-3-yl-pyrazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N4 O
+
+>  <MolecularWeight>
+202.213
+
+>  <ModifiedDate>
+2014-02-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N4O/c1-14-9(4-6-12-14)10(15)13-8-3-2-5-11-7-8/h2-7H,1H3,(H,13,15)
+
+>  <InChIKey>
+LSEUGEFZKAZGSI-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1c(ccn1)C(=O)Nc2cccnc2
+
+$$$$

@@ -1,0 +1,123 @@
+1A96_XAN_B_304
+  RCSB PDB12061701583D
+Coordinates from PDB:1A96:B:304 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   21.7570  136.7750   25.8070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8420  136.0190   26.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6740  134.9740   27.1200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6320  134.4620   28.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3790  133.5240   28.6950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7670  135.0040   29.3480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9090  136.0800   29.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2320  136.4890   30.1380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9830  136.5810   27.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3510  137.6670   27.2930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8420  137.7480   26.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+N9
+A    2
+C4
+A    3
+N3
+A    4
+C2
+A    5
+O2
+A    6
+N1
+A    7
+C6
+A    8
+O6
+A    9
+C5
+A   10
+N7
+A   11
+C8
+M  END
+>  <InstanceId>
+1A96_XAN_B_304
+
+>  <ChemCompId>
+XAN
+
+>  <PdbId>
+1A96
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O2
+
+>  <Name>
+XANTHINE
+
+>  <SystematicName>
+3,9-dihydropurine-2,6-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N4 O2
+
+>  <MolecularWeight>
+152.111
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4O2/c10-4-2-3(7-1-6-2)8-5(11)9-4/h1H,(H3,6,7,8,9,10,11)
+
+>  <InChIKey>
+LRFVTYWOQMYALW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)C(=O)NC(=O)N2
+
+$$$$

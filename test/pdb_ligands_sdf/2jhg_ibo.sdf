@@ -1,0 +1,101 @@
+2JHG_IBO_A_404
+  RCSB PDB12061706033D
+Coordinates from PDB:2JHG:A:404 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   -2.5130   -0.7740  -19.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3140   -1.9340  -20.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1810   -2.2700  -21.0230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3390   -2.7240  -20.8230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3510   -0.5960  -18.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8950    0.5220  -20.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  4  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+NA
+A    4
+O2
+A    5
+CB1
+A    6
+CB2
+M  END
+>  <InstanceId>
+2JHG_IBO_A_404
+
+>  <ChemCompId>
+IBO
+
+>  <PdbId>
+2JHG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O
+
+>  <Name>
+2-METHYLPROPANAMIDE
+
+>  <SystematicName>
+2-methylpropanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H9 N O
+
+>  <MolecularWeight>
+87.12
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C4H9NO/c1-3(2)4(5)6/h3H,1-2H3,(H2,5,6)
+
+>  <InChIKey>
+WFKAJVHLWXSISD-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)C(=O)N
+
+$$$$

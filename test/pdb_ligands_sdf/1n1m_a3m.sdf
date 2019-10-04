@@ -1,0 +1,126 @@
+1N1M_A3M_A_954
+  RCSB PDB12061703213D
+Coordinates from PDB:1N1M:A:954 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   84.1890   77.2130   97.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.8540   76.3810   97.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.6620   75.5160   98.2090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   84.0340   75.2340   98.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6320   76.6600   98.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.8000   74.3630   97.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.4200   74.3850   97.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2960   74.2300   98.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2210   75.2820   99.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.3220   73.1150   98.2010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   80.2150   73.3530   96.3790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   77.8050   74.2860   97.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C14
+A    7
+C15
+A    8
+C16
+A    9
+C17
+A   10
+O18
+A   11
+N19
+A   12
+C26
+M  END
+>  <InstanceId>
+1N1M_A3M_A_954
+
+>  <ChemCompId>
+A3M
+
+>  <PdbId>
+1N1M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+954
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+2-AMINO-3-METHYL-1-PYRROLIDIN-1-YL-BUTAN-1-ONE
+
+>  <SystematicName>
+(2S)-2-amino-3-methyl-1-pyrrolidin-1-yl-butan-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H18 N2 O
+
+>  <MolecularWeight>
+170.252
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H18N2O/c1-7(2)8(10)9(12)11-5-3-4-6-11/h7-8H,3-6,10H2,1-2H3/t8-/m0/s1
+
+>  <InChIKey>
+IHBAVXVTGLANPI-QMMMGPOBSA-N
+
+>  <SMILES>
+CC(C)[C@@H](C(=O)N1CCCC1)N
+
+$$$$

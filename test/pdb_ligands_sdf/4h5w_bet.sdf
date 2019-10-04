@@ -1,0 +1,110 @@
+1R9L_BET_A_1001
+  RCSB PDB12061703523D
+Coordinates from PDB:1R9L:A:1001 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   26.6760   22.9550   72.6820   N 0  3  0  0  0  0  0  0  0  0  0  0
+   25.2290   22.9420   72.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2530   22.8310   73.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0980   23.1860   73.3110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6270   22.3770   74.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3580   23.3720   71.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0140   23.9190   73.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0870   21.5820   73.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O1
+A    5
+O2
+A    6
+C1
+A    7
+C2
+A    8
+C3
+M  END
+>  <InstanceId>
+1R9L_BET_A_1001
+
+>  <ChemCompId>
+BET
+
+>  <PdbId>
+1R9L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2
+
+>  <Name>
+TRIMETHYL GLYCINE
+
+>  <SystematicName>
+carboxymethyl-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N O2
+
+>  <MolecularWeight>
+118.154
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO2/c1-6(2,3)4-5(7)8/h4H2,1-3H3/p+1
+
+>  <InChIKey>
+KWIUHFFTVRNATP-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(C)CC(=O)O
+
+$$$$

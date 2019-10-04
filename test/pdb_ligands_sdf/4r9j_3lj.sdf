@@ -1,0 +1,142 @@
+4R9J_3LJ_A_305
+  RCSB PDB12061714353D
+Coordinates from PDB:4R9J:A:305 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   53.6140    6.2400  -15.4620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9170    5.7450  -15.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.7740    6.4480  -14.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.6280    7.6020  -15.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3100    7.2100  -16.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2250    6.9440  -17.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7760    6.4200  -18.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.6070    7.9020  -14.0050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2750    8.2650  -16.5290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3260    5.8650  -16.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.6440    5.3050  -18.4760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0080    6.9160  -13.4270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0870    4.3670  -19.6840   S 0  0  0  0  0  0  0  0  0  0  0  0
+   56.9440    3.7520  -20.1520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7020    5.2290  -20.6700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.1000    3.4100  -18.8850   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 13  2  0  0  0  0
+ 14 13  2  0  0  0  0
+ 13 16  1  0  0  0  0
+ 13 11  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  9  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  8  1  0  0  0  0
+  3 12  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+O3
+A    9
+O4
+A   10
+O5
+A   11
+O6
+A   12
+N
+A   13
+S
+A   14
+O7
+A   15
+O8
+A   16
+O9
+M  END
+>  <InstanceId>
+4R9J_3LJ_A_305
+
+>  <ChemCompId>
+3LJ
+
+>  <PdbId>
+4R9J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+305
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O8 S
+
+>  <Name>
+2-amino-2-deoxy-6-O-sulfo-alpha-D-glucopyranose
+
+>  <SystematicName>
+[(2R,3S,4R,5R,6S)-5-azanyl-3,4,6-tris(oxidanyl)oxan-2-yl]methyl hydrogen sulfate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O8 S
+
+>  <MolecularWeight>
+259.234
+
+>  <ModifiedDate>
+2014-10-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO8S/c7-3-5(9)4(8)2(15-6(3)10)1-14-16(11,12)13/h2-6,8-10H,1,7H2,(H,11,12,13)/t2-,3-,4-,5-,6+/m1/s1
+
+>  <InChIKey>
+MTDHILKWIRSIHB-UKFBFLRUSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@H](O1)O)N)O)O)OS(=O)(=O)O
+
+$$$$

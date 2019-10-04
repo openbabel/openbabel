@@ -1,0 +1,113 @@
+2XUC_XRG_A_1338
+  RCSB PDB12061707303D
+Coordinates from PDB:2XUC:A:1338 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+  -10.1290    9.1880   -2.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2250   10.2210   -3.3160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4270   10.7740   -3.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3980   10.3960   -2.7250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5600   11.7480   -4.3250   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6890   12.3790   -4.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7650   12.1810   -3.8600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7390   13.2320   -5.6150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0320   13.9780   -5.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+CAB
+A    2
+NAF
+A    3
+CAI
+A    4
+OAD
+A    5
+NAG
+A    6
+CAH
+A    7
+NAC
+A    8
+NAE
+A    9
+CAA
+M  END
+>  <InstanceId>
+2XUC_XRG_A_1338
+
+>  <ChemCompId>
+XRG
+
+>  <PdbId>
+2XUC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1338
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N4 O
+
+>  <Name>
+1-methyl-3-(N-methylcarbamimidoyl)urea
+
+>  <SystematicName>
+1-methyl-3-(N-methylcarbamimidoyl)urea
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 N4 O
+
+>  <MolecularWeight>
+130.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10N4O/c1-6-3(5)8-4(9)7-2/h1-2H3,(H4,5,6,7,8,9)
+
+>  <InChIKey>
+KGCIDHJBLPVUNN-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\NC)/NC(=O)NC
+
+$$$$

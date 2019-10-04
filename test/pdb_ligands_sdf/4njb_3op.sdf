@@ -1,0 +1,131 @@
+4NJB_3OP_A_623
+  RCSB PDB12061713543D
+Coordinates from PDB:4NJB:A:623 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -24.6200    5.3670   30.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1560    5.0610   27.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1660    4.7220   31.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6070    4.3410   26.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5190    4.8030   31.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6650    3.0200   27.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2550    5.5210   30.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6560    6.1370   29.4050   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3670    6.0440   29.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3060    5.3030   29.9060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7810    4.5120   28.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3010    2.4630   28.0930   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8310    3.2150   29.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  6  2  0  0  0  0
+  4  2  1  0  0  0  0
+  6 12  1  0  0  0  0
+  2 11  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9  1  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  1  3  2  0  0  0  0
+  7  5  2  0  0  0  0
+  3  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N12
+A    9
+C2
+A   10
+O13
+A   11
+C3
+A   12
+N11
+A   13
+C1
+M  END
+>  <InstanceId>
+4NJB_3OP_A_623
+
+>  <ChemCompId>
+3OP
+
+>  <PdbId>
+4NJB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+623
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O
+
+>  <Name>
+3,3'-oxydipyridine
+
+>  <SystematicName>
+3-pyridin-3-yloxypyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 N2 O
+
+>  <MolecularWeight>
+172.183
+
+>  <ModifiedDate>
+2013-11-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8N2O/c1-3-9(7-11-5-1)13-10-4-2-6-12-8-10/h1-8H
+
+>  <InChIKey>
+VZUJTDYSGISPLP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)Oc2cccnc2
+
+$$$$

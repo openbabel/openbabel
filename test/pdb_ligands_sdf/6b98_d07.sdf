@@ -1,0 +1,131 @@
+6B98_D07_A_1003
+  RCSB PDB12061720213D
+Coordinates from PDB:6B98:A:1003 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   31.5180   -6.3170    8.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4750   -4.6360   11.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8990   -4.9380   14.6970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2410   -5.5210   13.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0110   -8.0830   12.5200  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6690   -6.9810   12.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1090   -6.8930   11.2670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0610   -6.0460   11.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3200   -6.3490   13.6360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8060   -3.9770   14.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5400   -5.3320   12.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3540   -4.9170   10.4560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3230   -5.7730   10.1500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13  8  1  0  0  0  0
+ 12  2  2  0  0  0  0
+  8  7  2  0  0  0  0
+  8 11  1  0  0  0  0
+  7  6  1  0  0  0  0
+  2 11  1  0  0  0  0
+ 11  4  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6  9  2  0  0  0  0
+  4  9  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3 10  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+N4
+A    4
+C5
+A    5
+CL
+A    6
+C4
+A    7
+N2
+A    8
+C1
+A    9
+N3
+A   10
+C6
+A   11
+C
+A   12
+N1
+A   13
+N
+M  END
+>  <InstanceId>
+6B98_D07_A_1003
+
+>  <ChemCompId>
+D07
+
+>  <PdbId>
+6B98
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 Cl
+
+>  <Name>
+6-chloro-N,1-dimethyl-1H-pyrazolo[3,4-d]pyrimidin-4-amine
+
+>  <SystematicName>
+6-chloranyl-~{N},1-dimethyl-pyrazolo[3,4-d]pyrimidin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 Cl N5
+
+>  <MolecularWeight>
+197.625
+
+>  <ModifiedDate>
+2017-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8ClN5/c1-9-5-4-3-10-13(2)6(4)12-7(8)11-5/h3H,1-2H3,(H,9,11,12)
+
+>  <InChIKey>
+KTBJQNWGZYGMEI-UHFFFAOYSA-N
+
+>  <SMILES>
+CNc1c2cnn(c2nc(n1)Cl)C
+
+$$$$

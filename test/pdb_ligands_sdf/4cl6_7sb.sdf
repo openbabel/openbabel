@@ -1,0 +1,78 @@
+2GY1_7SB_?_25
+  RCSB PDB12061705443D
+Coordinates from PDB:2GY1:?:25 Model:1 without hydrogens
+  0  0  0  0  0  0            999 V2000
+M  END
+>  <InstanceId>
+2GY1_7SB_?_25
+
+>  <ChemCompId>
+7SB
+
+>  <PdbId>
+2GY1
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+19
+
+>  <ObservedFormula>
+
+
+>  <Name>
+N-(4-chlorobenzyl)-5-(furan-2-yl)-1H-1,2,4-triazol-3-amine
+
+>  <SystematicName>
+N-[(4-chlorophenyl)methyl]-5-(furan-2-yl)-1H-1,2,4-triazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C13 H11 Cl N4 O
+
+>  <MolecularWeight>
+274.706
+
+>  <ModifiedDate>
+2015-01-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H11ClN4O/c14-10-5-3-9(4-6-10)8-15-13-16-12(17-18-13)11-2-1-7-19-11/h1-7H,8H2,(H2,15,16,17,18)
+
+>  <InChIKey>
+IRHUOSKJHRHZKH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1)c2[nH]nc(n2)NCc3ccc(cc3)Cl
+
+$$$$

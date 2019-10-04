@@ -1,0 +1,148 @@
+1W1T_CHQ_A_1513
+  RCSB PDB12061704283D
+Coordinates from PDB:1W1T:A:1513 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+   17.5970   42.2780  101.9110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9300   42.2000  102.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4770   43.5730  102.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6640   43.6740  103.2510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8800   41.5830  101.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2190   42.5810   99.5840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9440   43.4340   98.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6800   43.8410   98.6170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1470   43.2070   99.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0720   42.4480  100.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6790   44.7210  103.0080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2360   44.6550  102.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8080   43.4350  101.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7460   43.4430  101.2830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0640   45.9700  101.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8430   46.9080  102.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1300   46.1230  103.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 11  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 17  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+ND1
+A    7
+CE1
+A    8
+NE2
+A    9
+CD2
+A   10
+CG
+A   11
+NP
+A   12
+CAP
+A   13
+CP
+A   14
+OP
+A   15
+CBP
+A   16
+CGP
+A   17
+CDP
+M  END
+>  <InstanceId>
+1W1T_CHQ_A_1513
+
+>  <ChemCompId>
+CHQ
+
+>  <PdbId>
+1W1T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1513
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O2
+
+>  <Name>
+CYCLO-(L-HISTIDINE-L-PROLINE) INHIBITOR
+
+>  <SystematicName>
+(3S,8aS)-3-(3H-imidazol-4-ylmethyl)-2,3,6,7,8,8a-hexahydropyrrolo[2,1-f]pyrazine-1,4-dione
+
+>  <Synonyms>
+(3S,8AR)-3-(1H-IMIDAZOL-5-YLMETHYL)HEXAHYDROPYRROLO[1,2-A]PYRAZINE-1,4-DIONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 N4 O2
+
+>  <MolecularWeight>
+234.254
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14N4O2/c16-10-9-2-1-3-15(9)11(17)8(14-10)4-7-5-12-6-13-7/h5-6,8-9H,1-4H2,(H,12,13)(H,14,16)/t8-,9-/m0/s1
+
+>  <InChIKey>
+NAKUGCPAQTUSBE-IUCAKERBSA-N
+
+>  <SMILES>
+c1c([nH]cn1)C[C@H]2C(=O)N3CCC[C@H]3C(=O)N2
+
+$$$$

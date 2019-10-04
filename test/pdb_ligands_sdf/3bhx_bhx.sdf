@@ -1,0 +1,149 @@
+3BHX_BHX_A_1
+  RCSB PDB12061708013D
+Coordinates from PDB:3BHX:A:1 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   19.6910   46.9650   46.2160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8820   46.9110   44.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4650   47.8730   44.4470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3970   45.7670   44.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6770   44.7510   44.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5140   43.8580   43.8400   P 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2360   42.9430   42.8000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7070   43.0670   44.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3170   44.9200   42.9990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9010   44.4150   41.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0720   44.5110   40.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9830   45.3720   40.7240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0940   43.6960   39.5810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6720   45.1840   40.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9820   46.6890   41.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9080   47.5000   40.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1300   46.9540   39.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9030   48.7330   40.5890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  2  0  0  0  0
+A    1
+O3
+A    2
+C2
+A    3
+O2
+A    4
+C4
+A    5
+C5
+A    6
+P6
+A    7
+O61
+A    8
+O6
+A    9
+C1
+A   10
+CA
+A   11
+C
+A   12
+O
+A   13
+OC
+A   14
+CB
+A   15
+CG
+A   16
+CD
+A   17
+OE2
+A   18
+OE1
+M  END
+>  <InstanceId>
+3BHX_BHX_A_1
+
+>  <ChemCompId>
+BHX
+
+>  <PdbId>
+3BHX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O8 P
+
+>  <Name>
+(2S)-2-{[(S)-(2-carboxyethyl)(hydroxy)phosphoryl]methyl}pentanedioic acid
+
+>  <SystematicName>
+(2S)-2-[(2-carboxyethyl-hydroxy-phosphoryl)methyl]pentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H15 O8 P
+
+>  <MolecularWeight>
+282.184
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15O8P/c10-7(11)2-1-6(9(14)15)5-18(16,17)4-3-8(12)13/h6H,1-5H2,(H,10,11)(H,12,13)(H,14,15)(H,16,17)/t6-/m1/s1
+
+>  <InChIKey>
+GZNKYXXCKRYSFH-ZCFIWIBFSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@H](C[P@](=O)(CCC(=O)O)O)C(=O)O
+
+$$$$

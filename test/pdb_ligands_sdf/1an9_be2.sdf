@@ -1,0 +1,118 @@
+1AN9_BE2_A_352
+  RCSB PDB12061702003D
+Coordinates from PDB:1AN9:A:352 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   36.2600   74.9230   66.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4320   75.1580   66.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5170   75.8240   65.6180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7260   73.4890   66.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5330   73.0890   65.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0980   71.7260   65.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7670   73.9890   64.7800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8270   70.8140   66.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9880   71.2150   67.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4330   72.5290   66.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+O2
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+N2
+A    8
+C4
+A    9
+C5
+A   10
+C6
+M  END
+>  <InstanceId>
+1AN9_BE2_A_352
+
+>  <ChemCompId>
+BE2
+
+>  <PdbId>
+1AN9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+352
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+2-AMINOBENZOIC ACID
+
+>  <SystematicName>
+2-aminobenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C7 H7 N O2
+
+>  <MolecularWeight>
+137.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO2/c8-6-4-2-1-3-5(6)7(9)10/h1-4H,8H2,(H,9,10)
+
+>  <InChIKey>
+RWZYAGGXGHYGMB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)N
+
+$$$$

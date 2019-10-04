@@ -1,0 +1,131 @@
+3PD9_HA5_A_260
+  RCSB PDB12061710143D
+Coordinates from PDB:3PD9:A:260 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   57.2580   27.2210   47.1710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   58.4660   27.7040   46.4810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3340   27.3610   45.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3880   27.6900   44.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.2440   26.6440   43.1010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8430   26.7450   42.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8150   26.1130   41.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.6760   25.7920   40.7560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.9150   25.9990   40.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.8270   26.1740   43.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.1940   26.6850   44.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.5080   26.6020   46.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.4020   26.0390   46.4390   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11  3  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12  1  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+N1
+A    2
+O2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+O8
+A    9
+O9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+M  END
+>  <InstanceId>
+3PD9_HA5_A_260
+
+>  <ChemCompId>
+HA5
+
+>  <PdbId>
+3PD9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+260
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+13
+
+>  <ObservedFormula>
+C7 N2 O4
+
+>  <Name>
+(5R)-3-hydroxy-4,5,6,7-tetrahydroisoxazolo[5,4-c]pyridine-5-carboxylic acid
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N2 O4
+
+>  <MolecularWeight>
+184.149
+
+>  <ModifiedDate>
+2012-01-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O4/c10-6-3-1-4(7(11)12)8-2-5(3)13-9-6/h4,8H,1-2H2,(H,9,10)(H,11,12)/t4-/m1/s1
+
+>  <InChIKey>
+QOFAMUTZWHXYLI-SCSAIBSYSA-N
+
+>  <SMILES>
+C1c2c(onc2O)CN[C@H]1C(=O)O
+
+$$$$

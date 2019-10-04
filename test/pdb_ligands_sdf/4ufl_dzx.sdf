@@ -1,0 +1,127 @@
+4UFL_DZX_A_1001
+  RCSB PDB12061715063D
+Coordinates from PDB:4UFL:A:1001 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   80.7530   88.1080   16.9320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   80.0430   87.7450   18.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0480   88.8960   18.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.7980   89.1420   19.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.8690   87.8940   20.5280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4500   89.8000   20.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1700   89.3350   21.5950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.3050   89.4370   19.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.1100   87.9140   19.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.9850   87.4240   18.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.7150   88.6900   17.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.7010   89.7390   17.9360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O1
+A    2
+C6
+A    3
+C5
+A    4
+C4
+A    5
+O5
+A    6
+C3
+A    7
+O7
+A    8
+C2
+A    9
+C7
+A   10
+C8
+A   11
+C1
+A   12
+N1
+M  END
+>  <InstanceId>
+4UFL_DZX_A_1001
+
+>  <ChemCompId>
+DZX
+
+>  <PdbId>
+4UFL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+DEOXY-GALACTO-NOEUROSTEGINE
+
+>  <SystematicName>
+(1R,2R,3S,4R,5S)-2-(hydroxymethyl)-8-azabicyclo[3.2.1]octane-3,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H15 N O3
+
+>  <MolecularWeight>
+173.21
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO3/c10-3-4-5-1-2-6(9-5)8(12)7(4)11/h4-12H,1-3H2/t4-,5+,6-,7-,8+/m0/s1
+
+>  <InChIKey>
+GQKYZJDPLYFSSX-GWVFRZDISA-N
+
+>  <SMILES>
+C1C[C@H]2[C@H]([C@H]([C@H]([C@@H]1N2)CO)O)O
+
+$$$$

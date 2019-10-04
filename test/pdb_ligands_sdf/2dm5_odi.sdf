@@ -1,0 +1,117 @@
+2DM5_ODI_A_312
+  RCSB PDB12061705213D
+Coordinates from PDB:2DM5:A:312 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   51.7250   21.0660   42.4190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4470   22.0530   41.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.9890   22.0570   40.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.1600   23.3020   39.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.8760   23.3260   40.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.3680   24.7640   40.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8580   24.8420   40.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2510   25.8980   41.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2070   26.7340   40.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0730   28.0000   41.4580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+OAA
+A    2
+CAC
+A    3
+CAE
+A    4
+CAG
+A    5
+CAI
+A    6
+CAJ
+A    7
+CAH
+A    8
+CAF
+A    9
+CAD
+A   10
+OAB
+M  END
+>  <InstanceId>
+2DM5_ODI_A_312
+
+>  <ChemCompId>
+ODI
+
+>  <PdbId>
+2DM5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+312
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O2
+
+>  <Name>
+OCTANE-1,8-DIOL
+
+>  <SystematicName>
+octane-1,8-diol
+
+>  <Synonyms>
+1,8-OCTANEDIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 O2
+
+>  <MolecularWeight>
+146.227
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18O2/c9-7-5-3-1-2-4-6-8-10/h9-10H,1-8H2
+
+>  <InChIKey>
+OEIJHBUUFURJLI-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCCCO)CCCO
+
+$$$$

@@ -1,0 +1,121 @@
+1CWQ_UND_A_604
+  RCSB PDB12061702123D
+Coordinates from PDB:1CWQ:A:604 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -37.1710   35.9070  -11.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.0340   35.4070  -12.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.7680   36.1240  -11.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.8230   36.2700  -12.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.8780   37.4320  -12.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.0220   37.4590  -13.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1670   38.6510  -14.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.3610   38.3910  -15.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1750   38.0620  -16.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.4330   37.7590  -17.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.0150   38.4440  -19.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+M  END
+>  <InstanceId>
+1CWQ_UND_A_604
+
+>  <ChemCompId>
+UND
+
+>  <PdbId>
+1CWQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+604
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11
+
+>  <Name>
+UNDECANE
+
+>  <SystematicName>
+undecane
+
+>  <Synonyms>
+LIPID FRAGMENT
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H24
+
+>  <MolecularWeight>
+156.308
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H24/c1-3-5-7-9-11-10-8-6-4-2/h3-11H2,1-2H3
+
+>  <InChIKey>
+RSJKGSCJYJTIGS-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCC
+
+$$$$

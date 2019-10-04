@@ -1,0 +1,101 @@
+1D7J_BUQ_A_311
+  RCSB PDB12061702143D
+Coordinates from PDB:1D7J:A:311 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   60.8010   -6.0610   -1.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6140   -5.5790   -0.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4980   -6.4210    0.4290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.5610   -4.0930   -0.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.2240   -3.2290   -1.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0760   -3.5710   -2.1240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+C4
+A    6
+O5
+M  END
+>  <InstanceId>
+1D7J_BUQ_A_311
+
+>  <ChemCompId>
+BUQ
+
+>  <PdbId>
+1D7J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2
+
+>  <Name>
+4-HYDROXY-2-BUTANONE
+
+>  <SystematicName>
+4-hydroxybutan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O2
+
+>  <MolecularWeight>
+88.105
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O2/c1-4(6)2-3-5/h5H,2-3H2,1H3
+
+>  <InChIKey>
+LVSQXDHWDCMMRJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)CCO
+
+$$$$

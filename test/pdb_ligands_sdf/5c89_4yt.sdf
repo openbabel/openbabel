@@ -1,0 +1,152 @@
+5C89_4YT_A_801
+  RCSB PDB12061717033D
+Coordinates from PDB:5C89:A:801 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+   10.0530  -14.3910    2.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4250  -13.4870    3.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1790  -12.8200    3.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6750  -13.1850    2.0820   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7060  -12.5140    1.8510   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4860  -11.6580    2.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5420  -10.7290    3.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4270  -11.8410    3.7820   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4900  -11.1280    4.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4640  -11.3080    5.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4850  -10.5450    7.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4560  -10.7450    8.0270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3410  -11.8250    7.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5070   -9.5750    7.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5250   -9.3810    6.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5180  -10.1510    5.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5330   -9.9510    4.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5440   -8.9830    4.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  4  3  2  0  0  0  0
+  1  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 17  2  0  0  0  0
+  3  8  1  0  0  0  0
+  3  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 16  1  0  0  0  0
+  9 16  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 15 14  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+A    1
+CAA
+A    2
+CAH
+A    3
+CAN
+A    4
+NAI
+A    5
+NAJ
+A    6
+CAO
+A    7
+CAF
+A    8
+NAR
+A    9
+CAQ
+A   10
+CAG
+A   11
+CAL
+A   12
+OAK
+A   13
+CAB
+A   14
+CAD
+A   15
+CAE
+A   16
+CAP
+A   17
+CAM
+A   18
+CAC
+M  END
+>  <InstanceId>
+5C89_4YT_A_801
+
+>  <ChemCompId>
+4YT
+
+>  <PdbId>
+5C89
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N3 O
+
+>  <Name>
+1-ethyl-8-methoxy-5-methyl[1,2,4]triazolo[4,3-a]quinoline
+
+>  <SystematicName>
+1-ethyl-8-methoxy-5-methyl-[1,2,4]triazolo[4,3-a]quinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H15 N3 O
+
+>  <MolecularWeight>
+241.288
+
+>  <ModifiedDate>
+2016-07-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H15N3O/c1-4-13-15-16-14-7-9(2)11-6-5-10(18-3)8-12(11)17(13)14/h5-8H,4H2,1-3H3
+
+>  <InChIKey>
+USUCVCYKXJVXOI-UHFFFAOYSA-N
+
+>  <SMILES>
+CCc1nnc2n1c3cc(ccc3c(c2)C)OC
+
+$$$$

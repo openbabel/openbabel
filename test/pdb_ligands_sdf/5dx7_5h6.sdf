@@ -1,0 +1,135 @@
+5DX7_5H6_A_802
+  RCSB PDB12061717223D
+Coordinates from PDB:5DX7:A:802 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   30.2440   75.8450   59.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4460   76.0840   64.8420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3660   77.0660   64.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0140   78.1300   64.0870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3190   76.9720   62.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2960   75.9340   62.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6110   76.2940   61.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2040   77.4550   61.1320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2120   77.8460   61.9370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5080   75.7850   60.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0310   75.2500   59.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3130   74.7370   60.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7910   73.9610   59.8860  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1290   74.9760   61.6420   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  1  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  1 10  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  4  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+  5  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+C10
+A    2
+O01
+A    3
+C02
+A    4
+O03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+O07
+A    9
+N08
+A   10
+C09
+A   11
+C11
+A   12
+C12
+A   13
+CL
+A   14
+S14
+M  END
+>  <InstanceId>
+5DX7_5H6_A_802
+
+>  <ChemCompId>
+5H6
+
+>  <PdbId>
+5DX7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S Cl
+
+>  <Name>
+5-(5-chlorothiophen-2-yl)-1,2-oxazole-3-carboxylic acid
+
+>  <SystematicName>
+5-(5-chloranylthiophen-2-yl)-1,2-oxazole-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H4 Cl N O3 S
+
+>  <MolecularWeight>
+229.64
+
+>  <ModifiedDate>
+2016-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H4ClNO3S/c9-7-2-1-6(14-7)5-3-4(8(11)12)10-13-5/h1-3H,(H,11,12)
+
+>  <InChIKey>
+JMQBVJRNJFBDFK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1c2cc(no2)C(=O)O)Cl
+
+$$$$

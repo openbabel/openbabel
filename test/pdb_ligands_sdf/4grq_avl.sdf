@@ -1,0 +1,147 @@
+4GRQ_AVL_C_203
+  RCSB PDB12061712453D
+Coordinates from PDB:4GRQ:C:203 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -21.5890   53.0710  -11.4720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2710   52.9240  -12.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0120   54.0780  -13.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.0590   51.6000  -12.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8630   51.2600  -13.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8760   50.6720  -12.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9040   49.2900  -12.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9750   48.4300  -11.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6850   47.1210  -11.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3670   46.6440  -11.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3390   47.5130  -11.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6510   48.8220  -12.1390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7540   49.7910  -12.5210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4590   50.8940  -12.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8470   52.1750  -13.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2770   52.4500  -14.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3520   52.0620  -13.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  1  0  0  0  0
+  5  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 14  6  1  0  0  0  0
+ 14 13  2  0  0  0  0
+  6  7  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 11 10  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+NAL
+A   13
+NAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAQ
+A   17
+CAP
+M  END
+>  <InstanceId>
+4GRQ_AVL_C_203
+
+>  <ChemCompId>
+AVL
+
+>  <PdbId>
+4GRQ
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O
+
+>  <Name>
+2-methyl-1-[2-(propan-2-yl)pyrazolo[1,5-a]pyridin-3-yl]propan-1-one
+
+>  <SystematicName>
+2-methyl-1-(2-propan-2-ylpyrazolo[1,5-a]pyridin-3-yl)propan-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H18 N2 O
+
+>  <MolecularWeight>
+230.306
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H18N2O/c1-9(2)13-12(14(17)10(3)4)11-7-5-6-8-16(11)15-13/h5-10H,1-4H3
+
+>  <InChIKey>
+ZJVFLBOZORBYFE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)c1c(c2ccccn2n1)C(=O)C(C)C
+
+$$$$

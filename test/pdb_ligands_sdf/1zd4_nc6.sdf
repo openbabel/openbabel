@@ -1,0 +1,150 @@
+1ZD4_NC6_A_700
+  RCSB PDB12061704523D
+Coordinates from PDB:1ZD4:A:700 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   15.4350   11.5450  141.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1780   11.9470  140.3000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8440   11.0560  139.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2680   11.5780  138.2730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9600   10.7740  137.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0330   10.6330  136.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6420    9.8050  134.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6670    9.6990  133.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2350    8.8690  132.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0230    9.8970  139.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2810    8.7440  131.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8260    8.0060  130.3840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1650    9.2190  131.2760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1970   12.7700  142.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4100   12.3770  143.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0640   11.6810  143.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2610   10.4890  142.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0630   10.9120  141.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 14  1  0  0  0  0
+  1 18  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O10
+A   11
+C11
+A   12
+O12
+A   13
+O13
+A   14
+C14
+A   15
+C15
+A   16
+C16
+A   17
+C17
+A   18
+C18
+M  END
+>  <InstanceId>
+1ZD4_NC6_A_700
+
+>  <ChemCompId>
+NC6
+
+>  <PdbId>
+1ZD4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O3
+
+>  <Name>
+6-{[(CYCLOHEXYLAMINO)CARBONYL]AMINO}HEXANOIC ACID
+
+>  <SystematicName>
+6-(cyclohexylcarbamoylamino)hexanoic acid
+
+>  <Synonyms>
+4-(3-CYCLOHEXYLURIEDO)-HEXANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H24 N2 O3
+
+>  <MolecularWeight>
+256.341
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H24N2O3/c16-12(17)9-5-2-6-10-14-13(18)15-11-7-3-1-4-8-11/h11H,1-10H2,(H,16,17)(H2,14,15,18)
+
+>  <InChIKey>
+KFTVEPYSUSWBRD-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(CC1)NC(=O)NCCCCCC(=O)O
+
+$$$$

@@ -1,0 +1,127 @@
+5VJG_0BP_A_403
+  RCSB PDB12061720013D
+Coordinates from PDB:5VJG:A:403 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    2.4470   12.1880   24.5150   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4850   11.9360   25.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3230   11.4950   26.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1250   11.3530   25.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0670   11.7810   27.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3670   11.9340   28.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3860   12.3250   27.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1270   12.6060   26.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8500   12.4690   25.6970   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8240   12.0780   26.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0650   11.6430   24.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2220   12.0740   23.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12  1  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  2 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C12
+A    6
+C11
+A    7
+C10
+A    8
+C9
+A    9
+N8
+A   10
+C7
+A   11
+C5
+A   12
+C6
+M  END
+>  <InstanceId>
+5VJG_0BP_A_403
+
+>  <ChemCompId>
+0BP
+
+>  <PdbId>
+5VJG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2
+
+>  <Name>
+2,2'-bipyridine
+
+>  <SystematicName>
+2-pyridin-2-ylpyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 N2
+
+>  <MolecularWeight>
+156.184
+
+>  <ModifiedDate>
+2017-04-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8N2/c1-3-7-11-9(5-1)10-6-2-4-8-12-10/h1-8H
+
+>  <InChIKey>
+ROFVEXUMMXZLPA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)c2ccccn2
+
+$$$$

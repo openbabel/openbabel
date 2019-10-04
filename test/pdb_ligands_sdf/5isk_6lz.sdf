@@ -1,0 +1,122 @@
+5ISK_6LZ_A_408
+  RCSB PDB12061718143D
+Coordinates from PDB:5ISK:A:408 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -3.1820    2.0110   11.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0290    1.2830   11.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9410    1.5560   11.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0080    2.6400   10.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9410    0.2690   12.7030   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2360    3.0950   10.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1500    3.4300   10.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1760    4.6700    9.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1040    5.4550    9.3500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0410    4.9060    8.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4400    5.8900    7.3290   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  7  4  2  0  0  0  0
+  7  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  1  2  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+F
+A    6
+C3
+A    7
+C2
+A    8
+C1
+A    9
+O
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+5ISK_6LZ_A_408
+
+>  <ChemCompId>
+6LZ
+
+>  <PdbId>
+5ISK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+408
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O F
+
+>  <Name>
+2-amino-1-(4-fluorophenyl)ethan-1-one
+
+>  <SystematicName>
+2-azanyl-1-(4-fluorophenyl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 F N O
+
+>  <MolecularWeight>
+153.154
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8FNO/c9-7-3-1-6(2-4-7)8(11)5-10/h1-4H,5,10H2
+
+>  <InChIKey>
+HLYXSMQJWZMANE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)CN)F
+
+$$$$

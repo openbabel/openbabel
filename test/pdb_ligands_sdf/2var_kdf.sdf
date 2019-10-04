@@ -1,0 +1,126 @@
+2VAR_KDF_A_1314
+  RCSB PDB12061707043D
+Coordinates from PDB:2VAR:A:1314 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -31.5040   19.6720    6.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.5080   18.6490    6.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.0210   17.7270    7.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.8610   18.4840    8.6700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.0110   16.6410    7.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.7330   15.4480    7.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.7110   16.4190    9.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.3390   17.0290    9.9050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.1090   18.1810   11.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.9520   19.0960   10.9490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.7000   17.5170    9.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5730   17.7420   12.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+O1B
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O5
+A    9
+C6
+A   10
+O6A
+A   11
+C5
+A   12
+O6B
+M  END
+>  <InstanceId>
+2VAR_KDF_A_1314
+
+>  <ChemCompId>
+KDF
+
+>  <PdbId>
+2VAR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1314
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+3-deoxy-alpha-D-erythro-hex-2-ulofuranosonic acid
+
+>  <SystematicName>
+(2R,4S,5R)-2,4-dihydroxy-5-(hydroxymethyl)oxolane-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H10 O6
+
+>  <MolecularWeight>
+178.14
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H10O6/c7-2-4-3(8)1-6(11,12-4)5(9)10/h3-4,7-8,11H,1-2H2,(H,9,10)/t3-,4+,6+/m0/s1
+
+>  <InChIKey>
+RCUMQJPRQWRUNN-MRKVFDINSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H](O[C@]1(C(=O)O)O)CO)O
+
+$$$$

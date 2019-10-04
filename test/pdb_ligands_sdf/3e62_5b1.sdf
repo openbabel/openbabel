@@ -1,0 +1,123 @@
+3E62_5B1_A_1
+  RCSB PDB12061708253D
+Coordinates from PDB:3E62:A:1 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   33.7560   40.6770   36.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1580   39.5960   37.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4490   42.0510   36.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3800   42.6610   36.8630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7830   38.3500   37.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9720   38.1490   36.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9450   36.9070   37.9130  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5840   39.2270   35.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9400   40.4720   35.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2370   41.7040   35.2440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3560   42.6620   35.5880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+C1
+A    4
+N1
+A    5
+C5
+A    6
+C4
+A    7
+BR1
+A    8
+C3
+A    9
+C2
+A   10
+N3
+A   11
+N2
+M  END
+>  <InstanceId>
+3E62_5B1_A_1
+
+>  <ChemCompId>
+5B1
+
+>  <PdbId>
+3E62
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 Br
+
+>  <Name>
+5-bromo-1H-indazol-3-amine
+
+>  <SystematicName>
+5-bromo-1H-indazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 Br N3
+
+>  <MolecularWeight>
+212.047
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6BrN3/c8-4-1-2-6-5(3-4)7(9)11-10-6/h1-3H,(H3,9,10,11)
+
+>  <InChIKey>
+OMPYFDJVSAMSMA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Br)c(n[nH]2)N
+
+$$$$

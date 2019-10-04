@@ -1,0 +1,142 @@
+1O9V_SNG_A_1177
+  RCSB PDB12061703313D
+Coordinates from PDB:1O9V:A:1177 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   37.4560   46.9450   13.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1080   46.4220   14.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1160   44.8760   14.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5240   44.3010   12.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8620   44.9270   12.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2950   44.4280   11.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8800   47.6840   16.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9760   48.1280   14.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0600   49.0490   12.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8740   46.8910   15.6930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7950   44.3960   14.6770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6780   42.8910   13.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6760   46.3500   12.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3400   44.8330   10.1800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6290   47.9910   17.2600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4670   48.8010   13.6670  Se 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7 15  2  0  0  0  0
+  9 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+CM
+A   10
+N2
+A   11
+O3
+A   12
+O4
+A   13
+O5
+A   14
+O6
+A   15
+O7
+A   16
+SE
+M  END
+>  <InstanceId>
+1O9V_SNG_A_1177
+
+>  <ChemCompId>
+SNG
+
+>  <PdbId>
+1O9V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1177
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+16
+
+>  <ObservedFormula>
+C9 N O5 Se
+
+>  <Name>
+METHYL 2-ACETAMIDO-1,2-DIDEOXY-1-SELENO-BETA-D-GLUCOPYRANOSIDE
+
+>  <SystematicName>
+N-[(2S,3R,4R,5S,6R)-4,5-dihydroxy-6-(hydroxymethyl)-2-methylselanyl-oxan-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N O5 Se
+
+>  <MolecularWeight>
+298.195
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO5Se/c1-4(12)10-6-8(14)7(13)5(3-11)15-9(6)16-2/h5-9,11,13-14H,3H2,1-2H3,(H,10,12)/t5-,6-,7-,8-,9+/m1/s1
+
+>  <InChIKey>
+AZZZNYGPGINRNT-OKNNCHMLSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H]([C@@H]([C@H](O[C@H]1[Se]C)CO)O)O
+
+$$$$

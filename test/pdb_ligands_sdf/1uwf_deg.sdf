@@ -1,0 +1,142 @@
+1TR7_DEG_B_502
+  RCSB PDB12061704083D
+Coordinates from PDB:1TR7:B:502 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   58.0940  -14.4700   24.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.2250  -15.3800   25.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.6010  -14.3180   24.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7940  -15.2440   24.8400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.0600  -12.7260   22.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7820  -12.1400   21.9760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.1590  -11.8420   21.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8130  -11.5920   20.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3300  -10.5400   22.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3750   -9.7720   21.6700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5940  -10.7870   23.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.6440  -11.6660   24.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5820   -9.5120   24.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3100   -8.8470   24.4620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5360  -13.6260   23.6130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4120  -12.7620   23.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 15  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5 16  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C3'
+A    2
+C4'
+A    3
+C1'
+A    4
+C2'
+A    5
+C2
+A    6
+O2
+A    7
+C3
+A    8
+O3
+A    9
+C4
+A   10
+O4
+A   11
+C5
+A   12
+O5
+A   13
+C6
+A   14
+O6
+A   15
+O1
+A   16
+C1
+M  END
+>  <InstanceId>
+1TR7_DEG_B_502
+
+>  <ChemCompId>
+DEG
+
+>  <PdbId>
+1TR7
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O6
+
+>  <Name>
+BUTYL ALPHA-D-MANNOPYRANOSIDE
+
+>  <SystematicName>
+(2S,3S,4S,5S,6R)-2-butoxy-6-(hydroxymethyl)oxane-3,4,5-triol
+
+>  <Synonyms>
+BUTYL-A-D-MANNOSE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H20 O6
+
+>  <MolecularWeight>
+236.262
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20O6/c1-2-3-4-15-10-9(14)8(13)7(12)6(5-11)16-10/h6-14H,2-5H2,1H3/t6-,7-,8+,9+,10+/m1/s1
+
+>  <InChIKey>
+BZANQLIRVMZFOS-ZJDVBMNYSA-N
+
+>  <SMILES>
+CCCCO[C@@H]1[C@H]([C@H]([C@@H]([C@H](O1)CO)O)O)O
+
+$$$$

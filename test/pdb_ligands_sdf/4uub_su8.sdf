@@ -1,0 +1,121 @@
+4UUB_SU8_D_1004
+  RCSB PDB12061715193D
+Coordinates from PDB:4UUB:D:1004 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -31.2540  -24.6050   -4.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.0160  -25.8870   -5.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.0200  -25.8080   -6.6990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.2230  -23.5190   -5.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5710  -26.7980   -7.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.8890  -26.3320   -8.6800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.9090  -27.9870   -7.6060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.5080  -26.1360   -5.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.5570  -25.0020   -5.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4540  -24.0100   -6.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2870  -24.4480   -7.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  4  1  2  0  0  0  0
+  3  2  1  0  0  0  0
+  8  2  1  0  0  0  0
+  5  3  1  0  0  0  0
+  7  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+CAJ
+A    2
+CAK
+A    3
+CAL
+A    4
+OAM
+A    5
+CAN
+A    6
+OAO
+A    7
+OAP
+A    8
+CAQ
+A    9
+CAR
+A   10
+CAS
+A   11
+CAT
+M  END
+>  <InstanceId>
+4UUB_SU8_D_1004
+
+>  <ChemCompId>
+SU8
+
+>  <PdbId>
+4UUB
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+1004
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+(2R)-2-butylbutanedioic acid
+
+>  <SystematicName>
+(2R)-2-butylbutanedioic acid
+
+>  <Synonyms>
+(2R)-2-butylsuccinic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H14 O4
+
+>  <MolecularWeight>
+174.194
+
+>  <ModifiedDate>
+2014-08-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H14O4/c1-2-3-4-6(8(11)12)5-7(9)10/h6H,2-5H2,1H3,(H,9,10)(H,11,12)/t6-/m1/s1
+
+>  <InChIKey>
+WOPLHDNLGYOSPG-ZCFIWIBFSA-N
+
+>  <SMILES>
+CCCC[C@H](CC(=O)O)C(=O)O
+
+$$$$

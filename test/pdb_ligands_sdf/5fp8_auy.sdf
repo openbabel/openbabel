@@ -1,0 +1,147 @@
+5FP8_AUY_A_1341
+  RCSB PDB12061717443D
+Coordinates from PDB:5FP8:A:1341 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   14.4060    5.6180   17.1140   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4490    6.6900   15.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1780    4.2930   18.4510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5730    1.8900   17.7720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5210    7.6100   13.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5160    4.2880   16.9620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0520    0.2770   18.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8470    6.8900   14.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4840    6.3620   15.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0630    6.0140   16.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6520    5.6590   16.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3930    3.8290   17.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2930    4.6650   17.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1250    3.0470   18.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1410    2.1220   18.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3050    2.5110   18.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4170    1.5320   17.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  1  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  8  2  1  0  0  0  0
+  2 10  2  0  0  0  0
+ 13  3  2  0  0  0  0
+  3 14  1  0  0  0  0
+ 17  4  1  0  0  0  0
+  5  8  1  0  0  0  0
+ 11  6  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7 17  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  2  0  0  0  0
+ 15 14  2  0  0  0  0
+ 16 15  1  0  0  0  0
+ 17 16  1  0  0  0  0
+A    1
+S
+A    2
+C1
+A    3
+N1
+A    4
+O1
+A    5
+C01
+A    6
+N01
+A    7
+O01
+A    8
+C02
+A    9
+C03
+A   10
+C04
+A   11
+C05
+A   12
+C06
+A   13
+C07
+A   14
+C08
+A   15
+C09
+A   16
+C10
+A   17
+C11
+M  END
+>  <InstanceId>
+5FP8_AUY_A_1341
+
+>  <ChemCompId>
+AUY
+
+>  <PdbId>
+5FP8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1341
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2 S
+
+>  <Name>
+3-[(4-methylthiophen-2-yl)methylamino]pyridine-4-carboxylic acid
+
+>  <SystematicName>
+3-[(4-methylthiophen-2-yl)methylamino]pyridine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N2 O2 S
+
+>  <MolecularWeight>
+248.301
+
+>  <ModifiedDate>
+2016-01-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2O2S/c1-8-4-9(17-7-8)5-14-11-6-13-3-2-10(11)12(15)16/h2-4,6-7,14H,5H2,1H3,(H,15,16)
+
+>  <InChIKey>
+CXLKBDJGFBROEI-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(sc1)CNc2cnccc2C(=O)O
+
+$$$$

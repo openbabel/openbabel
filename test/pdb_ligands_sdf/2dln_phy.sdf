@@ -1,0 +1,131 @@
+1E4E_PHY_A_355
+  RCSB PDB12061702203D
+Coordinates from PDB:1E4E:A:355 Model:1 without hydrogens
+ 14 11  0  0  0  0            999 V2000
+   30.9880   43.0320   14.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5920   42.8590   10.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6780   42.6580    9.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7930   43.3070    8.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1080   42.3640   10.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7350   41.4260    9.5700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6380   43.3070   10.8680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8120   41.7610   13.7540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1090   41.7590   11.8970   P 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0610   40.8120   12.1820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0800   40.8700   11.1260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5010   41.2880   10.5220   P 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3610   42.6690   10.1910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8660   40.4190    9.4440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C2
+A    2
+C1'
+A    3
+C2'
+A    4
+C3'
+A    5
+C
+A    6
+O1
+A    7
+O2
+A    8
+N1
+A    9
+P1
+A   10
+O1P
+A   11
+O2P
+A   12
+P2
+A   13
+O3P
+A   14
+O4P
+M  END
+>  <InstanceId>
+1E4E_PHY_A_355
+
+>  <ChemCompId>
+PHY
+
+>  <PdbId>
+1E4E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+355
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C5 N O6 P2
+
+>  <Name>
+1(S)-AMINOETHYL-(2-CARBOXYPROPYL)PHOSPHORYL-PHOSPHINIC ACID
+
+>  <SystematicName>
+(2R)-3-[[(1S)-1-aminoethyl]-phosphonooxy-phosphoryl]-2-methyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H15 N O7 P2
+
+>  <MolecularWeight>
+275.133
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H15NO7P2/c1-4(6(8)9)3-15(10,5(2)7)14-16(11,12)13/h4-5H,3,7H2,1-2H3,(H,8,9)(H2,11,12,13)/t4-,5-,15+/m0/s1
+
+>  <InChIKey>
+BAIYWTZQRMCJBV-DKDXWZAISA-N
+
+>  <SMILES>
+C[C@@H](C[P@](=O)([C@@H](C)N)OP(=O)(O)O)C(=O)O
+
+$$$$

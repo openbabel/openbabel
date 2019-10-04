@@ -1,0 +1,126 @@
+3F80_6HN_A_551
+  RCSB PDB12061708333D
+Coordinates from PDB:3F80:A:551 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   26.1020  -12.9610    6.5950   N 0  3  0  0  0  0  0  0  0  0  0  0
+   21.7280  -17.3940    5.5470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6480  -17.0990    7.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5210  -16.0830    7.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8270  -15.6440    6.3050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2880  -15.6890    8.4520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0210  -16.5850    7.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2810  -15.1350    7.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6350  -14.6870    7.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8150  -13.2340    7.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6880  -11.8060    6.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6750  -13.8180    5.7770   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  1 11  2  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+M  CHG  2   1   1  12  -1
+A    1
+N1
+A    2
+N
+A    3
+CA
+A    4
+C
+A    5
+OXT
+A    6
+O
+A    7
+CB
+A    8
+CG
+A    9
+CD
+A   10
+CE
+A   11
+O2
+A   12
+O1
+M  END
+>  <InstanceId>
+3F80_6HN_A_551
+
+>  <ChemCompId>
+6HN
+
+>  <PdbId>
+3F80
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+551
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O4
+
+>  <Name>
+6-nitro-L-norleucine
+
+>  <SystematicName>
+(2S)-2-amino-6-nitro-hexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C6 H12 N2 O4
+
+>  <MolecularWeight>
+176.17
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+LYS
+
+>  <OneLetterCode>
+K
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12N2O4/c7-5(6(9)10)3-1-2-4-8(11)12/h5H,1-4,7H2,(H,9,10)/t5-/m0/s1
+
+>  <InChIKey>
+LMSAJWJHQUHKSX-YFKPBYRVSA-N
+
+>  <SMILES>
+C(CC[N+](=O)[O-])C[C@@H](C(=O)O)N
+
+$$$$

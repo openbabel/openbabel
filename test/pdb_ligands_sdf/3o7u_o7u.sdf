@@ -1,0 +1,114 @@
+3O7U_O7U_A_430
+  RCSB PDB12061710013D
+Coordinates from PDB:3O7U:A:430 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -68.6610   18.1380  -14.9840   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -68.5570   19.5050  -15.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.2330   20.4050  -14.7200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -67.6650   19.8970  -16.2220   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.7920   19.1800  -18.6490   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -65.2930   19.4280  -16.6230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.6200   18.9560  -17.0440   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -66.9530   17.2680  -16.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -67.8540   17.1280  -15.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+N4
+A    6
+O4
+A    7
+P4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+3O7U_O7U_A_430
+
+>  <ChemCompId>
+O7U
+
+>  <PdbId>
+3O7U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+430
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N3 O2 P
+
+>  <Name>
+(2R)-2-amino-2,5-dihydro-1,5,2-diazaphosphinin-6(1H)-one 2-oxide
+
+>  <SystematicName>
+(5R)-5-azanyl-5-oxo-2,6-diaza-5$l^{5}-phosphacyclohex-3-en-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H6 N3 O2 P
+
+>  <MolecularWeight>
+147.072
+
+>  <ModifiedDate>
+2011-06-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H6N3O2P/c4-9(8)2-1-5-3(7)6-9/h1-2H,(H4,4,5,6,7,8)/t9-/m1/s1
+
+>  <InChIKey>
+GGLLBAYBJJLFCT-SECBINFHSA-N
+
+>  <SMILES>
+C1=C[P@](=O)(NC(=O)N1)N
+
+$$$$

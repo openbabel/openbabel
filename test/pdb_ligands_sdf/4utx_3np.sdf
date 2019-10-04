@@ -1,0 +1,102 @@
+1YQ4_3NP_A_1002
+  RCSB PDB12061704473D
+Coordinates from PDB:1YQ4:A:1002 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   18.5290    3.9010  121.1630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4940    5.9020  120.7700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2610    5.1250  121.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7760    5.6360  122.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6960    5.1890  123.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9490    5.5280  123.7590   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+M  CHG  1   6   1
+A    1
+O1
+A    2
+O2
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+N1
+M  END
+>  <InstanceId>
+1YQ4_3NP_A_1002
+
+>  <ChemCompId>
+3NP
+
+>  <PdbId>
+1YQ4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C3 N O2
+
+>  <Name>
+3-NITROPROPANOIC ACID
+
+>  <SystematicName>
+3-nitropropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 N O4
+
+>  <MolecularWeight>
+119.076
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5NO4/c5-3(6)1-2-4(7)8/h1-2H2,(H,5,6)
+
+>  <InChIKey>
+WBLZUCOIBUDNBV-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C[N+](=O)[O-])C(=O)O
+
+$$$$

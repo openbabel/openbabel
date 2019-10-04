@@ -1,0 +1,151 @@
+4TTE_36Z_A_1204
+  RCSB PDB12061714483D
+Coordinates from PDB:4TTE:A:1204 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+  -12.1500   23.8040   12.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4110   24.1590   11.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4700   24.9110   12.2620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2830   25.0300   11.4020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8910   24.4030   10.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7220   24.3600    9.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7150   23.8350   10.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0040   23.1660    9.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5960   22.1950    8.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6570   23.5000    9.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9070   22.8500    8.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6320   23.1670    8.2190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4950   21.8720    7.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8470   21.5370    7.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4400   20.5650    6.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7840   20.0430    6.0560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7810   20.3450    7.1840   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2890   19.0650    6.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 15  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 15  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 11  1  0  0  0  0
+ 14  9  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  9  8  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  4  2  0  0  0  0
+  7  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+CAF
+A    2
+CAE
+A    3
+OAA
+A    4
+NAB
+A    5
+CAC
+A    6
+CAG
+A    7
+CAD
+A    8
+CAH
+A    9
+CAM
+A   10
+CAI
+A   11
+CAJ
+A   12
+NAR
+A   13
+CAK
+A   14
+CAL
+A   15
+CAN
+A   16
+OAO
+A   17
+OAP
+A   18
+CAQ
+M  END
+>  <InstanceId>
+4TTE_36Z_A_1204
+
+>  <ChemCompId>
+36Z
+
+>  <PdbId>
+4TTE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1204
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O3
+
+>  <Name>
+methyl 3-amino-5-(3,5-dimethyl-1,2-oxazol-4-yl)benzoate
+
+>  <SystematicName>
+methyl 3-azanyl-5-(3,5-dimethyl-1,2-oxazol-4-yl)benzoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H14 N2 O3
+
+>  <MolecularWeight>
+246.262
+
+>  <ModifiedDate>
+2014-12-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H14N2O3/c1-7-12(8(2)18-15-7)9-4-10(13(16)17-3)6-11(14)5-9/h4-6H,14H2,1-3H3
+
+>  <InChIKey>
+CEGDWRFGPGOTIM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(on1)C)c2cc(cc(c2)N)C(=O)OC
+
+$$$$

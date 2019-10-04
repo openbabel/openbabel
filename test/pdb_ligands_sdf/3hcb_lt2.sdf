@@ -1,0 +1,127 @@
+3HCB_LT2_A_3001
+  RCSB PDB12061708523D
+Coordinates from PDB:3HCB:A:3001 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   27.4450   44.9610   14.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8150   45.9110   15.6240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2220   45.2670   16.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9160   45.7350   17.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2330   44.8640   18.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8440   45.2440   19.8710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8530   43.5350   18.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1400   42.7830   19.7170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1580   43.0580   17.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8460   43.9200   16.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0930   43.6960   15.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5870   42.5480   14.6310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  2  0  0  0  0
+  3 10  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CAF
+A    2
+NAG
+A    3
+CAH
+A    4
+CAD
+A    5
+CAJ
+A    6
+OAA
+A    7
+CAK
+A    8
+OAB
+A    9
+CAE
+A   10
+CAI
+A   11
+CAL
+A   12
+OAC
+M  END
+>  <InstanceId>
+3HCB_LT2_A_3001
+
+>  <ChemCompId>
+LT2
+
+>  <PdbId>
+3HCB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+(3S)-3-hydroxy-2,3-dihydro-1H-indole-5,6-dione
+
+>  <SystematicName>
+(3S)-3-hydroxy-2,3-dihydro-1H-indole-5,6-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O3
+
+>  <MolecularWeight>
+165.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO3/c10-6-1-4-5(2-7(6)11)9-3-8(4)12/h1-2,8-9,12H,3H2/t8-/m1/s1
+
+>  <InChIKey>
+LXXQZMIOKXLXPT-MRVPVSSYSA-N
+
+>  <SMILES>
+C1[C@H](C2=CC(=O)C(=O)C=C2N1)O
+
+$$$$

@@ -1,0 +1,130 @@
+1FCP_GMH_A_1004
+  RCSB PDB12061702283D
+Coordinates from PDB:1FCP:A:1004 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   58.6550   63.4180   56.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5630   61.9160   56.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5060   61.2620   57.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8650   61.4750   58.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9630   62.9900   58.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2600   63.3630   60.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9720   64.8400   60.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.8300   61.3230   56.3670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2380   59.8540   56.7920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.8280   60.9230   59.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.9570   63.5590   57.8800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6140   63.0830   60.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3890   65.2180   61.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+O7
+M  END
+>  <InstanceId>
+1FCP_GMH_A_1004
+
+>  <ChemCompId>
+GMH
+
+>  <PdbId>
+1FCP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1004
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 O6
+
+>  <Name>
+L-GLYCERO-D-MANNO-HEPTOPYRANOSE
+
+>  <SystematicName>
+(2S,3S,4S,5S,6R)-6-[(1S)-1,2-dihydroxyethyl]oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C7 H14 O7
+
+>  <MolecularWeight>
+210.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O7/c8-1-2(9)6-4(11)3(10)5(12)7(13)14-6/h2-13H,1H2/t2-,3-,4-,5-,6+,7-/m0/s1
+
+>  <InChIKey>
+BGWQRWREUZVRGI-QQABCQGCSA-N
+
+>  <SMILES>
+C([C@@H]([C@@H]1[C@H]([C@@H]([C@@H]([C@H](O1)O)O)O)O)O)O
+
+$$$$

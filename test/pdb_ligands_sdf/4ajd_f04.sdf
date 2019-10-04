@@ -1,0 +1,135 @@
+4AJD_F04_A_1773
+  RCSB PDB12061711413D
+Coordinates from PDB:4AJD:A:1773 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   21.1740  -16.6010  -33.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0590  -15.3530  -33.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5840  -14.3570  -34.5850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0100  -13.1250  -34.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8490  -12.7730  -33.2200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5980  -12.1980  -35.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0000  -10.8560  -35.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6340  -10.0050  -36.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8890  -10.5120  -37.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4430  -11.8110  -37.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7990  -12.6360  -36.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4200  -14.0130  -36.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7560  -14.7520  -35.9570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6970  -14.6410  -38.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 13  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+O5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+A   14
+C14
+M  END
+>  <InstanceId>
+4AJD_F04_A_1773
+
+>  <ChemCompId>
+F04
+
+>  <PdbId>
+4AJD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1773
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+2-ETHYL-4-METHYL-PHTHALAZIN-1-ONE
+
+>  <SystematicName>
+2-ethyl-4-methyl-phthalazin-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H12 N2 O
+
+>  <MolecularWeight>
+188.226
+
+>  <ModifiedDate>
+2013-03-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2O/c1-3-13-11(14)10-7-5-4-6-9(10)8(2)12-13/h4-7H,3H2,1-2H3
+
+>  <InChIKey>
+ITVFFHLKZDWITI-UHFFFAOYSA-N
+
+>  <SMILES>
+CCN1C(=O)c2ccccc2C(=N1)C
+
+$$$$

@@ -1,0 +1,113 @@
+1HG3_3PP_A_1226
+  RCSB PDB12061702433D
+Coordinates from PDB:1HG3:A:1226 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   19.0140   10.7150   68.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6120   12.1010   68.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9030    9.3750   68.0070   P 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2860   13.2390   68.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3620   14.3610   68.3480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7310   13.0290   70.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5910    9.7190   68.6460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9890    9.5590   66.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6170    8.1890   68.5620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3  8  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+CB
+A    2
+CG
+A    3
+P
+A    4
+CD
+A    5
+OE1
+A    6
+OE2
+A    7
+O1
+A    8
+O2
+A    9
+O3
+M  END
+>  <InstanceId>
+1HG3_3PP_A_1226
+
+>  <ChemCompId>
+3PP
+
+>  <PdbId>
+1HG3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1226
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O5 P
+
+>  <Name>
+3-PHOSPHONOPROPANOIC ACID
+
+>  <SystematicName>
+3-phosphonopropanoic acid
+
+>  <Synonyms>
+2-CARBOXYETHYLPHOSPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 O5 P
+
+>  <MolecularWeight>
+154.058
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7O5P/c4-3(5)1-2-9(6,7)8/h1-2H2,(H,4,5)(H2,6,7,8)
+
+>  <InChIKey>
+NLBSQHGCGGFVJW-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CP(=O)(O)O)C(=O)O
+
+$$$$

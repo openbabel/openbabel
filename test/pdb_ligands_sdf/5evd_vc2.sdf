@@ -1,0 +1,139 @@
+4NQ7_VC2_A_304
+  RCSB PDB12061713563D
+Coordinates from PDB:4NQ7:A:304 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   11.4270    8.4920   28.6030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4170    8.4770   27.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6780    7.4740   26.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0250    9.8040   26.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9050    9.9680   25.6060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2830   10.7470   26.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6340   10.0010   26.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3200   11.9790   27.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9820   11.1050   24.5920   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2070   11.0270   24.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6590   12.3770   25.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0770   11.8480   25.6380   S 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5580   10.2370   26.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4610    9.5370   25.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2180    8.0040   24.8430   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CG2
+A    8
+CG1
+A    9
+SAI
+A   10
+CAO
+A   11
+CAG
+A   12
+SAH
+A   13
+CAK
+A   14
+CAF
+A   15
+SAE
+M  END
+>  <InstanceId>
+4NQ7_VC2_A_304
+
+>  <ChemCompId>
+VC2
+
+>  <PdbId>
+4NQ7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 S3
+
+>  <Name>
+(3S,5S,7aR)-2,2-dimethyl-5-(sulfanylmethyl)tetrahydro[1,3]thiazolo[4,3-b][1,3]thiazole-3-carboxylic acid
+
+>  <SystematicName>
+(3S,5S,7aR)-2,2-dimethyl-5-(sulfanylmethyl)-3,5,7,7a-tetrahydro-[1,3]thiazolo[4,3-b][1,3]thiazole-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H15 N O2 S3
+
+>  <MolecularWeight>
+265.416
+
+>  <ModifiedDate>
+2014-11-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15NO2S3/c1-9(2)7(8(11)12)10-5(3-13)14-4-6(10)15-9/h5-7,13H,3-4H2,1-2H3,(H,11,12)/t5-,6+,7-/m0/s1
+
+>  <InChIKey>
+IKSIYRPSHTUWIX-XVMARJQXSA-N
+
+>  <SMILES>
+CC1([C@@H](N2[C@H](S1)CS[C@H]2CS)C(=O)O)C
+
+$$$$

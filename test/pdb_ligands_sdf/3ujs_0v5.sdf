@@ -1,0 +1,117 @@
+3UJS_0V5_B_602
+  RCSB PDB12061711033D
+Coordinates from PDB:3UJS:B:602 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   31.2600   54.9260   -0.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8710   54.2950   -1.8620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6450   56.1290   -1.0580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1980   54.3310    0.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7360   52.8670    0.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8690   55.1410    1.6490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8680   56.1560    2.4500   P 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2430   57.0780    1.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7930   55.2900    3.0590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8510   56.7880    3.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  3  1  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2'
+A    4
+C2
+A    5
+C3
+A    6
+O2
+A    7
+P
+A    8
+O1P
+A    9
+O2P
+A   10
+O3P
+M  END
+>  <InstanceId>
+3UJS_0V5_B_602
+
+>  <ChemCompId>
+0V5
+
+>  <PdbId>
+3UJS
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+(2R)-2-(phosphonooxy)propanoic acid
+
+>  <SystematicName>
+(2R)-2-phosphonooxypropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 O6 P
+
+>  <MolecularWeight>
+170.058
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7O6P/c1-2(3(4)5)9-10(6,7)8/h2H,1H3,(H,4,5)(H2,6,7,8)/t2-/m1/s1
+
+>  <InChIKey>
+CSZRNWHGZPKNKY-UWTATZPHSA-N
+
+>  <SMILES>
+C[C@H](C(=O)O)OP(=O)(O)O
+
+$$$$

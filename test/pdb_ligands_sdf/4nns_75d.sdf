@@ -1,0 +1,154 @@
+4NNS_75D_A_201
+  RCSB PDB12061713553D
+Coordinates from PDB:4NNS:A:201 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+   -3.7030    5.2940  -16.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1820    6.6730  -16.5290   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1020    7.6100  -16.1960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3620    6.9650  -15.6740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5190    6.9010  -18.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5060    6.5060  -19.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1720    5.8650  -18.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0260    4.4370  -19.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9620    6.7480  -19.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6900    6.6710  -20.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8640    7.2420  -21.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0620    7.4330  -22.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5460    7.4980  -23.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2100    6.5180  -23.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8780    7.6540  -20.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7210    7.4980  -18.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9050    7.9950  -17.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7760    9.4670  -17.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2720    7.6780  -18.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 15  1  0  0  0  0
+ 10  6  1  0  0  0  0
+ 15 16  2  0  0  0  0
+  8  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+  9  7  1  0  0  0  0
+ 16  5  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 19 17  1  0  0  0  0
+  5  2  1  0  0  0  0
+ 17 18  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+A    1
+OAI
+A    2
+SAS
+A    3
+OAG
+A    4
+OAH
+A    5
+CAO
+A    6
+CAM
+A    7
+CAQ
+A    8
+CAD
+A    9
+CAC
+A   10
+CAJ
+A   11
+CAL
+A   12
+CAP
+A   13
+CAB
+A   14
+CAA
+A   15
+CAK
+A   16
+CAN
+A   17
+CAR
+A   18
+CAF
+A   19
+CAE
+M  END
+>  <InstanceId>
+4NNS_75D_A_201
+
+>  <ChemCompId>
+75D
+
+>  <PdbId>
+4NNS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 O3 S
+
+>  <Name>
+2,4,6-tri(propan-2-yl)benzenesulfonic acid
+
+>  <SystematicName>
+2,4,6-tri(propan-2-yl)benzenesulfonic acid
+
+>  <Synonyms>
+2,4,6-triisopropylbenzenesulfonic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H24 O3 S
+
+>  <MolecularWeight>
+284.414
+
+>  <ModifiedDate>
+2014-11-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H24O3S/c1-9(2)12-7-13(10(3)4)15(19(16,17)18)14(8-12)11(5)6/h7-11H,1-6H3,(H,16,17,18)
+
+>  <InChIKey>
+YHGKEORTCHVBQH-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)c1cc(c(c(c1)C(C)C)S(=O)(=O)O)C(C)C
+
+$$$$

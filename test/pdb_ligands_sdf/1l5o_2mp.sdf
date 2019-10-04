@@ -1,0 +1,114 @@
+1L5O_2MP_A_990
+  RCSB PDB12061703093D
+Coordinates from PDB:1L5O:A:990 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   56.1950   41.4410   14.3090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3570   42.2260   13.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0010   41.9840   12.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.1250   42.7260   12.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6580   43.7340   13.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0150   43.9790   14.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8460   43.2010   14.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.8950   44.5240   12.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5600   45.0510   15.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+M  END
+>  <InstanceId>
+1L5O_2MP_A_990
+
+>  <ChemCompId>
+2MP
+
+>  <PdbId>
+1L5O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+990
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O
+
+>  <Name>
+3,4-DIMETHYLPHENOL
+
+>  <SystematicName>
+3,4-dimethylphenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 O
+
+>  <MolecularWeight>
+122.164
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10O/c1-6-3-4-8(9)5-7(6)2/h3-5,9H,1-2H3
+
+>  <InChIKey>
+YCOXTKKNXUZSKD-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(cc1C)O
+
+$$$$

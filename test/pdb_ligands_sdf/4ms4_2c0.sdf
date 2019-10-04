@@ -1,0 +1,134 @@
+4MS4_2C0_A_501
+  RCSB PDB12061713473D
+Coordinates from PDB:4MS4:A:501 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -18.1860   18.4140  -32.7940  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6920   17.6110  -32.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8990   17.8960  -32.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0560   17.2460  -32.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6460   16.7610  -31.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8010   16.0890  -30.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0170   16.3370  -31.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2540   15.7100  -30.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1320   15.1110  -32.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4700   13.9300  -32.6270   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0730   16.8170  -30.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5340   17.2310  -28.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0040   16.4290  -28.0740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.6990   18.5010  -28.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  4  7  1  0  0  0  0
+  2  5  2  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CL
+A    2
+C8
+A    3
+C7
+A    4
+C6
+A    5
+C9
+A    6
+C10
+A    7
+C5
+A    8
+C2
+A    9
+C1
+A   10
+N
+A   11
+C3
+A   12
+C4
+A   13
+O2
+A   14
+O1
+M  END
+>  <InstanceId>
+4MS4_2C0_A_501
+
+>  <ChemCompId>
+2C0
+
+>  <PdbId>
+4MS4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2 Cl
+
+>  <Name>
+baclofen
+
+>  <SystematicName>
+(3R)-4-azanyl-3-(4-chlorophenyl)butanoic acid
+
+>  <Synonyms>
+(3R)-4-amino-3-(4-chlorophenyl)butanoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 Cl N O2
+
+>  <MolecularWeight>
+213.661
+
+>  <ModifiedDate>
+2013-12-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12ClNO2/c11-9-3-1-7(2-4-9)8(6-12)5-10(13)14/h1-4,8H,5-6,12H2,(H,13,14)/t8-/m0/s1
+
+>  <InChIKey>
+KPYSYYIEGFHWSV-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(ccc1[C@@H](CC(=O)O)CN)Cl
+
+$$$$

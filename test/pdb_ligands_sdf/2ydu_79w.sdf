@@ -1,0 +1,143 @@
+2YDU_79W_A_1469
+  RCSB PDB12061707363D
+Coordinates from PDB:2YDU:A:1469 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    0.4940   14.4080   24.2240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6150   13.9070   24.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8220   12.3930   24.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8920   11.7040   24.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8670   11.7250   23.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9470   10.3520   23.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0190    9.6740   23.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0090   10.3280   24.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0850    9.3090   25.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4860    9.3300   26.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4240    8.0380   26.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5740    7.3800   27.8180   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2720    7.7610   25.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6960    9.0480   24.4310   S 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2350    8.5020   23.1130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7360   10.1640   24.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  2  0  0  0  0
+A    1
+OAH
+A    2
+CAG
+A    3
+CAE
+A    4
+CAD
+A    5
+CAF
+A    6
+CAA
+A    7
+CAB
+A    8
+CAC
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+OAP
+A   13
+CAL
+A   14
+SAM
+A   15
+OAO
+A   16
+OAN
+M  END
+>  <InstanceId>
+2YDU_79W_A_1469
+
+>  <ChemCompId>
+79W
+
+>  <PdbId>
+2YDU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1469
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4 S
+
+>  <Name>
+3-[(2S)-1,1-DIOXIDO-4-OXOTETRAHYDROTHIOPHEN-2-YL]BENZALDEHYDE
+
+>  <SystematicName>
+3-[(2S)-1,1,4-trioxothiolan-2-yl]benzaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H10 O4 S
+
+>  <MolecularWeight>
+238.26
+
+>  <ModifiedDate>
+2011-10-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10O4S/c12-6-8-2-1-3-9(4-8)11-5-10(13)7-16(11,14)15/h1-4,6,11H,5,7H2/t11-/m0/s1
+
+>  <InChIKey>
+YIJQNPNARRVHGF-NSHDSACASA-N
+
+>  <SMILES>
+c1cc(cc(c1)[C@@H]2CC(=O)CS2(=O)=O)C=O
+
+$$$$

@@ -1,0 +1,146 @@
+1Q6K_TCO_A_0
+  RCSB PDB12061703443D
+Coordinates from PDB:1Q6K:A:0 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   74.0060   -9.5770  134.8660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6420  -10.5640  133.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.0590  -10.0470  133.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1530  -10.6140  133.6790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.4450  -12.1480  132.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.9940  -12.4000  130.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.2040  -11.2040  130.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.0620   -9.9340  130.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.9480   -9.7260  131.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.6970  -10.6950  132.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.2600   -9.8590  135.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.2230  -10.9600  136.5700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   72.5150   -8.7540  136.4410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   71.2700   -7.1310  137.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.8710   -8.5670  137.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.9250   -8.5410  138.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.7390   -9.6040  137.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CG2
+A    6
+CD2
+A    7
+CE
+A    8
+CD1
+A    9
+CG1
+A   10
+CB
+A   11
+C1
+A   12
+O1
+A   13
+O2
+A   14
+C4
+A   15
+C3
+A   16
+C6
+A   17
+C5
+M  END
+>  <InstanceId>
+1Q6K_TCO_A_0
+
+>  <ChemCompId>
+TCO
+
+>  <PdbId>
+1Q6K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O3
+
+>  <Name>
+TERT-BUTYL(1S)-1-CYCLOHEXYL-2-OXOETHYLCARBAMATE
+
+>  <SystematicName>
+tert-butyl N-[(1S)-1-cyclohexyl-2-oxo-ethyl]carbamate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H23 N O3
+
+>  <MolecularWeight>
+241.327
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H23NO3/c1-13(2,3)17-12(16)14-11(9-15)10-7-5-4-6-8-10/h9-11H,4-8H2,1-3H3,(H,14,16)/t11-/m1/s1
+
+>  <InChIKey>
+BDSGOSWEKUGHOV-LLVKDONJSA-N
+
+>  <SMILES>
+CC(C)(C)OC(=O)N[C@H](C=O)C1CCCCC1
+
+$$$$

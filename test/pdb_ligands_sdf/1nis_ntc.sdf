@@ -1,0 +1,130 @@
+1NIS_NTC_A_755
+  RCSB PDB12061703253D
+Coordinates from PDB:1NIS:A:755 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   34.1830   33.7900   72.7110   N 0  3  0  0  0  0  0  0  0  0  0  0
+   34.2540   33.9340   73.9020   O 0  5  0  0  0  0  0  0  0  0  0  0
+   33.1920   33.8840   72.0310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6070   33.6420   72.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1730   33.9980   70.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4590   32.7180   70.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2860   34.9320   71.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9510   34.7340   72.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9880   34.1120   72.8560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4290   35.1940   73.8150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1990   34.8300   69.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4130   34.2040   69.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2130   36.1050   70.0470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+M  CHG  2   1   1   2  -1
+A    1
+N1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+O7
+A    7
+C4
+A    8
+C5
+A    9
+O3
+A   10
+O4
+A   11
+C6
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1NIS_NTC_A_755
+
+>  <ChemCompId>
+NTC
+
+>  <PdbId>
+1NIS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+755
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O7
+
+>  <Name>
+2-HYDROXY-2-NITROMETHYL SUCCINIC ACID
+
+>  <SystematicName>
+(2R)-2-hydroxy-2-(nitromethyl)butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N O7
+
+>  <MolecularWeight>
+193.112
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7NO7/c7-3(8)1-5(11,4(9)10)2-6(12)13/h11H,1-2H2,(H,7,8)(H,9,10)/t5-/m1/s1
+
+>  <InChIKey>
+MTIGFRIXIPBOPZ-RXMQYKEDSA-N
+
+>  <SMILES>
+C(C(=O)O)[C@@](C[N+](=O)[O-])(C(=O)O)O
+
+$$$$

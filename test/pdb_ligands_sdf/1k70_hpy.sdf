@@ -1,0 +1,110 @@
+1K70_HPY_A_501
+  RCSB PDB12061703023D
+Coordinates from PDB:1K70:A:501 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+    4.0510   23.8590  101.9090   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0490   22.4900  102.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4570   21.6010  101.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7840   22.1460  103.2880   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5110   23.0250  104.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9130   22.7170  103.7790   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4770   24.4340  103.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7720   24.8330  102.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+M  END
+>  <InstanceId>
+1K70_HPY_A_501
+
+>  <ChemCompId>
+HPY
+
+>  <PdbId>
+1K70
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O2
+
+>  <Name>
+4-HYDROXY-3,4-DIHYDRO-1H-PYRIMIDIN-2-ONE
+
+>  <SystematicName>
+(4S)-4-hydroxy-3,4-dihydro-1H-pyrimidin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N2 O2
+
+>  <MolecularWeight>
+114.103
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N2O2/c7-3-1-2-5-4(8)6-3/h1-3,7H,(H2,5,6,8)/t3-/m0/s1
+
+>  <InChIKey>
+DEAAWXYGBWCVJW-VKHMYHEASA-N
+
+>  <SMILES>
+C1=CNC(=O)N[C@H]1O
+
+$$$$

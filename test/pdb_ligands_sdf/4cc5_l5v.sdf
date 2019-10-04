@@ -1,0 +1,127 @@
+4CC5_L5V_A_1311
+  RCSB PDB12061712013D
+Coordinates from PDB:4CC5:A:1311 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   25.9270   21.1350    7.3410  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7510   20.1870    8.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9060   18.8330    8.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5310   18.0650    9.2310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9820   18.7070   10.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8180   20.0750   10.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1860   20.8490    9.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3190   20.7550   11.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2970   22.0620   11.8930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8590   22.2920   13.1330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1950   21.1300   13.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8750   20.1700   12.7660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+CL1
+A    2
+C2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+N9
+A   10
+N10
+A   11
+C11
+A   12
+N12
+M  END
+>  <InstanceId>
+4CC5_L5V_A_1311
+
+>  <ChemCompId>
+L5V
+
+>  <PdbId>
+4CC5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5 Cl
+
+>  <Name>
+2-chloranyl-6-(1H-1,2,4-triazol-3-yl)pyrazine
+
+>  <SystematicName>
+2-chloranyl-6-(1H-1,2,4-triazol-3-yl)pyrazine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H4 Cl N5
+
+>  <MolecularWeight>
+181.582
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4ClN5/c7-5-2-8-1-4(11-5)6-9-3-10-12-6/h1-3H,(H,9,10,12)
+
+>  <InChIKey>
+KOARCKONUFDYQJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc(cn1)Cl)c2nc[nH]n2
+
+$$$$

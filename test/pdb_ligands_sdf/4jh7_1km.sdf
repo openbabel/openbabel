@@ -1,0 +1,137 @@
+4JH7_1KM_A_204
+  RCSB PDB12061713103D
+Coordinates from PDB:4JH7:A:204 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   -1.9610    4.3150  -14.2950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1020    4.1000  -13.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8480    3.1290  -14.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4840    4.9030  -12.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7070    6.1740  -12.5480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9950    5.1150  -12.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4300    5.6830  -10.7970   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2810    7.5030  -10.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6900    8.4910  -12.1750   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9790    7.8720  -12.8810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3630    8.3410  -13.0510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8870   10.0350  -11.8020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1740    7.8620   -9.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6910    7.7140   -9.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8900    9.2180   -8.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+ 11  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+SAJ
+A    8
+CAN
+A    9
+PAO
+A   10
+OAG
+A   11
+OAH
+A   12
+OAF
+A   13
+CAL
+A   14
+CAA
+A   15
+OAE
+M  END
+>  <InstanceId>
+4JH7_1KM_A_204
+
+>  <ChemCompId>
+1KM
+
+>  <PdbId>
+4JH7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+204
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O6 P S
+
+>  <Name>
+(2R)-2-azanyl-3-[(1R,2S)-2-oxidanyl-1-phosphono-propyl]sulfanyl-propanoic acid
+
+>  <SystematicName>
+(2R)-2-azanyl-3-[(1R,2S)-2-oxidanyl-1-phosphono-propyl]sulfanyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 N O6 P S
+
+>  <MolecularWeight>
+259.217
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14NO6PS/c1-3(8)6(14(11,12)13)15-2-4(7)5(9)10/h3-4,6,8H,2,7H2,1H3,(H,9,10)(H2,11,12,13)/t3-,4-,6+/m0/s1
+
+>  <InChIKey>
+ACZNEKUZDVGTFM-RVJQKOHUSA-N
+
+>  <SMILES>
+C[C@@H]([C@H](P(=O)(O)O)SC[C@@H](C(=O)O)N)O
+
+$$$$

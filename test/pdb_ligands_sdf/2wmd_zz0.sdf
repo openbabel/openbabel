@@ -1,0 +1,147 @@
+2WMD_ZZ0_A_1299
+  RCSB PDB12061707163D
+Coordinates from PDB:2WMD:A:1299 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -23.8510    7.7810   -0.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2320    6.6410   -0.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8970    6.4190   -0.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1610    4.9670   -0.0920  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2180    7.3230   -1.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8390    8.4960   -1.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2020    8.7300   -1.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9150    9.8280   -1.9000   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5430   10.7790   -2.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2160   10.9460   -3.1130   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8330   11.8830   -3.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7430   12.7170   -4.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1230   12.5510   -4.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5000   11.5720   -3.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0110   11.4220   -3.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3420   10.7950   -2.1530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8370   11.9860   -3.9130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+C7
+A    2
+C9
+A    3
+C5
+A    4
+CL1
+A    5
+C10
+A    6
+C8
+A    7
+C4
+A    8
+N1
+A    9
+C1
+A   10
+N2
+A   11
+C11
+A   12
+C12
+A   13
+C6
+A   14
+C2
+A   15
+C3
+A   16
+O2
+A   17
+O1
+M  END
+>  <InstanceId>
+2WMD_ZZ0_A_1299
+
+>  <ChemCompId>
+ZZ0
+
+>  <PdbId>
+2WMD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1299
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2 Cl
+
+>  <Name>
+2-(4-CHLORO-PHENYLAMINO)-NICOTINIC ACID
+
+>  <SystematicName>
+2-[(4-chlorophenyl)amino]pyridine-3-carboxylic acid
+
+>  <Synonyms>
+2-[(4-CHLOROPHENYL)AMINO]PYRIDINE-3-CARBOXYLIC ACID
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H9 Cl N2 O2
+
+>  <MolecularWeight>
+248.665
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9ClN2O2/c13-8-3-5-9(6-4-8)15-11-10(12(16)17)2-1-7-14-11/h1-7H,(H,14,15)(H,16,17)
+
+>  <InChIKey>
+YEXIXVLEDGNAKM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(nc1)Nc2ccc(cc2)Cl)C(=O)O
+
+$$$$

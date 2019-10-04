@@ -1,0 +1,141 @@
+3FO5_TCE_A_596
+  RCSB PDB12061708373D
+Coordinates from PDB:3FO5:A:596 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   29.6790   39.9820   65.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6560   40.1750   67.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7510   39.7860   67.7940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8550   40.9260   67.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3020   42.1620   66.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4630   43.6850   67.8530   P 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4870   44.8780   66.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0520   44.1840   65.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6070   45.1660   64.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7970   45.5530   64.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8380   45.4830   63.2290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8330   43.7660   68.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9310   43.7810   70.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6060   42.4230   70.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5400   42.3880   72.0830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4610   41.4470   70.0700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 12  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 16 14  2  0  0  0  0
+ 15 14  1  0  0  0  0
+A    1
+O16
+A    2
+C14
+A    3
+O15
+A    4
+C5
+A    5
+C2
+A    6
+P
+A    7
+C3
+A    8
+C6
+A    9
+C8
+A   10
+O10
+A   11
+O9
+A   12
+C1
+A   13
+C4
+A   14
+C11
+A   15
+O12
+A   16
+O13
+M  END
+>  <InstanceId>
+3FO5_TCE_A_596
+
+>  <ChemCompId>
+TCE
+
+>  <PdbId>
+3FO5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+596
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O6 P
+
+>  <Name>
+3,3',3''-phosphanetriyltripropanoic acid
+
+>  <SystematicName>
+3-[bis(2-carboxyethyl)phosphanyl]propanoic acid
+
+>  <Synonyms>
+3-[bis(2-carboxyethyl)phosphanyl]propanoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H15 O6 P
+
+>  <MolecularWeight>
+250.186
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15O6P/c10-7(11)1-4-16(5-2-8(12)13)6-3-9(14)15/h1-6H2,(H,10,11)(H,12,13)(H,14,15)
+
+>  <InChIKey>
+PZBFGYYEXUXCOF-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CP(CCC(=O)O)CCC(=O)O)C(=O)O
+
+$$$$

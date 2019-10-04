@@ -1,0 +1,126 @@
+2AY4_PPT_B_414
+  RCSB PDB12061705033D
+Coordinates from PDB:2AY4:B:414 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  103.4200   46.1910   11.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.9880   47.1070   13.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  103.3660   46.8430   14.2270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  102.2590   48.0890   12.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  102.3090   45.9170   10.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.2300   44.9780   11.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.0550   43.7260   10.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.3730   45.3580   12.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.0430   42.8790   11.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.3640   44.5150   12.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.1840   43.2680   12.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.0570   42.3740   12.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+OT1
+A    4
+OT2
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CD2
+A    9
+CE1
+A   10
+CE2
+A   11
+CZ
+A   12
+CH
+M  END
+>  <InstanceId>
+2AY4_PPT_B_414
+
+>  <ChemCompId>
+PPT
+
+>  <PdbId>
+2AY4
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+3-(P-TOLYL)PROPIONIC ACID
+
+>  <SystematicName>
+3-(4-methylphenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O2
+
+>  <MolecularWeight>
+164.201
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O2/c1-8-2-4-9(5-3-8)6-7-10(11)12/h2-5H,6-7H2,1H3,(H,11,12)
+
+>  <InChIKey>
+LDYGRLNSOKABMM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(cc1)CCC(=O)O
+
+$$$$

@@ -1,0 +1,114 @@
+3VP2_BP0_A_601
+  RCSB PDB12061711153D
+Coordinates from PDB:3VP2:A:601 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    7.8500   -7.8500    0.0000   S 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4170   -9.9210    0.5100   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2780  -10.1450   -2.3510   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2510   -9.9970   -0.1400   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8220   -9.8370    0.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4230  -10.0650   -1.5340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1740   -8.7380    0.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5100   -9.9290   -0.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0700  -10.0330   -1.9540   S 0  0  0  0  0  0  0  0  0  0  0  0
+  3  6  1  0  0  0  0
+  9  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+  6  4  2  0  0  0  0
+  8  5  1  0  0  0  0
+  8  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+S18
+A    2
+N26
+A    3
+N27
+A    4
+N28
+A    5
+C30
+A    6
+C31
+A    7
+C32
+A    8
+C33
+A    9
+S35
+M  END
+>  <InstanceId>
+3VP2_BP0_A_601
+
+>  <ChemCompId>
+BP0
+
+>  <PdbId>
+3VP2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+8
+
+>  <ObservedFormula>
+C4 N3 S2
+
+>  <Name>
+5,5'-(sulfanediyldiethane-2,1-diyl)bis(1,3,4-thiadiazol-2-amine)
+
+>  <SystematicName>
+5-[2-[2-(5-azanyl-1,3,4-thiadiazol-2-yl)ethylsulfanyl]ethyl]-1,3,4-thiadiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 N6 S3
+
+>  <MolecularWeight>
+288.416
+
+>  <ModifiedDate>
+2012-06-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12N6S3/c9-7-13-11-5(16-7)1-3-15-4-2-6-12-14-8(10)17-6/h1-4H2,(H2,9,13)(H2,10,14)
+
+>  <InChIKey>
+AOAQKDDVWLOZFV-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CSCCc1nnc(s1)N)c2nnc(s2)N
+
+$$$$

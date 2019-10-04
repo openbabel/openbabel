@@ -1,0 +1,139 @@
+1W7H_3IP_A_1355
+  RCSB PDB12061704303D
+Coordinates from PDB:1W7H:A:1355 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   20.8130   34.3980   31.5280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6460   33.9140   30.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7270   34.6770   30.1470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6300   34.2940   29.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4700   33.0260   28.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3300   32.1760   28.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3830   32.6130   29.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2520   31.8830   30.3440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5410   30.9110   29.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1040   30.7710   30.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0350   31.6570   29.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6590   31.5480   30.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2930   30.5430   31.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3560   29.6350   31.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7490   29.7570   31.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+M  END
+>  <InstanceId>
+1W7H_3IP_A_1355
+
+>  <ChemCompId>
+3IP
+
+>  <PdbId>
+1W7H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1355
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+3-(BENZYLOXY)PYRIDIN-2-AMINE
+
+>  <SystematicName>
+3-phenylmethoxypyridin-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N2 O
+
+>  <MolecularWeight>
+200.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2O/c13-12-11(7-4-8-14-12)15-9-10-5-2-1-3-6-10/h1-8H,9H2,(H2,13,14)
+
+>  <InChIKey>
+NMCBWICNRJLKKM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)COc2cccnc2N
+
+$$$$

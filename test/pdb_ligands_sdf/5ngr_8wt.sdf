@@ -1,0 +1,127 @@
+5NGR_8WT_A_201
+  RCSB PDB12061719103D
+Coordinates from PDB:5NGR:A:201 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   -0.8320  -11.6840   15.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7130  -12.4130   14.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9280  -10.5610   15.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3370   -9.5830   16.6280   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4440  -11.8670   15.6160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6120  -10.6260   15.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4250  -12.5910   14.4570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0270   -7.3070   18.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7460   -7.5350   17.7600   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4730   -8.9350   16.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5240  -11.4400   14.5410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4650   -9.4690   15.9940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  7  2  0  0  0  0
+  2 11  1  0  0  0  0
+  7  1  1  0  0  0  0
+ 11  3  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  2  0  0  0  0
+  3  6  1  0  0  0  0
+  3 12  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 12 10  2  0  0  0  0
+  4 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+N2
+A    6
+C3
+A    7
+N3
+A    8
+C1
+A    9
+S1
+A   10
+C2
+A   11
+N4
+A   12
+N5
+M  END
+>  <InstanceId>
+5NGR_8WT_A_201
+
+>  <ChemCompId>
+8WT
+
+>  <PdbId>
+5NGR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5 S
+
+>  <Name>
+8-methylsulfanyl-7~{H}-purin-6-amine
+
+>  <SystematicName>
+8-methylsulfanyl-7~{H}-purin-6-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N5 S
+
+>  <MolecularWeight>
+181.218
+
+>  <ModifiedDate>
+2017-09-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N5S/c1-12-6-10-3-4(7)8-2-9-5(3)11-6/h2H,1H3,(H3,7,8,9,10,11)
+
+>  <InChIKey>
+FEVUWFPPXQJXFN-UHFFFAOYSA-N
+
+>  <SMILES>
+CSc1[nH]c2c(ncnc2n1)N
+
+$$$$

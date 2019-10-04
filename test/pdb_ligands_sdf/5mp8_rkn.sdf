@@ -1,0 +1,144 @@
+5MP8_RKN_A_406
+  RCSB PDB12061719043D
+Coordinates from PDB:5MP8:A:406 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    5.9380  137.2940  350.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6520  138.7690  349.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6310  139.2270  349.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3740  140.5790  348.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1400  141.5230  349.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1600  141.0530  350.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6010  145.2420  349.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3050  145.6980  349.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5410  143.4510  349.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1530  142.1740  351.2970  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4160  139.7040  350.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8780  136.8390  351.4040   N 0  3  0  0  0  0  0  0  0  0  0  0
+    4.4950  136.7500  351.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8460  142.9730  349.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2760  144.8030  349.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8750  143.8920  349.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 16  1  0  0  0  0
+  8 15  1  0  0  0  0
+ 16 14  2  0  0  0  0
+ 15  9  2  0  0  0  0
+ 14  9  1  0  0  0  0
+ 14  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2 11  2  0  0  0  0
+  1 12  1  0  0  0  0
+  6 11  1  0  0  0  0
+  6 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+M  CHG  1  12   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C10
+A    8
+C11
+A    9
+C13
+A   10
+CL
+A   11
+C7
+A   12
+N
+A   13
+C
+A   14
+C8
+A   15
+C12
+A   16
+C9
+M  END
+>  <InstanceId>
+5MP8_RKN_A_406
+
+>  <ChemCompId>
+RKN
+
+>  <PdbId>
+5MP8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+406
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N Cl
+
+>  <Name>
+(3-chloranyl-4-phenyl-phenyl)methyl-methyl-azanium
+
+>  <SystematicName>
+(3-chloranyl-4-phenyl-phenyl)methyl-methyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H15 Cl N
+
+>  <MolecularWeight>
+232.729
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H14ClN/c1-16-10-11-7-8-13(14(15)9-11)12-5-3-2-4-6-12/h2-9,16H,10H2,1H3/p+1
+
+>  <InChIKey>
+MDDYEXZTZUUWBH-UHFFFAOYSA-O
+
+>  <SMILES>
+C[NH2+]Cc1ccc(c(c1)Cl)c2ccccc2
+
+$$$$

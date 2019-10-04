@@ -1,0 +1,109 @@
+1C9Y_NVA_A_355
+  RCSB PDB12061702093D
+Coordinates from PDB:1C9Y:A:355 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+    5.1940    4.7420  -23.3250   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1380    4.5590  -22.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0530    3.6820  -22.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8560    3.5490  -22.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8320    2.5570  -22.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7130    3.9130  -21.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3520    4.3310  -19.9730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5470    3.0260  -21.2040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+C
+A    7
+O
+A    8
+OXT
+M  END
+>  <InstanceId>
+1C9Y_NVA_A_355
+
+>  <ChemCompId>
+NVA
+
+>  <PdbId>
+1C9Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+355
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2
+
+>  <Name>
+NORVALINE
+
+>  <SystematicName>
+(2S)-2-aminopentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C5 H11 N O2
+
+>  <MolecularWeight>
+117.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+VAL
+
+>  <OneLetterCode>
+V
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO2/c1-2-3-4(6)5(7)8/h4H,2-3,6H2,1H3,(H,7,8)/t4-/m0/s1
+
+>  <InChIKey>
+SNDPXSYFESPGGJ-BYPYZUCNSA-N
+
+>  <SMILES>
+CCC[C@@H](C(=O)O)N
+
+$$$$

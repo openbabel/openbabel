@@ -1,0 +1,135 @@
+2FDV_D2G_A_501
+  RCSB PDB12061705333D
+Coordinates from PDB:2FDV:A:501 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   56.0870   77.5400   60.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4740   76.1860   60.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8270   75.9270   61.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.6990   77.0500   61.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3250   78.3270   61.0970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0570   78.5880   60.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7490   77.8390   60.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6520   77.0670   60.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5710   77.9620   59.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1170   79.2170   59.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4630   79.1820   59.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5390   80.6000   59.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7390   81.0530   57.9300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0340   80.1650   56.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C_1
+A    2
+C_2
+A    3
+C_3
+A    4
+C_4
+A    5
+N_1
+A    6
+C_5
+A    7
+C_6
+A    8
+C_7
+A    9
+C_8
+A   10
+C_9
+A   11
+O_1
+A   12
+C10
+A   13
+N_2
+A   14
+C11
+M  END
+>  <InstanceId>
+2FDV_D2G_A_501
+
+>  <ChemCompId>
+D2G
+
+>  <PdbId>
+2FDV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+N-METHYL(5-(PYRIDIN-3-YL)FURAN-2-YL)METHANAMINE
+
+>  <SystematicName>
+N-methyl-1-(5-pyridin-3-ylfuran-2-yl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N2 O
+
+>  <MolecularWeight>
+188.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2O/c1-12-8-10-4-5-11(14-10)9-3-2-6-13-7-9/h2-7,12H,8H2,1H3
+
+>  <InChIKey>
+MDGMPFRIYUFRRX-UHFFFAOYSA-N
+
+>  <SMILES>
+CNCc1ccc(o1)c2cccnc2
+
+$$$$

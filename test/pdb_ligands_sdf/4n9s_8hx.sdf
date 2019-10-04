@@ -1,0 +1,127 @@
+4N9M_8HX_A_401
+  RCSB PDB12061713513D
+Coordinates from PDB:4N9M:A:401 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -10.0190  -20.2430   36.6370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7760  -20.4580   37.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9100  -20.0000   37.8760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2430  -21.1920   38.8510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9570  -21.7090   38.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2050  -21.5010   37.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7300  -20.7680   36.5350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0580  -20.5830   35.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0340  -22.1030   37.7550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0630  -22.6520   38.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0460  -23.3630   39.5140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2210  -22.4290   39.5710   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  7  1  1  0  0  0  0
+  7  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6  5  2  0  0  0  0
+  9 10  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+O6
+A    9
+N7
+A   10
+C8
+A   11
+O8
+A   12
+N9
+M  END
+>  <InstanceId>
+4N9M_8HX_A_401
+
+>  <ChemCompId>
+8HX
+
+>  <PdbId>
+4N9M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O3
+
+>  <Name>
+8-hydroxy-3,9-dihydro-1H-purine-2,6-dione
+
+>  <SystematicName>
+8-oxidanyl-3,9-dihydropurine-2,6-dione
+
+>  <Synonyms>
+8-hydroxyxanthine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N4 O3
+
+>  <MolecularWeight>
+168.11
+
+>  <ModifiedDate>
+2014-01-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4O3/c10-3-1-2(7-4(11)6-1)8-5(12)9-3/h(H4,6,7,8,9,10,11,12)
+
+>  <InChIKey>
+LEHOTFFKMJEONL-UHFFFAOYSA-N
+
+>  <SMILES>
+c12c([nH]c(n1)O)NC(=O)NC2=O
+
+$$$$

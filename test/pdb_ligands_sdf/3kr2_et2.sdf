@@ -1,0 +1,123 @@
+3KR2_ET2_A_1001
+  RCSB PDB12061709293D
+Coordinates from PDB:3KR2:A:1001 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   29.0000   46.5510   18.4670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3990   41.0790   14.2740   F 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7130   43.3800   13.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9980   44.6720   14.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9410   42.5890   16.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5130   44.3980   17.6280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5580   46.0280   16.1880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6790   42.3370   14.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7100   45.7080   17.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2310   43.8810   16.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2560   44.9220   15.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  8  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+NAA
+A    2
+FAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+NAF
+A    7
+NAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3KR2_ET2_A_1001
+
+>  <ChemCompId>
+ET2
+
+>  <PdbId>
+3KR2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 F
+
+>  <Name>
+6-fluoro-1H-benzimidazol-2-amine
+
+>  <SystematicName>
+6-fluoro-1H-benzimidazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 F N3
+
+>  <MolecularWeight>
+151.141
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6FN3/c8-4-1-2-5-6(3-4)11-7(9)10-5/h1-3H,(H3,9,10,11)
+
+>  <InChIKey>
+MKYGXXIXMHTQFA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1F)[nH]c(n2)N
+
+$$$$

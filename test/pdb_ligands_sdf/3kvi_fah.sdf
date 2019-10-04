@@ -1,0 +1,97 @@
+3B12_FAH_A_501
+  RCSB PDB12061707573D
+Coordinates from PDB:3B12:A:501 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+   -6.5540   42.6620   14.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3060   43.8710   17.0090   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0220   41.9830   14.0650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7270   42.9040   16.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7150   43.1460   14.9510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  2  0  0  0  0
+  5  1  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+A    1
+C
+A    2
+F
+A    3
+O
+A    4
+CH3
+A    5
+OXT
+M  END
+>  <InstanceId>
+3B12_FAH_A_501
+
+>  <ChemCompId>
+FAH
+
+>  <PdbId>
+3B12
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O2 F
+
+>  <Name>
+fluoroacetic acid
+
+>  <SystematicName>
+2-fluoroethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H3 F O2
+
+>  <MolecularWeight>
+78.042
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H3FO2/c3-1-2(4)5/h1H2,(H,4,5)
+
+>  <InChIKey>
+QEWYKACRFQMRMB-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)F
+
+$$$$

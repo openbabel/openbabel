@@ -1,0 +1,141 @@
+1YNH_SUO_A_1001
+  RCSB PDB12061704473D
+Coordinates from PDB:1YNH:A:1001 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   11.1160   54.3740   72.8160   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7000   54.7000   72.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5150   56.2140   73.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0710   56.6300   73.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8980   58.1480   73.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4620   58.5220   73.5270   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9690   54.2130   71.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6260   54.0340   70.5730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7630   52.2020   73.2230   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7450   54.0090   71.7310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0320   52.8840   72.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5280   51.6980   73.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9430   51.2720   73.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2720   51.2930   72.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7280   50.9190   74.2110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5350   53.1260   72.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  2  0  0  0  0
+  9 16  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+NE
+A    7
+C
+A    8
+O
+A    9
+OXT
+A   10
+O2
+A   11
+CW
+A   12
+CX
+A   13
+CY
+A   14
+OD1
+A   15
+OD2
+A   16
+CV
+M  END
+>  <InstanceId>
+1YNH_SUO_A_1001
+
+>  <ChemCompId>
+SUO
+
+>  <PdbId>
+1YNH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5
+
+>  <Name>
+N~2~-(3-CARBOXYPROPANOYL)-L-ORNITHINE
+
+>  <SystematicName>
+(2S)-5-amino-2-[(4-hydroxy-4-oxo-butanoyl)amino]pentanoic acid
+
+>  <Synonyms>
+N~2~-SUCCINYLORNITHINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N2 O5
+
+>  <MolecularWeight>
+232.234
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N2O5/c10-5-1-2-6(9(15)16)11-7(12)3-4-8(13)14/h6H,1-5,10H2,(H,11,12)(H,13,14)(H,15,16)/t6-/m0/s1
+
+>  <InChIKey>
+VWXQFHJBQHTHMK-LURJTMIESA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)NC(=O)CCC(=O)O)CN
+
+$$$$

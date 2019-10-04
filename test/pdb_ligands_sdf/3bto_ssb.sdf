@@ -1,0 +1,118 @@
+1BTO_SSB_A_378
+  RCSB PDB12061702063D
+Coordinates from PDB:1BTO:A:378 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   19.2840   -0.2230    9.7340   S 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3140    1.2930   10.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2160    0.8280   12.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8830   -0.5730   12.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5030   -1.3960   11.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6590   -0.1460    9.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9970    1.8330   13.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3510    3.2620   13.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0490    4.1730   14.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8290    5.6940   13.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+S1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+M  END
+>  <InstanceId>
+1BTO_SSB_A_378
+
+>  <ChemCompId>
+SSB
+
+>  <PdbId>
+1BTO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+378
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O S
+
+>  <Name>
+3-BUTYLTHIOLANE 1-OXIDE
+
+>  <SystematicName>
+(1S,3S)-3-butylthiolane 1-oxide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 O S
+
+>  <MolecularWeight>
+160.277
+
+>  <ModifiedDate>
+2012-01-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16OS/c1-2-3-4-8-5-6-10(9)7-8/h8H,2-7H2,1H3/t8-,10-/m0/s1
+
+>  <InChIKey>
+QVVQIIIFHZDBDL-WPRPVWTQSA-N
+
+>  <SMILES>
+CCCC[C@H]1CC[S@](=O)C1
+
+$$$$

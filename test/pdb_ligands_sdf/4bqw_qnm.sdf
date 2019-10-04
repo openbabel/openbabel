@@ -1,0 +1,159 @@
+4BQW_QNM_A_901
+  RCSB PDB12061711533D
+Coordinates from PDB:4BQW:A:901 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+  -32.5940   23.0990    3.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.9530   22.3040    4.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.2930   21.3370    4.5880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3260   22.5440    4.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.9380   23.7500    4.2040   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1540   24.1470    4.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.7910   23.6010    5.4710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.8000   26.3200    3.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5940   26.0810    3.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3620   28.4720    2.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.6690   27.7860    2.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1670   28.9700    2.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.6820   25.4120    3.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.5350   29.2340    2.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.4020   28.3170    2.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.9080   27.1300    3.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5420   26.8710    3.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.0470   25.6870    3.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2960   27.5050    2.7510   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.9190   24.7820    4.4300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  2  0  0  0  0
+  8 19  1  0  0  0  0
+ 10 19  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 17  2  0  0  0  0
+ 11 19  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 13 18  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 20  2  0  0  0  0
+A    1
+OAK
+A    2
+CAI
+A    3
+OAJ
+A    4
+C4
+A    5
+N3
+A    6
+C2
+A    7
+O2
+A    8
+C6
+A    9
+O6
+A   10
+CAL
+A   11
+CAN
+A   12
+CAO
+A   13
+CA0
+A   14
+CAP
+A   15
+CAQ
+A   16
+CAR
+A   17
+CAS
+A   18
+CAT
+A   19
+NAN
+A   20
+OAU
+M  END
+>  <InstanceId>
+4BQW_QNM_A_901
+
+>  <ChemCompId>
+QNM
+
+>  <PdbId>
+4BQW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O5
+
+>  <Name>
+2-[(1-methyl-2-oxidanyl-4-oxidanylidene-quinolin-3-yl)carbonylamino]ethanoic acid
+
+>  <SystematicName>
+2-[(1-methyl-2-oxidanyl-4-oxidanylidene-quinolin-3-yl)carbonylamino]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C13 H12 N2 O5
+
+>  <MolecularWeight>
+276.245
+
+>  <ModifiedDate>
+2014-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H12N2O5/c1-15-8-5-3-2-4-7(8)11(18)10(13(15)20)12(19)14-6-9(16)17/h2-5,20H,6H2,1H3,(H,14,19)(H,16,17)
+
+>  <InChIKey>
+CRTHWBYRFGFTNO-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1c2ccccc2C(=O)C(=C1O)C(=O)NCC(=O)O
+
+$$$$

@@ -1,0 +1,113 @@
+1KQ0_MED_A_601
+  RCSB PDB12061703063D
+Coordinates from PDB:1KQ0:A:601 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   20.7790   27.7150   16.5150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6040   28.4690   15.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5170   28.7020   17.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7530   29.0400   18.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0290   29.8090   15.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9380   30.6400   16.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0320   32.1910   15.3350   S 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4980   32.9080   15.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3470   28.5610   16.6920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+SD
+A    8
+CE
+A    9
+OXT
+M  END
+>  <InstanceId>
+1KQ0_MED_A_601
+
+>  <ChemCompId>
+MED
+
+>  <PdbId>
+1KQ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2 S
+
+>  <Name>
+D-METHIONINE
+
+>  <SystematicName>
+(2R)-2-amino-4-methylsulfanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+D-PEPTIDE LINKING
+
+>  <Formula>
+C5 H11 N O2 S
+
+>  <MolecularWeight>
+149.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+M
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO2S/c1-9-3-2-4(6)5(7)8/h4H,2-3,6H2,1H3,(H,7,8)/t4-/m1/s1
+
+>  <InChIKey>
+FFEARJCKVFRZRR-SCSAIBSYSA-N
+
+>  <SMILES>
+CSCC[C@H](C(=O)O)N
+
+$$$$

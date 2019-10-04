@@ -1,0 +1,110 @@
+3RCK_1FP_X_208
+  RCSB PDB12061710333D
+Coordinates from PDB:3RCK:X:208 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+    0.0990   16.6860   18.9970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4420   15.7840   19.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1010   16.0920   22.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7770   14.6020   23.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2890   15.9220   21.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6620   14.2520   21.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5820   14.8650   23.5020   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0450   15.3440   20.8030   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  8  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+OAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+NAG
+A    8
+NAH
+M  END
+>  <InstanceId>
+3RCK_1FP_X_208
+
+>  <ChemCompId>
+1FP
+
+>  <PdbId>
+3RCK
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+208
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O
+
+>  <Name>
+piperazine-1-carbaldehyde
+
+>  <SystematicName>
+piperazine-1-carbaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 N2 O
+
+>  <MolecularWeight>
+114.146
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10N2O/c8-5-7-3-1-6-2-4-7/h5-6H,1-4H2
+
+>  <InChIKey>
+MSSDTZLYNMFTKN-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CN(CCN1)C=O
+
+$$$$

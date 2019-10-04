@@ -1,0 +1,114 @@
+4MRE_2C9_A_202
+  RCSB PDB12061713473D
+Coordinates from PDB:4MRE:A:202 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   12.4070   -5.0500    0.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7010   -4.4870   -0.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3080   -3.5770   -1.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5980   -3.0100   -2.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2430   -3.3430   -2.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6450   -4.2510   -1.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3510   -4.6140   -1.7990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3610   -4.8130   -0.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7410   -5.6790    0.2350   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  8  2  0  0  0  0
+  3  2  2  0  0  0  0
+  8  2  1  0  0  0  0
+  8  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAA
+A    2
+CAG
+A    3
+CAE
+A    4
+CAD
+A    5
+CAF
+A    6
+CAH
+A    7
+NAB
+A    8
+CAI
+A    9
+NAC
+M  END
+>  <InstanceId>
+4MRE_2C9_A_202
+
+>  <ChemCompId>
+2C9
+
+>  <PdbId>
+4MRE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2
+
+>  <Name>
+3-methylbenzene-1,2-diamine
+
+>  <SystematicName>
+3-methylbenzene-1,2-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N2
+
+>  <MolecularWeight>
+122.168
+
+>  <ModifiedDate>
+2014-04-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10N2/c1-5-3-2-4-6(8)7(5)9/h2-4H,8-9H2,1H3
+
+>  <InChIKey>
+AXNUJYHFQHQZBE-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1N)N
+
+$$$$

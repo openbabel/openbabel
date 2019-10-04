@@ -1,0 +1,98 @@
+3ZI4_SFL_A_1221
+  RCSB PDB12061711293D
+Coordinates from PDB:3ZI4:A:1221 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+  -11.6940    2.5510   12.1620  Sc 0  5  0  0  0  0  0  0  0  0  0  0
+  -10.1660    3.2970   11.2350   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8940    2.1420   13.5920   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8240    2.0760   10.5550   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6830    2.9490   13.8810   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+M  CHG  1   1  -1
+A    1
+SC
+A    2
+F1
+A    3
+F2
+A    4
+F3
+A    5
+F4
+M  END
+>  <InstanceId>
+3ZI4_SFL_A_1221
+
+>  <ChemCompId>
+SFL
+
+>  <PdbId>
+3ZI4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1221
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+Sc F4
+
+>  <Name>
+SCANDIUM TETRAFLOURIDE
+
+>  <SystematicName>
+tetrakis(fluoranyl)scandium(1-)
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+F4 Sc
+
+>  <MolecularWeight>
+120.95
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/4FH.Sc/h4*1H;/q;;;;+3/p-4
+
+>  <InChIKey>
+YVTFRTYUOUJWMQ-UHFFFAOYSA-J
+
+>  <SMILES>
+F[Sc-](F)(F)F
+
+$$$$

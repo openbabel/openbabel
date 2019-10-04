@@ -1,0 +1,127 @@
+2F64_12Q_A_472
+  RCSB PDB12061705313D
+Coordinates from PDB:2F64:A:472 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -28.8080    4.8350  -26.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4450    4.8590  -25.5190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8430    6.0820  -25.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5150    7.2900  -25.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9090    8.4930  -25.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6240    8.4930  -24.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9500    7.2910  -24.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5540    6.0870  -24.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8700    4.8910  -24.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4660    3.6830  -24.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7500    3.6540  -25.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2620    2.5740  -25.6140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+CAH
+A    2
+NAC
+A    3
+CAA
+A    4
+CAD
+A    5
+CAI
+A    6
+CAK
+A    7
+CAF
+A    8
+CAB
+A    9
+CAE
+A   10
+CAJ
+A   11
+CAG
+A   12
+OAL
+M  END
+>  <InstanceId>
+2F64_12Q_A_472
+
+>  <ChemCompId>
+12Q
+
+>  <PdbId>
+2F64
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+472
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+1-METHYLQUINOLIN-2(1H)-ONE
+
+>  <SystematicName>
+1-methylquinolin-2-one
+
+>  <Synonyms>
+1-METHYL-2-QUINOLONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N O
+
+>  <MolecularWeight>
+159.185
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO/c1-11-9-5-3-2-4-8(9)6-7-10(11)12/h2-7H,1H3
+
+>  <InChIKey>
+QYEMNJMSULGQRD-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1c2ccccc2C=CC1=O
+
+$$$$

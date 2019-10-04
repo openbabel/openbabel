@@ -1,0 +1,133 @@
+4ZUO_XS6_A_404
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZUO:A:404 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   -9.5530    0.8950  -27.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2880    2.2940  -28.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7470    3.3450  -27.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9210    4.1580  -26.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2610    5.5170  -26.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2640    6.6670  -26.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2560    7.3820  -27.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0240    8.6850  -27.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8550    9.5770  -28.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4260   -0.1000  -28.6240   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1290    3.1200  -26.7390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9780   10.1830  -28.9250   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7710    9.7200  -29.1780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0390   11.0930  -29.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 12  1  0  0  0  0
+ 13  9  2  0  0  0  0
+ 12  9  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  9  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  3 11  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+C11
+A   10
+N1
+A   11
+N5
+A   12
+N13
+A   13
+O12
+A   14
+O14
+M  END
+>  <InstanceId>
+4ZUO_XS6_A_404
+
+>  <ChemCompId>
+XS6
+
+>  <PdbId>
+4ZUO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O2
+
+>  <Name>
+6-[(3-aminopropyl)amino]-N-hydroxyhexanamide
+
+>  <SystematicName>
+6-(3-azanylpropylamino)-N-oxidanyl-hexanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H21 N3 O2
+
+>  <MolecularWeight>
+203.282
+
+>  <ModifiedDate>
+2015-07-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H21N3O2/c10-6-4-8-11-7-3-1-2-5-9(13)12-14/h11,14H,1-8,10H2,(H,12,13)
+
+>  <InChIKey>
+BREASWSBOVLQOH-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCC(=O)NO)CCNCCCN
+
+$$$$

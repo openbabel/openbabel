@@ -1,0 +1,122 @@
+1O2E_ANN_A_401
+  RCSB PDB12061703303D
+Coordinates from PDB:1O2E:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   30.2770   -1.2140   67.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5250   -0.3910   66.8840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8450    0.9180   66.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8610    1.6420   67.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0470    3.0090   67.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2110    3.7010   66.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2140    2.9230   65.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0110    1.5640   65.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2230    4.6950   65.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8440    5.4700   64.6540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4440    4.7180   65.9830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+C8
+A    2
+O3
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C1
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+1O2E_ANN_A_401
+
+>  <ChemCompId>
+ANN
+
+>  <PdbId>
+1O2E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+4-METHOXYBENZOIC ACID
+
+>  <SystematicName>
+4-methoxybenzoic acid
+
+>  <Synonyms>
+P-ANISIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O3/c1-11-7-4-2-6(3-5-7)8(9)10/h2-5H,1H3,(H,9,10)
+
+>  <InChIKey>
+ZEYHEAKUIGZSGI-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)C(=O)O
+
+$$$$

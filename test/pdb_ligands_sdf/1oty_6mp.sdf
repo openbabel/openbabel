@@ -1,0 +1,119 @@
+1OTY_6MP_A_247
+  RCSB PDB12061703353D
+Coordinates from PDB:1OTY:A:247 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   87.8250   66.3110   18.6130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2130   65.0790   18.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.4100   63.7520   18.6590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6610   62.7810   18.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.7770   63.0130   16.9730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   85.5890   64.3320   16.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.5930   64.5430   15.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.3270   65.4450   17.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.3670   66.8100   16.8790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2450   67.2410   17.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+N9
+A    2
+C4
+A    3
+N3
+A    4
+C2
+A    5
+N1
+A    6
+C6
+A    7
+C7
+A    8
+C5
+A    9
+N7
+A   10
+C8
+M  END
+>  <InstanceId>
+1OTY_6MP_A_247
+
+>  <ChemCompId>
+6MP
+
+>  <PdbId>
+1OTY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+247
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4
+
+>  <Name>
+6-METHYLPURINE
+
+>  <SystematicName>
+6-methyl-7H-purine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N4
+
+>  <MolecularWeight>
+134.139
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+A
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N4/c1-4-5-6(9-2-7-4)10-3-8-5/h2-3H,1H3,(H,7,8,9,10)
+
+>  <InChIKey>
+SYMHUEFSSMBHJA-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c2c(nc[nH]2)ncn1
+
+$$$$

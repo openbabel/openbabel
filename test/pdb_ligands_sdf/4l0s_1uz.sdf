@@ -1,0 +1,156 @@
+4L0S_1UZ_A_1201
+  RCSB PDB12061713283D
+Coordinates from PDB:4L0S:A:1201 Model:1 without hydrogens
+ 19 21  0  0  0  0            999 V2000
+    7.5860   38.3260   12.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5270   38.0310   14.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2970   38.6240   15.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6730   36.9710   14.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5090   36.6600   16.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6470   35.6060   16.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0010   34.8110   15.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1600   35.1510   14.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9900   36.2080   13.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1200   36.5540   12.4620   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8120   37.6350   12.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7760   37.8290   10.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0070   36.9520    9.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9750   37.1240    8.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6750   38.1660    7.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6450   38.3150    6.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6240   38.4270    5.4480   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4180   39.0460    8.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4470   38.8830   10.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 16  3  0  0  0  0
+ 16 15  1  0  0  0  0
+ 15 14  2  0  0  0  0
+ 15 18  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 18 19  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 19 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11  1  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+CAC
+A    2
+CAB
+A    3
+OAA
+A    4
+CAK
+A    5
+CAJ
+A    6
+CAI
+A    7
+CAH
+A    8
+CAG
+A    9
+CAF
+A   10
+OAE
+A   11
+CAD
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAR
+A   17
+NAS
+A   18
+CAP
+A   19
+CAQ
+M  END
+>  <InstanceId>
+4L0S_1UZ_A_1201
+
+>  <ChemCompId>
+1UZ
+
+>  <PdbId>
+4L0S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C16 N O2
+
+>  <Name>
+4-(4-oxo-4H-chromen-2-yl)benzonitrile
+
+>  <SystematicName>
+4-(4-oxidanylidenechromen-2-yl)benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H9 N O2
+
+>  <MolecularWeight>
+247.248
+
+>  <ModifiedDate>
+2013-10-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H9NO2/c17-10-11-5-7-12(8-6-11)16-9-14(18)13-3-1-2-4-15(13)19-16/h1-9H
+
+>  <InChIKey>
+VDQXIGZGRYCKAE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C(=O)C=C(O2)c3ccc(cc3)C#N
+
+$$$$

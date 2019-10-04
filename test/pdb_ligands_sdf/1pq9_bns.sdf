@@ -1,0 +1,114 @@
+1PQ9_BNS_A_1500
+  RCSB PDB12061703413D
+Coordinates from PDB:1PQ9:A:1500 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -12.8330   32.3190   37.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3280   33.2620   38.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0810   33.0960   39.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3080   31.9830   39.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0440   31.7570   41.7100   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0320   30.7290   41.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6800   31.3330   41.9620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7960   31.0340   39.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0630   31.2080   37.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  2  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+S1
+A    6
+O1
+A    7
+O2
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+1PQ9_BNS_A_1500
+
+>  <ChemCompId>
+BNS
+
+>  <PdbId>
+1PQ9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 O2 S
+
+>  <Name>
+benzenesulfonic acid
+
+>  <SystematicName>
+benzenesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O3 S
+
+>  <MolecularWeight>
+158.175
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O3S/c7-10(8,9)6-4-2-1-3-5-6/h1-5H,(H,7,8,9)
+
+>  <InChIKey>
+SRSXLGNVWSONIS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)S(=O)(=O)O
+
+$$$$

@@ -1,0 +1,123 @@
+1PHD_PIW_A_422
+  RCSB PDB12061703393D
+Coordinates from PDB:1PHD:A:422 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   47.2330   45.6650   12.8660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0130   45.4170   11.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1640   46.4980   11.1500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5470   47.4590   11.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9260   46.9850   12.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.7880   44.6000   13.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0370   44.7860   15.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5810   43.7790   16.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0500   42.6380   15.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7090   42.4820   14.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1260   43.5070   13.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  5  1  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6 11  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+M  END
+>  <InstanceId>
+1PHD_PIW_A_422
+
+>  <ChemCompId>
+PIW
+
+>  <PdbId>
+1PHD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+422
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+1-phenyl-1H-imidazole
+
+>  <SystematicName>
+1-phenylimidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2
+
+>  <MolecularWeight>
+144.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2/c1-2-4-9(5-3-1)11-7-6-10-8-11/h1-8H
+
+>  <InChIKey>
+SEULWJSKCVACTH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)n2ccnc2
+
+$$$$

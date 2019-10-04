@@ -1,0 +1,126 @@
+4Y3G_463_A_401
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3G:A:401 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   25.1070    3.7670  113.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6630    5.0520  114.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5310    6.1310  114.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7380    7.6330  115.7360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0510    7.5310  114.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8620    5.8900  113.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9520    2.1930  113.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3990    3.3050  112.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7940    3.4980  112.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6770    4.4460  113.0800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3160    4.6040  113.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4360    3.5340  113.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  7  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11  6  1  0  0  0  0
+ 12  1  1  0  0  0  0
+  6  3  2  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+O
+A    8
+C1
+A    9
+C
+A   10
+N
+A   11
+C2
+A   12
+C3
+M  END
+>  <InstanceId>
+4Y3G_463_A_401
+
+>  <ChemCompId>
+463
+
+>  <PdbId>
+4Y3G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+N-[3-(aminomethyl)phenyl]acetamide
+
+>  <SystematicName>
+N-[3-(aminomethyl)phenyl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O
+
+>  <MolecularWeight>
+164.204
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2O/c1-7(12)11-9-4-2-3-8(5-9)6-10/h2-5H,6,10H2,1H3,(H,11,12)
+
+>  <InChIKey>
+JLFWORHZSACMOG-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1cccc(c1)CN
+
+$$$$

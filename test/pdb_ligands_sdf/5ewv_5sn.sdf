@@ -1,0 +1,140 @@
+5EWV_5SN_A_801
+  RCSB PDB12061717333D
+Coordinates from PDB:5EWV:A:801 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+    5.4730   -9.1420    5.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2980  -10.1470    4.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3740  -10.5980    5.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6210  -10.0410    6.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6960  -10.4870    7.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5190  -11.4890    7.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2650  -12.0390    5.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1910  -11.6010    5.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8970  -12.0920    3.7930   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4520  -13.0350    3.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6860  -13.9200    3.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7580  -13.1420    1.8960   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8520  -12.3570    1.9180   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8650  -11.6660    3.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0590  -10.7070    3.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 10  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14  9  1  0  0  0  0
+ 15  2  2  0  0  0  0
+  9  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  8  3  2  0  0  0  0
+  8  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  6  2  0  0  0  0
+  4  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+CAA
+A    2
+CAJ
+A    3
+CAM
+A    4
+CAE
+A    5
+CAC
+A    6
+CAD
+A    7
+CAF
+A    8
+CAN
+A    9
+NAO
+A   10
+CAK
+A   11
+CAB
+A   12
+NAH
+A   13
+NAI
+A   14
+CAL
+A   15
+CAG
+M  END
+>  <InstanceId>
+5EWV_5SN_A_801
+
+>  <ChemCompId>
+5SN
+
+>  <PdbId>
+5EWV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3
+
+>  <Name>
+1,5-dimethyl-[1,2,4]triazolo[4,3-a]quinoline
+
+>  <SystematicName>
+1,5-dimethyl-[1,2,4]triazolo[4,3-a]quinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H11 N3
+
+>  <MolecularWeight>
+197.236
+
+>  <ModifiedDate>
+2016-10-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11N3/c1-8-7-12-14-13-9(2)15(12)11-6-4-3-5-10(8)11/h3-7H,1-2H3
+
+>  <InChIKey>
+UZKVTJNMCRNIDU-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc2nnc(n2c3c1cccc3)C
+
+$$$$

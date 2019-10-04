@@ -1,0 +1,136 @@
+5AQN_JG8_A_1382
+  RCSB PDB12061716523D
+Coordinates from PDB:5AQN:A:1382 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+  -28.1910   18.3280   63.6880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7610   17.8340   62.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4780   18.6130   61.8590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.1410   18.1420   60.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.1890   16.9020   60.4350   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4770   16.1030   61.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7660   16.4520   62.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1850   15.3770   63.0310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.5560   14.2770   62.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3360   14.6600   61.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2320   12.9650   62.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7090   11.9950   61.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4820   12.3450   60.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.7990   13.6710   60.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 14  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O1
+A    2
+C9
+A    3
+N1
+A    4
+C8
+A    5
+N
+A    6
+C1
+A    7
+C
+A    8
+O
+A    9
+C7
+A   10
+C2
+A   11
+C6
+A   12
+C5
+A   13
+C4
+A   14
+C3
+M  END
+>  <InstanceId>
+5AQN_JG8_A_1382
+
+>  <ChemCompId>
+JG8
+
+>  <PdbId>
+5AQN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1382
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+BENZOFURO[3,2-D]PYRIMIDIN-4(3H)-ONE
+
+>  <SystematicName>
+3H-[1]benzofuro[3,2-d]pyrimidin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H6 N2 O2
+
+>  <MolecularWeight>
+186.167
+
+>  <ModifiedDate>
+2016-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6N2O2/c13-10-9-8(11-5-12-10)6-3-1-2-4-7(6)14-9/h1-5H,(H,11,12,13)
+
+>  <InChIKey>
+PCCWPSFTRGJXEF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c3c(o2)C(=O)NC=N3
+
+$$$$

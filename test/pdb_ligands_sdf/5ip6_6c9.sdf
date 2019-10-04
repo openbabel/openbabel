@@ -1,0 +1,135 @@
+5IP6_6C9_A_301
+  RCSB PDB12061718123D
+Coordinates from PDB:5IP6:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   27.6700   13.6440   16.8430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0550   13.8500   15.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7910   14.9180   15.4120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0540   15.3300   14.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9270   16.5700   14.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1330   16.8330   15.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3890   15.7570   16.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7530   13.0120   14.7160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3860   11.6330   14.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7430   11.0210   13.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7810   10.9060   12.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9460    9.5220   12.3120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1040    8.6900   13.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3120    9.5960   14.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  2  1  2  0  0  0  0
+A    1
+O1
+A    2
+C5
+A    3
+N1
+A    4
+C9
+A    5
+C8
+A    6
+C7
+A    7
+C6
+A    8
+N
+A    9
+C4
+A   10
+C1
+A   11
+C2
+A   12
+O
+A   13
+C3
+A   14
+C
+M  END
+>  <InstanceId>
+5IP6_6C9_A_301
+
+>  <ChemCompId>
+6C9
+
+>  <PdbId>
+5IP6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+N-{[(3S)-oxolan-3-yl]methyl}pyrrolidine-1-carboxamide
+
+>  <SystematicName>
+~{N}-[[(3~{S})-oxolan-3-yl]methyl]pyrrolidine-1-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 N2 O2
+
+>  <MolecularWeight>
+198.262
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18N2O2/c13-10(12-4-1-2-5-12)11-7-9-3-6-14-8-9/h9H,1-8H2,(H,11,13)/t9-/m0/s1
+
+>  <InChIKey>
+MDOWUCLFMQLBNB-VIFPVBQESA-N
+
+>  <SMILES>
+C1CCN(C1)C(=O)NC[C@@H]2CCOC2
+
+$$$$

@@ -1,0 +1,163 @@
+3ESP_DZ3_A_128
+  RCSB PDB12061708303D
+Coordinates from PDB:3ESP:A:128 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   -0.5540    2.5800  -10.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2520    1.1760   -9.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3170    1.0610   -8.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0320    0.0530  -10.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0930    0.1100  -11.7030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2610   -1.1770   -9.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6240   -2.4430  -10.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2110   -1.2650   -8.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0700   -0.1750   -7.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0980   -0.4380   -6.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5220   -1.5260   -5.6440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2200    0.5300   -5.1250   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1440    0.2270   -3.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9980   -0.7170   -3.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8740   -1.0030   -1.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0380   -2.3200   -0.7190  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0950   -0.2770   -0.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3140   -0.4270    0.3850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9130    0.6250   -1.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3190    1.7430   -1.0560  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7740    0.8500   -3.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 21  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 19 21  2  0  0  0  0
+A    1
+CAA
+A    2
+CAN
+A    3
+CAJ
+A    4
+CAS
+A    5
+OAD
+A    6
+CAO
+A    7
+CAB
+A    8
+CAK
+A    9
+CAU
+A   10
+CAM
+A   11
+OAC
+A   12
+NAL
+A   13
+CAR
+A   14
+CAH
+A   15
+CAP
+A   16
+BRAF
+A   17
+CAT
+A   18
+OAE
+A   19
+CAQ
+A   20
+BRAG
+A   21
+CAI
+M  END
+>  <InstanceId>
+3ESP_DZ3_A_128
+
+>  <ChemCompId>
+DZ3
+
+>  <PdbId>
+3ESP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+128
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N O3 Br2
+
+>  <Name>
+N-(3,5-dibromo-4-hydroxyphenyl)-4-hydroxy-3,5-dimethylbenzamide
+
+>  <SystematicName>
+N-(3,5-dibromo-4-hydroxy-phenyl)-4-hydroxy-3,5-dimethyl-benzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H13 Br2 N O3
+
+>  <MolecularWeight>
+415.077
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H13Br2NO3/c1-7-3-9(4-8(2)13(7)19)15(21)18-10-5-11(16)14(20)12(17)6-10/h3-6,19-20H,1-2H3,(H,18,21)
+
+>  <InChIKey>
+HHFKUQZPNITQLU-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(cc(c1O)C)C(=O)Nc2cc(c(c(c2)Br)O)Br
+
+$$$$

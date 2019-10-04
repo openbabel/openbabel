@@ -1,0 +1,143 @@
+4NDA_NIY_A_401
+  RCSB PDB12061713523D
+Coordinates from PDB:4NDA:A:401 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   75.5960   37.8790   -4.1160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   75.0490   38.4230   -2.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.1180   37.5110   -1.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.4380   37.6970   -0.7510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.7810   39.1330   -3.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.7280   40.2670   -4.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.7080   40.3160   -5.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6860   41.2790   -4.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.6510   41.3710   -5.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6380   42.3290   -4.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.6140   42.3750   -5.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.5800   43.4260   -6.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   71.5820   41.3790   -6.9050   N 0  3  0  0  0  0  0  0  0  0  0  0
+   71.6670   42.0070   -7.9560   O 0  5  0  0  0  0  0  0  0  0  0  0
+   70.5090   40.6930   -6.6460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.8840   36.5050   -1.8670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 16  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  9 11  2  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+M  CHG  2  13   1  14  -1
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CD2
+A    9
+CE1
+A   10
+CE2
+A   11
+CZ
+A   12
+OH
+A   13
+NN
+A   14
+O1
+A   15
+O2
+A   16
+OXT
+M  END
+>  <InstanceId>
+4NDA_NIY_A_401
+
+>  <ChemCompId>
+NIY
+
+>  <PdbId>
+4NDA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5
+
+>  <Name>
+META-NITRO-TYROSINE
+
+>  <SystematicName>
+(2S)-2-amino-3-(4-hydroxy-3-nitro-phenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H10 N2 O5
+
+>  <MolecularWeight>
+226.186
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+Y
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N2O5/c10-6(9(13)14)3-5-1-2-8(12)7(4-5)11(15)16/h1-2,4,6,12H,3,10H2,(H,13,14)/t6-/m0/s1
+
+>  <InChIKey>
+FBTSQILOGYXGMD-LURJTMIESA-N
+
+>  <SMILES>
+c1cc(c(cc1C[C@@H](C(=O)O)N)[N+](=O)[O-])O
+
+$$$$

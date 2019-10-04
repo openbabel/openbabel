@@ -1,0 +1,122 @@
+5EDT_5MK_A_402
+  RCSB PDB12061717273D
+Coordinates from PDB:5EDT:A:402 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -16.4590   12.9460    3.3280   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8690   14.1440    3.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4960   14.3020    3.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8980   15.5590    3.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6640   16.6180    3.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0040   18.1720    4.3370  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0250   16.4470    4.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6830   15.2240    4.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0790   15.1330    4.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6150   14.0350    4.4410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7610   16.2430    4.6660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  8  2  0  0  0  0
+  5  7  2  0  0  0  0
+  5  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+NAB
+A    2
+CAI
+A    3
+CAE
+A    4
+CAF
+A    5
+CAJ
+A    6
+CLA
+A    7
+CAG
+A    8
+CAK
+A    9
+CAH
+A   10
+OAC
+A   11
+NAA
+M  END
+>  <InstanceId>
+5EDT_5MK_A_402
+
+>  <ChemCompId>
+5MK
+
+>  <PdbId>
+5EDT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O Cl
+
+>  <Name>
+2-azanyl-5-chloranyl-benzamide
+
+>  <SystematicName>
+2-azanyl-5-chloranyl-benzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 Cl N2 O
+
+>  <MolecularWeight>
+170.596
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7ClN2O/c8-4-1-2-6(9)5(3-4)7(10)11/h1-3H,9H2,(H2,10,11)
+
+>  <InChIKey>
+DNRVZOZGQHHDAT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)C(=O)N)N
+
+$$$$

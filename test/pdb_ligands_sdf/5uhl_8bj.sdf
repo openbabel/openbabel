@@ -1,0 +1,143 @@
+5UHL_8BJ_A_501
+  RCSB PDB12061719523D
+Coordinates from PDB:5UHL:A:501 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   14.1270   44.4210  -22.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9780   45.5280  -23.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2380   46.3720  -23.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4470   45.5320  -23.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1030   45.9270  -21.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8880   46.3700  -22.7140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0690   47.3780  -24.1120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6300   46.0060  -20.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8900   47.0090  -19.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4690   44.1710  -22.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2670   43.5830  -22.2990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9290   43.4910  -21.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6410   42.8840  -23.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5070   44.3600  -21.3450   S 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5650   46.3630  -23.0480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0610   46.5740  -21.3010   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4 15  1  0  0  0  0
+  4 10  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 15  5  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  1 12  1  0  0  0  0
+  5 14  1  0  0  0  0
+  5 16  2  0  0  0  0
+ 16  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O1
+A    7
+O2
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+O3
+A   12
+C
+A   13
+O
+A   14
+S
+A   15
+N
+A   16
+N1
+M  END
+>  <InstanceId>
+5UHL_8BJ_A_501
+
+>  <ChemCompId>
+8BJ
+
+>  <PdbId>
+5UHL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O4 S
+
+>  <Name>
+(2Z,3aR,5R,6S,7R,7aR)-2-(ethylimino)-5-(hydroxymethyl)hexahydro-3aH-pyrano[3,2-d][1,3]thiazole-6,7-diol
+
+>  <SystematicName>
+(2~{Z},3~{a}~{R},5~{R},6~{S},7~{R},7~{a}~{R})-2-ethylimino-5-(hydroxymethyl)-1,3~{a},5,6,7,7~{a}-hexahydropyrano[3,2-d][1,3]thiazole-6,7-diol
+
+>  <Synonyms>
+Thiamet G
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N2 O4 S
+
+>  <MolecularWeight>
+248.299
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N2O4S/c1-2-10-9-11-5-7(14)6(13)4(3-12)15-8(5)16-9/h4-8,12-14H,2-3H2,1H3,(H,10,11)/t4-,5-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+PPAIMZHKIXDJRN-FMDGEEDCSA-N
+
+>  <SMILES>
+CC/N=C\1/N[C@@H]2[C@H]([C@@H]([C@H](O[C@@H]2S1)CO)O)O
+
+$$$$

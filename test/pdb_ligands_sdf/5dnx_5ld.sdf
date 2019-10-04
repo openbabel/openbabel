@@ -1,0 +1,130 @@
+5DNX_5LD_A_203
+  RCSB PDB12061717203D
+Coordinates from PDB:5DNX:A:203 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   -8.7860   23.5800   30.3880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1940   23.7340   28.9160   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6550   23.3980   28.7310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8370   25.0820   28.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.2120   22.5550   27.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0590   21.1210   28.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1010   20.4140   27.6530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3650   20.3360   28.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3890   19.2130   29.3500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3130   18.3300   29.3830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6440   17.4450   30.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8570   17.7370   30.8570   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3170   18.8370   30.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 13  9  1  0  0  0  0
+ 13 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+O10
+A    2
+P9
+A    3
+O11
+A    4
+O12
+A    5
+C8
+A    6
+C7
+A    7
+O13
+A    8
+C6
+A    9
+N2
+A   10
+N1
+A   11
+C5
+A   12
+N4
+A   13
+C3
+M  END
+>  <InstanceId>
+5DNX_5LD_A_203
+
+>  <ChemCompId>
+5LD
+
+>  <PdbId>
+5DNX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 O4 P
+
+>  <Name>
+[(2R)-2-hydroxy-3-(1H-1,2,4-triazol-1-yl)propyl]phosphonic acid
+
+>  <SystematicName>
+[(2R)-2-oxidanyl-3-(1,2,4-triazol-1-yl)propyl]phosphonic acid
+
+>  <Synonyms>
+(R)-C348
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 N3 O4 P
+
+>  <MolecularWeight>
+207.124
+
+>  <ModifiedDate>
+2016-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10N3O4P/c9-5(2-13(10,11)12)1-8-4-6-3-7-8/h3-5,9H,1-2H2,(H2,10,11,12)/t5-/m1/s1
+
+>  <InChIKey>
+ZXKJPBBOMRHTCH-RXMQYKEDSA-N
+
+>  <SMILES>
+c1ncn(n1)C[C@H](CP(=O)(O)O)O
+
+$$$$

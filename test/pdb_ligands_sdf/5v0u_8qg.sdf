@@ -1,0 +1,123 @@
+5V0U_8QG_A_801
+  RCSB PDB12061719573D
+Coordinates from PDB:5V0U:A:801 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -28.5100  -47.0710   61.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.8750  -42.8260   62.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1340  -43.3680   61.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.5410  -44.6740   61.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8420  -45.1040   62.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1430  -46.3650   62.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9660  -47.1530   63.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2810  -48.2440   63.1380   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.9990  -48.1900   61.7860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8690  -43.8640   63.4320   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.4470  -41.2300   62.9220  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  3  2  2  0  0  0  0
+  1  9  2  0  0  0  0
+  1  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  2  0  0  0  0
+  2 11  1  0  0  0  0
+  2 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+A    1
+C11
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C07
+A    7
+C08
+A    8
+N09
+A    9
+N10
+A   10
+S06
+A   11
+CL
+M  END
+>  <InstanceId>
+5V0U_8QG_A_801
+
+>  <ChemCompId>
+8QG
+
+>  <PdbId>
+5V0U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 S Cl
+
+>  <Name>
+4-(5-chlorothiophen-2-yl)-1H-pyrazole
+
+>  <SystematicName>
+4-(5-chloranylthiophen-2-yl)-1~{H}-pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 Cl N2 S
+
+>  <MolecularWeight>
+184.646
+
+>  <ModifiedDate>
+2017-03-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5ClN2S/c8-7-2-1-6(11-7)5-3-9-10-4-5/h1-4H,(H,9,10)
+
+>  <InChIKey>
+FSGXXIOYDLGFFB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1c2c[nH]nc2)Cl
+
+$$$$

@@ -1,0 +1,122 @@
+4ZAA_4M4_A_606
+  RCSB PDB12061716363D
+Coordinates from PDB:4ZAA:A:606 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   20.2230    8.5060   28.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3870    9.6320   29.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1750   10.6520   31.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1760    9.8450   26.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5450    8.6450   27.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3500   10.9390   27.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0370    9.4860   30.5620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9970   10.8540   28.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6130    7.2880   29.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8830   12.1390   26.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9150   13.3240   27.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+ 10  6  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  5  1  1  0  0  0  0
+  6  8  2  0  0  0  0
+  1  9  1  0  0  0  0
+  1  2  2  0  0  0  0
+  8  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+  7  3  1  0  0  0  0
+A    1
+C3
+A    2
+C2
+A    3
+C1
+A    4
+C5
+A    5
+C4
+A    6
+C6
+A    7
+O1
+A    8
+C7
+A    9
+O8
+A   10
+C9
+A   11
+C10
+M  END
+>  <InstanceId>
+4ZAA_4M4_A_606
+
+>  <ChemCompId>
+4M4
+
+>  <PdbId>
+4ZAA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+606
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+2-Methoxy-4-vinylphenol
+
+>  <SystematicName>
+4-ethenyl-2-methoxy-phenol
+
+>  <Synonyms>
+4-vinyl guaiacol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 O2
+
+>  <MolecularWeight>
+150.174
+
+>  <ModifiedDate>
+2015-06-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10O2/c1-3-7-4-5-8(10)9(6-7)11-2/h3-6,10H,1H2,2H3
+
+>  <InChIKey>
+YOMSJEATGXXYPX-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(ccc1O)C=C
+
+$$$$

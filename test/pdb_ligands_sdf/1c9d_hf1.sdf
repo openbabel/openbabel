@@ -1,0 +1,146 @@
+1C9D_HF1_A_270
+  RCSB PDB12061702093D
+Coordinates from PDB:1C9D:A:270 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   48.6380   29.6800    9.8960   P 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4120   30.4050    9.8700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7220   28.8610    8.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7060   30.5850    9.9370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6670   29.4480   12.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3390   27.9400   14.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9650   24.7630   15.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.3470   26.1260   15.7160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.7050   26.5190   15.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1370   27.8750   15.4570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6290   25.5320   14.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2260   24.1720   14.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.8850   23.7960   15.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5000   22.4760   15.1660   F 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0870   27.2930   16.2430   S 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2980   28.8680   13.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7210   28.6310   11.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1 17  1  0  0  0  0
+  5 16  1  0  0  0  0
+  5 17  2  0  0  0  0
+  6 15  1  0  0  0  0
+  6 16  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+P1
+A    2
+O3
+A    3
+O1
+A    4
+O2
+A    5
+C2
+A    6
+C3
+A    7
+C9
+A    8
+C8
+A    9
+C7
+A   10
+OH
+A   11
+C6
+A   12
+C5
+A   13
+C10
+A   14
+F
+A   15
+S1
+A   16
+C4
+A   17
+C1
+M  END
+>  <InstanceId>
+1C9D_HF1_A_270
+
+>  <ChemCompId>
+HF1
+
+>  <PdbId>
+1C9D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+270
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4 P S F
+
+>  <Name>
+4-(2-HYDROXY-4-FLUOROPHENYLTHIO)-BUTYLPHOSPHONIC ACID
+
+>  <SystematicName>
+4-(5-fluoro-2-hydroxy-phenyl)sulfanylbut-1-enylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 F O4 P S
+
+>  <MolecularWeight>
+278.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12FO4PS/c11-8-3-4-9(12)10(7-8)17-6-2-1-5-16(13,14)15/h1,3-5,7,12H,2,6H2,(H2,13,14,15)/b5-1+
+
+>  <InChIKey>
+UXOYJQMPYTYCMG-ORCRQEGFSA-N
+
+>  <SMILES>
+c1cc(c(cc1F)SCCC=CP(=O)(O)O)O
+
+$$$$

@@ -1,0 +1,146 @@
+1T1S_CBQ_A_2001
+  RCSB PDB12061704033D
+Coordinates from PDB:1T1S:A:2001 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   17.2440    9.7120   61.9610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2220   10.4400   60.5980   P 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4270   11.2310   60.4270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2690    9.3990   59.4510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7260   11.4740   60.4720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6720   12.1800   59.2000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9500   11.7550   58.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9750   12.5370   56.9610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2640   12.1710   55.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5220   11.0080   55.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5700   10.5900   54.5020  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4790   10.2020   57.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1930   10.5720   58.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6810   12.7180   61.7970   P 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7590   12.0370   63.1850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4810   13.5320   61.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8000   13.7640   61.6030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 17  1  0  0  0  0
+A    1
+O1
+A    2
+P1
+A    3
+O2
+A    4
+O3
+A    5
+C1
+A    6
+N1
+A    7
+C2
+A    8
+N2
+A    9
+C3
+A   10
+C4
+A   11
+CL1
+A   12
+C5
+A   13
+C6
+A   14
+P2
+A   15
+O4
+A   16
+O5
+A   17
+O6
+M  END
+>  <InstanceId>
+1T1S_CBQ_A_2001
+
+>  <ChemCompId>
+CBQ
+
+>  <PdbId>
+1T1S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O6 P2 Cl
+
+>  <Name>
+[(5-CHLORO-PYRIDIN-2-YLAMINO)-PHOSPHONO-METHYL]-PHOSPHONIC ACID
+
+>  <SystematicName>
+[[(5-chloropyridin-2-yl)amino]-phosphono-methyl]phosphonic acid
+
+>  <Synonyms>
+[{(5-CHLORO-2-PYRIDINYL)AMINO} METHYLENE]-1,1-BISPHOSPHONATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 Cl N2 O6 P2
+
+>  <MolecularWeight>
+302.546
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9ClN2O6P2/c7-4-1-2-5(8-3-4)9-6(16(10,11)12)17(13,14)15/h1-3,6H,(H,8,9)(H2,10,11,12)(H2,13,14,15)
+
+>  <InChIKey>
+BNMYZGAZFGNKTH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1Cl)NC(P(=O)(O)O)P(=O)(O)O
+
+$$$$

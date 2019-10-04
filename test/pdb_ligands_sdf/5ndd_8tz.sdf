@@ -1,0 +1,147 @@
+5NDD_8TZ_A_2201
+  RCSB PDB12061719103D
+Coordinates from PDB:5NDD:A:2201 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   14.5090    6.7530   55.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1740    5.7880   54.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1680    4.9430   54.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4850    5.0520   54.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8190    6.0070   55.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8220    6.8540   56.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1890    7.8930   57.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7670    9.2960   56.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2360    6.1130   56.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9400    4.7790   56.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9170    7.1110   55.4810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8230    4.4920   55.0170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2210    3.2100   55.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5810    2.7070   56.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7910    3.6740   56.7740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8890    5.6830   54.3730   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2320   10.3790   57.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 16  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 15  2  0  0  0  0
+  6  7  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 17  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+O1
+A   12
+N1
+A   13
+C11
+A   14
+C12
+A   15
+N2
+A   16
+F1
+A   17
+C13
+M  END
+>  <InstanceId>
+5NDD_8TZ_A_2201
+
+>  <ChemCompId>
+8TZ
+
+>  <PdbId>
+5NDD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O F
+
+>  <Name>
+(~{S})-(4-fluoranyl-2-propyl-phenyl)-(1~{H}-imidazol-2-yl)methanol
+
+>  <SystematicName>
+(~{S})-(4-fluoranyl-2-propyl-phenyl)-(1~{H}-imidazol-2-yl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H15 F N2 O
+
+>  <MolecularWeight>
+234.269
+
+>  <ModifiedDate>
+2017-04-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H15FN2O/c1-2-3-9-8-10(14)4-5-11(9)12(17)13-15-6-7-16-13/h4-8,12,17H,2-3H2,1H3,(H,15,16)/t12-/m0/s1
+
+>  <InChIKey>
+IDFPQEHZYBXIFO-LBPRGKRZSA-N
+
+>  <SMILES>
+CCCc1cc(ccc1[C@@H](c2[nH]ccn2)O)F
+
+$$$$

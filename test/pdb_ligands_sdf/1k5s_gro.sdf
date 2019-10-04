@@ -1,0 +1,122 @@
+1K5S_GRO_B_601
+  RCSB PDB12061703023D
+Coordinates from PDB:1K5S:B:601 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -1.8730   -1.0040   -1.4420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0150   -0.5650   -0.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2750    0.3370   -1.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8280   -1.1080    0.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3470   -2.0820    0.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0630   -1.7280    1.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8150   -1.0090    2.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9590   -1.5540    2.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3560   -2.8310    2.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6070   -3.5670    1.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4510   -3.0160    0.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+O2
+A    2
+C1
+A    3
+O1
+A    4
+C2
+A    5
+C3
+A    6
+C1'
+A    7
+C6'
+A    8
+C5'
+A    9
+C4'
+A   10
+C3'
+A   11
+C2'
+M  END
+>  <InstanceId>
+1K5S_GRO_B_601
+
+>  <ChemCompId>
+GRO
+
+>  <PdbId>
+1K5S
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+R-2-PHENYL-PROPRIONIC ACID
+
+>  <SystematicName>
+(2R)-2-phenylpropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 O2
+
+>  <MolecularWeight>
+150.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10O2/c1-7(9(10)11)8-5-3-2-4-6-8/h2-7H,1H3,(H,10,11)/t7-/m1/s1
+
+>  <InChIKey>
+YPGCWEMNNLXISK-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@H](c1ccccc1)C(=O)O
+
+$$$$

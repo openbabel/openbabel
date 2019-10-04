@@ -1,0 +1,134 @@
+3ZYH_G0S_A_202
+  RCSB PDB12061711343D
+Coordinates from PDB:3ZYH:A:202 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    8.5580  -18.5960  -37.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1480  -18.3790  -36.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2600  -18.0540  -37.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1350  -17.3300  -35.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9050  -16.7260  -35.2680   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2240  -17.1740  -34.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8640  -17.9760  -33.6440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5690  -17.5610  -35.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4960  -18.7680  -36.1890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5740  -17.7560  -34.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8690  -17.9300  -34.7750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5580  -20.0040  -38.2580   S 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8530  -19.6770  -39.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7330  -18.4470  -40.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+O5
+A   10
+C6
+A   11
+O6
+A   12
+S1
+A   13
+C1A
+A   14
+C2A
+M  END
+>  <InstanceId>
+3ZYH_G0S_A_202
+
+>  <ChemCompId>
+G0S
+
+>  <PdbId>
+3ZYH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+3
+
+>  <ObservedFormula>
+C8 O5 S
+
+>  <Name>
+3-(beta-D-galactopyranosylthio)propanoic acid
+
+>  <SystematicName>
+3-[(2S,3R,4S,5R,6R)-6-(hydroxymethyl)-3,4,5-tris(oxidanyl)oxan-2-yl]sulfanylpropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H16 O7 S
+
+>  <MolecularWeight>
+268.284
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16O7S/c10-3-4-6(13)7(14)8(15)9(16-4)17-2-1-5(11)12/h4,6-10,13-15H,1-3H2,(H,11,12)/t4-,6+,7+,8-,9+/m1/s1
+
+>  <InChIKey>
+XMQYQVUZHDCFEM-MRCFXUCSSA-N
+
+>  <SMILES>
+C(CS[C@H]1[C@@H]([C@H]([C@H]([C@H](O1)CO)O)O)O)C(=O)O
+
+$$$$

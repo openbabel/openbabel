@@ -1,0 +1,156 @@
+5BZJ_4WN_A_204
+  RCSB PDB12061717013D
+Coordinates from PDB:5BZJ:A:204 Model:1 without hydrogens
+ 19 21  0  0  0  0            999 V2000
+   11.7850   -5.7120    1.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6110   -5.1220    0.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8280   -4.5390   -0.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4860   -3.7150   -1.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7720   -3.1070   -2.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3970   -3.3190   -2.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7750   -4.1650   -1.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4520   -4.3610   -1.9140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4440   -4.7760   -0.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7430   -5.6180    0.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5850   -6.4260    1.1220   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7370   -7.0130    2.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4130   -8.0410    3.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1410   -7.3810    4.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9200   -6.1540    4.7010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7270   -5.8980    5.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4320   -7.0070    5.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0870   -7.9300    5.0630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6400   -9.3290    4.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  9  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 11  1  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 18  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 19 18  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 16 17  2  0  0  0  0
+A    1
+CAJ
+A    2
+CAH
+A    3
+CAO
+A    4
+CAF
+A    5
+CAC
+A    6
+CAE
+A    7
+CAN
+A    8
+NAB
+A    9
+CAP
+A   10
+CAL
+A   11
+NAR
+A   12
+CAK
+A   13
+CAI
+A   14
+CAQ
+A   15
+NAM
+A   16
+CAD
+A   17
+CAG
+A   18
+NAS
+A   19
+CAA
+M  END
+>  <InstanceId>
+5BZJ_4WN_A_204
+
+>  <ChemCompId>
+4WN
+
+>  <PdbId>
+5BZJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+204
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N4
+
+>  <Name>
+2-[2-(1-methyl-1H-imidazol-2-yl)ethyl]-1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <SystematicName>
+2-[2-(1-methylimidazol-2-yl)ethyl]-3,4-dihydro-1H-isoquinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H20 N4
+
+>  <MolecularWeight>
+256.346
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H20N4/c1-18-10-7-17-15(18)6-9-19-8-5-12-3-2-4-14(16)13(12)11-19/h2-4,7,10H,5-6,8-9,11,16H2,1H3
+
+>  <InChIKey>
+JGJLPCQCNSYHGF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1ccnc1CCN2CCc3cccc(c3C2)N
+
+$$$$

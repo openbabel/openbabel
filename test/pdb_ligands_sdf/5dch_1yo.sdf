@@ -1,0 +1,139 @@
+2MBU_1YO_A_201
+  RCSB PDB12061706183D
+Coordinates from PDB:2MBU:A:201 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -0.9240    8.7640    2.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5050    9.4610    2.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5060   10.8490    2.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2990    8.7700    2.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3010   11.5430    2.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1120   13.6640    1.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9010   11.5510    2.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0940    9.4620    2.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0950   10.8510    2.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5650   12.3170    1.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0910   11.7460    0.1850   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3200   14.1120    2.2360   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4830   13.3840    2.4560   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6290   12.4840    0.8910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1450   11.4670    1.0970   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 14  1  0  0  0  0
+ 14  6  1  0  0  0  0
+ 14 10  1  0  0  0  0
+ 15 10  1  0  0  0  0
+ 15  7  1  0  0  0  0
+  6 12  2  0  0  0  0
+  1  8  1  0  0  0  0
+ 10 13  2  0  0  0  0
+  8  4  2  0  0  0  0
+  8  9  1  0  0  0  0
+  4  2  1  0  0  0  0
+  9  7  1  0  0  0  0
+  9  5  2  0  0  0  0
+  2  3  2  0  0  0  0
+ 12 13  1  0  0  0  0
+  5  3  1  0  0  0  0
+A    1
+CAA
+A    2
+CAC
+A    3
+CAD
+A    4
+CAE
+A    5
+CAF
+A    6
+CAG
+A    7
+CAH
+A    8
+CAL
+A    9
+CAM
+A   10
+CAN
+A   11
+NAB
+A   12
+NAI
+A   13
+NAJ
+A   14
+NAO
+A   15
+SAK
+M  END
+>  <InstanceId>
+2MBU_1YO_A_201
+
+>  <ChemCompId>
+1YO
+
+>  <PdbId>
+2MBU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 S
+
+>  <Name>
+3-[(2-methylbenzyl)sulfanyl]-4H-1,2,4-triazol-4-amine
+
+>  <SystematicName>
+3-[(2-methylphenyl)methylsulfanyl]-1,2,4-triazol-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 N4 S
+
+>  <MolecularWeight>
+220.294
+
+>  <ModifiedDate>
+2014-11-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12N4S/c1-8-4-2-3-5-9(8)6-15-10-13-12-7-14(10)11/h2-5,7H,6,11H2,1H3
+
+>  <InChIKey>
+UVAUEHMNFBWZNL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccccc1CSc2nncn2N
+
+$$$$

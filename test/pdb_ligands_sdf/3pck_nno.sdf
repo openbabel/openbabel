@@ -1,0 +1,123 @@
+3PCK_NNO_M_550
+  RCSB PDB12061710143D
+Coordinates from PDB:3PCK:M:550 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   14.1890    9.4890   40.7470   N 0  3  0  0  0  0  0  0  0  0  0  0
+   14.9550   10.4550   40.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8000   11.8160   40.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7500   12.1190   41.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9350   11.1110   42.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1750    9.7930   41.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7760   12.9150   40.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6970   12.6030   39.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6570   14.0890   40.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3610    8.8800   41.9840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3270    8.3100   40.3520   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+M  CHG  2   1   1  11  -1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O4
+A   11
+O3
+M  END
+>  <InstanceId>
+3PCK_NNO_M_550
+
+>  <ChemCompId>
+NNO
+
+>  <PdbId>
+3PCK
+
+>  <ChainId>
+M
+
+>  <ResidueNumber>
+550
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+6-HYDROXYISONICOTINIC ACID N-OXIDE
+
+>  <SystematicName>
+6-hydroxy-1-oxido-pyridin-1-ium-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 N O4
+
+>  <MolecularWeight>
+155.108
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5NO4/c8-5-2-1-4(6(9)10)3-7(5)11/h1-3,8H,(H,9,10)
+
+>  <InChIKey>
+PQTDJLRPWRPPLV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc([n+](cc1C(=O)O)[O-])O
+
+$$$$

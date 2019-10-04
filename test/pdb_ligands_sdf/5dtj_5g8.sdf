@@ -1,0 +1,114 @@
+5DTJ_5G8_A_601
+  RCSB PDB12061717213D
+Coordinates from PDB:5DTJ:A:601 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    6.5620  -23.7830    9.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8730  -23.7130    8.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7080  -24.4660    8.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2140  -25.2790    9.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8970  -25.3430   10.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0620  -24.6020   10.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3860  -22.7170    6.8450  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7400  -26.2180    8.8210  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7170  -23.0490    9.6680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  1  1  0  0  0  0
+  4  3  2  0  0  0  0
+  1  9  1  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+CL2
+A    8
+CL4
+A    9
+O1
+M  END
+>  <InstanceId>
+5DTJ_5G8_A_601
+
+>  <ChemCompId>
+5G8
+
+>  <PdbId>
+5DTJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+10
+
+>  <ObservedFormula>
+C6 O Cl2
+
+>  <Name>
+1-[5-(2,4-dichlorophenoxy)pentyl]-1H-imidazole
+
+>  <SystematicName>
+1-[5-[2,4-bis(chloranyl)phenoxy]pentyl]imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H16 Cl2 N2 O
+
+>  <MolecularWeight>
+299.196
+
+>  <ModifiedDate>
+2015-10-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H16Cl2N2O/c15-12-4-5-14(13(16)10-12)19-9-3-1-2-7-18-8-6-17-11-18/h4-6,8,10-11H,1-3,7,9H2
+
+>  <InChIKey>
+RCLGZIGOWPMCRV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)Cl)OCCCCCn2ccnc2
+
+$$$$

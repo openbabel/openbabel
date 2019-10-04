@@ -1,0 +1,127 @@
+2ORQ_MSR_A_601
+  RCSB PDB12061706333D
+Coordinates from PDB:2ORQ:A:601 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   69.9750   -8.7770   50.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.7580   -8.5500   49.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.1430   -8.2480   48.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.9060   -8.0590   47.1730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.7400   -8.1640   48.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.9530   -8.3910   49.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5650   -8.7050   50.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.8190   -9.0010   51.6530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4820   -8.9990   51.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.1430   -9.3730   52.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.2600   -9.6060   53.6510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2850   -9.3770   52.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C12
+A    2
+C13
+A    3
+C14
+A    4
+O17
+A    5
+C15
+A    6
+C16
+A    7
+C11
+A    8
+N3
+A    9
+C4
+A   10
+C5
+A   11
+NFE
+A   12
+C2
+M  END
+>  <InstanceId>
+2ORQ_MSR_A_601
+
+>  <ChemCompId>
+MSR
+
+>  <PdbId>
+2ORQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+4-(1H-IMIDAZOL-1-YL)PHENOL
+
+>  <SystematicName>
+4-imidazol-1-ylphenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2 O
+
+>  <MolecularWeight>
+160.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H8N2O/c12-9-3-1-8(2-4-9)11-6-5-10-7-11/h1-7,12H
+
+>  <InChIKey>
+CYKCUAPYWQDIKR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1n2ccnc2)O
+
+$$$$

@@ -1,0 +1,134 @@
+4CNP_9C4_A_301
+  RCSB PDB12061712043D
+Coordinates from PDB:4CNP:A:301 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   16.3590    4.7640   14.4650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6140    3.6640   13.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8250    2.5830   14.5160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6340    3.6480   12.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8140    4.9820   11.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7600    2.7580   11.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7360    2.7470   10.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8250    1.9120    9.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3770    2.2420    9.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3010    2.3910    8.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2310    3.0490   10.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9510    2.4580   10.0120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2980    3.1470   11.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2940    4.0700   12.3760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+OAA
+A    2
+CAI
+A    3
+OAB
+A    4
+CAN
+A    5
+OAG
+A    6
+CAH
+A    7
+CAJ
+A    8
+OAC
+A    9
+CAK
+A   10
+OAD
+A   11
+CAL
+A   12
+OAE
+A   13
+CAM
+A   14
+OAF
+M  END
+>  <InstanceId>
+4CNP_9C4_A_301
+
+>  <ChemCompId>
+9C4
+
+>  <PdbId>
+4CNP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7
+
+>  <Name>
+(2S)-2-HYDROXY-3-EPIQUINIC ACID
+
+>  <SystematicName>
+(1R,2S,4S,5R)-1,2,3,4,5-pentakis(oxidanyl)cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H12 O7
+
+>  <MolecularWeight>
+208.166
+
+>  <ModifiedDate>
+2015-02-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H12O7/c8-2-1-7(14,6(12)13)5(11)4(10)3(2)9/h2-5,8-11,14H,1H2,(H,12,13)/t2-,3+,4-,5+,7-/m1/s1
+
+>  <InChIKey>
+OLBQNCISLUABGO-LNHNIDQWSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](C([C@@H]([C@]1(C(=O)O)O)O)O)O)O
+
+$$$$

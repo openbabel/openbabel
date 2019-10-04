@@ -1,0 +1,135 @@
+3WTN_N2Y_A_301
+  RCSB PDB12061711253D
+Coordinates from PDB:3WTN:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    1.5070   22.8980   16.8610   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3290   22.4100   14.6810   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1540   23.2440   15.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7860   24.4820   15.6310   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4210   24.5100   14.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1210   23.1470   13.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7040   17.8120   14.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8620   16.5330   13.9870  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0540   18.9700   14.7290   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1850   19.9930   14.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8450   19.8910   14.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4730   18.6750   13.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4000   17.6200   13.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8210   21.0350   14.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6  2  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 14  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  9 10  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  1  2  0  0  0  0
+A    1
+N2
+A    2
+N3
+A    3
+C1
+A    4
+N4
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+CL1
+A    9
+N6
+A   10
+C5
+A   11
+C6
+A   12
+C7
+A   13
+C8
+A   14
+C9
+M  END
+>  <InstanceId>
+3WTN_N2Y_A_301
+
+>  <ChemCompId>
+N2Y
+
+>  <PdbId>
+3WTN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 Cl
+
+>  <Name>
+(2Z)-1-[(6-chloropyridin-3-yl)methyl]imidazolidin-2-imine
+
+>  <SystematicName>
+1-[(6-chloranylpyridin-3-yl)methyl]imidazolidin-2-imine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 Cl N4
+
+>  <MolecularWeight>
+210.663
+
+>  <ModifiedDate>
+2015-01-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11ClN4/c10-8-2-1-7(5-13-8)6-14-4-3-12-9(14)11/h1-2,5H,3-4,6H2,(H2,11,12)
+
+>  <InChIKey>
+UEQZFAGVRGWPDK-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C\1/NCCN1Cc2ccc(nc2)Cl
+
+$$$$

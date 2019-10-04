@@ -1,0 +1,138 @@
+2QCX_PF1_A_300
+  RCSB PDB12061706473D
+Coordinates from PDB:2QCX:A:300 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -18.7500   -3.2980   20.5910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9600   -4.4880   20.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4860   -4.1300   20.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3650   -3.4450   22.2170   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4200   -2.1160   22.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3240   -1.4800   23.3200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1840   -4.2250   23.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7320   -4.6970   23.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4950   -6.0410   23.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2670   -6.5540   23.3380   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2240   -5.8030   23.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8240   -6.4180   23.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4120   -4.5030   24.0400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.6280   -3.9290   23.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.7300   -2.6320   24.3110   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+OAD
+A    2
+CAG
+A    3
+CAH
+A    4
+NAO
+A    5
+CAE
+A    6
+OAC
+A    7
+CAI
+A    8
+C5
+A    9
+C6
+A   10
+N1
+A   11
+C2
+A   12
+CAA
+A   13
+N3
+A   14
+C4
+A   15
+NAB
+M  END
+>  <InstanceId>
+2QCX_PF1_A_300
+
+>  <ChemCompId>
+PF1
+
+>  <PdbId>
+2QCX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O2
+
+>  <Name>
+N-[(4-AMINO-2-METHYLPYRIMIDIN-5-YL)METHYL]-N-(2-HYDROXYETHYL)FORMAMIDE
+
+>  <SystematicName>
+N-[(4-amino-2-methyl-pyrimidin-5-yl)methyl]-N-(2-hydroxyethyl)methanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H14 N4 O2
+
+>  <MolecularWeight>
+210.233
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H14N4O2/c1-7-11-4-8(9(10)12-7)5-13(6-15)2-3-14/h4,6,14H,2-3,5H2,1H3,(H2,10,11,12)
+
+>  <InChIKey>
+PXEGMHGZZOOILN-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ncc(c(n1)N)CN(CCO)C=O
+
+$$$$

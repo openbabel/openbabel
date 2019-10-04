@@ -1,0 +1,146 @@
+3EHY_TBL_A_1
+  RCSB PDB12061708273D
+Coordinates from PDB:3EHY:A:1 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   -1.0810   -6.6970   -4.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8610   -5.5850   -4.8790   S 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3440   -5.6660   -5.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8580   -4.2810   -3.9320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5330   -2.9680   -4.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2790   -2.1440   -3.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7860   -2.2190   -4.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8580   -1.5180   -5.8730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8600   -2.3300   -4.1020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0710   -5.6230   -5.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3590   -5.9330   -5.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4230   -6.0050   -6.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2010   -5.8490   -7.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9360   -5.5380   -8.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8730   -5.4200   -7.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2910   -5.9330   -8.6790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3380   -6.7060   -9.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+ 10  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 15 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 16 13  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 17 16  1  0  0  0  0
+A    1
+O4
+A    2
+S1
+A    3
+O3
+A    4
+N1
+A    5
+C2
+A    6
+C10
+A    7
+C1
+A    8
+O2
+A    9
+O1
+A   10
+C3
+A   11
+C4
+A   12
+C5
+A   13
+C6
+A   14
+C8
+A   15
+C9
+A   16
+O5
+A   17
+C7
+M  END
+>  <InstanceId>
+3EHY_TBL_A_1
+
+>  <ChemCompId>
+TBL
+
+>  <PdbId>
+3EHY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O5 S
+
+>  <Name>
+N-[(4-methoxyphenyl)sulfonyl]-D-alanine
+
+>  <SystematicName>
+(2R)-2-[(4-methoxyphenyl)sulfonylamino]propanoic acid
+
+>  <Synonyms>
+(R)-2-(4-methoxyphenylsulfonamido)propanoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O5 S
+
+>  <MolecularWeight>
+259.279
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO5S/c1-7(10(12)13)11-17(14,15)9-5-3-8(16-2)4-6-9/h3-7,11H,1-2H3,(H,12,13)/t7-/m1/s1
+
+>  <InChIKey>
+XTCIPBHRVYICGT-SSDOTTSWSA-N
+
+>  <SMILES>
+C[C@H](C(=O)O)NS(=O)(=O)c1ccc(cc1)OC
+
+$$$$

@@ -1,0 +1,142 @@
+2SHP_CAT_A_1800
+  RCSB PDB12061706583D
+Coordinates from PDB:2SHP:A:1800 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   23.6380  -22.0500   33.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2840  -22.1130   32.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0550  -23.5140   32.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5860  -23.8110   32.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0340  -23.0180   30.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7970  -23.2980   29.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2500  -22.4860   28.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7680  -22.7500   28.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3220  -22.3900   26.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8080  -22.4300   26.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3610  -22.0850   25.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8480  -21.8950   25.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9000  -19.6800   33.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2600  -20.6110   35.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2460  -20.2390   33.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0110  -20.6340   34.0680   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 16  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 15 16  1  0  0  0  0
+M  CHG  1  16   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+CA1
+A   14
+CB1
+A   15
+CC1
+A   16
+NE1
+M  END
+>  <InstanceId>
+2SHP_CAT_A_1800
+
+>  <ChemCompId>
+CAT
+
+>  <PdbId>
+2SHP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N
+
+>  <Name>
+DODECANE-TRIMETHYLAMINE
+
+>  <SystematicName>
+dodecyl-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H34 N
+
+>  <MolecularWeight>
+228.437
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H34N/c1-5-6-7-8-9-10-11-12-13-14-15-16(2,3)4/h5-15H2,1-4H3/q+1
+
+>  <InChIKey>
+VICYBMUVWHJEFT-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCC[N+](C)(C)C
+
+$$$$

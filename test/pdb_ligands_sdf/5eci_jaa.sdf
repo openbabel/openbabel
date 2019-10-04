@@ -1,0 +1,138 @@
+5ECH_JAA_A_601
+  RCSB PDB12061717273D
+Coordinates from PDB:5ECH:A:601 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    3.8280   22.4500  -51.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5670   27.5840  -50.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4940   27.9380  -50.0700   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9410   25.2520  -50.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6920   23.6100  -50.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4560   25.5740  -51.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0570   24.9020  -51.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4900   23.4390  -51.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9630   23.6230  -49.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3200   25.7190  -50.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3650   22.4510  -48.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4260   27.1710  -50.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9650   22.7360  -47.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0490   24.1910  -46.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6010   24.6390  -45.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  1  0  0  0  0
+  6  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  1  8  2  0  0  0  0
+  8  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  9  1  0  0  0  0
+ 10 12  1  0  0  0  0
+  2 12  2  0  0  0  0
+ 12  3  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O01
+A    2
+O02
+A    3
+O03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+M  END
+>  <InstanceId>
+5ECH_JAA_A_601
+
+>  <ChemCompId>
+JAA
+
+>  <PdbId>
+5ECH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O3
+
+>  <Name>
+{(1R,2R)-3-oxo-2-[(2Z)-pent-2-en-1-yl]cyclopentyl}acetic acid
+
+>  <SystematicName>
+2-[(1R,2R)-3-oxidanylidene-2-[(Z)-pent-2-enyl]cyclopentyl]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H18 O3
+
+>  <MolecularWeight>
+210.27
+
+>  <ModifiedDate>
+2016-10-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18O3/c1-2-3-4-5-10-9(8-12(14)15)6-7-11(10)13/h3-4,9-10H,2,5-8H2,1H3,(H,14,15)/b4-3-/t9-,10-/m1/s1
+
+>  <InChIKey>
+ZNJFBWYDHIGLCU-HWKXXFMVSA-N
+
+>  <SMILES>
+CC/C=C\C[C@@H]1[C@H](CCC1=O)CC(=O)O
+
+$$$$

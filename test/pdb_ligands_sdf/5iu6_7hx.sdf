@@ -1,0 +1,119 @@
+5IU6_7HX_A_301
+  RCSB PDB12061718143D
+Coordinates from PDB:5IU6:A:301 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+  -19.8530   45.1150   20.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6940   44.1220   21.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6830   43.5380   22.0130   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4480   42.4570   22.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2130   41.9120   22.9160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1420   42.4220   22.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3260   43.5820   21.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8190   42.1390   22.0800   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1660   43.0080   21.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0770   43.9220   20.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  8  6  1  0  0  0  0
+  6  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+N1
+A    4
+C2
+A    5
+N3
+A    6
+C4
+A    7
+C5
+A    8
+N9
+A    9
+C8
+A   10
+C7
+M  END
+>  <InstanceId>
+5IU6_7HX_A_301
+
+>  <ChemCompId>
+7HX
+
+>  <PdbId>
+5IU6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O
+
+>  <Name>
+7H-pyrrolo[2,3-d]pyrimidin-4-ol
+
+>  <SystematicName>
+7~{H}-pyrrolo[2,3-d]pyrimidin-4-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 N3 O
+
+>  <MolecularWeight>
+135.123
+
+>  <ModifiedDate>
+2017-03-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5N3O/c10-6-4-1-2-7-5(4)8-3-9-6/h1-3H,(H2,7,8,9,10)
+
+>  <InChIKey>
+FBMZEITWVNHWJW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c[nH]c2c1c(ncn2)O
+
+$$$$

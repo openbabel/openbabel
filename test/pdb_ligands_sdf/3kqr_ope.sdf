@@ -1,0 +1,109 @@
+1B7A_OPE_A_1501
+  RCSB PDB12061702033D
+Coordinates from PDB:1B7A:A:1501 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   27.8190   44.3620   28.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2620   44.1040   29.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4130   42.4300   25.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7310   42.5570   26.4700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7400   44.6070   25.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0880   43.8500   27.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9580   42.5310   28.5050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4710   43.2560   26.1420   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+O1
+A    4
+O2
+A    5
+O3
+A    6
+O4
+A    7
+N
+A    8
+P
+M  END
+>  <InstanceId>
+1B7A_OPE_A_1501
+
+>  <ChemCompId>
+OPE
+
+>  <PdbId>
+1B7A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N O4 P
+
+>  <Name>
+PHOSPHORIC ACID MONO-(2-AMINO-ETHYL) ESTER
+
+>  <SystematicName>
+2-aminoethyl dihydrogen phosphate
+
+>  <Synonyms>
+COLAMINE PHOSPHORIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H8 N O4 P
+
+>  <MolecularWeight>
+141.063
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H8NO4P/c3-1-2-7-8(4,5)6/h1-3H2,(H2,4,5,6)
+
+>  <InChIKey>
+SUHOOTKUPISOBE-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COP(=O)(O)O)N
+
+$$$$

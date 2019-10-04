@@ -1,0 +1,148 @@
+2ZJU_IM4_A_301
+  RCSB PDB12061707453D
+Coordinates from PDB:2ZJU:A:301 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   29.9310  -27.6730  -31.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4720  -26.8520  -32.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4520  -25.4450  -32.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9030  -24.4050  -33.7080  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8530  -24.9010  -31.2700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2930  -25.6520  -30.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3560  -27.0840  -30.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8620  -27.9590  -29.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4740  -27.5720  -27.8100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2770  -26.6650  -26.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5190  -26.5320  -25.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3270  -27.3680  -25.7820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3130  -27.9570  -27.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4160  -28.7680  -27.5020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2430  -29.2760  -26.9930   N 0  3  0  0  0  0  0  0  0  0  0  0
+   26.8050  -29.0090  -25.7960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5520  -30.0730  -27.7290   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 16 15  2  0  0  0  0
+M  CHG  2  15   1  17  -1
+A    1
+C5
+A    2
+C6
+A    3
+C1
+A    4
+CL7
+A    5
+N2
+A    6
+C3
+A    7
+C4
+A    8
+C8
+A    9
+N9
+A   10
+C13
+A   11
+C12
+A   12
+N11
+A   13
+C10
+A   14
+N14
+A   15
+N15
+A   16
+O16
+A   17
+O17
+M  END
+>  <InstanceId>
+2ZJU_IM4_A_301
+
+>  <ChemCompId>
+IM4
+
+>  <PdbId>
+2ZJU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5 O2 Cl
+
+>  <Name>
+(2E)-1-[(6-chloropyridin-3-yl)methyl]-N-nitroimidazolidin-2-imine
+
+>  <SystematicName>
+(NE)-N-[1-[(6-chloropyridin-3-yl)methyl]imidazolidin-2-ylidene]nitramide
+
+>  <Synonyms>
+imidacloprid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 Cl N5 O2
+
+>  <MolecularWeight>
+255.661
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10ClN5O2/c10-8-2-1-7(5-12-8)6-14-4-3-11-9(14)13-15(16)17/h1-2,5H,3-4,6H2,(H,11,13)
+
+>  <InChIKey>
+YWTYJOPNNQFBPC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1CN\2CCN/C2=N\[N+](=O)[O-])Cl
+
+$$$$

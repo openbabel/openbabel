@@ -1,0 +1,121 @@
+3WWL_UN1_A_101
+  RCSB PDB12061711263D
+Coordinates from PDB:3WWL:A:101 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    1.0600   26.2380    4.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8810   26.5300    3.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7720   27.1080    5.4640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5240   20.4240    6.5770   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6210   24.8810    5.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3390   20.5570    6.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5630   21.7420    6.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8820   23.1150    7.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0920   24.3130    6.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1470   21.4780    6.5600   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7880   19.7020    7.6800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+O2'
+A    4
+O58
+A    5
+C1
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+N4
+A   11
+O5'
+M  END
+>  <InstanceId>
+3WWL_UN1_A_101
+
+>  <ChemCompId>
+UN1
+
+>  <PdbId>
+3WWL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+2-AMINOHEXANEDIOIC ACID
+
+>  <SystematicName>
+(2S)-2-aminohexanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C6 H11 N O4
+
+>  <MolecularWeight>
+161.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11NO4/c7-4(6(10)11)2-1-3-5(8)9/h4H,1-3,7H2,(H,8,9)(H,10,11)/t4-/m0/s1
+
+>  <InChIKey>
+OYIFNHCXNCRBQI-BYPYZUCNSA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)N)CC(=O)O
+
+$$$$

@@ -1,0 +1,117 @@
+2YBS_S2G_A_1359
+  RCSB PDB12061707353D
+Coordinates from PDB:2YBS:A:1359 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   11.2850   18.8850    1.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8500   19.2890    1.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4760   19.3740    1.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3730   19.6680    0.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2670   19.3450    2.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3170   18.3240    0.5510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8880   20.0540    3.2960   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1970   19.5680    1.3010   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9100   18.9970    2.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7410   19.9830   -0.2540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4 10  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+O2
+A    6
+O1
+A    7
+O3
+A    8
+O5
+A    9
+C2
+A   10
+O4
+M  END
+>  <InstanceId>
+2YBS_S2G_A_1359
+
+>  <ChemCompId>
+S2G
+
+>  <PdbId>
+2YBS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1359
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+(2S)-2-HYDROXYPENTANEDIOIC ACID
+
+>  <SystematicName>
+(2S)-2-hydroxypentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 O5
+
+>  <MolecularWeight>
+148.114
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8O5/c6-3(5(9)10)1-2-4(7)8/h3,6H,1-2H2,(H,7,8)(H,9,10)/t3-/m0/s1
+
+>  <InChIKey>
+HWXBTNAVRSUOJR-VKHMYHEASA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@@H](C(=O)O)O
+
+$$$$

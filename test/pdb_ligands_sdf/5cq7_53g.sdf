@@ -1,0 +1,139 @@
+5CQ7_53G_A_2001
+  RCSB PDB12061717083D
+Coordinates from PDB:5CQ7:A:2001 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   10.5440   41.6060   28.6650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9630   41.4890   31.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9700   42.3780   31.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8100   42.4450   30.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6850   41.5730   29.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7370   40.6300   29.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7900   43.4640   30.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0660   39.7660   30.1750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9710   39.5440   29.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6220   38.2480   29.6750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3630   37.5140   29.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8390   37.4210   29.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8860   40.6460   29.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5990   42.5250   28.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8290   43.3870   30.8340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1 14  1  0  0  0  0
+  1  5  2  0  0  0  0
+ 14  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6 13  2  0  0  0  0
+  5  4  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 13  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 13  2  1  0  0  0  0
+  7 15  1  0  0  0  0
+  4 15  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C10
+A    8
+O
+A    9
+C2
+A   10
+N
+A   11
+C1
+A   12
+C
+A   13
+C3
+A   14
+C9
+A   15
+N2
+M  END
+>  <InstanceId>
+5CQ7_53G_A_2001
+
+>  <ChemCompId>
+53G
+
+>  <PdbId>
+5CQ7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O
+
+>  <Name>
+N,N-dimethylquinoxaline-6-carboxamide
+
+>  <SystematicName>
+N,N-dimethylquinoxaline-6-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N3 O
+
+>  <MolecularWeight>
+201.225
+
+>  <ModifiedDate>
+2015-09-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11N3O/c1-14(2)11(15)8-3-4-9-10(7-8)13-6-5-12-9/h3-7H,1-2H3
+
+>  <InChIKey>
+HQOVESVNZPVFDO-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)C(=O)c1ccc2c(c1)nccn2
+
+$$$$

@@ -1,14 +1,20 @@
 if(MINIMAL_BUILD)
   set(tools
-        babel
+        obabel
   )
 else(MINIMAL_BUILD)
+  find_package(Boost COMPONENTS program_options iostreams)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+  endif()
+
+
   set(tools
-        babel
         obabel
         obconformer
         obenergy
         obfit
+	obfitall
         obgen
         obminimize
         obmm
@@ -68,7 +74,7 @@ if(BUILD_SHARED)
 else(BUILD_SHARED)
 ###############################################################################
 #
-# Build STATIC babel with all plugins taken from the static libopenbabel.a
+# Build STATIC obabel with all plugins taken from the static libopenbabel.a
 #
 ###############################################################################
 
@@ -126,22 +132,14 @@ else(BUILD_SHARED)
     endif(BUILD_MIXED)
   endif()
 
-  # build a static babel only
-  add_executable(babel babel.cpp)
-  target_link_libraries(babel ${libs})
+  # build a static obabel only
   add_executable(obabel obabel.cpp)
   target_link_libraries(obabel ${libs})
 
   if(NOT BUILD_MIXED)
     # Prevent -Wl,-Bdynamic from being added to the end of the link line.
-    set_target_properties(babel PROPERTIES LINK_SEARCH_END_STATIC TRUE)
     set_target_properties(obabel PROPERTIES LINK_SEARCH_END_STATIC TRUE)
   endif(NOT BUILD_MIXED)
-
-  install(TARGETS babel
-          RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib${LIB_SUFFIX}
-          ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
   install(TARGETS obabel
           RUNTIME DESTINATION bin

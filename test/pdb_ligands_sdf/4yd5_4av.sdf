@@ -1,0 +1,131 @@
+4YD5_4AV_A_401
+  RCSB PDB12061716253D
+Coordinates from PDB:4YD5:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   -1.0920    2.3440   10.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2210    2.9230   10.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4190    4.2750   10.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8900    0.9060   10.5950   N 0  3  0  0  0  0  0  0  0  0  0  0
+   -1.5070    5.0010   10.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7700    0.2600   11.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1300    0.4110   10.1440   O 0  5  0  0  0  0  0  0  0  0  0  0
+   -0.1500    3.0650    9.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8470    6.6750    9.7140  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3590    4.4210    9.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5930    5.1730    8.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0310    5.1780    9.1710   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1360    5.9000   10.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 10  8  2  0  0  0  0
+ 10  5  1  0  0  0  0
+  9  5  1  0  0  0  0
+  8  1  1  0  0  0  0
+  5  3  2  0  0  0  0
+  7  4  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  4  6  2  0  0  0  0
+  3  2  1  0  0  0  0
+M  CHG  2   4   1   7  -1
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+O1
+A    7
+O
+A    8
+C3
+A    9
+CL
+A   10
+C2
+A   11
+C1
+A   12
+N
+A   13
+C
+M  END
+>  <InstanceId>
+4YD5_4AV_A_401
+
+>  <ChemCompId>
+4AV
+
+>  <PdbId>
+4YD5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 Cl
+
+>  <Name>
+1-(2-chloro-5-nitrophenyl)-N-methylmethanamine
+
+>  <SystematicName>
+1-(2-chloranyl-5-nitro-phenyl)-N-methyl-methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 Cl N2 O2
+
+>  <MolecularWeight>
+200.622
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9ClN2O2/c1-10-5-6-4-7(11(12)13)2-3-8(6)9/h2-4,10H,5H2,1H3
+
+>  <InChIKey>
+YRTNCUPHKWUHMQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CNCc1cc(ccc1Cl)[N+](=O)[O-]
+
+$$$$

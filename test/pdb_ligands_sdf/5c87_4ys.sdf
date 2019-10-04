@@ -1,0 +1,123 @@
+5C87_4YS_A_802
+  RCSB PDB12061717033D
+Coordinates from PDB:5C87:A:802 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    7.9260  -11.3340    3.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6690  -10.7760    3.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7510  -11.4340    2.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0820  -12.6460    2.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3390  -13.2060    2.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2580  -12.5450    3.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5150  -13.1010    3.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8370  -14.3120    2.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8960  -14.9650    1.9050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6880  -14.4270    1.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7680  -15.0560    0.9140   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  2  2  0  0  0  0
+  8  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  1  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAE
+A    2
+CAB
+A    3
+CAC
+A    4
+CAF
+A    5
+CAK
+A    6
+CAJ
+A    7
+CAG
+A    8
+CAD
+A    9
+NAH
+A   10
+CAI
+A   11
+OAA
+M  END
+>  <InstanceId>
+5C87_4YS_A_802
+
+>  <ChemCompId>
+4YS
+
+>  <PdbId>
+5C87
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O
+
+>  <Name>
+isoquinolin-1(2H)-one
+
+>  <SystematicName>
+2H-isoquinolin-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N O
+
+>  <MolecularWeight>
+145.158
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7NO/c11-9-8-4-2-1-3-7(8)5-6-10-9/h1-6H,(H,10,11)
+
+>  <InChIKey>
+VDBNYAPERZTOOF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C=CNC2=O
+
+$$$$

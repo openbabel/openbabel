@@ -1,0 +1,142 @@
+1ZW5_ZOL_A_901
+  RCSB PDB12061704553D
+Coordinates from PDB:1ZW5:A:901 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   17.3480   33.9430   -8.8600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1440   34.1960   -9.6610   P 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0430   35.5460  -10.3420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0210   33.0190  -10.6360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9540   34.2900   -8.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3580   35.6930   -7.1820   P 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4650   35.6890   -5.9680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8340   35.6120   -6.7370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0420   36.9090   -7.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6410   34.5000   -8.7870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9210   33.0430   -7.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5910   31.7640   -7.9840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7130   31.5570   -8.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7180   30.2550   -9.2930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5700   29.6330   -8.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1240   30.5850   -7.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+O17
+A    2
+P14
+A    3
+O16
+A    4
+O15
+A    5
+C8
+A    6
+P9
+A    7
+O10
+A    8
+O11
+A    9
+O12
+A   10
+O13
+A   11
+C7
+A   12
+N15
+A   13
+C16
+A   14
+N17
+A   15
+C18
+A   16
+C19
+M  END
+>  <InstanceId>
+1ZW5_ZOL_A_901
+
+>  <ChemCompId>
+ZOL
+
+>  <PdbId>
+1ZW5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O7 P2
+
+>  <Name>
+ZOLEDRONIC ACID
+
+>  <SystematicName>
+(1-hydroxy-2-imidazol-1-yl-1-phosphono-ethyl)phosphonic acid
+
+>  <Synonyms>
+(1-HYDROXY-2-IMIDAZOL-1-YLETHYLIDENE)DIPHOSPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 N2 O7 P2
+
+>  <MolecularWeight>
+272.09
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10N2O7P2/c8-5(15(9,10)11,16(12,13)14)3-7-2-1-6-4-7/h1-2,4,8H,3H2,(H2,9,10,11)(H2,12,13,14)
+
+>  <InChIKey>
+XRASPMIURGNCCH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cn(cn1)CC(O)(P(=O)(O)O)P(=O)(O)O
+
+$$$$
