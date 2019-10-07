@@ -45,8 +45,8 @@ public:
   //Register this format type ID in the constructor
   MAEFormat()
 	{
-		OBConversion::RegisterFormat("MAE", this);
-		OBConversion::RegisterFormat("MAEGZ", this);
+		OBConversion::RegisterFormat("mae", this);
+		OBConversion::RegisterFormat("maegz", this);
 	}
 
 	virtual const char* Description() override //required

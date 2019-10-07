@@ -43,6 +43,7 @@ namespace OpenBabel
     {
       return
         "RInChI\n"
+        "The Reaction InChI\n"
         "The Reaction InChI (or RInChI) is intended to be a unique\n"
         "string that describes a reaction. This may be useful for\n"
         "indexing and searching reaction databases. As with the InChI\n"

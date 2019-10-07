@@ -3425,8 +3425,7 @@ namespace OpenBabel
     generator.TimeSeed();
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
-    double velocity, kB;
-    kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+    double velocity;
 
     _velocityPtr = new double[_ncoords];
     memset(_velocityPtr, '\0', sizeof(double)*_ncoords);
@@ -3442,7 +3441,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
         }
 
@@ -3451,7 +3450,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+1] = velocity; // idem
         }
 
@@ -3460,7 +3459,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+2] = velocity; // idem
         }
       }
@@ -3473,12 +3472,11 @@ namespace OpenBabel
   {
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
-    double velocity, kB, E_kin, E_kin2, factor;
-    kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+    double velocity, E_kin, E_kin2, factor;
 
-    // E_kin = 0.5 * Ndf * kB * T
-    E_kin = _ncoords * kB * _temp;
-    //cout << "E_{kin} = Ndf * kB * T = " << E_kin << endl;
+    // E_kin = 0.5 * Ndf * R * T
+    E_kin = _ncoords * GAS_CONSTANT * _temp;
+    //cout << "E_{kin} = Ndf * R * T = " << E_kin << endl;
 
     // E_kin = 0.5 * sum( m_i * v_i^2 )
     E_kin2 = 0.0;

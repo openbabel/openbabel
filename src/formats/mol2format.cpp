@@ -53,10 +53,10 @@ namespace OpenBabel
       return
         "Sybyl Mol2 format\n"
         "Read Options e.g. -ac\n"
-        "  c               Read UCSF Dock scores saved in comments preceeding molecules\n\n"
+        "  c               Read UCSF Dock scores saved in comments preceding molecules\n\n"
         "Write Options e.g. -xl\n"
-        "  l               Output ignores residue information (only ligands)\n\n"
-        "  c               Write UCSF Dock scores saved in comments preceeding molecules\n\n"
+        "  l               Output ignores residue information (only ligands)\n"
+        "  c               Write UCSF Dock scores saved in comments preceding molecules\n"
         "  u               Do not write formal charge information in UNITY records\n\n";
     };
 
