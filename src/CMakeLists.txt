@@ -1,6 +1,6 @@
 # Library versioning
-set(SOVERSION 5)
-set(LIBRARY_VERSION 5.0.0)
+set(SOVERSION 6)
+set(LIBRARY_VERSION 6.0.0)
 
 
 find_package(Boost 1.45.0 COMPONENTS system) 
