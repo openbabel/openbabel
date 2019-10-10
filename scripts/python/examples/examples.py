@@ -1,5 +1,5 @@
 from __future__ import print_function
-import openbabel
+from openbabel import openbabel
 
 mol = openbabel.OBMol()
 print('Should print 0 (atoms)')

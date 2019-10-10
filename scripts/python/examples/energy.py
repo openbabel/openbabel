@@ -5,7 +5,7 @@
 ######################################################################
 
 from __future__ import print_function
-import openbabel
+from openbabel import openbabel
 import sys
 
 # Make sure we have a filename
