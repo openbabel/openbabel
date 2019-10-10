@@ -479,7 +479,7 @@ endif()
 
 
 find_package(Boost)
-if(Boost_FOUND)
+if(Boost_FOUND AND BUILD_SHARED)
     include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
     option(WITH_MAEPARSER "Build Maestro support" ON)
 else()
