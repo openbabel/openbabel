@@ -79,7 +79,7 @@ else() # Windows - bin dir = lib dir to load libraries
   endif()
 endif()
 if(NOT DEFINED OB_INCLUDE_DIRS)
-  set(OB_INCLUDE_DIRS "include/openbabel3")
+  set(OB_INCLUDE_DIRS "include/openbabel${BABEL_MAJ_VER}")
 endif()
 set(OB_EXPORTS_FILE "${openbabel_BINARY_DIR}/OpenBabel3_EXPORTS.cmake")
 # Ensure a fresh file is made each time CMake is run
