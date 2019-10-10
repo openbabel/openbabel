@@ -34,7 +34,6 @@ const double eV = 3.67493245e-2;
 
 /// conversion factor from Angstrom to bohr
 const double Angstrom = 1./0.529177249;
-using namespace Eigen;
 
 /// Determines threshold value of Coulomb interaction beyond which the classical 1/R expression
 /// will be used instead of an integral over the Gaussian orbitals
@@ -57,15 +56,15 @@ public:
   double DipoleScalingFactor() { return 1.959; } // fit from regression
 
 private:
-  Vector3d GetParameters(unsigned int Z, int Q);
-  bool solver(MatrixXd A,VectorXd b, VectorXd &x, const double NormThreshold = 1.e-6);
+  Eigen::Vector3d GetParameters(unsigned int Z, int Q);
+  bool solver(Eigen::MatrixXd A, Eigen::VectorXd b, Eigen::VectorXd &x, const double NormThreshold = 1.e-6);
   double CoulombInt(double a, double b, double R);
 
-  MatrixXd Hardness; ///The hardness matrix
-  VectorXd Electronegativity, Voltage, Charge;
+  Eigen::MatrixXd Hardness; ///The hardness matrix
+  Eigen::VectorXd Electronegativity, Voltage, Charge;
   double ChemicalPotential;
 
-  std::vector< Vector3d > _parameters;
+  std::vector<Eigen::Vector3d> _parameters;
   void ParseParamFile();
 };
 

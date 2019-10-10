@@ -42,8 +42,6 @@ const double lambda = 1.2; // Coulomb scaling parameter
 const double hi_0 = -2.0; // Electron affinity of hydrogen used in EQeq paper
 const double eta = 50; // Ewald splitting parameter
 
-using namespace Eigen;
-
 namespace OpenBabel
 {
 
