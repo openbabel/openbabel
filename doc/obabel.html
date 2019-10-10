@@ -3,7 +3,7 @@
 
 <html>
 <head>
-<title>babel</title>
+<title>obabel</title>
 </head>
 <body bgcolor='white'>
 <a href='#toc'>Table of Contents</a><p>
@@ -11,21 +11,21 @@
 <h2><a name='sect0' href='#toc0'>Name</a></h2>
 
 <p>
-<b>babel</b> -- a converter for chemistry and molecular modeling data files
+<b>obabel</b> -- a converter for chemistry and molecular modeling data files
 
 <p>
 <h2><a name='sect1' href='#toc1'><b>Synopsis</b></a></h2>
 
 <p>
-<b>babel</b> [<b>-H</b> <i>help-options</i>]<br>
+<b>obabel</b> [<b>-H</b> <i>help-options</i>]<br>
 
-<b>babel</b> [<i>OPTIONS</i>] [<b>-i</b> <i>input-type</i>] <i>infile</i> [<b>-o</b> <i>output-type</i>] <i>outfile</i>
+<b>obabel</b> [<i>OPTIONS</i>] [<b>-i</b> <i>input-type</i> | <b>-: </b>"<i>SMILES-string</i>"] <i>infile</i> [<b>-o</b> <i>output-type</i>] <b>-O</b> <i>outfile</i>
 
 <p>
 <h2><a name='sect2' href='#toc2'><b>Description</b></a></h2>
 
 <p>
-Babel is a cross-platform program designed to interconvert between many
+obabel is a cross-platform program designed to interconvert between many
 file formats used in molecular modeling and computational chemistry and
 related areas.
 
@@ -371,13 +371,13 @@ e.g., <code>-Hcml</code>
 <p>
 Standard conversion:<br>
 
-<pre>babel -ixyz ethanol.xyz -opdb ethanol.pdb</pre>
+<pre>obabel ethanol.xyz -Oethanol.pdb</pre>
 
 Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT:<br>
-<pre>babel -ismi -omol2</pre>
+<pre>obabel -ismi -omol2</pre>
 
 Split a multi-molecule file into new1.smi, new2.smi, etc.:<br>
-<pre>babel infile.mol new.smi -m</pre>
+<pre>obabel infile.mol -Onew.smi -m</pre>
 
 <p>
 <h2><a name='sect7' href='#toc7'><b>See</b> <b>Also</b></a></h2>
