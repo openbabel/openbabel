@@ -15,7 +15,7 @@ import time
 import unittest
 import warnings
 
-import openbabel as ob
+from openbabel import openbabel as ob
 
 def testfile(name):
     return os.path.join("files", name)

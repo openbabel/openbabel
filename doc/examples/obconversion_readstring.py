@@ -1,5 +1,5 @@
 from __future__ import print_function
-import openbabel as ob
+from openbabel import openbabel as ob
 
 # Initialize the OBConversion object
 conv = ob.OBConversion()
