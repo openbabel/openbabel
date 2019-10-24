@@ -21,9 +21,6 @@ install Open Babel on most systems.  If you are using unique install locations
 and/or libraries are not automatically detected please consult the 'Advanced'
 section.
 
-The following instructions assume that the Open Babel source distribution is in
-the directory ~/openbabel-2.4.0.
-
 1. Create a 'build' directory:
 
    mkdir build

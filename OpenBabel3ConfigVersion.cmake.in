@@ -1,4 +1,4 @@
-# OpenBabel2 CMake version file - http://www.openbabel.org/
+# OpenBabel3 CMake version file - http://www.openbabel.org/
 
 set(PACKAGE_VERSION @BABEL_MAJ_VER@.@BABEL_MIN_VER@.@BABEL_PATCH_VER@)
 

@@ -13,7 +13,7 @@ http://openbabel.org/wiki/Java
 
   First of all, set some environment variables (remember to change the paths to correspond to your system):
 $ export JAVA_HOME=/home/noel/Tools/jdk1.5.0_15
-$ export OB_JAVADIR=/home/noel/Tools/openbabel-2.2.0/scripts/java
+$ export OB_JAVADIR=/home/noel/Tools/openbabel-3.0.0/scripts/java
 $ export OB_LIBDIR=/home/noel/tree/lib # The install location of libopenbabel.so
 
   Next, compile the Java bindings:

@@ -30,7 +30,7 @@ Dependencies
 ------------
 
 -  Python 2.4 or a more recent version.
--  Open Babel 2.3.0 or a more recent version.
+-  Open Babel 3 or a more recent version.
 
 Installation
 ------------
@@ -45,8 +45,8 @@ Installation
 
 ::
 
-    tar -xzvf openbabel-1.8.1.tar.gz
-    cd openbabel-1.8.1
+    tar -xzvf openbabel-3-0-0.tar.gz
+    cd openbabel-openbabel-3-0-0
     python setup.py install
     
 **Option 3**: While building Open Babel itself.
