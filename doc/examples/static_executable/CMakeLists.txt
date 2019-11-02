@@ -1,10 +1,10 @@
 #
 # This script can be used to create static executables linking to the static
-# OpenBabel2 library.
+# OpenBabel3 library.
 #
 # This script requires OpenBabel to be build and installed. For example:
 #
-#  cd openbabel-2.3
+#  cd openbabel
 #  mkdir build
 #  cd build
 #  cmake -DBUILD_SHARED=OFF -DCMAKE_INSTALL_PREFIX=/home/me/some/path ..
@@ -16,7 +16,7 @@
 #  cd myproject
 #  mkdir build
 #  cd build
-#  cmake -DOpenBabel2_DIR=/home/me/some/path/lib/openbabel ..
+#  cmake -DOpenBabel3_DIR=/home/me/some/path/lib/openbabel ..
 #  make
 #
 # All plugins are inside the static libopenbabel.a but the symbols for the
@@ -53,17 +53,17 @@ else()
   set(CMAKE_FIND_LIBRARY_SUFFIXES ".a")
 endif()
 
-# Set the path containing OpenBabel2Config.cmake, needed for find_package below.
-find_path(OpenBabel2_DIR OpenBabel2Config.cmake PATHS
-          ${OpenBabel2_DIR}
+# Set the path containing OpenBabel3Config.cmake, needed for find_package below.
+find_path(OpenBabel3_DIR OpenBabel3Config.cmake PATHS
+          ${OpenBabel3_DIR}
           "/usr/lib/openbabel"
          "/usr/local/lib/openbabel")
 
 #
-# Find and setup OpenBabel2.
+# Find and setup OpenBabel3.
 #
-find_package(OpenBabel2 REQUIRED)
-include_directories(${OpenBabel2_INCLUDE_DIRS})
+find_package(OpenBabel3 REQUIRED)
+include_directories(${OpenBabel3_INCLUDE_DIRS})
 
 # Dependencies
 find_package(LibXml2)
