@@ -1,0 +1,139 @@
+5H1V_7FU_A_1103
+  RCSB PDB12061717553D
+Coordinates from PDB:5H1V:A:1103 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   18.9580   -1.0420  -18.0470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6250    1.3490  -23.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3740    1.5550  -24.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8020    0.1230  -20.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7580    0.8810  -22.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3280    0.8220  -22.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3310    3.2540  -27.2600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6310    2.2050  -25.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3890    2.0200  -25.4150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7780    1.7840  -24.7030   S 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6050    0.6150  -21.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8290    0.3690  -19.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2000    1.2850  -23.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0380    2.6870  -27.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7490   -0.6160  -19.3870   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7 14  1  0  0  0  0
+ 14  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9  3  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3 13  2  0  0  0  0
+  2  5  2  0  0  0  0
+ 13  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 11  2  0  0  0  0
+ 11  4  1  0  0  0  0
+  4 12  2  0  0  0  0
+  4 15  1  0  0  0  0
+ 15  1  1  0  0  0  0
+A    1
+N1
+A    2
+C6
+A    3
+C7
+A    4
+C8
+A    5
+C10
+A    6
+C13
+A    7
+N2
+A    8
+C3
+A    9
+N4
+A   10
+S5
+A   11
+C9
+A   12
+O11
+A   13
+C12
+A   14
+N14
+A   15
+N15
+M  END
+>  <InstanceId>
+5H1V_7FU_A_1103
+
+>  <ChemCompId>
+7FU
+
+>  <PdbId>
+5H1V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1103
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N5 O S
+
+>  <Name>
+2-Hydrazino-1,3-benzothiazole-6-carbohydrazide
+
+>  <SystematicName>
+2-diazanyl-1,3-benzothiazole-6-carbohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N5 O S
+
+>  <MolecularWeight>
+223.255
+
+>  <ModifiedDate>
+2017-02-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9N5OS/c9-12-7(14)4-1-2-5-6(3-4)15-8(11-5)13-10/h1-3H,9-10H2,(H,11,13)(H,12,14)
+
+>  <InChIKey>
+JTWKTGKIUURTLG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1C(=O)NN)sc(n2)NN
+
+$$$$

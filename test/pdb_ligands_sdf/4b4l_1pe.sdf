@@ -1,0 +1,133 @@
+1G8I_1PE_A_951
+  RCSB PDB12061702343D
+Coordinates from PDB:1G8I:A:951 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   18.6040    9.6900    3.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5210   10.5690    3.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4830   10.5350    1.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4810    9.6680    0.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2380    8.5620   -1.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2060    9.2990   -0.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3560    7.2620   -0.6560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5930    5.0510   -0.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4490    6.2680   -1.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5300    5.4210    0.8830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2450    4.5400    3.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6420    4.2550    1.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2320    5.1450    3.9100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8240    6.0380    5.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+OH2
+A    2
+C12
+A    3
+C22
+A    4
+OH3
+A    5
+C13
+A    6
+C23
+A    7
+OH4
+A    8
+C14
+A    9
+C24
+A   10
+OH5
+A   11
+C15
+A   12
+C25
+A   13
+OH6
+A   14
+C26
+M  END
+>  <InstanceId>
+1G8I_1PE_A_951
+
+>  <ChemCompId>
+1PE
+
+>  <PdbId>
+1G8I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+951
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C9 O5
+
+>  <Name>
+PENTAETHYLENE GLYCOL
+
+>  <SystematicName>
+2-[2-[2-[2-(2-hydroxyethoxy)ethoxy]ethoxy]ethoxy]ethanol
+
+>  <Synonyms>
+PEG400
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H22 O6
+
+>  <MolecularWeight>
+238.278
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H22O6/c11-1-3-13-5-7-15-9-10-16-8-6-14-4-2-12/h11-12H,1-10H2
+
+>  <InChIKey>
+JLFNLZLINWHATN-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COCCOCCOCCOCCO)O
+
+$$$$

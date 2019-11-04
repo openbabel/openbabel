@@ -23,11 +23,11 @@ General Public License for more details.
 #include <string>
 #include <map>
 #include <openbabel/plugin.h>
-#include <openbabel/base.h>
 
 namespace OpenBabel
 {
   class OBConversion; //used only as a pointer
+  class OBBase;
 
 // Class introduction below
 class OBAPI OBOp : public OBPlugin
@@ -97,7 +97,7 @@ public:
       \brief Operations to modify molecules before output
       \since version 2.2
 
-Classes derived from OBOp implement options for the babel program (for both
+Classes derived from OBOp implement options for the obabel program (for both
 its commandline and GUI interfaces). It is intended for options that carry out some
 modification on the molecule(or reaction) after it has been input, but before
 it is output. An example is the --center option implemented in the OpCenter class
@@ -105,7 +105,7 @@ in ops.cpp, which is a duplicate of the built in -c option for centering coordin
 
 The advantage of plugin classes is that no existing code has to be modified
 when a new class is added. You can list those that are present by
-babel -L ops
+obabel -L ops
 or from a menu item in the GUI.
 
 Any OBOp derived class has to have a constructor, a function returning a short description,

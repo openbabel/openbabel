@@ -1,0 +1,153 @@
+2ZSA_PAZ_A_801
+  RCSB PDB12061707463D
+Coordinates from PDB:2ZSA:A:801 Model:1 without hydrogens
+ 19 18  0  0  0  0            999 V2000
+   65.6310   32.7820    7.3280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.3410   32.4310    5.7830   P 0  0  0  0  0  0  0  0  0  0  0  0
+   64.9540   30.8680    5.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.5060   32.7300    4.9180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.0140   33.2520    5.3830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.7030   33.4890    4.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3840   34.2500    3.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.2840   33.5210    4.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5490   35.6640    4.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0200   34.3170    2.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.9850   32.9870    1.8490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6440   34.9590    2.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6390   34.2610    2.0550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6300   36.2880    2.1490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3760   37.0370    1.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6530   38.3900    1.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.2350   38.2250   -0.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.2750   38.8690   -0.3460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6300   37.4690   -0.8790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 18 17  2  0  0  0  0
+ 17 19  1  0  0  0  0
+A    1
+O8
+A    2
+P1
+A    3
+O6
+A    4
+O7
+A    5
+O2
+A    6
+C2
+A    7
+C1
+A    8
+C4
+A    9
+C3
+A   10
+C5
+A   11
+O5'
+A   12
+C6
+A   13
+O6'
+A   14
+N
+A   15
+C8
+A   16
+C9
+A   17
+C
+A   18
+O
+A   19
+OXT
+M  END
+>  <InstanceId>
+2ZSA_PAZ_A_801
+
+>  <ChemCompId>
+PAZ
+
+>  <PdbId>
+2ZSA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O8 P
+
+>  <Name>
+N-[(2R)-2-hydroxy-3,3-dimethyl-4-(phosphonooxy)butanoyl]-beta-alanine
+
+>  <SystematicName>
+3-[[(2R)-2-hydroxy-3,3-dimethyl-4-phosphonooxy-butanoyl]amino]propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H18 N O8 P
+
+>  <MolecularWeight>
+299.215
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H18NO8P/c1-9(2,5-18-19(15,16)17)7(13)8(14)10-4-3-6(11)12/h7,13H,3-5H2,1-2H3,(H,10,14)(H,11,12)(H2,15,16,17)/t7-/m0/s1
+
+>  <InChIKey>
+XHFVGHPGDLDEQO-ZETCQYMHSA-N
+
+>  <SMILES>
+CC(C)(COP(=O)(O)O)[C@H](C(=O)NCCC(=O)O)O
+
+$$$$

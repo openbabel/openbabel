@@ -1,0 +1,131 @@
+2QMY_AD1_A_501
+  RCSB PDB12061706493D
+Coordinates from PDB:2QMY:A:501 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   16.8430  -16.3340   29.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5910  -15.9130   30.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2440  -16.2070   30.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8440  -15.2600   31.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0570  -14.3530   32.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6160  -13.8200   33.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9210  -13.0450   34.4070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9510  -14.1910   34.1710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4530  -13.7490   35.2070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7340  -15.0940   33.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1700  -15.6200   32.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7450  -16.5910   31.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1070  -16.2600   30.8060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4 11  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  8  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+A    1
+CAG
+A    2
+NAM
+A    3
+CAA
+A    4
+CAI
+A    5
+CAF
+A    6
+CAK
+A    7
+OAC
+A    8
+CAJ
+A    9
+OAB
+A   10
+CAE
+A   11
+CAH
+A   12
+CAL
+A   13
+OAD
+M  END
+>  <InstanceId>
+2QMY_AD1_A_501
+
+>  <ChemCompId>
+AD1
+
+>  <PdbId>
+2QMY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+(3S)-3-hydroxy-1-methyl-2,3-dihydro-1H-indole-5,6-dione
+
+>  <SystematicName>
+(3S)-3-hydroxy-1-methyl-2,3-dihydroindole-5,6-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O3
+
+>  <MolecularWeight>
+179.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO3/c1-10-4-9(13)5-2-7(11)8(12)3-6(5)10/h2-3,9,13H,4H2,1H3/t9-/m1/s1
+
+>  <InChIKey>
+RPHLQSHHTJORHI-SECBINFHSA-N
+
+>  <SMILES>
+CN1C[C@H](C2=CC(=O)C(=O)C=C21)O
+
+$$$$

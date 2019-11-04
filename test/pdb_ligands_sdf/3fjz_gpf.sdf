@@ -1,0 +1,117 @@
+3FK1_GPF_A_429
+  RCSB PDB12061708363D
+Coordinates from PDB:3FK1:A:429 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   60.1760    7.9310   28.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4590    7.9900   30.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9730    8.8470   31.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6310   10.2720   27.1240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5320    8.3940   25.8470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0050    8.2870   26.4600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.5270    9.9790   31.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6030    8.7900   26.8280   P 0  0  0  0  0  0  0  0  0  0  0  0
+   60.8270    8.4300   32.8680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7100    8.5820   29.3970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  1  1  0  0  0  0
+  1 10  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  7  3  2  0  0  0  0
+  3  9  1  0  0  0  0
+  8  4  1  0  0  0  0
+  5  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O1
+A    5
+O2
+A    6
+O3
+A    7
+O4
+A    8
+P1
+A    9
+O5
+A   10
+N1
+M  END
+>  <InstanceId>
+3FK1_GPF_A_429
+
+>  <ChemCompId>
+GPF
+
+>  <PdbId>
+3FK1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+429
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O5 P
+
+>  <Name>
+N-(phosphonomethyl)glycine
+
+>  <SystematicName>
+2-(phosphonomethylamino)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H8 N O5 P
+
+>  <MolecularWeight>
+169.073
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H8NO5P/c5-3(6)1-4-2-10(7,8)9/h4H,1-2H2,(H,5,6)(H2,7,8,9)
+
+>  <InChIKey>
+XDDAORKBJWWYJS-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)NCP(=O)(O)O
+
+$$$$

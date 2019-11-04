@@ -1,0 +1,146 @@
+1PTV_PTR_A_322
+  RCSB PDB12061703423D
+Coordinates from PDB:1PTV:A:322 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   46.2950   11.4910   -0.3740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8920   11.9130   -0.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8720   13.3090   -1.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8010   13.7560   -1.8080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9940   13.7470   -1.6080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1060   11.9360    0.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6960   12.8860    1.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7610   12.5110    2.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1420   14.1470    1.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2590   13.3940    3.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6050   15.0220    2.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6640   14.6530    3.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1130   15.5330    4.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2500   16.2030    5.6380   P 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2490   17.1420    6.3360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1630   15.1320    6.8120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7720   16.7930    5.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 17  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OXT
+A    6
+CB
+A    7
+CG
+A    8
+CD1
+A    9
+CD2
+A   10
+CE1
+A   11
+CE2
+A   12
+CZ
+A   13
+OH
+A   14
+P
+A   15
+O1P
+A   16
+O2P
+A   17
+O3P
+M  END
+>  <InstanceId>
+1PTV_PTR_A_322
+
+>  <ChemCompId>
+PTR
+
+>  <PdbId>
+1PTV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+322
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O6 P
+
+>  <Name>
+O-PHOSPHOTYROSINE
+
+>  <SystematicName>
+(2S)-2-amino-3-(4-phosphonooxyphenyl)propanoic acid
+
+>  <Synonyms>
+PHOSPHONOTYROSINE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H12 N O6 P
+
+>  <MolecularWeight>
+261.168
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+Y
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12NO6P/c10-8(9(11)12)5-6-1-3-7(4-2-6)16-17(13,14)15/h1-4,8H,5,10H2,(H,11,12)(H2,13,14,15)/t8-/m0/s1
+
+>  <InChIKey>
+DCWXELXMIBXGTH-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@@H](C(=O)O)N)OP(=O)(O)O
+
+$$$$

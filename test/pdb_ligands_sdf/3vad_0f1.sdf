@@ -1,0 +1,135 @@
+3VAD_0F1_A_404
+  RCSB PDB12061711123D
+Coordinates from PDB:3VAD:A:404 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -8.8640  -32.3720   21.4510  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8960  -31.9960   19.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7870  -31.0280   19.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8640  -30.7020   17.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0340  -32.6820   18.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0790  -32.3770   17.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0200  -31.3600   16.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8560  -31.2360   15.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8390  -30.0720   14.4890  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1760  -33.0420   16.3200   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7910  -32.1800   15.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3930  -32.3100   13.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4820  -33.1150   13.3300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9780  -31.6570   12.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 12  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 11  8  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  3  2  0  0  0  0
+  5  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CL1
+A    2
+C2
+A    3
+C1
+A    4
+C6
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C8
+A    9
+CL2
+A   10
+S
+A   11
+C7
+A   12
+C9
+A   13
+O1
+A   14
+O2
+M  END
+>  <InstanceId>
+3VAD_0F1_A_404
+
+>  <ChemCompId>
+0F1
+
+>  <PdbId>
+3VAD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2 S Cl2
+
+>  <Name>
+3,6-dichloro-1-benzothiophene-2-carboxylic acid
+
+>  <SystematicName>
+3,6-bis(chloranyl)-1-benzothiophene-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H4 Cl2 O2 S
+
+>  <MolecularWeight>
+247.098
+
+>  <ModifiedDate>
+2013-01-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H4Cl2O2S/c10-4-1-2-5-6(3-4)14-8(7(5)11)9(12)13/h1-3H,(H,12,13)
+
+>  <InChIKey>
+AAHPIJMQJAZYTM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)sc(c2Cl)C(=O)O
+
+$$$$

@@ -1,0 +1,126 @@
+3NT5_ISE_A_345
+  RCSB PDB12061709583D
+Coordinates from PDB:3NT5:A:345 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -55.4360   -1.4310   18.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.8670   -2.0160   19.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.9280   -1.5900   17.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.2930   -2.5290   18.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.4220   -0.8060   16.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.9840   -0.7200   16.4590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.8740    0.6400   16.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.4450    1.2250   15.4130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.3820    0.7500   16.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.6650    2.1410   16.8090   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.9860    0.0240   17.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.4080    0.0600   17.5910   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  1  1  0  0  0  0
+  3  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  5  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+A   11
+C6
+A   12
+O6
+M  END
+>  <InstanceId>
+3NT5_ISE_A_345
+
+>  <ChemCompId>
+ISE
+
+>  <PdbId>
+3NT5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+345
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+(2R,3S,4s,5R,6S)-2,3,4,5,6-pentahydroxycyclohexanone
+
+>  <SystematicName>
+(2R,3S,5R,6S)-2,3,4,5,6-pentahydroxycyclohexan-1-one
+
+>  <Synonyms>
+Inosose, Myo-inosose
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 O6
+
+>  <MolecularWeight>
+178.14
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O6/c7-1-2(8)4(10)6(12)5(11)3(1)9/h1-5,7-11H/t1-,2-,3+,4+,5-
+
+>  <InChIKey>
+VYEGBDHSGHXOGT-HYFGLKJPSA-N
+
+>  <SMILES>
+[C@H]1([C@H](C(=O)[C@H]([C@@H](C1O)O)O)O)O
+
+$$$$

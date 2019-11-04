@@ -1,0 +1,118 @@
+4MRH_2CQ_A_201
+  RCSB PDB12061713473D
+Coordinates from PDB:4MRH:A:201 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    2.5940    4.5330  -11.1050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8070    4.1300  -10.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3590    4.9950   -9.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5530    4.5210   -8.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0670    5.3960   -6.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2380    3.1510   -8.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7030    2.4790   -6.7070  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6950    2.2840   -9.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4800    2.7590  -10.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9260    1.9390  -11.0410   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  2  9  2  0  0  0  0
+  2  3  1  0  0  0  0
+  9  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  8  6  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+NAB
+A    2
+CAH
+A    3
+CAE
+A    4
+CAG
+A    5
+CAA
+A    6
+CAJ
+A    7
+CL
+A    8
+CAF
+A    9
+CAI
+A   10
+NAC
+M  END
+>  <InstanceId>
+4MRH_2CQ_A_201
+
+>  <ChemCompId>
+2CQ
+
+>  <PdbId>
+4MRH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 Cl
+
+>  <Name>
+4-chloro-5-methylbenzene-1,2-diamine
+
+>  <SystematicName>
+4-chloranyl-5-methyl-benzene-1,2-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 Cl N2
+
+>  <MolecularWeight>
+156.613
+
+>  <ModifiedDate>
+2014-04-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9ClN2/c1-4-2-6(9)7(10)3-5(4)8/h2-3H,9-10H2,1H3
+
+>  <InChIKey>
+HOFKXNBVTNUDSH-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(c(cc1Cl)N)N
+
+$$$$

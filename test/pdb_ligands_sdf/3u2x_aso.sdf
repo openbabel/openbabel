@@ -1,0 +1,122 @@
+1XIE_ASO_A_389
+  RCSB PDB12061704383D
+Coordinates from PDB:1XIE:A:389 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   35.5270   30.9090   56.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9210   32.3980   56.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5500   33.1430   57.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0900   32.9080   57.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6460   31.4570   57.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2550   31.1760   57.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3330   32.5130   56.1820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6740   34.5600   57.5000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5340   33.6310   59.0510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1350   30.8000   56.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3430   32.2410   57.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O5
+A   11
+O6
+M  END
+>  <InstanceId>
+1XIE_ASO_A_389
+
+>  <ChemCompId>
+ASO
+
+>  <PdbId>
+1XIE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+389
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+1,5-ANHYDROSORBITOL
+
+>  <SystematicName>
+(2R,3S,4R,5S)-2-(hydroxymethyl)oxane-3,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c7-1-4-6(10)5(9)3(8)2-11-4/h3-10H,1-2H2/t3-,4+,5+,6+/m0/s1
+
+>  <InChIKey>
+MPCAJMNYNOGXPB-SLPGGIOYSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H](O1)CO)O)O)O
+
+$$$$

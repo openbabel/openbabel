@@ -27,6 +27,11 @@ GNU General Public License for more details.
 #include <iomanip>
 #include <map>
 #include <algorithm>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
@@ -102,7 +107,7 @@ namespace OpenBabel
 
       virtual const char* SpecificationURL()
       {
-        return "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";
+        return "https://www.3dsbiovia.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html";
       }
 
       virtual const char* GetMIMEType()
@@ -545,6 +550,7 @@ namespace OpenBabel
         }
         if (begin == 0 || end == 0 || order == 0 || begin > mol.NumAtoms() || end > mol.NumAtoms()) {
           errorMsg << "WARNING: Problems reading a MDL file\n";
+          errorMsg << line << "\n";
           errorMsg << "Invalid bond specification, atom numbers or bond order are wrong;\n";
           errorMsg << "each should be in a field of three characters.\n";
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
@@ -607,7 +613,7 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
           // return false; Should we return false for a kekulization failure?
         }
-        mol.UnsetAromaticPerceived();
+        mol.SetAromaticPerceived(false);
       }
 
       //
@@ -636,12 +642,15 @@ namespace OpenBabel
             ad->SetAlias(line);
             ad->SetOrigin(fileformatInput);
             OBAtom* at = mol.GetAtom(atomnum);
-            if (at) {
+            if (at) { // dkoes - only expand wild cards
               at->SetData(ad);
               //at->SetAtomicNum(0); Now leave element as found
               //The alias has now been added as a dummy atom with a AliasData object.
               //Delay the chemical interpretation until the rest of the molecule has been built
-              aliases.push_back(make_pair(ad, at));
+              //dkoes - only expand alias if referenced atom is wild card
+              //this is necessary since this field is used to store atom names (at least in the PDB)              
+              if(at->GetAtomicNum() == 0)
+                aliases.push_back(make_pair(ad, at));
             }
           }
           continue;
@@ -817,6 +826,10 @@ namespace OpenBabel
       }
     }
 
+    //alias expansion may need to look at coordinate array, so call
+    //endmodify to set mol->_c
+    mol.EndModify();
+
     //Expand aliases (implicit hydrogens already set on these as read from SMILES)
     for (vector<pair<AliasData*, OBAtom*> >::iterator iter = aliases.begin(); iter != aliases.end(); ++iter)
     {
@@ -824,8 +837,6 @@ namespace OpenBabel
       unsigned atomnum = (*iter).second->GetIdx();
       ad->Expand(mol, atomnum); //Make chemically meaningful, if possible.
     }
-
-    mol.EndModify();
 
     if (comment.length()) {
       OBCommentData *cd = new OBCommentData;
@@ -967,6 +978,52 @@ namespace OpenBabel
     return (GetNumberedRGroup(pmol, atom) == -1) ? "* " : "R#";
   }
 
+  static bool OldIsChiral(OBMol &mol)
+  {
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      if ((atom->GetAtomicNum() == OBElements::Carbon || atom->GetAtomicNum() == OBElements::Nitrogen)
+          && atom->GetHvyDegree() > 2
+          && atom->IsChiral())
+        return true;
+    }
+
+    return false;
+  }
+
+  static bool GetChiralFlagFromGenericData(OBMol &mol)
+  {
+    OBGenericData*  gd = mol.GetData("MOL Chiral Flag");
+    if (gd)
+    {
+      int iflag = atoi(((OBPairData*)gd)->GetValue().c_str());
+      if (iflag == 0)
+       return false;
+      else if (iflag == 1)
+        return true;
+      else
+      {
+        stringstream errorMsg;
+        errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
+          << iflag << " will be ignored.\n";
+        obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      }
+    }
+
+    return OldIsChiral(mol); // TODO: Remove this in favor of the following code
+
+    // Return true if and only if it has a specified tet stereocenter
+    std::vector<OBGenericData *> stereoData = mol.GetAllData(OBGenericDataType::StereoData);
+    std::vector<OBGenericData*>::iterator data;
+    for (data = stereoData.begin(); data != stereoData.end(); ++data) {
+      OBStereo::Type type = ((OBStereoBase*)*data)->GetType();
+      if (type != OBStereo::Tetrahedral) continue;
+      OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
+      if (ts->GetConfig().specified)
+        return true;
+    }
+    return false;
+  }
+
   /////////////////////////////////////////////////////////////////
   bool MDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -1081,29 +1138,8 @@ namespace OpenBabel
       // ... = obsolete
       // mmm = no longer supported (default=999)
       //                         aaabbblllfffcccsssxxxrrrpppiiimmmvvvvvv
-      bool chiralFlag = false;
-      int iflag = -1;
-      OBGenericData*  gd = mol.GetData("MOL Chiral Flag");
-      if (gd)
-      {
-        iflag = atoi(((OBPairData*) gd)->GetValue().c_str());
-        if (iflag == 0)
-          chiralFlag = false;
-        else if (iflag == 1)
-          chiralFlag = true;
-        else
-        {
-          stringstream errorMsg;
-          errorMsg << "WARNING: The Chiral Flag should be either 0 or 1. The value of "
-                   << iflag << " will be ignored.\n";
-          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obWarning);
-        }
-      }
-
-      if (iflag < 0 || iflag > 1)
-      {
-        chiralFlag = mol.IsChiral();
-      }
+      bool chiralFlag = GetChiralFlagFromGenericData(mol);
+ 
       snprintf(buff, BUFF_SIZE, "%3d%3d  0  0%3d  0  0  0  0  0999 V2000\n",
                mol.NumAtoms(), mol.NumBonds(), chiralFlag);
       ofs << buff;
@@ -1128,7 +1164,7 @@ namespace OpenBabel
           stereo = parity[atom];
 
         
-        int expval = atom->BOSum();
+        int expval = atom->GetExplicitValence();
         int impval = MDLValence(atom->GetAtomicNum(), atom->GetFormalCharge(), expval);
         int actual_impval = expval + atom->GetImplicitHCount();
         int valence;
@@ -1193,7 +1229,7 @@ namespace OpenBabel
 
             ofs << setw(3) << atom->GetIdx(); // begin atom number
             ofs << setw(3) << nbr->GetIdx(); // end atom number
-            ofs << setw(3) << bond->GetBO(); // bond type
+            ofs << setw(3) << bond->GetBondOrder(); // bond type
             ofs << setw(3) << stereo; // bond stereo
             ofs << "  0  0  0" << endl;
 
@@ -1229,8 +1265,8 @@ namespace OpenBabel
             zchs.push_back(make_pair(origatom->GetIdx(), origatom->GetFormalCharge()));
           }
           int hcount = atom->ExplicitHydrogenCount() + atom->GetImplicitHCount();
-          int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->BOSum())
-                             - origatom->BOSum() + atom->ExplicitHydrogenCount();
+          int autohcount = HYDValence(origatom->GetAtomicNum(), origatom->GetFormalCharge(), origatom->GetExplicitValence())
+                             - origatom->GetExplicitValence() + atom->ExplicitHydrogenCount();
           if (hcount != autohcount) {
             hyds.push_back(make_pair(origatom->GetIdx(), atom->GetImplicitHCount()));
           }
@@ -1503,10 +1539,6 @@ namespace OpenBabel
             }
           }
         if(!mol.AddAtom(atom)) return false;
-        /*
-        if(chiralWatch)
-          _mapcd[mol.GetAtom(mol.NumAtoms())]= new OBChiralData; // fill the map with chrial data for each chiral atom
-        */
         atom.Clear();
       }
     return true;
@@ -1549,24 +1581,6 @@ namespace OpenBabel
               }
           }
         if (!mol.AddBond(obstart,obend,order,flag)) return false;
-
-        /*
-        // after adding a bond to atom "obstart"
-        // search to see if atom is bonded to a chiral atom
-        map<OBAtom*,OBChiralData*>::iterator ChiralSearch;
-        ChiralSearch = _mapcd.find(mol.GetAtom(obstart));
-        if (ChiralSearch!=_mapcd.end())
-          {
-            (ChiralSearch->second)->AddAtomRef(obend, input);
-          }
-        // after adding a bond to atom "obend"
-        // search to see if atom is bonded to a chiral atom
-        ChiralSearch = _mapcd.find(mol.GetAtom(obend));
-        if (ChiralSearch!=_mapcd.end())
-          {
-            (ChiralSearch->second)->AddAtomRef(obstart, input);
-          }
-        */
       }
     return true;
   }
@@ -1607,10 +1621,12 @@ namespace OpenBabel
   //////////////////////////////////////////////////////////
   bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
   {
+    bool chiralFlag = GetChiralFlagFromGenericData(mol);
+
     ofs << "  0  0  0     0  0            999 V3000" << endl; //line 4
     ofs << "M  V30 BEGIN CTAB" <<endl;
     ofs << "M  V30 COUNTS " << mol.NumAtoms() << " " << mol.NumBonds()
-        << " 0 0 " << mol.IsChiral() << endl;
+        << " 0 0 " << chiralFlag << endl;
 
     ofs << "M  V30 BEGIN ATOM" <<endl;
     OBAtom *atom;
@@ -1629,57 +1645,6 @@ namespace OpenBabel
           ofs << " CHG=" << atom->GetFormalCharge();
         if(atom->GetSpinMultiplicity()!=0)
           ofs << " RAD=" << atom->GetSpinMultiplicity();
-        /*
-        if(atom->IsChiral())
-          {
-            // MOLV3000 uses 1234 unless an H then 123H
-
-            OBChiralData* cd=(OBChiralData*)atom->GetData(OBGenericDataType::ChiralData);
-            if(!cd){ //if no Chiral Data Set, need to make one!
-              cd=new OBChiralData;
-              atom->SetData(cd);
-            }
-            if (atom->GetHvyValence()==3)
-              {
-                OBAtom *nbr;
-                int Hid = (mol.NumAtoms()+1) ;// max Atom ID +1
-                vector<unsigned int> nbr_atms;
-                vector<OBBond*>::iterator i;
-                for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-                  {
-                    if (nbr->GetAtomicNum() == OBElements::Hydrogen){Hid=nbr->GetIdx();continue;}
-                    nbr_atms.push_back(nbr->GetIdx());
-                  }
-                sort(nbr_atms.begin(),nbr_atms.end());
-                nbr_atms.push_back(Hid);
-                cd->SetAtom4Refs(nbr_atms,output);
-              }
-            else if (atom->GetHvyValence()==4)
-              {
-                vector<unsigned int> nbr_atms;
-                int n;
-                for(n=1;n<5;n++)nbr_atms.push_back(n);
-                cd->SetAtom4Refs(nbr_atms,output);
-              }
-            double vol=0;
-            if (mol.HasNonZeroCoords())
-              {
-                vol=CalcSignedVolume(mol,atom);
-                if (vol > 0.0)atom->SetClockwiseStereo();
-                else if(vol < 0.0)atom->SetAntiClockwiseStereo();
-                CorrectChirality(mol,atom,calcvolume,output);
-              }
-            else {
-              CorrectChirality(mol,atom); // will set the stereochem based on input/output atom4refs
-            }
-
-            int cfg=3; // if we don't know, then it's unspecified
-            if(atom->IsClockwise())cfg=1;
-            else if(atom->IsAntiClockwise())cfg=2;
-
-            ofs << " CFG=" << cfg;
-          }
-        */
         if(atom->GetIsotope()!=0)
           ofs << " MASS=" << atom->GetIsotope();
         ofs << endl;
@@ -1701,7 +1666,7 @@ namespace OpenBabel
                 bond = (OBBond*) *j;
                 ofs << "M  V30 "
                     << index++ << " "
-                    << bond->GetBO() << " "
+                    << bond->GetBondOrder() << " "
                     << bond->GetBeginAtomIdx() << " "
                     << bond->GetEndAtomIdx();
                 //@todo do the following stereo chemistry properly
@@ -1966,11 +1931,11 @@ namespace OpenBabel
 
   bool MDLFormat::TestForAlias(const string& symbol, OBAtom* at, vector<pair<AliasData*,OBAtom*> >& aliases)
   {
-  /*If symbol is R R' R'' R# R¢ R¢¢ or Rn Rnn where n is an digit
+  /*If symbol is R R' R'' R# Rï¿½ Rï¿½ï¿½ or Rn Rnn where n is an digit
     the atom is added to the alias list and the atomic number set to zero. Returns false.
     Otherwise, e.g Rh or Ru, returns true.
   */
-    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='¢' || symbol[1]=='#')
+    if(symbol.size()==1 || isdigit(symbol[1]) || symbol[1]=='\'' || symbol[1]=='\xa2' || symbol[1]=='#')
     {
       AliasData* ad = new AliasData();
       ad->SetAlias(symbol);

@@ -1,0 +1,111 @@
+1EVI_2PC_A_352
+  RCSB PDB12061702253D
+Coordinates from PDB:1EVI:A:352 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   34.0270   72.7080   64.9990   N 0  3  0  0  0  0  0  0  0  0  0  0
+   35.0880   72.8080   65.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3690   71.5070   66.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1770   70.5940   66.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2390   71.4530   65.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8600   74.1030   65.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2590   75.0530   65.4440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9410   74.0100   66.5150   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+M  CHG  2   1   1   8  -1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+M  END
+>  <InstanceId>
+1EVI_2PC_A_352
+
+>  <ChemCompId>
+2PC
+
+>  <PdbId>
+1EVI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+352
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2
+
+>  <Name>
+3,4-DIHYDRO-2H-PYRROLIUM-5-CARBOXYLATE
+
+>  <SystematicName>
+4,5-dihydro-3H-pyrrol-1-ium-2-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N O2
+
+>  <MolecularWeight>
+113.115
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7NO2/c7-5(8)4-2-1-3-6-4/h1-3H2,(H,7,8)
+
+>  <InChIKey>
+RHTAIKJZSXNELN-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CC(=[NH+]C1)C(=O)[O-]
+
+$$$$

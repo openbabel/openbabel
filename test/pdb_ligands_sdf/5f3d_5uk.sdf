@@ -1,0 +1,133 @@
+5F3D_5UK_A_302
+  RCSB PDB12061717353D
+Coordinates from PDB:5F3D:A:302 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   12.5880    4.4570   13.3390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6700    4.0010   12.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0600    4.7020   11.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3220    2.6220   12.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0580    2.3600   14.0060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1050    1.6140   11.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1670    2.3310   10.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3750    2.6330    9.6170   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1470    2.6300   11.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2550    1.0140   10.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2000    0.1140   11.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9350   -0.5020   12.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4830   -1.8430   12.8470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2680   -0.1400   11.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 14 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  6  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  6  4  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  4  5  2  0  0  0  0
+A    1
+OAC
+A    2
+CAJ
+A    3
+OAE
+A    4
+CAL
+A    5
+NAA
+A    6
+CAN
+A    7
+CAK
+A    8
+OAF
+A    9
+OAD
+A   10
+CAI
+A   11
+CAM
+A   12
+CAH
+A   13
+OAB
+A   14
+OAG
+M  END
+>  <InstanceId>
+5F3D_5UK_A_302
+
+>  <ChemCompId>
+5UK
+
+>  <PdbId>
+5F3D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O6
+
+>  <Name>
+2-IMINO,3-CARBOXY,5-OXO,6-HYDROXY HEXANOIC ACID
+
+>  <SystematicName>
+(3~{S})-2-azanylidene-3-(3-oxidanyl-2-oxidanylidene-propyl)butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N O6
+
+>  <MolecularWeight>
+203.149
+
+>  <ModifiedDate>
+2016-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9NO6/c8-5(7(13)14)4(6(11)12)1-3(10)2-9/h4,8-9H,1-2H2,(H,11,12)(H,13,14)/b8-5+/t4-/m0/s1
+
+>  <InChIKey>
+RVRAXUFLRLVVQJ-FMAAMLBYSA-N
+
+>  <SMILES>
+[H]/N=C(\[C@H](CC(=O)CO)C(=O)O)/C(=O)O
+
+$$$$

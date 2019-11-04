@@ -1,0 +1,110 @@
+1EFL_TTN_A_603
+  RCSB PDB12061702233D
+Coordinates from PDB:1EFL:A:603 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   16.5020   24.1260   37.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2750   22.6240   37.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4760   21.8260   38.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0250   24.8120   37.0080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1620   24.6670   38.9400   O 0  5  0  0  0  0  0  0  0  0  0  0
+   16.0340   22.3370   36.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4550   21.3180   39.3030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4710   21.6860   37.4500   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  7  2  0  0  0  0
+  3  8  1  0  0  0  0
+M  CHG  2   5  -1   8  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O1
+A    5
+O2
+A    6
+O3
+A    7
+O4
+A    8
+O5
+M  END
+>  <InstanceId>
+1EFL_TTN_A_603
+
+>  <ChemCompId>
+TTN
+
+>  <PdbId>
+1EFL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+603
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O5
+
+>  <Name>
+TARTRONATE
+
+>  <SystematicName>
+2-hydroxypropanedioate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H2 O5
+
+>  <MolecularWeight>
+118.045
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H4O5/c4-1(2(5)6)3(7)8/h1,4H,(H,5,6)(H,7,8)/p-2
+
+>  <InChIKey>
+ROBFUDYVXSDBQM-UHFFFAOYSA-L
+
+>  <SMILES>
+C(C(=O)[O-])(C(=O)[O-])O
+
+$$$$

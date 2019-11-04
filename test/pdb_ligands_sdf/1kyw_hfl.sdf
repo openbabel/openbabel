@@ -1,0 +1,138 @@
+1KYW_HFL_F_0
+  RCSB PDB12061703083D
+Coordinates from PDB:1KYW:F:0 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   32.5740   -5.4490    9.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4590   -5.0480   10.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3030   -4.4810    9.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2140   -4.2960    8.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3360   -4.7140    7.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5070   -5.2850    8.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7120   -5.9890   10.2160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5690   -5.6770    7.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5040   -5.2070   11.8810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9780   -3.6810    7.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7530   -3.4310    6.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4470   -2.7870    6.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9620   -2.0520    7.2780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3530   -3.6650    5.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0910   -4.1160   12.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  8  1  0  0  0  0
+  9 15  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+A    9
+O9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+A   14
+O14
+A   15
+C15
+M  END
+>  <InstanceId>
+1KYW_HFL_F_0
+
+>  <ChemCompId>
+HFL
+
+>  <PdbId>
+1KYW
+
+>  <ChainId>
+F
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O5
+
+>  <Name>
+5-(3,3-DIHYDROXYPROPENY)-3-METHOXY-BENZENE-1,2-DIOL
+
+>  <SystematicName>
+5-[(E)-3,3-dihydroxyprop-1-enyl]-3-methoxy-benzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O5
+
+>  <MolecularWeight>
+212.199
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O5/c1-15-8-5-6(2-3-9(12)13)4-7(11)10(8)14/h2-5,9,11-14H,1H3/b3-2+
+
+>  <InChIKey>
+QQVLKPZAOPJJCB-NSCUHMNNSA-N
+
+>  <SMILES>
+COc1cc(cc(c1O)O)\C=C\C(O)O
+
+$$$$

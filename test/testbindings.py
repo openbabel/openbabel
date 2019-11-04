@@ -19,20 +19,20 @@ and so you can quickly develop the tests and try them out.
 """
 
 import os
-import re
 import sys
 import unittest
+import itertools
 
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except ImportError:
     ob = None
 
 try:
-    import pybel
+    from openbabel import pybel
 except ImportError:
     pybel = None
 
@@ -80,6 +80,24 @@ class TestSuite(PythonBindings):
             roundtrip = pybel.readstring("smi", smi).write("smi", opt={"a":True})
             hasbracket = "[" in roundtrip
             self.assertEqual(hasbracket, needsbracket)
+
+    def testAromaticityPreservedOnAtomDeletion(self):
+        """Ensure that aromaticity is preserved on atom deleteion"""
+        mol = pybel.readstring("smi", "c1ccccc1").OBMol
+        mol.DeleteAtom(mol.GetFirstAtom())
+        self.assertTrue(mol.GetFirstAtom().IsAromatic())
+        mol.SetAromaticPerceived(False)
+        self.assertFalse(mol.GetFirstAtom().IsAromatic())
+
+    def testLPStereo(self):
+        """Ensure that nitrogen and sulfur can support LP stereo"""
+        data = ["[N@@](Cl)(Br)I", "Cl[N@@](Br)I",
+                "[S@@](Cl)(Br)I", "Cl[S@@](Br)I"]
+        for smi in data:
+            mol = pybel.readstring("smi", smi)
+            self.assertTrue(mol.OBMol.GetData(ob.StereoData))
+            nsmi = mol.write("smi").rstrip()
+            self.assertEqual(smi, nsmi)
 
     def testSmilesAtomOrder(self):
         """Ensure that SMILES atom order is written correctly"""
@@ -133,7 +151,7 @@ class TestSuite(PythonBindings):
             # Aromaticity is perceived during the last step of reading SMILES
             # so let's unset it here for the first pass
             if N == 0:
-                obmol.UnsetAromaticPerceived()
+                obmol.SetAromaticPerceived(False)
             else:
                 self.assertTrue(obmol.HasAromaticPerceived())
 
@@ -224,6 +242,8 @@ H          0.74700        0.50628       -0.64089
         ff = pybel._forcefields["mmff94"]
 
         self.assertTrue(ff.Setup(mol.OBMol))
+        energy = ff.Energy() # note: calling GetGradient w/o calling Energy()
+                             #       just returns random numbers
         for atom in mol.atoms:
             # this should throw an AttributeError if not available
             grad = ff.GetGradient(atom.OBAtom)
@@ -444,6 +464,25 @@ H         -0.26065        0.64232       -2.62218
 
         self.assertTrue(N > 100)
 
+    def testElementsSpecifiedByAtomicNumberInSmiles(self):
+        smis = [
+                ("[#100]", "[Fm]"),
+                ("[#255]", None),
+                ("[254#255]", None),
+                ("[#6]", -1),
+                ("[#256]", -1),
+                ("[#10a]", -1)
+               ]
+
+        for smi, rt in smis:
+            if rt==-1:
+                self.assertRaises(IOError, pybel.readstring, "smi", smi)
+                continue
+            if rt is None:
+                rt = smi
+            nsmi = pybel.readstring("smi", smi).write("smi").rstrip()
+            self.assertEqual(rt, nsmi)
+
     def testIterators(self):
         """Basic check that at least two iterators are working"""
         mol = pybel.readstring("smi", "c1ccccc1C(=O)Cl")
@@ -453,6 +492,172 @@ H         -0.26065        0.64232       -2.62218
         self.assertEqual(elements, [6,6,6,6,6,6,6,8,17])
         bonds = list(ob.OBMolBondIter(mol.OBMol))
         self.assertEqual(len(bonds), 9)
+
+    def testProper2DofFragments(self):
+        """Check for proper handling of fragments in mcdl routines, see issue #1889"""
+        mol = pybel.readstring("smi", "[H+].CC[O-].CC[O-]")
+        mol.draw(show=False, update=True)
+        dists = [
+            abs(a.coords[0] - b.coords[0]) + abs(a.coords[1] - b.coords[1])
+            for a, b in itertools.combinations(mol.atoms, 2)
+        ]
+        mindist = min(dists)
+        self.assertTrue(mindist > 0.00001)
+
+    def testRegressionBenzene2D(self):
+        """Check that benzene is given a correct layout, see #1900"""
+        mol = pybel.readstring("smi", "c1ccccc1")
+        mol.draw(show=False, update=True)
+        benzmol = """
+ OpenBabel10161813072D
+
+  6  6  0  0  0  0  0  0  0  0999 V2000
+   -0.8660   -0.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7321   -0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7321    1.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8660    1.5000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0000    1.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+M  END
+"""
+        self.assertEqual(mol.write("mol")[24:], benzmol[24:])
+
+    def testTemplates(self):
+        """Check for regressions to #1851"""
+        smis = [
+            "O=C(C1=CN=CS1)N1C2CCC1CN(CC1CC3CCC1O3)C2",
+            "O=C(CC1CC1)N1C2CCC1CC(NC(=O)C13CCC(CC1)CC3)C2",
+            "O=C([C@@H]1C[C@H]1C1CCC1)N1C2CCC1CN(C(=O)C13CCN(CC1)C3)C2",
+            "O=C(CCN1C=CN=C1)N1C2CCC1CN(CC1CC3CCC1C3)C2"
+            ]
+        for s in smis:
+            mol = pybel.readstring("smi", s)
+            mol.draw(show=False, update=True)
+        assert(True) # Segfaults before...
+
+
+class NewReactionHandling(PythonBindings):
+
+    def testBasic(self):
+        smis = ["C>N>O", "C>N>", ">N>O", ">N>", "C>>", ">>O", ">>"]
+        for smi in smis:
+            nsmi = pybel.readstring("smi", smi).write("smi").rstrip()
+            self.assertEqual(smi, nsmi)
+        badsmis = ["C>>N>O", ">>>", "C>N>O>", ">", ">N", "N>"]
+        for smi in badsmis:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
+    def testFacade(self):
+        parts = "CNO"
+        mol = pybel.readstring("smi", ">".join(parts)).OBMol
+        facade = ob.OBReactionFacade(mol)
+
+        # basic test - copy out each component
+        comps = [ob.REACTANT, ob.AGENT, ob.PRODUCT]
+        for part, comp in zip(parts, comps):
+            nmol = ob.OBMol()
+            facade.GetComponent(nmol, comp, 0)
+            nsmi = pybel.Molecule(nmol).write("smi").rstrip()
+            self.assertEqual(nsmi, part)
+        nmol = ob.OBMol()
+        facade.GetComponent(nmol, ob.NO_REACTIONROLE, 0)
+        self.assertEqual(0, nmol.NumAtoms())
+
+        # Reassign role
+        facade.ReassignComponent(ob.AGENT, 0, ob.NO_REACTIONROLE)
+        nsmi = pybel.Molecule(mol).write("smi").rstrip()
+        self.assertEqual("C>>O", nsmi)
+        # ...and back again
+        facade.ReassignComponent(ob.NO_REACTIONROLE, 0, ob.AGENT)
+
+        # Add a new reactant
+        molb = pybel.readstring("smi", "S").OBMol
+        facade.AddComponent(molb, ob.REACTANT)
+        nsmi = pybel.Molecule(mol).write("smi").rstrip()
+        self.assertEqual("C.S>N>O", nsmi)
+
+        # ...and copy it back out
+        nmol = ob.OBMol()
+        facade.GetComponent(nmol, ob.REACTANT, 1)
+        nsmi = pybel.Molecule(nmol).write("smi").rstrip()
+        self.assertEqual("S", nsmi)
+        # ...and also copy the O
+        facade.GetComponent(nmol, ob.PRODUCT, 0)
+        nmol.SetIsReaction()
+        nsmi = pybel.Molecule(nmol).write("smi").rstrip()
+        self.assertEqual("S>>O", nsmi)
+
+    def testInvalidRxn(self):
+        """IsValid() should flag up invalid reaction data"""
+        mol = pybel.readstring("smi", "CC>>O").OBMol
+        facade = ob.OBReactionFacade(mol)
+        self.assertTrue(facade.IsValid())
+        mol.SetIsReaction(False)
+        self.assertFalse(facade.IsValid())
+        mol.SetIsReaction()
+        self.assertTrue(facade.IsValid())
+
+        atom = mol.GetAtom(1)
+
+        facade.SetRole(atom, 4)
+        self.assertFalse(facade.IsValid()) # invalid role
+        facade.SetRole(atom, ob.REACTANT)
+        self.assertTrue(facade.IsValid())
+
+        data = atom.GetData("rxncomp")
+        ob.toPairInteger(data).SetValue(-1)
+        self.assertFalse(facade.IsValid()) # invalid rxn component id
+
+        atom.DeleteData(data)
+        self.assertFalse(atom.HasData("rxncomp"))
+        self.assertFalse(facade.IsValid()) # data missing
+
+        newdata = ob.OBPairData()
+        newdata.SetAttribute("rxncomp")
+        newdata.SetValue("1")
+        atom.CloneData(newdata)
+        self.assertTrue(atom.HasData("rxncomp"))
+        self.assertFalse(facade.IsValid()) # wrong type of data
+
+        # Connected component should not belong to two different
+        # rxn components or two different reaction roles
+        mol = pybel.readstring("smi", "CC>>O").OBMol
+        facade = ob.OBReactionFacade(mol)
+        self.assertTrue(facade.IsValid())
+        atom = mol.GetAtom(1)
+        facade.SetComponentId(atom, 99)
+        self.assertFalse(facade.IsValid())
+        facade.SetComponentId(atom, 1)
+        self.assertTrue(facade.IsValid())
+        facade.SetRole(atom, ob.AGENT)
+        self.assertFalse(facade.IsValid())
+
+
+    def testRoundtripThroughRXN(self):
+        data = ["C>N>O", "C>>O", "C.N>>O", "C>>O.N",
+                "C>>O", ">>O", "C>>", ">N>", ">>"]
+        for rsmi in data:
+            rxn = pybel.readstring("smi", rsmi).write("rxn")
+            mrsmi = pybel.readstring("rxn", rxn).write("smi").rstrip()
+            self.assertEqual(mrsmi, rsmi)
+        # Test -G option, which changes the treatment of agents
+        rsmi = "C>N>O"
+        ans = {"agent": "C>N>O",
+               "reactant": "C.N>>O",
+               "product": "C>>O.N",
+               "both": "C.N>>O.N",
+               "ignore": "C>>O"}
+        for option, result in ans.items():
+            rxn = pybel.readstring("smi", rsmi).write("rxn", opt={"G":option})
+            mrsmi = pybel.readstring("rxn", rxn).write("smi").rstrip()
+            self.assertEqual(mrsmi, result)
+
 
 class Radicals(PythonBindings):
     def testSmilesToMol(self):
@@ -698,7 +903,7 @@ class AtomClass(PythonBindings):
         self.assertEqual(6, ob.toPairInteger(data).GetGenericValue())
 
         atom.DeleteData("Atom Class")
-        ac = ob.obpairtemplateint()
+        ac = ob.OBPairInteger()
         ac.SetAttribute("Atom Class")
         ac.SetValue(2)
         mol.OBMol.GetAtom(1).CloneData(ac)

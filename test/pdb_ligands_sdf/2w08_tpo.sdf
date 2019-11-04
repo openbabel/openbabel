@@ -1,0 +1,125 @@
+1LC7_TPO_A_990
+  RCSB PDB12061703103D
+Coordinates from PDB:1LC7:A:990 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   26.1790   28.3590   14.7710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7250   27.0370   15.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9520   27.2750   16.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1520   26.4660   15.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3420   28.6180   15.9530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0330   29.5020   17.2830   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6980   30.9210   17.0330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6670   28.7220   18.5180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4710   29.6000   17.3430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7420   26.1980   15.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0240   24.9670   16.0610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6620   26.7070   16.3410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG2
+A    5
+OG1
+A    6
+P
+A    7
+O1P
+A    8
+O2P
+A    9
+O3P
+A   10
+C
+A   11
+O
+A   12
+OXT
+M  END
+>  <InstanceId>
+1LC7_TPO_A_990
+
+>  <ChemCompId>
+TPO
+
+>  <PdbId>
+1LC7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+990
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O6 P
+
+>  <Name>
+PHOSPHOTHREONINE
+
+>  <SystematicName>
+(2S,3R)-2-amino-3-phosphonooxy-butanoic acid
+
+>  <Synonyms>
+PHOSPHONOTHREONINE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H10 N O6 P
+
+>  <MolecularWeight>
+199.099
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+THR
+
+>  <OneLetterCode>
+T
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10NO6P/c1-2(3(5)4(6)7)11-12(8,9)10/h2-3H,5H2,1H3,(H,6,7)(H2,8,9,10)/t2-,3+/m1/s1
+
+>  <InChIKey>
+USRGIUJOYOXOQJ-GBXIJSLDSA-N
+
+>  <SMILES>
+C[C@H]([C@@H](C(=O)O)N)OP(=O)(O)O
+
+$$$$

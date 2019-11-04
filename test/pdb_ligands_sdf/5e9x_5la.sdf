@@ -1,0 +1,127 @@
+5E9X_5LA_A_804
+  RCSB PDB12061717263D
+Coordinates from PDB:5E9X:A:804 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   30.0990   79.2740   58.8740  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1330   79.3130   60.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0800   80.2370   60.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8010   80.0450   61.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8010   80.5450   62.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9760   79.7450   63.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9380   79.8410   64.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0040   78.8520   65.6350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6360   80.9070   64.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0570   78.6840   63.5230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3160   78.8130   62.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0640   78.0850   61.4620   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  4 11  2  0  0  0  0
+  4  5  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+ 10  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+CL1
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+O08
+A    9
+O09
+A   10
+N10
+A   11
+C11
+A   12
+S12
+M  END
+>  <InstanceId>
+5E9X_5LA_A_804
+
+>  <ChemCompId>
+5LA
+
+>  <PdbId>
+5E9X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+804
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2 S Cl
+
+>  <Name>
+2-chloranyl-6~{H}-thieno[2,3-b]pyrrole-5-carboxylic acid
+
+>  <SystematicName>
+2-chloranyl-6~{H}-thieno[2,3-b]pyrrole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 Cl N O2 S
+
+>  <MolecularWeight>
+201.63
+
+>  <ModifiedDate>
+2016-10-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4ClNO2S/c8-5-2-3-1-4(7(10)11)9-6(3)12-5/h1-2,9H,(H,10,11)
+
+>  <InChIKey>
+SOGNHUJSAKAIRG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2cc(sc2[nH]c1C(=O)O)Cl
+
+$$$$

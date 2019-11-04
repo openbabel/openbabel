@@ -1,0 +1,109 @@
+2CU9_PG0_A_1203
+  RCSB PDB12061705173D
+Coordinates from PDB:2CU9:A:1203 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   25.3400    3.8230   19.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5880    2.4300   19.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0390    1.9780   18.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4790    1.4830   18.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8710    0.3590   17.8260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1680   -0.1540   18.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2730    0.8910   17.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5320    0.5280   18.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C5
+A    2
+O2
+A    3
+C4
+A    4
+C3
+A    5
+O1
+A    6
+C2
+A    7
+C1
+A    8
+OTT
+M  END
+>  <InstanceId>
+2CU9_PG0_A_1203
+
+>  <ChemCompId>
+PG0
+
+>  <PdbId>
+2CU9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O3
+
+>  <Name>
+2-(2-METHOXYETHOXY)ETHANOL
+
+>  <SystematicName>
+2-(2-methoxyethoxy)ethanol
+
+>  <Synonyms>
+PEG 6000
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O3
+
+>  <MolecularWeight>
+120.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O3/c1-7-4-5-8-3-2-6/h6H,2-5H2,1H3
+
+>  <InChIKey>
+SBASXUCJHJRPEV-UHFFFAOYSA-N
+
+>  <SMILES>
+COCCOCCO
+
+$$$$

@@ -1,0 +1,142 @@
+4JBX_SK7_A_601
+  RCSB PDB12061713083D
+Coordinates from PDB:4JBX:A:601 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   46.4790   25.0620   54.5220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6220   25.4010   55.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2900   26.7880   55.5130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1290   24.3950   52.3070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2030   25.5850   53.8890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3210   25.8700   54.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1750   24.5420   52.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4010   23.7450   52.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3150   22.6620   51.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5090   24.0080   53.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7450   23.1920   53.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8540   23.3920   52.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9850   22.3850   52.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.1910   24.7650   52.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.9630   21.7240   51.5550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1560   25.3320   53.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 13  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 14 16  1  0  0  0  0
+  4  7  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  2  0  0  0  0
+  7  5  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  6  3  2  0  0  0  0
+A    1
+N1
+A    2
+C6
+A    3
+O1
+A    4
+O2
+A    5
+N2
+A    6
+C1
+A    7
+C2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C11
+A   12
+C12
+A   13
+C14
+A   14
+C13
+A   15
+O4
+A   16
+O3
+M  END
+>  <InstanceId>
+4JBX_SK7_A_601
+
+>  <ChemCompId>
+SK7
+
+>  <PdbId>
+4JBX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4
+
+>  <Name>
+6-[3-hydroxy-2-(hydroxymethyl)prop-1-en-1-yl]-1,5-dimethylpyrimidine-2,4(1H,3H)-dione
+
+>  <SystematicName>
+6-[2-(hydroxymethyl)-3-oxidanyl-prop-1-enyl]-1,5-dimethyl-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2 O4
+
+>  <MolecularWeight>
+226.229
+
+>  <ModifiedDate>
+2013-03-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2O4/c1-6-8(3-7(4-13)5-14)12(2)10(16)11-9(6)15/h3,13-14H,4-5H2,1-2H3,(H,11,15,16)
+
+>  <InChIKey>
+BIORUVJYBNBNNA-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(N(C(=O)NC1=O)C)C=C(CO)CO
+
+$$$$

@@ -20,6 +20,11 @@ GNU General Public License for more details.
 
 #include "eqeq.h"
 #include <openbabel/locale.h>
+#include <openbabel/oberror.h>
+#include <openbabel/atom.h>
+#include <openbabel/generic.h>
+
+
 
 using namespace std;
 
@@ -86,8 +91,8 @@ namespace OpenBabel
   {
     int i, j, a, c, N = mol.NumAtoms();
     double cellVolume;
-    VectorXf chi(N), J(N), b(N), x(N);
-    MatrixXf J_ij(N, N), A(N, N);
+    Eigen::VectorXf chi(N), J(N), b(N), x(N);
+    Eigen::MatrixXf J_ij(N, N), A(N, N);
     OBUnitCell *obuc;
     matrix3x3 unitcell, fourier;
     vector3 dx;
@@ -163,7 +168,7 @@ namespace OpenBabel
 
     // Formulate problem as A x = b, where x is the calculated partial charges
     // First equation is a simple overall balance: sum(Q) = 0
-    A.row(0) = VectorXf::Ones(N);
+    A.row(0) = Eigen::VectorXf::Ones(N);
     b(0) = 0;
 
     // Remaining equations are based off of the fact that, at equilibrium, the

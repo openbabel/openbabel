@@ -1,0 +1,135 @@
+5FSM_N91_A_202
+  RCSB PDB12061717453D
+Coordinates from PDB:5FSM:A:202 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   15.2040   17.5980    6.6480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3180   17.8300    7.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9230   16.9750    8.1710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0900   18.8870    6.6870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8830   19.7510    5.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9940   20.4070    5.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8110   21.3010    3.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7360   22.0210    3.2340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0050   22.6760    2.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6820   22.3850    2.4250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6170   22.9500    1.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5270   21.5280    3.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4110   20.8790    4.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5940   20.0380    5.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O10
+A    2
+C10
+A    3
+C11
+A    4
+N5
+A    5
+C5
+A    6
+C4
+A    7
+C9
+A    8
+N3
+A    9
+C2
+A   10
+N1
+A   11
+C1
+A   12
+C8
+A   13
+C7
+A   14
+C6
+M  END
+>  <InstanceId>
+5FSM_N91_A_202
+
+>  <ChemCompId>
+N91
+
+>  <PdbId>
+5FSM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O
+
+>  <Name>
+N-(1-METHYLBENZIMIDAZOL-5-YL)ACETAMIDE
+
+>  <SystematicName>
+N-(1-methylbenzimidazol-5-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H11 N3 O
+
+>  <MolecularWeight>
+189.214
+
+>  <ModifiedDate>
+2016-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3O/c1-7(14)12-8-3-4-10-9(5-8)11-6-13(10)2/h3-6H,1-2H3,(H,12,14)
+
+>  <InChIKey>
+KAWIUNXJBSAKNK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccc2c(c1)ncn2C
+
+$$$$

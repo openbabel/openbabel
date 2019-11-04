@@ -1,0 +1,137 @@
+1QXS_S70_A_804
+  RCSB PDB12061703493D
+Coordinates from PDB:1QXS:A:804 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   22.6470  -16.0560   19.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9660  -17.3900   18.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3690  -17.1780   18.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7390  -17.2250   17.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6630  -17.6380   17.6250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5710  -16.9480   19.5180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7460  -15.6610   18.5550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0490  -17.0220   17.3450   P 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5300  -17.1160   15.8320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3740  -18.2150   18.1860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6900  -15.5970   17.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7320  -14.3340   18.7170   P 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7830  -14.2960   17.5180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4220  -14.2450   20.1850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7640  -12.9950   18.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+O5
+A    6
+O6
+A    7
+O7
+A    8
+P8
+A    9
+O9
+A   10
+O10
+A   11
+O11
+A   12
+P12
+A   13
+O13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+1QXS_S70_A_804
+
+>  <ChemCompId>
+S70
+
+>  <PdbId>
+1QXS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+804
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O9 P2
+
+>  <Name>
+3-HYDROXY-2-OXO-4-PHOPHONOXY- BUTYL)-PHOSPHONIC ACID
+
+>  <SystematicName>
+[(3S)-3-hydroxy-2-oxo-4-phosphonooxy-butyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 O9 P2
+
+>  <MolecularWeight>
+264.064
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10O9P2/c5-3(1-13-15(10,11)12)4(6)2-14(7,8)9/h3,5H,1-2H2,(H2,7,8,9)(H2,10,11,12)/t3-/m0/s1
+
+>  <InChIKey>
+ISHNYNQEXZYUQN-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@@H](C(=O)CP(=O)(O)O)O)OP(=O)(O)O
+
+$$$$

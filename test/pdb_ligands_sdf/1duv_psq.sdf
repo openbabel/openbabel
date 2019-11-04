@@ -1,0 +1,145 @@
+1DUV_PSQ_G_401
+  RCSB PDB12061702183D
+Coordinates from PDB:1DUV:G:401 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+   27.6570   16.4910   23.5070   S 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3000   17.2980   22.2810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7920   15.7870   23.4180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7220   17.4660   24.7420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3190   14.3010   24.8570   P 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6690   13.8230   24.8630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6320   14.7490   26.2730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4460   13.2060   24.4900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1920    9.3800   24.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7350    9.7760   23.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8020    9.3970   25.7440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7540    8.8020   24.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6760    9.7060   25.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5300   11.1030   24.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4790   11.9640   25.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3940   15.5350   23.7070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7720    7.4710   25.2470   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  2  0  0  0  0
+  1 16  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5 16  1  0  0  0  0
+  8 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+S
+A    2
+O
+A    3
+O1
+A    4
+O2
+A    5
+P
+A    6
+N
+A    7
+O3
+A    8
+N1
+A    9
+C
+A   10
+O4
+A   11
+O5
+A   12
+C1
+A   13
+C2
+A   14
+C3
+A   15
+C4
+A   16
+N2
+A   17
+N3
+M  END
+>  <InstanceId>
+1DUV_PSQ_G_401
+
+>  <ChemCompId>
+PSQ
+
+>  <PdbId>
+1DUV
+
+>  <ChainId>
+G
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O6 P S
+
+>  <Name>
+NDELTA-(N'-SULPHODIAMINOPHOSPHINYL)-L-ORNITHINE
+
+>  <SystematicName>
+(2S)-2-amino-5-[[amino-(sulfoamino)phosphoryl]amino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H15 N4 O6 P S
+
+>  <MolecularWeight>
+290.235
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H15N4O6PS/c6-4(5(10)11)2-1-3-8-16(7,12)9-17(13,14)15/h4H,1-3,6H2,(H,10,11)(H,13,14,15)(H4,7,8,9,12)/t4-,16+/m0/s1
+
+>  <InChIKey>
+MDGVOXPIIICZEK-FOIQGAMDSA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)N)CN[P@](=O)(N)NS(=O)(=O)O
+
+$$$$

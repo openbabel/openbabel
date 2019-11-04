@@ -1,0 +1,137 @@
+4EB3_0O3_A_402
+  RCSB PDB12061712213D
+Coordinates from PDB:4EB3:A:402 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -24.8090    0.8660  -16.1210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0370    0.7730  -16.9300   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7780    0.8750  -18.4630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9990    1.9450  -16.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8760   -0.5240  -16.7350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4180   -2.1090  -16.5790   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8730   -2.4420  -16.8940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5370   -2.9210  -17.2930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5730   -2.6390  -15.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7510   -1.9680  -13.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7400   -0.8420  -14.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1370   -1.3150  -14.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3170   -2.6580  -14.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.1120   -0.1680  -13.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3060    0.8910  -13.1260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  8  6  2  0  0  0  0
+  5  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O20
+A    2
+P17
+A    3
+O19
+A    4
+O18
+A    5
+O16
+A    6
+P13
+A    7
+O15
+A    8
+O14
+A    9
+O29
+A   10
+C28
+A   11
+C27
+A   12
+C30
+A   13
+C1
+A   14
+C13
+A   15
+O3
+M  END
+>  <InstanceId>
+4EB3_0O3_A_402
+
+>  <ChemCompId>
+0O3
+
+>  <PdbId>
+4EB3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P2
+
+>  <Name>
+3-(hydroxymethyl)but-3-en-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+3-(hydroxymethyl)but-3-enyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O8 P2
+
+>  <MolecularWeight>
+262.092
+
+>  <ModifiedDate>
+2013-02-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O8P2/c1-5(4-6)2-3-12-15(10,11)13-14(7,8)9/h6H,1-4H2,(H,10,11)(H2,7,8,9)
+
+>  <InChIKey>
+DFMXRQRICFHJAS-UHFFFAOYSA-N
+
+>  <SMILES>
+C=C(CCOP(=O)(O)OP(=O)(O)O)CO
+
+$$$$

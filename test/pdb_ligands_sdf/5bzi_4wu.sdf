@@ -1,0 +1,123 @@
+5BZI_4WU_A_201
+  RCSB PDB12061717013D
+Coordinates from PDB:5BZI:A:201 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   12.9640   -4.7880    0.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3840   -5.9340    1.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9370   -5.7930    1.4890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1820   -5.6820    0.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7350   -4.7340   -0.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0750   -4.3200   -0.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5750   -3.3910   -1.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7610   -2.8740   -2.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4210   -3.2560   -2.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9420   -4.2030   -1.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6700   -4.6150   -1.7780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  1  1  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+CAF
+A    2
+CAE
+A    3
+NAH
+A    4
+CAG
+A    5
+CAK
+A    6
+CAJ
+A    7
+CAD
+A    8
+CAB
+A    9
+CAC
+A   10
+CAI
+A   11
+NAA
+M  END
+>  <InstanceId>
+5BZI_4WU_A_201
+
+>  <ChemCompId>
+4WU
+
+>  <PdbId>
+5BZI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <SystematicName>
+1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2
+
+>  <MolecularWeight>
+148.205
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2/c10-9-3-1-2-7-4-5-11-6-8(7)9/h1-3,11H,4-6,10H2
+
+>  <InChIKey>
+GIIQUGGTGRRQEN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(c(c1)N)CNCC2
+
+$$$$

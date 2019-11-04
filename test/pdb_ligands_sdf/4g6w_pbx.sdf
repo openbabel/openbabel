@@ -1,0 +1,118 @@
+4G6W_PBX_X_600
+  RCSB PDB12061712393D
+Coordinates from PDB:4G6W:X:600 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   35.7810   -2.1150   27.3220  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0680   -1.3840   27.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0350   -2.2690   27.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3550   -3.5670   27.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7290   -1.8380   27.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6960   -2.7290   27.3180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5020   -0.4950   26.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2320   -0.0350   26.7930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5600    0.4040   26.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8660   -0.0410   26.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9 10  2  0  0  0  0
+  9  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  7  5  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+BR
+A    2
+C4
+A    3
+C3
+A    4
+O3
+A    5
+C2
+A    6
+O2
+A    7
+C1
+A    8
+O1
+A    9
+C6
+A   10
+C5
+M  END
+>  <InstanceId>
+4G6W_PBX_X_600
+
+>  <ChemCompId>
+PBX
+
+>  <PdbId>
+4G6W
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3 Br
+
+>  <Name>
+4-bromobenzene-1,2,3-triol
+
+>  <SystematicName>
+4-bromanylbenzene-1,2,3-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 Br O3
+
+>  <MolecularWeight>
+205.006
+
+>  <ModifiedDate>
+2013-07-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5BrO3/c7-3-1-2-4(8)6(10)5(3)9/h1-2,8-10H
+
+>  <InChIKey>
+TYRFQQZIVRBJAK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1O)O)O)Br
+
+$$$$

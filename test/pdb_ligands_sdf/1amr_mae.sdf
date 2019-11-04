@@ -1,0 +1,109 @@
+1AHY_MAE_A_411
+  RCSB PDB12061701593D
+Coordinates from PDB:1AHY:A:411 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   -9.5480   53.2920   24.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1740   52.0800   24.9770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2880   53.8910   25.7420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1070   54.1020   23.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4240   55.3490   23.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3320   56.3460   24.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4260   56.6050   23.4540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9720   56.9270   25.0550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+O3
+A    8
+O4
+M  END
+>  <InstanceId>
+1AHY_MAE_A_411
+
+>  <ChemCompId>
+MAE
+
+>  <PdbId>
+1AHY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+411
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+8
+
+>  <ObservedFormula>
+C4 O4
+
+>  <Name>
+MALEIC ACID
+
+>  <SystematicName>
+but-2-enedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H4 O4
+
+>  <MolecularWeight>
+116.072
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H4O4/c5-3(6)1-2-4(7)8/h1-2H,(H,5,6)(H,7,8)/b2-1-
+
+>  <InChIKey>
+VZCYOOQTPOCHFL-UPHRSURJSA-N
+
+>  <SMILES>
+C(=C/C(=O)O)/C(=O)O
+
+$$$$

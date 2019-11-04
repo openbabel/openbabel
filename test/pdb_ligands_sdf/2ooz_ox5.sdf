@@ -1,0 +1,118 @@
+2OOZ_OX5_A_200
+  RCSB PDB12061706323D
+Coordinates from PDB:2OOZ:A:200 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   26.9660   36.1730   28.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0530   37.0070   27.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0980   38.4130   28.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1920   39.2790   27.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2440   38.7470   25.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1960   37.3470   25.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1010   36.4790   26.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3450   39.6420   24.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4310   40.4930   24.4480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4690   41.3810   23.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+N8
+A   10
+O9
+M  END
+>  <InstanceId>
+2OOZ_OX5_A_200
+
+>  <ChemCompId>
+OX5
+
+>  <PdbId>
+2OOZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+7
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+4-HYDROXYBENZALDEHYDE O-(3,3-DIMETHYLBUTANOYL)OXIME
+
+>  <SystematicName>
+[(4-hydroxyphenyl)methylideneamino] 3,3-dimethylbutanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H17 N O3
+
+>  <MolecularWeight>
+235.279
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C13H17NO3/c1-13(2,3)8-12(16)17-14-9-10-4-6-11(15)7-5-10/h4-7,9,15H,8H2,1-3H3/b14-9+
+
+>  <InChIKey>
+IRHAIEVALGHVLW-NTEUORMPSA-N
+
+>  <SMILES>
+CC(C)(C)CC(=O)O/N=C/c1ccc(cc1)O
+
+$$$$

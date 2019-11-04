@@ -339,11 +339,11 @@ namespace OpenBabel
     seekdata.resize(header.nEntries);
 
     pIndexstream->read((char*)&(fptdata[0]), sizeof(unsigned int) * nwords);
-    if(header.seek64)
+    if(header.seek64) 
       {
     	pIndexstream->read((char*)&(seekdata[0]), sizeof(unsigned long) * header.nEntries);
       }
-    else
+    else 
       { //legacy format
 	 vector<unsigned int> tmp(header.nEntries);
          pIndexstream->read((char*)&(tmp[0]), sizeof(unsigned int) * header.nEntries);
@@ -587,7 +587,7 @@ namespace OpenBabel
     set in the fingerprint of the others. To display hexadecimal information when
     multiple molecules are provided it is necessay to use the -xh option.
 
-    To see a list of available format types, type babel -F on the command line.
+    To see a list of available format types, type obabel -F on the command line.
     The -xF option of the FingerprintFormat class also provides this output, but due
     to a quirk in the way the program works, it is necessary to have a valid input
     molecule for this option to work.
@@ -600,7 +600,7 @@ namespace OpenBabel
     OpenBabel can also search files for molecules containing a substructure specified
     by a SMARTS string, using OBSmartsPattern or from the command line:
     \code
-    babel datafile.xxx -outfile.yyy -sSMARTS
+    obabel datafile.xxx -O outfile.yyy -sSMARTS
     \endcode
     But when the data file contains more than about 10,000 molecules this becomes
     rather too slow to be used interactively. To do it more quickly, an index
@@ -693,16 +693,12 @@ namespace OpenBabel
 
     <strong>Prepare an index:</strong>
     \code
-    babel datafile.xxx index.fs
-    \endcode
-    or
-    \code
-    babel datafile.xxx -ofs namedindex
+    obabel datafile.xxx -O index.fs
     \endcode
     With options you can specify:
     - which type of fingerprint to be used, e.g. -xfFP2,
     -	whether it is folded to a specified number of bits, e.g. -xn128
-    (which should be a power of2)
+    (which should be a power of 2)
     - whether to pre-select the molecules which are indexed:
     - by structure e.g only ethers and esters, -sCOC
     - by excluding molecules with bezene rings, -vc1ccccc1
@@ -710,11 +706,11 @@ namespace OpenBabel
     .
     <strong>Substructure search</strong> in a previously prepared index file
     \code
-    babel index.fs outfile.yyy -sSMILES
+    obabel index.fs -O outfile.yyy -sSMILES
     \endcode
     The datafile can also be used as the input file, provided the input format is specified as fs
     \code
-    babel datafile.xxx outfile.yyy -sSMILES -ifs
+    obabel datafile.xxx -O outfile.yyy -sSMILES -ifs
     \endcode
     A "slow" search not using fingerprints would be done on the same data by omitting -ifs.
     A "slow" search can use SMARTS strings, but the fast search is restricted
@@ -722,7 +718,7 @@ namespace OpenBabel
 
     With the -S option, the target can be specified as a molecule in a file of any format
     \code
-    babel datafile.xxx outfile.yyy -Spattern_mol.zzz -ifs
+    obabel datafile.xxx -O outfile.yyy -Spattern_mol.zzz -ifs
     \endcode
     These searches have two stages: a fingerprint search which produces
     a number of candidate molecules and a definitive search which selects
@@ -735,7 +731,7 @@ namespace OpenBabel
     <strong>Similarity search</strong> in a previously prepared index file<br>
     This rather done (rather than a substructure search) if the -at option is used,
     \code
-    babel datafile.xxx outfile.yyy -sSMILES -ifs -at0.7
+    obabel datafile.xxx -O outfile.yyy -sSMILES -ifs -at0.7
     \endcode
     for instance
     - -at0.7 will recover all molecules with Tanimoto greater than 0.7

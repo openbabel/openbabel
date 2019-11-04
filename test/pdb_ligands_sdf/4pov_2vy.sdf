@@ -1,0 +1,147 @@
+4POP_2VY_A_201
+  RCSB PDB12061714163D
+Coordinates from PDB:4POP:A:201 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   14.6840   11.6360   41.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0970    7.6280   44.4680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3120    7.1970   48.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8260    5.5380   48.2410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5750    5.3110   46.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4150    7.8930   44.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6380    6.6950   44.6760   S 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6530    6.3540   46.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6680    7.1890   46.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9880    8.0530   45.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8940    9.0080   46.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4560    8.9840   44.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9670    9.6500   43.2520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2560   10.9350   43.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0320   11.6140   43.8740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5560   11.0550   44.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2900    9.6820   45.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 14  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 12  2  1  0  0  0  0
+ 12 17  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  5  1  0  0  0  0
+  9  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+A    1
+CM2
+A    2
+N4A
+A    3
+CM4
+A    4
+O1
+A    5
+C6
+A    6
+C2
+A    7
+S1
+A    8
+C5
+A    9
+C4
+A   10
+C3
+A   11
+C7A
+A   12
+C4A
+A   13
+N3A
+A   14
+C2A
+A   15
+N1A
+A   16
+C6A
+A   17
+C5A
+M  END
+>  <InstanceId>
+4POP_2VY_A_201
+
+>  <ChemCompId>
+2VY
+
+>  <PdbId>
+4POP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O S
+
+>  <Name>
+4-[(4-amino-2-methylpyrimidin-5-yl)methyl]-3-methylthiophene-2-carbaldehyde
+
+>  <SystematicName>
+4-[(4-azanyl-2-methyl-pyrimidin-5-yl)methyl]-3-methyl-thiophene-2-carbaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 N3 O S
+
+>  <MolecularWeight>
+247.316
+
+>  <ModifiedDate>
+2014-09-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13N3OS/c1-7-10(6-17-11(7)5-16)3-9-4-14-8(2)15-12(9)13/h4-6H,3H2,1-2H3,(H2,13,14,15)
+
+>  <InChIKey>
+NWGVSSQLYKZANM-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(csc1C=O)Cc2cnc(nc2N)C
+
+$$$$

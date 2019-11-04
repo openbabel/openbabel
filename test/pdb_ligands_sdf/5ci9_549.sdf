@@ -1,0 +1,139 @@
+5CI9_549_A_401
+  RCSB PDB12061717063D
+Coordinates from PDB:5CI9:A:401 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   22.6420   40.2930   73.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0770   43.3370   67.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6410   42.7830   69.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9620   41.4320   69.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4780   40.9230   70.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6830   41.7750   71.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3650   43.1050   71.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8390   43.6200   70.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1660   41.5540   72.7910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1410   42.7510   73.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6470   43.7090   72.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6380   39.1500   73.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9750   39.8860   72.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0640   42.8080   67.2810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6270   44.3310   67.2400   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15  2  2  0  0  0  0
+ 14  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7 11  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 13  1  1  0  0  0  0
+  9  1  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12  1  1  0  0  0  0
+A    1
+C10
+A    2
+C13
+A    3
+C01
+A    4
+C02
+A    5
+C03
+A    6
+C04
+A    7
+C05
+A    8
+C06
+A    9
+N07
+A   10
+C08
+A   11
+N09
+A   12
+C11
+A   13
+C12
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+5CI9_549_A_401
+
+>  <ChemCompId>
+549
+
+>  <PdbId>
+5CI9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+1-(propan-2-yl)-1H-benzimidazole-5-carboxylic acid
+
+>  <SystematicName>
+1-propan-2-ylbenzimidazole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 N2 O2
+
+>  <MolecularWeight>
+204.225
+
+>  <ModifiedDate>
+2015-11-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2O2/c1-7(2)13-6-12-9-5-8(11(14)15)3-4-10(9)13/h3-7H,1-2H3,(H,14,15)
+
+>  <InChIKey>
+SQIQIYYPWAELAC-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)n1cnc2c1ccc(c2)C(=O)O
+
+$$$$

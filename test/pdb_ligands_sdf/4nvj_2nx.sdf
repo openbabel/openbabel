@@ -1,0 +1,138 @@
+4NVJ_2NX_B_302
+  RCSB PDB12061713573D
+Coordinates from PDB:4NVJ:B:302 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   20.7690    4.5690   -7.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2400    4.9190   -6.2530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5800    3.7860   -5.2020   P 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5030    4.5720   -4.1670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3440    5.9840   -4.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4060    2.7750   -5.8740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2020    3.2660   -4.4180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4280    2.5770   -3.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5560    2.3460   -2.8640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3310    2.0430   -2.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2940    2.0540   -1.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2150    1.4940   -0.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1800    0.9050   -1.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2230    0.8790   -2.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3050    1.4370   -3.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  3  2  0  0  0  0
+  3  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 15 14  2  0  0  0  0
+ 15 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CAA
+A    2
+OAK
+A    3
+PAO
+A    4
+OAL
+A    5
+CAB
+A    6
+OAD
+A    7
+NAJ
+A    8
+CAM
+A    9
+OAC
+A   10
+CAN
+A   11
+CAH
+A   12
+CAF
+A   13
+CAE
+A   14
+CAG
+A   15
+CAI
+M  END
+>  <InstanceId>
+4NVJ_2NX_B_302
+
+>  <ChemCompId>
+2NX
+
+>  <PdbId>
+4NVJ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 P
+
+>  <Name>
+dimethyl benzoylphosphoramidate
+
+>  <SystematicName>
+N-dimethoxyphosphorylbenzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N O4 P
+
+>  <MolecularWeight>
+229.17
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12NO4P/c1-13-15(12,14-2)10-9(11)8-6-4-3-5-7-8/h3-7H,1-2H3,(H,10,11,12)
+
+>  <InChIKey>
+IJZVLPFIUWFOFA-UHFFFAOYSA-N
+
+>  <SMILES>
+COP(=O)(NC(=O)c1ccccc1)OC
+
+$$$$

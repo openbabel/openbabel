@@ -21,6 +21,8 @@ GNU General Public License for more details.
 #include <openbabel/math/align.h>
 #include <openbabel/forcefield.h>
 #include <openbabel/elements.h>
+#include <openbabel/bond.h>
+#include "rand.h"
 
 #if defined(_MSC_VER) && (_MSC_VER < 1800)
  #define OB_ISNAN _isnan
@@ -81,7 +83,7 @@ namespace OpenBabel {
         vdwCutoff = m_vdw_factor * (OBElements::GetVdwRad(atom1->GetAtomicNum())
                                     + OBElements::GetVdwRad(atom2->GetAtomicNum()));
         vdwCutoff *= vdwCutoff; // compare squared distances
-        //cout << vdwCutoff << " " << m_vdw_factor << " " << m_cutoff << " " <<  distanceSquared << endl ;
+        //std::cout << vdwCutoff << " " << m_vdw_factor << " " << m_cutoff << " " << distanceSquared << std::endl;
 
         // check distance
         if (distanceSquared < m_cutoff || distanceSquared < vdwCutoff)
@@ -307,8 +309,12 @@ namespace OpenBabel {
     p_crossover = 0.7;
     niche_mating = 0.7;
     local_opt_rate = 3;
-    unique_generator.TimeSeed();
-    m_logstream = &cout; 	// Default logging send to standard output
+    // For the moment 'd' is an opaque pointer to an instance of OBRandom*.
+    // In future, it could be a pointer to a structure storing all of the
+    // private variables.
+    d = (void*)new OBRandom();
+    ((OBRandom*)d)->TimeSeed();
+    m_logstream = &std::cout; 	// Default logging send to standard output
     // m_logstream = NULL;
     m_printrotors = false;  // By default, do not print rotors but perform the conformer search
 
@@ -318,6 +324,7 @@ namespace OpenBabel {
   {
     delete m_filter;
     delete m_score;
+    delete (OBRandom*)d;
   }
 
 
@@ -391,7 +398,7 @@ namespace OpenBabel {
       m_rotorKeys.push_back(rotorKey);
     else {
       if (m_logstream != NULL)
-        (*m_logstream) << "Initial conformer does not pass filter!" << endl;
+        (*m_logstream) << "Initial conformer does not pass filter!" << std::endl;
     }
 
     int tries = 0, ndup = 0, nbad = 0;
@@ -423,8 +430,8 @@ namespace OpenBabel {
     // print out initial conformers
     if (m_logstream != NULL)
       {
-        (*m_logstream) << "Initial conformer count: " << m_rotorKeys.size() << endl;
-        (*m_logstream) << tries << " attempts,  " << ndup << " duplicates, " << nbad << " failed filter." << endl;
+        (*m_logstream) << "Initial conformer count: " << m_rotorKeys.size() << std::endl;
+        (*m_logstream) << tries << " attempts,  " << ndup << " duplicates, " << nbad << " failed filter." << std::endl;
         for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
           for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
             (*m_logstream) << m_rotorKeys[i][j] << " ";
@@ -583,28 +590,28 @@ namespace OpenBabel {
 
     if (m_logstream != NULL)
       {
-        (*m_logstream) << endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << endl;
+        (*m_logstream) << std::endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << std::endl;
         if (use_sharing)
           {
-            (*m_logstream) << "Uses fitness sharing (with dynamic niche identification)" << endl;
-            (*m_logstream) << "Population size :" << m_rotorKeys.size() << endl;
-            (*m_logstream) << nb_niches << " niches searched, with a key distance radius of " << niche_radius << endl;
-            (*m_logstream) << "Fitness sharing parameter alpha: " << alpha_share << " \t sigma:" << sigma_share << endl;
-            (*m_logstream) << "Uniform crossover probability: " << p_crossover << endl;
-            (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << endl;
-            (*m_logstream) << "Niche mating probability: " << niche_mating << endl;
+            (*m_logstream) << "Uses fitness sharing (with dynamic niche identification)" << std::endl;
+            (*m_logstream) << "Population size :" << m_rotorKeys.size() << std::endl;
+            (*m_logstream) << nb_niches << " niches searched, with a key distance radius of " << niche_radius << std::endl;
+            (*m_logstream) << "Fitness sharing parameter alpha: " << alpha_share << " \t sigma:" << sigma_share << std::endl;
+            (*m_logstream) << "Uniform crossover probability: " << p_crossover << std::endl;
+            (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << std::endl;
+            (*m_logstream) << "Niche mating probability: " << niche_mating << std::endl;
             if (local_opt_rate)
               {
                 (*m_logstream) << "Trying to improve best indivual with local search every ";
-                (*m_logstream) << local_opt_rate<< "generations" << endl;
+                (*m_logstream) << local_opt_rate<< "generations" << std::endl;
               }
           }
         else
           {
-            (*m_logstream) << "Perform elitist generation replacement with mutation only" << endl;
-            (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << endl;
+            (*m_logstream) << "Perform elitist generation replacement with mutation only" << std::endl;
+            (*m_logstream) << "Mutation probability: " << (1.0 / (double) m_mutability) << std::endl;
           }
-        (*m_logstream) << "Will stop after " << m_convergence << " generations without improvement."  << endl  << endl;
+        (*m_logstream) << "Will stop after " << m_convergence << " generations without improvement." << std::endl << std::endl;
       }
     if (use_sharing)
       score_population ();
@@ -628,7 +635,7 @@ namespace OpenBabel {
           score = MakeSelection();
         }
       if (OB_ISNAN(score)) {
-          (*m_logstream) << "The current score is not a number, will not continue."  << endl  << endl;
+          (*m_logstream) << "The current score is not a number, will not continue." << std::endl << std::endl;
           return;
       }
       if (i == 0)
@@ -749,8 +756,8 @@ namespace OpenBabel {
   {
     int dist = 0;
     //    assert(key1.size() > 1 && key1.size()== key2.size());
-    vector<int>::const_iterator it1 = key1.begin ();
-    vector<int>::const_iterator it2 = key2.begin ();
+    std::vector<int>::const_iterator it1 = key1.begin ();
+    std::vector<int>::const_iterator it2 = key2.begin ();
     // Skip first values, since  meaningfull valaues are starting at index 1 (Fortran translation inside ;-))
     for (++it1, ++it2; it1 != key1.end ();++it1, ++it2)
       if (*it1 != *it2)
@@ -782,9 +789,9 @@ namespace OpenBabel {
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
         neighbor = best;
-        new_val = unique_generator.NextInt() % rotor->GetResolution().size();
+        new_val = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
         while (new_val == best[i])
-          new_val = unique_generator.NextInt() % rotor->GetResolution().size();
+          new_val = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
         neighbor[i] = new_val;
         if (IsUniqueKey(backup_population, neighbor) && IsGood(neighbor))
           m_rotorKeys.push_back (neighbor);
@@ -798,7 +805,7 @@ namespace OpenBabel {
         if (m_logstream != NULL)
           {
             (*m_logstream) << "    => Best individual improved with local search: ";
-            (*m_logstream) << backup_scores[0] << "  --> " <<  opt_score << endl;
+            (*m_logstream) << backup_scores[0] << "  --> " << opt_score << std::endl;
           }
       }
     // Set back population and score vector
@@ -836,30 +843,30 @@ namespace OpenBabel {
       return 0;
 
     // Make a 2-tournament selection to choose first parent
-    i = unique_generator.NextInt() % pop_size;
-    j = unique_generator.NextInt() % pop_size;
+    i = ((OBRandom*)d)->NextInt() % pop_size;
+    j = ((OBRandom*)d)->NextInt() % pop_size;
     parent1 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
     iniche = niche_map[parent1];
     if (iniche > -1)
       nsize = dynamic_niches[iniche].size (); // Belongs to a specific niche
 
     // Do we apply crossover here?
-    flag_crossover = (unique_generator.NextFloat () <= p_crossover);
-    if (flag_crossover && (unique_generator.NextFloat () <= niche_mating)  &&  nsize > 1)
+    flag_crossover = (((OBRandom*)d)->NextFloat () <= p_crossover);
+    if (flag_crossover && (((OBRandom*)d)->NextFloat () <= niche_mating)  &&  nsize > 1)
       {
         // Apply niche mating: draw second parent in the same niche, if its has
         // at least 2 members. Make a 2-tournament selection whithin this niche
-        rnd1 =  unique_generator.NextInt() % nsize;
+        rnd1 = ((OBRandom*)d)->NextInt() % nsize;
         i =  dynamic_niches[iniche][rnd1];
-        rnd2 =  unique_generator.NextInt() % nsize;
+        rnd2 = ((OBRandom*)d)->NextInt() % nsize;
         j = dynamic_niches[iniche][rnd2];
         parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
       }
     else
       {
         // Draw second in the whole population
-        i = unique_generator.NextInt() % pop_size;
-        j = unique_generator.NextInt() % pop_size;
+        i = ((OBRandom*)d)->NextInt() % pop_size;
+        j = ((OBRandom*)d)->NextInt() % pop_size;
         parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
       }
 
@@ -868,7 +875,7 @@ namespace OpenBabel {
         // Cross the 2 vectors: toss a coin for each position (i.e. uniform crossover)
         for (i = 1; i < key1.size(); i++)
           {
-            if ( unique_generator.NextInt() % 2)
+            if (((OBRandom*)d)->NextInt() % 2)
               { // Copy parent1 to offspring 1
                 key1[i] = m_rotorKeys[parent1][i];
                 key2[i] = m_rotorKeys[parent2][i];
@@ -890,10 +897,10 @@ namespace OpenBabel {
     rotor = m_rotorList.BeginRotor(ri);
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
-        if (unique_generator.NextInt() % m_mutability == 0)
-          key1[i] = unique_generator.NextInt() % rotor->GetResolution().size();
-        if (unique_generator.NextInt() % m_mutability == 0)
-          key2[i] = unique_generator.NextInt() % rotor->GetResolution().size();
+        if (((OBRandom*)d)->NextInt() % m_mutability == 0)
+          key1[i] = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
+        if (((OBRandom*)d)->NextInt() % m_mutability == 0)
+          key2[i] = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
       }
     if (IsUniqueKey(m_rotorKeys, key1) && IsGood(key1))
       ret_code += 1;
@@ -1120,7 +1127,7 @@ namespace OpenBabel {
     if (m_logstream != NULL)
       {
         (*m_logstream) << "  ==> Number of niches: " << dynamic_niches.size ();
-        (*m_logstream) << "   # out of niches :" << out_niches.size ()  << "\t Best :" << vscores[0] << endl;
+        (*m_logstream) << "   # out of niches :" << out_niches.size () << "\t Best :" << vscores[0] << std::endl;
       }
 
     // Save each niche 1set element, then 2nd until we have half of the population

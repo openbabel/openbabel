@@ -56,20 +56,14 @@ namespace OpenBabel
 #define OB_AROMATIC_ATOM  (1<<3)
   //! Atom is in a ring
 #define OB_RING_ATOM      (1<<4)
-  //! Atom has clockwise SMILES chiral stereochemistry (i.e., "@@")
-#define OB_CSTEREO_ATOM   (1<<5)
-  //! Atom has anticlockwise SMILES chiral stereochemistry (i.e., "@")
-#define OB_ACSTEREO_ATOM  (1<<6)
   //! Atom is an electron donor
 #define OB_DONOR_ATOM     (1<<7)
   //! Atom is an electron acceptor
 #define OB_ACCEPTOR_ATOM  (1<<8)
-  //! Atom is chiral
-#define OB_CHIRAL_ATOM    (1<<9)
-  //! Atom has + chiral volume
-#define OB_POS_CHIRAL_ATOM (1<<10)
-  //! Atom has - chiral volume
-#define OB_NEG_CHIRAL_ATOM (1<<11)
+
+#define SET_OR_UNSET_FLAG(X) \
+  if (value) SetFlag(X); \
+  else     UnsetFlag(X);
 
   // Class OBAtom
   // class introduction in atom.cpp
@@ -167,30 +161,9 @@ namespace OpenBabel
       //! Attach an OBMol @p ptr as the parent container for this atom
       void SetParent(OBMol *ptr)          { _parent=ptr; }
       //! Mark atom as being aromatic
-      void SetAromatic()                  { SetFlag(OB_AROMATIC_ATOM); }
-      //! Clear aromatic information from the atom
-      void UnsetAromatic()                { _flags &= (~(OB_AROMATIC_ATOM)); }
-      //! \deprecated
-      void SetClockwiseStereo()           { SetFlag(OB_CSTEREO_ATOM|OB_CHIRAL_ATOM); }
-      //! \deprecated
-      void SetAntiClockwiseStereo()       { SetFlag(OB_ACSTEREO_ATOM|OB_CHIRAL_ATOM); }
-      //! \deprecated
-      void SetPositiveStereo() { SetFlag(OB_POS_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
-      //! \deprecated
-      void SetNegativeStereo() { SetFlag(OB_NEG_CHIRAL_ATOM|OB_CHIRAL_ATOM); }
-      //! \deprecated
-      void UnsetStereo()
-        {
-          _flags &= ~(OB_ACSTEREO_ATOM);
-          _flags &= ~(OB_CSTEREO_ATOM);
-          _flags &= ~(OB_POS_CHIRAL_ATOM);
-          _flags &= ~(OB_NEG_CHIRAL_ATOM);
-          _flags &= ~(OB_CHIRAL_ATOM);
-        }
+      void SetAromatic(bool value=true)                  { SET_OR_UNSET_FLAG(OB_AROMATIC_ATOM); }
       //! Mark an atom as belonging to at least one ring
-      void SetInRing(bool set=true)         { if(set) SetFlag(OB_RING_ATOM); else UnsetFlag(OB_RING_ATOM); }
-      //! Mark an atom as being chiral with unknown stereochemistry
-      void SetChiral()         { SetFlag(OB_CHIRAL_ATOM); }
+      void SetInRing(bool value=true)         { SET_OR_UNSET_FLAG(OB_RING_ATOM); }
       //! Clear the internal coordinate pointer
       void ClearCoordPtr()     { _c = NULL; _cidx=0; }
       //@}
@@ -219,18 +192,22 @@ namespace OpenBabel
       //! \return the index into a pointer-driven array as used by
       //!   GetCoordPtr() or SetCoordPtr()
       unsigned int GetCoordinateIdx() const { return((int)_cidx); }
-      //! \deprecated Use GetCoordinateIdx() instead
-      unsigned int GetCIdx()          const { return((int)_cidx); }
-      //! \return The current number of explicit connections
-      unsigned int GetValence() const { return (unsigned int)_vbond.size(); }
+      //! \return The number of explicit bonds to this atom
+      unsigned int GetExplicitDegree() const { return (unsigned int)_vbond.size(); }
+      //! \return The total number of bonds to this atom including bonds to implicit hydrogens
+      unsigned int GetTotalDegree() const { return (unsigned int)(_vbond.size() + _imph); }
+      //! \return The sum of the bond orders of the explicit bonds to this atom
+      unsigned int GetExplicitValence() const;
+      //! \return The sum of the bond orders of all bonds to this atom including bonds to implicit hydrogens
+      unsigned int GetTotalValence() const;
       //! \return The hybridization of this atom: 1 for sp, 2 for sp2, 3 for sp3, 4 for sq. planar, 5 for trig. bipy, 6 for octahedral
       unsigned int GetHyb()             const;
       //! \return The number of implicit hydrogens attached to this atom
       unsigned char GetImplicitHCount() const { return _imph; };
       //! \return The number of non-hydrogens connected to this atom
-      unsigned int GetHvyValence()      const;
+      unsigned int GetHvyDegree()      const;
       //! \return The number of heteroatoms connected to an atom
-      unsigned int GetHeteroValence()   const;
+      unsigned int GetHeteroDegree()   const;
       //! \return the atomic type (e.g., for molecular mechanics)
       char        *GetType();
 
@@ -274,9 +251,6 @@ namespace OpenBabel
       double     GetPartialCharge();
       //! \return the residue which contains this atom, or NULL if none exists
       OBResidue *GetResidue();
-      //! \param perception implies whether chain perception should occur
-      //! \return the residue which contains this atom, or NULL if none exists
-      OBResidue *GetResidue(bool perception);
       //! \return the molecule which contains this atom, or NULL if none exists
       OBMol     *GetParent()        {return((OBMol*)_parent);}
       //! Create a vector for a new bond from this atom, with length given by the supplied parameter
@@ -285,11 +259,6 @@ namespace OpenBabel
       //! \return the OBBond object between this atom and that supplied,
       //! or NULL if the two atoms are not bonded
       OBBond    *GetBond(OBAtom *);
-      //! \return a pointer to the "next" atom (by atom index) in the
-      //!    parent OBMol, or NULL if no such atom exists.
-      //! \deprecated Use any of the other iterator methods. This
-      //!    method will be removed in the future.
-      OBAtom    *GetNextAtom();
       //@}
 
       //! \name Iterator methods
@@ -388,8 +357,6 @@ namespace OpenBabel
       double	  SmallestBondAngle();
       //! \return The average angle of bonds to this atom
       double	  AverageBondAngle();
-      //! \return The sum of the bond orders of the bonds to the atom (i.e. double bond = 2...)
-      unsigned int  BOSum()                 const;
       /** Lewis acid/base vacancies for this atom
        *  \return A pair of integers, where first is acid count and second is base count
        *  \since version 2.3
@@ -445,18 +412,6 @@ namespace OpenBabel
       bool IsChiral();
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
-      //! \deprecated
-      bool IsClockwise()         { return(HasFlag(OB_CSTEREO_ATOM));  }
-      //! \deprecated
-      bool IsAntiClockwise()     { return(HasFlag(OB_ACSTEREO_ATOM)); }
-      //! \deprecated
-      bool IsPositiveStereo() { return(HasFlag(OB_POS_CHIRAL_ATOM)); }
-      //! \deprecated
-      bool IsNegativeStereo() { return(HasFlag(OB_NEG_CHIRAL_ATOM)); }
-      //! \deprecated
-      bool HasChiralitySpecified() { return(HasFlag(OB_CSTEREO_ATOM|OB_ACSTEREO_ATOM)); }
-      //! \deprecated
-      bool HasChiralVolume() { return(HasFlag(OB_POS_CHIRAL_ATOM|OB_NEG_CHIRAL_ATOM)); }
       //! \return Is this atom a hydrogen-bond acceptor  (considering also atom surrounding)
       bool IsHbondAcceptor();
       //! \return Is this atom a hydrogen-bond acceptor (old function)?

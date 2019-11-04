@@ -1,0 +1,105 @@
+1E3W_AAE_D_302
+  RCSB PDB12061702203D
+Coordinates from PDB:1E3W:D:302 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+    7.9600   45.7460   34.1750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5560   45.0690   35.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2500   43.8900   35.2250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7240   45.6750   35.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5690   45.1960   37.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5010   44.9830   37.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1100   44.9430   37.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+O8
+A    7
+C9
+M  END
+>  <InstanceId>
+1E3W_AAE_D_302
+
+>  <ChemCompId>
+AAE
+
+>  <PdbId>
+1E3W
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O3
+
+>  <Name>
+ACETOACETIC ACID
+
+>  <SystematicName>
+3-oxobutanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O3
+
+>  <MolecularWeight>
+102.089
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O3/c1-3(5)2-4(6)7/h2H2,1H3,(H,6,7)
+
+>  <InChIKey>
+WDJHALXBUFZDSR-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)CC(=O)O
+
+$$$$

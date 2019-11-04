@@ -1,0 +1,125 @@
+1D1J_PG5_D_902
+  RCSB PDB12061702133D
+Coordinates from PDB:1D1J:D:902 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   41.1290    4.6540   87.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5740    5.1650   85.7980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9700    6.5440   85.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0430    7.2760   84.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7240    8.5990   85.0900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9020    9.5980   84.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4970   10.9100   84.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5310   11.9850   84.5980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0970   13.2260   85.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9630   14.2020   85.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5140   15.4170   86.0810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7200   15.8470   87.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+O2
+A    6
+C4
+A    7
+C5
+A    8
+O3
+A    9
+C6
+A   10
+C7
+A   11
+O4
+A   12
+C8
+M  END
+>  <InstanceId>
+1D1J_PG5_D_902
+
+>  <ChemCompId>
+PG5
+
+>  <PdbId>
+1D1J
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O4
+
+>  <Name>
+1-METHOXY-2-[2-(2-METHOXY-ETHOXY]-ETHANE
+
+>  <SystematicName>
+1-methoxy-2-[2-(2-methoxyethoxy)ethoxy]ethane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 O4
+
+>  <MolecularWeight>
+178.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18O4/c1-9-3-5-11-7-8-12-6-4-10-2/h3-8H2,1-2H3
+
+>  <InChIKey>
+YFNKIDBQEZZDLK-UHFFFAOYSA-N
+
+>  <SMILES>
+COCCOCCOCCOC
+
+$$$$

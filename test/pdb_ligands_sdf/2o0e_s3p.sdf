@@ -1,0 +1,142 @@
+1G6S_S3P_A_601
+  RCSB PDB12061702343D
+Coordinates from PDB:1G6S:A:601 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   55.9200   12.3110   28.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8520   11.4170   28.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9570   10.1530   29.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.1720   10.1590   29.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4210   10.6520   29.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.1640   12.1000   28.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.7340   13.5390   27.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9510    8.9680   28.1100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3380    8.8390   30.4950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5520   10.6080   30.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8180   13.5330   26.3810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4720   14.4900   27.4930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5890    8.0280   27.8830   P 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5400    8.8970   27.3000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.2750    7.5200   29.2850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.0720    6.9740   26.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7 12  2  0  0  0  0
+  8 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+P1
+A   14
+O6
+A   15
+O7
+A   16
+O8
+M  END
+>  <InstanceId>
+1G6S_S3P_A_601
+
+>  <ChemCompId>
+S3P
+
+>  <PdbId>
+1G6S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O8 P
+
+>  <Name>
+SHIKIMATE-3-PHOSPHATE
+
+>  <SystematicName>
+(3R,4S,5R)-4,5-dihydroxy-3-phosphonooxy-cyclohexene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 O8 P
+
+>  <MolecularWeight>
+254.131
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11O8P/c8-4-1-3(7(10)11)2-5(6(4)9)15-16(12,13)14/h2,4-6,8-9H,1H2,(H,10,11)(H2,12,13,14)/t4-,5-,6+/m1/s1
+
+>  <InChIKey>
+QYOJSKGCWNAKGW-PBXRRBTRSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H]([C@@H](C=C1C(=O)O)OP(=O)(O)O)O)O
+
+$$$$

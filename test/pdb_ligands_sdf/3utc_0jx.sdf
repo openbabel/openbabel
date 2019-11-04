@@ -1,0 +1,133 @@
+3UTC_0JX_A_318
+  RCSB PDB12061711063D
+Coordinates from PDB:3UTC:A:318 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  -25.6800    0.7450  -18.5940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0500    0.6550  -17.1600   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3090    1.3490  -16.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9650    0.8550  -16.2210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6700   -0.7820  -16.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2180   -2.2450  -16.7780   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8220   -2.6290  -17.0980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3270   -2.8650  -17.5390   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3210   -2.4830  -15.2690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5600   -2.6770  -14.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4760   -1.5290  -14.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.3210   -0.4300  -13.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4720    0.2820  -13.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.2690    1.2220  -12.9560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  8  6  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O20
+A    2
+P17
+A    3
+O19
+A    4
+O18
+A    5
+O16
+A    6
+P13
+A    7
+O15
+A    8
+O14
+A    9
+O29
+A   10
+C28
+A   11
+C27
+A   12
+C30
+A   13
+C13
+A   14
+O33
+M  END
+>  <InstanceId>
+3UTC_0JX_A_318
+
+>  <ChemCompId>
+0JX
+
+>  <PdbId>
+3UTC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+318
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O8 P2
+
+>  <Name>
+(3E)-4-hydroxybut-3-en-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+[(E)-4-oxidanylbut-3-enyl] phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 O8 P2
+
+>  <MolecularWeight>
+248.065
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10O8P2/c5-3-1-2-4-11-14(9,10)12-13(6,7)8/h1,3,5H,2,4H2,(H,9,10)(H2,6,7,8)/b3-1+
+
+>  <InChIKey>
+YCGPFMCUJHDYHD-HNQUOIGGSA-N
+
+>  <SMILES>
+C(COP(=O)(O)OP(=O)(O)O)/C=C/O
+
+$$$$

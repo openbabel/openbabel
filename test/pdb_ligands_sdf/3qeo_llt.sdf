@@ -1,0 +1,147 @@
+3HP1_LLT_A_401
+  RCSB PDB12061708553D
+Coordinates from PDB:3HP1:A:401 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   62.7210   33.0400   17.4680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.0180   33.2450   17.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.4220   34.5040   18.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4510   35.6460   18.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.7470   34.6960   18.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.9060   32.2300   17.7900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   66.1940   32.4630   18.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.0610   31.4220   18.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.6150   33.6730   18.5180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   67.9950   33.9200   18.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.3070   35.3270   18.8830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2510   35.6730   19.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.7790   36.9170   20.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2210   38.1060   19.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   69.3530   34.4640   20.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.6290   33.8570   20.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.2300   33.5300   20.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  6  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  9  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10 17  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 17 15  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C5
+A    4
+C7
+A    5
+C6
+A    6
+N3
+A    7
+C2
+A    8
+O2
+A    9
+N1
+A   10
+C1'
+A   11
+O4'
+A   12
+C4'
+A   13
+C5'
+A   14
+O5'
+A   15
+C3'
+A   16
+O3'
+A   17
+C2'
+M  END
+>  <InstanceId>
+3HP1_LLT_A_401
+
+>  <ChemCompId>
+LLT
+
+>  <PdbId>
+3HP1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O5
+
+>  <Name>
+L-deoxythymidine
+
+>  <SystematicName>
+1-[(2S,4R,5S)-4-hydroxy-5-(hydroxymethyl)oxolan-2-yl]-5-methyl-pyrimidine-2,4-dione
+
+>  <Synonyms>
+L-thymidine, beta-L-thymidine, L-dT, 2'-deoxy-L-thymidine, 1-(2-deoxy-beta-L-erythro-pentofuranosyl)-5-methylpyrimidine-2,4(1H,3H)-dione
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2 O5
+
+>  <MolecularWeight>
+242.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2O5/c1-5-3-12(10(16)11-9(5)15)8-2-6(14)7(4-13)17-8/h3,6-8,13-14H,2,4H2,1H3,(H,11,15,16)/t6-,7+,8+/m1/s1
+
+>  <InChIKey>
+IQFYYKKMVGJFEH-CSMHCCOUSA-N
+
+>  <SMILES>
+CC1=CN(C(=O)NC1=O)[C@@H]2C[C@H]([C@@H](O2)CO)O
+
+$$$$

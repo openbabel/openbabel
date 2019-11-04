@@ -1,0 +1,126 @@
+4ZCW_4NG_A_501
+  RCSB PDB12061716363D
+Coordinates from PDB:4ZCW:A:501 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   76.4960  111.7880  -93.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.1260  113.4460  -92.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.8850  113.2840  -92.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.1120  111.9520  -93.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1240  112.6030  -92.8340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   78.5290  112.6550  -92.6310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.0780  110.9720  -94.3950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.5500  114.8110  -92.1710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.1320  110.6210  -91.2800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.7770  109.2440  -93.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   72.8790  110.7710  -92.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.3440  110.6210  -92.6940   P 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4 12  1  0  0  0  0
+ 10 12  2  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  2  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12  9  1  0  0  0  0
+  8  2  1  0  0  0  0
+A    1
+CAA
+A    2
+CAC
+A    3
+CAD
+A    4
+CAE
+A    5
+NAB
+A    6
+OAF
+A    7
+OAG
+A    8
+OAH
+A    9
+OAJ
+A   10
+OAK
+A   11
+OAL
+A   12
+PAI
+M  END
+>  <InstanceId>
+4ZCW_4NG_A_501
+
+>  <ChemCompId>
+4NG
+
+>  <PdbId>
+4ZCW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O6 P
+
+>  <Name>
+[(3S,5S)-1,5-dihydroxy-2-oxopyrrolidin-3-yl]phosphonic acid
+
+>  <SystematicName>
+[(3S,5S)-1,5-bis(oxidanyl)-2-oxidanylidene-pyrrolidin-3-yl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 N O6 P
+
+>  <MolecularWeight>
+197.083
+
+>  <ModifiedDate>
+2016-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8NO6P/c6-3-1-2(12(9,10)11)4(7)5(3)8/h2-3,6,8H,1H2,(H2,9,10,11)/t2-,3-/m0/s1
+
+>  <InChIKey>
+CGWBGDOPBYWJKZ-HRFVKAFMSA-N
+
+>  <SMILES>
+C1[C@@H](C(=O)N([C@H]1O)O)P(=O)(O)O
+
+$$$$

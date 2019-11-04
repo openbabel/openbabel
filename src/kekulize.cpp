@@ -19,8 +19,12 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/kekulize.h>
+#include <cstdlib>
+#include <cstring>
 
 namespace OpenBabel
 {
@@ -61,22 +65,17 @@ namespace OpenBabel
     std::vector<unsigned int> m_path;
   };
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
-  }
-
   static bool IsSpecialCase(OBAtom* atom)
   {
     switch(atom->GetAtomicNum()) {
     case 7:
       // Any exo-cyclic double bond from a N
       // e.g. pyridine N-oxide as the double bond form
-      if (TotalNumberOfBonds(atom) == 3 && atom->GetFormalCharge() == 0)
+      if (atom->GetTotalDegree() == 3 && atom->GetFormalCharge() == 0)
         return true;
       break;
     case 16: // e.g. Cs1(=O)ccccn1
-      if (TotalNumberOfBonds(atom) == 4 && atom->GetFormalCharge() == 0)
+      if (atom->GetTotalDegree() == 4 && atom->GetFormalCharge() == 0)
         return true;
       break;
     }
@@ -106,7 +105,7 @@ namespace OpenBabel
 
     // Is it one of the cases where we know that it only has single bonds?
     int chg = atom->GetFormalCharge();
-    int deg = TotalNumberOfBonds(atom);
+    int deg = atom->GetTotalDegree();
     switch (atom->GetAtomicNum()) {
     case 6:
       if (deg == 3 && (chg == 1 || chg == -1))
@@ -195,18 +194,20 @@ namespace OpenBabel
     // to give all of these atoms a single double bond.
     needs_dbl_bond = new OBBitVec(atomArraySize); // defaults to all False
     FOR_ATOMS_OF_MOL(atom, m_mol) {
-      if (NeedsDoubleBond(&*atom))
+      if (NeedsDoubleBond(&*atom)) {
         needs_dbl_bond->SetBitOn(atom->GetIdx());
+      }
     }
     // Make a copy of needs_dbl_bond, to restrict the traversal in BackTrack()
     kekule_system = new OBBitVec(*needs_dbl_bond);
 
     // Create lookup of degrees
     unsigned int *degrees = (unsigned int*)malloc(sizeof(unsigned int)*atomArraySize);
+    memset(degrees, 0, sizeof(unsigned int)*atomArraySize);
     std::vector<OBAtom*> degreeOneAtoms;
     FOR_ATOMS_OF_MOL(atom, m_mol) {
       unsigned int atom_idx = atom->GetIdx();
-      if (!needs_dbl_bond->BitIsOn(atom_idx)) {
+      if (!needs_dbl_bond->BitIsSet(atom_idx)) {
         degrees[atom_idx] = 0;
         continue;
       }
@@ -214,7 +215,7 @@ namespace OpenBabel
       FOR_BONDS_OF_ATOM(bond, &*atom) {
         if (!bond->IsAromatic()) continue;
         OBAtom *nbr = bond->GetNbrAtom(&*atom);
-        if (needs_dbl_bond->BitIsOn(nbr->GetIdx()))
+        if (needs_dbl_bond->BitIsSet(nbr->GetIdx()))
           mdeg++;
       }
       degrees[atom_idx] = mdeg;
@@ -233,11 +234,11 @@ namespace OpenBabel
         OBAtom* atom = degreeOneAtoms.back();
         degreeOneAtoms.pop_back();
         // some nodes may already have been handled
-        if (!needs_dbl_bond->BitIsOn(atom->GetIdx())) continue;
+        if (!needs_dbl_bond->BitIsSet(atom->GetIdx())) continue;
         FOR_BONDS_OF_ATOM(bond, atom) {
           if (!bond->IsAromatic()) continue;
           OBAtom *nbr = bond->GetNbrAtom(&*atom);
-          if (!needs_dbl_bond->BitIsOn(nbr->GetIdx())) continue;
+          if (!needs_dbl_bond->BitIsSet(nbr->GetIdx())) continue;
           // create a double bond from atom -> nbr
           doubleBonds->SetBitOn(bond->GetIdx());
           needs_dbl_bond->SetBitOff(atom->GetIdx());
@@ -247,7 +248,7 @@ namespace OpenBabel
             if (&(*nbrbond) == &(*bond) || !nbrbond->IsAromatic()) continue;
             OBAtom* nbrnbr = nbrbond->GetNbrAtom(nbr);
             unsigned int nbrnbrIdx = nbrnbr->GetIdx();
-            if (!needs_dbl_bond->BitIsOn(nbrnbrIdx)) continue;
+            if (!needs_dbl_bond->BitIsSet(nbrnbrIdx)) continue;
             degrees[nbrnbrIdx]--;
             if (degrees[nbrnbrIdx] == 1)
               degreeOneAtoms.push_back(nbrnbr);
@@ -269,14 +270,14 @@ namespace OpenBabel
       NodeIterator iterator(degrees, atomArraySize);
       bool change = false;
       while (unsigned int atomIdx = iterator.next()) {
-        if (!needs_dbl_bond->BitIsOn(atomIdx)) continue;
+        if (!needs_dbl_bond->BitIsSet(atomIdx)) continue;
         // The following is almost identical to the code above for deg 1 atoms
         // except for handling the variable 'change'
         OBAtom *atom = m_mol->GetAtom(atomIdx);
         FOR_BONDS_OF_ATOM(bond, atom) {
           if (!bond->IsAromatic()) continue;
           OBAtom *nbr = bond->GetNbrAtom(&*atom);
-          if (!needs_dbl_bond->BitIsOn(nbr->GetIdx())) continue;
+          if (!needs_dbl_bond->BitIsSet(nbr->GetIdx())) continue;
           // create a double bond from atom -> nbr
           doubleBonds->SetBitOn(bond->GetIdx());
           needs_dbl_bond->SetBitOff(atomIdx);
@@ -288,7 +289,7 @@ namespace OpenBabel
               if (&(*nbrbond) == &(*bond) || !nbrbond->IsAromatic()) continue;
               OBAtom* nbrnbr = nbrbond->GetNbrAtom(ref);
               unsigned int nbrnbrIdx = nbrnbr->GetIdx();
-              if (!needs_dbl_bond->BitIsOn(nbrnbrIdx)) continue;
+              if (!needs_dbl_bond->BitIsSet(nbrnbrIdx)) continue;
               degrees[nbrnbrIdx]--;
               if (degrees[nbrnbrIdx] == 1) {
                 degreeOneAtoms.push_back(nbrnbr);
@@ -318,16 +319,16 @@ namespace OpenBabel
   // an alternating path
   bool Kekulizer::FindPath(unsigned int atomidx, bool isDoubleBond, OBBitVec &visited)
   {
-    if (needs_dbl_bond->BitIsOn(atomidx))
+    if (needs_dbl_bond->BitIsSet(atomidx))
       return true;
     visited.SetBitOn(atomidx);
     OBAtom* atom = m_mol->GetAtom(atomidx);
     FOR_BONDS_OF_ATOM(bond, atom) {
       if (!bond->IsAromatic()) continue;
       OBAtom *nbr = bond->GetNbrAtom(atom);
-      if (!kekule_system->BitIsOn(nbr->GetIdx())) continue;
-      if (doubleBonds->BitIsOn(bond->GetIdx()) == isDoubleBond) {
-        if (visited.BitIsOn(nbr->GetIdx())) continue;
+      if (!kekule_system->BitIsSet(nbr->GetIdx())) continue;
+      if (doubleBonds->BitIsSet(bond->GetIdx()) == isDoubleBond) {
+        if (visited.BitIsSet(nbr->GetIdx())) continue;
         bool found_path = FindPath(nbr->GetIdx(), !isDoubleBond, visited);
         if (found_path) {
           m_path.push_back(nbr->GetIdx());
@@ -374,7 +375,7 @@ namespace OpenBabel
           doubleBonds->SetBitOff(bond->GetIdx());
       }
     }
-    return needs_dbl_bond->Empty();
+    return needs_dbl_bond->IsEmpty();
   }
 
 // I'd like to thank John Mayfield for many helpful discussions on the topic of
@@ -411,8 +412,9 @@ namespace OpenBabel
   {
     Kekulizer kekulizer(mol);
     bool success = kekulizer.GreedyMatch();
-    if (!success)
+    if (!success) {
       success = kekulizer.BackTrack();
+    }
 
     kekulizer.AssignDoubleBonds();
 

@@ -1,0 +1,141 @@
+2PUV_M6R_A_5003
+  RCSB PDB12061706413D
+Coordinates from PDB:2PUV:A:5003 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   56.9340  -18.0340   44.4520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0620  -18.6550   43.5220   P 0  0  0  0  0  0  0  0  0  0  0  0
+   58.4960  -17.6130   42.4310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.2340  -19.1140   44.3460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3960  -19.8930   42.7140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7360  -20.9040   43.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4540  -22.1120   42.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5970  -21.6910   41.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.7520  -22.6290   41.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.6210  -23.1140   42.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4720  -23.8030   41.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.9150  -24.9220   41.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7620  -24.2530   40.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3060  -24.9320   39.0790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5700  -25.1940   41.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6980  -25.8750   40.6730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+O61
+A    2
+P6
+A    3
+O62
+A    4
+O63
+A    5
+O6
+A    6
+C6
+A    7
+C5
+A    8
+O5
+A    9
+C4
+A   10
+O4
+A   11
+C3
+A   12
+O3
+A   13
+C2
+A   14
+N2
+A   15
+C1
+A   16
+O1
+M  END
+>  <InstanceId>
+2PUV_M6R_A_5003
+
+>  <ChemCompId>
+M6R
+
+>  <PdbId>
+2PUV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O8 P
+
+>  <Name>
+5-AMINO-5-DEOXY-1-O-PHOSPHONO-D-MANNITOL
+
+>  <SystematicName>
+[(2R,3S,4R,5R)-5-amino-2,3,4,6-tetrahydroxy-hexyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H16 N O8 P
+
+>  <MolecularWeight>
+261.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H16NO8P/c7-3(1-8)5(10)6(11)4(9)2-15-16(12,13)14/h3-6,8-11H,1-2,7H2,(H2,12,13,14)/t3-,4-,5-,6-/m1/s1
+
+>  <InChIKey>
+LBNVXZROMBUNNQ-KVTDHHQDSA-N
+
+>  <SMILES>
+C([C@H]([C@H]([C@@H]([C@@H](COP(=O)(O)O)O)O)O)N)O
+
+$$$$

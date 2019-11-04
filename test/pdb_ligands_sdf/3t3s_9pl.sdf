@@ -1,0 +1,139 @@
+3T3Q_9PL_A_501
+  RCSB PDB12061710493D
+Coordinates from PDB:3T3Q:A:501 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -35.2800   29.3340  -50.2800   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2520   29.9530  -50.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8690   30.8170  -50.1200   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2750   30.7290  -48.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.2650   29.7860  -49.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3680   28.3100  -50.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3150   29.3420  -47.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.6790   30.5430  -47.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.0400   30.1640  -45.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.9150   31.0310  -45.7670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.7730   31.8540  -46.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.7140   31.4340  -48.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.9600   30.7630  -49.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.8000   29.8800  -48.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.9880   32.7780  -47.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  5  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 12  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 15 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+O15
+M  END
+>  <InstanceId>
+3T3Q_9PL_A_501
+
+>  <ChemCompId>
+9PL
+
+>  <PdbId>
+3T3Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+(3S,4R)-3-ethyl-4-[(1-methyl-1H-imidazol-5-yl)methyl]dihydrofuran-2(3H)-one
+
+>  <SystematicName>
+(3S,4R)-3-ethyl-4-[(3-methylimidazol-4-yl)methyl]oxolan-2-one
+
+>  <Synonyms>
+PILOCARPINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 N2 O2
+
+>  <MolecularWeight>
+208.257
+
+>  <ModifiedDate>
+2011-12-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16N2O2/c1-3-10-8(6-15-11(10)14)4-9-5-12-7-13(9)2/h5,7-8,10H,3-4,6H2,1-2H3/t8-,10-/m0/s1
+
+>  <InChIKey>
+QCHFTSOMWOSFHM-WPRPVWTQSA-N
+
+>  <SMILES>
+CC[C@H]1[C@H](COC1=O)Cc2cncn2C
+
+$$$$

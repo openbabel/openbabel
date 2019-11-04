@@ -1,0 +1,138 @@
+4HPW_3YM_A_401
+  RCSB PDB12061712543D
+Coordinates from PDB:4HPW:A:401 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   18.0100   -2.3240   32.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3570   -3.3050   31.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6480   -2.9600   30.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6330   -2.0100   30.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9470   -3.5770   29.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9440   -4.5270   29.1170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2490   -3.2380   28.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2400   -2.2900   28.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9280   -1.6700   29.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8610   -0.6680   29.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0930    0.7200   28.7490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9380    1.6600   28.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7220    2.1950   30.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2520    1.3790   29.3190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1750    1.9340   27.9690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  2  0  0  0  0
+  7  5  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  3  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 12 15  1  0  0  0  0
+A    1
+CAN
+A    2
+OAM
+A    3
+CAJ
+A    4
+CD2
+A    5
+CAK
+A    6
+OAL
+A    7
+CAI
+A    8
+CD1
+A    9
+CG
+A   10
+CB
+A   11
+CA
+A   12
+C
+A   13
+O
+A   14
+N
+A   15
+OXT
+M  END
+>  <InstanceId>
+4HPW_3YM_A_401
+
+>  <ChemCompId>
+3YM
+
+>  <PdbId>
+4HPW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4
+
+>  <Name>
+3-methoxy-L-tyrosine
+
+>  <SystematicName>
+(2S)-2-azanyl-3-(3-methoxy-4-oxidanyl-phenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C10 H13 N O4
+
+>  <MolecularWeight>
+211.215
+
+>  <ModifiedDate>
+2013-10-25
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO4/c1-15-9-5-6(2-3-8(9)12)4-7(11)10(13)14/h2-3,5,7,12H,4,11H2,1H3,(H,13,14)/t7-/m0/s1
+
+>  <InChIKey>
+PFDUUKDQEHURQC-ZETCQYMHSA-N
+
+>  <SMILES>
+COc1cc(ccc1O)C[C@@H](C(=O)O)N
+
+$$$$

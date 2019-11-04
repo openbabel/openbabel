@@ -8,6 +8,7 @@
 
 #include <openbabel/graphsym.h>
 #include <openbabel/canon.h>
+#include <openbabel/atom.h>
 
 using namespace std;
 using namespace OpenBabel;

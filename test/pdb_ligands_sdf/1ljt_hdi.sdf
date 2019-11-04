@@ -1,0 +1,147 @@
+1LJT_HDI_A_115
+  RCSB PDB12061703113D
+Coordinates from PDB:1LJT:A:115 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -44.2650   43.1200   11.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.8590   42.6230    9.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.3970   43.7390    9.6980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -44.0190   42.3620   10.6770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.1790   41.3400    9.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.6100   41.7180    6.4310   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.0800   42.3130    7.4950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.8800   41.5740    8.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.1680   40.3040    8.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.0890   40.6050    6.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5930   37.0540    3.0540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.6370   39.8230    4.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.4390   39.6630    5.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.6160   38.6210    6.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.0080   37.7600    5.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.2040   37.9170    3.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.0270   38.9580    3.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+A    1
+C12
+A    2
+C11
+A    3
+O3
+A    4
+O4
+A    5
+C10
+A    6
+N1
+A    7
+O2
+A    8
+C9
+A    9
+C8
+A   10
+C7
+A   11
+O1
+A   12
+C5
+A   13
+C6
+A   14
+C1
+A   15
+C2
+A   16
+C3
+A   17
+C4
+M  END
+>  <InstanceId>
+1LJT_HDI_A_115
+
+>  <ChemCompId>
+HDI
+
+>  <PdbId>
+1LJT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+115
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O4
+
+>  <Name>
+3-(4-HYDROXYPHENYL)-4,5-DIHYDRO-5-ISOXAZOLE-ACETIC ACID METHYL ESTER
+
+>  <SystematicName>
+methyl 2-[(5R)-3-(4-hydroxyphenyl)-4,5-dihydro-1,2-oxazol-5-yl]ethanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 N O4
+
+>  <MolecularWeight>
+235.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13NO4/c1-16-12(15)7-10-6-11(13-17-10)8-2-4-9(14)5-3-8/h2-5,10,14H,6-7H2,1H3/t10-/m1/s1
+
+>  <InChIKey>
+AIXMJTYHQHQJLU-SNVBAGLBSA-N
+
+>  <SMILES>
+COC(=O)C[C@H]1CC(=NO1)c2ccc(cc2)O
+
+$$$$

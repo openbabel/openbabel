@@ -1,0 +1,132 @@
+1G0O_PYQ_A_1404
+  RCSB PDB12061702333D
+Coordinates from PDB:1G0O:A:1404 Model:1 without hydrogens
+ 13 15  0  0  0  0            999 V2000
+    2.5580   89.5890   58.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8900   89.2980   58.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8900   89.6790   59.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6200   90.3130   60.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9430   90.5650   61.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9600   89.9650   60.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2080   89.4790   59.0620   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6520   88.8780   57.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9080   88.6990   57.8220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7280   88.4490   56.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3360   88.6600   57.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2970   90.6030   60.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2730   90.2360   59.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+N8
+A    8
+C9
+A    9
+O10
+A   10
+C11
+A   11
+C12
+A   12
+C13
+A   13
+C14
+M  END
+>  <InstanceId>
+1G0O_PYQ_A_1404
+
+>  <ChemCompId>
+PYQ
+
+>  <PdbId>
+1G0O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O
+
+>  <Name>
+PYROQUILON
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+1,2,5,6-TETRAHYDRO-4H-PYRROLO(3,2,1-IJ)QUINOLIN-4-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O
+
+>  <MolecularWeight>
+173.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO/c13-10-5-4-8-2-1-3-9-6-7-12(10)11(8)9/h1-3H,4-7H2
+
+>  <InChIKey>
+XRJLAOUDSILTFT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c3c(c1)CCN3C(=O)CC2
+
+$$$$

@@ -1,0 +1,142 @@
+2AG2_CH5_B_2341
+  RCSB PDB12061705003D
+Coordinates from PDB:2AG2:B:2341 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   18.7170   49.8440   11.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9890   50.2830   10.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7930   49.1890    9.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7120   52.4390   14.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4770   53.6050   13.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7450   52.4690   13.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2710   54.4530   15.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5420   54.5980   12.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0010   53.7490   13.8040   N 0  3  0  0  0  0  0  0  0  0  0  0
+   16.6830   50.8980   10.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3990   48.9400    8.8990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0760   51.2890   14.1570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2500   50.0650   14.4290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5760   50.9420   12.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2680   52.5700   14.0510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5570   51.2110   13.6750   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 15  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 16  2  0  0  0  0
+ 13 16  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 15 16  1  0  0  0  0
+M  CHG  1   9   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N
+A   10
+O2
+A   11
+O3
+A   12
+O1P
+A   13
+O2P
+A   14
+O3P
+A   15
+O4P
+A   16
+P
+M  END
+>  <InstanceId>
+2AG2_CH5_B_2341
+
+>  <ChemCompId>
+CH5
+
+>  <PdbId>
+2AG2
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+2341
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O6 P
+
+>  <Name>
+2-(((R)-2,3-DIHYDROXYPROPYL)PHOSPHORYLOXY)-N,N,N-TRIMETHYLETHANAMINIUM
+
+>  <SystematicName>
+2-[[(2R)-2,3-dihydroxypropoxy]-hydroxy-phosphoryl]oxyethyl-trimethyl-azanium
+
+>  <Synonyms>
+GLYCERO-3-PHOSPHOCHOLINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H21 N O6 P
+
+>  <MolecularWeight>
+258.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H20NO6P/c1-9(2,3)4-5-14-16(12,13)15-7-8(11)6-10/h8,10-11H,4-7H2,1-3H3/p+1/t8-/m1/s1
+
+>  <InChIKey>
+SUHOQUVVVLNYQR-MRVPVSSYSA-O
+
+>  <SMILES>
+C[N+](C)(C)CCO[P@](=O)(O)OC[C@@H](CO)O
+
+$$$$

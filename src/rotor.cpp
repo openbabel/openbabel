@@ -20,6 +20,10 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/bond.h>
+#include <openbabel/ring.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/rotor.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/elements.h>
@@ -29,6 +33,11 @@ GNU General Public License for more details.
 
 // private data headers with default parameters
 #include "torlib.h"
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 using namespace std;
 namespace OpenBabel
@@ -135,15 +144,15 @@ namespace OpenBabel
 
   bool OBRotorList::IsFixedBond(OBBond *bond)
   {
-    if (_fixedatoms.Empty() && _fixedbonds.Empty())
+    if (_fixedatoms.IsEmpty() && _fixedbonds.IsEmpty())
       return false;
 
     // new fixed bonds
-    if (!_fixedbonds.Empty()) {
+    if (!_fixedbonds.IsEmpty()) {
       return _fixedbonds.BitIsSet(bond->GetIdx());
     }
 
-    if (_fixedatoms.Empty())
+    if (_fixedatoms.IsEmpty())
       return false;
 
     // deprecated fixed atoms
@@ -205,15 +214,15 @@ namespace OpenBabel
         used.SetBitOn(atom->GetIdx());
         curr.SetBitOn(atom->GetIdx());
 
-        while (!curr.IsEmpty() && (bv&curr).Empty())
+        while (!curr.IsEmpty() && (bv&curr).IsEmpty())
           {
             next.Clear();
             for (natom = curr.NextBit(-1);natom != curr.EndBit();natom = curr.NextBit(natom))
               {
                 atom1 = mol.GetAtom(natom);
                 for (bond = atom1->BeginBond(j);bond;bond = atom1->NextBond(j))
-                  if (!used.BitIsOn(bond->GetNbrAtomIdx(atom1)) &&
-                      !curr.BitIsOn(bond->GetNbrAtomIdx(atom1)))
+                  if (!used.BitIsSet(bond->GetNbrAtomIdx(atom1)) &&
+                      !curr.BitIsSet(bond->GetNbrAtomIdx(atom1)))
                       if (bond->GetNbrAtom(atom1)->GetAtomicNum() != OBElements::Hydrogen)
                       next.SetBitOn(bond->GetNbrAtomIdx(atom1));
               }
@@ -254,7 +263,7 @@ namespace OpenBabel
         }
 
         for (unsigned int hyb=2; hyb<=3; ++hyb) { // sp2 and sp3 carbons, with explicit Hs
-          if (this_side->GetAtomicNum() == 6 && this_side->GetHyb() == hyb && this_side->GetValence() == (hyb + 1) ) {
+          if (this_side->GetAtomicNum() == 6 && this_side->GetHyb() == hyb && this_side->GetExplicitDegree() == (hyb + 1) ) {
             syms.clear();
             FOR_NBORS_OF_ATOM(nbr, this_side) {
               if ( &(*nbr) == other_side ) continue;
@@ -298,7 +307,7 @@ namespace OpenBabel
         eval |= curr;
 
         //follow all non-rotor bonds and add atoms to eval list
-        for (;!curr.Empty();)
+        for (;!curr.IsEmpty();)
           {
             next.Clear();
             for (j = curr.NextBit(0);j != curr.EndBit();j = curr.NextBit(j))

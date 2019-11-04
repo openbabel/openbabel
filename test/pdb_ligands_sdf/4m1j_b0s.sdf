@@ -1,0 +1,141 @@
+4M1J_B0S_C_801
+  RCSB PDB12061713403D
+Coordinates from PDB:4M1J:C:801 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   24.5940   38.3170   11.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0640   37.0960   10.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7120   35.8390   11.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3270   34.6200   10.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1900   33.4150   10.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6050   32.1420    9.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4680   30.8940   10.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0310   30.6110    8.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5750   29.3390    7.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6970   29.3980    6.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9450   28.0290    6.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8210   27.5600    5.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3200   27.4180    3.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6010   26.2340    3.0010   B 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1470   26.1140    3.1200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9850   26.0920    1.5770   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+B1
+A   15
+O2
+A   16
+O3
+M  END
+>  <InstanceId>
+4M1J_B0S_C_801
+
+>  <ChemCompId>
+B0S
+
+>  <PdbId>
+4M1J
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O2 B
+
+>  <Name>
+tridecylboronic acid
+
+>  <SystematicName>
+tridecylboronic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H29 B O2
+
+>  <MolecularWeight>
+228.179
+
+>  <ModifiedDate>
+2013-08-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H29BO2/c1-2-3-4-5-6-7-8-9-10-11-12-13-14(15)16/h15-16H,2-13H2,1H3
+
+>  <InChIKey>
+IBKXABQGVIIFFS-UHFFFAOYSA-N
+
+>  <SMILES>
+B(CCCCCCCCCCCCC)(O)O
+
+$$$$

@@ -235,6 +235,7 @@ namespace OpenBabel
         _init = false;
         _rvdw = 7.0;
         _rele = 15.0;
+        _epsilon = 1.0; // default electrostatics
         _pairfreq = 15;
         _cutoff = false;
         _linesearch = LineSearchType::Newton2Num;
@@ -335,4 +336,3 @@ namespace OpenBabel
 
 //! \file forcefieldmmff94.h
 //! \brief MMFF94 force field
-

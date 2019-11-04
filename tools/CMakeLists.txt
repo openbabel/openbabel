@@ -1,17 +1,23 @@
 if(MINIMAL_BUILD)
   set(tools
-        babel
+        obabel
   )
 else(MINIMAL_BUILD)
+  find_package(Boost COMPONENTS program_options iostreams)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+  endif()
+
+
   set(tools
-        babel
         obabel
-        obchiral
         obconformer
         obenergy
         obfit
+	obfitall
         obgen
         obminimize
+        obmm
         obprobe
         obprop
         obrotamer
@@ -24,8 +30,7 @@ else(MINIMAL_BUILD)
     set(tools
         ${tools}
         obdistgen
-        obrms
-       )
+    )
   endif()
 endif(MINIMAL_BUILD)
 
@@ -45,37 +50,31 @@ if(BUILD_SHARED)
   endforeach(tool)
 
   if(NOT MINIMAL_BUILD)
-    # obspectrophore -- requires getopt
-    if (NOT GETOPT_FOUND)
-      add_executable(obspectrophore obspectrophore.cpp getopt.c)
-    else(NOT GETOPT_FOUND)
-      add_executable(obspectrophore obspectrophore.cpp)
-    endif(NOT GETOPT_FOUND)
-    target_link_libraries(obspectrophore ${BABEL_LIBRARY})
-    install(TARGETS obspectrophore
-                    RUNTIME DESTINATION bin
-                    LIBRARY DESTINATION lib${LIB_SUFFIX}
-                    ARCHIVE DESTINATION lib${LIB_SUFFIX}
-    )
-
-    # obgrep -- requires getopt
-    if (NOT GETOPT_FOUND)
-      add_executable(obgrep obgrep.cpp getopt.c)
-    else(NOT GETOPT_FOUND)
-      add_executable(obgrep obgrep.cpp)
-    endif(NOT GETOPT_FOUND)
-      target_link_libraries(obgrep ${BABEL_LIBRARY})
-      install(TARGETS obgrep
+    # obgrep, obrms, obspectrophore -- require getopt
+    set(toolnames obgrep obspectrophore)
+    if(EIGEN3_FOUND)
+      set(toolnames ${toolnames} obrms)
+    endif()
+    foreach(tool ${toolnames})
+      if (NOT GETOPT_FOUND)
+        add_executable(${tool} ${tool}.cpp getopt.c)
+      else(NOT GETOPT_FOUND)
+        add_executable(${tool} ${tool}.cpp)
+      endif(NOT GETOPT_FOUND)
+      target_link_libraries(${tool} ${BABEL_LIBRARY})
+      install(TARGETS ${tool}
                       RUNTIME DESTINATION bin
                       LIBRARY DESTINATION lib${LIB_SUFFIX}
                       ARCHIVE DESTINATION lib${LIB_SUFFIX}
       )
+    endforeach()
+
   endif(NOT MINIMAL_BUILD)
 
 else(BUILD_SHARED)
 ###############################################################################
 #
-# Build STATIC babel with all plugins taken from the static libopenbabel.a
+# Build STATIC obabel with all plugins taken from the static libopenbabel.a
 #
 ###############################################################################
 
@@ -133,22 +132,14 @@ else(BUILD_SHARED)
     endif(BUILD_MIXED)
   endif()
 
-  # build a static babel only
-  add_executable(babel babel.cpp)
-  target_link_libraries(babel ${libs})
+  # build a static obabel only
   add_executable(obabel obabel.cpp)
   target_link_libraries(obabel ${libs})
 
   if(NOT BUILD_MIXED)
     # Prevent -Wl,-Bdynamic from being added to the end of the link line.
-    set_target_properties(babel PROPERTIES LINK_SEARCH_END_STATIC TRUE)
     set_target_properties(obabel PROPERTIES LINK_SEARCH_END_STATIC TRUE)
   endif(NOT BUILD_MIXED)
-
-  install(TARGETS babel
-          RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib${LIB_SUFFIX}
-          ARCHIVE DESTINATION lib${LIB_SUFFIX})
 
   install(TARGETS obabel
           RUNTIME DESTINATION bin

@@ -1,0 +1,153 @@
+1DBW_15P_A_999
+  RCSB PDB12061702153D
+Coordinates from PDB:1DBW:A:999 Model:1 without hydrogens
+ 19 18  0  0  0  0            999 V2000
+    1.5710   -4.1180    8.3800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9790   -4.3080    8.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7900   -3.4800    9.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5710   -2.0440    9.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6890   -1.2140    9.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5240    0.0860    8.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3270   -0.1180    7.4930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8460    0.4820    6.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7570   -0.4060    5.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4130   -1.5800    5.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4490   -2.6320    5.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0780   -3.8890    4.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7350   -4.4890    5.5820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3680   -5.7420    5.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1790   -6.2630    6.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3810   -6.4460    7.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4530   -7.5220    7.5810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2220   -7.8690    9.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2860   -8.6920    9.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+O1
+A    2
+C3
+A    3
+C4
+A    4
+O2
+A    5
+C5
+A    6
+C6
+A    7
+O3
+A    8
+C7
+A    9
+C8
+A   10
+O4
+A   11
+C9
+A   12
+C10
+A   13
+O5
+A   14
+C11
+A   15
+C12
+A   16
+O6
+A   17
+C13
+A   18
+C14
+A   19
+O7
+M  END
+>  <InstanceId>
+1DBW_15P_A_999
+
+>  <ChemCompId>
+15P
+
+>  <PdbId>
+1DBW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+85
+
+>  <ObservedFormula>
+C12 O7
+
+>  <Name>
+POLYETHYLENE GLYCOL (N=34)
+
+>  <SystematicName>
+2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-[2-(2-methoxyethoxy)ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethanol
+
+>  <Synonyms>
+PEG 1500
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C69 H140 O35
+
+>  <MolecularWeight>
+1529.83
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C69H140O35/c1-71-4-5-73-8-9-75-12-13-77-16-17-79-20-21-81-24-25-83-28-29-85-32-33-87-36-37-89-40-41-91-44-45-93-48-49-95-52-53-97-56-57-99-60-61-101-64-65-103-68-69-104-67-66-102-63-62-100-59-58-98-55-54-96-51-50-94-47-46-92-43-42-90-39-38-88-35-34-86-31-30-84-27-26-82-23-22-80-19-18-78-15-14-76-11-10-74-7-6-72-3-2-70/h70H,2-69H2,1H3
+
+>  <InChIKey>
+VUYXVWGKCKTUMF-UHFFFAOYSA-N
+
+>  <SMILES>
+COCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCOCCO
+
+$$$$

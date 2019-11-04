@@ -37,7 +37,6 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/squareplanar.h>
-
 /* OBBuilder::GetNewBondVector():
  * - is based on OBAtom::GetNewBondVector()
  * - but: when extending a long chain all the bonds are trans
@@ -70,19 +69,35 @@ namespace OpenBabel
       //
       \endcode
   **/
-  std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_fragments;
+  //std::map<std::string, double> OBBuilder::_torsion;
+  std::vector<std::string> OBBuilder::_rigid_fragments;
+  std::map<std::string, int> OBBuilder::_rigid_fragments_index;
+  std::map<std::string, std::vector<vector3> > OBBuilder::_rigid_fragments_cache;
+  std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_ring_fragments;
 
   void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
-    if (OpenDatafile(ifs, "fragments.txt").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open fragments.txt", obError);
+    if (OpenDatafile(ifs, "rigid-fragments-index.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open ring-fragments-index.txt", obError);
       return;
     }
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     // TODO: Use OpenDatafile()
     obLocale.SetLocale();
+
+    std::string smiles;
+    int index;
+    while(ifs >> smiles >> index) {
+      _rigid_fragments.push_back(smiles);
+      _rigid_fragments_index[smiles] = index;
+    }
+
+    if (OpenDatafile(ifs, "ring-fragments.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open ring-fragments.txt", obError);
+      return;
+    }
 
     char buffer[BUFF_SIZE];
     vector<string> vs;
@@ -96,7 +111,7 @@ namespace OpenBabel
 
       if (vs.size() == 1) { // SMARTS pattern
         if (sp != NULL)
-          _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+          _ring_fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
 
         coords.clear();
         sp = new OBSmartsPattern;
@@ -109,13 +124,53 @@ namespace OpenBabel
         vector3 coord(atof(vs[0].c_str()), atof(vs[1].c_str()), atof(vs[2].c_str()));
         coords.push_back(coord);
       }
-
     }
-
-    _fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+    _ring_fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
 
     // return the locale to the original one
     obLocale.RestoreLocale();
+
+    /*if (OpenDatafile(ifs, "torsion.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open torsion.txt", obError);
+      return;
+    }
+    double angle;
+    while(ifs >> smiles >> angle) {
+      _torsion[smiles] = angle;
+    }
+    */
+  }
+
+  std::vector<vector3> OBBuilder::GetFragmentCoord(std::string smiles) {
+    if (_rigid_fragments_cache.count(smiles) > 0) {
+      return _rigid_fragments_cache[smiles];
+    }
+
+    std::vector<vector3> coords;
+    if (_rigid_fragments_index.count(smiles) == 0) {
+      return coords;
+    }
+
+    ifstream ifs;
+    if (OpenDatafile(ifs, "rigid-fragments.txt").length() == 0) {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot open rigid-fragments.txt", obError);
+      return coords;
+    }
+
+    ifs.clear();
+    ifs.seekg(_rigid_fragments_index[smiles]);
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      tokenize(vs, buffer);
+      if (vs.size() == 4) { // XYZ coordinates
+        vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
+        coords.push_back(coord);
+      } else if (vs.size() == 1) { // SMARTS pattern
+        break;
+      }
+    }
+    return coords;
   }
 
   vector3 GetCorrectedBondVector(OBAtom *atom1, OBAtom *atom2, int bondOrder = 1)
@@ -171,7 +226,7 @@ namespace OpenBabel
       //
       //  a   --->   a--*
       //
-      if (atom->GetValence() == 0) {
+      if (atom->GetExplicitDegree() == 0) {
         newbond = atom->GetVector() + VX * length;
         return newbond;
       }
@@ -199,7 +254,7 @@ namespace OpenBabel
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109
       //                              \                                      //
       //                               *
-      if (atom->GetValence() == 1) {
+      if (atom->GetExplicitDegree() == 1) {
         bool isCarboxylateO = atom->IsCarboxylOxygen();
 
         FOR_NBORS_OF_ATOM (nbr, atom) {
@@ -267,7 +322,7 @@ namespace OpenBabel
       //     X  --->   X--*
       //    /         /
       //
-      if (atom->GetValence() == 2) {
+      if (atom->GetExplicitDegree() == 2) {
         FOR_NBORS_OF_ATOM (nbr, atom) {
           if (bond1 == VZero)
             bond1 = atom->GetVector() - nbr->GetVector();
@@ -281,14 +336,14 @@ namespace OpenBabel
         v1 = v1.normalize();
 
         if (atom->GetHyb() == 2)
-          newbond = v1;
-        if (atom->GetHyb() == 3) {
+          newbond = v1; 
+        else if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
           newbond = bond1 - v2 * tan(DEG_TO_RAD*(180.0 - 109.471));
           newbond = v2 + v1 * (sqrt(2.0) / 2.0); // used to be tan(70.53 degrees/2) which is sqrt(2.0) / 2.0
         }
-        if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
+        else if (atom->GetHyb() == 5 || atom->GetHyb() == 4) {
           /* add the first equatorial atom, orthogonally to bond1 (and bond2 = -bond1) */
           /* is atom order correct?  I don't think it matters, but I might have to ask a chemist
            * whether PClF4 would be more likely to have an equatorial or axial Cl-P bond */
@@ -303,12 +358,12 @@ namespace OpenBabel
           v1 = v1.normalize();
           newbond = v1;
         }
-        if (atom->GetHyb() == 6) {
+        else if (atom->GetHyb() == 6) {
           v2 = cross(bond1, bond2);
           newbond = v2;
         }
 
-        newbond = newbond.normalize();
+        newbond = newbond.normalize(); //if newbond was not set, it will become non-finite here
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
@@ -337,7 +392,7 @@ namespace OpenBabel
        //    /          /
        //
        */
-      if (atom->GetValence() == 3) {
+      if (atom->GetExplicitDegree() == 3) {
         if (atom->GetHyb() == 3) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -421,7 +476,7 @@ namespace OpenBabel
         }
       }
 
-      if (atom->GetValence() == 4) {
+      if (atom->GetExplicitDegree() == 4) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -471,7 +526,7 @@ namespace OpenBabel
 
       }
 
-      if (atom->GetValence() == 5) {
+      if (atom->GetExplicitDegree() == 5) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
             if (bond1 == VZero)
@@ -508,7 +563,7 @@ namespace OpenBabel
       //
       //  a   --->   a---*
       //
-      if (atom->GetValence() == 0) {
+      if (atom->GetExplicitDegree() == 0) {
         newbond = atom->GetVector() + VX * length;
         // Check that the vector is still finite before returning
         if (!isfinite(newbond.x()) || !isfinite(newbond.y()))
@@ -539,7 +594,7 @@ namespace OpenBabel
       //    (a-1)--a   --->   (a-1)--a          angle(a-1, a, *) = 109            //
       //                              \                                           //
       //                               *                                          //
-      if (atom->GetValence() == 1) {
+      if (atom->GetExplicitDegree() == 1) {
         OBAtom *nbr = atom->BeginNbrAtom(i);
         if (!nbr)
           return VZero;
@@ -561,14 +616,14 @@ namespace OpenBabel
         newbond *= length;
         newbond += atom->GetVector();
         return newbond;
-      } // GetValence() == 1
+      } // GetExplicitDegree() == 1
 
       //                          //
       //    \         \           //
       //     X  --->   X--*       //
       //    /         /           //
       //                          //
-      if (atom->GetValence() == 2) {
+      if (atom->GetExplicitDegree() == 2) {
         for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
           if (bond1 == VZero)
             bond1 = atom->GetVector() - nbr->GetVector();
@@ -589,7 +644,7 @@ namespace OpenBabel
       //   --X  --->  --X--*      //
       //    /          /          //
       //                          //
-      if (atom->GetValence() == 3) {
+      if (atom->GetExplicitDegree() == 3) {
         OBStereoFacade stereoFacade((OBMol*)atom->GetParent());
         if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
           OBBond *hash = 0;
@@ -791,6 +846,8 @@ namespace OpenBabel
     }
     //
     // translate fragment
+    //for(vector<OBMol>::iterator f=fragments.begin(); f!=fragments.end(); f++) {
+    //
     //
     for (unsigned int i = 1; i <= mol.NumAtoms(); ++i) {
       if (fragment.BitIsSet(i)) {
@@ -825,14 +882,28 @@ namespace OpenBabel
     a->AddBond(bond);
     b->AddBond(bond);
     //
-    // Set the dihedral between the two fragments (for the moment, only handle double bonds)
+    // Set the dihedral between the two fragments
     //
     // For example, if a double bond is coming off a ring, then the dihedral
     // should be 180, e.g. for I/C=C\1/NC1 (don't worry about whether cis or trans
     // at this point - this will be corrected later)
     //
-    if(bondOrder==2 && a->GetHyb()==2 && b->GetHyb()==2 && nbr_a && nbr_b)
+    if (bondOrder == 2 && a->GetHyb() == 2 && b->GetHyb() == 2 && nbr_a &&
+        nbr_b)
       mol.SetTorsion(nbr_a, a, b, nbr_b, 180 * DEG_TO_RAD);
+
+    // another special case is a single bond between two sp2 carbons - twist
+    // e.g. biphenyl
+    if (bondOrder == 1 && a->GetHyb() == 2 && b->GetHyb() == 2 && nbr_a &&
+        nbr_b)
+      mol.SetTorsion(nbr_a, a, b, nbr_b, 45.0 * DEG_TO_RAD);
+
+    // another special case is building dihedrals between two rings
+    //  twist it a little bit (e.g., Platinum 00J_2XIR_A)
+    if (bondOrder == 1 && ((nbr_a && nbr_a->IsInRing() && b->IsInRing()) ||
+                           (nbr_b && nbr_b->IsInRing() && a->IsInRing())))
+      mol.SetTorsion(nbr_a, a, b, nbr_b, 60.0 * DEG_TO_RAD);
+    // TODO - other inter-fragment dihedrals here
 
     return true;
   }
@@ -969,17 +1040,18 @@ namespace OpenBabel
   //                                           b) Not first atom: Find position and place atom
   bool OBBuilder::Build(OBMol &mol, bool stereoWarnings)
   {
-    //cerr << "OBBuilder::Build(OBMol &mol)" << endl;
     OBBitVec vdone; // Atoms that are done, need no further manipulation.
     OBBitVec vfrag; // Atoms that are part of a fragment found in the database.
                     // These atoms have coordinates, but the fragment still has
                     // to be rotated and translated.
     vector3 molvec, moldir;
-    vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
     vector<vector<int> >::iterator j;
-    vector<int>::iterator k, k2, k3;
+    vector<int>::iterator k, k2;
     vector<vector3>::iterator l;
     vector<vector<int> > mlist; // match list for fragments
+
+    OBConversion conv;
+    conv.SetOutFormat("can"); // Canonical SMILES
 
     // Trigger hybridisation perception now so it will be copied to workMol
     mol.GetFirstAtom()->GetHyb();
@@ -991,109 +1063,151 @@ namespace OpenBabel
     if (workMol.GetDimension() == 2)
       workMol.SetDimension(0);
 
-    // Count the number of ring atoms.
-    unsigned int ratoms = 0;
-    FOR_ATOMS_OF_MOL(a, mol)
-      if (a->IsInRing()) {
-        ratoms++;
-        if (_keeprings) // Mark these as fragments
-          vfrag.SetBitOn(a->GetIdx());
-      }
 
-    if (_keeprings) {
-      // Delete all non-ring bonds
-      std::vector<OBBond*> for_deletion;
-      FOR_BONDS_OF_MOL(b, workMol)
-        if (!b->IsInRing())
-          for_deletion.push_back(&(*b));
-      for(std::vector<OBBond*>::iterator it=for_deletion.begin(); it!=for_deletion.end(); ++it) {
-        workMol.DeleteBond(*it);
-      }
-    }
-    else
-      // Delete all bonds in the working molecule
-      // (we will add them back at the end)
-      while (workMol.NumBonds())
-        workMol.DeleteBond(workMol.GetBond(0));
+    // Delete all bonds in the working molecule
+    // (we will add them back at the end)
+    while (workMol.NumBonds())
+      workMol.DeleteBond(workMol.GetBond(0));
 
     // Deleting the bonds unsets HybridizationPerceived. To prevent our
     // perceived values being reperceived (incorrectly), we must set
     // this flag again.
     workMol.SetHybridizationPerceived();
 
-    if (ratoms && !_keeprings) {
-      //datafile is read only on first use of Build()
-      if(_fragments.empty())
-        LoadFragments();
 
-      // Skip all fragments that are too big to match
-      // Note: It would be faster to compare to the size of the largest
-      //       isolated ring system instead of comparing to ratoms
-      for (i = _fragments.begin();i != _fragments.end() && i->first->NumAtoms() > ratoms;++i);
+    // I think just deleting rotable bond and separate is enough,
+    // but it did not work.
 
-      // Loop through  the remaining fragments and assign the coordinates from
-      // the first (most complex) fragment.
-      // Stop if there are no unassigned ring atoms (ratoms).
-      for (;i != _fragments.end() && ratoms;++i) {
+    // Get fragments using CopySubstructure
+    // Copy all atoms
+    OBBitVec atomsToCopy;
+    FOR_ATOMS_OF_MOL(atom, mol) {
+      atomsToCopy.SetBitOn(atom->GetIdx());
+    }
 
-        if (i->first != NULL && i->first->Match(mol)) {
-          mlist = i->first->GetUMapList();
+    // Exclude rotatable bonds
+    OBBitVec bondsToExclude;
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if (bond->IsRotor()) {
+        bondsToExclude.SetBitOn(bond->GetIdx());
+      }
+    }
 
-          for (j = mlist.begin();j != mlist.end();++j) { // for all matches
+    // Generate fragments by copy
+    OBMol mol_copy;
+    mol.CopySubstructure(mol_copy, &atomsToCopy, &bondsToExclude);
 
+    // Separate each disconnected fragments as different molecules
+    vector<OBMol> fragments = mol_copy.Separate();
+
+    // datafile is read only on first use of Build()
+    if(_rigid_fragments.empty())
+      LoadFragments();
+
+
+    for(vector<OBMol>::iterator f = fragments.begin(); f != fragments.end(); ++f) {
+      std::string fragment_smiles = conv.WriteString(&*f, true);
+      bool isMatchRigid = false;
+      // if rigid fragment is in database
+      if (_rigid_fragments_index.count(fragment_smiles) > 0) {
+        OBSmartsPattern sp;
+        if (!sp.Init(fragment_smiles)) {
+          obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from fragment", obInfo);
+        } else if (sp.Match(mol)) { // for all matches
+          isMatchRigid = true;
+          mlist = sp.GetUMapList();
+          for (j = mlist.begin(); j != mlist.end(); ++j) {
             // Have any atoms of this match already been added?
-            int alreadydone = 0;
-            int match_idx = 0;
-            for (k = j->begin(); k != j->end(); ++k) // for all atoms of the fragment
+            bool alreadydone = false;
+            for (k = j->begin(); k != j->end(); ++k)
               if (vfrag.BitIsSet(*k)) {
-                alreadydone += 1;
-                if (alreadydone > 1) break;
-                match_idx = *k;
+                alreadydone = true;
+                break;
               }
-            bool spiro = false;
-            if (alreadydone > 1) // At least two atoms of the found match have already been added
-              continue;
-            else if (alreadydone == 1) {
-              spiro = IsSpiroAtom(mol.GetAtom(match_idx)->GetId(), mol);
-              if (!spiro) continue;
-            }
+            if (alreadydone) continue;
 
-            ratoms += alreadydone - static_cast<int> (j->size()); // Update the number of available ring atoms
             for (k = j->begin(); k != j->end(); ++k)
               vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
 
-            if (spiro) {
-              vector<int> match_indices(1); // In future, it could be of longer length
-              match_indices[0] = match_idx;
-              ConnectFrags(mol, workMol, *j, i->second, match_indices);
+            int counter;
+            std::vector<vector3> coords = GetFragmentCoord(fragment_smiles);
+            for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
+              // set coordinates for atoms
+              OBAtom *atom = workMol.GetAtom(*k);
+              atom->SetVector(coords[counter]);
             }
-            else {
+
+            // add the bonds for the fragment
+            for (k = j->begin(); k != j->end(); ++k) {
+              OBAtom *atom1 = mol.GetAtom(*k);
+              for (k2 = j->begin(); k2 != j->end(); ++k2) {
+                OBAtom *atom2 = mol.GetAtom(*k2);
+                OBBond *bond = atom1->GetBond(atom2);
+                if (bond != NULL) {
+                  workMol.AddBond(*bond);
+                }
+              }
+            }
+          }
+        }
+      }
+      if(!isMatchRigid) {    // if rigid fragment is not in database
+        // Count the number of ring atoms.
+        unsigned int ratoms = 0;
+        FOR_ATOMS_OF_MOL(a, mol) {
+          if (a->IsInRing()) {
+            ratoms++;
+          }
+        }
+        if (ratoms < 3) continue; // Smallest ring fragment has 3 atoms
+
+        vector<pair<OBSmartsPattern*, vector<vector3 > > >::iterator i;
+        // Skip all fragments that are too big to match
+        // Note: It would be faster to compare to the size of the largest
+        //       isolated ring system instead of comparing to ratoms
+        for (i = _ring_fragments.begin(); i != _ring_fragments.end() && i->first->NumAtoms() > ratoms; ++i);
+
+        // Loop through the remaining fragments and assign the coordinates from
+        // the first (most complex) fragment.
+        // Stop if there are no unassigned ring atoms (ratoms).
+        for (; i != _ring_fragments.end() && ratoms; ++i) {
+          if (i->first != NULL && i->first->Match(*f)) { // if match to fragment
+            i->first->Match(mol);                        // match over mol
+            mlist = i->first->GetUMapList();
+            for (j = mlist.begin();j != mlist.end();++j) { // for all matches
+              // Have any atoms of this match already been added?
+              bool alreadydone = false;
+              for (k = j->begin(); k != j->end(); ++k) { // for all atoms of the fragment
+                if (vfrag.BitIsSet(*k)) {
+                  alreadydone = true;
+                  break;
+                }
+              }
+              if (alreadydone) continue;
+              for (k = j->begin(); k != j->end(); ++k)
+                vfrag.SetBitOn(*k); // Set vfrag for all atoms of fragment
+
               int counter;
               for (k = j->begin(), counter=0; k != j->end(); ++k, ++counter) { // for all atoms of the fragment
                 // set coordinates for atoms
                 OBAtom *atom = workMol.GetAtom(*k);
                 atom->SetVector(i->second[counter]);
               }
-            }
-
-            // add the bonds for the fragment
-            int index2;
-            for (k = j->begin(); k != j->end(); ++k) {
-              OBAtom *atom1 = mol.GetAtom(*k);
-
-              for (k2 = j->begin(); k2 != j->end(); ++k2) {
-                index2 = *k2;
-                OBAtom *atom2 = mol.GetAtom(index2);
-                OBBond *bond = atom1->GetBond(atom2);
-
-                if (bond != NULL)
-                  workMol.AddBond(*bond);
+              // add the bonds for the fragment
+              for (k = j->begin(); k != j->end(); ++k) {
+                OBAtom *atom1 = mol.GetAtom(*k);
+                for (k2 = j->begin(); k2 != j->end(); ++k2) {
+                  OBAtom *atom2 = mol.GetAtom(*k2);
+                  OBBond *bond = atom1->GetBond(atom2);
+                  if (bond != NULL)
+                    workMol.AddBond(*bond);
+                }
               }
             }
           }
         }
       }
-    } // if (ratoms)
+    } // for all fragments
 
     // iterate over all atoms to place them in 3D space
     FOR_DFS_OF_MOL (a, mol) {
@@ -1127,7 +1241,7 @@ namespace OpenBabel
 
       // get the position for the new atom, this is done with GetNewBondVector
       if (prev != NULL) {
-        int bondType = a->GetBond(prev)->GetBO();
+        int bondType = a->GetBond(prev)->GetBondOrder();
         if (a->GetBond(prev)->IsAromatic())
           bondType = -1;
 
@@ -1169,9 +1283,50 @@ namespace OpenBabel
     FOR_BONDS_OF_MOL(b, mol) {
       beginIdx = b->GetBeginAtomIdx();
       endIdx = b->GetEndAtomIdx();
-      workMol.AddBond(beginIdx, endIdx, b->GetBO(), b->GetFlags());
+      workMol.AddBond(beginIdx, endIdx, b->GetBondOrder(), b->GetFlags());
     }
 
+    /*
+    FOR_BONDS_OF_MOL(bond, mol) {
+      if(bond->IsRotor()) {
+        OBBitVec atomsToCopy;
+        OBAtom *atom = bond->GetBeginAtom();
+        FOR_NBORS_OF_ATOM(a, &*atom) {
+          atomsToCopy.SetBitOn(a->GetIdx());
+        }
+        atom = bond->GetEndAtom();
+        FOR_NBORS_OF_ATOM(a, &*atom) {
+          atomsToCopy.SetBitOn(a->GetIdx());
+        }
+        OBMol mol_copy;
+        mol.CopySubstructure(mol_copy, &atomsToCopy);
+        string smiles = conv.WriteString(&mol_copy, true);
+
+        if(_torsion.count(smiles) > 0) {
+          OBAtom* b = bond->GetBeginAtom();
+          OBAtom* c = bond->GetEndAtom();
+          OBAtom* a = NULL;
+          FOR_NBORS_OF_ATOM(t, &*b) {
+            a = &*t;
+            if(a != c)
+              break;
+          }
+          OBAtom* d = NULL;
+          FOR_NBORS_OF_ATOM(t, &*c) {
+            d = &*t;
+            if(d != b)
+              break;
+          }
+          double angle = _torsion[smiles] * DEG_TO_RAD;
+          mol.SetTorsion(a, b, c, d, angle);
+        } else {
+          ; // Do something
+        }
+      }
+    }
+    */
+
+    // We may have to change these success check
     // correct the chirality
     bool success = CorrectStereoBonds(workMol);
     // we only succeed if we corrected all stereochemistry
@@ -1363,7 +1518,7 @@ namespace OpenBabel
   {
     OBMol workmol = mol; // Make a copy (this invalidates Ids, but not Idxs)
     OBAtom* watom = workmol.GetAtom(mol.GetAtomById(atomId)->GetIdx());
-    if (watom->GetHvyValence() != 4) // QUESTION: Do I need to restrict it further?
+    if (watom->GetHvyDegree() != 4) // QUESTION: Do I need to restrict it further?
       return false;
 
     int atomsInSameRing = 0;

@@ -1,0 +1,145 @@
+2X2W_X2W_A_1259
+  RCSB PDB12061707223D
+Coordinates from PDB:2X2W:A:1259 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+   19.1260   73.3180  108.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6640   71.8630  108.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6780   71.3580  109.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5020   71.8840  110.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6530   73.4170  108.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1470   73.1180  109.3830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2980   73.7960  107.2880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6670   75.0710  106.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9680   75.9790  107.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4230   71.2530  112.7220   P 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5760   71.8640  114.1960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6850   69.6850  112.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1240   71.5700  112.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7160   73.7900  106.8110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2680   75.4050  105.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5020   72.3690  110.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7020   71.8030  111.9070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 14  1  0  0  0  0
+  8 15  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 10 17  1  0  0  0  0
+  4 16  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4 17  1  0  0  0  0
+A    1
+CA
+A    2
+CB
+A    3
+CG
+A    4
+C3
+A    5
+C
+A    6
+O
+A    7
+OXT
+A    8
+C1
+A    9
+O1
+A   10
+P
+A   11
+O2P
+A   12
+O1P
+A   13
+O3P
+A   14
+N1
+A   15
+C2
+A   16
+O2
+A   17
+OE2
+M  END
+>  <InstanceId>
+2X2W_X2W_A_1259
+
+>  <ChemCompId>
+X2W
+
+>  <PdbId>
+2X2W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1259
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O8 P
+
+>  <Name>
+N-ACETYL-L-GLUTAMYL 5-PHOSPHATE
+
+>  <SystematicName>
+(2S)-2-acetamido-5-oxo-5-phosphonooxy-pentanoic acid
+
+>  <Synonyms>
+N-ACETYL-5-OXO-5-(PHOSPHONOOXY)-L-NORVALINE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C7 H12 N O8 P
+
+>  <MolecularWeight>
+269.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+GLU
+
+>  <OneLetterCode>
+E
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H12NO8P/c1-4(9)8-5(7(11)12)2-3-6(10)16-17(13,14)15/h5H,2-3H2,1H3,(H,8,9)(H,11,12)(H2,13,14,15)/t5-/m0/s1
+
+>  <InChIKey>
+FCVIHFVSXHOPSW-YFKPBYRVSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CCC(=O)OP(=O)(O)O)C(=O)O
+
+$$$$

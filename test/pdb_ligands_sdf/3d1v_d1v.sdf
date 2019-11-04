@@ -1,0 +1,127 @@
+3D1V_D1V_A_293
+  RCSB PDB12061708153D
+Coordinates from PDB:3D1V:A:293 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   52.8530   49.5220   24.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7750   48.7590   24.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0310   47.9700   25.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6970   47.0730   26.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0890   46.9370   26.6650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.6840   47.7130   25.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3190   47.4830   25.8650   S 0  0  0  0  0  0  0  0  0  0  0  0
+   55.1480   48.5820   24.8370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.8740   46.3840   27.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4240   46.5350   27.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.8020   47.4530   26.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6350   48.1260   25.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+O4
+A    2
+C3
+A    3
+C4
+A    4
+C1
+A    5
+N1
+A    6
+C2
+A    7
+S1
+A    8
+N2
+A    9
+C8
+A   10
+C7
+A   11
+C6
+A   12
+C5
+M  END
+>  <InstanceId>
+3D1V_D1V_A_293
+
+>  <ChemCompId>
+D1V
+
+>  <PdbId>
+3D1V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+293
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O S
+
+>  <Name>
+2-mercapto(3H)quinazolinone
+
+>  <SystematicName>
+2-sulfanyl-3H-quinazolin-4-one
+
+>  <Synonyms>
+2-sulfanylquinazolin-4(3H)-one
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 N2 O S
+
+>  <MolecularWeight>
+178.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N2OS/c11-7-5-3-1-2-4-6(5)9-8(12)10-7/h1-4H,(H2,9,10,11,12)
+
+>  <InChIKey>
+PUPFOFVEHDNUJU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C(=O)NC(=N2)S
+
+$$$$

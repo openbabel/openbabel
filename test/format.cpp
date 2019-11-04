@@ -23,6 +23,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <cstdlib>
 #include <openbabel/obconversion.h>
 
 #include <stdio.h>

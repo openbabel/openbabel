@@ -104,8 +104,7 @@ public:
   };
 
   //Optional URL where the file format is specified
-	virtual const char* SpecificationURL(){return
-     "http://www.mdl.com/downloads/public/ctfile/ctfile.jsp";};
+	virtual const char* SpecificationURL(){ return ""; }
 
   //Optional
 	virtual const char* GetMIMEType()

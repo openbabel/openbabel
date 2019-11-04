@@ -1,0 +1,138 @@
+3Q7A_3FX_B_522
+  RCSB PDB12061710223D
+Coordinates from PDB:3Q7A:B:522 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   30.4000  -18.8240  -36.2690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8870  -19.8410  -34.1630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4790  -22.5110  -34.8840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9820  -21.2050  -35.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9540  -24.6180  -36.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2070  -23.6420  -37.6070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8760  -24.1710  -35.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7470  -23.4790  -37.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4190  -23.9630  -34.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6430  -21.6770  -35.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5990  -20.3840  -36.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2410  -22.9600  -35.2650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1490  -21.8020  -35.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6530  -23.0030  -35.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8870  -20.0570  -35.5770   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 15  1  2  0  0  0  0
+ 15  2  1  0  0  0  0
+ 13  3  1  0  0  0  0
+  4 15  2  0  0  0  0
+  7  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 14  8  1  0  0  0  0
+ 14  9  1  0  0  0  0
+ 13 10  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 14 12  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+NAL
+A   13
+CAM
+A   14
+CAN
+A   15
+SAO
+M  END
+>  <InstanceId>
+3Q7A_3FX_B_522
+
+>  <ChemCompId>
+3FX
+
+>  <PdbId>
+3Q7A
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+522
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 S
+
+>  <Name>
+(2R)-3-(cyclohexylamino)-2-hydroxypropane-1-sulfonic acid
+
+>  <SystematicName>
+(2R)-3-(cyclohexylamino)-2-oxidanyl-propane-1-sulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H19 N O4 S
+
+>  <MolecularWeight>
+237.316
+
+>  <ModifiedDate>
+2011-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H19NO4S/c11-9(7-15(12,13)14)6-10-8-4-2-1-3-5-8/h8-11H,1-7H2,(H,12,13,14)/t9-/m1/s1
+
+>  <InChIKey>
+INEWUCPYEUEQTN-SECBINFHSA-N
+
+>  <SMILES>
+C1CCC(CC1)NC[C@H](CS(=O)(=O)O)O
+
+$$$$

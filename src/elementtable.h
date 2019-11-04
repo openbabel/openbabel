@@ -19,10 +19,10 @@
 #   - elemental symbol                                                       #
 #   - Allred and Rochow electronegativity  0.0 if unknown                    #
 #   - covalent radii (in Angstrom)         1.6 if unknown                    #
-#       from http://dx.doi.org/10.1039/b801115j                              #
+#       from https://doi.org/10.1039/b801115j                              #
 #   - "bond order" radii -- ignored, but included for compatibility          #
 #   - van der Waals radii (in Angstrom)    2.0 if unknown                    #
-#       from http://dx.doi.org/10.1021/jp8111556                             #
+#       from https://doi.org/10.1021/jp8111556                             #
 #   - maximum bond valence                   6 if unknown                    #
 #   - IUPAC recommended atomic masses (in amu)                               #
 #   - Pauling electronegativity            0.0 if unknown                    #

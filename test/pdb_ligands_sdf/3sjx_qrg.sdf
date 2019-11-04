@@ -1,0 +1,157 @@
+3SJX_QRG_A_1
+  RCSB PDB12061710443D
+Coordinates from PDB:3SJX:A:1 Model:1 without hydrogens
+ 20 19  0  0  0  0            999 V2000
+   20.1760   43.5820   46.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9380   44.4200   47.0080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1210   42.4200   46.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8450   43.7300   44.8290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9800   44.8480   44.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2740   44.4270   43.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6100   43.4150   42.4520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7640   46.1120   44.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4100   46.7320   45.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6490   46.4740   45.4860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6610   47.4450   45.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1950   45.1260   42.7290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3690   44.6650   41.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1610   44.6970   40.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8980   43.8030   39.3950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1930   45.6700   41.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3550   45.3370   40.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0220   46.6060   40.1300   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8510   47.9970   39.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0270   45.5810   40.1000   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  2  0  0  0  0
+ 20 14  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12  6  1  0  0  0  0
+ 16 13  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 19 18  1  0  0  0  0
+ 18 17  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  2  2  0  0  0  0
+  9 11  1  0  0  0  0
+  7  6  2  0  0  0  0
+  9 10  2  0  0  0  0
+  8  5  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  1  1  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+CAO
+A    2
+OAC
+A    3
+CAB
+A    4
+NAL
+A    5
+CAT
+A    6
+CAR
+A    7
+OAF
+A    8
+CAK
+A    9
+CAP
+A   10
+OAG
+A   11
+OAD
+A   12
+N
+A   13
+CA
+A   14
+C
+A   15
+OXT
+A   16
+CB
+A   17
+CG
+A   18
+SD
+A   19
+CE
+A   20
+O
+M  END
+>  <InstanceId>
+3SJX_QRG_A_1
+
+>  <ChemCompId>
+QRG
+
+>  <PdbId>
+3SJX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O6 S
+
+>  <Name>
+N-acetyl-L-alpha-aspartyl-L-methionine
+
+>  <SystematicName>
+(3S)-3-acetamido-4-[[(2S)-4-methylsulfanyl-1-oxidanyl-1-oxidanylidene-butan-2-yl]amino]-4-oxidanylidene-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C11 H18 N2 O6 S
+
+>  <MolecularWeight>
+306.335
+
+>  <ModifiedDate>
+2011-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+ACE ASP MET
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H18N2O6S/c1-6(14)12-8(5-9(15)16)10(17)13-7(11(18)19)3-4-20-2/h7-8H,3-5H2,1-2H3,(H,12,14)(H,13,17)(H,15,16)(H,18,19)/t7-,8-/m0/s1
+
+>  <InChIKey>
+FGMUBJQYXOPMHD-YUMQZZPRSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CC(=O)O)C(=O)N[C@@H](CCSC)C(=O)O
+
+$$$$

@@ -1,0 +1,139 @@
+4DHL_0K7_A_503
+  RCSB PDB12061712123D
+Coordinates from PDB:4DHL:A:503 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -70.1390   33.3710  -45.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.3560   33.4110  -47.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.4880   34.0300  -47.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.7080   34.0720  -49.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.4140   34.6060  -46.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.2020   34.5610  -45.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.0630   33.9440  -44.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.8420   33.8910  -43.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.2050   32.9090  -42.7110   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.3740   35.0350  -42.2650   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.7660   34.2740  -40.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.1530   33.1020  -41.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.4860   32.1530  -40.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.9130   32.0250  -39.2660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -68.4800   31.5020  -40.7720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  5  1  0  0  0  0
+  2  1  1  0  0  0  0
+  5  6  2  0  0  0  0
+  1  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 15 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CAF
+A    2
+CAD
+A    3
+CAL
+A    4
+CAA
+A    5
+CAE
+A    6
+CAG
+A    7
+CAM
+A    8
+CAO
+A    9
+NAI
+A   10
+SAJ
+A   11
+CAH
+A   12
+CAN
+A   13
+CAK
+A   14
+OAC
+A   15
+OAB
+M  END
+>  <InstanceId>
+4DHL_0K7_A_503
+
+>  <ChemCompId>
+0K7
+
+>  <PdbId>
+4DHL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 S
+
+>  <Name>
+2-(4-methylphenyl)-1,3-thiazole-4-carboxylic acid
+
+>  <SystematicName>
+2-(4-methylphenyl)-1,3-thiazole-4-carboxylic acid
+
+>  <Synonyms>
+MO07123
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 N O2 S
+
+>  <MolecularWeight>
+219.26
+
+>  <ModifiedDate>
+2012-12-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9NO2S/c1-7-2-4-8(5-3-7)10-12-9(6-15-10)11(13)14/h2-6H,1H3,(H,13,14)
+
+>  <InChIKey>
+MTVWIZYQYPRZGZ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(cc1)c2nc(cs2)C(=O)O
+
+$$$$

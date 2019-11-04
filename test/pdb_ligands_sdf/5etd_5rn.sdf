@@ -1,0 +1,127 @@
+5ETD_5RN_A_801
+  RCSB PDB12061717323D
+Coordinates from PDB:5ETD:A:801 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    9.3360  -13.8470    2.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0530  -13.0180    2.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2050  -13.0170    1.8150   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9180  -12.3420    3.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9180  -11.5250    4.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8100  -11.1200    3.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9290  -10.2370    4.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2210   -9.7870    5.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3850  -10.2380    6.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1990  -11.0820    5.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3470  -11.6350    5.8440   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7980  -12.4130    4.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  2  0  0  0  0
+  7  8  1  0  0  0  0
+  5 10  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+CAA
+A    2
+CAI
+A    3
+OAB
+A    4
+CAJ
+A    5
+CAL
+A    6
+CAF
+A    7
+CAD
+A    8
+CAC
+A    9
+CAE
+A   10
+CAK
+A   11
+NAH
+A   12
+CAG
+M  END
+>  <InstanceId>
+5ETD_5RN_A_801
+
+>  <ChemCompId>
+5RN
+
+>  <PdbId>
+5ETD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+1-(1~{H}-indol-3-yl)ethanone
+
+>  <SystematicName>
+1-(1~{H}-indol-3-yl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N O
+
+>  <MolecularWeight>
+159.185
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO/c1-7(12)9-6-11-10-5-3-2-4-8(9)10/h2-6,11H,1H3
+
+>  <InChIKey>
+VUIMBZIZZFSQEE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)c1c[nH]c2c1cccc2
+
+$$$$

@@ -1,0 +1,139 @@
+4YQR_4HQ_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YQR:A:301 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -19.0230   41.0230   -9.3820   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0450   41.4180   -6.8600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3430   41.3710  -11.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6400   41.5960   -8.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0120   41.2610   -7.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8560   42.0820   -6.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7270   40.0490  -10.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6070   41.2800   -9.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2760   40.1180  -11.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3980   40.1700  -13.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7400   40.2000   -8.2320   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8220   40.1760  -11.7900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4920   43.2630   -6.4300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0160   42.3590   -7.5720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9230   40.2770   -7.6390   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12  9  1  0  0  0  0
+ 12  3  1  0  0  0  0
+  9  7  1  0  0  0  0
+  3  8  1  0  0  0  0
+  7  1  1  0  0  0  0
+  8  1  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 14  2  0  0  0  0
+ 11  5  2  0  0  0  0
+ 11 15  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 15  2  1  0  0  0  0
+  6  2  2  0  0  0  0
+  6 13  1  0  0  0  0
+A    1
+N1
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C2
+A    8
+C3
+A    9
+C1
+A   10
+C
+A   11
+N2
+A   12
+N
+A   13
+N4
+A   14
+O
+A   15
+O1
+M  END
+>  <InstanceId>
+4YQR_4HQ_A_301
+
+>  <ChemCompId>
+4HQ
+
+>  <PdbId>
+4YQR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N5 O2
+
+>  <Name>
+(4-amino-1,2,5-oxadiazol-3-yl)(4-methylpiperazin-1-yl)methanone
+
+>  <SystematicName>
+(4-azanyl-1,2,5-oxadiazol-3-yl)-(4-methylpiperazin-1-yl)methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N5 O2
+
+>  <MolecularWeight>
+211.221
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13N5O2/c1-12-2-4-13(5-3-12)8(14)6-7(9)11-15-10-6/h2-5H2,1H3,(H2,9,11)
+
+>  <InChIKey>
+KQKPEPOSSQPUOT-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1CCN(CC1)C(=O)c2c(non2)N
+
+$$$$

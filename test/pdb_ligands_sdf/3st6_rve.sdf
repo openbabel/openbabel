@@ -1,0 +1,142 @@
+3ST6_RVE_A_451
+  RCSB PDB12061710463D
+Coordinates from PDB:3ST6:A:451 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    0.0880  -37.9250   18.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1610  -38.4350   20.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2790  -38.2340   11.8820   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9700  -37.5330   20.2950   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0000  -39.7890   13.3520   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4390  -39.2500   15.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5420  -35.5450   14.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6050  -35.9210   16.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1080  -36.4160   13.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3340  -37.5060   17.7310   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8960  -38.0360   20.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2520  -38.6410   13.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4220  -37.9620   18.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2020  -37.1720   16.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8050  -38.0590   15.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7310  -37.6780   14.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 13  2  0  0  0  0
+  2 11  1  0  0  0  0
+  3 12  2  0  0  0  0
+  4 11  2  0  0  0  0
+  5 12  1  0  0  0  0
+  6 15  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 16  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C8
+A    2
+OA'
+A    3
+OB
+A    4
+OB'
+A    5
+OA
+A    6
+O2
+A    7
+C5
+A    8
+C4
+A    9
+C6
+A   10
+O3
+A   11
+C'
+A   12
+C
+A   13
+C7
+A   14
+C3
+A   15
+C2
+A   16
+C1
+M  END
+>  <InstanceId>
+3ST6_RVE_A_451
+
+>  <ChemCompId>
+RVE
+
+>  <PdbId>
+3ST6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+451
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O6
+
+>  <Name>
+3-[(1-carboxyethenyl)oxy]-2-hydroxybenzoic acid
+
+>  <SystematicName>
+2-oxidanyl-3-(3-oxidanyl-3-oxidanylidene-prop-1-en-2-yl)oxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 O6
+
+>  <MolecularWeight>
+224.167
+
+>  <ModifiedDate>
+2012-05-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8O6/c1-5(9(12)13)16-7-4-2-3-6(8(7)11)10(14)15/h2-4,11H,1H2,(H,12,13)(H,14,15)
+
+>  <InChIKey>
+RFJWXQPFGYFIBS-UHFFFAOYSA-N
+
+>  <SMILES>
+C=C(C(=O)O)Oc1cccc(c1O)C(=O)O
+
+$$$$

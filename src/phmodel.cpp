@@ -19,7 +19,14 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/typer.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/phmodel.h>
+
+#include <cstdlib>
 
 // private data header with default parameters
 #include "phmodeldata.h"
@@ -34,8 +41,7 @@ namespace OpenBabel
 {
 
   // Global OBPhModel for assigning formal charges and hydrogen addition rules
-  OBPhModel phmodel;
-  extern OBAtomTyper atomtyper;
+  THREAD_LOCAL OBPhModel phmodel;
 
   OBPhModel::OBPhModel()
   {
@@ -316,9 +322,12 @@ namespace OpenBabel
           for (j = _vchrg.begin();j != _vchrg.end();++j)
             if (j->first < (signed)i->size()) { //goof proofing
               OBAtom *atom = mol.GetAtom((*i)[j->first]);
-              unsigned int old_charge = atom->GetFormalCharge();
+              int old_charge = atom->GetFormalCharge();
               atom->SetFormalCharge(j->second);
-              atom->SetImplicitHCount(atom->GetImplicitHCount() + (j->second - old_charge));
+              int new_hcount = atom->GetImplicitHCount() + (j->second - old_charge);
+              if (new_hcount < 0)
+                new_hcount = 0;
+              atom->SetImplicitHCount(new_hcount);
             }
       }
 
@@ -340,7 +349,10 @@ namespace OpenBabel
               bond->SetBondOrder(j->second);
               for (int k = 0; k < 2; ++k) {
                 OBAtom* atom = k == 0 ? bond->GetBeginAtom() : bond->GetEndAtom();
-                atom->SetImplicitHCount(atom->GetImplicitHCount() - (j->second - old_bond_order));
+                int new_hcount = atom->GetImplicitHCount() - (j->second - old_bond_order);
+                if (new_hcount < 0)
+                  new_hcount = 0;
+                atom->SetImplicitHCount(new_hcount);
               }
             }
       }

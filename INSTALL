@@ -7,7 +7,7 @@ installation instructions, please see:
 
 Requirements
 ============
- -- CMake 2.8.10 or later
+ -- CMake 3.1 or later
  -- Eigen 3.0 or later (optional)
  -- libxml2 (optional)
  -- zlib (optional)
@@ -20,9 +20,6 @@ These instructions give a very basic overview of how to configure, compile and
 install Open Babel on most systems.  If you are using unique install locations
 and/or libraries are not automatically detected please consult the 'Advanced'
 section.
-
-The following instructions assume that the Open Babel source distribution is in
-the directory ~/openbabel-2.4.0.
 
 1. Create a 'build' directory:
 

@@ -75,13 +75,13 @@ class OBAPI OBChargeModel : public OBPlugin
 Classes derived from OBChargeModel implement different atomic partial
 charge models. It is intended to allow assinging partial charges
 beyond the traditional Gasteiger-Marsili sigma charges previously used
-in Open Babel. A --partialcharge method is provided for the babel
+in Open Babel. A --partialcharge method is provided for the obabel
 command-line, allowing you to override the Gasteiger charge assignment
 and use other charge models.
 
 The advantage of plugin classes is that no existing code has to be modified
 when a new class is added. You can list those that are present by
-babel -L charges
+obabel -L charges
 or from a menu item in the GUI.
 
 Any OBChargeModel derived class works like other plugins and needs to

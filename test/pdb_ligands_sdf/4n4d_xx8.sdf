@@ -1,0 +1,147 @@
+4N4D_XX8_A_201
+  RCSB PDB12061713503D
+Coordinates from PDB:4N4D:A:201 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   15.7720   21.8510   42.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3790   17.9470   45.0450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7930   18.1980   42.4580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1020   17.0430   43.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8200   17.5790   47.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6600   17.2180   44.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7050   18.2030   45.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2750   18.3670   46.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2010   19.4640   46.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6950   19.3280   44.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1380   19.9380   43.6230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4050   21.2020   43.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2220   21.9230   44.0820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8110   21.4130   45.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5580   20.0670   45.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1990   16.4230   45.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7770   16.6000   47.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5 17  2  0  0  0  0
+  5  8  1  0  0  0  0
+ 17 16  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 15  1  0  0  0  0
+  8  7  2  0  0  0  0
+ 16  6  2  0  0  0  0
+ 15 14  2  0  0  0  0
+ 15 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  6  4  1  0  0  0  0
+  2 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 12  2  0  0  0  0
+  4  3  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12  1  1  0  0  0  0
+A    1
+CM2
+A    2
+N4A
+A    3
+O01
+A    4
+C6
+A    5
+C2
+A    6
+C5
+A    7
+C4
+A    8
+C01
+A    9
+C7A
+A   10
+C4A
+A   11
+N3A
+A   12
+C2A
+A   13
+N1A
+A   14
+C6A
+A   15
+C5A
+A   16
+C28
+A   17
+C30
+M  END
+>  <InstanceId>
+4N4D_XX8_A_201
+
+>  <ChemCompId>
+XX8
+
+>  <PdbId>
+4N4D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N3 O
+
+>  <Name>
+{3-[(4-amino-2-methylpyrimidin-5-yl)methyl]phenyl}methanol
+
+>  <SystematicName>
+[3-[(4-azanyl-2-methyl-pyrimidin-5-yl)methyl]phenyl]methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H15 N3 O
+
+>  <MolecularWeight>
+229.278
+
+>  <ModifiedDate>
+2014-09-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H15N3O/c1-9-15-7-12(13(14)16-9)6-10-3-2-4-11(5-10)8-17/h2-5,7,17H,6,8H2,1H3,(H2,14,15,16)
+
+>  <InChIKey>
+WCYNVVXZGIHJNV-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ncc(c(n1)N)Cc2cccc(c2)CO
+
+$$$$

@@ -1,0 +1,155 @@
+3IMR_IW1_A_128
+  RCSB PDB12061709053D
+Coordinates from PDB:3IMR:A:128 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+    0.5600   -0.3200   -1.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1700    2.7750   -8.9170  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3990   -2.5880   -9.7470  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9300    1.5930   -2.1830  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5280   -1.9060   -3.9240  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6240    0.3950   -7.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3080   -0.0330   -8.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3170    0.4740  -12.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3380    1.5680  -11.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0870   -0.7970  -11.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0910    0.8380   -4.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7100   -0.5650   -5.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2750   -0.1510   -3.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1210    1.3880   -9.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1200   -0.9830  -10.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7960    0.6710   -3.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0210   -0.7610   -4.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3460    0.2260   -5.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0960    0.1130   -9.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  1  1  0  0  0  0
+ 14  2  1  0  0  0  0
+ 15  3  1  0  0  0  0
+ 16  4  1  0  0  0  0
+ 17  5  1  0  0  0  0
+  7  6  2  0  0  0  0
+  6 18  1  0  0  0  0
+ 19  7  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 18 11  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 18 12  1  0  0  0  0
+ 12 17  2  0  0  0  0
+ 17 13  1  0  0  0  0
+ 16 13  2  0  0  0  0
+ 14 19  1  0  0  0  0
+ 15 19  2  0  0  0  0
+A    1
+OAA
+A    2
+CLAB
+A    3
+CLAC
+A    4
+BRAD
+A    5
+BRAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+CAR
+A   19
+CAS
+M  END
+>  <InstanceId>
+3IMR_IW1_A_128
+
+>  <ChemCompId>
+IW1
+
+>  <PdbId>
+3IMR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+128
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O Br2 Cl2
+
+>  <Name>
+2,6-dibromo-4-[(E)-2-(2,6-dichlorophenyl)ethenyl]phenol
+
+>  <SystematicName>
+2,6-dibromo-4-[(E)-2-(2,6-dichlorophenyl)ethenyl]phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H8 Br2 Cl2 O
+
+>  <MolecularWeight>
+422.927
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H8Br2Cl2O/c15-10-6-8(7-11(16)14(10)19)4-5-9-12(17)2-1-3-13(9)18/h1-7,19H/b5-4+
+
+>  <InChIKey>
+RLPYELPZSFVXBH-SNAWJCMRSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)Cl)/C=C/c2cc(c(c(c2)Br)O)Br)Cl
+
+$$$$

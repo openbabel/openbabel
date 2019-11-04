@@ -21,7 +21,7 @@
 #define USING_OBDLL
 #endif
 
-
+#include <cstdlib>
 #include <iostream>
 #include <fstream>
 #include <sstream>

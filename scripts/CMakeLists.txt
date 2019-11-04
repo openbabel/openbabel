@@ -19,7 +19,7 @@ endif (RUN_SWIG)
 
 # The following needs to be kept in synch with ..\CMakeLists.txt
 if(EIGEN3_FOUND)
-  set (eigen_define "-DHAVE_EIGEN -DHAVE_EIGEN3")
+  set (eigen_define "-DHAVE_EIGEN" "-DHAVE_EIGEN3")
   include_directories(${EIGEN3_INCLUDE_DIR})
   set (CPPFLAGS_VALUE "-I${EIGEN3_INCLUDE_DIR}")
   set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
@@ -70,22 +70,16 @@ if (DO_PYTHON_BINDINGS)
     )
 
     if(RUN_SWIG)
-      if(WIN32) # Skip the extra COMMANDs below as 'cat' is not present on Windows
-        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+      COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
-      else(WIN32)
-        add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-            COMMAND ${SWIG_EXECUTABLE} -python -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
-              MAIN_DEPENDENCY openbabel-python.i
-              VERBATIM
-              )
-      endif(WIN32)
     endif(RUN_SWIG)
-
-    add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp)
+    
+    configure_file(${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py.in
+                   ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py)
+    add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp)
 
     if(APPLE)
       # Don't link against Python library on Mac
@@ -115,18 +109,31 @@ if (DO_PYTHON_BINDINGS)
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
+	#workaround for https://bugs.launchpad.net/ubuntu/+source/python3-defaults/+bug/1814653
+	if(NOT ${PYTHON_INSTDIR} MATCHES "python[0-9].[0-9]")
+	  execute_process(
+           COMMAND
+           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,1,prefix='${CMAKE_INSTALL_PREFIX}'))"
+           OUTPUT_VARIABLE PYTHON_INSTDIR
+           OUTPUT_STRIP_TRAILING_WHITESPACE
+          )
+          set(PYTHON_INSTDIR "${PYTHON_INSTDIR}/dist-packages")
+	endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
@@ -144,16 +151,19 @@ if (DO_PYTHON_BINDINGS)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}
+                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
+                DESTINATION ${PYTHON_INSTDIR}/openbabel
                 COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
 endif (DO_PYTHON_BINDINGS)
@@ -259,16 +269,16 @@ if (DO_R_BINDINGS)
 		 add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp
 			 COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/R
 			 COMMAND ${SWIG_EXECUTABLE} -r -package openbabelR  -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/R ${openbabel_SOURCE_DIR}/scripts/openbabel-R.i
-			 COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
+			 # COMMAND sed  -i  -e "'s/reg\.finalizer(\(.*\)) /reg.finalizer(\1); /g'" ${openbabel_BINARY_DIR}/scripts/R/openbabelR.R
 			 MAIN_DEPENDENCY openbabel-R.i
       )
     endif (RUN_SWIG)
 
 	 add_library(bindings_R MODULE ${openbabel_SOURCE_DIR}/scripts/R/openbabel-R.cpp)
 	 if(BINDINGS_ONLY)
-		 target_link_libraries(bindings_R R ${BABEL_SYSTEM_LIBRARY})
+		 target_link_libraries(bindings_R ${BABEL_SYSTEM_LIBRARY})
 	 else()
-		 target_link_libraries(bindings_R R ${BABEL_LIBRARY})
+		 target_link_libraries(bindings_R ${BABEL_LIBRARY})
 	 endif()
 
 	 set_target_properties(bindings_R PROPERTIES
@@ -276,7 +286,6 @@ if (DO_R_BINDINGS)
     if(NOT BINDINGS_ONLY)
 		 add_dependencies(bindings_R openbabel)
     endif()
-	 add_dependencies(bindings_R R)
 
 	 install(TARGETS bindings_R
             LIBRARY DESTINATION ${LIB_INSTALL_DIR}
@@ -462,7 +471,7 @@ if (DO_CSHARP_BINDINGS)
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNetAssemblyInfo.cs ${openbabel_SOURCE_DIR}/scripts/csharp/src
           COMMAND ${SWIG_EXECUTABLE} -csharp -c++ -small -O -templatereduce -namespace OpenBabel -outdir ${openbabel_SOURCE_DIR}/scripts/csharp/src -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp ${openbabel_SOURCE_DIR}/scripts/openbabel-csharp.i
-          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp/src ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/scripts/csharp/obdotnet.snk /optimize /out:${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}/OBDotNet.dll *.cs
+          COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_SOURCE_DIR}/scripts/csharp/src ${CSHARP_EXECUTABLE} /target:library ${PLATFORM_TYPE} /keyfile:${openbabel_SOURCE_DIR}/scripts/csharp/obdotnet.snk /optimize /out:${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll *.cs
           COMMAND ${CMAKE_COMMAND} -E remove_directory ${openbabel_SOURCE_DIR}/scripts/csharp/src
           MAIN_DEPENDENCY openbabel-csharp.i
           WORKING_DIRECTORY ${openbabel_BINARY_DIR}/scripts

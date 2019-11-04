@@ -1,0 +1,119 @@
+4B3D_5MI_A_1351
+  RCSB PDB12061711463D
+Coordinates from PDB:4B3D:A:1351 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+    5.3270    6.8150   -1.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4140    6.1330   -1.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6860    4.8320   -2.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8740    4.2210   -1.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3820    3.0170   -2.1310   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5140    6.2000   -0.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7850    4.8980   -1.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8140    4.0850   -0.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5670    2.9420   -1.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0190    8.2440   -0.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+C5
+A    2
+C6
+A    3
+C7
+A    4
+C8
+A    5
+N1
+A    6
+C4
+A    7
+C9
+A    8
+C3
+A    9
+C2
+A   10
+CAJ
+M  END
+>  <InstanceId>
+4B3D_5MI_A_1351
+
+>  <ChemCompId>
+5MI
+
+>  <PdbId>
+4B3D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N
+
+>  <Name>
+5-METHYL INDOLE
+
+>  <SystematicName>
+5-methyl-1H-indole
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H9 N
+
+>  <MolecularWeight>
+131.174
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9N/c1-7-2-3-9-8(6-7)4-5-10-9/h2-6,10H,1H3
+
+>  <InChIKey>
+YPKBCLZFIYBSHK-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2c(c1)cc[nH]2
+
+$$$$

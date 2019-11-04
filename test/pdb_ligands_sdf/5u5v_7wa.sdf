@@ -1,0 +1,119 @@
+5U5V_7WA_A_302
+  RCSB PDB12061719493D
+Coordinates from PDB:5U5V:A:302 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+  -17.4400    3.5760    5.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0030    3.2060    3.2190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7770    2.9970    3.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8100    2.1820    3.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5510    1.9500    3.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1900    2.5110    5.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1510    3.3260    5.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0870    4.0610    6.8020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2980    4.7140    6.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1390    4.4580    5.9160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  1  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C10
+A    2
+N01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+N07
+A    9
+C08
+A   10
+N09
+M  END
+>  <InstanceId>
+5U5V_7WA_A_302
+
+>  <ChemCompId>
+7WA
+
+>  <PdbId>
+5U5V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3
+
+>  <Name>
+1H-benzimidazol-4-amine
+
+>  <SystematicName>
+1~{H}-benzimidazol-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N3
+
+>  <MolecularWeight>
+133.151
+
+>  <ModifiedDate>
+2017-01-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N3/c8-5-2-1-3-6-7(5)10-4-9-6/h1-4H,8H2,(H,9,10)
+
+>  <InChIKey>
+NZJKEQFPRPAEPO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c2c(c1)[nH]cn2)N
+
+$$$$

@@ -18,7 +18,6 @@ GNU General Public License for more details.
 #ifndef OB_INCHIFORMAT_H
 #define OB_INCHIFORMAT_H
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obmolecformat.h>
 
@@ -30,12 +29,12 @@ GNU General Public License for more details.
 #endif
 #include <set>
 #include <vector>
-#include "openbabel/chiral.h"
+#include <cstdlib>
+#include <algorithm>
 
-using namespace std;
 namespace OpenBabel
 {
-extern string GetInChI(istream& is);
+extern std::string GetInChI(std::istream& is);
 
 class InChIFormat : public OBMoleculeFormat
 {
@@ -119,8 +118,8 @@ public:
   virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   virtual int  SkipObjects(int n, OBConversion* pConv);
 
-  static char   CompareInchi(const string& Inchi1, const string& Inchi2);
-  static string InChIErrorMessage(const char ch);
+  static char CompareInchi(const std::string& Inchi1, const std::string& Inchi2);
+  static std::string InChIErrorMessage(const char ch);
 
   ///Removes layers or truncates InChi, according to \param spec
   ///which can contain any number of:/formula /connect /nostereo /nosp3 /noEZ /nochg /noiso
@@ -132,12 +131,12 @@ public:
   // and "CH4" is less than "C2H6"
   // and "CH4" is less than "ClH" (hydrogen chloride)
   struct InchiLess
-    : public binary_function<const string&, const string&, bool>
+    : public std::binary_function<const std::string&, const std::string&, bool>
   {
-    bool operator()(const string& s1, const string& s2) const
+    bool operator()(const std::string& s1, const std::string& s2) const
     {
       //stop at the first space or the end of the strings
-      string::const_iterator p1=s1.begin(), p2=s2.begin(),
+      std::string::const_iterator p1=s1.begin(), p2=s2.begin(),
         p1end=find(s1.begin(), s1.end(), ' '), p2end=find(s2.begin(), s2.end(), ' ');
 
       while( p1<p1end && p2<p2end)
@@ -186,10 +185,10 @@ private:
   char* GetInChIOptions(OBConversion* pConv, bool Reading);
   void SaveInchi(OBMol* pmol, const std::string& s);
 
-  typedef	set<string, InchiLess> nSet;
+  typedef std::set<std::string, InchiLess> nSet;
   nSet allInchi;
-  string firstInchi;
-  string firstID;
+  std::string firstInchi;
+  std::string firstID;
 };
 
 //*****************************************************

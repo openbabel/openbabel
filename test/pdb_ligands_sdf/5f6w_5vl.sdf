@@ -1,0 +1,135 @@
+5F6V_5VL_A_201
+  RCSB PDB12061717363D
+Coordinates from PDB:5F6V:A:201 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   15.3940   11.4080  109.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6760   10.1480  110.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6420    9.2880  110.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3170    9.6760  110.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2720    8.6730  110.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7530    6.3420  111.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9850    9.0030  111.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7530   11.3850  109.8920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0420   10.9440  110.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0780   11.8050  109.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6450    7.3370  110.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4700    6.6720  111.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0910    8.0030  111.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5610   10.3130  111.4800   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  1  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  9  4  2  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 11  5  2  0  0  0  0
+ 11  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 12  2  0  0  0  0
+  7 14  1  0  0  0  0
+  7 13  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+C13
+A    8
+O1
+A    9
+C2
+A   10
+C3
+A   11
+C9
+A   12
+C11
+A   13
+C12
+A   14
+O14
+M  END
+>  <InstanceId>
+5F6V_5VL_A_201
+
+>  <ChemCompId>
+5VL
+
+>  <PdbId>
+5F6V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2
+
+>  <Name>
+2-(2-hydroxyphenyl)phenol
+
+>  <SystematicName>
+2-(2-hydroxyphenyl)phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 O2
+
+>  <MolecularWeight>
+186.207
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10O2/c13-11-7-3-1-5-9(11)10-6-2-4-8-12(10)14/h1-8,13-14H
+
+>  <InChIKey>
+IMHDGJOMLMDPJN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)c2ccccc2O)O
+
+$$$$

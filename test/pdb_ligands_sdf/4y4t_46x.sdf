@@ -1,0 +1,131 @@
+4Y4T_46X_A_408
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4T:A:408 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   27.4010    1.6340   60.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6630    5.2310   59.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5800    6.1070   59.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0060    3.4170   59.4060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8380    5.6170   58.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0180    2.9990   60.4910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7360    6.8500   59.9280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1490    6.7860   58.2360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5910    4.5100   58.7990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8360    3.8650   59.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1540    1.0870   61.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0350    1.9870   61.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6560    3.3370   60.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  5  1  0  0  0  0
+  5  9  2  0  0  0  0
+  5  2  1  0  0  0  0
+  9  4  1  0  0  0  0
+  4 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3  7  3  0  0  0  0
+ 10  6  1  0  0  0  0
+  6  1  1  0  0  0  0
+  6 13  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+N2
+A    7
+N3
+A    8
+N4
+A    9
+N
+A   10
+C
+A   11
+C3
+A   12
+C2
+A   13
+C1
+M  END
+>  <InstanceId>
+4Y4T_46X_A_408
+
+>  <ChemCompId>
+46X
+
+>  <PdbId>
+4Y4T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+408
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N5
+
+>  <Name>
+3-amino-5-(pyrrolidin-1-yl)-1H-pyrazole-4-carbonitrile
+
+>  <SystematicName>
+3-azanyl-5-pyrrolidin-1-yl-1H-pyrazole-4-carbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N5
+
+>  <MolecularWeight>
+177.206
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N5/c9-5-6-7(10)11-12-8(6)13-3-1-2-4-13/h1-4H2,(H3,10,11,12)
+
+>  <InChIKey>
+RQDSNKYYHIZWJX-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCN(C1)c2c(c(n[nH]2)N)C#N
+
+$$$$

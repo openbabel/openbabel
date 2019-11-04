@@ -1,0 +1,138 @@
+4CIW_XH2_A_1148
+  RCSB PDB12061712033D
+Coordinates from PDB:4CIW:A:1148 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    3.7890   13.5880   21.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7850   13.2430   22.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6550   11.6890   21.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1110   11.3080   20.6850   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7660   11.1990   23.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4740   11.5380   24.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5790   11.2680   25.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0910   11.3320   26.7630   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3520   10.9940   25.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6910   10.7160   24.5930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9630   12.8870   24.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1320   13.7360   23.4150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6030   15.0790   23.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0180   15.7010   24.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9920   17.1910   24.8500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+OAF
+A    2
+CAC
+A    3
+CAB
+A    4
+OAG
+A    5
+CAA
+A    6
+CAI
+A    7
+CAH
+A    8
+OAO
+A    9
+OAN
+A   10
+OAM
+A   11
+CAE
+A   12
+CAD
+A   13
+CAL
+A   14
+CAK
+A   15
+OAJ
+M  END
+>  <InstanceId>
+4CIW_XH2_A_1148
+
+>  <ChemCompId>
+XH2
+
+>  <PdbId>
+4CIW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1148
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O6
+
+>  <Name>
+(1R,4R,5R)-1,4,5-trihydroxy-3-(2-hydroxy)ethylcyclohex-2-ene-1-carboxylic acid
+
+>  <SystematicName>
+(1R,4R,5R)-3-(2-hydroxyethyl)-1,4,5-tris(oxidanyl)cyclohex-2-ene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H14 O6
+
+>  <MolecularWeight>
+218.204
+
+>  <ModifiedDate>
+2014-04-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14O6/c10-2-1-5-3-9(15,8(13)14)4-6(11)7(5)12/h3,6-7,10-12,15H,1-2,4H2,(H,13,14)/t6-,7-,9+/m1/s1
+
+>  <InChIKey>
+HVNZLWXJZRWNGG-BHNWBGBOSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](C(=C[C@]1(C(=O)O)O)CCO)O)O
+
+$$$$

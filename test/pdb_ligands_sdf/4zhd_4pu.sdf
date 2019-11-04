@@ -1,0 +1,82 @@
+4ZHD_4PU_A_201
+  RCSB PDB12061716383D
+Coordinates from PDB:4ZHD:A:201 Model:1 without hydrogens
+  1  0  0  0  0  0            999 V2000
+   27.8640   76.9420   65.6120  Pu 0  0  0  0  0  0  0  0  0  0  0  0
+M  CHG  1   1   4
+A    1
+PU
+M  END
+>  <InstanceId>
+4ZHD_4PU_A_201
+
+>  <ChemCompId>
+4PU
+
+>  <PdbId>
+4ZHD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+Pu
+
+>  <Name>
+PLUTONIUM ION
+
+>  <SystematicName>
+Plutonium(+4) cation
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+Pu
+
+>  <MolecularWeight>
+244.0
+
+>  <ModifiedDate>
+2015-07-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/Pu/q+4
+
+>  <InChIKey>
+OYEHPCDNVJXUIW-UHFFFAOYSA-N
+
+>  <SMILES>
+[Pu+4]
+
+$$$$

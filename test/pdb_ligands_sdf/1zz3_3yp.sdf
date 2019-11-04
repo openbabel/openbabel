@@ -1,0 +1,122 @@
+1ZZ3_3YP_A_1452
+  RCSB PDB12061704563D
+Coordinates from PDB:1ZZ3:A:1452 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -5.5340  -11.8380   38.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5130  -10.4750   37.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0780  -10.0430   38.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9620  -10.3360   39.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8550  -11.5670   40.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9390  -12.7120   40.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5620  -14.0770   40.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0290  -14.5440   42.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8600  -14.8200   42.2380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7300  -14.3480   42.9020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4070  -14.6120   44.1530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+CAF
+A    2
+CAC
+A    3
+CAD
+A    4
+CAG
+A    5
+CAK
+A    6
+CAH
+A    7
+CAE
+A    8
+CAJ
+A    9
+OAA
+A   10
+NAI
+A   11
+OAB
+M  END
+>  <InstanceId>
+1ZZ3_3YP_A_1452
+
+>  <ChemCompId>
+3YP
+
+>  <PdbId>
+1ZZ3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1452
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+3-CYCLOPENTYL-N-HYDROXYPROPANAMIDE
+
+>  <SystematicName>
+3-cyclopentyl-N-hydroxy-propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 N O2
+
+>  <MolecularWeight>
+157.21
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO2/c10-8(9-11)6-5-7-3-1-2-4-7/h7,11H,1-6H2,(H,9,10)
+
+>  <InChIKey>
+PCDWXHSMVLWAMG-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(C1)CCC(=O)NO
+
+$$$$

@@ -1,0 +1,122 @@
+5JOY_6LW_A_602
+  RCSB PDB12061718283D
+Coordinates from PDB:5JOY:A:602 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  300.1460  218.0160  329.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  300.7110  216.6210  329.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  299.6550  215.7950  330.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  300.4790  218.9700  328.9320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  298.4090  216.5020  330.5770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  298.8420  213.8660  331.2190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  298.6190  217.8140  330.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  299.8580  214.5890  330.6270   N 0  0  0  0  0  0  0  0  0  0  0  0
+  302.0240  216.3480  330.1790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  297.8610  218.8630  330.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  298.2920  218.8130  332.1660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  1  7  1  0  0  0  0
+  7  5  1  0  0  0  0
+  7 10  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  8  2  0  0  0  0
+  8  6  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C3
+A    2
+C2
+A    3
+C1
+A    4
+O3
+A    5
+O4
+A    6
+O1
+A    7
+C4
+A    8
+N1
+A    9
+O2
+A   10
+C5
+A   11
+O5
+M  END
+>  <InstanceId>
+5JOY_6LW_A_602
+
+>  <ChemCompId>
+6LW
+
+>  <PdbId>
+5JOY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O5
+
+>  <Name>
+(2~{Z},3~{R},4~{R},5~{S})-2-hydroxyimino-5-(hydroxymethyl)oxolane-3,4-diol
+
+>  <SystematicName>
+(2~{Z},3~{R},4~{R},5~{S})-2-hydroxyimino-5-(hydroxymethyl)oxolane-3,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N O5
+
+>  <MolecularWeight>
+163.129
+
+>  <ModifiedDate>
+2016-11-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO5/c7-1-2-3(8)4(9)5(6-10)11-2/h2-4,7-10H,1H2/b6-5-/t2-,3-,4+/m0/s1
+
+>  <InChIKey>
+AVHYWFZJLLOYOD-XXXIWBGBSA-N
+
+>  <SMILES>
+C([C@H]1[C@@H]([C@H](/C(=N/O)/O1)O)O)O
+
+$$$$

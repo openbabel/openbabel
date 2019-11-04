@@ -1,4 +1,5 @@
 #include "obtest.h"
+#include <openbabel/atom.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/math/align.h>
 #include <openbabel/math/matrix3x3.h>
@@ -7,6 +8,11 @@
 
 using namespace std;
 using namespace OpenBabel;
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 typedef vector<vector3> vv3;
 

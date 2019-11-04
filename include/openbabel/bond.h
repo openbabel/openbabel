@@ -36,9 +36,6 @@ namespace OpenBabel
   class OBAtom;
   class OBRing;
 
-  //! OBEdgeBase is declared for backwards-compatibility with 2.0 and earlier code
-  typedef OBBond OBEdgeBase;
-
   //BOND Property Macros (flags)
   //! An aromatic bond (regardless of bond order)
 #define OB_AROMATIC_BOND  (1<<1)
@@ -48,18 +45,16 @@ namespace OpenBabel
 #define OB_HASH_BOND      (1<<3)
   //! A bond in a ring
 #define OB_RING_BOND      (1<<4)
-  //! The "upper" bond in a double bond cis/trans isomer (i.e., "\" in SMILES) <-- this was wrong (/), obsolete anyway
-#define OB_TORUP_BOND     (1<<5)
-  //! The "down" bond in a double bond cis/trans isomer (i.e., "/" in SMILES) <-- same
-#define OB_TORDOWN_BOND   (1<<6)
   //! A bond which "closes" a ring when walking the molecular graph
 #define OB_CLOSURE_BOND   (1<<10)
   // 11-16 currently unused
-
 #define OB_WEDGE_OR_HASH_BOND     (1<<11)
-#define OB_CIS_OR_TRANS_BOND     (1<<12)
 
-  //class OBBondPrivate;
+#define SET_OR_UNSET_FLAG(X) \
+  if (value) SetFlag(X); \
+  else     UnsetFlag(X);
+
+
   class OBAPI OBBond: public OBBase
   {
     protected:
@@ -114,9 +109,6 @@ namespace OpenBabel
       void SetIdx(int idx)        {          _idx = idx;        }
       void SetId(unsigned long id) { _id = id; }
       //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
-      /** \deprecated Use SetBondOrder() instead. **/
-      void SetBO(int order);
-      //! Set the bond order to @p order (i.e., 1 = single, 2 = double, 5 = aromatic)
       void SetBondOrder(int order);
       //! Set the beginning atom of this bond to @p begin. Does not update @p begin.
       void SetBegin(OBAtom *begin){          _bgn = begin;      }
@@ -132,43 +124,28 @@ namespace OpenBabel
       //! Set the main bond information (i.e., when creating a bond)
       void Set(int index, OBAtom* begin,OBAtom* end,int order,int flags);
       //! Mark that this bond is aromatic. Does not update atoms or validate.
-      void SetAromatic()    { SetFlag(OB_AROMATIC_BOND); }
+      void SetAromatic(bool value=true)    { SET_OR_UNSET_FLAG(OB_AROMATIC_BOND); }
       /**
        * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive
        * Z direction from the beginning to end atoms)
        */
-      void SetWedge() { SetFlag(Wedge); }
+      void SetWedge(bool value=true) { SET_OR_UNSET_FLAG(Wedge); }
       /**
        * Mark that this bond has 2D "hash" notation (i.e., goes in a negative
        * Z direction from the beginning to end atoms)
        */
-      void SetHash() { SetFlag(Hash); }
+      void SetHash(bool value=true) { SET_OR_UNSET_FLAG(Hash); }
       /**
-       * Mark that this bond has 2D "wedge" notation (i.e., goes in a positive
-       * Z direction from the beginning to end atoms)
+       * Set the WedgeOrHash flag on a bond (??)
        */
-      void SetWedgeOrHash() { SetFlag(WedgeOrHash); }
-      //! Mark that this bond has an "up" torsion for double-bond stereochem (i.e., "/" in SMILES notation
-      void SetUp()          { SetFlag(OB_TORUP_BOND); UnsetFlag(OB_TORDOWN_BOND); }
-      //! Mark that this bond has an "down" torsion for double-bond stereochem (i.e., "\" in SMILES notation
-      void SetDown()        { SetFlag(OB_TORDOWN_BOND); UnsetFlag(OB_TORUP_BOND);   }
+      void SetWedgeOrHash(bool value=true) { SET_OR_UNSET_FLAG(WedgeOrHash); }
       //! Mark that this bond is in a ring. Primarily for internal use.
-      void SetInRing(bool set=true) { if(set)SetFlag(OB_RING_BOND); else UnsetFlag(OB_RING_BOND);}
+      void SetInRing(bool value=true) { SET_OR_UNSET_FLAG(OB_RING_BOND); }
       //! Mark that this bond indicates a ring closure when walking the molecule
       /** \warning This is for internal use only. All closure bonds are marked
           automatically by lazy evaluation when requesting
           OBBond::IsClosure() **/
-      void SetClosure(bool set=true)     { if(set)SetFlag(OB_CLOSURE_BOND); else UnsetFlag(OB_CLOSURE_BOND);}
-      //! Clear any indication of 2D "hash" notation from SetHash()
-      void UnsetHash()      { UnsetFlag(OB_HASH_BOND);    }
-      //! Clear any indication of 2D "wedge" notation from SetWedge()
-      void UnsetWedge()     { UnsetFlag(OB_WEDGE_BOND);   }
-      //! Clear any indication of "/" double bond stereochemistry from SetUp()
-      void UnsetUp()        { UnsetFlag(OB_TORUP_BOND);   }
-      //! Clear any indication of "\" double bond stereochemistry from SetDown()
-      void UnsetDown()      { UnsetFlag(OB_TORDOWN_BOND); }
-      //! Clear all aromaticity information for the bond
-      void UnsetAromatic()  { UnsetFlag(OB_AROMATIC_BOND);}
+      void SetClosure(bool value=true)     { SET_OR_UNSET_FLAG(OB_CLOSURE_BOND); }
       //@}
 
       //! \name Bond data request methods
@@ -176,9 +153,6 @@ namespace OpenBabel
       //! \return The unique bond index in a molecule.
       unsigned int     GetIdx()           const { return(_idx);  }
       unsigned long GetId()           const { return _id; }
-      //! \return The bond order for the bond
-      /** \deprecated Use GetBondOrder() as this method may be removed. **/
-      unsigned int     GetBO()            const { return(_order); }
       //! \return The bond order for the bond
       unsigned int     GetBondOrder()     const { return(_order); }
       //! \return The set of property flags defined for this bond.
@@ -259,12 +233,6 @@ namespace OpenBabel
       bool IsCarbonyl();
       //! \return Does this bond "close" a ring when walking the molecular graph?
       bool IsClosure();
-      /** \return Whether this is the "upper" bond in a double bond cis/trans
-          isomer (i.e., "/" in SMILES) **/
-      bool IsUp()    {    return(HasFlag(OB_TORUP_BOND));    }
-      /** \return Whether this is the "lower" bond in a double bond cis/trans
-          isomer (i.e., "\" in SMILES) **/
-      bool IsDown()  {    return(HasFlag(OB_TORDOWN_BOND));  }
       /** \return Whether this bond is a "wedge" in 2D representations
           (i.e., goes in a positive Z direction from the beginning to end atoms) **/
       bool IsWedge() {    return(HasFlag(OB_WEDGE_BOND));    }

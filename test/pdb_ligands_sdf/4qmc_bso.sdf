@@ -1,0 +1,147 @@
+2C1S_BSO_A_1125
+  RCSB PDB12061705113D
+Coordinates from PDB:2C1S:A:1125 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   31.0440   11.3960   15.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0300   12.4400   14.4060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3320   10.4010   14.8710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9670   11.3090   16.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2870   12.1120   16.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2510   11.3950   15.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4820   12.2860   15.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4340   11.5600   14.0810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2440   10.1030   14.7610   S 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4340   10.0060   13.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7850   11.4720   13.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9370   11.8770   13.8870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5840   12.8460   14.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4060   13.3610   15.5040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3020   13.2210   14.6370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6390   12.4190   13.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2470    8.9910   14.5780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 16  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 17  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+C11
+A    2
+O11
+A    3
+O12
+A    4
+C10
+A    5
+C9
+A    6
+C8
+A    7
+C7
+A    8
+C2
+A    9
+S1
+A   10
+C6
+A   11
+C5
+A   12
+N1
+A   13
+C3
+A   14
+O3
+A   15
+N2
+A   16
+C4
+A   17
+O10
+M  END
+>  <InstanceId>
+2C1S_BSO_A_1125
+
+>  <ChemCompId>
+BSO
+
+>  <PdbId>
+2C1S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1125
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4 S
+
+>  <Name>
+BIOTIN-D-SULFOXIDE
+
+>  <SystematicName>
+5-[(3aS,4S,5S,6aR)-2,5-dioxo-1,3,3a,4,6,6a-hexahydrothieno[3,4-d]imidazol-4-yl]pentanoic acid
+
+>  <Synonyms>
+5-[(3AR,4R,6AS)-5-OXIDO-2-OXOHEXAHYDRO-1H-THIENO[3,4-D]IMIDAZOL-4-YL]PENTANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N2 O4 S
+
+>  <MolecularWeight>
+260.31
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N2O4S/c13-8(14)4-2-1-3-7-9-6(5-17(7)16)11-10(15)12-9/h6-7,9H,1-5H2,(H,13,14)(H2,11,12,15)/t6-,7-,9-,17-/m0/s1
+
+>  <InChIKey>
+KCSKCIQYNAOBNQ-OKPRWBIXSA-N
+
+>  <SMILES>
+C1[C@H]2[C@@H]([C@@H]([S@]1=O)CCCCC(=O)O)NC(=O)N2
+
+$$$$

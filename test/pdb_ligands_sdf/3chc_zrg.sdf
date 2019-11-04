@@ -1,0 +1,157 @@
+3CHC_ZRG_A_439
+  RCSB PDB12061708103D
+Coordinates from PDB:3CHC:A:439 Model:1 without hydrogens
+ 20 19  0  0  0  0            999 V2000
+   95.9400   70.9050  -10.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.1770   70.1170   -9.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.9670   69.1740   -9.3150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   95.4580   70.4950   -8.2820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   94.4780   71.5910   -8.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   95.1840   72.9330   -8.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.2420   73.1920   -7.9510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   94.5690   73.7630   -9.3610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   95.0900   75.1350   -9.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   93.6970   71.6020   -7.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.7000   72.7610   -6.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.9530   72.7780   -5.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.0810   71.6010   -5.4870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   91.2560   70.7050   -4.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.3400   70.7860   -3.7510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.4090   69.6790   -4.4350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.4190   68.7190   -3.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.1970   68.7730   -2.5420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   89.4910   67.7710   -3.6060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.1530   66.9700   -2.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  1  2  1  0  0  0  0
+  8  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 17 18  2  0  0  0  0
+ 19 20  1  0  0  0  0
+A    1
+CAC
+A    2
+CAP
+A    3
+OAE
+A    4
+N
+A    5
+CA
+A    6
+C
+A    7
+O
+A    8
+NAL
+A    9
+CAB
+A   10
+CB
+A   11
+CG
+A   12
+CD
+A   13
+NE
+A   14
+CZ
+A   15
+NH1
+A   16
+NH2
+A   17
+CAR
+A   18
+OAF
+A   19
+NAK
+A   20
+CAA
+M  END
+>  <InstanceId>
+3CHC_ZRG_A_439
+
+>  <ChemCompId>
+ZRG
+
+>  <PdbId>
+3CHC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+439
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N6 O3
+
+>  <Name>
+(2S)-2-acetamido-N-methyl-5-[[N-(methylcarbamoyl)carbamimidoyl]amino]pentanamide
+
+>  <SystematicName>
+(2S)-2-acetamido-N-methyl-5-[[N-(methylcarbamoyl)carbamimidoyl]amino]pentanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C11 H22 N6 O3
+
+>  <MolecularWeight>
+286.331
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H22N6O3/c1-7(18)16-8(9(19)13-2)5-4-6-15-10(12)17-11(20)14-3/h8H,4-6H2,1-3H3,(H,13,19)(H,16,18)(H4,12,14,15,17,20)/t8-/m0/s1
+
+>  <InChIKey>
+IHUKVJKKTBLTEE-QMMMGPOBSA-N
+
+>  <SMILES>
+[H]/N=C(/NCCC[C@@H](C(=O)NC)NC(=O)C)\NC(=O)NC
+
+$$$$

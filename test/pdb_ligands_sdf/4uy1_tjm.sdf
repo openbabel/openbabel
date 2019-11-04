@@ -1,0 +1,139 @@
+4UY1_TJM_A_1130
+  RCSB PDB12061715203D
+Coordinates from PDB:4UY1:A:1130 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    0.0720   -4.5100   -3.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4990   -3.9360   -2.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3070   -3.4180   -1.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4200   -2.9370   -0.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7860   -3.0950   -0.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8280   -2.7160    0.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1600   -3.8190   -1.8920   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3080   -2.3550    0.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0830   -1.2250    1.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9630   -1.0610    2.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8540   -2.0550    2.2280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4910   -2.8590    1.2210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2300   -0.1270    3.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1280   -0.3330    4.3550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4300    0.9960    3.6120   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+S7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+A   12
+N12
+A   13
+C13
+A   14
+O14
+A   15
+N15
+M  END
+>  <InstanceId>
+4UY1_TJM_A_1130
+
+>  <ChemCompId>
+TJM
+
+>  <PdbId>
+4UY1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1130
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O S
+
+>  <Name>
+5-(2,5-DIMETHYL-3-THIENYL)-1H-PYRAZOLE-3-CARBOXAMIDE
+
+>  <SystematicName>
+5-(2,5-dimethylthiophen-3-yl)-1H-pyrazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H11 N3 O S
+
+>  <MolecularWeight>
+221.279
+
+>  <ModifiedDate>
+2014-10-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3OS/c1-5-3-7(6(2)15-5)8-4-9(10(11)14)13-12-8/h3-4H,1-2H3,(H2,11,14)(H,12,13)
+
+>  <InChIKey>
+KLVHCUPVBQYXJT-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(c(s1)C)c2cc(n[nH]2)C(=O)N
+
+$$$$

@@ -21,11 +21,12 @@ GNU General Public License for more details.
 
 #include <vector>
 #include <openbabel/shared_ptr.h>
-#include <openbabel/mol.h>
+#include <openbabel/base.h>
 
 
 namespace OpenBabel
 {
+  class OBMol;
 
 //!\brief Used to store chemical reactions (i.e., reactants -> products)
 //!

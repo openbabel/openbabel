@@ -1,0 +1,129 @@
+1OIK_C26_A_1300
+  RCSB PDB12061703333D
+Coordinates from PDB:1OIK:A:1300 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   39.5560   77.1350   15.6230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5110   77.3400   14.5240   S 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8160   77.1340   13.2190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0470   78.7290   14.6460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7360   76.2160   14.6130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9770   76.3230   13.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1940   76.6630   14.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4510   76.4570   13.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5310   77.5090   14.1040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2440   75.7610   16.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8360   76.3910   17.2710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3860   75.3120   18.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8310   75.5660   18.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O4
+A    2
+S1
+A    3
+O2
+A    4
+O3
+A    5
+O1
+A    6
+C1
+A    7
+C2
+A    8
+C7
+A    9
+C8
+A   10
+C3
+A   11
+C4
+A   12
+C5
+A   13
+C6
+M  END
+>  <InstanceId>
+1OIK_C26_A_1300
+
+>  <ChemCompId>
+C26
+
+>  <PdbId>
+1OIK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O4 S
+
+>  <Name>
+(2R)-2-ETHYL-1-HEXANESULFONIC ACID
+
+>  <SystematicName>
+[(2R)-2-ethylhexyl] hydrogen sulfate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 O4 S
+
+>  <MolecularWeight>
+210.291
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18O4S/c1-3-5-6-8(4-2)7-12-13(9,10)11/h8H,3-7H2,1-2H3,(H,9,10,11)/t8-/m1/s1
+
+>  <InChIKey>
+MHGOKSLTIUHUBF-MRVPVSSYSA-N
+
+>  <SMILES>
+CCCC[C@@H](CC)COS(=O)(=O)O
+
+$$$$

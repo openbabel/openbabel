@@ -1,0 +1,134 @@
+1H0S_FA6_A_200
+  RCSB PDB12061702403D
+Coordinates from PDB:1H0S:A:200 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   29.4150   68.0710   20.3510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9910   69.1780   20.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2430   69.3120   20.2670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1600   70.3900   19.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8410   70.3170   20.4180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9320   70.4240   18.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2720   71.7340   17.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3850   71.6890   16.9550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0630   70.4300   16.3720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5970   72.9810   18.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9060   74.1170   18.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1940   72.9960   19.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5770   74.1680   20.3780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8300   71.7040   20.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+O2
+A    2
+C7
+A    3
+O1
+A    4
+C1
+A    5
+O3
+A    6
+C2
+A    7
+C3
+A    8
+N1
+A    9
+O6
+A   10
+C4
+A   11
+O4
+A   12
+C5
+A   13
+O5
+A   14
+C6
+M  END
+>  <InstanceId>
+1H0S_FA6_A_200
+
+>  <ChemCompId>
+FA6
+
+>  <PdbId>
+1H0S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O6
+
+>  <Name>
+3-HYDROXYIMINO QUINIC ACID
+
+>  <SystematicName>
+(1S,3R,4R,5E)-1,3,4-trihydroxy-5-hydroxyimino-cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N O6
+
+>  <MolecularWeight>
+205.165
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO6/c9-4-2-7(13,6(11)12)1-3(8-14)5(4)10/h4-5,9-10,13-14H,1-2H2,(H,11,12)/b8-3+/t4-,5-,7+/m1/s1
+
+>  <InChIKey>
+WASIBXJFRXJWAR-GKQOBJDDSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](/C(=N/O)/C[C@]1(C(=O)O)O)O)O
+
+$$$$

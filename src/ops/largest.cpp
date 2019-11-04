@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include "deferred.h"
 #include <sstream>
+#include <algorithm>
 
 using namespace std;
 

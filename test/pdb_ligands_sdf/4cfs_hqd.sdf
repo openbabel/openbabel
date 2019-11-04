@@ -1,0 +1,131 @@
+2WJ4_HQD_A_1281
+  RCSB PDB12061707153D
+Coordinates from PDB:2WJ4:A:1281 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    7.6950   74.2680   21.3230   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0080   73.6460   22.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0110   73.5510   23.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7780   74.1700   23.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2590   75.3960   22.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9560   76.0630   20.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9250   76.1410   19.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1620   75.5240   19.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4550   74.8610   21.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4840   74.8340   22.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3450   73.0300   22.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3410   72.9670   24.7590   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9300   74.1010   24.3150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4 10  1  0  0  0  0
+  4 13  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C
+A   12
+O3
+A   13
+O13
+M  END
+>  <InstanceId>
+2WJ4_HQD_A_1281
+
+>  <ChemCompId>
+HQD
+
+>  <PdbId>
+2WJ4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1281
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+3-HYDROXY-2-METHYLQUINOLIN-4(1H)-ONE
+
+>  <SystematicName>
+3-hydroxy-2-methyl-1H-quinolin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H9 N O2
+
+>  <MolecularWeight>
+175.184
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO2/c1-6-9(12)10(13)7-4-2-3-5-8(7)11-6/h2-5,12H,1H3,(H,11,13)
+
+>  <InChIKey>
+FSCXZVPPDJYLDD-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(C(=O)c2ccccc2N1)O
+
+$$$$

@@ -1,0 +1,133 @@
+2OGD_SUF_A_3001
+  RCSB PDB12061706303D
+Coordinates from PDB:2OGD:A:3001 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   26.3960  -14.4640    8.1940   P 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5840  -14.2290   11.1490   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3030  -15.9030   11.9660   S 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6830  -15.4230   11.0490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8290  -13.1820   10.0660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1750  -14.0750   12.5870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7110  -13.1850    7.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4090  -15.6620    8.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9900  -14.3450    9.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6190  -14.7350    7.3480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8710  -15.6090   10.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9510  -12.8780   10.8120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3470  -14.4960   12.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3980  -17.3050   11.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  2  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2 12  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3 14  1  0  0  0  0
+  3 13  1  0  0  0  0
+  5  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+P1
+A    2
+P2
+A    3
+S
+A    4
+O1
+A    5
+O2
+A    6
+O3
+A    7
+O4
+A    8
+O5
+A    9
+C1
+A   10
+O6
+A   11
+C2
+A   12
+O7
+A   13
+C3
+A   14
+C4
+M  END
+>  <InstanceId>
+2OGD_SUF_A_3001
+
+>  <ChemCompId>
+SUF
+
+>  <PdbId>
+2OGD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O7 P2 S
+
+>  <Name>
+[2-(DIMETHYL-LAMBDA~4~-SULFANYL)-1-HYDROXYETHANE-1,1-DIYL]BIS(PHOSPHONIC ACID)
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H14 O7 P2 S
+
+>  <MolecularWeight>
+268.162
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C4H14O7P2S/c1-14(2)3-4(5,12(6,7)8)13(9,10)11/h5,14H,3H2,1-2H3,(H2,6,7,8)(H2,9,10,11)
+
+>  <InChIKey>
+QRMZYUMGWARYEI-UHFFFAOYSA-N
+
+>  <SMILES>
+CS(C)CC(O)(P(=O)(O)O)P(=O)(O)O
+
+$$$$

@@ -1,0 +1,135 @@
+2XXZ_8XQ_A_3001
+  RCSB PDB12061707313D
+Coordinates from PDB:2XXZ:A:3001 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   48.1870   44.4990    6.3330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0630   45.7610    4.7360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7160   44.4370    1.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.9940   45.0160    6.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9890   44.8470    5.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0310   44.5800    2.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.1100   44.7370    3.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3090   45.0380    6.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2540   44.7080    4.4790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1520   45.0460    5.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7250   44.5750    2.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8990   44.8850    4.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5780   44.8800    4.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4970   44.7340    3.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7 12  2  0  0  0  0
+  8 13  2  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+NAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+M  END
+>  <InstanceId>
+2XXZ_8XQ_A_3001
+
+>  <ChemCompId>
+8XQ
+
+>  <PdbId>
+2XXZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3
+
+>  <Name>
+8-hydroxyquinoline-5-carboxylic acid
+
+>  <SystematicName>
+8-hydroxyquinoline-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 N O3
+
+>  <MolecularWeight>
+189.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7NO3/c12-8-4-3-7(10(13)14)6-2-1-5-11-9(6)8/h1-5,12H,(H,13,14)
+
+>  <InChIKey>
+JGRPKOGHYBAVMW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(ccc(c2nc1)O)C(=O)O
+
+$$$$

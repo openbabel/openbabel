@@ -1,0 +1,121 @@
+2J3K_HNE_A_1347
+  RCSB PDB12061705593D
+Coordinates from PDB:2J3K:A:1347 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   34.3220    4.4180   79.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5190    4.7510   80.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7480    4.4680   79.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9170    4.4070   80.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1040    3.6550   80.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8980    2.9140   81.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5960    1.4040   81.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3830    0.6960   82.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4030   -0.2770   81.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3150    5.7150   80.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1890    4.4510   79.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O10
+A   11
+O11
+M  END
+>  <InstanceId>
+2J3K_HNE_A_1347
+
+>  <ChemCompId>
+HNE
+
+>  <PdbId>
+2J3K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1347
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+(2E,4R)-4-HYDROXYNON-2-ENAL
+
+>  <SystematicName>
+(4R)-4-hydroxynon-2-enal
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 O2
+
+>  <MolecularWeight>
+156.222
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H16O2/c1-2-3-4-6-9(11)7-5-8-10/h5,7-9,11H,2-4,6H2,1H3/b7-5+/t9-/m1/s1
+
+>  <InChIKey>
+JVJFIQYAHPMBBX-VPIOIWJLSA-N
+
+>  <SMILES>
+CCCCC[C@H](C=CC=O)O
+
+$$$$

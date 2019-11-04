@@ -1,0 +1,145 @@
+5ITO_6DB_A_304
+  RCSB PDB12061718143D
+Coordinates from PDB:5ITO:A:304 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+   21.2640   -4.8220   -3.1330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2450   -5.4670   -2.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0820   -6.9120   -3.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7250   -7.7870   -2.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6790   -7.2930   -3.4940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8750   -6.3720   -4.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5240   -6.9810   -4.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5970   -6.3120   -5.1710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3200   -8.1880   -4.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5380   -5.9700   -5.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9000   -7.1410   -6.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5450   -6.8800   -7.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1890   -8.0740   -8.3210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9090   -8.0820   -9.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0150   -7.0200  -10.2750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4870   -9.2040   -9.9140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3670   -4.9590   -2.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2 17  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+CA
+A    4
+CB
+A    5
+N
+A    6
+CAI
+A    7
+CAE
+A    8
+OAB
+A    9
+OAF
+A   10
+CAK
+A   11
+CAL
+A   12
+CAM
+A   13
+NAN
+A   14
+CAP
+A   15
+NAO
+A   16
+NAQ
+A   17
+OXT
+M  END
+>  <InstanceId>
+5ITO_6DB_A_304
+
+>  <ChemCompId>
+6DB
+
+>  <PdbId>
+5ITO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O4
+
+>  <Name>
+octopine
+
+>  <SystematicName>
+(2~{S})-5-carbamimidamido-2-[[(2~{R})-1-oxidanyl-1-oxidanylidene-propan-2-yl]amino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H18 N4 O4
+
+>  <MolecularWeight>
+246.264
+
+>  <ModifiedDate>
+2016-11-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H18N4O4/c1-5(7(14)15)13-6(8(16)17)3-2-4-12-9(10)11/h5-6,13H,2-4H2,1H3,(H,14,15)(H,16,17)(H4,10,11,12)/t5-,6+/m1/s1
+
+>  <InChIKey>
+IMXSCCDUAFEIOE-RITPCOANSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\NCCC[C@@H](C(=O)O)N[C@H](C)C(=O)O
+
+$$$$

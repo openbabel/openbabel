@@ -23,12 +23,12 @@ GNU General Public License for more details.
 #include <vector>
 #include <map>
 
-#include <openbabel/mol.h>
 #include <openbabel/rotor.h>
 #include <openbabel/generic.h>
 
 namespace OpenBabel
 {
+  class OBMol;
 
   //! \brief Supports a set of rotamer coordinate sets for some number of potentially rotatable bonds
   // Further class introduction in rotamer.cpp
@@ -114,10 +114,7 @@ namespace OpenBabel
 
     //! \brief Copies the mol's conformers (the coordinates, NOT the pointers)
     //! into the object as base coordinates
-    void SetBaseCoordinateSets(OBMol& mol)
-    {
-      SetBaseCoordinateSets(mol.GetConformers(), mol.NumAtoms());
-    }
+    void SetBaseCoordinateSets(OBMol& mol);
 
     //! Copies the coordinates in bc, NOT the pointers, into this object
     /** \param bc The conformer set for the molecule

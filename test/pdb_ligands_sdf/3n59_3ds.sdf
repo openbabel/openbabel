@@ -1,0 +1,126 @@
+3N59_3DS_C_147
+  RCSB PDB12061709513D
+Coordinates from PDB:3N59:C:147 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -20.2160   61.0020  -26.5740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7160   57.2820  -29.8030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7300   60.2630  -25.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5690   55.3370  -26.4880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8300   55.0140  -28.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3460   58.6040  -28.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0900   57.7170  -26.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0100   60.1290  -26.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4170   57.4160  -28.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1210   58.8080  -26.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6020   56.3250  -26.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3670   56.2850  -28.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  2  0  0  0  0
+  2  9  2  0  0  0  0
+  8  3  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  5 12  1  0  0  0  0
+  9  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+ 10  7  1  0  0  0  0
+ 11  7  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+M  END
+>  <InstanceId>
+3N59_3DS_C_147
+
+>  <ChemCompId>
+3DS
+
+>  <PdbId>
+3N59
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+147
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O5
+
+>  <Name>
+(4S,5R)-4,5-dihydroxy-3-oxocyclohex-1-ene-1-carboxylic acid
+
+>  <SystematicName>
+(4S,5R)-4,5-bis(oxidanyl)-3-oxidanylidene-cyclohexene-1-carboxylic acid
+
+>  <Synonyms>
+3-dehydroshikimate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 O5
+
+>  <MolecularWeight>
+172.135
+
+>  <ModifiedDate>
+2012-08-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8O5/c8-4-1-3(7(11)12)2-5(9)6(4)10/h1,5-6,9-10H,2H2,(H,11,12)/t5-,6-/m1/s1
+
+>  <InChIKey>
+SLWWJZMPHJJOPH-PHDIDXHHSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](C(=O)C=C1C(=O)O)O)O
+
+$$$$

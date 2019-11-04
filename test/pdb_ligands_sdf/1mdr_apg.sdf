@@ -1,0 +1,126 @@
+1DTN_APG_A_399
+  RCSB PDB12061702183D
+Coordinates from PDB:1DTN:A:399 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   33.4760    5.1120   17.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2390    5.0980   17.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1560    4.4950   17.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3130    3.9180   16.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5310    3.9770   15.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6170    4.5680   15.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7910    4.4320   17.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9040    3.7120   17.1030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2030    5.7950   18.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9080    3.4850   19.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2790    6.3320   17.9090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5820    6.3530   19.4640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+  9 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C12
+A    8
+O17
+A    9
+C13
+A   10
+C14
+A   11
+O14
+A   12
+O15
+M  END
+>  <InstanceId>
+1DTN_APG_A_399
+
+>  <ChemCompId>
+APG
+
+>  <PdbId>
+1DTN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+399
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+ATROLACTIC ACID (2-PHENYL-LACTIC ACID)
+
+>  <SystematicName>
+(2S)-2-hydroxy-2-phenyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 O3
+
+>  <MolecularWeight>
+166.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10O3/c1-9(12,8(10)11)7-5-3-2-4-6-7/h2-6,12H,1H3,(H,10,11)/t9-/m0/s1
+
+>  <InChIKey>
+NWCHELUCVWSRRS-VIFPVBQESA-N
+
+>  <SMILES>
+C[C@](c1ccccc1)(C(=O)O)O
+
+$$$$

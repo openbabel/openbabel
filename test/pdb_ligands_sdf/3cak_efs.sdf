@@ -1,0 +1,105 @@
+1P6B_EFS_B_9
+  RCSB PDB12061703373D
+Coordinates from PDB:1P6B:B:9 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   55.9300  -24.3500    9.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.1660  -25.4420    8.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2780  -26.1910    9.2170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4210  -27.7540    8.9360   P 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0270  -27.8700    8.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.8950  -28.6250   10.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0350  -28.1820    7.6030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  2  0  0  0  0
+A    1
+C12
+A    2
+C11
+A    3
+O2
+A    4
+P
+A    5
+O4
+A    6
+O1
+A    7
+O3
+M  END
+>  <InstanceId>
+1P6B_EFS_B_9
+
+>  <ChemCompId>
+EFS
+
+>  <PdbId>
+1P6B
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+9
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O4 P
+
+>  <Name>
+ETHYL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+ethyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H7 O4 P
+
+>  <MolecularWeight>
+126.048
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H7O4P/c1-2-6-7(3,4)5/h2H2,1H3,(H2,3,4,5)
+
+>  <InChIKey>
+ZJXZSIYSNXKHEA-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOP(=O)(O)O
+
+$$$$

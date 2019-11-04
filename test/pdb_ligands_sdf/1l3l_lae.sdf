@@ -1,0 +1,146 @@
+1L3L_LAE_A_1003
+  RCSB PDB12061703093D
+Coordinates from PDB:1L3L:A:1003 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   54.0570   16.1010   82.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6440   15.9910   83.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1790   17.1890   83.4890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1210   18.4220   83.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3620   17.5260   82.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0550   15.0100   83.5500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1710   15.2500   81.5770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8680   14.1160   81.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0910   13.0470   80.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.2360   11.7550   80.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7080   11.9410   80.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0230   10.9400   81.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5160   11.1760   81.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7590   10.2060   82.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7440    9.3970   82.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3250   13.8210   83.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.7500   10.6770   80.9290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 16  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 17  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+O10
+A    7
+N11
+A    8
+C13
+A    9
+C14
+A   10
+C15
+A   11
+C18
+A   12
+C19
+A   13
+C22
+A   14
+C25
+A   15
+C28
+A   16
+O35
+A   17
+O36
+M  END
+>  <InstanceId>
+1L3L_LAE_A_1003
+
+>  <ChemCompId>
+LAE
+
+>  <PdbId>
+1L3L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O4
+
+>  <Name>
+3-OXO-OCTANOIC ACID (2-OXO-TETRAHYDRO-FURAN-3-YL)-AMIDE
+
+>  <SystematicName>
+3-oxo-N-[(3S)-2-oxooxolan-3-yl]octanamide
+
+>  <Synonyms>
+N-(3-OXO-OCTANAL-1-YL)-HOMOSERINE LACTONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H19 N O4
+
+>  <MolecularWeight>
+241.284
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H19NO4/c1-2-3-4-5-9(14)8-11(15)13-10-6-7-17-12(10)16/h10H,2-8H2,1H3,(H,13,15)/t10-/m0/s1
+
+>  <InChIKey>
+FXCMGCFNLNFLSH-JTQLQIEISA-N
+
+>  <SMILES>
+CCCCCC(=O)CC(=O)N[C@H]1CCOC1=O
+
+$$$$

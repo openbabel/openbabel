@@ -1,0 +1,118 @@
+4Q0P_Z6J_A_503
+  RCSB PDB12061714193D
+Coordinates from PDB:4Q0P:A:503 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   35.5870   19.7440   12.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0210   18.5570   11.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6460   18.5600   10.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3580   19.1910    9.9450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5220   17.1490    9.4880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.5230   16.9410    8.5030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1420   17.0790    8.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2810   17.1100    7.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3990   18.3290    9.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8610   19.0150    8.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+M  END
+>  <InstanceId>
+4Q0P_Z6J_A_503
+
+>  <ChemCompId>
+Z6J
+
+>  <PdbId>
+4Q0P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+alpha-L-ribofuranose
+
+>  <SystematicName>
+(2R,3S,4R,5S)-5-(hydroxymethyl)oxolane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2014-05-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-1-2-3(7)4(8)5(9)10-2/h2-9H,1H2/t2-,3-,4-,5+/m0/s1
+
+>  <InChIKey>
+HMFHBZSHGGEWLO-NEEWWZBLSA-N
+
+>  <SMILES>
+C([C@H]1[C@@H]([C@@H]([C@@H](O1)O)O)O)O
+
+$$$$

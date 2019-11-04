@@ -1,0 +1,133 @@
+5DZ2_212_A_404
+  RCSB PDB12061717233D
+Coordinates from PDB:5DZ2:A:404 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   31.0420  -21.7340   25.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5720  -23.3600   23.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6020  -20.6180   23.7280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1550  -23.3650   22.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3220  -24.5580   21.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6780  -21.7660   23.0180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3710  -24.7070   20.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5000  -21.8170   23.9690   P 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1380  -22.3610   24.3180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1130  -23.4290   24.7590   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5700  -23.1620   26.1710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4220  -24.7720   24.7020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3970  -24.4630   23.9460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1030  -25.0860   19.7490   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  8  1  0  0  0  0
+  2 10  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7 14  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+O2
+A    2
+C7
+A    3
+O3
+A    4
+C16
+A    5
+C19
+A    6
+O5
+A    7
+C22
+A    8
+P1
+A    9
+O9
+A   10
+P8
+A   11
+O10
+A   12
+O12
+A   13
+O14
+A   14
+N25
+M  END
+>  <InstanceId>
+5DZ2_212_A_404
+
+>  <ChemCompId>
+212
+
+>  <PdbId>
+5DZ2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O7 P2
+
+>  <Name>
+ALENDRONATE
+
+>  <SystematicName>
+(4-amino-1-hydroxy-1-phosphono-butyl)phosphonic acid
+
+>  <Synonyms>
+(4-AMINO-1-HYDROXY-1-PHOSPHONO-BUTYL)PHOSPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H13 N O7 P2
+
+>  <MolecularWeight>
+249.096
+
+>  <ModifiedDate>
+2015-12-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H13NO7P2/c5-3-1-2-4(6,13(7,8)9)14(10,11)12/h6H,1-3,5H2,(H2,7,8,9)(H2,10,11,12)
+
+>  <InChIKey>
+OGSPWJRAVKPPFI-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CC(O)(P(=O)(O)O)P(=O)(O)O)CN
+
+$$$$

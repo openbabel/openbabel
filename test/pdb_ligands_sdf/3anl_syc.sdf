@@ -1,0 +1,122 @@
+3ANL_SYC_A_800
+  RCSB PDB12061707543D
+Coordinates from PDB:3ANL:A:800 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -11.4100   16.0650   13.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3650   15.8510   14.5720   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2020   14.9480   15.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0040   14.2290   15.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0000   14.4580   14.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2190   15.3730   13.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3280   14.7400   16.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2720   13.2020   16.1790   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3460   12.9940   17.2590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2310   11.9680   16.1980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7870   13.0360   14.7060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C11
+A    8
+P12
+A    9
+O15
+A   10
+O16
+A   11
+O17
+M  END
+>  <InstanceId>
+3ANL_SYC_A_800
+
+>  <ChemCompId>
+SYC
+
+>  <PdbId>
+3ANL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3 P
+
+>  <Name>
+(pyridin-2-ylmethyl)phosphonic acid
+
+>  <SystematicName>
+pyridin-2-ylmethylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 N O3 P
+
+>  <MolecularWeight>
+173.106
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8NO3P/c8-11(9,10)5-6-3-1-2-4-7-6/h1-4H,5H2,(H2,8,9,10)
+
+>  <InChIKey>
+WVWCWWLEFNGDBC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)CP(=O)(O)O
+
+$$$$

@@ -13,11 +13,14 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/descriptor.h>
 #include <openbabel/op.h>
 #include <openbabel/text.h>
 #include <openbabel/depict/svgpainter.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/alias.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
@@ -101,10 +104,11 @@ public:
       " rows# number of rows in table(not displayed in GUI)\n"
       " N# max number objects to be output\n"
       " l draw grid lines\n"
-      " h <condition><color> highlight mol if condition is met\n"
+      " h <condition> highlight mol if condition is met\n"
       "    The condition can use descriptors and properties,\n"
       "    See documentation on ``--filter`` option for details.\n"
-      "    Specifying the highlight color is optional.\n"
+      "    To highlight in a particular color, follow the condition\n"
+      "    by a color.\n"
       " i add index to each atom\n"
       "    These indices are those in sd or mol files and correspond to the\n"
       "    order of atoms in a SMILES string.\n"

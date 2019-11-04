@@ -1,0 +1,128 @@
+4BS0_6NT_A_1305
+  RCSB PDB12061711543D
+Coordinates from PDB:4BS0:A:1305 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   22.9000   -2.6910  -18.3860   O 0  5  0  0  0  0  0  0  0  0  0  0
+   23.8030   -2.1460  -19.2090   N 0  3  0  0  0  0  0  0  0  0  0  0
+   24.9800   -1.9180  -18.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4390   -1.6670  -20.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3930   -0.9750  -21.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0540   -0.4500  -22.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6840   -0.5410  -22.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0250   -0.1900  -24.0010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7870   -1.2790  -22.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1280   -1.8600  -20.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5650   -1.2470  -22.7830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7440   -0.5990  -23.9130   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+M  CHG  2   1  -1   2   1
+A    1
+O21
+A    2
+NO1
+A    3
+O11
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C7A
+A    8
+N1
+A    9
+C3A
+A   10
+C4
+A   11
+N3
+A   12
+N2
+M  END
+>  <InstanceId>
+4BS0_6NT_A_1305
+
+>  <ChemCompId>
+6NT
+
+>  <PdbId>
+4BS0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1305
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O2
+
+>  <Name>
+6-NITROBENZOTRIAZOLE
+
+>  <SystematicName>
+6-nitro-1H-benzotriazole
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H4 N4 O2
+
+>  <MolecularWeight>
+164.122
+
+>  <ModifiedDate>
+2014-05-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4N4O2/c11-10(12)4-1-2-5-6(3-4)8-9-7-5/h1-3H,(H,7,8,9)
+
+>  <InChIKey>
+AOCDQWRMYHJTMY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1[N+](=O)[O-])[nH]nn2
+
+$$$$

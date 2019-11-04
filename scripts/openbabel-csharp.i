@@ -27,7 +27,6 @@
 //renamed these because all public methods of a C# class should start with
 //a capital letter. As swig for c# matures this may become uneccesary.
 %rename(DistSq) OpenBabel::vector3::distSq(const vector3 &) const;
-%rename(RandomUnitVector) OpenBabel::vector3::randomUnitVector(OBRandom *);
 %rename(RandomUnitVector) OpenBabel::vector3::randomUnitVector();
 %rename(Normalize) OpenBabel::vector3::normalize();
 //changed this name slightly to match DistSq(vector3)
@@ -192,7 +191,6 @@
 %enddef
 DISABLE_DOWNCAST(AliasData);
 DISABLE_DOWNCAST(OBAngleData);
-DISABLE_DOWNCAST(OBChiralData);
 DISABLE_DOWNCAST(OBCommentData);
 DISABLE_DOWNCAST(OBConformerData);
 DISABLE_DOWNCAST(OBExternalBondData);
@@ -631,11 +629,12 @@ using System.Runtime.InteropServices;
 #endif
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
+
 #include <openbabel/generic.h>
+#include <openbabel/griddata.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -668,6 +667,8 @@ using System.Runtime.InteropServices;
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
 
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 //ignore some currently unsupported operators
@@ -689,21 +690,6 @@ using System.Runtime.InteropServices;
 
 %include "std_string.i"
 %include "std_vector.i"
-
-%typemap(cscode) std::vector<T>
-%{
-//ForEach method to simplify working around the foreach/delegate interaction "bug"
-#if !SWIG_DOTNET_1
-  public void ForEach(Action<CSTYPE> action)
-  {
-    if(action == null)
-		throw new ArgumentNullException("action");
-	
-	for(int i = 0 ;i<Count; i++)
-		action(getitem(i));
-  }
-#endif
-%}
 
 %template (VectorInt)             std::vector<int>;
 // Note that the following line will fail if the space between 
@@ -742,7 +728,6 @@ using System.Runtime.InteropServices;
 
 %warnfilter(516) OpenBabel::OBElementTable; // Ignoring std::string methods in favour of char* ones
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %warnfilter(516) OpenBabel::vector3; // Using the const x(), y() and z() in favour of the non-const
 %include <openbabel/math/vector3.h>
@@ -817,7 +802,6 @@ using System.Runtime.InteropServices;
 
 //why is AliasData not supported?
 CAST_GENERICDATA_TO(AngleData);
-CAST_GENERICDATA_TO(ChiralData);
 CAST_GENERICDATA_TO(CommentData);
 CAST_GENERICDATA_TO(ConformerData);
 CAST_GENERICDATA_TO(ExternalBondData);
@@ -825,6 +809,7 @@ CAST_GENERICDATA_TO(GridData);
 CAST_GENERICDATA_TO(MatrixData);
 CAST_GENERICDATA_TO(NasaThermoData);
 CAST_GENERICDATA_TO(PairData);
+CAST_GENERICDATA_TO(PairInteger);
 // CAST_GENERICDATA_TO(PairTemplate);
 CAST_GENERICDATA_TO(RateData);
 CAST_GENERICDATA_TO(RotamerList);

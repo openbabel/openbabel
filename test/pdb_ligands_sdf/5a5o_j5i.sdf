@@ -1,0 +1,127 @@
+5A5O_J5I_A_2112
+  RCSB PDB12061716453D
+Coordinates from PDB:5A5O:A:2112 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -23.6520   44.8880    9.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9580   44.9750   10.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8370   45.9540   10.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0900   46.0640   10.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0310   47.0690   10.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.2210   47.1130   11.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4930   46.1640   12.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.5800   45.1540   12.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3780   45.1040   11.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4460   44.1020   12.1700   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2530   43.9720   11.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5040   43.0450   11.8360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C01
+A    2
+C05
+A    3
+C06
+A    4
+C08
+A    5
+C09
+A    6
+C11
+A    7
+C13
+A    8
+C15
+A    9
+C17
+A   10
+N18
+A   11
+C20
+A   12
+O21
+M  END
+>  <InstanceId>
+5A5O_J5I_A_2112
+
+>  <ChemCompId>
+J5I
+
+>  <PdbId>
+5A5O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2112
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+3-METHYL-1,2-DIHYDROQUINOLIN-2-ONE
+
+>  <SystematicName>
+3-methyl-1H-quinolin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H9 N O
+
+>  <MolecularWeight>
+159.185
+
+>  <ModifiedDate>
+2015-07-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO/c1-7-6-8-4-2-3-5-9(8)11-10(7)12/h2-6H,1H3,(H,11,12)
+
+>  <InChIKey>
+POYSUXIHCXBJPN-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=Cc2ccccc2NC1=O
+
+$$$$

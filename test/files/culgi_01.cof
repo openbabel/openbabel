@@ -1,0 +1,71 @@
+@CulgiVersion: 7.0.0
+# Culgi Object File
+
+moleculekeys
+	name
+	id
+end_moleculekeys
+
+atomkeys
+	name
+	element_type
+	force_field_type
+	charge
+	fixed
+	x
+	y
+	z
+	velocity_x
+	velocity_y
+	velocity_z
+	velocity_const_x
+	velocity_const_y
+	velocity_const_z
+end_atomkeys
+
+bondkeys
+	atom1_name
+	atom2_name
+	bond_order
+end_bondkeys
+
+chargegroupkeys
+	atoms_vector
+end_chargegroupkeys
+
+molecule	culgi_01	0
+atom	C1	C	C	0	0	-2.444	1.5484	-0.0724	0	0	0	0	0	0
+atom	C2	C	C	0	0	-1.2956	2.2062	0.0202	0	0	0	0	0	0
+atom	C3	C	C	0	0	-0.0178	1.4662	0.0085	0	0	0	0	0	0
+atom	C4	C	C	0	0	1.1758	2.1297	-0.0115	0	0	0	0	0	0
+atom	N1	N	N	0	0	2.3398	1.4168	-0.0267	0	0	0	0	0	0
+atom	H1	H	H	0	0	3.2125	1.9049	-0.0403	0	0	0	0	0	0
+atom	C5	C	C	0	0	2.3379	0.074	-0.0238	0	0	0	0	0	0
+atom	O1	O	O	0	0	3.3998	-0.518	-0.0382	0	0	0	0	0	0
+atom	N2	N	N	0	0	1.1955	-0.6347	-0.0049	0	0	0	0	0	0
+atom	H2	H	H	0	0	1.23	-1.6341	-0.0033	0	0	0	0	0	0
+atom	C6	C	C	0	0	0.0024	-0.004	0.0119	0	0	0	0	0	0
+atom	O2	O	O	0	0	-1.0357	-0.6392	0.029	0	0	0	0	0	0
+atom	H3	H	H	0	0	-3.3738	2.0929	-0.1464	0	0	0	0	0	0
+atom	H4	H	H	0	0	-2.4491	0.4684	-0.0738	0	0	0	0	0	0
+atom	H5	H	H	0	0	-1.2954	3.283	0.1042	0	0	0	0	0	0
+atom	H6	H	H	0	0	1.1985	3.2094	-0.0142	0	0	0	0	0	0
+bond	C1	C2	2
+bond	C1	H3	1
+bond	C1	H4	1
+bond	C2	C3	1
+bond	C2	H5	1
+bond	C3	C6	1.5
+bond	C3	C4	1.5
+bond	C4	N1	1.5
+bond	C4	H6	1
+bond	N1	H1	1
+bond	N1	C5	1.5
+bond	C5	O1	2
+bond	C5	N2	1.5
+bond	N2	H2	1
+bond	N2	C6	1.5
+bond	C6	O2	2
+chargegroup	16	C1	C2	C3	C4	N1	H1	C5	O1	N2	H2	C6	O2	H3	H4	H5	H6
+end_molecule
+

@@ -19,6 +19,11 @@ GNU General Public License for more details.
 #include <iostream>
 #include<openbabel/op.h>
 #include<openbabel/mol.h>
+#include <openbabel/oberror.h>
+#include <openbabel/generic.h>
+#include <openbabel/obiter.h>
+#include <openbabel/atom.h>
+#include <cstdlib>
 
 namespace OpenBabel
 {

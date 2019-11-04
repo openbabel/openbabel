@@ -1,0 +1,137 @@
+3ZGN_10G_A_1310
+  RCSB PDB12061711293D
+Coordinates from PDB:3ZGN:A:1310 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   35.5170    2.3930   26.5020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8740    2.3610   26.8880   P 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8150    2.2260   25.8790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1720    3.2640   27.9280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9400    0.9930   27.6730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2130   -0.4760   27.1010   P 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7630   -0.5770   25.7100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7750   -1.4080   28.0940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6640   -0.6290   26.8770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5750   -0.6540   27.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4880    0.7510   28.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3190    1.0980   30.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2700    0.0980   31.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1450    2.5530   30.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5390    2.8990   31.3650   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  8  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+O13
+A    2
+P12
+A    3
+O14
+A    4
+O15
+A    5
+O11
+A    6
+P8
+A    7
+O9
+A    8
+O10
+A    9
+O7
+A   10
+C6
+A   11
+C5
+A   12
+C3
+A   13
+C4
+A   14
+C1
+A   15
+S2
+M  END
+>  <InstanceId>
+3ZGN_10G_A_1310
+
+>  <ChemCompId>
+10G
+
+>  <PdbId>
+3ZGN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1310
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O7 P2 S
+
+>  <Name>
+(2E)-3-methyl-4-sulfanylbut-2-en-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+[(E)-3-methyl-4-sulfanyl-but-2-enyl] phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O7 P2 S
+
+>  <MolecularWeight>
+278.157
+
+>  <ModifiedDate>
+2013-01-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O7P2S/c1-5(4-15)2-3-11-14(9,10)12-13(6,7)8/h2,15H,3-4H2,1H3,(H,9,10)(H2,6,7,8)/b5-2+
+
+>  <InChIKey>
+YSUKJHNOIKPIFM-GORDUTHDSA-N
+
+>  <SMILES>
+C/C(=C\COP(=O)(O)OP(=O)(O)O)/CS
+
+$$$$

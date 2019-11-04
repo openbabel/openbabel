@@ -1,0 +1,123 @@
+4HJL_15O_A_503
+  RCSB PDB12061712523D
+Coordinates from PDB:4HJL:A:503 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   13.1110   53.3930   81.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3590   53.5340   80.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8130   52.4430   79.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0270   51.1790   80.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7800   51.0520   81.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3130   52.1680   82.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9840   49.8000   82.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4420   48.7010   81.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6990   48.8260   80.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4960   50.0440   79.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8290   50.1270   78.0440  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+  8  7  2  0  0  0  0
+  5  7  1  0  0  0  0
+  5  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+CL1
+M  END
+>  <InstanceId>
+4HJL_15O_A_503
+
+>  <ChemCompId>
+15O
+
+>  <PdbId>
+4HJL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 Cl
+
+>  <Name>
+1-chloronaphthalene
+
+>  <SystematicName>
+1-chloranylnaphthalene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 Cl
+
+>  <MolecularWeight>
+162.616
+
+>  <ModifiedDate>
+2013-10-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7Cl/c11-10-7-3-5-8-4-1-2-6-9(8)10/h1-7H
+
+>  <InChIKey>
+JTPNRXUCIXHOKM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)cccc2Cl
+
+$$$$

@@ -1,0 +1,131 @@
+4NRC_2LY_A_2001
+  RCSB PDB12061713563D
+Coordinates from PDB:4NRC:A:2001 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -24.7950  -11.5230    0.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9850  -10.7100    0.5590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8010   -9.2690    0.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9580   -8.3780    0.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.3330   -8.8660    0.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.2340   -7.7510    0.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4730   -6.4560    0.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8860   -6.7520    0.6870   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.5770   -7.9360    0.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.0640   -9.2180   -0.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.2270  -10.4050    0.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7830  -10.2480    0.3350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7190   -8.7390    0.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  9  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+ 12  5  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  5  4  2  0  0  0  0
+  7  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  8  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3 13  2  0  0  0  0
+A    1
+C01
+A    2
+N02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+S08
+A    9
+O09
+A   10
+C10
+A   11
+C11
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+4NRC_2LY_A_2001
+
+>  <ChemCompId>
+2LY
+
+>  <PdbId>
+4NRC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S
+
+>  <Name>
+N-methyl-2,3-dihydrothieno[3,4-b][1,4]dioxine-5-carboxamide
+
+>  <SystematicName>
+N-methyl-2,3-dihydrothieno[3,4-b][1,4]dioxine-5-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N O3 S
+
+>  <MolecularWeight>
+199.227
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9NO3S/c1-9-8(10)7-6-5(4-13-7)11-2-3-12-6/h4H,2-3H2,1H3,(H,9,10)
+
+>  <InChIKey>
+MXUQWUJJYQPEJH-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=O)c1c2c(cs1)OCCO2
+
+$$$$

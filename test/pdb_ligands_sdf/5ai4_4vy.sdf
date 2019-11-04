@@ -1,0 +1,126 @@
+5AI4_4VY_A_1555
+  RCSB PDB12061716503D
+Coordinates from PDB:5AI4:A:1555 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   14.0940   13.7040   18.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9870   12.2560   18.5730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3390   11.9020   18.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2240   11.0350   17.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5510   10.7380   17.0180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6670   11.6810   19.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1310   12.4890   20.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8660   11.8610   22.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1170   10.4780   22.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6110    9.7240   21.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8770   10.2900   20.0120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7780    9.5410   23.8860  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+O5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+N11
+A   12
+BR
+M  END
+>  <InstanceId>
+5AI4_4VY_A_1555
+
+>  <ChemCompId>
+4VY
+
+>  <PdbId>
+5AI4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1555
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O Br
+
+>  <Name>
+2-[(5-BROMO-2-PYRIDYL)-METHYL-AMINO]ETHANOL
+
+>  <SystematicName>
+2-[(5-bromanylpyridin-2-yl)-methyl-amino]ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H11 Br N2 O
+
+>  <MolecularWeight>
+231.09
+
+>  <ModifiedDate>
+2015-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11BrN2O/c1-11(4-5-12)8-3-2-7(9)6-10-8/h2-3,6,12H,4-5H2,1H3
+
+>  <InChIKey>
+FWDPWBASDJULOB-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(CCO)c1ccc(cn1)Br
+
+$$$$

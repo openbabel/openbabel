@@ -1,0 +1,121 @@
+1IAY_AVG_A_501
+  RCSB PDB12061702493D
+Coordinates from PDB:1IAY:A:501 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    0.9770   44.9860   19.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0650   44.1790   19.0430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0560   44.7620   18.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1200   45.0430   16.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8760   46.0530   16.5800   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1610   43.7590   16.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5020   43.4960   14.9190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7380   42.8040   14.9020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5390   41.4630   14.4700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2620   40.5000   15.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4370   40.2970   16.6310   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+C1
+A    4
+C2
+A    5
+N1
+A    6
+C3
+A    7
+C4
+A    8
+O3
+A    9
+C5
+A   10
+C6
+A   11
+N2
+M  END
+>  <InstanceId>
+1IAY_AVG_A_501
+
+>  <ChemCompId>
+AVG
+
+>  <PdbId>
+1IAY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O3
+
+>  <Name>
+2-AMINO-4-(2-AMINO-ETHOXY)-BUTYRIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-4-(2-aminoethoxy)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 N2 O3
+
+>  <MolecularWeight>
+162.187
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N2O3/c7-2-4-11-3-1-5(8)6(9)10/h5H,1-4,7-8H2,(H,9,10)/t5-/m0/s1
+
+>  <InChIKey>
+FDDYPVBIHWFLOI-YFKPBYRVSA-N
+
+>  <SMILES>
+C(COCCN)[C@@H](C(=O)O)N
+
+$$$$

@@ -1,0 +1,134 @@
+5NIO_8YH_A_301
+  RCSB PDB12061719113D
+Coordinates from PDB:5NIO:A:301 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -10.3300  -26.7740    4.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0130  -26.8180    4.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0040  -26.0680    4.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6990  -25.9810    4.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0640  -25.9930    2.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3300  -25.8410    2.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3970  -26.5230    2.6290   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5750  -26.6340    1.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6470  -26.5050    0.7150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6600  -27.0320    2.6090   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9240  -27.3020    1.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7010  -28.3360    2.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9890  -28.7890    1.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7880  -29.3620    0.5310   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  5  3  1  0  0  0  0
+  7  1  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+CAE
+A    2
+CAH
+A    3
+CAI
+A    4
+CAK
+A    5
+CAG
+A    6
+CAD
+A    7
+NAB
+A    8
+CAA
+A    9
+OAC
+A   10
+NAF
+A   11
+CAJ
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+M  END
+>  <InstanceId>
+5NIO_8YH_A_301
+
+>  <ChemCompId>
+8YH
+
+>  <PdbId>
+5NIO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+~{N}-butyl-4-methyl-piperidine-1-carboxamide
+
+>  <SystematicName>
+~{N}-butyl-4-methyl-piperidine-1-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H22 N2 O
+
+>  <MolecularWeight>
+198.305
+
+>  <ModifiedDate>
+2017-11-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H22N2O/c1-3-4-7-12-11(14)13-8-5-10(2)6-9-13/h10H,3-9H2,1-2H3,(H,12,14)
+
+>  <InChIKey>
+GASMLRFTKRLWLW-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCNC(=O)N1CCC(CC1)C
+
+$$$$

@@ -1,0 +1,101 @@
+1AFY_CAA_?_1
+  RCSB PDB12061701593D
+Coordinates from PDB:1AFY:?:1 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   60.9670    1.7970   91.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6000    0.9040   90.6100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0390    2.2700   92.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.6550    1.7520   92.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.1710    0.8880   92.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.7230    2.2060   93.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+M  END
+>  <InstanceId>
+1AFY_CAA_?_1
+
+>  <ChemCompId>
+CAA
+
+>  <PdbId>
+1AFY
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+48
+
+>  <ObservedFormula>
+C4 O2
+
+>  <Name>
+ACETOACETYL-COENZYME A
+
+>  <SystematicName>
+S-[2-[3-[[(2R)-4-[[[(2R,3S,4R,5R)-5-(6-aminopurin-9-yl)-4-hydroxy-3-phosphonooxy-oxolan-2-yl]methoxy-hydroxy-phosphoryl]oxy-hydroxy-phosphoryl]oxy-2-hydroxy-3,3-dimethyl-butanoyl]amino]propanoylamino]ethyl] 3-oxobutanethioate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C25 H40 N7 O18 P3 S
+
+>  <MolecularWeight>
+851.607
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C25H40N7O18P3S/c1-13(33)8-16(35)54-7-6-27-15(34)4-5-28-23(38)20(37)25(2,3)10-47-53(44,45)50-52(42,43)46-9-14-19(49-51(39,40)41)18(36)24(48-14)32-12-31-17-21(26)29-11-30-22(17)32/h11-12,14,18-20,24,36-37H,4-10H2,1-3H3,(H,27,34)(H,28,38)(H,42,43)(H,44,45)(H2,26,29,30)(H2,39,40,41)/t14-,18-,19-,20+,24-/m1/s1
+
+>  <InChIKey>
+OJFDKHTZOUZBOS-CITAKDKDSA-N
+
+>  <SMILES>
+CC(=O)CC(=O)SCCNC(=O)CCNC(=O)[C@@H](C(C)(C)CO[P@](=O)(O)O[P@](=O)(O)OC[C@@H]1[C@H]([C@H]([C@@H](O1)n2cnc3c2ncnc3N)O)OP(=O)(O)O)O
+
+$$$$

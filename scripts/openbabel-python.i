@@ -11,7 +11,6 @@
 #endif
 
 #include <openbabel/obutil.h>
-#include <openbabel/rand.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/math/transform3d.h>
@@ -26,8 +25,10 @@
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/reaction.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
+#include <openbabel/bondtyper.h>
 
 #include <openbabel/ring.h>
 #include <openbabel/obconversion.h>
@@ -63,6 +64,9 @@
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/squareplanar.h>
 #include <openbabel/stereo/bindings.h>
+
+#include <openbabel/chains.h>
+#include <openbabel/obiter.h>
 %}
 
 // Set and reset dlopenflags so that plugin loading works fine for "import _openbabel"
@@ -207,7 +211,6 @@ OpenBabel::AliasData *toAliasData(OpenBabel::OBGenericData *data) {
 }
 %}
 CAST_GENERICDATA_TO(AngleData)
-CAST_GENERICDATA_TO(ChiralData)
 CAST_GENERICDATA_TO(CommentData)
 CAST_GENERICDATA_TO(ConformerData)
 CAST_GENERICDATA_TO(ExternalBondData)
@@ -216,6 +219,7 @@ CAST_GENERICDATA_TO(MatrixData)
 CAST_GENERICDATA_TO(NasaThermoData)
 CAST_GENERICDATA_TO(PairData)
 CAST_GENERICDATA_TO(PairInteger)
+CAST_GENERICDATA_TO(PairFloatingPoint)
 // CAST_GENERICDATA_TO(PairTemplate)
 CAST_GENERICDATA_TO(RateData)
 CAST_GENERICDATA_TO(RotamerList)
@@ -241,7 +245,6 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %import <openbabel/babelconfig.h>
 
 %include <openbabel/data.h>
-%include <openbabel/rand.h>
 %include <openbabel/obutil.h>
 %include <openbabel/math/vector3.h>
 %warnfilter(503) OpenBabel::matrix3x3; // Not wrapping any of the overloaded operators
@@ -256,7 +259,8 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/base.h>
 
 %include <openbabel/generic.h>
-%template(obpairtemplateint) OpenBabel::OBPairTemplate<int>;
+%template(OBPairInteger) OpenBabel::OBPairTemplate<int>;
+%template(OBPairFloatingPoint) OpenBabel::OBPairTemplate<float>;
 %include <openbabel/griddata.h>
 
 %include <openbabel/chains.h>
@@ -282,6 +286,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/reaction.h>
+%include <openbabel/reactionfacade.h>
 
 // Remove C++ iterators
 %pythoncode %{

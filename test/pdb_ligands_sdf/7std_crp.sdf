@@ -1,0 +1,159 @@
+2STD_CRP_A_175
+  RCSB PDB12061706583D
+Coordinates from PDB:2STD:A:175 Model:1 without hydrogens
+ 20 21  0  0  0  0            999 V2000
+   27.3880   42.3390   25.0820  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0950   39.4730   22.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3730   40.4540   21.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5490   41.3080   22.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4570   41.1790   24.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1740   40.2000   24.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9870   39.3500   24.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0360   38.5580   21.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4560   38.9340   22.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7030   37.1850   22.2180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7740   36.5030   21.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1580   37.0520   20.5990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5330   35.0700   22.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8290   33.9290   21.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5620   34.0000   22.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2230   32.9570   23.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2180   35.0630   22.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0090   35.7420   24.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6690   34.3020   19.5610  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6550   32.6540   20.8120  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 17  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 19  1  0  0  0  0
+ 14 20  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+CL0
+A    2
+C1'
+A    3
+C2'
+A    4
+C3'
+A    5
+C4'
+A    6
+C5'
+A    7
+C6'
+A    8
+C7'
+A    9
+C8'
+A   10
+N
+A   11
+C
+A   12
+O
+A   13
+C1
+A   14
+C2
+A   15
+C3
+A   16
+C4
+A   17
+C5
+A   18
+C6
+A   19
+CL1
+A   20
+CL2
+M  END
+>  <InstanceId>
+2STD_CRP_A_175
+
+>  <ChemCompId>
+CRP
+
+>  <PdbId>
+2STD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+175
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N O Cl3
+
+>  <Name>
+((1RS,3SR)-2,2-DICHLORO-N-[(R)-1-(4-CHLOROPHENYL)ETHYL]-1-ETHYL-3-METHYLCYCLOPROPANECARBOXAMIDE
+
+>  <SystematicName>
+(1S,3R)-2,2-dichloro-N-[(1R)-1-(4-chlorophenyl)ethyl]-1-ethyl-3-methyl-cyclopropane-1-carboxamide
+
+>  <Synonyms>
+CARPROPAMID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H18 Cl3 N O
+
+>  <MolecularWeight>
+334.669
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H18Cl3NO/c1-4-14(10(3)15(14,17)18)13(20)19-9(2)11-5-7-12(16)8-6-11/h5-10H,4H2,1-3H3,(H,19,20)/t9-,10-,14+/m1/s1
+
+>  <InChIKey>
+RXDMAYSSBPYBFW-RULNRJAQSA-N
+
+>  <SMILES>
+CC[C@]1([C@H](C1(Cl)Cl)C)C(=O)N[C@H](C)c2ccc(cc2)Cl
+
+$$$$

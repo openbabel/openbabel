@@ -29,8 +29,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
 #include <openbabel/ring.h>
 
 using namespace std;
@@ -132,7 +135,7 @@ namespace OpenBabel
 "            Tatyana Gloriozova. **Chemical Similarity Assessment through\n"
 "            Multilevel Neighborhoods of Atoms: Definition and Comparison with\n"
 "            the Other Descriptors.** *J. Chem. Inf. Comput. Sci.* **1999**, *39*, 666-670.\n"
-"            [`Link <http://dx.doi.org/10.1021/ci980335o>`_]\n\n"
+"            [`Link <https://doi.org/10.1021/ci980335o>`_]\n\n"
 
         "Write Options e.g. -x" << levels_option << "1 \n"
 				"  " << levels_option << "#  Levels (default = " << levels << ")\n\n"

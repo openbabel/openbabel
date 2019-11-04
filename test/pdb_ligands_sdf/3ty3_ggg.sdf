@@ -1,0 +1,129 @@
+3HD7_GGG_A_1
+  RCSB PDB12061708523D
+Coordinates from PDB:3HD7:A:1 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  141.9150   13.7840   83.2430   N 0  0  0  0  0  0  0  0  0  0  0  0
+  140.7640   14.6070   83.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  141.1320   15.5810   84.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  142.3040   15.6870   85.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  140.1550   16.2980   85.2160   N 0  0  0  0  0  0  0  0  0  0  0  0
+  138.7660   16.2040   84.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  137.9390   17.1900   85.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  137.7910   17.0380   86.8320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  137.4080   18.2080   84.9460   N 0  0  0  0  0  0  0  0  0  0  0  0
+  136.6320   19.2430   85.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.6360   19.9250   84.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.2180   19.3660   83.6730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  135.2140   21.0560   84.9340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+N1
+A    2
+CA1
+A    3
+C1
+A    4
+O1
+A    5
+N2
+A    6
+CA2
+A    7
+C2
+A    8
+O2
+A    9
+N3
+A   10
+CA3
+A   11
+C3
+A   12
+O3
+A   13
+O
+M  END
+>  <InstanceId>
+3HD7_GGG_A_1
+
+>  <ChemCompId>
+GGG
+
+>  <PdbId>
+3HD7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O4
+
+>  <Name>
+glycylglycylglycine
+
+>  <SystematicName>
+2-[2-(2-aminoethanoylamino)ethanoylamino]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 N3 O4
+
+>  <MolecularWeight>
+189.169
+
+>  <ModifiedDate>
+2011-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11N3O4/c7-1-4(10)8-2-5(11)9-3-6(12)13/h1-3,7H2,(H,8,10)(H,9,11)(H,12,13)
+
+>  <InChIKey>
+XKUKSGPZAADMRA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)NCC(=O)NCC(=O)O)N
+
+$$$$

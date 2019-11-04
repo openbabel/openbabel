@@ -22,6 +22,9 @@ GNU General Public License for more details.
 #include <climits> // UINT_MAX
 
 #include <openbabel/math/align.h>
+#include <openbabel/atom.h>
+#include <openbabel/oberror.h>
+#include <openbabel/obiter.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/elements.h>
@@ -35,6 +38,8 @@ using namespace std;
 
 namespace OpenBabel
 {
+  extern OBMessageHandler obErrorLog;
+
   OBAlign::OBAlign(bool includeH, bool symmetry) : _method(OBAlign::Kabsch)
   {
     _ready = false;

@@ -1,0 +1,126 @@
+3UU1_14B_A_404
+  RCSB PDB12061711063D
+Coordinates from PDB:3UU1:A:404 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    7.9580   -3.2540   29.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1880   -4.4310   24.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6410   -6.7990   25.1350   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6670   -7.7090   28.7070   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0480   -8.3460   26.5930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5250   -3.9300   27.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1310   -5.4040   28.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2020   -7.5610   27.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8600   -4.2230   28.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4510   -4.7950   26.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7080   -5.9750   26.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0520   -6.2820   27.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+ 10  2  1  0  0  0  0
+ 11  3  1  0  0  0  0
+  8  4  1  0  0  0  0
+  5  8  2  0  0  0  0
+  9  6  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 12  2  0  0  0  0
+  8 12  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+NAC
+A    4
+OAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+M  END
+>  <InstanceId>
+3UU1_14B_A_404
+
+>  <ChemCompId>
+14B
+
+>  <PdbId>
+3UU1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2
+
+>  <Name>
+2-amino-3,5-dimethylbenzoic acid
+
+>  <SystematicName>
+2-azanyl-3,5-dimethyl-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N O2
+
+>  <MolecularWeight>
+165.189
+
+>  <ModifiedDate>
+2012-12-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11NO2/c1-5-3-6(2)8(10)7(4-5)9(11)12/h3-4H,10H2,1-2H3,(H,11,12)
+
+>  <InChIKey>
+GIMYRAQQQBFFFJ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(c(c(c1)C(=O)O)N)C
+
+$$$$

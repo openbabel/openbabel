@@ -1,0 +1,113 @@
+1TNA_PSU_?_39
+  RCSB PDB12061704083D
+Coordinates from PDB:1TNA:?:39 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   13.3000   14.5000   15.6000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9000   15.2000   14.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6000   14.4000   13.5000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7000   13.1000   13.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0000   12.4000   14.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4000   13.2000   15.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9000   16.4000   14.3000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3000   12.5000   12.7000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4000   11.0000   19.9000   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O2
+A    8
+O4
+A    9
+P
+M  END
+>  <InstanceId>
+1TNA_PSU_?_39
+
+>  <ChemCompId>
+PSU
+
+>  <PdbId>
+1TNA
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+39
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+12
+
+>  <ObservedFormula>
+C4 N2 O2 P
+
+>  <Name>
+PSEUDOURIDINE-5'-MONOPHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4R,5S)-5-(2,4-dioxo-1H-pyrimidin-5-yl)-3,4-dihydroxy-oxolan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+RNA LINKING
+
+>  <Formula>
+C9 H13 N2 O9 P
+
+>  <MolecularWeight>
+324.181
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+U
+
+>  <OneLetterCode>
+U
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N2O9P/c12-5-4(2-19-21(16,17)18)20-7(6(5)13)3-1-10-9(15)11-8(3)14/h1,4-7,12-13H,2H2,(H2,16,17,18)(H2,10,11,14,15)/t4-,5-,6-,7+/m1/s1
+
+>  <InChIKey>
+MOBMOJGXNHLLIR-GBNDHIKLSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1)[C@H]2[C@@H]([C@@H]([C@H](O2)COP(=O)(O)O)O)O
+
+$$$$

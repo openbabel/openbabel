@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2017 by Noel M. O'Boyle
+Copyright (C) 2017,2018 by Noel M. O'Boyle
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -13,12 +13,16 @@ but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
-#include "openbabel/babelconfig.h"
+#include <openbabel/babelconfig.h>
 #include <string>
 #include <algorithm>
-#include "openbabel/mol.h"
-#include "openbabel/obconversion.h"
-#include "openbabel/reaction.h"
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/elements.h>
+
+#include <openbabel/obconversion.h>
+#include <openbabel/reactionfacade.h>
+#include <openbabel/obmolecformat.h>
 
 using namespace std;
 
@@ -26,7 +30,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-  class ReactionInChIFormat : public OBFormat
+  class ReactionInChIFormat : public OBMoleculeFormat
   {
   public:
     //Register this format type ID
@@ -39,6 +43,7 @@ namespace OpenBabel
     {
       return
         "RInChI\n"
+        "The Reaction InChI\n"
         "The Reaction InChI (or RInChI) is intended to be a unique\n"
         "string that describes a reaction. This may be useful for\n"
         "indexing and searching reaction databases. As with the InChI\n"
@@ -58,46 +63,18 @@ namespace OpenBabel
 
     virtual const char* TargetClassDescription()
     {
-      return OBReaction::ClassDescription();
+      return OBMol::ClassDescription();
     }
 
     virtual unsigned int Flags()
     {
       return NOTREADABLE;
-    };
-
-    const type_info& GetType()
-    {
-      return typeid(OBReaction*);
     }
-
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pReact, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pReact, OBConversion* pConv);
-
-    ////////////////////////////////////////////////////
-    /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
-    {
-      return true;
-    }
-
-    virtual bool WriteChemObject(OBConversion* pConv)
-    {
-      //WriteChemObject() always deletes the object retrieved by GetChemObject
-      OBBase* pOb = pConv->GetChemObject();
-      OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-      if(pReact==NULL)
-        return false;
-
-      bool ret=false;
-      ret=WriteMolecule(pReact,pConv);
-
-      delete pOb;
-      return ret;
-    }
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
   };
 
@@ -127,10 +104,8 @@ namespace OpenBabel
   /////////////////////////////////////////////////////////////////
   bool ReactionInChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
-    //It's really a reaction, not a molecule.
-    //Cast output object to the class type need, i.e. OBReaction
-    OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-    if (pReact == NULL)
+    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+    if (pmol == NULL || !pmol->IsReaction())
       return false;
     ostream &ofs = *pConv->GetOutStream();
 
@@ -138,46 +113,44 @@ namespace OpenBabel
     if (!pInChIFormat)
       return false;
 
-    bool isEquilibrium = pReact->IsReversible() || pConv->IsOption("e");
+    bool isEquilibrium = pConv->IsOption("e");
 
     OBConversion inchiconv;
     inchiconv.SetOutFormat(pInChIFormat);
     stringstream ss;
     inchiconv.SetOutStream(&ss);
 
-    //if (pReact->NumReactants() == 0 && pReact->NumProducts() == 0 && pReact->NumAgents() == 0) {
-    //  // Special-case the empty RInChI
-    //  ofs << RINCHI_VERSION_STRING << "/d+\n";
-    //  return true;
-    //}
+#define M_REACTANTS 0
+#define M_PRODUCTS 1
+#define M_AGENTS 2
 
-#define REACTANTS 0
-#define PRODUCTS 1
-#define AGENTS 2
+    OBReactionFacade facade(pmol);
 
     std::vector<std::vector<std::string> > inchis(3);
     unsigned int nonInchi[3] = { 0, 0, 0 };
     bool hasNonInchi = false;
+    OBMol mol;
     for (int part = 0; part <= 2; ++part) {
       unsigned int N;
       switch (part) {
-      case REACTANTS: N = pReact->NumReactants(); break;
-      case PRODUCTS: N = pReact->NumProducts(); break;
-      case AGENTS: N = pReact->NumAgents(); break;
+      case M_REACTANTS: N = facade.NumComponents(REACTANT); break;
+      case M_PRODUCTS: N = facade.NumComponents(PRODUCT); break;
+      case M_AGENTS: N = facade.NumComponents(AGENT); break;
       }
       for (unsigned int i = 0; i < N; ++i) {
-        OBMol* mol;
+        mol.Clear();
         switch (part) {
-        case REACTANTS: mol = &*(pReact->GetReactant(i)); break;
-        case PRODUCTS: mol = &*(pReact->GetProduct(i)); break;
-        case AGENTS: mol = &*(pReact->GetAgent(i)); break;
+        case M_REACTANTS: facade.GetComponent(&mol, REACTANT, i); break;
+        case M_PRODUCTS: facade.GetComponent(&mol, PRODUCT, i); break;
+        case M_AGENTS: facade.GetComponent(&mol, AGENT, i); break;
         }
-        if (mol->NumAtoms() == 0) {
+        if (mol.NumAtoms() == 1 && mol.GetFirstAtom()->GetAtomicNum() == 0) {
+          // This represents an unknown component
           nonInchi[part]++;
           hasNonInchi = true;
         }
         else {
-          bool ok = inchiconv.Write(mol);
+          bool ok = inchiconv.Write(&mol);
           if (!ok) {
             nonInchi[part]++;
             hasNonInchi = true;
@@ -193,36 +166,36 @@ namespace OpenBabel
       }
     }
 
-    std::sort(inchis[REACTANTS].begin(), inchis[REACTANTS].end());
-    std::sort(inchis[PRODUCTS].begin(), inchis[PRODUCTS].end());
-    std::sort(inchis[AGENTS].begin(), inchis[AGENTS].end());
+    std::sort(inchis[M_REACTANTS].begin(), inchis[M_REACTANTS].end());
+    std::sort(inchis[M_PRODUCTS].begin(), inchis[M_PRODUCTS].end());
+    std::sort(inchis[M_AGENTS].begin(), inchis[M_AGENTS].end());
 
     std::string reactants_string = "";
-    const int rsize = inchis[REACTANTS].size();
+    const int rsize = inchis[M_REACTANTS].size();
     for (int i = 0; i < rsize; ++i) {
       if (i > 0)
         reactants_string += '!';
-      reactants_string += inchis[REACTANTS][i];
+      reactants_string += inchis[M_REACTANTS][i];
     }
     std::string products_string = "";
-    const int psize = inchis[PRODUCTS].size();
+    const int psize = inchis[M_PRODUCTS].size();
     for (int i = 0; i < psize; ++i) {
       if (i > 0)
         products_string += '!';
-      products_string += inchis[PRODUCTS][i];
+      products_string += inchis[M_PRODUCTS][i];
     }
 
     bool reactants_first = reactants_string <= products_string;
 
     ofs << RINCHI_VERSION_STRING;
-    if (rsize > 0 || psize > 0 || !inchis[AGENTS].empty()) {
+    if (rsize > 0 || psize > 0 || !inchis[M_AGENTS].empty()) {
       ofs << (reactants_first ? reactants_string : products_string);
       ofs << "<>";
       ofs << (reactants_first ? products_string : reactants_string);
-      if (!inchis[AGENTS].empty()) {
+      if (!inchis[M_AGENTS].empty()) {
         ofs << "<>";
-        for (std::vector<std::string>::const_iterator vit = inchis[AGENTS].begin(); vit != inchis[AGENTS].end(); ++vit) {
-          if (vit != inchis[AGENTS].begin())
+        for (std::vector<std::string>::const_iterator vit = inchis[M_AGENTS].begin(); vit != inchis[M_AGENTS].end(); ++vit) {
+          if (vit != inchis[M_AGENTS].begin())
             ofs << '!';
           ofs << *vit;
         }
@@ -234,9 +207,9 @@ namespace OpenBabel
     else
       ofs << (reactants_first ? '+' : '-');
     if (hasNonInchi) {
-      ofs << "/u" << (reactants_first ? nonInchi[REACTANTS] : nonInchi[PRODUCTS]) << '-'
-        << (reactants_first ? nonInchi[PRODUCTS] : nonInchi[REACTANTS]) << '-'
-        << nonInchi[AGENTS];
+      ofs << "/u" << (reactants_first ? nonInchi[M_REACTANTS] : nonInchi[M_PRODUCTS]) << '-'
+        << (reactants_first ? nonInchi[M_PRODUCTS] : nonInchi[M_REACTANTS]) << '-'
+        << nonInchi[M_AGENTS];
     }
 
     ofs << '\n';

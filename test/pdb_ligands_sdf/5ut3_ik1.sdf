@@ -1,0 +1,151 @@
+3ZON_IK1_A_1871
+  RCSB PDB12061711313D
+Coordinates from PDB:3ZON:A:1871 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   17.8830   24.3540    6.1030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7360   22.8230    2.7560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4510   23.5140    7.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8720   23.3260    3.2100   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9820   22.0540    8.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3890   22.7230    9.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0150   22.3140    7.2460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4240   22.9740    9.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2660   22.9100    5.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7020   23.9090    5.5050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7830   23.4250    7.3620   S 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6590   23.9370    6.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7130   23.1640    3.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1630   22.2660    9.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2580   22.7720    7.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2800   23.0180    6.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4550   23.2060    4.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4460   23.5340    5.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3 12  2  0  0  0  0
+  4 13  2  0  0  0  0
+  6  8  2  0  0  0  0
+  6 14  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5 14  2  0  0  0  0
+  8 15  1  0  0  0  0
+  7 15  2  0  0  0  0
+  9 16  2  0  0  0  0
+  9 17  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 18  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 11 18  1  0  0  0  0
+ 13 17  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 17 18  2  0  0  0  0
+A    1
+NAA
+A    2
+NAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAG
+A    6
+CAF
+A    7
+CAI
+A    8
+CAH
+A    9
+CAJ
+A   10
+NAK
+A   11
+SAL
+A   12
+CAM
+A   13
+CAN
+A   14
+CAO
+A   15
+CAP
+A   16
+CAQ
+A   17
+CAR
+A   18
+CAS
+M  END
+>  <InstanceId>
+3ZON_IK1_A_1871
+
+>  <ChemCompId>
+IK1
+
+>  <PdbId>
+3ZON
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1871
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O2 S
+
+>  <Name>
+5-PHENYL-2-UREIDOTHIOPHENE-3-CARBOXAMIDE
+
+>  <SystematicName>
+2-(aminocarbonylamino)-5-phenyl-thiophene-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H11 N3 O2 S
+
+>  <MolecularWeight>
+261.3
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11N3O2S/c13-10(16)8-6-9(7-4-2-1-3-5-7)18-11(8)15-12(14)17/h1-6H,(H2,13,16)(H3,14,15,17)
+
+>  <InChIKey>
+PSVUSJKZJQMCSP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2cc(c(s2)NC(=O)N)C(=O)N
+
+$$$$

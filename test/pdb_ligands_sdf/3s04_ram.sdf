@@ -1,0 +1,118 @@
+1CB8_RAM_A_2001
+  RCSB PDB12061702093D
+Coordinates from PDB:1CB8:A:2001 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   37.6310    4.3780   24.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0960    3.0010   23.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7290    3.0520   22.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9980    3.3900   21.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5470    4.7910   21.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8460    5.2230   21.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0880    2.0270   23.8620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2450    1.7970   21.7420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6840    3.4150   19.9570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7890    4.7200   23.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O5
+M  END
+>  <InstanceId>
+1CB8_RAM_A_2001
+
+>  <ChemCompId>
+RAM
+
+>  <PdbId>
+1CB8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 O4
+
+>  <Name>
+ALPHA-L-RHAMNOSE
+
+>  <SystematicName>
+(2R,3R,4R,5R,6S)-6-methyloxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c1-2-3(7)4(8)5(9)6(10)11-2/h2-10H,1H3/t2-,3-,4+,5+,6+/m0/s1
+
+>  <InChIKey>
+SHZGCJCMOBCMKK-HGVZOGFYSA-N
+
+>  <SMILES>
+C[C@H]1[C@@H]([C@H]([C@H]([C@@H](O1)O)O)O)O
+
+$$$$

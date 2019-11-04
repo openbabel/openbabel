@@ -1,0 +1,151 @@
+5T8J_77T_A_1002
+  RCSB PDB12061719323D
+Coordinates from PDB:5T8J:A:1002 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   28.3180    1.9120    5.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4870    0.4570    5.6710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5730   -0.3730    4.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0420   -1.6610    5.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3330    3.1140    4.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3020    5.7250    4.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6360    0.1510    3.2710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4070    0.5910    4.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0640    1.8970    4.3300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2730   -0.6710    3.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1550    4.2180    4.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6640    5.4920    4.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8910    7.0900    4.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5450    8.1670    4.0720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4190    4.6470    4.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0840    4.8750    4.6840   F 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9320    3.3410    4.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9110    2.2680    4.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  1  0  0  0  0
+ 10  3  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12  6  1  0  0  0  0
+ 11  5  1  0  0  0  0
+ 14 13  3  0  0  0  0
+ 13  6  1  0  0  0  0
+  6 15  2  0  0  0  0
+  5  9  1  0  0  0  0
+  5 17  2  0  0  0  0
+  9  8  1  0  0  0  0
+  9  1  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 16  1  0  0  0  0
+  8  3  1  0  0  0  0
+ 17 18  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C5
+A    2
+C6
+A    3
+C7
+A    4
+C8
+A    5
+C10
+A    6
+C13
+A    7
+C1
+A    8
+C2
+A    9
+N4
+A   10
+O9
+A   11
+C11
+A   12
+C12
+A   13
+C14
+A   14
+N15
+A   15
+C16
+A   16
+F17
+A   17
+C18
+A   18
+C19
+M  END
+>  <InstanceId>
+5T8J_77T_A_1002
+
+>  <ChemCompId>
+77T
+
+>  <PdbId>
+5T8J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O F
+
+>  <Name>
+2-fluoro-4-[(2S,3S)-3-hydroxy-2,3-dimethylpyrrolidin-1-yl]-3-methylbenzonitrile
+
+>  <SystematicName>
+4-[(2~{S},3~{S})-2,3-dimethyl-3-oxidanyl-pyrrolidin-1-yl]-2-fluoranyl-3-methyl-benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H17 F N2 O
+
+>  <MolecularWeight>
+248.296
+
+>  <ModifiedDate>
+2017-04-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H17FN2O/c1-9-12(5-4-11(8-16)13(9)15)17-7-6-14(3,18)10(17)2/h4-5,10,18H,6-7H2,1-3H3/t10-,14-/m0/s1
+
+>  <InChIKey>
+OAXYYUPBCKQHBM-HZMBPMFUSA-N
+
+>  <SMILES>
+Cc1c(ccc(c1F)C#N)N2CC[C@]([C@@H]2C)(C)O
+
+$$$$

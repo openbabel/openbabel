@@ -1,0 +1,183 @@
+3EFT_3BS_A_300
+  RCSB PDB12061708273D
+Coordinates from PDB:3EFT:A:300 Model:1 without hydrogens
+ 26 27  0  0  0  0            999 V2000
+   -2.4490    9.4920   12.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6850   10.7440   12.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7800   10.9200   14.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2490   11.9770   11.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2710   10.5930   12.1730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1700   10.3440   10.7380   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3310    9.4710   12.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1430    9.7060   14.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8210    9.4060   12.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3620    8.1740   12.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8550    8.2650   12.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5350    7.0530   12.3270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0170    6.1730   13.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8450    6.4540   14.8880   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6320    5.0760   12.7680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1130    4.1960   13.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4070    4.3380   14.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9110    3.4200   15.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3910    5.6590   13.6000  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3230    3.1360   14.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8260    2.2170   14.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1200    2.3590   15.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7530    1.2020   16.6190   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2520    1.2570   16.6100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2490    1.5340   17.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2620   -0.2970   16.2090   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 20  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 18 22  2  0  0  0  0
+ 20 21  2  0  0  0  0
+ 21 22  1  0  0  0  0
+ 22 23  1  0  0  0  0
+ 23 24  2  0  0  0  0
+ 23 25  2  0  0  0  0
+ 23 26  1  0  0  0  0
+A    1
+CAQ
+A    2
+CAR
+A    3
+CAS
+A    4
+CAH
+A    5
+NAX
+A    6
+OAY
+A    7
+CAW
+A    8
+CAV
+A    9
+CAZ
+A   10
+CAU
+A   11
+CAP
+A   12
+NAO
+A   13
+CAN
+A   14
+SAT
+A   15
+NAM
+A   16
+CAL
+A   17
+CAF
+A   18
+CAE
+A   19
+CLAG
+A   20
+CAK
+A   21
+CAJ
+A   22
+CAD
+A   23
+SAC
+A   24
+OAI
+A   25
+OAA
+A   26
+NAB
+M  END
+>  <InstanceId>
+3EFT_3BS_A_300
+
+>  <ChemCompId>
+3BS
+
+>  <PdbId>
+3EFT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C16 N4 O3 S2 Cl
+
+>  <Name>
+3-chloro-4-{[(1-hydroxy-2,2,6,6-tetramethylpiperidin-4-yl)carbamothioyl]amino}benzenesulfonamide
+
+>  <SystematicName>
+3-(2-chloro-4-sulfamoyl-phenyl)-1-(1-hydroxy-2,2,6,6-tetramethyl-piperidin-4-yl)thiourea
+
+>  <Synonyms>
+(4-{[(2-chloro-4-sulfamoylphenyl)carbamothioyl]amino}-2,2,6,6-tetramethylpiperidin-1-yl)oxidanyl
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H25 Cl N4 O3 S2
+
+>  <MolecularWeight>
+420.978
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H25ClN4O3S2/c1-15(2)8-10(9-16(3,4)21(15)22)19-14(25)20-13-6-5-11(7-12(13)17)26(18,23)24/h5-7,10,22H,8-9H2,1-4H3,(H2,18,23,24)(H2,19,20,25)
+
+>  <InChIKey>
+WDEYGBCTTZKGRI-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(CC(CC(N1O)(C)C)NC(=S)Nc2ccc(cc2Cl)S(=O)(=O)N)C
+
+$$$$

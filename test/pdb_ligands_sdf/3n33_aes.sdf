@@ -1,0 +1,126 @@
+2AJC_AES_A_801
+  RCSB PDB12061705003D
+Coordinates from PDB:2AJC:A:801 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   -7.4150   23.1850    5.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8330   24.0760    4.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9690   24.4400    3.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5890   25.5680    2.0810   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5210   25.7680    1.0720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0990   26.7860    2.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6430   23.8920    3.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2120   22.9770    4.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1140   22.6270    5.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6990   21.6510    6.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5250   20.3550    6.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9680   19.2950    7.1150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C3
+A    2
+C2
+A    3
+C1
+A    4
+S
+A    5
+O1S
+A    6
+O2S
+A    7
+C6
+A    8
+C5
+A    9
+C4
+A   10
+C7
+A   11
+C8
+A   12
+N8
+M  END
+>  <InstanceId>
+2AJC_AES_A_801
+
+>  <ChemCompId>
+AES
+
+>  <PdbId>
+2AJC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 N O2 S
+
+>  <Name>
+4-(2-AMINOETHYL)BENZENESULFONYL FLUORIDE
+
+>  <SystematicName>
+4-(2-azanylethyl)benzenesulfonyl fluoride
+
+>  <Synonyms>
+AEBSF
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 F N O2 S
+
+>  <MolecularWeight>
+203.234
+
+>  <ModifiedDate>
+2012-05-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10FNO2S/c9-13(11,12)8-3-1-7(2-4-8)5-6-10/h1-4H,5-6,10H2
+
+>  <InChIKey>
+MGSKVZWGBWPBTF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CCN)S(=O)(=O)F
+
+$$$$

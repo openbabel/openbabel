@@ -1,0 +1,127 @@
+5E3D_5JL_A_801
+  RCSB PDB12061717243D
+Coordinates from PDB:5E3D:A:801 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    7.2230  -10.3220    4.6210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1730  -10.7320    3.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8600  -11.8210    2.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9530   -8.9670    3.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6390  -12.5490    3.8420   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9840  -11.0130    5.5680   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8320  -12.2280    1.7760   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3710   -9.8760    2.6880   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8670   -7.5920    3.2540   S 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4710   -9.2310    4.7650   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7030  -12.1410    5.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6560  -13.0130    6.3320   S 0  0  0  0  0  0  0  0  0  0  0  0
+  7  3  2  0  0  0  0
+  8  2  1  0  0  0  0
+  8  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  5  1  0  0  0  0
+  9  4  2  0  0  0  0
+  2  1  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5 11  1  0  0  0  0
+  1 10  1  0  0  0  0
+  1  6  1  0  0  0  0
+ 11  6  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C8
+A    5
+N1
+A    6
+N3
+A    7
+O6
+A    8
+N7
+A    9
+S8
+A   10
+N9
+A   11
+C2
+A   12
+S2
+M  END
+>  <InstanceId>
+5E3D_5JL_A_801
+
+>  <ChemCompId>
+5JL
+
+>  <PdbId>
+5E3D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O S2
+
+>  <Name>
+2,8-dithioxo-1,2,3,7,8,9-hexahydro-6H-purin-6-one
+
+>  <SystematicName>
+2,8-bis(sulfanylidene)-7,9-dihydro-3H-purin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N4 O S2
+
+>  <MolecularWeight>
+200.241
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4OS2/c10-3-1-2(7-4(11)6-1)8-5(12)9-3/h(H4,6,7,8,9,10,11,12)
+
+>  <InChIKey>
+NDSUZZIWNBVBKW-UHFFFAOYSA-N
+
+>  <SMILES>
+C12=C(NC(=S)N1)NC(=S)NC2=O
+
+$$$$

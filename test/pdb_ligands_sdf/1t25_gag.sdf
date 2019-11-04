@@ -1,0 +1,114 @@
+1T25_GAG_A_337
+  RCSB PDB12061704033D
+Coordinates from PDB:1T25:A:337 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   24.4300   19.7580    5.6840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5060   19.3680    5.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0500   19.9060    3.8260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4850   20.9860    2.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3480   21.3990    3.1420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2150   21.4350    2.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2090   19.1800    3.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3850   18.2890    4.6320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3270   18.4030    5.5290   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O20
+A    2
+C2
+A    3
+C1
+A    4
+COO
+A    5
+O12
+A    6
+O11
+A    7
+C5
+A    8
+O4
+A    9
+N3
+M  END
+>  <InstanceId>
+1T25_GAG_A_337
+
+>  <ChemCompId>
+GAG
+
+>  <PdbId>
+1T25
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+337
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O4
+
+>  <Name>
+3-HYDROXYISOXAZOLE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+3-hydroxy-1,2-oxazole-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H3 N O4
+
+>  <MolecularWeight>
+129.071
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H3NO4/c6-3-2(4(7)8)1-9-5-3/h1H,(H,5,6)(H,7,8)
+
+>  <InChIKey>
+JLPHBZYAQYOJND-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c(no1)O)C(=O)O
+
+$$$$

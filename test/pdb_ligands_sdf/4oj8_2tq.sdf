@@ -1,0 +1,123 @@
+4OJ8_2TQ_B_304
+  RCSB PDB12061714043D
+Coordinates from PDB:4OJ8:B:304 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -26.7310  -13.4860   -9.0740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2200  -13.0630  -10.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0030  -12.8170  -10.3050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1060  -12.7830  -11.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8220  -14.0430  -11.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.6700  -13.8920  -13.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2450  -13.3960  -13.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4720  -12.2340  -12.4250   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0600  -11.3700  -13.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9440  -10.1500  -13.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8400  -12.3660  -14.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  9  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+N
+A    9
+CAH
+A   10
+OAB
+A   11
+CAF
+M  END
+>  <InstanceId>
+4OJ8_2TQ_B_304
+
+>  <ChemCompId>
+2TQ
+
+>  <PdbId>
+4OJ8
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+(2S,5S)-7-oxo-1-azabicyclo[3.2.0]heptane-2-carboxylic acid
+
+>  <SystematicName>
+(2S,5S)-7-oxidanylidene-1-azabicyclo[3.2.0]heptane-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N O3
+
+>  <MolecularWeight>
+155.151
+
+>  <ModifiedDate>
+2014-03-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9NO3/c9-6-3-4-1-2-5(7(10)11)8(4)6/h4-5H,1-3H2,(H,10,11)/t4-,5-/m0/s1
+
+>  <InChIKey>
+RJPDELAUUYAFTQ-WHFBIAKZSA-N
+
+>  <SMILES>
+C1C[C@H](N2[C@@H]1CC2=O)C(=O)O
+
+$$$$

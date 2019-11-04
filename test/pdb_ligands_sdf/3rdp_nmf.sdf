@@ -1,0 +1,142 @@
+3RDP_NMF_A_601
+  RCSB PDB12061710333D
+Coordinates from PDB:3RDP:A:601 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   50.2780   25.1160   53.8770   F 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8170   26.2880   55.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9450   25.3680   55.2010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8810   27.2090   56.1310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7140   25.0440   53.6890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6870   26.0800   54.5220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6230   24.8440   52.9240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7870   24.1100   53.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.3220   22.0150   51.6300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6020   23.0150   52.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9140   24.2980   54.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0980   25.6320   56.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0800   23.3380   54.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9200   23.4460   52.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0920   22.4310   52.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.5860   24.8270   52.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  5  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 15  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+F
+A    2
+C1
+A    3
+N1
+A    4
+O1
+A    5
+C2
+A    6
+N2
+A    7
+O2
+A    8
+C3
+A    9
+O3
+A   10
+C4
+A   11
+C5
+A   12
+C6
+A   13
+C11
+A   14
+C12
+A   15
+C13
+A   16
+C14
+M  END
+>  <InstanceId>
+3RDP_NMF_A_601
+
+>  <ChemCompId>
+NMF
+
+>  <PdbId>
+3RDP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3 F
+
+>  <Name>
+6-[(2R)-2-(fluoromethyl)-3-hydroxy-propyl]-1,5-dimethyl-pyrimidine-2,4-dione
+
+>  <SystematicName>
+6-[(2R)-2-(fluoromethyl)-3-hydroxy-propyl]-1,5-dimethyl-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 F N2 O3
+
+>  <MolecularWeight>
+230.236
+
+>  <ModifiedDate>
+2011-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15FN2O3/c1-6-8(3-7(4-11)5-14)13(2)10(16)12-9(6)15/h7,14H,3-5H2,1-2H3,(H,12,15,16)/t7-/m0/s1
+
+>  <InChIKey>
+OHXHFKXQCMBBKV-ZETCQYMHSA-N
+
+>  <SMILES>
+CC1=C(N(C(=O)NC1=O)C)C[C@H](CO)CF
+
+$$$$

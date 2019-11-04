@@ -1,0 +1,155 @@
+4GLX_0XS_A_603
+  RCSB PDB12061712443D
+Coordinates from PDB:4GLX:A:603 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+   27.3170    5.1160    6.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9620    4.3210    6.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7970    4.5390    5.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6240    3.9060    4.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4640    4.5940    5.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0110    4.0110    4.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8760    3.3470    3.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0340    3.2520    3.4550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5490    4.0680    4.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8580    4.8650    5.0420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6810    5.0710    7.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5110    5.8950    8.6760  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4940    2.7530    2.2670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1710    3.3180    3.7190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9400    3.9010    5.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4810    4.4460    6.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5450    5.3980    6.8760   F 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1390    3.3080    7.2280   F 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4750    4.0060    5.1880   F 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  7  1  0  0  0  0
+  7 14  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 14  4  1  0  0  0  0
+  9  6  1  0  0  0  0
+  9 10  1  0  0  0  0
+  6  5  2  0  0  0  0
+  4 15  2  0  0  0  0
+  4  3  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 19  2  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  1  2  0  0  0  0
+ 16  2  1  0  0  0  0
+ 16 11  2  0  0  0  0
+  2 17  1  0  0  0  0
+  2 18  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C4
+A    2
+C6
+A    3
+C7
+A    4
+C8
+A    5
+C12
+A    6
+C14
+A    7
+C15
+A    8
+O18
+A    9
+C16
+A   10
+N19
+A   11
+C2
+A   12
+BR1
+A   13
+N17
+A   14
+N13
+A   15
+N5
+A   16
+C3
+A   17
+F9
+A   18
+F10
+A   19
+F11
+M  END
+>  <InstanceId>
+4GLX_0XS_A_603
+
+>  <ChemCompId>
+0XS
+
+>  <PdbId>
+4GLX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+603
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O Br F3
+
+>  <Name>
+2-amino-6-bromo-7-(trifluoromethyl)-1,8-naphthyridine-3-carboxamide
+
+>  <SystematicName>
+2-azanyl-6-bromanyl-7-(trifluoromethyl)-1,8-naphthyridine-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H6 Br F3 N4 O
+
+>  <MolecularWeight>
+335.08
+
+>  <ModifiedDate>
+2012-10-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6BrF3N4O/c11-5-2-3-1-4(8(16)19)7(15)18-9(3)17-6(5)10(12,13)14/h1-2H,(H2,16,19)(H2,15,17,18)
+
+>  <InChIKey>
+CENBBVPSOFGGNG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2cc(c(nc2nc(c1C(=O)N)N)C(F)(F)F)Br
+
+$$$$

@@ -1,0 +1,130 @@
+4U6Q_3CR_A_402
+  RCSB PDB12061715033D
+Coordinates from PDB:4U6Q:A:402 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    5.0570   27.3340  -20.9910   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9370   28.5880  -20.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5090   29.2790  -21.8670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1230   29.2520  -19.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0820   28.6340  -19.4410   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4490   29.0760  -18.3950   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4920   30.6260  -19.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3570   30.7370  -18.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4670   31.5660  -18.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2750   31.6720  -17.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9720   30.9460  -16.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8630   30.1130  -16.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0550   30.0110  -17.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+N05
+A    6
+O06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+M  END
+>  <InstanceId>
+4U6Q_3CR_A_402
+
+>  <ChemCompId>
+3CR
+
+>  <PdbId>
+4U6Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+(2E)-2-(hydroxyimino)-3-phenylpropanoic acid
+
+>  <SystematicName>
+(2E)-2-hydroxyimino-3-phenyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O3
+
+>  <MolecularWeight>
+179.173
+
+>  <ModifiedDate>
+2015-02-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO3/c11-9(12)8(10-13)6-7-4-2-1-3-5-7/h1-5,13H,6H2,(H,11,12)/b10-8+
+
+>  <InChIKey>
+PNTMGOUAICFJQK-CSKARUKUSA-N
+
+>  <SMILES>
+c1ccc(cc1)C/C(=N\O)/C(=O)O
+
+$$$$

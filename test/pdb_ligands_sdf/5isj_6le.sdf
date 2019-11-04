@@ -1,0 +1,122 @@
+5ISJ_6LE_A_402
+  RCSB PDB12061718143D
+Coordinates from PDB:5ISJ:A:402 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    0.8270    8.9290    7.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0600    9.4840    8.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9360    8.9060    9.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5500    7.7570    9.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5070   10.9680    7.4470  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4590    7.7760    8.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3040    7.1830    9.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8350    6.0020   10.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5600    6.4190   11.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8860    4.9000   10.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9670    4.1170    9.1570   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  7  2  0  0  0  0
+  3  4  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  7  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+CL
+A    6
+C3
+A    7
+C2
+A    8
+C1
+A    9
+O
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+5ISJ_6LE_A_402
+
+>  <ChemCompId>
+6LE
+
+>  <PdbId>
+5ISJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O Cl
+
+>  <Name>
+(1S)-2-amino-1-(4-chlorophenyl)ethan-1-ol
+
+>  <SystematicName>
+(1~{S})-2-azanyl-1-(4-chlorophenyl)ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 Cl N O
+
+>  <MolecularWeight>
+171.624
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10ClNO/c9-7-3-1-6(2-4-7)8(11)5-10/h1-4,8,11H,5,10H2/t8-/m1/s1
+
+>  <InChIKey>
+QPHAZZJNYDEVHL-MRVPVSSYSA-N
+
+>  <SMILES>
+c1cc(ccc1[C@@H](CN)O)Cl
+
+$$$$

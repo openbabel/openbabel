@@ -1,0 +1,147 @@
+5EVA_5S9_A_801
+  RCSB PDB12061717333D
+Coordinates from PDB:5EVA:A:801 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    8.7980  -11.2810    8.3030   F 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1400  -10.1150    8.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8740   -9.3440    9.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2000   -8.1360    9.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9460   -7.3790   10.2790   F 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7890   -7.6970    7.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0580   -8.4660    6.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7230   -9.6880    6.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0330  -10.4970    5.8430   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1700  -10.6760    4.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0660  -10.1300    4.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6050  -11.4860    3.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8540  -11.9150    3.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8570  -12.6680    2.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6170  -12.6760    2.0830   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8910  -11.9830    2.7980   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4600  -11.8380    2.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 16 12  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  2  1  0  0  0  0
+  6  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+FAD
+A    2
+CAN
+A    3
+CAI
+A    4
+CAM
+A    5
+FAC
+A    6
+CAG
+A    7
+CAH
+A    8
+CAO
+A    9
+NAK
+A   10
+CAL
+A   11
+OAB
+A   12
+CAP
+A   13
+CAF
+A   14
+CAE
+A   15
+NAJ
+A   16
+NAQ
+A   17
+CAA
+M  END
+>  <InstanceId>
+5EVA_5S9_A_801
+
+>  <ChemCompId>
+5S9
+
+>  <PdbId>
+5EVA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O F2
+
+>  <Name>
+~{N}-[2,4-bis(fluoranyl)phenyl]-2-methyl-pyrazole-3-carboxamide
+
+>  <SystematicName>
+~{N}-[2,4-bis(fluoranyl)phenyl]-2-methyl-pyrazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 F2 N3 O
+
+>  <MolecularWeight>
+237.205
+
+>  <ModifiedDate>
+2016-06-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9F2N3O/c1-16-10(4-5-14-16)11(17)15-9-3-2-7(12)6-8(9)13/h2-6H,1H3,(H,15,17)
+
+>  <InChIKey>
+IHVMTGWVPFOMFY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1c(ccn1)C(=O)Nc2ccc(cc2F)F
+
+$$$$

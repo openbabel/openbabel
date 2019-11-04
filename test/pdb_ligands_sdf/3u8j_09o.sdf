@@ -1,0 +1,131 @@
+3U8J_09O_B_211
+  RCSB PDB12061711013D
+Coordinates from PDB:3U8J:B:211 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    3.7060   18.3200   37.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5620   18.8070   36.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5780   17.8000   36.3150   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8930   17.9220   37.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9100   17.5160   38.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7150   18.0200   39.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4430   17.4530   38.8370   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5700   13.9780   40.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8470   14.8870   39.4650   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4990   16.0000   39.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8830   16.2870   39.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6090   15.3110   39.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9380   14.1500   40.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  2  1  1  0  0  0  0
+  7  1  1  0  0  0  0
+  7 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13  8  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N1
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+N2
+A    8
+C6
+A    9
+N3
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+C10
+M  END
+>  <InstanceId>
+3U8J_09O_B_211
+
+>  <ChemCompId>
+09O
+
+>  <PdbId>
+3U8J
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+211
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3
+
+>  <Name>
+1-(pyridin-3-yl)-1,4-diazepane
+
+>  <SystematicName>
+1-pyridin-3-yl-1,4-diazepane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N3
+
+>  <MolecularWeight>
+177.246
+
+>  <ModifiedDate>
+2011-12-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N3/c1-3-10(9-12-4-1)13-7-2-5-11-6-8-13/h1,3-4,9,11H,2,5-8H2
+
+>  <InChIKey>
+JBOVXXZNZSULJJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cnc1)N2CCCNCC2
+
+$$$$

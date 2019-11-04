@@ -1,0 +1,149 @@
+2FZC_EOP_A_811
+  RCSB PDB12061705373D
+Coordinates from PDB:2FZC:A:811 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   43.9000   28.8450   19.8860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0640   29.7360   19.2190   P 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9990   31.1810   19.9280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3990   29.1130   19.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6130   29.9730   17.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1100   29.9490   17.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5070   30.9910   16.9300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5660   28.7380   17.1040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1560   28.4780   16.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2370   28.4380   17.9790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5550   29.7360   18.0740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3290   30.4010   19.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8590   31.5390   19.2290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8080   29.7370   20.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4480   30.3720   20.9160   P 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1920   31.5600   21.9730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0120   31.0590   19.5720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3530   29.3250   21.4400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 18  2  0  0  0  0
+A    1
+OAD
+A    2
+PAR
+A    3
+OAH
+A    4
+OAG
+A    5
+CAL
+A    6
+CAP
+A    7
+OAB
+A    8
+NAN
+A    9
+CAJ
+A   10
+CAI
+A   11
+NAM
+A   12
+CAO
+A   13
+OAA
+A   14
+CAK
+A   15
+PAQ
+A   16
+OAF
+A   17
+OAE
+A   18
+OAC
+M  END
+>  <InstanceId>
+2FZC_EOP_A_811
+
+>  <ChemCompId>
+EOP
+
+>  <PdbId>
+2FZC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+811
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O8 P2
+
+>  <Name>
+{ETHANE-1,2-DIYLBIS[IMINO(2-OXOETHANE-2,1-DIYL)]}BIS(PHOSPHONIC ACID)
+
+>  <SystematicName>
+[2-oxo-2-[2-(2-phosphonoethanoylamino)ethylamino]ethyl]phosphonic acid
+
+>  <Synonyms>
+2,2'-(ETHANE-1,2-DIYLBIS(AZANEDIYL))BIS(2-OXOETHANE-2,1DIYL)DIPHOSPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 N2 O8 P2
+
+>  <MolecularWeight>
+304.131
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N2O8P2/c9-5(3-17(11,12)13)7-1-2-8-6(10)4-18(14,15)16/h1-4H2,(H,7,9)(H,8,10)(H2,11,12,13)(H2,14,15,16)
+
+>  <InChIKey>
+RPUNQQORCLHWTD-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CNC(=O)CP(=O)(O)O)NC(=O)CP(=O)(O)O
+
+$$$$

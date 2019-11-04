@@ -1,0 +1,123 @@
+4JMZ_1M2_A_302
+  RCSB PDB12061713123D
+Coordinates from PDB:4JMZ:A:302 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   30.1440   88.6570   42.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1160   89.4720   42.6390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3230   89.9920   43.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4920   89.9580   44.7140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2500   90.5350   45.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0940   90.7510   47.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5550   91.3810   48.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2050   91.7500   48.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3750   91.5030   47.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9250   90.9050   45.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3730   90.5690   44.7460   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  2  0  0  0  0
+  4  5  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  5 10  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  9  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C01
+A    2
+N02
+A    3
+C03
+A    4
+N04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+N11
+M  END
+>  <InstanceId>
+4JMZ_1M2_A_302
+
+>  <ChemCompId>
+1M2
+
+>  <PdbId>
+4JMZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3
+
+>  <Name>
+N-methyl-1H-benzimidazol-2-amine
+
+>  <SystematicName>
+N-methyl-1H-benzimidazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N3
+
+>  <MolecularWeight>
+147.177
+
+>  <ModifiedDate>
+2013-04-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9N3/c1-9-8-10-6-4-2-3-5-7(6)11-8/h2-5H,1H3,(H2,9,10,11)
+
+>  <InChIKey>
+ALBBQFWHUCTZFM-UHFFFAOYSA-N
+
+>  <SMILES>
+CNc1[nH]c2ccccc2n1
+
+$$$$

@@ -1,0 +1,121 @@
+1PCK_PEZ_A_1268
+  RCSB PDB12061703383D
+Coordinates from PDB:1PCK:A:1268 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   33.0780   52.2730   23.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2950   51.7290   22.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1100   51.8470   22.5090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0580   50.9240   21.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0810   50.3920   20.4900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1890   49.4440   19.2150   P 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6730   48.1570   19.6950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8750   50.2400   18.1430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6960   49.2880   18.7870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3900   50.7000   21.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4060   50.0400   20.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+O2'
+A    4
+C2
+A    5
+O2
+A    6
+P
+A    7
+O1P
+A    8
+O2P
+A    9
+O3P
+A   10
+C3
+A   11
+C4
+M  END
+>  <InstanceId>
+1PCK_PEZ_A_1268
+
+>  <ChemCompId>
+PEZ
+
+>  <PdbId>
+1PCK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1268
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O6 P
+
+>  <Name>
+2-(PHOSPHONOOXY)BUTANOIC ACID
+
+>  <SystematicName>
+2-phosphonooxybutanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H9 O6 P
+
+>  <MolecularWeight>
+184.084
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H9O6P/c1-2-3(4(5)6)10-11(7,8)9/h3H,2H2,1H3,(H,5,6)(H2,7,8,9)/t3-/m1/s1
+
+>  <InChIKey>
+OETAGSCBSKODFW-GSVOUGTGSA-N
+
+>  <SMILES>
+CCC(C(=O)O)OP(=O)(O)O
+
+$$$$

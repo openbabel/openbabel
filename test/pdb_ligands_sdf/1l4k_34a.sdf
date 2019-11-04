@@ -1,0 +1,114 @@
+1L4K_34A_A_990
+  RCSB PDB12061703093D
+Coordinates from PDB:1L4K:A:990 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   56.1860   41.4630   13.9910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3840   42.1780   13.6180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9610   41.9430   12.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0930   42.6050   11.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7110   43.5230   12.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.1390   43.7650   14.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9630   43.0690   14.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9710   44.2490   12.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7970   44.7560   15.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+M  END
+>  <InstanceId>
+1L4K_34A_A_990
+
+>  <ChemCompId>
+34A
+
+>  <PdbId>
+1L4K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+990
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N
+
+>  <Name>
+3,4-DIMETHYLANILINE
+
+>  <SystematicName>
+3,4-dimethylaniline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N
+
+>  <MolecularWeight>
+121.18
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N/c1-6-3-4-8(9)5-7(6)2/h3-5H,9H2,1-2H3
+
+>  <InChIKey>
+DOLQYFPDPKPQSS-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(cc1C)N
+
+$$$$

@@ -1,0 +1,144 @@
+3GFN_SQO_A_400
+  RCSB PDB12061708443D
+Coordinates from PDB:3GFN:A:400 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   17.4010   17.1830   23.9490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8870   16.8480   22.1820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8810   17.1590   21.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1730   17.5170   21.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4600   17.4940   23.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1690   17.8640   20.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8280   17.8200   19.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5450   17.1720   19.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4800   18.1800   18.2340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6380   18.0150   17.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1480   16.8790   23.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5400   17.5160   18.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4490   17.6370   17.5730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1030   18.2450   15.9010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5280   17.8610   23.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2170   18.3480   14.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5 15  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+N1
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+C10
+A    9
+N12
+A   10
+C13
+A   11
+C2
+A   12
+C9
+A   13
+N14
+A   14
+N15
+A   15
+O16
+A   16
+C25
+M  END
+>  <InstanceId>
+3GFN_SQO_A_400
+
+>  <ChemCompId>
+SQO
+
+>  <PdbId>
+3GFN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+7
+
+>  <ObservedFormula>
+C10 N5 O
+
+>  <Name>
+2-{[2-(4-Morpholinyl)ethyl]amino}-1,7-dihydro-8H-imidazo[4,5-g]quinazolin-8-one
+
+>  <SystematicName>
+2-(2-morpholin-4-ylethylamino)-1,7-dihydropyrimido[6,5-f]benzimidazol-8-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H18 N6 O2
+
+>  <MolecularWeight>
+314.342
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H18N6O2/c22-14-10-7-12-13(8-11(10)17-9-18-14)20-15(19-12)16-1-2-21-3-5-23-6-4-21/h7-9H,1-6H2,(H2,16,19,20)(H,17,18,22)
+
+>  <InChIKey>
+IQPSZZDLHUVVGO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c(cc3c1[nH]c(n3)NCCN4CCOCC4)N=CNC2=O
+
+$$$$

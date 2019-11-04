@@ -1,0 +1,135 @@
+5K8P_6R8_A_502
+  RCSB PDB12061718343D
+Coordinates from PDB:5K8P:A:502 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -36.5950  -23.4850  -74.5640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.7440  -22.8340  -75.4050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5450  -22.1410  -76.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3550  -20.9060  -76.2850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.9930  -23.0370  -75.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.9570  -23.9930  -76.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.7310  -24.4950  -77.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.4660  -24.4280  -78.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.5030  -23.5400  -77.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.7450  -22.8170  -76.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2480  -25.0000  -79.7140   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -35.0600  -25.6490  -80.0120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2260  -24.9420  -80.7440   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -37.7070  -21.8010  -75.6950   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+ 14  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3 10  1  0  0  0  0
+ 10  5  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  5  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8 11  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+M  CHG  2  11   1  13  -1
+A    1
+O14
+A    2
+O11
+A    3
+C10
+A    4
+O12
+A    5
+C01
+A    6
+C02
+A    7
+C03
+A    8
+C04
+A    9
+C05
+A   10
+C06
+A   11
+N07
+A   12
+O08
+A   13
+O09
+A   14
+N13
+M  END
+>  <InstanceId>
+5K8P_6R8_A_502
+
+>  <ChemCompId>
+6R8
+
+>  <PdbId>
+5K8P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O5
+
+>  <Name>
+(6~{R})-6-azanyl-3-nitro-6-oxidanyl-cyclohexa-1,3-diene-1-carboxylic acid
+
+>  <SystematicName>
+(6~{R})-6-azanyl-3-nitro-6-oxidanyl-cyclohexa-1,3-diene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N2 O5
+
+>  <MolecularWeight>
+200.149
+
+>  <ModifiedDate>
+2016-09-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N2O5/c8-7(12)2-1-4(9(13)14)3-5(7)6(10)11/h1,3,12H,2,8H2,(H,10,11)/t7-/m1/s1
+
+>  <InChIKey>
+YMJMMSMKJXYRPV-SSDOTTSWSA-N
+
+>  <SMILES>
+C1C=C(C=C([C@]1(N)O)C(=O)O)[N+](=O)[O-]
+
+$$$$

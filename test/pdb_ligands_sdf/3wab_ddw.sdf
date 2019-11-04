@@ -1,0 +1,125 @@
+3WAB_DDW_A_403
+  RCSB PDB12061711203D
+Coordinates from PDB:3WAB:A:403 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+    4.3240  -14.8920    0.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5370  -16.0260   -0.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3300  -16.9650   -0.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1940  -17.6400    0.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4450  -18.4690    0.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4590  -13.9590    0.1720   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2030  -19.3430    2.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9110  -18.4850    3.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9030  -18.0460    3.9640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7320  -18.4770    3.7510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4280  -20.2160    2.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2140  -21.2200    3.8980   S 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+N1
+A    7
+C7
+A    8
+C10
+A    9
+O12
+A   10
+O11
+A   11
+C8
+A   12
+S9
+M  END
+>  <InstanceId>
+3WAB_DDW_A_403
+
+>  <ChemCompId>
+DDW
+
+>  <PdbId>
+3WAB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2 S
+
+>  <Name>
+(2R)-7-amino-2-(sulfanylmethyl)heptanoic acid
+
+>  <SystematicName>
+(2R)-7-azanyl-2-(sulfanylmethyl)heptanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O2 S
+
+>  <MolecularWeight>
+191.291
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO2S/c9-5-3-1-2-4-7(6-12)8(10)11/h7,12H,1-6,9H2,(H,10,11)/t7-/m0/s1
+
+>  <InChIKey>
+OWVFNXQLXNWAHW-ZETCQYMHSA-N
+
+>  <SMILES>
+C(CC[C@@H](CS)C(=O)O)CCN
+
+$$$$

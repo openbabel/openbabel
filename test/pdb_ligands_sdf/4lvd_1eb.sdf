@@ -1,0 +1,140 @@
+4LVD_1EB_B_603
+  RCSB PDB12061713383D
+Coordinates from PDB:4LVD:B:603 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   15.4780  -17.0240    2.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9780  -17.3510    3.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3020  -16.9780    4.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1140  -16.2830    4.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6130  -15.9520    3.2730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2740  -16.3290    2.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7060  -15.9280    0.8820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3700  -15.8090   -0.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5510  -16.0940   -0.4340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6020  -15.2890   -1.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0830  -13.9350   -2.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2720  -15.1900   -2.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8560  -17.3400    5.9280   N 0  3  0  0  0  0  0  0  0  0  0  0
+   16.8790  -18.0020    5.9870   O 0  5  0  0  0  0  0  0  0  0  0  0
+   15.3000  -16.9720    6.9480   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  6  2  0  0  0  0
+  2  1  2  0  0  0  0
+  6  1  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+M  CHG  2  13   1  14  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+O9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+4LVD_1EB_B_603
+
+>  <ChemCompId>
+1EB
+
+>  <PdbId>
+4LVD
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+603
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3
+
+>  <Name>
+N-(4-nitrophenyl)cyclopropanecarboxamide
+
+>  <SystematicName>
+N-(4-nitrophenyl)cyclopropanecarboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O3
+
+>  <MolecularWeight>
+206.198
+
+>  <ModifiedDate>
+2013-09-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O3/c13-10(7-1-2-7)11-8-3-5-9(6-4-8)12(14)15/h3-7H,1-2H2,(H,11,13)
+
+>  <InChIKey>
+PXCMXAOVWGQBSS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1NC(=O)C2CC2)[N+](=O)[O-]
+
+$$$$

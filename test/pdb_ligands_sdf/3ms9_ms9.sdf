@@ -1,0 +1,126 @@
+3MS9_MS9_A_516
+  RCSB PDB12061709483D
+Coordinates from PDB:3MS9:A:516 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    0.7270   59.3390   30.6650  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0090   59.5870   30.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5350   60.7680   31.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9460   61.0210   31.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8140   59.9850   30.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2540   58.7330   30.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8400   58.5370   30.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3180   60.1280   30.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7870   61.2060   31.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0540   59.0040   30.3850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4530   59.3670   30.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3820   62.2270   31.6190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  7  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4 12  1  0  0  0  0
+  6  5  2  0  0  0  0
+  5  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+CL1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C9
+A    8
+C11
+A    9
+O12
+A   10
+O13
+A   11
+C14
+A   12
+N18
+M  END
+>  <InstanceId>
+3MS9_MS9_A_516
+
+>  <ChemCompId>
+MS9
+
+>  <PdbId>
+3MS9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+516
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2 Cl
+
+>  <Name>
+methyl 2-amino-4-chlorobenzoate
+
+>  <SystematicName>
+methyl 2-azanyl-4-chloro-benzoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 Cl N O2
+
+>  <MolecularWeight>
+185.608
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8ClNO2/c1-12-8(11)6-3-2-5(9)4-7(6)10/h2-4H,10H2,1H3
+
+>  <InChIKey>
+YPSSCICDVDOEAI-UHFFFAOYSA-N
+
+>  <SMILES>
+COC(=O)c1ccc(cc1N)Cl
+
+$$$$

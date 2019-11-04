@@ -1,0 +1,98 @@
+3R5Q_FU1_A_596
+  RCSB PDB12061710313D
+Coordinates from PDB:3R5Q:A:596 Model:1 without hydrogens
+  5  5  0  0  0  0            999 V2000
+    5.6890    2.7300   26.3690   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4910    3.1590   28.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3240    4.3830   28.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7620    2.1430   27.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0620    4.0540   26.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  3  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+M  END
+>  <InstanceId>
+3R5Q_FU1_A_596
+
+>  <ChemCompId>
+FU1
+
+>  <PdbId>
+3R5Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+596
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O
+
+>  <Name>
+tetrahydrofuran
+
+>  <SystematicName>
+oxolane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O
+
+>  <MolecularWeight>
+72.106
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O/c1-2-4-5-3-1/h1-4H2
+
+>  <InChIKey>
+WYURNTSHIVDZCO-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCOC1
+
+$$$$

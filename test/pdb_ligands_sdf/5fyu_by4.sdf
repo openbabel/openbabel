@@ -1,0 +1,127 @@
+5FYU_BY4_A_1774
+  RCSB PDB12061717463D
+Coordinates from PDB:5FYU:A:1774 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   88.4020   60.3220   13.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.3030   61.3510   12.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.3050   61.0830   11.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.2810   62.0340   11.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.2400   63.2540   12.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.2540   63.5140   13.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2860   62.5700   13.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.1690   63.1210   14.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.6460   64.4550   14.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.4820   64.6930   14.1470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   88.0730   65.2160   15.7640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   89.5810   62.9250   14.7260   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+N10
+A   11
+O11
+A   12
+N12
+M  END
+>  <InstanceId>
+5FYU_BY4_A_1774
+
+>  <ChemCompId>
+BY4
+
+>  <PdbId>
+5FYU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1774
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+(3R)-3-azanyl-4-methyl-1,3-dihydroindol-2-one
+
+>  <SystematicName>
+(3R)-3-azanyl-4-methyl-1,3-dihydroindol-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H10 N2 O
+
+>  <MolecularWeight>
+162.188
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N2O/c1-5-3-2-4-6-7(5)8(10)9(12)11-6/h2-4,8H,10H2,1H3,(H,11,12)/t8-/m1/s1
+
+>  <InChIKey>
+DXMQUOQQGLIRSR-MRVPVSSYSA-N
+
+>  <SMILES>
+Cc1cccc2c1[C@H](C(=O)N2)N
+
+$$$$

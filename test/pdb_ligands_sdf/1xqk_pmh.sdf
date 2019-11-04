@@ -1,0 +1,167 @@
+1XQK_PMH_A_501
+  RCSB PDB12061704403D
+Coordinates from PDB:1XQK:A:501 Model:1 without hydrogens
+ 22 23  0  0  0  0            999 V2000
+   90.7510   11.9510   47.9260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.9870   11.2500   49.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.3910   11.9750   50.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.8450    9.8170   49.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.0750    9.1260   50.1810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   90.4620    9.1510   47.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.2790    7.6670   47.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.2120    9.9540   46.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.3750   11.3630   46.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.7590    9.3410   45.3550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.4480    8.8290   45.6150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   87.7680    8.0750   44.3970   P 0  0  0  0  0  0  0  0  0  0  0  0
+   88.6840    6.6100   43.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.1200    7.6510   44.8520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   87.7290    9.1330   43.0020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9770    7.2530   48.2930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9080    6.0190   48.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.4460    5.6870   50.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.2150    6.4970   50.9160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9800    4.5310   50.5550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   88.2070    4.0310   49.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   88.1480    4.9520   48.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 16  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 22  2  0  0  0  0
+ 18 19  1  0  0  0  0
+ 18 20  2  0  0  0  0
+ 20 21  1  0  0  0  0
+ 21 22  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C2A
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+C4A
+A    8
+C5
+A    9
+C6
+A   10
+C5A
+A   11
+O4P
+A   12
+P
+A   13
+O1P
+A   14
+O2P
+A   15
+O3P
+A   16
+N
+A   17
+CA
+A   18
+C
+A   19
+O
+A   20
+ND
+A   21
+OG
+A   22
+CB
+M  END
+>  <InstanceId>
+1XQK_PMH_A_501
+
+>  <ChemCompId>
+PMH
+
+>  <PdbId>
+1XQK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O7 P
+
+>  <Name>
+(5-HYDROXY-4-{[(3-HYDROXYISOXAZOL-4-YL)AMINO]METHYL}-6-METHYLPYRIDIN-3-YL)METHYL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+[5-hydroxy-4-[[(3-hydroxy-1,2-oxazol-4-yl)amino]methyl]-6-methyl-pyridin-3-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+PMP-HYDROXYISOXAZOLE, PYRIDOXAMINE-5-PHOSPHATE-HYDROXYISOXAZOLE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 N3 O7 P
+
+>  <MolecularWeight>
+331.219
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14N3O7P/c1-6-10(15)8(3-13-9-5-20-14-11(9)16)7(2-12-6)4-21-22(17,18)19/h2,5,13,15H,3-4H2,1H3,(H,14,16)(H2,17,18,19)
+
+>  <InChIKey>
+PXWFNGNWQUPGPJ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)COP(=O)(O)O)CNc2conc2O)O
+
+$$$$

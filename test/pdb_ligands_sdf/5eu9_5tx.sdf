@@ -1,0 +1,130 @@
+5EU9_5TX_A_502
+  RCSB PDB12061717323D
+Coordinates from PDB:5EU9:A:502 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -52.4530   10.1100  -23.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.3990   10.6590  -22.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.3090   11.8820  -22.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.4300   12.2600  -23.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.1420   11.4630  -21.6970   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.9710   12.7130  -21.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.5140   10.4050  -22.7060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -54.9520   10.8820  -20.3340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.8140   12.9530  -21.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.9400   13.2640  -24.2090   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.9940   11.2510  -24.5080   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.0990    9.9850  -24.2220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.0220   11.2490  -25.8750   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11  1  1  0  0  0  0
+ 11  4  1  0  0  0  0
+ 12  1  1  0  0  0  0
+ 10  4  2  0  0  0  0
+  1  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  7  5  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+P05
+A    6
+O06
+A    7
+O07
+A    8
+O08
+A    9
+C09
+A   10
+O10
+A   11
+N12
+A   12
+O13
+A   13
+O11
+M  END
+>  <InstanceId>
+5EU9_5TX_A_502
+
+>  <ChemCompId>
+5TX
+
+>  <PdbId>
+5EU9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O6 P
+
+>  <Name>
+((3S,5S)-1,5-dihydroxy-3-methyl-2-oxopyrrolidin-3-yl)phosphonic acid
+
+>  <SystematicName>
+[(3~{S},5~{S})-3-methyl-1,5-bis(oxidanyl)-2-oxidanylidene-pyrrolidin-3-yl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 N O6 P
+
+>  <MolecularWeight>
+211.11
+
+>  <ModifiedDate>
+2016-11-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10NO6P/c1-5(13(10,11)12)2-3(7)6(9)4(5)8/h3,7,9H,2H2,1H3,(H2,10,11,12)/t3-,5-/m0/s1
+
+>  <InChIKey>
+VVBLYPMICKYZTP-UCORVYFPSA-N
+
+>  <SMILES>
+C[C@@]1(C[C@@H](N(C1=O)O)O)P(=O)(O)O
+
+$$$$

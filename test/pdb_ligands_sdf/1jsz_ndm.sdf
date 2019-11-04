@@ -1,0 +1,132 @@
+1JSZ_NDM_A_600
+  RCSB PDB12061702593D
+Coordinates from PDB:1JSZ:A:600 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   17.3730   10.2110   22.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0310   11.6560   21.9680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5590   12.4560   20.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3920   11.9210   20.0100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7860   12.9050   19.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5880   12.5780   18.1400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3790   14.2530   19.3060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4800   14.7650   20.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8930   16.0920   20.3080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0940   13.7510   21.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2510   13.8350   22.3050   N 0  3  0  0  0  0  0  0  0  0  0  0
+   15.3450   14.8910   22.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2410   12.4470   22.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+M  CHG  1  11   1
+A    1
+CN9
+A    2
+N9
+A    3
+C4
+A    4
+N3
+A    5
+C2
+A    6
+N2
+A    7
+N1
+A    8
+C6
+A    9
+O6
+A   10
+C5
+A   11
+N7
+A   12
+CN7
+A   13
+C8
+M  END
+>  <InstanceId>
+1JSZ_NDM_A_600
+
+>  <ChemCompId>
+NDM
+
+>  <PdbId>
+1JSZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O
+
+>  <Name>
+7,9-DIMETHYLGUANINE
+
+>  <SystematicName>
+2-amino-7,9-dimethyl-1,2,3,6-tetrahydropurin-7-ium-6-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H14 N5 O
+
+>  <MolecularWeight>
+184.219
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14N5O/c1-11-3-12(2)5-4(11)6(13)10-7(8)9-5/h3,6-7,9-10,13H,8H2,1-2H3/q+1/t6-,7+/m0/s1
+
+>  <InChIKey>
+UCYXILDOFXGENE-NKWVEPMBSA-N
+
+>  <SMILES>
+Cn1c[n+](c2c1NC(NC2O)N)C
+
+$$$$

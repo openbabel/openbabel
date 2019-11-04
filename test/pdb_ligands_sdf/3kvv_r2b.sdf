@@ -1,0 +1,114 @@
+3KVV_R2B_A_256
+  RCSB PDB12061709313D
+Coordinates from PDB:3KVV:A:256 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   98.0470   13.6960  -46.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.1400   13.0750  -45.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   96.7840   11.7530  -46.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.2100   10.7340  -45.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.6720   11.1370  -44.0780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   97.4890   11.5530  -47.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.5110   11.2930  -48.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   98.1130   12.8930  -47.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.6610   13.2800  -49.0970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1'
+A    2
+O4'
+A    3
+C4'
+A    4
+C5'
+A    5
+O5'
+A    6
+C3'
+A    7
+O3'
+A    8
+C2'
+A    9
+O2'
+M  END
+>  <InstanceId>
+3KVV_R2B_A_256
+
+>  <ChemCompId>
+R2B
+
+>  <PdbId>
+3KVV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+256
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+1,4-anhydro-D-erythro-pent-1-enitol
+
+>  <SystematicName>
+(2R,3R)-2-(hydroxymethyl)-2,3-dihydrofuran-3,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C5 H8 O4
+
+>  <MolecularWeight>
+132.115
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8O4/c6-1-4-5(8)3(7)2-9-4/h2,4-8H,1H2/t4-,5+/m1/s1
+
+>  <InChIKey>
+WGCMRWDTTZWXPL-UHNVWZDZSA-N
+
+>  <SMILES>
+C1=C([C@@H]([C@H](O1)CO)O)O
+
+$$$$

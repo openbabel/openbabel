@@ -1,0 +1,127 @@
+3IME_BZ2_A_301
+  RCSB PDB12061709053D
+Coordinates from PDB:3IME:A:301 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   15.3390   12.9190    3.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7680   11.0450    2.4290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8440    9.1690    8.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9770    7.9680    8.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0620   10.3450    8.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3200    7.9390    6.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6790   11.3020    5.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8910    9.4210    4.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3550   11.6630    3.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9560   10.7940    4.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4080   10.3210    6.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5400    9.1220    5.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  1  1  0  0  0  0
+  2  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  5  3  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 11  5  2  0  0  0  0
+ 12  6  2  0  0  0  0
+ 10  7  2  0  0  0  0
+  7 11  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+OAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+M  END
+>  <InstanceId>
+3IME_BZ2_A_301
+
+>  <ChemCompId>
+BZ2
+
+>  <PdbId>
+3IME
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+1-benzofuran-2-carboxylic acid
+
+>  <SystematicName>
+1-benzofuran-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 O3
+
+>  <MolecularWeight>
+162.142
+
+>  <ModifiedDate>
+2011-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6O3/c10-9(11)8-5-6-3-1-2-4-7(6)12-8/h1-5H,(H,10,11)
+
+>  <InChIKey>
+OFFSPAZVIVZPHU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)cc(o2)C(=O)O
+
+$$$$

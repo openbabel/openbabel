@@ -1,0 +1,143 @@
+4YQC_EFW_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YQC:A:301 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  -21.2600   40.7720   -8.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1410   40.4690   -9.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8970   42.2660   -7.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1240   41.6960   -7.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9390   41.0890   -8.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2590   42.0910   -6.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6030   40.0310  -11.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7880   40.2320  -12.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8110   40.9170  -11.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9630   40.1300  -10.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2360   40.6090  -13.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8040   41.9820   -7.8420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0240   43.2340   -5.7790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7750   40.8080   -9.5710   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2900   41.4340   -6.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9190   39.4730  -13.6730   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16 11  1  0  0  0  0
+ 11  8  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 14  5  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  1  1  0  0  0  0
+  5 12  1  0  0  0  0
+  1  4  2  0  0  0  0
+ 12  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6 15  2  0  0  0  0
+  6 13  1  0  0  0  0
+A    1
+C5
+A    2
+C6
+A    3
+C16
+A    4
+C4
+A    5
+C7
+A    6
+C2
+A    7
+C10
+A    8
+C11
+A    9
+C14
+A   10
+C9
+A   11
+C12
+A   12
+N15
+A   13
+N1
+A   14
+N8
+A   15
+O3
+A   16
+O13
+M  END
+>  <InstanceId>
+4YQC_EFW_A_301
+
+>  <ChemCompId>
+EFW
+
+>  <PdbId>
+4YQC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2
+
+>  <Name>
+6-{[(1R,3R)-3-hydroxycyclopentyl]amino}pyridine-3-carboxamide
+
+>  <SystematicName>
+6-[[(1R,3R)-3-oxidanylcyclopentyl]amino]pyridine-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 N3 O2
+
+>  <MolecularWeight>
+221.256
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15N3O2/c12-11(16)7-1-4-10(13-6-7)14-8-2-3-9(15)5-8/h1,4,6,8-9,15H,2-3,5H2,(H2,12,16)(H,13,14)/t8-,9-/m1/s1
+
+>  <InChIKey>
+PLJXPUZSPCVRPI-RKDXNWHRSA-N
+
+>  <SMILES>
+c1cc(ncc1C(=O)N)N[C@@H]2CC[C@H](C2)O
+
+$$$$

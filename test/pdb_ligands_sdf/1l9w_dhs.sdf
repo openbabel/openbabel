@@ -1,0 +1,123 @@
+1L9W_DHS_A_301
+  RCSB PDB12061703103D
+Coordinates from PDB:1L9W:A:301 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   35.3830   81.5290    2.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5070   79.7390    1.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8910   78.6680    2.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0540   79.4180    3.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9530   80.5080    3.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1510   83.0030    3.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7810   81.0730    1.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6380   78.0660    1.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2570   78.4720    3.8940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0910   83.6920    3.4730   O 0  5  0  0  0  0  0  0  0  0  0  0
+   34.1000   83.2000    3.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6 11  2  0  0  0  0
+M  CHG  1  10  -1
+A    1
+C1
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C2
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+M  END
+>  <InstanceId>
+1L9W_DHS_A_301
+
+>  <ChemCompId>
+DHS
+
+>  <PdbId>
+1L9W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 O4
+
+>  <Name>
+3-AMINO-4,5-DIHYDROXY-CYCLOHEX-1-ENECARBOXYLATE
+
+>  <SystematicName>
+(4R,5R)-3-amino-4,5-dihydroxy-cyclohexene-1-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 N O4
+
+>  <MolecularWeight>
+172.159
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO4/c8-4-1-3(7(11)12)2-5(9)6(4)10/h1,4-6,9-10H,2,8H2,(H,11,12)/p-1/t4-,5+,6+/m0/s1
+
+>  <InChIKey>
+WPZSUTUAATWRPU-KVQBGUIXSA-M
+
+>  <SMILES>
+C1[C@H]([C@@H](C(C=C1C(=O)[O-])N)O)O
+
+$$$$

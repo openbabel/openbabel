@@ -1,0 +1,131 @@
+1AJN_AAN_B_559
+  RCSB PDB12061701593D
+Coordinates from PDB:1AJN:B:559 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   13.9920   37.8040   36.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8720   36.3160   36.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8420   36.0860   34.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0210   36.6710   33.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9730   36.5260   32.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8990   35.7310   33.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1470   35.5500   32.3480   N 0  3  0  0  0  0  0  0  0  0  0  0
+   10.4890   36.2740   31.1760   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0250   34.7280   32.6160   O 0  5  0  0  0  0  0  0  0  0  0  0
+   10.7210   35.0520   34.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7420   35.2890   35.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6010   38.1410   37.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5040   38.7610   35.8060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+M  CHG  2   7   1   9  -1
+A    1
+C1
+A    2
+C2
+A    3
+C1'
+A    4
+C2'
+A    5
+C3'
+A    6
+C4'
+A    7
+N4'
+A    8
+O3'
+A    9
+O4'
+A   10
+C5'
+A   11
+C6'
+A   12
+O1
+A   13
+O2
+M  END
+>  <InstanceId>
+1AJN_AAN_B_559
+
+>  <ChemCompId>
+AAN
+
+>  <PdbId>
+1AJN
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+559
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4
+
+>  <Name>
+2-(4-NITROPHENYL)ACETIC ACID
+
+>  <SystematicName>
+2-(4-nitrophenyl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O4
+
+>  <MolecularWeight>
+181.145
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO4/c10-8(11)5-6-1-3-7(4-2-6)9(12)13/h1-4H,5H2,(H,10,11)
+
+>  <InChIKey>
+YBADLXQNJCMBKR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CC(=O)O)[N+](=O)[O-]
+
+$$$$

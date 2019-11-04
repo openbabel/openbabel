@@ -1,0 +1,131 @@
+3DWS_FIC_A_303
+  RCSB PDB12061708223D
+Coordinates from PDB:3DWS:A:303 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   35.9280   45.0510   49.8470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8770   44.5140   50.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9050   45.1340   50.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7840   43.0940   50.7160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6770   42.3930   51.4760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7990   42.2510   50.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0590   40.9960   50.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3890   39.7700   50.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9000   38.6320   51.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2950   37.4250   51.1670   F 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0720   38.7710   52.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7460   39.9780   52.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2370   41.1010   51.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5 13  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 13  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O12
+A    2
+C10
+A    3
+O11
+A    4
+C2
+A    5
+N1
+A    6
+C3
+A    7
+C9
+A    8
+C4
+A    9
+C5
+A   10
+F14
+A   11
+C6
+A   12
+C7
+A   13
+C8
+M  END
+>  <InstanceId>
+3DWS_FIC_A_303
+
+>  <ChemCompId>
+FIC
+
+>  <PdbId>
+3DWS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 F
+
+>  <Name>
+5-fluoroindole-2-carboxylic acid
+
+>  <SystematicName>
+5-fluoro-1H-indole-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 F N O2
+
+>  <MolecularWeight>
+179.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6FNO2/c10-6-1-2-7-5(3-6)4-8(11-7)9(12)13/h1-4,11H,(H,12,13)
+
+>  <InChIKey>
+WTXBRZCVLDTWLP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1F)cc([nH]2)C(=O)O
+
+$$$$

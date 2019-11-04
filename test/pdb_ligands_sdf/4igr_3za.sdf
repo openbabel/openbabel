@@ -1,0 +1,145 @@
+4IGR_3ZA_A_901
+  RCSB PDB12061713003D
+Coordinates from PDB:4IGR:A:901 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+   -6.5720   30.4960  -15.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6530   28.2060  -17.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2030   28.0060  -15.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3900   31.8320  -12.8640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0700   30.3160  -13.9220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3770   26.8790  -14.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8890   28.1530  -16.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4370   29.7820  -13.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5970   29.3980  -15.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3660   27.6940  -16.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7450   30.3560  -13.1440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1770   30.7200  -13.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1250   27.0250  -14.7320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0530   25.8900  -14.3780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4540   27.0720  -16.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3450   29.3210  -16.1220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6680   29.5330  -15.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2 10  1  0  0  0  0
+  2  7  1  0  0  0  0
+ 10  3  1  0  0  0  0
+  7 15  2  0  0  0  0
+  7 16  1  0  0  0  0
+ 16  1  1  0  0  0  0
+ 16 17  1  0  0  0  0
+  3  9  1  0  0  0  0
+  3  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+  6 13  2  0  0  0  0
+  6 14  1  0  0  0  0
+  5 12  2  0  0  0  0
+  8 12  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 12  4  1  0  0  0  0
+A    1
+O6
+A    2
+C5
+A    3
+C3
+A    4
+O2
+A    5
+O1
+A    6
+C7
+A    7
+C8
+A    8
+C1
+A    9
+C2
+A   10
+C4
+A   11
+N1
+A   12
+C6
+A   13
+O3
+A   14
+O4
+A   15
+O5
+A   16
+N2
+A   17
+C9
+M  END
+>  <InstanceId>
+4IGR_3ZA_A_901
+
+>  <ChemCompId>
+3ZA
+
+>  <PdbId>
+4IGR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O6
+
+>  <Name>
+(4R)-4-{3-[hydroxy(methyl)amino]-3-oxopropyl}-L-glutamic acid
+
+>  <SystematicName>
+(2S,4R)-2-azanyl-4-[3-[methyl(oxidanyl)amino]-3-oxidanylidene-propyl]pentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N2 O6
+
+>  <MolecularWeight>
+248.233
+
+>  <ModifiedDate>
+2013-03-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N2O6/c1-11(17)7(12)3-2-5(8(13)14)4-6(10)9(15)16/h5-6,17H,2-4,10H2,1H3,(H,13,14)(H,15,16)/t5-,6+/m1/s1
+
+>  <InChIKey>
+YWTXUGAXXGHUOR-RITPCOANSA-N
+
+>  <SMILES>
+CN(C(=O)CC[C@H](C[C@@H](C(=O)O)N)C(=O)O)O
+
+$$$$

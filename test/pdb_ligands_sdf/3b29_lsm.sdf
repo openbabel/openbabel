@@ -1,0 +1,105 @@
+3B29_LSM_A_203
+  RCSB PDB12061707583D
+Coordinates from PDB:3B29:A:203 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   96.2770   72.3650   14.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.5590   71.8740   16.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.7250   70.8820   16.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.7370   70.0980   17.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.1520   69.6290   17.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.1450   68.8260   19.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.2760   67.7940   19.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+C6
+A    2
+C7
+A    3
+C8
+A    4
+C9
+A    5
+C10
+A    6
+C11
+A    7
+C12
+M  END
+>  <InstanceId>
+3B29_LSM_A_203
+
+>  <ChemCompId>
+LSM
+
+>  <PdbId>
+3B29
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+28
+
+>  <ObservedFormula>
+C7
+
+>  <Name>
+dodecyl 4-O-alpha-D-glucopyranosyl-1-seleno-beta-D-glucopyranoside
+
+>  <SystematicName>
+(2R,3R,4S,5S,6R)-2-[(2R,3S,4R,5R,6S)-6-dodecylselanyl-2-(hydroxymethyl)-4,5-bis(oxidanyl)oxan-3-yl]oxy-6-(hydroxymethyl)oxane-3,4,5-triol
+
+>  <Synonyms>
+DODECYL-BETA-D-SELENOMALTOSIDE
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C24 H46 O10 Se
+
+>  <MolecularWeight>
+573.576
+
+>  <ModifiedDate>
+2011-12-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C24H46O10Se/c1-2-3-4-5-6-7-8-9-10-11-12-35-24-21(31)19(29)22(16(14-26)33-24)34-23-20(30)18(28)17(27)15(13-25)32-23/h15-31H,2-14H2,1H3/t15-,16-,17-,18+,19-,20-,21-,22-,23-,24+/m1/s1
+
+>  <InChIKey>
+MEIBWTYMLPEGMV-ALYNCGSASA-N
+
+>  <SMILES>
+CCCCCCCCCCCC[Se][C@H]1[C@@H]([C@H]([C@@H]([C@H](O1)CO)O[C@@H]2[C@@H]([C@H]([C@@H]([C@H](O2)CO)O)O)O)O)O
+
+$$$$

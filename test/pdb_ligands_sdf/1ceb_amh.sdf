@@ -1,0 +1,122 @@
+1B2I_AMH_A_84
+  RCSB PDB12061702023D
+Coordinates from PDB:1B2I:A:84 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    5.6330   -0.3560   -9.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0730    0.7890   -9.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9840    0.2530  -10.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7720   -0.3120  -10.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2750   -1.3200   -9.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4740   -0.8420   -8.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7660   -0.9960  -11.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8660    0.0820   -8.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4750   -1.7890  -12.0240   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4630    1.1180   -8.4980   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2650   -0.6270   -7.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+1B2I_AMH_A_84
+
+>  <ChemCompId>
+AMH
+
+>  <PdbId>
+1B2I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+84
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+TRANS-4-AMINOMETHYLCYCLOHEXANE-1-CARBOXYLIC ACID
+
+>  <SystematicName>
+4-(aminomethyl)cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 N O2
+
+>  <MolecularWeight>
+157.21
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15NO2/c9-5-6-1-3-7(4-2-6)8(10)11/h6-7H,1-5,9H2,(H,10,11)/t6-,7-
+
+>  <InChIKey>
+GYDJEQRTZSCIOI-LJGSYFOKSA-N
+
+>  <SMILES>
+C1CC(CCC1CN)C(=O)O
+
+$$$$

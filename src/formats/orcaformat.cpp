@@ -16,6 +16,14 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
+#include <cstdlib>
+
 #ifdef _MSC_VER
 #include <regex>
 #else
@@ -80,7 +88,9 @@ namespace OpenBabel
     {
       return
         "ORCA input format\n"
-        "This can be used as a template file for orca calculations\n";
+        "Write Options e.g. -xk\n"
+        "  k  \"keywords\" Use the specified keywords for input\n"
+        "  f    <file>     Read the file specified for input keywords\n\n";
     }
 
     virtual const char* SpecificationURL()
@@ -645,7 +655,28 @@ namespace OpenBabel
 
     ofs << "# ORCA input file" << endl;
     ofs << "# " << mol.GetTitle() << endl;
-    ofs << "! insert inline commands here " << endl;
+
+    const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
+    const char *keywordFile = pConv->IsOption("f",OBConversion::OUTOPTIONS);
+    string defaultKeywords = "! insert inline commands here ";
+
+    if(keywords)
+      {
+        defaultKeywords = keywords;
+      }
+    if (keywordFile)
+      {
+        ifstream kfstream(keywordFile);
+        string keyBuffer;
+        if (kfstream)
+          {
+            while (getline(kfstream, keyBuffer))
+              ofs << keyBuffer << endl;
+          }
+      }
+    else
+      ofs << defaultKeywords << endl;
+
     ofs << "* xyz " << mol.GetTotalCharge() << " " << mol.GetTotalSpinMultiplicity() << endl;
 
 

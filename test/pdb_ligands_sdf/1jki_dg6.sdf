@@ -1,0 +1,137 @@
+1JKI_DG6_A_630
+  RCSB PDB12061702573D
+Coordinates from PDB:1JKI:A:630 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   -7.0630   39.7720    9.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2410   38.5740    8.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4540   40.6370    9.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6970   39.7280    9.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4850   40.4200   10.9350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6480   39.2470    8.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9980   38.0330    8.1860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7690   40.4330    7.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7890   40.4480    6.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8380   41.6770    7.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3390   41.4860    7.7700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2720   42.9190    7.1580   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4170   43.8700    8.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.6330   43.5800    6.0700   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5180   42.4500    6.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+O5
+A   10
+C6
+A   11
+O6
+A   12
+P
+A   13
+O1P
+A   14
+O2P
+A   15
+O3P
+M  END
+>  <InstanceId>
+1JKI_DG6_A_630
+
+>  <ChemCompId>
+DG6
+
+>  <PdbId>
+1JKI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+630
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O8 P
+
+>  <Name>
+2-DEOXY-GLUCITOL-6-PHOSPHATE
+
+>  <SystematicName>
+[(3S,4R)-2,3,4,6-tetrahydroxyhexyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H15 O8 P
+
+>  <MolecularWeight>
+246.152
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H15O8P/c7-2-1-4(8)6(10)5(9)3-14-15(11,12)13/h4-10H,1-3H2,(H2,11,12,13)/t4-,5-,6+/m1/s1
+
+>  <InChIKey>
+KLPBNGZTTQNYHR-PBXRRBTRSA-N
+
+>  <SMILES>
+C(CO)[C@H]([C@@H](C(COP(=O)(O)O)O)O)O
+
+$$$$

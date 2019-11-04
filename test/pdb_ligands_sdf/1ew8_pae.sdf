@@ -1,0 +1,109 @@
+1EW8_PAE_A_556
+  RCSB PDB12061702253D
+Coordinates from PDB:1EW8:A:556 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   74.0080   39.2080   42.7000   P 0  0  0  0  0  0  0  0  0  0  0  0
+   74.5960   40.5810   43.0350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   72.7710   39.0640   43.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.6850   39.1140   41.2760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.2080   37.9270   43.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.8340   37.7000   44.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.1090   38.6240   45.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.9690   36.5800   45.2080   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+A    1
+P
+A    2
+O1P
+A    3
+O2P
+A    4
+O3P
+A    5
+C1P
+A    6
+C1
+A    7
+O1
+A    8
+O2
+M  END
+>  <InstanceId>
+1EW8_PAE_A_556
+
+>  <ChemCompId>
+PAE
+
+>  <PdbId>
+1EW8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+556
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O5 P
+
+>  <Name>
+PHOSPHONOACETIC ACID
+
+>  <SystematicName>
+2-phosphonoethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H5 O5 P
+
+>  <MolecularWeight>
+140.032
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H5O5P/c3-2(4)1-8(5,6)7/h1H2,(H,3,4)(H2,5,6,7)
+
+>  <InChIKey>
+XUYJLQHKOGNDPB-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)P(=O)(O)O
+
+$$$$

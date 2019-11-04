@@ -1,0 +1,135 @@
+4URV_UMK_S_2047
+  RCSB PDB12061715183D
+Coordinates from PDB:4URV:S:2047 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   44.6850   42.2550   73.7790  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2670   41.4970   75.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8670   42.3090   76.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2650   41.7550   77.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0560   40.1500   75.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4570   39.6170   76.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.0550   40.4080   77.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5420   39.7990   79.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7350   38.6690   79.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4550   40.8210   80.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0670   40.3010   81.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4740   39.9270   81.3870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5760   38.8720   80.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9880   39.3070   79.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+BR
+A    2
+C8
+A    3
+C7
+A    4
+C6
+A    5
+C9
+A    6
+C10
+A    7
+C5
+A    8
+C
+A    9
+O
+A   10
+C4
+A   11
+C3
+A   12
+N
+A   13
+C2
+A   14
+C1
+M  END
+>  <InstanceId>
+4URV_UMK_S_2047
+
+>  <ChemCompId>
+UMK
+
+>  <PdbId>
+4URV
+
+>  <ChainId>
+S
+
+>  <ResidueNumber>
+2047
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O Br
+
+>  <Name>
+4-(4-BROMOPHENYL)PIPERIDIN-4-OL
+
+>  <SystematicName>
+4-(4-bromophenyl)piperidin-4-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H14 Br N O
+
+>  <MolecularWeight>
+256.139
+
+>  <ModifiedDate>
+2015-02-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14BrNO/c12-10-3-1-9(2-4-10)11(14)5-7-13-8-6-11/h1-4,13-14H,5-8H2
+
+>  <InChIKey>
+QNLXJYQUWCNYBH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C2(CCNCC2)O)Br
+
+$$$$

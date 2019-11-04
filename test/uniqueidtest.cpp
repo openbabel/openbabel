@@ -1,6 +1,8 @@
 #include "obtest.h"
 
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 
 using namespace std;
 using namespace OpenBabel;

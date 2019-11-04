@@ -1,0 +1,109 @@
+2RKE_SAT_A_704
+  RCSB PDB12061706563D
+Coordinates from PDB:2RKE:A:704 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+    2.2430   -3.8190    9.0810   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6540   -4.8960    8.2630   S 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1850   -4.7390    8.2280   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1770   -4.7980    6.8970   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0400   -6.3970    8.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4970   -6.7820    8.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8520   -7.3340    7.6600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2950   -6.5760    9.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+O5
+A    2
+S1
+A    3
+O3
+A    4
+O4
+A    5
+C2
+A    6
+C1
+A    7
+O1
+A    8
+O2
+M  END
+>  <InstanceId>
+2RKE_SAT_A_704
+
+>  <ChemCompId>
+SAT
+
+>  <PdbId>
+2RKE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+704
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O5 S
+
+>  <Name>
+sulfoacetic acid
+
+>  <SystematicName>
+2-sulfoethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H4 O5 S
+
+>  <MolecularWeight>
+140.115
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C2H4O5S/c3-2(4)1-8(5,6)7/h1H2,(H,3,4)(H,5,6,7)
+
+>  <InChIKey>
+AGGIJOLULBJGTQ-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)S(=O)(=O)O
+
+$$$$

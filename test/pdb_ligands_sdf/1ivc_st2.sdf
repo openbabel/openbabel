@@ -1,0 +1,138 @@
+1IVC_ST2_A_471
+  RCSB PDB12061702533D
+Coordinates from PDB:1IVC:A:471 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   49.5200   22.8930  -20.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.6240   22.5360  -20.0020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9740   23.9900  -20.1850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9080   22.0650  -21.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5760   21.6720  -21.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9480   20.8810  -22.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6050   20.5600  -22.1930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6840   20.4600  -23.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0780   19.7080  -24.4980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6160   18.5270  -24.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3750   17.6680  -23.5990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1360   18.1940  -24.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0390   20.8530  -23.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7960   20.4650  -24.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   49.6300   21.6470  -22.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 15  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+C'
+A    2
+O1'
+A    3
+O2'
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+N3
+A    8
+C4
+A    9
+N4
+A   10
+C4'
+A   11
+O4'
+A   12
+CM4
+A   13
+C5
+A   14
+O5
+A   15
+C6
+M  END
+>  <InstanceId>
+1IVC_ST2_A_471
+
+>  <ChemCompId>
+ST2
+
+>  <PdbId>
+1IVC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+471
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O4
+
+>  <Name>
+4-(ACETYLAMINO)-5-AMINO-3-HYDROXYBENZOIC ACID
+
+>  <SystematicName>
+4-acetamido-3-amino-5-hydroxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 N2 O4
+
+>  <MolecularWeight>
+210.187
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N2O4/c1-4(12)11-8-6(10)2-5(9(14)15)3-7(8)13/h2-3,13H,10H2,1H3,(H,11,12)(H,14,15)
+
+>  <InChIKey>
+CALDTVBHJMBRTM-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1c(cc(cc1O)C(=O)O)N
+
+$$$$

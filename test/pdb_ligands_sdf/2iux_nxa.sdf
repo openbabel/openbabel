@@ -1,0 +1,113 @@
+1O8A_NXA_A_702
+  RCSB PDB12061703313D
+Coordinates from PDB:1O8A:A:702 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   41.9880   34.5370   43.4910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8250   34.6450   42.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8460   33.4670   42.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1790   32.4100   43.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6030   34.8100   41.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4940   34.4780   45.3110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7780   34.1360   45.4750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6750   34.3890   44.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7930   33.2590   41.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+OD1
+A    7
+OD2
+A    8
+C1
+A    9
+OXT
+M  END
+>  <InstanceId>
+1O8A_NXA_A_702
+
+>  <ChemCompId>
+NXA
+
+>  <PdbId>
+1O8A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+702
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O4
+
+>  <Name>
+N-CARBOXYALANINE
+
+>  <SystematicName>
+(2S)-2-(carboxyamino)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H7 N O4
+
+>  <MolecularWeight>
+133.103
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H7NO4/c1-2(3(6)7)5-4(8)9/h2,5H,1H3,(H,6,7)(H,8,9)/t2-/m0/s1
+
+>  <InChIKey>
+JCVPWRQVQNVNGU-REOHCLBHSA-N
+
+>  <SMILES>
+C[C@@H](C(=O)O)NC(=O)O
+
+$$$$

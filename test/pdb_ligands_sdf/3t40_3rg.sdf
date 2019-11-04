@@ -1,0 +1,134 @@
+3T40_3RG_A_273
+  RCSB PDB12061710493D
+Coordinates from PDB:3T40:A:273 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   15.0030    4.3700    9.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3910    2.1720   10.3680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8390    4.4640    9.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5220    3.0830   10.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9510   -1.8390   11.2400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3210   -0.2450    9.7070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7270    2.8310   13.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1170    1.4250   14.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5040    3.1080   12.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2830    0.2970   13.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2320   -0.5250   10.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6700    1.9760   11.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0570    0.5800   11.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8190    5.5110    9.6000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  2  0  0  0  0
+  1 14  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2 12  1  0  0  0  0
+ 11  5  1  0  0  0  0
+  6 11  2  0  0  0  0
+  9  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 10  8  2  0  0  0  0
+ 12  9  1  0  0  0  0
+ 13 10  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+CA
+A    5
+OAB
+A    6
+OAD
+A    7
+CAE
+A    8
+CAF
+A    9
+CAG
+A   10
+CAH
+A   11
+CAL
+A   12
+CAM
+A   13
+CAN
+A   14
+OXT
+M  END
+>  <InstanceId>
+3T40_3RG_A_273
+
+>  <ChemCompId>
+3RG
+
+>  <PdbId>
+3T40
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+273
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4
+
+>  <Name>
+2-[(carboxymethyl)amino]benzoic acid
+
+>  <SystematicName>
+2-(carboxymethylamino)benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O4
+
+>  <MolecularWeight>
+195.172
+
+>  <ModifiedDate>
+2012-08-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO4/c11-8(12)5-10-7-4-2-1-3-6(7)9(13)14/h1-4,10H,5H2,(H,11,12)(H,13,14)
+
+>  <InChIKey>
+PJUXPMVQAZLJEX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)NCC(=O)O
+
+$$$$

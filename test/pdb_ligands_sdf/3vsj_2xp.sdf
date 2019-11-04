@@ -1,0 +1,117 @@
+3VSJ_2XP_B_402
+  RCSB PDB12061711163D
+Coordinates from PDB:3VSJ:B:402 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  101.6280   57.8230  -16.3240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  100.9120   57.3270  -15.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.6640   57.4210  -15.4520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  101.5200   56.5000  -14.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.1450   55.4940  -14.8370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  101.3390   56.6190  -12.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.8380   57.6050  -12.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.1710   58.8890  -12.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.1670   59.6190  -13.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.7570   59.2470  -14.6560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  4  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+A    1
+O3
+A    2
+C1
+A    3
+O2
+A    4
+C2
+A    5
+N
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O1
+M  END
+>  <InstanceId>
+3VSJ_2XP_B_402
+
+>  <ChemCompId>
+2XP
+
+>  <PdbId>
+3VSJ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3
+
+>  <Name>
+(2Z,4Z)-2-imino-6-oxohex-4-enoic acid
+
+>  <SystematicName>
+(Z)-2-azanylidene-6-oxidanylidene-hex-4-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N O3
+
+>  <MolecularWeight>
+141.125
+
+>  <ModifiedDate>
+2013-01-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7NO3/c7-5(6(9)10)3-1-2-4-8/h1-2,4,7H,3H2,(H,9,10)/b2-1-,7-5-
+
+>  <InChIKey>
+IZBQCPKKCVTOTK-PQZOIKATSA-N
+
+>  <SMILES>
+[H]/N=C(/C/C=C\C=O)\C(=O)O
+
+$$$$

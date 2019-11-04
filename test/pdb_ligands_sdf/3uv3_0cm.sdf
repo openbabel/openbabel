@@ -1,0 +1,129 @@
+3UV3_0CM_A_318
+  RCSB PDB12061711073D
+Coordinates from PDB:3UV3:A:318 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -24.6890    0.8650  -15.6510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9140    0.8980  -16.4480   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6210    1.0140  -17.9520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8400    1.9670  -16.0040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6050   -0.4910  -16.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0860   -1.9750  -16.2290   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7150   -2.1540  -16.7940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1580   -2.7690  -16.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9290   -2.3200  -14.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6110   -1.7960  -13.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0290   -1.5780  -13.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.2330   -1.3750  -14.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6400   -1.1310  -14.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 12  3  0  0  0  0
+ 12 13  1  0  0  0  0
+  9  6  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  5  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+O12
+A    2
+P8
+A    3
+O13
+A    4
+O9
+A    5
+O7
+A    6
+P6
+A    7
+O10
+A    8
+O11
+A    9
+O5
+A   10
+C4
+A   11
+C3
+A   12
+C2
+A   13
+C1
+M  END
+>  <InstanceId>
+3UV3_0CM_A_318
+
+>  <ChemCompId>
+0CM
+
+>  <PdbId>
+3UV3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+318
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O7 P2
+
+>  <Name>
+but-2-yn-1-yl trihydrogen diphosphate
+
+>  <SystematicName>
+but-2-ynyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O7 P2
+
+>  <MolecularWeight>
+230.05
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O7P2/c1-2-3-4-10-13(8,9)11-12(5,6)7/h4H2,1H3,(H,8,9)(H2,5,6,7)
+
+>  <InChIKey>
+MMKJTWNLJFDOFE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC#CCOP(=O)(O)OP(=O)(O)O
+
+$$$$

@@ -1,0 +1,126 @@
+4KGL_IDJ_A_910
+  RCSB PDB12061713213D
+Coordinates from PDB:4KGL:A:910 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  327.9860  -40.8770  -24.1600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  328.9010  -41.6940  -24.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  328.7800  -42.9250  -24.1950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  330.2030  -41.1510  -24.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  330.7580  -41.9720  -25.9570   N 0  0  0  0  0  0  0  0  0  0  0  0
+  331.2170  -40.9200  -23.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  330.9440  -41.7480  -22.6110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  332.6910  -41.1280  -24.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  333.4930  -40.1390  -23.4920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  333.0750  -41.1730  -25.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  334.1190  -42.1490  -25.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  331.9530  -41.5090  -26.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  5  1  0  0  0  0
+ 12 10  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  8  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+O6B
+A    2
+C6
+A    3
+O6A
+A    4
+C5
+A    5
+N5
+A    6
+C4
+A    7
+O4
+A    8
+C3
+A    9
+O3
+A   10
+C2
+A   11
+O2
+A   12
+C1
+M  END
+>  <InstanceId>
+4KGL_IDJ_A_910
+
+>  <ChemCompId>
+IDJ
+
+>  <PdbId>
+4KGL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+910
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O5
+
+>  <Name>
+(2R,3R,4R,5S)-3,4,5-trihydroxypiperidine-2-carboxylic acid
+
+>  <SystematicName>
+(2R,3R,4R,5S)-3,4,5-tris(oxidanyl)piperidine-2-carboxylic acid
+
+>  <Synonyms>
+[2R,3R,4R,5S]-2-carboxy-3,4,5-trihydroxy-piperidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 N O5
+
+>  <MolecularWeight>
+177.155
+
+>  <ModifiedDate>
+2013-09-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11NO5/c8-2-1-7-3(6(11)12)5(10)4(2)9/h2-5,7-10H,1H2,(H,11,12)/t2-,3+,4+,5+/m0/s1
+
+>  <InChIKey>
+ZHFMVVUVCALAMY-NRXMZTRTSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@@H](N1)C(=O)O)O)O)O
+
+$$$$

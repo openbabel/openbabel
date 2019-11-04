@@ -1,8 +1,12 @@
+#include <openbabel/mol.h>
 #include <openbabel/isomorphism.h>
+#include <openbabel/obiter.h>
+#include <openbabel/oberror.h>
 #include <openbabel/query.h>
 #include <openbabel/graphsym.h>
 #include <ctime>
 #include <cassert>
+#include <algorithm>
 
 #define DEBUG 0
 
@@ -169,6 +173,9 @@ namespace OpenBabel {
        */
       bool matchCandidate(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom)
       {
+        if (!queryAtom->Matches(queriedAtom))
+          return false;
+
         // add the neighbors to the paths
         state.queryPath.push_back(queryAtom->GetIndex());
         state.queriedPath.push_back(queriedAtom->GetIndex());
@@ -461,7 +468,7 @@ namespace OpenBabel {
       void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask)
       {
         m_startTime = time(NULL);
-
+        if(m_query->NumAtoms() == 0) return;
         // set all atoms to 1 if the mask is empty
         OBBitVec queriedMask = mask;
         if (!queriedMask.CountBits())

@@ -3,6 +3,10 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/phmodel.h>
 #include <openbabel/elements.h>
+#include <openbabel/atom.h>
+#include <openbabel/obiter.h>
+#include <openbabel/bond.h>
+#include <openbabel/generic.h>
 
 #include <iostream>
 #include <string>
@@ -11,6 +15,68 @@
 
 using namespace std;
 using namespace OpenBabel;
+
+void test_Fix1912_PDBReading()
+{
+  // Reading from a PDB file should set the residues
+  // and mark chains as perceived
+  OBMolPtr mol = OBTestUtil::ReadFile("00T_ideal_het.pdb");
+  OB_ASSERT(mol->HasChainsPerceived());
+  OBAtom* atom = mol->GetAtom(1);
+  OBResidue* res = atom->GetResidue();
+  OB_REQUIRE(res != (OBResidue*)0);
+  OB_COMPARE(res->GetAtomID(atom), " N19");
+  OB_COMPARE(res->GetChain(), 'A');
+}
+
+std::string remove_slashr(const char* smi)
+{
+  // Remove \r if present to normalise across platforms
+  std::string ans;
+  const char *p = smi;
+  while (*p) {
+    if (*p != '\r')
+      ans += *p;
+    p++;
+  }
+  return ans;
+}
+
+struct CdxData {
+  const char* fname;
+  const char* smi;
+};
+
+// Some basic reading of ChemDraw files
+// Note that we don't correctly read radicals - TODO
+// Also, converting ChemDraw doesn't work with the Read() interface, only Convert()
+void test_ChemDraw_Basic()
+{
+  static const CdxData cdxData[] = {
+    { "ethanol.cdx", "CCO\t\n" },
+    // cyclohexane -> benzene reaction, plus another cyclohexane drawn on its own
+    { "molrxnmix.cdx", "C1CCCCC1>>c1ccccc1\t\nC1CCCCC1\t\n" },
+    { "MeCN.cdx", "CC#N\t\n"}
+  };
+
+  ios_base::openmode imode = ios_base::in | ios_base::binary;
+  unsigned int size = sizeof(cdxData) / sizeof(CdxData);
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("cdx", "smi"));
+  std::stringstream outs;
+  conv.SetOutStream(&outs);
+
+  for (int i=0; i<size; ++i) {
+    std::string fname = OBTestUtil::GetFilename(cdxData[i].fname);
+    std::ifstream ifs(fname.c_str(), imode);
+    OB_REQUIRE(ifs.good());
+    conv.SetInStream(&ifs);
+    outs.str("");
+    conv.Convert();
+    std::string out = outs.str();
+    OB_COMPARE(remove_slashr(out.c_str()), cdxData[i].smi);
+  }
+}
 
 // A basic test of functionality
 void test_OBChemTsfm()
@@ -41,6 +107,24 @@ void test_OBChemTsfm()
   b.Apply(mol);
   out = conv.WriteString(&mol, true);
   OB_COMPARE(out, "ClC=CBr");
+
+  conv.ReadString(&mol, "ClC(=O)[O]");
+  start = "[#6]-[OD1:1]";
+  end = "[#6]-[O-1:1]";
+  OBChemTsfm c;
+  c.Init(start, end);
+  c.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "ClC(=O)[O-]");
+
+  conv.ReadString(&mol, "Cl[C]CBr");
+  start = "Cl[C:1]-[C:2]";
+  end = "[C:1]=[C:2]";
+  OBChemTsfm d;
+  d.Init(start, end);
+  d.Apply(mol);
+  out = conv.WriteString(&mol, true);
+  OB_COMPARE(out, "Cl[C]=CBr");
 }
 
 // Open Babel was previously disappearing triple bonds when provided with SMILES
@@ -308,6 +392,54 @@ void test_SMILES_Valence()
   OB_COMPARE(conv.WriteString(&mol, true), "C[H:1]");
 }
 
+//make sure insertion code gets copied (it wasn't)
+void test_insertioncode() 
+{
+  const char* pdb = "ATOM    266  HB2 ASP L  14      -2.604   8.021  19.867  1.00  0.00           H\n\
+ATOM    267  CG  ASP L  14      -2.280   6.992  21.697  1.00 18.10           C\n\
+ATOM    268  OD1 ASP L  14      -1.109   7.431  21.698  1.00 18.97           O\n\
+ATOM    269  OD2 ASP L  14      -2.735   6.263  22.603  1.00 19.18           O\n\
+ATOM    270  N   LYS L  14A     -5.804   6.060  21.469  1.00 20.85           N\n\
+ATOM    271  H   LYS L  14A     -5.589   5.759  20.497  1.00  0.00           H\n\
+ATOM    272  CA  LYS L  14A     -6.654   5.209  22.296  1.00 22.86           C\n\
+ATOM    273  HA  LYS L  14A     -7.392   5.923  22.662  1.00  0.00           H\n\
+ATOM    274  C   LYS L  14A     -6.108   4.607  23.591  1.00 21.70           C\n\
+ATOM    275  O   LYS L  14A     -6.892   4.228  24.455  1.00 21.72           O\n";
+
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("pdb", "pdb"));
+    OBMol mol;
+    conv.ReadString(&mol, pdb);
+    OBMol mol2;
+    mol2 = mol;
+    char i = mol2.GetResidue(1)->GetInsertionCode();
+    OB_COMPARE(i, 'A');
+}
+
+//make sure icode is read by pdbqt
+void test_insertioncode_pdbqt() 
+{
+  const char* pdb = "ATOM    266  HB2 ASP L  14      -2.604   8.021  19.867  1.00  0.00           H\n\
+ATOM    267  CG  ASP L  14      -2.280   6.992  21.697  1.00 18.10           C\n\
+ATOM    268  OD1 ASP L  14      -1.109   7.431  21.698  1.00 18.97           O\n\
+ATOM    269  OD2 ASP L  14      -2.735   6.263  22.603  1.00 19.18           O\n\
+ATOM    270  N   LYS L  14A     -5.804   6.060  21.469  1.00 20.85           N\n\
+ATOM    271  H   LYS L  14A     -5.589   5.759  20.497  1.00  0.00           H\n\
+ATOM    272  CA  LYS L  14A     -6.654   5.209  22.296  1.00 22.86           C\n\
+ATOM    273  HA  LYS L  14A     -7.392   5.923  22.662  1.00  0.00           H\n\
+ATOM    274  C   LYS L  14A     -6.108   4.607  23.591  1.00 21.70           C\n\
+ATOM    275  O   LYS L  14A     -6.892   4.228  24.455  1.00 21.72           O\n";
+
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("pdbqt", "pdbqt"));
+    OBMol mol;
+    conv.ReadString(&mol, pdb);
+    OBMol mol2;
+    mol2 = mol;
+    char i = mol2.GetResidue(1)->GetInsertionCode();
+    OB_COMPARE(i, 'A');
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -351,6 +483,18 @@ int regressionstest(int argc, char* argv[])
     break;
   case 227:
     test_OBChemTsfm();
+    break;
+  case 228:
+    test_ChemDraw_Basic();
+    break;
+  case 240:
+    test_Fix1912_PDBReading();
+    break;
+  case 241:
+    test_insertioncode();
+    break;
+  case 242:
+    test_insertioncode_pdbqt();
     break;
     //case N:
   //  YOUR_TEST_HERE();

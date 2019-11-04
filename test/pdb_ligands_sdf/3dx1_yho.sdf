@@ -1,0 +1,114 @@
+3DX1_YHO_A_1050
+  RCSB PDB12061708223D
+Coordinates from PDB:3DX1:A:1050 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   33.6990   65.8280    7.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9330   66.8210    7.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5520   66.2890    9.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4060   65.2010    9.5940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0710   65.8390    9.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9530   64.4810    9.6380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7420   65.8990    7.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5570   67.1270    7.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6230   67.3100    5.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  8  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+O3
+A    2
+C3
+A    3
+C2
+A    4
+O2
+A    5
+C1
+A    6
+N1
+A    7
+C5
+A    8
+C4
+A    9
+O4
+M  END
+>  <InstanceId>
+3DX1_YHO_A_1050
+
+>  <ChemCompId>
+YHO
+
+>  <PdbId>
+3DX1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1050
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O3
+
+>  <Name>
+(1S,2S,3R,4R)-4-aminocyclopentane-1,2,3-triol
+
+>  <SystematicName>
+(1S,2S,3R,4R)-4-aminocyclopentane-1,2,3-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 N O3
+
+>  <MolecularWeight>
+133.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO3/c6-2-1-3(7)5(9)4(2)8/h2-5,7-9H,1,6H2/t2-,3+,4-,5+/m1/s1
+
+>  <InChIKey>
+UUKWSEIZIMUXPU-LECHCGJUSA-N
+
+>  <SMILES>
+C1[C@H]([C@H]([C@H]([C@H]1O)O)O)N
+
+$$$$

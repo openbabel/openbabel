@@ -1,0 +1,123 @@
+1N7J_IDI_A_3003
+  RCSB PDB12061703233D
+Coordinates from PDB:1N7J:A:3003 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   27.2250   42.7080   14.7090   I 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6850   46.0030   17.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0930   45.2320   16.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0810   43.8470   16.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6550   43.2510   17.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2410   44.0130   18.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2610   45.3980   18.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8120   43.3320   19.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7740   45.5420   20.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9300   46.2150   19.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4600   44.2360   20.4170   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+I
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C1
+A    9
+C2
+A   10
+C3
+A   11
+N1
+M  END
+>  <InstanceId>
+1N7J_IDI_A_3003
+
+>  <ChemCompId>
+IDI
+
+>  <PdbId>
+1N7J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3003
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N I
+
+>  <Name>
+7-IODO-1,2,3,4-TETRAHYDRO-ISOQUINOLINE
+
+>  <SystematicName>
+7-iodo-1,2,3,4-tetrahydroisoquinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 I N
+
+>  <MolecularWeight>
+259.087
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10IN/c10-9-2-1-7-3-4-11-6-8(7)5-9/h1-2,5,11H,3-4,6H2
+
+>  <InChIKey>
+FFCFXJXBXUOFIU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1I)CNCC2
+
+$$$$

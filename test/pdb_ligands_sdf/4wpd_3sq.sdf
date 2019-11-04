@@ -1,0 +1,127 @@
+4WPD_3SQ_A_401
+  RCSB PDB12061716003D
+Coordinates from PDB:4WPD:A:401 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   31.3290    1.3200   -6.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3830    2.2770   -6.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4210    2.8130   -4.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4480    2.3030   -7.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3690    3.1990   -7.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6190    1.3900   -8.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6950    1.3860   -9.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6430    2.2880   -9.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4590    3.1920   -8.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9950    1.6450   -5.1520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4380    3.2060   -5.6380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7480    2.2960  -10.8210   F 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  6  4  2  0  0  0  0
+  9  5  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2 11  1  0  0  0  0
+  1 10  1  0  0  0  0
+ 11  3  2  0  0  0  0
+ 10  3  1  0  0  0  0
+A    1
+C2
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C11
+A    7
+C10
+A    8
+C9
+A    9
+C8
+A   10
+N1
+A   11
+N3
+A   12
+F
+M  END
+>  <InstanceId>
+4WPD_3SQ_A_401
+
+>  <ChemCompId>
+3SQ
+
+>  <PdbId>
+4WPD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 F
+
+>  <Name>
+4-(4-fluorophenyl)-1H-imidazole
+
+>  <SystematicName>
+4-(4-fluorophenyl)-1H-imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 F N2
+
+>  <MolecularWeight>
+162.164
+
+>  <ModifiedDate>
+2015-02-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7FN2/c10-8-3-1-7(2-4-8)9-5-11-6-12-9/h1-6H,(H,11,12)
+
+>  <InChIKey>
+QYDAFWKRBZYBOB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2c[nH]cn2)F
+
+$$$$

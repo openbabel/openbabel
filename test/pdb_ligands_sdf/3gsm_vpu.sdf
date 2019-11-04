@@ -1,0 +1,150 @@
+3GSM_VPU_A_341
+  RCSB PDB12061708473D
+Coordinates from PDB:3GSM:A:341 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   -8.5710   18.5930   12.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6540   18.6200   13.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5180   17.2550   14.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0530   16.8850   14.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4560   16.2260   13.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1130   15.3870   12.7680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2150   16.6040   13.0080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5330   16.0500   11.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5770   14.9180   12.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2280   13.8420   12.9460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9310   14.3950   10.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2360   13.1580   11.1950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9710   15.4280   10.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5890   15.0110    8.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2620   15.3700    7.9730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5070   16.7660   10.3000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7410   17.0770   11.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1920   18.2580   10.9740   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 17  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 16  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  2  0  0  0  0
+A    1
+C3
+A    2
+C2
+A    3
+C1
+A    4
+CAH
+A    5
+CAG
+A    6
+OAN
+A    7
+NAI
+A    8
+CAB
+A    9
+CAC
+A   10
+OAJ
+A   11
+CAD
+A   12
+OAK
+A   13
+CAE
+A   14
+CAF
+A   15
+OAM
+A   16
+OAL
+A   17
+CAA
+A   18
+NAY
+M  END
+>  <InstanceId>
+3GSM_VPU_A_341
+
+>  <ChemCompId>
+VPU
+
+>  <PdbId>
+3GSM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+341
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+10
+
+>  <ObservedFormula>
+C11 N2 O5
+
+>  <Name>
+[[(3R,4R,5S,6R)-4,5-dihydroxy-6-(hydroxymethyl)-3-(pentanoylamino)oxan-2-ylidene]amino] N-phenylcarbamate
+
+>  <SystematicName>
+[[(3R,4R,5S,6R)-4,5-dihydroxy-6-(hydroxymethyl)-3-(pentanoylamino)oxan-2-ylidene]amino] N-phenylcarbamate
+
+>  <Synonyms>
+N-Valeryl-PUGNAc
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C18 H25 N3 O7
+
+>  <MolecularWeight>
+395.407
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C18H25N3O7/c1-2-3-9-13(23)20-14-16(25)15(24)12(10-22)27-17(14)21-28-18(26)19-11-7-5-4-6-8-11/h4-8,12,14-16,22,24-25H,2-3,9-10H2,1H3,(H,19,26)(H,20,23)/b21-17-/t12-,14-,15-,16-/m1/s1
+
+>  <InChIKey>
+NUNQIQQEEPOGDJ-JDOAOKHLSA-N
+
+>  <SMILES>
+CCCCC(=O)N[C@@H]\1[C@H]([C@@H]([C@H](O/C1=N\OC(=O)Nc2ccccc2)CO)O)O
+
+$$$$

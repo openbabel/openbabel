@@ -4,14 +4,15 @@
 #
 ######################################################################
 
-import openbabel
+from __future__ import print_function
+from openbabel import openbabel
 import sys
 
 # Make sure we have a filename
 try:
   filename = sys.argv[1]
 except:
-  print "Usage: python energy.py filename"
+  print("Usage: python energy.py filename")
   sys.exit(1)
 
 # Read the file.
@@ -24,21 +25,21 @@ conv.ReadFile(mol, filename)
 # Find the MMFF94 force field.
 ff = openbabel.OBForceField.FindForceField("MMFF94")
 if ff == 0:
-  print "Could not find forcefield"
+  print("Could not find forcefield")
 
 # Set the log level to low since we only want to print out the conformer search
 # steps and not all individual interactions for each call to Energy()
-ff.SetLogLevel(openbabel.OBFF_LOGLVL_LOW) 
+ff.SetLogLevel(openbabel.OBFF_LOGLVL_LOW)
 # python specific, python doesn't have std::ostream so the SetLogFile()
 # function is replaced by SetLogToStdOut and SetLogToStdErr in the SWIG
 # interface file
-ff.SetLogToStdErr() 
+ff.SetLogToStdErr()
 
-# Setup the molecule. This assigns atoms types, charges and parameters 
+# Setup the molecule. This assigns atoms types, charges and parameters
 if ff.Setup(mol) == 0:
-  print "Could not setup forcefield"
+  print("Could not setup forcefield")
 
-# Weighted rotor search: generate 25 conformers, optimize each conformer for 
+# Weighted rotor search: generate 25 conformers, optimize each conformer for
 # 500 steps.
 ff.WeightedRotorSearch(25, 500)
 

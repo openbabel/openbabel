@@ -1,0 +1,125 @@
+1J79_NCD_A_950
+  RCSB PDB12061702553D
+Coordinates from PDB:1J79:A:950 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   15.8620   19.9760   76.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5870   18.4830   76.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4470   17.6090   76.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4440   18.0730   75.8070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7470   20.8530   76.2900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4770   20.7240   76.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5930   21.5610   76.5390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1470   19.7080   77.5910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1920   20.0210   78.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5990   19.4780   78.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1800   19.8790   79.3180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0770   18.5740   77.6260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C6
+A    2
+C61
+A    3
+O61
+A    4
+O62
+A    5
+N1
+A    6
+C2
+A    7
+O2
+A    8
+N3
+A    9
+C5
+A   10
+C4
+A   11
+O4
+A   12
+O5
+M  END
+>  <InstanceId>
+1J79_NCD_A_950
+
+>  <ChemCompId>
+NCD
+
+>  <PdbId>
+1J79
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+950
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O5
+
+>  <Name>
+N-CARBAMOYL-L-ASPARTATE
+
+>  <SystematicName>
+(2S)-2-(aminocarbonylamino)butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 N2 O5
+
+>  <MolecularWeight>
+176.127
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8N2O5/c6-5(12)7-2(4(10)11)1-3(8)9/h2H,1H2,(H,8,9)(H,10,11)(H3,6,7,12)/t2-/m0/s1
+
+>  <InChIKey>
+HLKXYZVTANABHZ-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)NC(=O)N)C(=O)O
+
+$$$$

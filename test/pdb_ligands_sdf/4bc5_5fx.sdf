@@ -1,0 +1,117 @@
+4BC5_5FX_A_1531
+  RCSB PDB12061711493D
+Coordinates from PDB:4BC5:A:1531 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   13.7970   -0.4910   29.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9580    0.8860   29.5850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9010   -1.3640   29.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7190   -0.9170   30.6970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9750   -2.8260   29.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7970   -3.3060   28.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2730   -3.1700   28.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1590   -2.7380   27.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3790   -4.7090   28.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6090   -5.0480   28.1400   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+F
+M  END
+>  <InstanceId>
+4BC5_5FX_A_1531
+
+>  <ChemCompId>
+5FX
+
+>  <PdbId>
+4BC5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1531
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O4 F
+
+>  <Name>
+5-deoxy-5-fluoro-D-xylulose
+
+>  <SystematicName>
+(3S,4S)-5-fluoranyl-1,3,4-tris(oxidanyl)pentan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H9 F O4
+
+>  <MolecularWeight>
+152.121
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9FO4/c6-1-3(8)5(10)4(9)2-7/h3,5,7-8,10H,1-2H2/t3-,5+/m1/s1
+
+>  <InChIKey>
+DZPAPJMTQBXJAM-WUJLRWPWSA-N
+
+>  <SMILES>
+C([C@H]([C@@H](C(=O)CO)O)O)F
+
+$$$$

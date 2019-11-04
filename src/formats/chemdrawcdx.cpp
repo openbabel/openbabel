@@ -15,11 +15,17 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/elements.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/stereo/stereo.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/reaction.h>
 #include <openbabel/tokenst.h>
-#include <openbabel/text.h>
 #include <openbabel/alias.h>
+#include <openbabel/text.h>
 #include "chemdrawcdx.h"
 
 #include <iostream>
@@ -114,7 +120,7 @@ private:
 };
 
 //**************************************************************
-class ChemDrawBinaryXFormat : OBFormat
+class ChemDrawBinaryXFormat : OBMoleculeFormat
 {
 public:
   //Register this format type ID in the constructor
@@ -129,15 +135,17 @@ public:
       "ChemDraw binary format\n"
       "Read only\n"
       "The whole file is read in one call.\n"
-      "Reactions if present are read and output as OBReaction objects.\n"
-      "Any molecules not involved in a reaction are output as OBMol objects.\n"
-      "Most molecule formats will output the reactants and products when\n"
-      "given an OBReaction object.\n"
+      "Note that a file may contain a mixture of reactions and\n"
+      "molecules.\n"
+
       "With the -ad option, a human-readable representation of the CDX tree\n"
-      "structure is output as an OBText object. Use textformat to view it:\n"
-      "    obabel input.cdx -otext -ad\n"
+      "structure is output as an OBText object. Use textformat to view it::\n\n"
+
+      "    obabel input.cdx -otext -ad\n\n"
+
       "Many reactions in CDX files are not fully specified with reaction data\n"
-      "structures, and may not be completely interpreted by this parser.\n"
+      "structures, and may not be completely interpreted by this parser.\n\n"
+
       "Read Options, e.g. -am\n"
       " m read molecules only; no reactions\n"
       " d output CDX tree to OBText object\n"
@@ -153,11 +161,6 @@ public:
   virtual unsigned int Flags()
   {
     return READBINARY|NOTWRITABLE;
-  };
-
-  virtual bool ReadChemObject(OBConversion* pConv)
-  {
-    return ReadMolecule(NULL, pConv);
   }
 
   ////////////////////////////////////////////////////
@@ -169,7 +172,7 @@ private:
   bool        DoFragment(CDXReader& cdxr, OBMol* pmol);
   bool        DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
          map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown);
-  bool        DoReaction(CDXReader& cdxr, OBReaction* pReact);
+  bool        DoReaction(CDXReader& cdxr, OBMol* pReact);
   std::string DoText(CDXReader& cdxr);
 
   std::vector<OBMol*> LookupMol(CDXObjectID id);
@@ -197,7 +200,7 @@ private:
 Each fragment goes into a new OBMol on the heap.
 The CDX id and OBMol* are added to _molmap.
 When a reaction is found, the reactant/product/agent CDX ids are looked up in molmap,
-made into a shared_ptr and added to an OBReaction (made by deleting pOb if it is a OBMol
+and added to an OBReaction (made by deleting pOb if it is a OBMol
 and assigning pOb to a new OBReaction. The OBMol is marked as Used.
 When the reaction is complete it is output via AddChemObject().
 At the end, any OBMol in the map not marked as Used is output as an OBMol.
@@ -291,7 +294,8 @@ bool ChemDrawBinaryXFormat::TopLevelParse
 
     else if(tag == kCDXObj_ReactionStep && readReactions)
     {
-      OBReaction* pReact = new OBReaction;
+      OBMol* pReact = new OBMol;
+      pReact->SetIsReaction();
       ok = DoReaction(cdxr, pReact);
       // Output OBReaction and continue 
       if(pReact)
@@ -321,10 +325,11 @@ bool ChemDrawBinaryXFormat::TopLevelParse
   return true;
 }
 ///////////////////////////////////////////////////////////////////////
-bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
+bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBMol* pReact)
 {
   CDXTag tag;
   CDXObjectID id;
+  OBReactionFacade facade(pReact);
   while( (tag = cdxr.ReadNext()) )
   {
     if(tag ==	kCDXProp_ReactionStep_Reactants)
@@ -337,20 +342,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
           {
-            // If there is a product with same ID,
-            // clone it since this will be deleted in WriteChemObject
-            if (_lastProdId && _lastProdId == id)
-            {
-              OBMol* pmol = new OBMol(*molvec[i]);
-              // Mark as used
-              pmol->SetFlags(molvec[i]->GetFlags());
-              pReact->AddReactant(obsharedptr<OBMol>(pmol));
-            }
-
-            else
-            {
-              pReact->AddReactant(obsharedptr<OBMol>(molvec[i]));
-            }
+            facade.AddComponent(molvec[i], REACTANT);
           }
       }
     }
@@ -364,7 +356,7 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
         for(unsigned i=0;i<molvec.size();++i)
           if(strcmp(molvec[i]->GetTitle(),"justplus"))
           {
-            pReact->AddProduct(obsharedptr<OBMol>(molvec[i]));
+            facade.AddComponent(molvec[i], PRODUCT);
             _lastProdId = id;
           }
       }
@@ -372,8 +364,8 @@ bool ChemDrawBinaryXFormat::DoReaction(CDXReader& cdxr, OBReaction* pReact)
     else if(tag==kCDXProp_ReactionStep_Arrows)
     {
       READ_INT32(cdxr.data(),id);
-      if(LookupGraphic(id)==equilArrow)
-        pReact->SetReversible();
+      //if(LookupGraphic(id)==equilArrow) // TODO? Store reversibility somehow?
+      //  pReact->SetReversible();
     }
   }
   return true;
@@ -452,10 +444,20 @@ bool ChemDrawBinaryXFormat::DoFragment(CDXReader& cdxr, OBMol* pmol)
   pmol->EndModify();
 
   //Expand any aliases after molecule constructed
+  //Need to save aliases in list first and expand later
+  vector<OBAtom*> aliasatoms;
   for(int idx=1; idx<=pmol->NumAtoms();++idx)
   {
     OBAtom* pAtom = pmol->GetAtom(idx);
     AliasData* ad = dynamic_cast<AliasData*>(pAtom->GetData(AliasDataType));
+    if(ad && !ad->IsExpanded())
+      aliasatoms.push_back(pAtom);
+  }
+  for(vector<OBAtom*>::iterator vit=aliasatoms.begin();
+      vit!=aliasatoms.end(); ++vit)
+  {
+    int idx = (*vit)->GetIdx();
+    AliasData* ad = dynamic_cast<AliasData*>((*vit)->GetData(AliasDataType));
     if(ad && !ad->IsExpanded())
       ad->Expand(*pmol, idx); //Make chemically meaningful, if possible.
   }
@@ -466,13 +468,15 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
        map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown)
 {
   CDXTag tag;
+  std::vector<OBAtom*> handleImplicitCarbons;
   while((tag = cdxr.ReadNext(objectsOnly)))
   {
     if(tag==kCDXObj_Node)
     {
       unsigned nodeID = cdxr.CurrentID();
       bool isAlias=false, hasElement=false;
-      UINT16 atnum=-1, spin=0;
+      bool hasNumHs = false;
+      UINT16 atnum=-1, spin=0, numHs=0;
       int x, y, charge=0, iso=0;
       string aliastext;
 
@@ -511,6 +515,8 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
           READ_INT16(cdxr.data(),iso);
           break;
         case kCDXProp_Atom_NumHydrogens:
+          READ_INT16(cdxr.data(), numHs);
+          hasNumHs = true;
           break;
         case kCDXProp_Atom_CIPStereochemistry:
           break;
@@ -558,6 +564,10 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
         if(atnum==0xffff)
           atnum = 6; //atoms are C by default
         pAtom->SetAtomicNum(atnum);
+        if (hasNumHs)
+          pAtom->SetImplicitHCount(numHs);
+        else if (atnum==6)
+          handleImplicitCarbons.push_back(pAtom);
         pAtom->SetFormalCharge(charge);
         pAtom->SetIsotope(iso);
         pAtom->SetSpinMultiplicity(spin);
@@ -626,6 +636,12 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
       }
     }
   }
+  // Handle 'implicit carbons' by adjusting their valence with
+  // implicit hydrognes
+  for(vector<OBAtom*>::iterator vit=handleImplicitCarbons.begin();
+      vit!=handleImplicitCarbons.end(); ++vit)
+    OBAtomAssignTypicalImplicitHydrogens(*vit);
+
   return true;
 }
 

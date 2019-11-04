@@ -15,13 +15,20 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <openbabel/obmolecformat.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <openbabel/generic.h>
 #include <openbabel/kekulize.h>
 #include <openbabel/obfunctions.h>
+#include <openbabel/data.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel
 {
-
   //The routine WriteSmiOrderedMol2() in the original mol2.cpp is presumably
   //another output format, but was not made available in version 100.1.2, nor
   //is it here.
@@ -35,9 +42,10 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mol2",this, "chemical/x-mol2");
       OBConversion::RegisterFormat("ml2",this);
       OBConversion::RegisterFormat("sy2",this);
-      OBConversion::RegisterOptionParam("c", NULL, 0, OBConversion::INOPTIONS);
-      OBConversion::RegisterOptionParam("c", NULL, 0, OBConversion::OUTOPTIONS);
-      OBConversion::RegisterOptionParam("l", NULL, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("c", this, 0, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("c", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("l", this, 0, OBConversion::OUTOPTIONS);
+      OBConversion::RegisterOptionParam("u", this, 0, OBConversion::OUTOPTIONS);
     }
 
     virtual const char* Description() //required
@@ -45,10 +53,11 @@ namespace OpenBabel
       return
         "Sybyl Mol2 format\n"
         "Read Options e.g. -ac\n"
-        "  c               Read UCSF Dock scores saved in comments preceeding molecules\n\n"
+        "  c               Read UCSF Dock scores saved in comments preceding molecules\n\n"
         "Write Options e.g. -xl\n"
-        "  l               Output ignores residue information (only ligands)\n\n"
-        "  c               Write UCSF Dock scores saved in comments preceeding molecules\n\n";
+        "  l               Output ignores residue information (only ligands)\n"
+        "  c               Write UCSF Dock scores saved in comments preceding molecules\n"
+        "  u               Do not write formal charge information in UNITY records\n\n";
     };
 
     virtual const char* SpecificationURL()
@@ -78,7 +87,7 @@ namespace OpenBabel
   {
     if (queryatom->GetAtomicNum() != OBElements::Sulfur)
       return(false);
-    if (queryatom->GetHvyValence() != 1)
+    if (queryatom->GetHvyDegree() != 1)
       return(false);
 
     OBAtom *atom = NULL;
@@ -102,10 +111,6 @@ namespace OpenBabel
     return(true);
   }
 
-  static unsigned int TotalNumberOfBonds(OBAtom* atom)
-  {
-    return atom->GetImplicitHCount() + atom->GetValence();
-  }
   static bool IsOxygenOrSulfur(OBAtom *atom)
   {
     switch (atom->GetAtomicNum()) {
@@ -134,6 +139,18 @@ namespace OpenBabel
     return OBElements::GetAtomicNum(symbol);
   }
 
+  //read from ifs until next rti is found and return it
+  static string read_until_rti(istream & ifs) 
+  {
+      char buffer[BUFF_SIZE];
+      for (;;)
+      {
+        if (!ifs.getline(buffer,BUFF_SIZE))
+          return "";
+        if (!strncmp(buffer,"@<TRIPOS>",9))
+          return string(buffer);
+      }      
+  }
   /////////////////////////////////////////////////////////////////
   bool MOL2Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
@@ -154,6 +171,8 @@ namespace OpenBabel
     vector<string> vstr;
     int len;
 
+    // Prevent reperception
+    mol.SetChainsPerceived();
 
     mol.BeginModify();
 
@@ -250,6 +269,7 @@ namespace OpenBabel
     int elemno, resnum = -1;
     int isotope = 0;
     bool has_explicit_hydrogen = false;
+    bool has_residue_information = false;
 
     ttab.SetFromType("SYB");
     for (i = 0;i < natoms;i++)
@@ -356,6 +376,7 @@ namespace OpenBabel
         if (resnum != -1 && resnum != 0 &&
             strlen(resname) != 0 && strncmp(resname,"<1>", 3) != 0)
           {
+            has_residue_information = true;
             OBResidue *res  = (mol.NumResidues() > 0) ?
               mol.GetResidue(mol.NumResidues()-1) : NULL;
             if (res == NULL || res->GetName() != resname ||
@@ -380,14 +401,39 @@ namespace OpenBabel
           } // end adding residue info
       }
 
-    for (;;)
-      {
-        if (!ifs.getline(buffer,BUFF_SIZE))
-          return(false);
-        str = buffer;
-        if (!strncmp(buffer,"@<TRIPOS>BOND",13))
-          break;
-      }
+    string nextrti;
+    do { nextrti = read_until_rti(ifs); } 
+    while(nextrti != "@<TRIPOS>UNITY_ATOM_ATTR" && nextrti != "@<TRIPOS>BOND" && nextrti.length() > 0);
+
+    if(nextrti == "@<TRIPOS>UNITY_ATOM_ATTR")
+    { //read in formal charge information, must be done before Kekulization
+        int aid = 0, num = 0;
+        while (ifs.peek() != '@' && ifs.getline(buffer,BUFF_SIZE))
+        {
+          sscanf(buffer,"%d %d",&aid, &num);
+          for(int i = 0; i < num; i++) 
+          {
+            if (!ifs.getline(buffer,BUFF_SIZE))
+              return(false);
+            if(strncmp(buffer, "charge", 6) == 0)
+            {
+              int charge = 0;
+              sscanf(buffer,"%*s %d",&charge);
+              if(aid <= mol.NumAtoms()) 
+              {
+                OBAtom *atom = mol.GetAtom(aid);
+                atom->SetFormalCharge(charge);
+              }
+            }
+          }
+        }
+    }
+
+    while(nextrti != "@<TRIPOS>BOND" && nextrti.length() > 0)
+      nextrti = read_until_rti(ifs);
+
+    if(nextrti != "@<TRIPOS>BOND")
+      return false;
 
     int start, end;
     bool needs_kekulization = false;
@@ -426,7 +472,7 @@ namespace OpenBabel
 
     if (has_explicit_hydrogen) {
       FOR_ATOMS_OF_MOL(atom, mol) {
-        unsigned int total_valence = TotalNumberOfBonds(&*atom);
+        unsigned int total_valence = atom->GetTotalDegree();
         switch (atom->GetAtomicNum()) {
         case 8:
           if (total_valence != 1) continue;
@@ -453,7 +499,7 @@ namespace OpenBabel
       FOR_ATOMS_OF_MOL(atom, mol) {
         OBAtom* oxygenOrSulfur = &*atom;
         // Look first for a terminal O/S
-        if (!IsOxygenOrSulfur(oxygenOrSulfur) || TotalNumberOfBonds(oxygenOrSulfur) != 1) continue;
+        if (!IsOxygenOrSulfur(oxygenOrSulfur) || oxygenOrSulfur->GetTotalDegree() != 1) continue;
         OBAtomBondIter bitA(oxygenOrSulfur);
         OBBond *bondA = &*bitA;
         if (!bondA->IsAromatic()) continue;
@@ -466,18 +512,19 @@ namespace OpenBabel
         FOR_BONDS_OF_ATOM(bitB, carbon) {
           if (&*bitB == bondA || !bitB->IsAromatic()) continue;
           OBAtom* nbr = bitB->GetNbrAtom(carbon);
-          if (IsOxygenOrSulfur(nbr) && TotalNumberOfBonds(nbr) == 1) {
+          if (IsOxygenOrSulfur(nbr) && nbr->GetTotalDegree() == 1) {
             otherOxygenOrSulfur = nbr;
             bondB = &*bitB;
           }
         }
+        if(otherOxygenOrSulfur->GetFormalCharge() != 0) continue; //formal charge already set on one
         if (!otherOxygenOrSulfur) continue;
 
         // Now set as C(=O)O
-        bondA->UnsetAromatic();
+        bondA->SetAromatic(false);
         oxygenOrSulfur->SetFormalCharge(-1);
 
-        bondB->UnsetAromatic();
+        bondB->SetAromatic(false);
         bondB->SetBondOrder(2);
       }
 
@@ -507,6 +554,9 @@ namespace OpenBabel
     // Suggestion by Liu Zhiguo 2008-01-26
     // Mol2 files define atom types -- there is no need to re-perceive
     mol.SetAtomTypesPerceived();
+
+    if (has_residue_information)
+      mol.SetChainsPerceived();
 
     if (!has_explicit_hydrogen) {
       // Guess how many hydrogens are present on each atom based on typical valencies
@@ -560,6 +610,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
     bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS)!=NULL;
+    bool skipFormalCharge = pConv->IsOption("u", OBConversion::OUTOPTIONS)!=NULL;
 
     //The old code follows....
     string str,str1;
@@ -635,6 +686,7 @@ namespace OpenBabel
     ttab.SetFromType("INT");
     ttab.SetToType("SYB");
 
+    bool hasFormalCharges = false;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
 
@@ -651,6 +703,7 @@ namespace OpenBabel
         str = atom->GetType();
         ttab.Translate(str1,str);
 
+        if (atom->GetFormalCharge() != 0) hasFormalCharges = true;
         //
         //  Use original atom names if there are residues
         //
@@ -673,10 +726,25 @@ namespace OpenBabel
         ofs << buffer << endl;
       }
 
+    //store formal charge info; put before bonds so we don't have
+    //to read past the end of the molecule to realize it is there
+    if(hasFormalCharges && !skipFormalCharge) {
+      //dkoes - to enable roundtriping of charges
+      ofs << "@<TRIPOS>UNITY_ATOM_ATTR\n";
+      for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
+      {
+        int charge = atom->GetFormalCharge();
+        if (charge != 0) 
+        {
+          ofs << atom->GetIdx() << " 1\n"; //one attribute
+          ofs << "charge " << charge << "\n"; //namely charge
+        }
+      }
+    }
+
     ofs << "@<TRIPOS>BOND" << endl;
     OBBond *bond;
     vector<OBBond*>::iterator j;
-    OBSmartsPattern pat;
     string s1, s2;
     for (bond = mol.BeginBond(j);bond;bond = mol.NextBond(j))
       {
@@ -687,7 +755,7 @@ namespace OpenBabel
         else if (bond->IsAmide())
           strcpy(label,"am");
         else
-          snprintf(label,BUFF_SIZE,"%d",bond->GetBO());
+          snprintf(label,BUFF_SIZE,"%d",bond->GetBondOrder());
 
         snprintf(buffer, BUFF_SIZE,"%6d %5d %5d   %2s",
                  bond->GetIdx()+1,bond->GetBeginAtomIdx(),bond->GetEndAtomIdx(),

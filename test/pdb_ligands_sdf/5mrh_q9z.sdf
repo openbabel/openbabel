@@ -1,0 +1,122 @@
+5MRH_Q9Z_A_805
+  RCSB PDB12061719053D
+Coordinates from PDB:5MRH:A:805 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -28.7180   39.2740   11.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9020   40.4540   12.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6510   41.5840   11.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6000   39.9280   13.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6000   40.9430   14.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.7510   39.3310   14.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.8500   39.3670   13.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.9140   40.3990   14.3050   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.8210   40.6150   13.0580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.6380   41.2680   13.4280   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.6220   38.4730   13.4570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  7  1  0  0  0  0
+ 10  8  1  0  0  0  0
+ 11  7  2  0  0  0  0
+  7  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  5  1  0  0  0  0
+  8  6  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C07
+A    7
+C08
+A    8
+N06
+A    9
+N10
+A   10
+N11
+A   11
+O09
+M  END
+>  <InstanceId>
+5MRH_Q9Z_A_805
+
+>  <ChemCompId>
+Q9Z
+
+>  <PdbId>
+5MRH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+805
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O
+
+>  <Name>
+3-(3-methylbutyl)-4~{H}-1,2,3-triazol-5-one
+
+>  <SystematicName>
+3-(3-methylbutyl)-4~{H}-1,2,3-triazol-5-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N3 O
+
+>  <MolecularWeight>
+155.198
+
+>  <ModifiedDate>
+2017-05-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13N3O/c1-6(2)3-4-10-5-7(11)8-9-10/h6H,3-5H2,1-2H3
+
+>  <InChIKey>
+NRFSJPLMHMLGTM-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)CCN1CC(=O)N=N1
+
+$$$$

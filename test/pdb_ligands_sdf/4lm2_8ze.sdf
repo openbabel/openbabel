@@ -1,0 +1,127 @@
+4LM2_8ZE_A_900
+  RCSB PDB12061713353D
+Coordinates from PDB:4LM2:A:900 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    5.3340   12.2930   48.0430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2710   12.9400   47.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4550   12.8250   45.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0880   11.6930   45.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2640   11.5670   43.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8050   12.5800   43.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9780   12.4500   41.7980   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1540   13.2160   40.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9790   14.6500   41.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7400   14.6830   42.8160   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1670   13.7210   43.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9890   13.8530   45.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  6 11  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 12  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+C8
+A    9
+C9
+A   10
+O10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+4LM2_8ZE_A_900
+
+>  <ChemCompId>
+8ZE
+
+>  <PdbId>
+4LM2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+2,3-dihydro-1,4-benzodioxin-6-ylmethanol
+
+>  <SystematicName>
+2,3-dihydro-1,4-benzodioxin-6-ylmethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 O3
+
+>  <MolecularWeight>
+166.174
+
+>  <ModifiedDate>
+2014-02-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10O3/c10-6-7-1-2-8-9(5-7)12-4-3-11-8/h1-2,5,10H,3-4,6H2
+
+>  <InChIKey>
+FFLHNBGNAWYMRH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1CO)OCCO2
+
+$$$$

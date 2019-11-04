@@ -1,0 +1,125 @@
+1ED6_ILO_A_1765
+  RCSB PDB12061702223D
+Coordinates from PDB:1ED6:A:1765 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+    7.5630   15.0170   35.2200   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0490   15.6620   33.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9900   14.6280   32.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6280   13.2350   33.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2240   12.3020   32.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7370   12.1720   32.1990   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9610   11.5750   31.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4320   10.9590   30.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6960   11.5690   31.5160   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2270   16.8930   33.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2930   17.2480   34.3760   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5160   17.5610   32.6230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD
+A    6
+NE
+A    7
+CZ
+A    8
+CH1
+A    9
+NH2
+A   10
+C
+A   11
+OA1
+A   12
+OA2
+M  END
+>  <InstanceId>
+1ED6_ILO_A_1765
+
+>  <ChemCompId>
+ILO
+
+>  <PdbId>
+1ED6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1765
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O2
+
+>  <Name>
+N5-IMINOETHYL-L-ORNITHINE
+
+>  <SystematicName>
+(2S)-2-amino-5-(ethanimidoylamino)pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 N3 O2
+
+>  <MolecularWeight>
+173.213
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15N3O2/c1-5(8)10-4-2-3-6(9)7(11)12/h6H,2-4,9H2,1H3,(H2,8,10)(H,11,12)/t6-/m0/s1
+
+>  <InChIKey>
+UYZFAUAYFLEHRC-LURJTMIESA-N
+
+>  <SMILES>
+CC(=N)NCCC[C@@H](C(=O)O)N
+
+$$$$

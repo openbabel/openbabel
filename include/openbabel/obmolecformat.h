@@ -32,20 +32,18 @@ GNU General Public License for more details.
   #include <boost/tr1/unordered_map.hpp>
 #endif
 
-#include <typeinfo>
-
-#include <openbabel/mol.h>
-#ifdef HAVE_SHARED_POINTER
-  #include <openbabel/reaction.h>
-#endif
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
 #include <typeinfo>
-#include <openbabel/descriptor.h>
-#include <openbabel/elements.h>
-#include <set>
+#include <cstdlib>
 
 namespace OpenBabel {
+
+  class OBMol;
+  class OBDescriptor;
+#ifdef HAVE_SHARED_POINTER
+  class OBReaction;
+#endif
 
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.

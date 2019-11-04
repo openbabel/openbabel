@@ -1,0 +1,123 @@
+4YJH_96B_A_401
+  RCSB PDB12061716263D
+Coordinates from PDB:4YJH:A:401 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -22.7270  -14.6350   10.8210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2990  -15.9550   10.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5620  -16.8030   10.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7430  -15.9040   10.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0960  -14.8320   11.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8850  -13.6000   11.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2450  -12.3770   11.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.2660  -13.6800   11.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.0070  -12.5390   12.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.3690  -11.3180   12.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9850  -11.2340   12.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  5  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  7 11  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+N
+A    2
+C3
+A    3
+C
+A    4
+C1
+A    5
+C2
+A    6
+C4
+A    7
+C9
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+M  END
+>  <InstanceId>
+4YJH_96B_A_401
+
+>  <ChemCompId>
+96B
+
+>  <PdbId>
+4YJH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N
+
+>  <Name>
+(2R)-2-phenylpyrrolidine
+
+>  <SystematicName>
+(2R)-2-phenylpyrrolidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N
+
+>  <MolecularWeight>
+147.217
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13N/c1-2-5-9(6-3-1)10-7-4-8-11-10/h1-3,5-6,10-11H,4,7-8H2/t10-/m1/s1
+
+>  <InChIKey>
+JUTDHSGANMHVIC-SNVBAGLBSA-N
+
+>  <SMILES>
+c1ccc(cc1)[C@H]2CCCN2
+
+$$$$

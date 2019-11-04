@@ -1,0 +1,133 @@
+1W6J_C14_A_1735
+  RCSB PDB12061704303D
+Coordinates from PDB:1W6J:A:1735 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   14.6870   71.0080    0.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1340   70.6830   -0.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0150   70.8170   -1.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8440   69.5780   -2.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4370   69.5030   -3.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5000   68.7750   -2.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0460   68.8340   -2.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2730   67.6350   -2.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8750   67.7420   -2.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2480   66.4590   -2.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8630   66.5240   -2.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3570   65.2390   -1.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2870   65.3830   -0.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0140   64.1070   -0.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+1W6J_C14_A_1735
+
+>  <ChemCompId>
+C14
+
+>  <PdbId>
+1W6J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1735
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14
+
+>  <Name>
+TETRADECANE
+
+>  <SystematicName>
+tetradecane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H30
+
+>  <MolecularWeight>
+198.388
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H30/c1-3-5-7-9-11-13-14-12-10-8-6-4-2/h3-14H2,1-2H3
+
+>  <InChIKey>
+BGHCVCJVXZWKCC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCCC
+
+$$$$

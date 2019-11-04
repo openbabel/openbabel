@@ -1,0 +1,147 @@
+5BZL_4WO_A_203
+  RCSB PDB12061717013D
+Coordinates from PDB:5BZL:A:203 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   12.5300   -6.0650    0.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0250   -4.7940    0.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1450   -4.3150   -0.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6840   -3.4060   -1.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9080   -2.8710   -2.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5620   -3.2340   -2.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0050   -4.1680   -1.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7040   -4.5350   -1.9660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7940   -4.7100   -0.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2480   -5.6430    0.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1140   -5.9290    1.3040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7570   -7.1410    2.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4550   -6.9580    2.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3350   -7.3940    1.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5640   -8.0640    0.8800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0980   -6.9760    2.2480   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1940   -7.3530    1.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  9  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 15 14  2  0  0  0  0
+  1 11  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAJ
+A    2
+CAH
+A    3
+CAO
+A    4
+CAF
+A    5
+CAD
+A    6
+CAE
+A    7
+CAN
+A    8
+NAB
+A    9
+CAP
+A   10
+CAK
+A   11
+NAQ
+A   12
+CAI
+A   13
+CAG
+A   14
+CAM
+A   15
+OAC
+A   16
+OAL
+A   17
+CAA
+M  END
+>  <InstanceId>
+5BZL_4WO_A_203
+
+>  <ChemCompId>
+4WO
+
+>  <PdbId>
+5BZL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O2
+
+>  <Name>
+methyl 3-(8-amino-3,4-dihydroisoquinolin-2(1H)-yl)propanoate
+
+>  <SystematicName>
+methyl 3-(8-azanyl-3,4-dihydro-1H-isoquinolin-2-yl)propanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H18 N2 O2
+
+>  <MolecularWeight>
+234.294
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H18N2O2/c1-17-13(16)6-8-15-7-5-10-3-2-4-12(14)11(10)9-15/h2-4H,5-9,14H2,1H3
+
+>  <InChIKey>
+HYEBSCFAHVBELO-UHFFFAOYSA-N
+
+>  <SMILES>
+COC(=O)CCN1CCc2cccc(c2C1)N
+
+$$$$

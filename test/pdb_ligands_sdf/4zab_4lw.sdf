@@ -1,0 +1,126 @@
+4ZAB_4LW_A_606
+  RCSB PDB12061716363D
+Coordinates from PDB:4ZAB:A:606 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   16.8520   11.6990   24.5670   F 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4930   12.7700   25.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1320   14.0260   24.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0070   14.0180   23.7760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8420   15.0090   24.5370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3900   12.6590   26.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8060   11.4190   26.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5180   11.5880   27.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9630   10.4860   28.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7830    9.2190   28.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0430    8.9790   26.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6120   10.2050   26.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+ 12  7  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+F1
+A    2
+CA
+A    3
+C
+A    4
+OXT
+A    5
+O
+A    6
+CB
+A    7
+CG
+A    8
+CD1
+A    9
+CE1
+A   10
+CZ
+A   11
+CE2
+A   12
+CD2
+M  END
+>  <InstanceId>
+4ZAB_4LW_A_606
+
+>  <ChemCompId>
+4LW
+
+>  <PdbId>
+4ZAB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+606
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2 F
+
+>  <Name>
+(2Z)-2-fluoro-3-phenylprop-2-enoic acid
+
+>  <SystematicName>
+(Z)-2-fluoranyl-3-phenyl-prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 F O2
+
+>  <MolecularWeight>
+166.149
+
+>  <ModifiedDate>
+2015-06-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7FO2/c10-8(9(11)12)6-7-4-2-1-3-5-7/h1-6H,(H,11,12)/b8-6-
+
+>  <InChIKey>
+QONCEXMULRJPPY-VURMDHGXSA-N
+
+>  <SMILES>
+c1ccc(cc1)/C=C(/C(=O)O)\F
+
+$$$$

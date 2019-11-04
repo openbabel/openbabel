@@ -1,0 +1,131 @@
+5ETB_5RO_A_801
+  RCSB PDB12061717323D
+Coordinates from PDB:5ETB:A:801 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    6.6570   -9.5780    7.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3530  -10.0210    5.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2540   -9.4950    5.2210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9730   -9.9550    3.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8040  -10.9150    3.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8500  -11.3900    4.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1170  -10.9420    5.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2060  -11.5700    5.7380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6270  -12.4050    4.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7910  -12.2920    3.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9250  -13.0040    2.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0910  -13.0110    1.7150   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2040  -13.8410    2.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  2  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 10  6  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  4  3  1  0  0  0  0
+  6  7  2  0  0  0  0
+  9  8  1  0  0  0  0
+  3  2  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAB
+A    2
+CAJ
+A    3
+CAE
+A    4
+CAD
+A    5
+CAF
+A    6
+CAL
+A    7
+CAM
+A    8
+NAH
+A    9
+CAG
+A   10
+CAK
+A   11
+CAI
+A   12
+OAC
+A   13
+CAA
+M  END
+>  <InstanceId>
+5ETB_5RO_A_801
+
+>  <ChemCompId>
+5RO
+
+>  <PdbId>
+5ETB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O
+
+>  <Name>
+1-(7-methyl-1~{H}-indol-3-yl)ethanone
+
+>  <SystematicName>
+1-(7-methyl-1~{H}-indol-3-yl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O
+
+>  <MolecularWeight>
+173.211
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO/c1-7-4-3-5-9-10(8(2)13)6-12-11(7)9/h3-6,12H,1-2H3
+
+>  <InChIKey>
+LJRVPYJAWOKMGL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc2c1[nH]cc2C(=O)C
+
+$$$$

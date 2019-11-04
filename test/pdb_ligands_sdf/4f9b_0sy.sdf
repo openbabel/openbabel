@@ -1,0 +1,144 @@
+4F9B_0SY_A_601
+  RCSB PDB12061712303D
+Coordinates from PDB:4F9B:A:601 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+    7.6460   12.0950   30.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1720   13.2370   29.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6700   14.4700   29.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5360   14.6870   30.1060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3980   15.5510   29.1650   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7790   15.3290   28.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2450   13.8600   28.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3890   12.9240   29.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6300   11.6190   29.4850   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5560   11.1160   30.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3490    9.8160   30.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1050    9.3610   30.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8840    8.0120   31.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9140    7.0670   31.0180   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1820    7.5300   30.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3830    8.8850   30.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 15 16  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  1 10  2  0  0  0  0
+  1  2  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  5  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+A    1
+CAF
+A    2
+CAO
+A    3
+CAL
+A    4
+OAA
+A    5
+NAJ
+A    6
+CAG
+A    7
+CAH
+A    8
+CAP
+A    9
+NAK
+A   10
+CAN
+A   11
+CAM
+A   12
+CAD
+A   13
+CAB
+A   14
+NAI
+A   15
+CAC
+A   16
+CAE
+M  END
+>  <InstanceId>
+4F9B_0SY_A_601
+
+>  <ChemCompId>
+0SY
+
+>  <PdbId>
+4F9B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O
+
+>  <Name>
+2-(pyridin-4-yl)-1,5,6,7-tetrahydro-4H-pyrrolo[3,2-c]pyridin-4-one
+
+>  <SystematicName>
+2-pyridin-4-yl-1,5,6,7-tetrahydropyrrolo[3,2-c]pyridin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H11 N3 O
+
+>  <MolecularWeight>
+213.235
+
+>  <ModifiedDate>
+2012-10-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H11N3O/c16-12-9-7-11(8-1-4-13-5-2-8)15-10(9)3-6-14-12/h1-2,4-5,7,15H,3,6H2,(H,14,16)
+
+>  <InChIKey>
+DKXHSOUZPMHNIZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnccc1c2cc3c([nH]2)CCNC3=O
+
+$$$$

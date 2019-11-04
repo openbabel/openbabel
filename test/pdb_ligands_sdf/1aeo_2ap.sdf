@@ -1,0 +1,107 @@
+1AEO_2AP_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEO:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+  -10.7730   53.9420  110.9010   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -11.4900   52.9170  110.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8800   51.6410  110.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6100   51.4810  110.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9040   52.5750  111.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5110   53.7990  111.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7200   53.1560  109.8820   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N
+M  END
+>  <InstanceId>
+1AEO_2AP_A_296
+
+>  <ChemCompId>
+2AP
+
+>  <PdbId>
+1AEO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2
+
+>  <Name>
+2-AMINOPYRIDINE
+
+>  <SystematicName>
+pyridin-1-ium-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N2
+
+>  <MolecularWeight>
+95.122
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2/c6-5-3-1-2-4-7-5/h1-4H,(H2,6,7)/p+1
+
+>  <InChIKey>
+ICSNLGPSRYBMBD-UHFFFAOYSA-O
+
+>  <SMILES>
+c1cc[nH+]c(c1)N
+
+$$$$

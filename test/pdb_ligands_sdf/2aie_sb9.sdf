@@ -1,0 +1,134 @@
+2AIE_SB9_P_501
+  RCSB PDB12061705003D
+Coordinates from PDB:2AIE:P:501 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   23.8560   -5.2880    8.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3230   -4.9200    7.7430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4540   -4.1500    7.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2000   -3.6970    8.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7780   -4.0390   10.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4910   -4.9140   10.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6160   -6.1290    8.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8630   -3.8130    6.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8510   -4.8250    5.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5010   -4.3330    4.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8400   -3.8060    4.5590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9280   -4.6730    4.5470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0050   -2.4850    4.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0810   -1.9490    5.0490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C11
+A    9
+C12
+A   10
+C15
+A   11
+N18
+A   12
+O21
+A   13
+C23
+A   14
+O24
+M  END
+>  <InstanceId>
+2AIE_SB9_P_501
+
+>  <ChemCompId>
+SB9
+
+>  <PdbId>
+2AIE
+
+>  <ChainId>
+P
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2
+
+>  <Name>
+HYDROXY[3-(6-METHYLPYRIDIN-2-YL)PROPYL]FORMAMIDE
+
+>  <SystematicName>
+N-hydroxy-N-[3-(6-methylpyridin-2-yl)propyl]methanamide
+
+>  <Synonyms>
+SB-505684
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2 O2
+
+>  <MolecularWeight>
+194.23
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2O2/c1-9-4-2-5-10(11-9)6-3-7-12(14)8-13/h2,4-5,8,14H,3,6-7H2,1H3
+
+>  <InChIKey>
+FJYUGRZKJXCRFF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(n1)CCCN(C=O)O
+
+$$$$

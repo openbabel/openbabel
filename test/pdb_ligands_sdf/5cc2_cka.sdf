@@ -1,0 +1,139 @@
+5CC2_CKA_A_301
+  RCSB PDB12061717043D
+Coordinates from PDB:5CC2:A:301 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   13.4810    4.0170   23.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8290    3.8580   23.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5900    5.0010   23.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0430    6.2730   23.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6690    6.4230   23.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7610    7.8590   23.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3130    9.3380   23.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0750    7.6590   23.3350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8750    5.2910   23.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9380    6.8080   23.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4290    5.4450   23.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7160    4.4670   24.2830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2930    4.8030   22.7440  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2300   10.1370   23.2090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1140    9.5750   23.7720   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 14  7  2  0  0  0  0
+  8  5  1  0  0  0  0
+  8  6  1  0  0  0  0
+  5  9  2  0  0  0  0
+  2  1  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7 15  1  0  0  0  0
+  6 10  2  0  0  0  0
+  9  1  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N1
+A    9
+C3
+A   10
+C1
+A   11
+C2
+A   12
+O1
+A   13
+CL1
+A   14
+O2
+A   15
+O3
+M  END
+>  <InstanceId>
+5CC2_CKA_A_301
+
+>  <ChemCompId>
+CKA
+
+>  <PdbId>
+5CC2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3 Cl
+
+>  <Name>
+7-Chlorokynurenic acid
+
+>  <SystematicName>
+7-chloranyl-4-oxidanylidene-1H-quinoline-2-carboxylic acid
+
+>  <Synonyms>
+7-CKA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H6 Cl N O3
+
+>  <MolecularWeight>
+223.613
+
+>  <ModifiedDate>
+2015-12-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H6ClNO3/c11-5-1-2-6-7(3-5)12-8(10(14)15)4-9(6)13/h1-4H,(H,12,13)(H,14,15)
+
+>  <InChIKey>
+UAWVRVFHMOSAPU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)NC(=CC2=O)C(=O)O
+
+$$$$

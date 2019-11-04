@@ -1,0 +1,114 @@
+4WS7_5UC_A_301
+  RCSB PDB12061716033D
+Coordinates from PDB:4WS7:A:301 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  141.6020    1.3400   80.8300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  140.7490    1.3930   79.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  140.2590    2.5550   79.3220   N 0  0  0  0  0  0  0  0  0  0  0  0
+  139.3080    2.5180   78.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  138.7920    3.5560   77.7970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  140.3600    0.1990   79.3880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  139.4480    0.1080   78.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  138.9350    1.2490   77.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  137.6870    0.9100   76.6180  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  5  4  2  0  0  0  0
+  8  4  1  0  0  0  0
+  8  7  2  0  0  0  0
+  4  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+A    1
+O2
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+O4
+A    6
+N1
+A    7
+C6
+A    8
+C5
+A    9
+CL5
+M  END
+>  <InstanceId>
+4WS7_5UC_A_301
+
+>  <ChemCompId>
+5UC
+
+>  <PdbId>
+4WS7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O2 Cl
+
+>  <Name>
+5-chloropyrimidine-2,4(1H,3H)-dione
+
+>  <SystematicName>
+5-chloranyl-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H3 Cl N2 O2
+
+>  <MolecularWeight>
+146.532
+
+>  <ModifiedDate>
+2015-07-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H3ClN2O2/c5-2-1-6-4(9)7-3(2)8/h1H,(H2,6,7,8,9)
+
+>  <InChIKey>
+ZFTBZKVVGZNMJR-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1)Cl
+
+$$$$

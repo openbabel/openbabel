@@ -1,0 +1,123 @@
+1O9U_ADZ_A_1386
+  RCSB PDB12061703313D
+Coordinates from PDB:1O9U:A:1386 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   -8.6590   43.3590  134.6350   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8250   42.7230  134.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9650   41.6380  135.1460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9030   41.5780  135.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4220   40.7130  137.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1420   39.6350  137.3930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2100   40.9830  137.6460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4260   42.0600  137.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8650   42.8950  136.3010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0580   42.6940  135.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0970   44.6040  133.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+N9
+A    2
+C8
+A    3
+N7
+A    4
+C5
+A    5
+C6
+A    6
+N6
+A    7
+N1
+A    8
+C2
+A    9
+N3
+A   10
+C4
+A   11
+C1'
+M  END
+>  <InstanceId>
+1O9U_ADZ_A_1386
+
+>  <ChemCompId>
+ADZ
+
+>  <PdbId>
+1O9U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1386
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5
+
+>  <Name>
+9-METHYL-9H-PURIN-6-AMINE
+
+>  <SystematicName>
+9-methylpurin-6-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N5
+
+>  <MolecularWeight>
+149.153
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N5/c1-11-3-10-4-5(7)8-2-9-6(4)11/h2-3H,1H3,(H2,7,8,9)
+
+>  <InChIKey>
+WRXCXOUDSPTXNX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1cnc2c1ncnc2N
+
+$$$$

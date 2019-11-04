@@ -1,0 +1,127 @@
+5D2T_6VP_A_301
+  RCSB PDB12061717123D
+Coordinates from PDB:5D2T:A:301 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+  -13.0960  -19.1550  -11.0360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8180  -19.6510  -10.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4680  -20.2740   -8.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7170  -19.6280   -7.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8760  -21.5310   -8.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6590  -22.1110  -10.0120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5290  -22.1520   -7.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7810  -21.5010   -6.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3730  -20.2420   -6.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6110  -19.6230   -5.2530   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -13.1880  -18.2820   -5.2420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2980  -20.2780   -3.9860   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  3  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  4  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+M  CHG  2  10   1  12  -1
+A    1
+NAA
+A    2
+CAE
+A    3
+CAJ
+A    4
+CAH
+A    5
+CAI
+A    6
+OAB
+A    7
+CAF
+A    8
+CAG
+A    9
+CAK
+A   10
+NAL
+A   11
+OAD
+A   12
+OAC
+M  END
+>  <InstanceId>
+5D2T_6VP_A_301
+
+>  <ChemCompId>
+6VP
+
+>  <PdbId>
+5D2T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O3
+
+>  <Name>
+5-nitro-2-oxidanyl-benzenecarbonitrile
+
+>  <SystematicName>
+5-nitro-2-oxidanyl-benzenecarbonitrile
+
+>  <Synonyms>
+2-hydroxy-5-nitrobenzonitrile
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 N2 O3
+
+>  <MolecularWeight>
+164.118
+
+>  <ModifiedDate>
+2016-09-02
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4N2O3/c8-4-5-3-6(9(11)12)1-2-7(5)10/h1-3,10H
+
+>  <InChIKey>
+MPQNPFJBRPRBFF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1[N+](=O)[O-])C#N)O
+
+$$$$

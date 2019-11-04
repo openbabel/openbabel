@@ -1,0 +1,118 @@
+1WS2_URN_A_900
+  RCSB PDB12061704343D
+Coordinates from PDB:1WS2:A:900 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   59.2320  -15.5080   10.6510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6850  -15.1560    9.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4910  -15.9930    8.8180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3110  -13.7680    9.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5000  -12.9280    9.9490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.8310  -13.3680    7.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5610  -12.1380    7.3010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6070  -14.2670    7.1160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9560  -15.5330    7.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.6660  -16.2210    6.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+N3
+A    4
+C5
+A    5
+N5
+A    6
+C6
+A    7
+N6
+A    8
+N1
+A    9
+C2
+A   10
+O2
+M  END
+>  <InstanceId>
+1WS2_URN_A_900
+
+>  <ChemCompId>
+URN
+
+>  <PdbId>
+1WS2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N4 O2
+
+>  <Name>
+5,6-DIAMINOPYRIMIDINE-2,4(1H,3H)-DIONE
+
+>  <SystematicName>
+5,6-diamino-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+5,6-DIAMINOURACIL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N4 O2
+
+>  <MolecularWeight>
+142.116
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N4O2/c5-1-2(6)7-4(10)8-3(1)9/h5H2,(H4,6,7,8,9,10)
+
+>  <InChIKey>
+BBTNLADSUVOPPN-UHFFFAOYSA-N
+
+>  <SMILES>
+C1(=C(NC(=O)NC1=O)N)N
+
+$$$$

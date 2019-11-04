@@ -1,0 +1,140 @@
+3MWI_B25_U_1244
+  RCSB PDB12061709493D
+Coordinates from PDB:3MWI:U:1244 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -29.3470  -17.3030    9.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8870  -16.3930   12.5820   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -26.3380  -17.2560   13.2420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2590  -16.6240    9.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.2680  -19.6120    9.7080   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7050  -15.2640   12.8720   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -27.4420  -16.3040   10.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.8690  -18.8390    7.5890   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7650  -16.6970   11.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.2830  -17.6960    8.6260   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9260  -17.4280   11.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6910  -17.6950   10.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.8870  -18.3880   10.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.2490  -18.3430    9.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.4890  -18.9760    8.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8 15  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10  1  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 15  5  1  0  0  0  0
+  4  1  2  0  0  0  0
+  4  7  1  0  0  0  0
+ 14 13  2  0  0  0  0
+  1 12  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9  2  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+M  CHG  2   2   1   6  -1
+A    1
+C1
+A    2
+N1
+A    3
+O1
+A    4
+C2
+A    5
+N2
+A    6
+O2
+A    7
+C3
+A    8
+N3
+A    9
+C4
+A   10
+N4
+A   11
+C5
+A   12
+C6
+A   13
+C7
+A   14
+C8
+A   15
+C9
+M  END
+>  <InstanceId>
+3MWI_B25_U_1244
+
+>  <ChemCompId>
+B25
+
+>  <PdbId>
+3MWI
+
+>  <ChainId>
+U
+
+>  <ResidueNumber>
+1244
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O2
+
+>  <Name>
+5-nitro-1H-indole-2-carboximidamide
+
+>  <SystematicName>
+5-nitro-1H-indole-2-carboximidamide
+
+>  <Synonyms>
+5-nitro-1H-indole-2-amidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N4 O2
+
+>  <MolecularWeight>
+204.185
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N4O2/c10-9(11)8-4-5-3-6(13(14)15)1-2-7(5)12-8/h1-4,12H,(H3,10,11)
+
+>  <InChIKey>
+ZFLOQYGDSBVASK-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/c1cc2cc(ccc2[nH]1)[N+](=O)[O-])\N
+
+$$$$

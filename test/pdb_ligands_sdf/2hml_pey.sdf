@@ -1,0 +1,136 @@
+2HMK_PEY_A_701
+  RCSB PDB12061705493D
+Coordinates from PDB:2HMK:A:701 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+   13.6300   52.4890   79.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2870   53.6160   80.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1390   53.5300   81.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3330   52.3480   82.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6760   51.2290   81.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8320   51.3010   80.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1720   50.1810   79.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3960   48.9880   80.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2170   48.9260   81.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8760   50.0360   82.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3110   50.2620   78.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6620   49.1450   77.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8550   47.9380   78.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7360   47.8460   79.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+2HMK_PEY_A_701
+
+>  <ChemCompId>
+PEY
+
+>  <PdbId>
+2HMK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14
+
+>  <Name>
+PHENANTHRENE
+
+>  <SystematicName>
+phenanthrene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H10
+
+>  <MolecularWeight>
+178.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H10/c1-3-7-13-11(5-1)9-10-12-6-2-4-8-14(12)13/h1-10H
+
+>  <InChIKey>
+YNPNZTXNASCQKK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ccc3c2cccc3
+
+$$$$

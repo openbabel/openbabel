@@ -1,0 +1,143 @@
+4YCY_4AO_A_401
+  RCSB PDB12061716253D
+Coordinates from PDB:4YCY:A:401 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -2.2740    8.5320   13.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8200    9.5010   12.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4400    9.6290   11.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1160    5.7830   12.9490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5120    8.8010   10.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9330    7.7750   11.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2410    5.0030   11.0650   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4290    5.9600   11.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6540    5.0700    9.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0990    8.9600    9.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3520    4.0740    9.2680   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3410    6.1150    9.0460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7190    6.5720   13.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9850    6.3730   14.8530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0340    6.9280   10.8450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3130    7.6330   12.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  9  1  0  0  0  0
+ 10  5  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  9  7  2  0  0  0  0
+  5  3  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 15  6  2  0  0  0  0
+ 15  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6 16  1  0  0  0  0
+  8  4  2  0  0  0  0
+  2  1  2  0  0  0  0
+ 16  1  1  0  0  0  0
+ 16 13  2  0  0  0  0
+  4 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+C10
+A   10
+C11
+A   11
+N3
+A   12
+N4
+A   13
+C2
+A   14
+O
+A   15
+N
+A   16
+C3
+M  END
+>  <InstanceId>
+4YCY_4AO_A_401
+
+>  <ChemCompId>
+4AO
+
+>  <PdbId>
+4YCY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C10 N5 O
+
+>  <Name>
+2-(4-ethoxy-8-methylquinazolin-2-yl)guanidine
+
+>  <SystematicName>
+2-(4-ethoxy-8-methyl-quinazolin-2-yl)guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H15 N5 O
+
+>  <MolecularWeight>
+245.28
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H15N5O/c1-3-18-10-8-6-4-5-7(2)9(8)15-12(16-10)17-11(13)14/h4-6H,3H2,1-2H3,(H4,13,14,15,16,17)
+
+>  <InChIKey>
+FIIINVTXWYOJPG-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOc1c2cccc(c2nc(n1)N=C(N)N)C
+
+$$$$

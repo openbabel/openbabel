@@ -1,0 +1,126 @@
+3FVF_1JZ_B_1
+  RCSB PDB12061708393D
+Coordinates from PDB:3FVF:B:1 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   10.2680   35.9920   -0.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7830   35.9470    3.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6480   34.5650    1.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2120   33.9730    2.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8770   34.0810    4.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1100   34.1850    5.8230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2920   34.6660    3.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1210   35.8530    1.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1840   36.5190    2.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6110   36.5090    0.2940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0060   34.6690   -0.8720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0230   36.7210   -1.9580   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  1  2  0  0  0  0
+ 11  1  1  0  0  0  0
+  1 10  1  0  0  0  0
+  9  2  2  0  0  0  0
+  7  2  1  0  0  0  0
+  3  8  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  7  2  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C10
+A    2
+C12
+A    3
+C8
+A    4
+C7
+A    5
+C5
+A    6
+O2
+A    7
+C6
+A    8
+C9
+A    9
+C11
+A   10
+N3
+A   11
+N4
+A   12
+N5
+M  END
+>  <InstanceId>
+3FVF_1JZ_B_1
+
+>  <ChemCompId>
+1JZ
+
+>  <PdbId>
+3FVF
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O
+
+>  <Name>
+1-[4-(hydroxymethyl)phenyl]guanidine
+
+>  <SystematicName>
+1-[4-(hydroxymethyl)phenyl]guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N3 O
+
+>  <MolecularWeight>
+165.192
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11N3O/c9-8(10)11-7-3-1-6(5-12)2-4-7/h1-4,12H,5H2,(H4,9,10,11)
+
+>  <InChIKey>
+JAFHTIHHRCEJDS-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/Nc1ccc(cc1)CO
+
+$$$$

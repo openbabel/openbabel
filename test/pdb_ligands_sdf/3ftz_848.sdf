@@ -1,0 +1,139 @@
+3FTZ_848_A_710
+  RCSB PDB12061708393D
+Coordinates from PDB:3FTZ:A:710 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   24.3580    1.6590    0.9140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9950    1.5070    2.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1290    2.4260    2.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4800    0.4330    2.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0750    0.3150    4.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2270    1.2390    4.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7400    2.2990    4.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3560   -0.4980    2.4090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4960   -0.7850    1.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7120   -0.1700    0.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9110    0.0360    1.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0040    0.5880    0.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8950    0.9110   -1.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7300    0.6880   -1.6710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6570    0.1680   -1.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  8  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  7  6  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 15 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C7
+A    5
+C6
+A    6
+C5
+A    7
+C4
+A    8
+O8
+A    9
+C9
+A   10
+C10
+A   11
+C15
+A   12
+C14
+A   13
+C13
+A   14
+N12
+A   15
+C11
+M  END
+>  <InstanceId>
+3FTZ_848_A_710
+
+>  <ChemCompId>
+848
+
+>  <PdbId>
+3FTZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+710
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O
+
+>  <Name>
+2-(pyridin-3-ylmethoxy)aniline
+
+>  <SystematicName>
+2-(pyridin-3-ylmethoxy)aniline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 N2 O
+
+>  <MolecularWeight>
+200.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2O/c13-11-5-1-2-6-12(11)15-9-10-4-3-7-14-8-10/h1-8H,9,13H2
+
+>  <InChIKey>
+NISBBHHUQZRGQA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)N)OCc2cccnc2
+
+$$$$

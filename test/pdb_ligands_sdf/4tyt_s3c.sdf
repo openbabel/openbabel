@@ -1,0 +1,138 @@
+4PVO_S3C_A_403
+  RCSB PDB12061714183D
+Coordinates from PDB:4PVO:A:403 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -24.7780   -9.0860   62.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0330  -10.1470   64.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3160   -8.0660   64.0980  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7480   -8.9460   63.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5940   -8.4240   62.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2850   -7.1220   62.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8520   -7.1840   60.5720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4470   -5.8560   59.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2140   -5.8400   58.7530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3290   -4.7960   60.6800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9310   -8.6030   59.6750   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9130   -8.4260   61.2740  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0470  -10.2870   63.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5050  -11.1510   62.6250  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1830  -10.8020   63.9790   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  8  2  0  0  0  0
+ 11  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  7  6  2  0  0  0  0
+ 12  1  1  0  0  0  0
+  6  5  1  0  0  0  0
+  1  5  2  0  0  0  0
+  1 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 13 15  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  2  2  0  0  0  0
+ 15  2  1  0  0  0  0
+A    1
+C10
+A    2
+C15
+A    3
+CL1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+O7
+A   10
+O8
+A   11
+S9
+A   12
+CL2
+A   13
+C12
+A   14
+CL3
+A   15
+C14
+M  END
+>  <InstanceId>
+4PVO_S3C_A_403
+
+>  <ChemCompId>
+S3C
+
+>  <PdbId>
+4PVO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2 S Cl3
+
+>  <Name>
+(2Z)-2-sulfanyl-3-(2,3,6-trichlorophenyl)prop-2-enoic acid
+
+>  <SystematicName>
+(Z)-2-sulfanyl-3-[2,3,6-tris(chloranyl)phenyl]prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H5 Cl3 O2 S
+
+>  <MolecularWeight>
+283.559
+
+>  <ModifiedDate>
+2014-11-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H5Cl3O2S/c10-5-1-2-6(11)8(12)4(5)3-7(15)9(13)14/h1-3,15H,(H,13,14)/b7-3-
+
+>  <InChIKey>
+ZCOCHUAGSBNGCP-CLTKARDFSA-N
+
+>  <SMILES>
+c1cc(c(c(c1Cl)/C=C(/C(=O)O)\S)Cl)Cl
+
+$$$$

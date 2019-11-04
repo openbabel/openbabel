@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #include <openbabel/distgeom.h>
 #include <openbabel/forcefield.h>
 
+#include <cstdlib> // needed for strtol and gcc 4.8
+
 namespace OpenBabel
 {
 
@@ -149,8 +151,10 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   // Initial cleanup for every level
   pFF->ConjugateGradients(iterations, 1.0e-4);
 
-  if (speed == 4)
+  if (speed == 4) {
+    pFF->UpdateCoordinates(*pmol);
     return true; // no conformer searching
+  }
 
   switch(speed) {
   case 1:

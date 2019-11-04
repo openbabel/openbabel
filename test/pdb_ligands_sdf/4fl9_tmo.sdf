@@ -1,0 +1,98 @@
+3EV5_TMO_A_905
+  RCSB PDB12061708303D
+Coordinates from PDB:3EV5:A:905 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+  -81.4120   -3.0860    6.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -80.4850   -3.2900    5.1470   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -79.2720   -3.9640    5.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -81.1320   -4.1240    4.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -80.1300   -1.9970    4.5690   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+M  CHG  2   2   1   5  -1
+A    1
+CAA
+A    2
+NAC
+A    3
+CAD
+A    4
+CAB
+A    5
+OAE
+M  END
+>  <InstanceId>
+3EV5_TMO_A_905
+
+>  <ChemCompId>
+TMO
+
+>  <PdbId>
+3EV5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+905
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O
+
+>  <Name>
+trimethylamine oxide
+
+>  <SystematicName>
+N,N-dimethylmethanamine oxide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H9 N O
+
+>  <MolecularWeight>
+75.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H9NO/c1-4(2,3)5/h1-3H3
+
+>  <InChIKey>
+UYPYRKYUKCHHIB-UHFFFAOYSA-N
+
+>  <SMILES>
+C[N+](C)(C)[O-]
+
+$$$$

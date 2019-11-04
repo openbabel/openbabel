@@ -1,0 +1,109 @@
+4YTU_LER_A_402
+  RCSB PDB12061716303D
+Coordinates from PDB:4YTU:A:402 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   15.2300  -18.0570   13.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7020  -17.0750   13.0060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8190  -19.1960   13.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7310  -19.1900   11.8320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3580  -20.4330   13.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9510  -21.2990   12.8180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4030  -20.0320   14.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9520  -21.1960   15.4320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  6  5  1  0  0  0  0
+  2  1  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  1  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+M  END
+>  <InstanceId>
+4YTU_LER_A_402
+
+>  <ChemCompId>
+LER
+
+>  <PdbId>
+4YTU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O4
+
+>  <Name>
+L-Erythrulose
+
+>  <SystematicName>
+(3S)-1,3,4-tris(oxidanyl)butan-2-one
+
+>  <Synonyms>
+(3S)-1,3,4-trihydroxybutan-2-one
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O4
+
+>  <MolecularWeight>
+120.104
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O4/c5-1-3(7)4(8)2-6/h3,5-7H,1-2H2/t3-/m0/s1
+
+>  <InChIKey>
+UQPHVQVXLPRNCX-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@@H](C(=O)CO)O)O
+
+$$$$

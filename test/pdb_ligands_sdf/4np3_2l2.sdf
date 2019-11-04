@@ -1,0 +1,152 @@
+4NP3_2L2_A_201
+  RCSB PDB12061713563D
+Coordinates from PDB:4NP3:A:201 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+   12.2890   -5.8900    1.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8370   -4.6300    0.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9770   -4.2060   -0.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5020   -3.3160   -1.4720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7240   -2.8600   -2.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3790   -3.2820   -2.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8500   -4.1580   -1.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5480   -4.5840   -1.8140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6210   -4.6400   -0.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0390   -5.5490    0.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8650   -5.6740    1.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3240   -6.7210    2.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0950   -6.7110    3.8260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9890   -5.7350    4.7140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8320   -6.0370    5.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4460   -7.1940    5.4440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9810   -7.6170    4.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4350   -8.9040    3.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  2  0  0  0  0
+  4  3  2  0  0  0  0
+  9  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 13 17  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 15  2  0  0  0  0
+A    1
+CAH
+A    2
+CAG
+A    3
+CAO
+A    4
+CAE
+A    5
+CAC
+A    6
+CAD
+A    7
+CAM
+A    8
+NAB
+A    9
+CAQ
+A   10
+CAJ
+A   11
+NAR
+A   12
+CAI
+A   13
+CAP
+A   14
+NAL
+A   15
+CAF
+A   16
+NAK
+A   17
+CAN
+A   18
+CAA
+M  END
+>  <InstanceId>
+4NP3_2L2_A_201
+
+>  <ChemCompId>
+2L2
+
+>  <PdbId>
+4NP3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N4
+
+>  <Name>
+2-[(4-methyl-1H-imidazol-5-yl)methyl]-1,2,3,4-tetrahydroisoquinolin-8-amine
+
+>  <SystematicName>
+2-[(4-methyl-1H-imidazol-5-yl)methyl]-3,4-dihydro-1H-isoquinolin-8-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H18 N4
+
+>  <MolecularWeight>
+242.32
+
+>  <ModifiedDate>
+2014-04-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H18N4/c1-10-14(17-9-16-10)8-18-6-5-11-3-2-4-13(15)12(11)7-18/h2-4,9H,5-8,15H2,1H3,(H,16,17)
+
+>  <InChIKey>
+IMWCZDDKZOUUNI-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c([nH]cn1)CN2CCc3cccc(c3C2)N
+
+$$$$

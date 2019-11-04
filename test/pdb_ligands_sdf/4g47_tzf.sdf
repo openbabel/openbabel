@@ -1,0 +1,127 @@
+4G47_TZF_A_406
+  RCSB PDB12061712393D
+Coordinates from PDB:4G47:A:406 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -10.8440   19.1620    3.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4310   20.2540    2.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5150   20.0900    1.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1230   21.1310    0.8060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0040   18.8270    1.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3850   17.7420    2.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3160   17.8880    3.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6410   16.8280    3.9210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8020   15.8540    4.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4910   15.0020    5.0380   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7290   15.5010    5.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7700   16.6160    4.3390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  5  3  2  0  0  0  0
+  5  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6  7  2  0  0  0  0
+  2  1  2  0  0  0  0
+  7  1  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 12 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+CAD
+A    2
+CAB
+A    3
+CAJ
+A    4
+OAA
+A    5
+CAC
+A    6
+CAE
+A    7
+CAK
+A    8
+NAL
+A    9
+CAG
+A   10
+NAH
+A   11
+CAF
+A   12
+NAI
+M  END
+>  <InstanceId>
+4G47_TZF_A_406
+
+>  <ChemCompId>
+TZF
+
+>  <PdbId>
+4G47
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+406
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O
+
+>  <Name>
+4-(1H-1,2,4-triazol-1-yl)phenol
+
+>  <SystematicName>
+4-(1,2,4-triazol-1-yl)phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N3 O
+
+>  <MolecularWeight>
+161.161
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7N3O/c12-8-3-1-7(2-4-8)11-6-9-5-10-11/h1-6,12H
+
+>  <InChIKey>
+ZOPIBCDDKMAEII-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1n2cncn2)O
+
+$$$$

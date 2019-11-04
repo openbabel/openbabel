@@ -1,0 +1,163 @@
+4NXS_2OZ_A_508
+  RCSB PDB12061713583D
+Coordinates from PDB:4NXS:A:508 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   27.3400  -20.5800    2.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2980  -21.4330    1.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4580  -21.6030    2.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4360  -22.4290    1.4270   F 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1240  -20.2530    0.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0920  -19.1360    1.1320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1490  -19.2860    1.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1050  -18.2350    2.1770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9680  -17.1830    3.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6400  -17.0930    4.1390   S 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0310  -16.2250    3.2130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1200  -16.4310    2.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2990  -15.5110    2.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4120  -16.2520    2.7320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1820  -14.3480    3.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8030  -13.2180    2.6600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2970  -14.5420    4.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0690  -13.3140    5.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0040  -15.1530    4.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0360  -14.0850    3.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1000  -12.8700    4.4330   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+ 21 20  1  0  0  0  0
+  3  1  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 20 19  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 19 17  1  0  0  0  0
+ 19 11  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  5  2  0  0  0  0
+  9 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 17 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+A    1
+CAA
+A    2
+CAE
+A    3
+CAF
+A    4
+FAG
+A    5
+CAD
+A    6
+CAC
+A    7
+CAB
+A    8
+NAH
+A    9
+CAI
+A   10
+SAU
+A   11
+NAJ
+A   12
+CAO
+A   13
+CAN
+A   14
+OAS
+A   15
+CAM
+A   16
+OAR
+A   17
+CAL
+A   18
+OAQ
+A   19
+CAK
+A   20
+CAP
+A   21
+OAT
+M  END
+>  <InstanceId>
+4NXS_2OZ_A_508
+
+>  <ChemCompId>
+2OZ
+
+>  <PdbId>
+4NXS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+508
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O4 S F
+
+>  <Name>
+(2R,3S,4R,5S)-N-(4-fluorophenyl)-3,4,5-trihydroxy-2-(hydroxymethyl)piperidine-1-carbothioamide
+
+>  <SystematicName>
+(2R,3S,4R,5S)-N-(4-fluorophenyl)-2-(hydroxymethyl)-3,4,5-tris(oxidanyl)piperidine-1-carbothioamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H17 F N2 O4 S
+
+>  <MolecularWeight>
+316.348
+
+>  <ModifiedDate>
+2014-06-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H17FN2O4S/c14-7-1-3-8(4-2-7)15-13(21)16-5-10(18)12(20)11(19)9(16)6-17/h1-4,9-12,17-20H,5-6H2,(H,15,21)/t9-,10+,11+,12-/m1/s1
+
+>  <InChIKey>
+WPBCEOLJVINCLL-NOOOWODRSA-N
+
+>  <SMILES>
+c1cc(ccc1NC(=S)N2C[C@@H]([C@H]([C@H]([C@H]2CO)O)O)O)F
+
+$$$$

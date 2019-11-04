@@ -1,0 +1,106 @@
+1AEQ_2EZ_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEQ:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   32.7970   93.4170   49.4950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9280   93.2500   48.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8100   93.7660   47.6280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9690   94.2610   48.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5940   94.0390   49.7980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0800   92.6200   47.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0090   91.0900   47.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+M  END
+>  <InstanceId>
+1AEQ_2EZ_A_296
+
+>  <ChemCompId>
+2EZ
+
+>  <PdbId>
+1AEQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2
+
+>  <Name>
+2-ETHYLIMIDAZOLE
+
+>  <SystematicName>
+2-ethyl-1H-imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 N2
+
+>  <MolecularWeight>
+96.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8N2/c1-2-5-6-3-4-7-5/h3-4H,2H2,1H3,(H,6,7)
+
+>  <InChIKey>
+PQAMFDRRWURCFQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CCc1[nH]ccn1
+
+$$$$

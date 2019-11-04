@@ -1,5 +1,5 @@
-.Dd July 4, 2008
-.Os "Open Babel" 2.2
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.0
 .Dt obgen 1 URM
 .Sh NAME
 .Nm obgen
@@ -12,7 +12,7 @@
 The obgen tool will generate 3D coordinates for molecules in a file
 (e.g. multi-molecule SMILES files). The resulting structure will be
 optimized using the given forcefield and checked for the
-lowest-energy conformer using a Monte Carlo search. 
+lowest-energy conformer using a Monte Carlo search.
 Output will be sent to standard output in the SDF file format.
 .Sh OPTIONS
 If no filename is given, obgen will give all options including the
@@ -23,24 +23,24 @@ Select the forcefield
 .El
 .Sh EXAMPLES
 .Pp
-View the possible options, including available forcefields: 
+View the possible options, including available forcefields:
 .Dl "obgen"
 .Pp
 Generate 3D coordinates for the molecule(s) in file test.smi:
 .Dl "obgen test.smi"
 .Pp
-Generate 3D coordinates for the molecule(s) in file test.smi using the 
+Generate 3D coordinates for the molecule(s) in file test.smi using the
 UFF forcefield:
 .Dl "obgen -ff UFF test.smi"
 .Sh SEE ALSO
-.Xr babel 1 ,
+.Xr obabel 1 ,
 .Xr obminimize 1 ,
 .Xr obconformer 1 .
 .Pp
 The web pages for Open Babel can be found at:
-\%<\fBhttp://openbabel.org/\fR> 
+\%<\fBhttp://openbabel.org/\fR>
 .Pp
-The web pages for Open Babel Molecular Mechanics can be found at: 
+The web pages for Open Babel Molecular Mechanics can be found at:
 \%<\fBhttp://openbabel.org/wiki/Molecular_mechanics\fR>
 .Sh AUTHORS
 The obgen program was contributed by
@@ -50,18 +50,18 @@ The obgen program was contributed by
 Open Babel is developed by a cast of many, including currrent maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
-.An Michael Banck , 
-and innumerable others who have contributed fixes and additions. 
-For more contributors to Open Babel, see 
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
 \%<\fBhttp://openbabel.org/wiki/THANKS\fR>
 .Sh COPYRIGHT
 Copyright (C) 2007-2008 by Tim Vandermeersch.
 .Pp
- This program is free software; you can redistribute it and/or modify
+This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
 .Pp
- This program is distributed in the hope that it will be useful,
+This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.

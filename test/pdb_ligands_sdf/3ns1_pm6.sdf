@@ -1,0 +1,119 @@
+3BGD_PM6_A_301
+  RCSB PDB12061708013D
+Coordinates from PDB:3BGD:A:301 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   -8.5920   23.3280   44.4660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4440   23.8460   45.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5150   23.3600   45.9950   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1980   24.1170   46.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8560   25.3730   47.0850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7960   25.9130   46.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0550   25.1510   45.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9790   25.3890   44.8280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7010   24.2730   44.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3480   27.5550   46.7930   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N9
+A    2
+C4
+A    3
+N3
+A    4
+C2
+A    5
+N1
+A    6
+C6
+A    7
+C5
+A    8
+N7
+A    9
+C8
+A   10
+S6
+M  END
+>  <InstanceId>
+3BGD_PM6_A_301
+
+>  <ChemCompId>
+PM6
+
+>  <PdbId>
+3BGD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 S
+
+>  <Name>
+9H-purine-6-thiol
+
+>  <SystematicName>
+9H-purine-6-thiol
+
+>  <Synonyms>
+6-Mercaptopurine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 N4 S
+
+>  <MolecularWeight>
+152.177
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4N4S/c10-5-3-4(7-1-6-3)8-2-9-5/h1-2H,(H2,6,7,8,9,10)
+
+>  <InChIKey>
+GLVAUDGFNGKCSF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)c(ncn2)S
+
+$$$$

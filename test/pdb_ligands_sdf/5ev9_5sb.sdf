@@ -1,0 +1,78 @@
+2IRL_5SB_?_25
+  RCSB PDB12061705573D
+Coordinates from PDB:2IRL:?:25 Model:1 without hydrogens
+  0  0  0  0  0  0            999 V2000
+M  END
+>  <InstanceId>
+2IRL_5SB_?_25
+
+>  <ChemCompId>
+5SB
+
+>  <PdbId>
+2IRL
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+19
+
+>  <ObservedFormula>
+
+
+>  <Name>
+~{N}-[5-(1~{H}-pyrazol-4-yl)quinolin-8-yl]ethanamide
+
+>  <SystematicName>
+~{N}-[5-(1~{H}-pyrazol-4-yl)quinolin-8-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H12 N4 O
+
+>  <MolecularWeight>
+252.271
+
+>  <ModifiedDate>
+2016-06-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H12N4O/c1-9(19)18-13-5-4-11(10-7-16-17-8-10)12-3-2-6-15-14(12)13/h2-8H,1H3,(H,16,17)(H,18,19)
+
+>  <InChIKey>
+QUBRUQFHLRIPBK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccc(c2c1nccc2)c3c[nH]nc3
+
+$$$$

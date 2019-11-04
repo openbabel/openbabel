@@ -20,6 +20,10 @@ GNU General Public License for more details.
 
 #include "qtpie.h"
 #include <openbabel/locale.h>
+#include <openbabel/oberror.h>
+#include <openbabel/generic.h>
+#include <openbabel/obiter.h>
+#include <openbabel/atom.h>
 
 using namespace std;
 
@@ -121,7 +125,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
-    Vector3d P;
+    Eigen::Vector3d P;
     float radius;
 
     while (ifs.getline(buffer, BUFF_SIZE)) {
@@ -144,11 +148,11 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
     }
   }
 
-  Vector3d QTPIECharges::GetParameters(unsigned int Z, int Q)
+  Eigen::Vector3d QTPIECharges::GetParameters(unsigned int Z, int Q)
   {
     //Returns a triple of numbers: electronegativity (in eV), hardness (in eV), and Gaussian exponent (in bohr^-2)
 
-    Vector3d P;
+    Eigen::Vector3d P;
     //For now, completely ignore the formal charge
     if (_parameters.size() == 0)
       ParseParamFile();
@@ -181,12 +185,12 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
     //Read in total number of atoms
     int i, N = mol.NumAtoms();
 
-    Hardness = MatrixXd::Zero(N+1, N+1);
-    Voltage = VectorXd::Zero(N+1);
-    Electronegativity = VectorXd::Zero(N);
-    VectorXd BasisSet = VectorXd::Zero(N);
+    Hardness = Eigen::MatrixXd::Zero(N+1, N+1);
+    Voltage = Eigen::VectorXd::Zero(N+1);
+    Electronegativity = Eigen::VectorXd::Zero(N);
+    Eigen::VectorXd BasisSet = Eigen::VectorXd::Zero(N);
 
-    Vector3d Parameters;
+    Eigen::Vector3d Parameters;
 
     FOR_ATOMS_OF_MOL(atom, mol)
     {
@@ -255,7 +259,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
 
     //This matrix can be sparse, but I didn't get Eigen's SparseMatrix to
     //play well with this - jiahao@mit.edu 2010-04-20 eigen-2.0.12 r3691
-    MatrixXd Overlap = MatrixXd::Zero(N,N);
+    Eigen::MatrixXd Overlap = Eigen::MatrixXd::Zero(N,N);
     double OverlapVal;
     FOR_ATOMS_OF_MOL(atom1, mol)
     {
@@ -277,7 +281,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
     }
 
     // Calculate normalization factors
-    VectorXd OvNorm(N);
+    Eigen::VectorXd OvNorm(N);
     for (i=0; i<N; i++) OvNorm[i] = 1.0 / (1.0 + Overlap.row(i).sum());
 
     // Calculate voltages
@@ -352,7 +356,7 @@ double QTPIECharges::OverlapInt(double a, double b, double R)
 }
 
 /// Here's a wrapper around the Eigen solver routine
-bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double NormThreshold)
+bool QTPIECharges::solver(Eigen::MatrixXd A, Eigen::VectorXd b, Eigen::VectorXd &x, const double NormThreshold)
 {
     // using a LU factorization
 #ifdef HAVE_EIGEN3
@@ -363,7 +367,7 @@ bool QTPIECharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double Norm
 #endif
     //bool SolverOK = A.svd().solve(b, &x);
 
-    VectorXd resid = A*x - b;
+    Eigen::VectorXd resid = A*x - b;
     double resnorm = resid.norm();
     if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
       {

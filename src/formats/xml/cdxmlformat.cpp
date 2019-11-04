@@ -18,6 +18,13 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/xml.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
+#include <openbabel/elements.h>
+#include <algorithm>
+#include <vector>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -26,6 +33,20 @@ GNU General Public License for more details.
 using namespace std;
 namespace OpenBabel
 {
+
+struct Boundary
+{
+  double xMin;
+  double xMax;
+  double yMin;
+  double yMax;
+};
+
+struct Coord2D
+{
+  double x;
+  double y;
+};
 
 class ChemDrawXMLFormat : public XMLMoleculeFormat
 {
@@ -69,11 +90,18 @@ public:
     void EnsureEndElement(void);
 
 private:
+  Boundary CalculateMoleculeBoundary(OBMol* pMol);
+  void CalculateCdxmlShift(OBMol* pMol);
+  Coord2D TransformCdxmlCoord(OBAtom* pAtom);
+
+private:
   OBAtom _tempAtom; //!< A temporary atom as the atom tag is read
   int Begin, End, Order, Flag; // Data for current bond
   map <int, int> atoms; // maps chemdraw atom id to openbabel idx.
   int _offset; // used to ensure that atoms have different ids.
   double _scale; // current scale
+  double xCdxmlShift, yCdxmlShift;
+
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -276,6 +304,57 @@ void ChemDrawXMLFormat::EnsureEndElement(void)
   }
 }
 
+// Calculate boundary coordintates xMin, xMax, yMin, yMax of the molecule.
+Boundary ChemDrawXMLFormat::CalculateMoleculeBoundary(OBMol* pMol)
+{
+  OBAtom *patom;
+  vector<OBAtom *>::iterator i;
+  vector<double> atomXs;
+  vector<double> atomYs;
+
+  for (patom = pMol->BeginAtom(i); patom; patom = pMol->NextAtom(i))
+  {
+    atomXs.push_back(patom->GetX());
+    atomYs.push_back(patom->GetY());
+  }
+
+  Boundary bd = {
+    *min_element(atomXs.begin(), atomXs.end()),
+    *max_element(atomXs.begin(), atomXs.end()),
+    *min_element(atomYs.begin(), atomYs.end()),
+    *max_element(atomYs.begin(), atomYs.end()),
+  };
+
+  return bd;
+}
+
+// [1] Calculate necessary shifts when converting to CDXML,
+//      since ChemDraw will not auto-center the molecule.
+// [2] Reverse coordinate on Y direction.
+void ChemDrawXMLFormat::CalculateCdxmlShift(OBMol* pMol)
+{
+  const double xDelta = 3.0;
+  const double yDelta = 3.0;
+
+  Boundary molBd = CalculateMoleculeBoundary(pMol);
+  this->xCdxmlShift = xDelta - molBd.xMin;
+  this->yCdxmlShift = yDelta + molBd.yMax;
+}
+
+// Given atom coordinates, and transform them to CDXML coordinates.
+// Transformation includes centering & y-inverse.
+Coord2D ChemDrawXMLFormat::TransformCdxmlCoord(OBAtom* pAtom)
+{
+  const double xTransform = (this->xCdxmlShift + pAtom->GetX()) * this->_scale;
+  const double yTransfrom = (this->yCdxmlShift - pAtom->GetY()) * this->_scale;
+  Coord2D cd = {
+    xTransform,
+    yTransfrom,
+  };
+
+  return cd;
+}
+
 bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   static const xmlChar C_MOLECULE[]         = "fragment";
@@ -327,18 +406,24 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     _offset = 0;
   }
 
+  CalculateCdxmlShift(pmol);
   xmlTextWriterStartElement(writer(), C_MOLECULE);
 
   OBAtom *patom;
   vector<OBAtom*>::iterator i;
   int n;
+
   for (patom = mol.BeginAtom(i);patom;patom = mol.NextAtom(i))
   {
     xmlTextWriterStartElement(writer(), C_ATOM);
-
     xmlTextWriterWriteFormatAttribute(writer(), C_ID , "%d", patom->GetIdx() + _offset);
-    xmlTextWriterWriteFormatAttribute(writer(), C_COORDS , "%f %f", patom->GetX() * _scale, patom->GetY() * _scale);
-	n = patom->GetAtomicNum();
+
+    Coord2D transformCd = TransformCdxmlCoord(patom);
+    xmlTextWriterWriteFormatAttribute(
+      writer(), C_COORDS , "%f %f", transformCd.x, transformCd.y
+    );
+
+    n = patom->GetAtomicNum();
     if (n != 6)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ELEMENT , "%d", n);
@@ -363,15 +448,15 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     xmlTextWriterWriteFormatAttribute(writer(), C_BEGIN , "%d", patom->GetIdx() + _offset);
 	patom = pbond->GetEndAtom();
     xmlTextWriterWriteFormatAttribute(writer(), C_END , "%d", patom->GetIdx() + _offset);
-	n = pbond->GetBO();
+	n = pbond->GetBondOrder();
     if (n != 1)
     {
       xmlTextWriterWriteFormatAttribute(writer(), C_ORDER , "%d", n);
     }
     if (pbond->IsHash())
-      xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgeBegin");
-    else if (pbond->IsWedge())
       xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgedHashBegin");
+    else if (pbond->IsWedge())
+      xmlTextWriterWriteFormatAttribute(writer(), C_DISPLAY , "WedgeBegin");
     xmlTextWriterEndElement(writer());
   }
   _offset += mol.NumAtoms ();

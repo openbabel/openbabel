@@ -1,0 +1,135 @@
+1M78_CLZ_A_194
+  RCSB PDB12061703153D
+Coordinates from PDB:1M78:A:194 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   28.6430   -1.6470    2.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6810   -0.9940    1.4200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5850   -1.0990    0.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3810   -1.9940   -0.6800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6730   -1.4500    3.4610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6000   -0.4950   -0.6210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5330   -4.0840    1.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6760   -3.2250    1.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5960   -2.5390    1.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4030   -2.6570   -0.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2890   -3.4770   -0.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2990   -4.1670   -0.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5850   -4.7530    1.7430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1000   -3.1340    3.6320  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  9  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4 10  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+N5
+A    6
+N6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+A   14
+CL
+M  END
+>  <InstanceId>
+1M78_CLZ_A_194
+
+>  <ChemCompId>
+CLZ
+
+>  <PdbId>
+1M78
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+194
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C8 N5 Cl
+
+>  <Name>
+5-CHLORYL-2,4,6-QUINAZOLINETRIAMINE
+
+>  <SystematicName>
+5-chlorylquinazoline-2,4,6-triamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 Cl N5 O2
+
+>  <MolecularWeight>
+241.634
+
+>  <ModifiedDate>
+2008-10-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+Y
+
+>  <InChI>
+InChI=1/C8H8ClN5O2/c10-3-1-2-4-5(6(3)9(15)16)7(11)14-8(12)13-4/h1-2H,10H2,(H4,11,12,13,14)/f/h11-12H2
+
+>  <InChIKey>
+AOIWFGJNGXKHGL-LLDOCCBOCX
+
+>  <SMILES>
+c1cc2c(c(c1N)Cl(=O)=O)c(nc(n2)N)N
+
+$$$$

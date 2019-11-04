@@ -1,0 +1,122 @@
+5LDG_IT9_A_401
+  RCSB PDB12061718463D
+Coordinates from PDB:5LDG:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -11.5240  -15.1750    9.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6780  -16.0340    8.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2210  -16.7640    7.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3000  -13.9760    8.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0970  -12.9030    8.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1520  -14.0040    7.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6240  -18.5820    6.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3210  -15.6210   10.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9350  -17.5060    7.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0760  -17.1700    8.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2480  -16.0160    9.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  9  1  0  0  0  0
+  6  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  3  2  1  0  0  0  0
+  9 10  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  1  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11  8  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C
+A    8
+O
+A    9
+C1
+A   10
+C2
+A   11
+C3
+M  END
+>  <InstanceId>
+5LDG_IT9_A_401
+
+>  <ChemCompId>
+IT9
+
+>  <PdbId>
+5LDG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+(-)-Isopiperitenone
+
+>  <SystematicName>
+(6~{R})-3-methyl-6-prop-1-en-2-yl-cyclohex-2-en-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O
+
+>  <MolecularWeight>
+150.218
+
+>  <ModifiedDate>
+2016-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O/c1-7(2)9-5-4-8(3)6-10(9)11/h6,9H,1,4-5H2,2-3H3/t9-/m1/s1
+
+>  <InChIKey>
+SEZLYIWMVRUIKT-SECBINFHSA-N
+
+>  <SMILES>
+CC1=CC(=O)[C@H](CC1)C(=C)C
+
+$$$$

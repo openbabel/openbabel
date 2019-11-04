@@ -1,0 +1,138 @@
+1F1L_CRE_?_900
+  RCSB PDB12061702263D
+Coordinates from PDB:1F1L:?:900 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   39.2850   39.2430   26.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1000   37.9730   27.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0090   37.4400   28.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6320   38.0550   28.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1670   36.0740   29.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1700   34.9060   27.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8670   35.4410   26.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2330   35.9760   25.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7350   36.0840   25.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9990   36.5690   24.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9680   38.1510   24.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8390   39.0520   25.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3050   38.5650   25.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8820   38.3710   24.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1010   38.3140   26.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+M  END
+>  <InstanceId>
+1F1L_CRE_?_900
+
+>  <ChemCompId>
+CRE
+
+>  <PdbId>
+1F1L
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15
+
+>  <Name>
+GERMACRENE A
+
+>  <SystematicName>
+(8R)-1,5-dimethyl-8-prop-1-en-2-yl-cyclodeca-1,5-diene
+
+>  <Synonyms>
+8-ISOPROPENYL-1,5-DIMETHYL-CYCLODECA-1,5-DIENE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H24
+
+>  <MolecularWeight>
+204.351
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H24/c1-12(2)15-10-8-13(3)6-5-7-14(4)9-11-15/h6,9,15H,1,5,7-8,10-11H2,2-4H3/t15-/m1/s1
+
+>  <InChIKey>
+XMRKUJJDDKYUHV-OAHLLOKOSA-N
+
+>  <SMILES>
+CC1=CCCC(=CC[C@@H](CC1)C(=C)C)C
+
+$$$$

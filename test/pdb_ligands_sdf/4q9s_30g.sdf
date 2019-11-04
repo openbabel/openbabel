@@ -1,0 +1,140 @@
+4Q9S_30G_A_701
+  RCSB PDB12061714223D
+Coordinates from PDB:4Q9S:A:701 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+    8.9800    2.5430   26.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7430    1.2690   26.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9610    3.2870   25.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4820    0.7310   26.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6790    2.7650   25.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4720    1.4780   26.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3880    3.0130   25.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5980    5.2410   23.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1940    1.8130   26.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8450    4.7310   24.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4390    4.5540   23.9420   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6220    3.4610   25.0580   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3560    3.4620   24.7350   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6210    6.2290   22.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2380    0.8520   25.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  8  2  0  0  0  0
+  8 11  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13  7  2  0  0  0  0
+ 12  7  1  0  0  0  0
+ 12  5  1  0  0  0  0
+  7  9  1  0  0  0  0
+  5  3  2  0  0  0  0
+  5  6  1  0  0  0  0
+  3  1  1  0  0  0  0
+ 15  6  1  0  0  0  0
+ 15  9  1  0  0  0  0
+  6  4  2  0  0  0  0
+  1  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+A    1
+C9
+A    2
+C13
+A    3
+C4
+A    4
+C8
+A    5
+C1
+A    6
+C3
+A    7
+C5
+A    8
+C12
+A    9
+C10
+A   10
+C6
+A   11
+N14
+A   12
+N2
+A   13
+N11
+A   14
+O15
+A   15
+O7
+M  END
+>  <InstanceId>
+4Q9S_30G_A_701
+
+>  <ChemCompId>
+30G
+
+>  <PdbId>
+4Q9S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O2
+
+>  <Name>
+3,5-dihydro[1,2,4]triazino[3,4-c][1,4]benzoxazin-2(1H)-one
+
+>  <SystematicName>
+3,5-dihydro-1H-[1,2,4]triazino[3,4-c][1,4]benzoxazin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N3 O2
+
+>  <MolecularWeight>
+203.197
+
+>  <ModifiedDate>
+2014-06-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9N3O2/c14-10-5-13-7-3-1-2-4-8(7)15-6-9(13)11-12-10/h1-4H,5-6H2,(H,12,14)
+
+>  <InChIKey>
+PNPBXXNNLJGHBP-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)N3CC(=O)NN=C3CO2
+
+$$$$

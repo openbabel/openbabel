@@ -1,0 +1,174 @@
+2ANQ_C1A_A_500
+  RCSB PDB12061705013D
+Coordinates from PDB:2ANQ:A:500 Model:1 without hydrogens
+ 24 24  0  0  0  0            999 V2000
+   32.7480   43.2960    7.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3320   44.2760    8.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6640   44.7220    8.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2460   45.5980    9.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6550   46.0810    8.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3670   45.5700   10.4490   S 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9200   46.0020   10.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2140   46.9100    9.4310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8980   45.4180   11.1360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2710   45.6700   10.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6920   46.8860   10.2390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1690   44.7230   10.9190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5330   46.0270   10.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1680   46.9820   11.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2410   45.5840   10.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6390   44.6730    9.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2530   44.1540    9.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5600   42.5270   10.6800   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2480   41.9950   11.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1890   42.9070   11.7490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9820   40.6180   11.8860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7570   39.5990   11.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9830   39.9120   11.8000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4510   38.4600   12.1330   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 16  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 13  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 19 20  2  0  0  0  0
+ 19 21  1  0  0  0  0
+ 21 22  1  0  0  0  0
+ 22 23  2  0  0  0  0
+ 22 24  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+S1
+A    7
+C6
+A    8
+N1
+A    9
+N2
+A   10
+C7
+A   11
+N3
+A   12
+N4
+A   13
+C8
+A   14
+C9
+A   15
+C10
+A   16
+C11
+A   17
+C12
+A   18
+S2
+A   19
+C13
+A   20
+N5
+A   21
+N6
+A   22
+C14
+A   23
+N7
+A   24
+N8
+M  END
+>  <InstanceId>
+2ANQ_C1A_A_500
+
+>  <ChemCompId>
+C1A
+
+>  <PdbId>
+2ANQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N8 S2
+
+>  <Name>
+(2,5-dimethylbenzene-1,4-diyl)dimethanediyl bis(N-carbamimidoylcarbamimidothioate)
+
+>  <SystematicName>
+[4-[(N-carbamimidoylcarbamimidoyl)sulfanylmethyl]-2,5-dimethyl-phenyl]methyl N-carbamimidoylcarbamimidothioate
+
+>  <Synonyms>
+4-({[(E)-{[(E)-AMINO(IMINO)METHYL]AMINO}(IMINO)METHYL]SULFANYL}METHYL)-2,5-DIMETHYLBENZYL N-[(E)-AMINO(IMINO)METHYL]IMIDOTHIOCARBAMATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H22 N8 S2
+
+>  <MolecularWeight>
+366.508
+
+>  <ModifiedDate>
+2011-10-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H22N8S2/c1-7-3-10(6-24-14(20)22-12(17)18)8(2)4-9(7)5-23-13(19)21-11(15)16/h3-4H,5-6H2,1-2H3,(H5,15,16,19,21)(H5,17,18,20,22)
+
+>  <InChIKey>
+UQMGTQSCMRRWFV-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/N/C(=N\[H])/SCc1c(cc(c(c1)C)CS/C(=N/[H])/N/C(=N/[H])/N)C)\N
+
+$$$$

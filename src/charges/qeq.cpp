@@ -20,6 +20,10 @@ GNU General Public License for more details.
 
 #include "qeq.h"
 #include <openbabel/locale.h>
+#include <openbabel/atom.h>
+#include <openbabel/oberror.h>
+#include <openbabel/generic.h>
+#include <openbabel/obiter.h>
 
 using namespace std;
 
@@ -129,7 +133,7 @@ namespace OpenBabel
 
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
-    Vector3d P;
+    Eigen::Vector3d P;
     float radius;
     while (ifs.getline(buffer, BUFF_SIZE)) {
       if (buffer[0] == '#')
@@ -153,10 +157,9 @@ namespace OpenBabel
   }
 
   //!Returns a triple of numbers: electronegativity (in eV), hardness (in eV), and Gaussian exponent (in bohr^-2)
-  Vector3d QEqCharges::GetParameters(unsigned int Z, int Q)
+  Eigen::Vector3d QEqCharges::GetParameters(unsigned int Z, int Q)
   {
-
-    Vector3d P;
+    Eigen::Vector3d P;
     //For now, completely ignore the formal charge
     if (_parameters.size() == 0)
       ParseParamFile();
@@ -189,12 +192,12 @@ namespace OpenBabel
     //Read in total number of atoms
     int i, N = mol.NumAtoms();
 
-    Hardness = MatrixXd::Zero(N+1, N+1);
-    Voltage = VectorXd::Zero(N+1);
-    Electronegativity = VectorXd::Zero(N);
-    VectorXd BasisSet = VectorXd::Zero(N);
+    Hardness = Eigen::MatrixXd::Zero(N+1, N+1);
+    Voltage = Eigen::VectorXd::Zero(N+1);
+    Electronegativity = Eigen::VectorXd::Zero(N);
+    Eigen::VectorXd BasisSet = Eigen::VectorXd::Zero(N);
 
-    Vector3d Parameters;
+    Eigen::Vector3d Parameters;
 
     FOR_ATOMS_OF_MOL(atom, mol)
       {
@@ -303,7 +306,7 @@ namespace OpenBabel
   //! Wrapper around the Eigen linear solver routines
   // First attempts to solve using Gaussian elimination
   // if that fails, tries again using singular value decomposition (SVD)
-  bool QEqCharges::solver(MatrixXd A, VectorXd b, VectorXd &x, const double NormThreshold)
+  bool QEqCharges::solver(Eigen::MatrixXd A, Eigen::VectorXd b, Eigen::VectorXd &x, const double NormThreshold)
   {
     // using a LU factorization
 #ifdef HAVE_EIGEN3
@@ -314,7 +317,7 @@ namespace OpenBabel
 #endif
     //bool SolverOK = A.svd().solve(b, &x);
 
-    VectorXd resid = A*x - b;
+    Eigen::VectorXd resid = A*x - b;
     double resnorm = resid.norm();
     if (IsNan(resnorm) || resnorm > NormThreshold || !SolverOK)
       {

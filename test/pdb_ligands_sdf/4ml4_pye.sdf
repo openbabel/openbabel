@@ -1,0 +1,102 @@
+1A65_PYE_A_900
+  RCSB PDB12061701573D
+Coordinates from PDB:1A65:A:900 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   -8.9570   50.2800    6.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5000   49.6050    5.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.8060   50.6860    4.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6910   51.9050    3.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5950   52.2890    5.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0040   51.1770    5.9370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O5
+M  END
+>  <InstanceId>
+1A65_PYE_A_900
+
+>  <ChemCompId>
+PYE
+
+>  <PdbId>
+1A65
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O
+
+>  <Name>
+TETRAHYDROPYRAN
+
+>  <SystematicName>
+oxane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 O
+
+>  <MolecularWeight>
+86.132
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O/c1-2-4-6-5-3-1/h1-5H2
+
+>  <InChIKey>
+DHXVGJBLRPWPCS-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCOCC1
+
+$$$$

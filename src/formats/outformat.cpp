@@ -14,6 +14,11 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/generic.h>
+
+#ifndef BUFF_SIZE
+#define BUFF_SIZE 32768
+#endif
 
 #include <sstream>
 
@@ -122,6 +127,11 @@ namespace OpenBabel
             formatName = "adfband";
             break;
           } else if (strstr(buffer, "|     D F T B     |") != NULL) {
+            formatName = "adfdftb";
+            break;
+          } else if (strstr(buffer, "DFTB Engine") != NULL) {
+            // "|     D F T B     |" is no longer printed in ADF 2018
+            // Hopefully, "DFTB Engine" will work fine...
             formatName = "adfdftb";
             break;
           }

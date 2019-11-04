@@ -1,0 +1,147 @@
+1GCZ_YZ9_A_900
+  RCSB PDB12061702353D
+Coordinates from PDB:1GCZ:A:900 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   64.4220   22.9560   19.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.3860   23.3810   18.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.3510   24.5010   20.7240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0570   23.4360   18.8690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.0580   29.4880   19.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.1960   26.9880   19.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1960   29.0700   16.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3600   26.7030   16.7360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9070   28.1890   18.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4860   28.0060   17.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.6760   25.6360   17.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.5290   24.5010   19.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1240   31.4520   16.1840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.5840   24.5910   16.9260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7800   30.5970   18.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.1380   25.7560   18.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3670   30.3620   16.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3 12  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  9  2  0  0  0  0
+  5 15  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 16  2  0  0  0  0
+  7 10  2  0  0  0  0
+  7 17  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 14  2  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 17  1  0  0  0  0
+ 15 17  2  0  0  0  0
+A    1
+C3
+A    2
+C11
+A    3
+O1
+A    4
+O2
+A    5
+C6
+A    6
+C5
+A    7
+C4
+A    8
+O3
+A    9
+C2
+A   10
+C1
+A   11
+C7
+A   12
+C12
+A   13
+O4
+A   14
+O5
+A   15
+C10
+A   16
+C9
+A   17
+C8
+M  END
+>  <InstanceId>
+1GCZ_YZ9_A_900
+
+>  <ChemCompId>
+YZ9
+
+>  <PdbId>
+1GCZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O5
+
+>  <Name>
+7-HYDROXY-2-OXO-CHROMENE-3-CARBOXYLIC ACID ETHYL ESTER
+
+>  <SystematicName>
+ethyl 7-hydroxy-2-oxo-chromene-3-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 O5
+
+>  <MolecularWeight>
+234.205
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10O5/c1-2-16-11(14)9-5-7-3-4-8(13)6-10(7)17-12(9)15/h3-6,13H,2H2,1H3
+
+>  <InChIKey>
+IETDBZQIWIJQJG-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)C1=Cc2ccc(cc2OC1=O)O
+
+$$$$

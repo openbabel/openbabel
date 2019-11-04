@@ -1,0 +1,142 @@
+1FHV_OSB_A_789
+  RCSB PDB12061702293D
+Coordinates from PDB:1FHV:A:789 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   30.5070  -20.8760   42.5330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1080  -22.8100   43.4250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7680  -21.6370   43.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4770  -19.9990   44.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5930  -19.7910   45.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7570  -20.1980   46.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8040  -20.8010   45.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6980  -21.0140   43.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5240  -20.6050   43.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3300  -20.8060   41.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9210  -20.2450   41.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0720  -21.3200   41.0670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4550  -20.3900   40.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4830  -20.0080   39.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3460  -20.5650   38.0620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5280  -19.3880   39.4140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+C7
+A    4
+C6
+A    5
+C5
+A    6
+C4
+A    7
+C3
+A    8
+C2
+A    9
+C1
+A   10
+C8
+A   11
+C9
+A   12
+O3
+A   13
+C10
+A   14
+C11
+A   15
+O4
+A   16
+O5
+M  END
+>  <InstanceId>
+1FHV_OSB_A_789
+
+>  <ChemCompId>
+OSB
+
+>  <PdbId>
+1FHV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+789
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O5
+
+>  <Name>
+2-SUCCINYLBENZOATE
+
+>  <SystematicName>
+2-(4-hydroxy-4-oxo-butanoyl)benzoic acid
+
+>  <Synonyms>
+O-SUCCINYLBENZOATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 O5
+
+>  <MolecularWeight>
+222.194
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10O5/c12-9(5-6-10(13)14)7-3-1-2-4-8(7)11(15)16/h1-4H,5-6H2,(H,13,14)(H,15,16)
+
+>  <InChIKey>
+YIVWQNVQRXFZJB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)CCC(=O)O)C(=O)O
+
+$$$$

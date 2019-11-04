@@ -1,0 +1,110 @@
+3W4I_8LG_A_402
+  RCSB PDB12061711183D
+Coordinates from PDB:3W4I:A:402 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   45.4870   25.2350   15.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9440   24.2630   14.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6640   24.8740   16.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3390   23.5820   16.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8520   22.6090   15.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6570   22.9500   14.8670   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5110   23.1840   17.8640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5340   21.3690   16.0980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  6  2  0  0  0  0
+  2  1  1  0  0  0  0
+  6  5  1  0  0  0  0
+  1  3  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  7  1  0  0  0  0
+A    1
+C7
+A    2
+C8
+A    3
+C3
+A    4
+C1
+A    5
+C2
+A    6
+N5
+A    7
+O4
+A    8
+O6
+M  END
+>  <InstanceId>
+3W4I_8LG_A_402
+
+>  <ChemCompId>
+8LG
+
+>  <PdbId>
+3W4I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2
+
+>  <Name>
+pyridine-2,3-diol
+
+>  <SystematicName>
+pyridine-2,3-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N O2
+
+>  <MolecularWeight>
+111.099
+
+>  <ModifiedDate>
+2013-05-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5NO2/c7-4-2-1-3-6-5(4)8/h1-3,7H,(H,6,8)
+
+>  <InChIKey>
+GGOZGYRTNQBSSA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(nc1)O)O
+
+$$$$

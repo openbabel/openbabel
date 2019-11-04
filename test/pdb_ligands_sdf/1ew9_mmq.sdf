@@ -1,0 +1,102 @@
+1EW9_MMQ_A_559
+  RCSB PDB12061702253D
+Coordinates from PDB:1EW9:A:559 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   73.6670   39.0110   43.5090   S 0  0  0  0  0  0  0  0  0  0  0  0
+   74.8050   37.0220   45.3710   P 0  0  0  0  0  0  0  0  0  0  0  0
+   75.9650   37.3180   46.3390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.8140   35.5370   44.9980   O 0  5  0  0  0  0  0  0  0  0  0  0
+   73.5460   37.4230   45.9820   O 0  5  0  0  0  0  0  0  0  0  0  0
+   75.1110   37.9520   43.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+M  CHG  2   4  -1   5  -1
+A    1
+S1
+A    2
+P
+A    3
+O1P
+A    4
+O2P
+A    5
+O3P
+A    6
+C1P
+M  END
+>  <InstanceId>
+1EW9_MMQ_A_559
+
+>  <ChemCompId>
+MMQ
+
+>  <PdbId>
+1EW9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+559
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C O3 P S
+
+>  <Name>
+MERCAPTOMETHYL PHOSPHONATE
+
+>  <SystematicName>
+phosphonatomethanethiol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C H3 O3 P S
+
+>  <MolecularWeight>
+126.071
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/CH5O3PS/c2-5(3,4)1-6/h6H,1H2,(H2,2,3,4)/p-2
+
+>  <InChIKey>
+MJZCELCYTRONIX-UHFFFAOYSA-L
+
+>  <SMILES>
+C(P(=O)([O-])[O-])S
+
+$$$$

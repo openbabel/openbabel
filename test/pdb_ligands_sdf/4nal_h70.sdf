@@ -1,0 +1,147 @@
+2XO8_H70_A_1778
+  RCSB PDB12061707283D
+Coordinates from PDB:2XO8:A:1778 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   66.8890   48.1560  -49.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.4570   47.3830  -47.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.4000   47.0320  -46.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.0720   47.2670  -47.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.1070   47.5820  -48.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.8900   47.8320  -48.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2220   47.9650  -49.2820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.4980   48.0290  -49.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.0620   46.4840  -44.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.2240   46.5150  -45.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.8020   46.8640  -46.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.9790   46.7980  -45.2750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   70.8890   47.0480  -48.1220  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   71.9260   46.1720  -44.7200  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4730   47.4120  -47.8910  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   68.9130   46.1000  -42.6780  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   67.3210   48.6850  -51.4950  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  1  8  2  0  0  0  0
+  1 17  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  6  2  0  0  0  0
+  3 11  2  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5 15  1  0  0  0  0
+  6  7  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 12  1  0  0  0  0
+  9 16  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+CH
+A    2
+CG
+A    3
+CD1
+A    4
+CD2
+A    5
+CE2
+A    6
+CR
+A    7
+O
+A    8
+C3
+A    9
+C7
+A   10
+C8
+A   11
+C9
+A   12
+N11
+A   13
+BR1
+A   14
+BR2
+A   15
+CL1
+A   16
+BR3
+A   17
+CL2
+M  END
+>  <InstanceId>
+2XO8_H70_A_1778
+
+>  <ChemCompId>
+H70
+
+>  <PdbId>
+2XO8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1778
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O Br3 Cl2
+
+>  <Name>
+2,4-DICHLORO-6-(3,4,5-TRIBROMO-1H-PYRROL-2-YL)PHENOL
+
+>  <SystematicName>
+2,4-dichloro-6-(3,4,5-tribromo-1H-pyrrol-2-yl)phenol
+
+>  <Synonyms>
+TRIBROMODICHLOROPSEUDILIN
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H4 Br3 Cl2 N O
+
+>  <MolecularWeight>
+464.763
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H4Br3Cl2NO/c11-6-7(12)10(13)16-8(6)4-1-3(14)2-5(15)9(4)17/h1-2,16-17H
+
+>  <InChIKey>
+KMUJMUQZYHMNDR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1c2c(c(c([nH]2)Br)Br)Br)O)Cl)Cl
+
+$$$$

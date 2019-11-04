@@ -1,0 +1,123 @@
+4MRG_24W_A_201
+  RCSB PDB12061713473D
+Coordinates from PDB:4MRG:A:201 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   12.3240   -4.9690    0.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4020   -5.5960    1.7340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3820   -6.3890    1.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5190   -5.4860    0.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3150   -4.6470   -0.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6710   -4.3780   -0.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3800   -3.5280   -1.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7760   -2.9490   -2.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4120   -3.1900   -2.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7170   -4.0430   -1.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3870   -4.3150   -2.0830   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  1  1  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+CAG
+A    2
+NAH
+A    3
+CAE
+A    4
+CAF
+A    5
+CAK
+A    6
+CAJ
+A    7
+CAD
+A    8
+CAB
+A    9
+CAC
+A   10
+CAI
+A   11
+NAA
+M  END
+>  <InstanceId>
+4MRG_24W_A_201
+
+>  <ChemCompId>
+24W
+
+>  <PdbId>
+4MRG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+1,2,3,4-tetrahydroisoquinolin-5-amine
+
+>  <SystematicName>
+1,2,3,4-tetrahydroisoquinolin-5-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2
+
+>  <MolecularWeight>
+148.205
+
+>  <ModifiedDate>
+2014-04-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2/c10-9-3-1-2-7-6-11-5-4-8(7)9/h1-3,11H,4-6,10H2
+
+>  <InChIKey>
+ZSHCQIHYOFRGNI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(c(c1)N)CCNC2
+
+$$$$

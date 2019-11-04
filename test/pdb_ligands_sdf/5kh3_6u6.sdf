@@ -1,0 +1,139 @@
+5KH3_6U6_A_1317
+  RCSB PDB12061718363D
+Coordinates from PDB:5KH3:A:1317 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -1.4030    2.2400    8.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4300    2.3720    7.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9930    1.9860    7.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3630    1.5490    8.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6140    4.0720    6.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7430    2.3280    8.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0940    4.3250    9.2170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5240    3.2740    7.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9660    4.1110    6.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8050    3.1180    7.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0150    5.2110    6.0250  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5830    2.9450    7.0450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2390    1.1730    8.7290   S 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5500    3.7530    8.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2250    4.2470    7.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  9  1  0  0  0  0
+  5  9  2  0  0  0  0
+  5 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 12  3  2  0  0  0  0
+ 10  1  2  0  0  0  0
+ 15 14  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2 14  1  0  0  0  0
+  8  6  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 13  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1 13  1  0  0  0  0
+ 14  7  1  0  0  0  0
+A    1
+C9
+A    2
+C1
+A    3
+C3
+A    4
+C2
+A    5
+C5
+A    6
+C8
+A    7
+O1
+A    8
+C7
+A    9
+C6
+A   10
+C4
+A   11
+CL
+A   12
+N
+A   13
+S
+A   14
+C
+A   15
+O
+M  END
+>  <InstanceId>
+5KH3_6U6_A_1317
+
+>  <ChemCompId>
+6U6
+
+>  <PdbId>
+5KH3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1317
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2 S Cl
+
+>  <Name>
+3-(5-chloranyl-1,3-benzothiazol-2-yl)propanoic acid
+
+>  <SystematicName>
+3-(5-chloranyl-1,3-benzothiazol-2-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 Cl N O2 S
+
+>  <MolecularWeight>
+241.694
+
+>  <ModifiedDate>
+2016-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8ClNO2S/c11-6-1-2-8-7(5-6)12-9(15-8)3-4-10(13)14/h1-2,5H,3-4H2,(H,13,14)
+
+>  <InChIKey>
+UMBLVHSXXWQLDL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)nc(s2)CCC(=O)O
+
+$$$$

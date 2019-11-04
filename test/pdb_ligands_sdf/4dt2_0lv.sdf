@@ -1,0 +1,131 @@
+4DT2_0LV_A_504
+  RCSB PDB12061712163D
+Coordinates from PDB:4DT2:A:504 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -69.5250   33.1940  -43.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.4460   34.2930  -44.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.2910   33.9520  -45.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.6110   35.5670  -44.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.2780   34.4920  -42.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.8050   33.6530  -41.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.7760   32.8770  -42.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.1560   31.9480  -41.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.5840   31.8230  -40.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.6360   32.6230  -39.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.2370   33.5410  -40.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.3650   34.4160  -40.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -73.5060   34.2500  -40.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  7  1  1  0  0  0  0
+  7  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  4  2  1  0  0  0  0
+ 11  6  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  6  5  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAH
+A    2
+CAM
+A    3
+CAA
+A    4
+CAB
+A    5
+OAI
+A    6
+CAL
+A    7
+CAK
+A    8
+CAF
+A    9
+CAD
+A   10
+CAE
+A   11
+CAJ
+A   12
+CAG
+A   13
+OAC
+M  END
+>  <InstanceId>
+4DT2_0LV_A_504
+
+>  <ChemCompId>
+0LV
+
+>  <PdbId>
+4DT2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+504
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O2
+
+>  <Name>
+(2,2-dimethyl-2,3-dihydro-1-benzofuran-7-yl)methanol
+
+>  <SystematicName>
+(2,2-dimethyl-3H-1-benzofuran-7-yl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 O2
+
+>  <MolecularWeight>
+178.228
+
+>  <ModifiedDate>
+2012-09-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14O2/c1-11(2)6-8-4-3-5-9(7-12)10(8)13-11/h3-5,12H,6-7H2,1-2H3
+
+>  <InChIKey>
+LKFXMRFTJVYQMT-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(Cc2cccc(c2O1)CO)C
+
+$$$$

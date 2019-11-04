@@ -1,0 +1,119 @@
+1JHM_5MB_A_990
+  RCSB PDB12061702573D
+Coordinates from PDB:1JHM:A:990 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   56.4640   41.6500   14.4970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.0520   40.9580   12.4570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2050   40.8020   13.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9280   41.9830   12.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5640   42.4020   14.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2930   43.4110   14.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.3670   44.0060   14.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7570   43.5780   12.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0550   42.5510   12.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1060   45.1250   14.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+N3
+A    2
+N1
+A    3
+C2
+A    4
+C7A
+A    5
+C3A
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+M  END
+>  <InstanceId>
+1JHM_5MB_A_990
+
+>  <ChemCompId>
+5MB
+
+>  <PdbId>
+1JHM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+990
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2
+
+>  <Name>
+5-METHYLBENZIMIDAZOLE
+
+>  <SystematicName>
+6-methyl-1H-benzimidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N2
+
+>  <MolecularWeight>
+132.163
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N2/c1-6-2-3-7-8(4-6)10-5-9-7/h2-5H,1H3,(H,9,10)
+
+>  <InChIKey>
+RWXZXCZBMQPOBF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2c(c1)[nH]cn2
+
+$$$$

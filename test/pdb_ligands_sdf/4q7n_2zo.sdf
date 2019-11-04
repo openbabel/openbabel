@@ -1,0 +1,114 @@
+4Q7N_2ZO_A_402
+  RCSB PDB12061714223D
+Coordinates from PDB:4Q7N:A:402 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   19.2130    0.4850  -14.1310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7950    1.0750  -14.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2790    0.9560  -15.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9330    1.9270  -16.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7410    1.2670  -16.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6430    2.1500  -18.1160   N 0  3  0  0  0  0  0  0  0  0  0  0
+   18.6620    3.1170  -17.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1390    1.3600  -19.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9520    2.8230  -18.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+M  CHG  1   6   1
+A    1
+O
+A    2
+C4
+A    3
+C3
+A    4
+C2
+A    5
+C1
+A    6
+N
+A    7
+C7
+A    8
+C6
+A    9
+C5
+M  END
+>  <InstanceId>
+4Q7N_2ZO_A_402
+
+>  <ChemCompId>
+2ZO
+
+>  <PdbId>
+4Q7N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O
+
+>  <Name>
+N,N,N-trimethyl-4-oxobutan-1-aminium
+
+>  <SystematicName>
+trimethyl(4-oxidanylidenebutyl)azanium
+
+>  <Synonyms>
+4-N-trimethylaminobutyraldehyde
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H16 N O
+
+>  <MolecularWeight>
+130.208
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H16NO/c1-8(2,3)6-4-5-7-9/h7H,4-6H2,1-3H3/q+1
+
+>  <InChIKey>
+OITBLCDWXSXNCN-UHFFFAOYSA-N
+
+>  <SMILES>
+C[N+](C)(C)CCCC=O
+
+$$$$

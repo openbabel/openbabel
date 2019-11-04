@@ -1,0 +1,110 @@
+2EUN_LG3_A_296
+  RCSB PDB12061705293D
+Coordinates from PDB:2EUN:A:296 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   -7.7430   71.0890   15.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4790   69.9350   15.6700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9240   69.8370   16.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6200   70.9090   17.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8670   72.0590   16.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3870   72.1540   15.5880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3430   71.2350   13.7490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7040   68.6990   17.7000   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+A    1
+C2
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+N1
+A    7
+N7
+A    8
+N8
+M  END
+>  <InstanceId>
+2EUN_LG3_A_296
+
+>  <ChemCompId>
+LG3
+
+>  <PdbId>
+2EUN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N4
+
+>  <Name>
+PYRIMIDINE-2,4-DIAMINE
+
+>  <SystematicName>
+pyrimidine-2,4-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N4
+
+>  <MolecularWeight>
+110.117
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N4/c5-3-1-2-7-4(6)8-3/h1-2H,(H4,5,6,7,8)
+
+>  <InChIKey>
+YAAWASYJIRZXSZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnc(nc1N)N
+
+$$$$

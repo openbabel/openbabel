@@ -1,0 +1,15 @@
+# The OpenBabel3 config file. To get the targets include the exports file.
+get_filename_component(OpenBabel3_INSTALL_PREFIX "${OpenBabel3_DIR}@REL_REF@"
+  ABSOLUTE)
+
+set(OpenBabel3_VERSION_MAJOR   "@BABEL_MAJ_VER@")
+set(OpenBabel3_VERSION_MINOR   "@BABEL_MIN_VER@")
+set(OpenBabel3_VERSION_PATCH   "@BABEL_PATCH_VER@")
+set(OpenBabel3_VERSION         "@BABEL_VERSION@")
+
+set(OpenBabel3_INCLUDE_DIRS "@OpenBabel3_INCLUDE_DIRS@")
+set(OpenBabel3_EXPORTS_FILE "@OB_EXPORTS_FILE@")
+set(OpenBabel3_ENABLE_VERSIONED_FORMATS "@ENABLE_VERSIONED_FORMATS@")
+
+# Include the exports file to import the exported OpenBabel targets
+include("${OpenBabel3_EXPORTS_FILE}")

@@ -1,0 +1,148 @@
+4ASX_6OJ_A_1487
+  RCSB PDB12061711433D
+Coordinates from PDB:4ASX:A:1487 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+  -40.2480   44.4360    9.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.0510   45.1040    9.1020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1800   45.7300    9.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1870   45.9600   11.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0160   46.5770   11.7610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.7840   47.0350   11.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.8850   47.0370    9.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0950   46.2480    9.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3680   45.8510    7.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.6740   46.1120    6.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2130   45.6450    5.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.4350   44.9360    5.4060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1270   44.6870    6.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5820   45.1640    7.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.6480   43.8370    6.5670  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.0450   44.3580    3.9200  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1110   45.7040   12.1350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 17  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C01
+A    2
+N02
+A    3
+C03
+A    4
+C04
+A    5
+N05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+CL1
+A   16
+CL2
+A   17
+O17
+M  END
+>  <InstanceId>
+4ASX_6OJ_A_1487
+
+>  <ChemCompId>
+6OJ
+
+>  <PdbId>
+4ASX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1487
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O Cl2
+
+>  <Name>
+7,8-bis(chloranyl)-9-methyl-3,4-dihydro-2H-pyrido[3,4-b]indol-1-one
+
+>  <SystematicName>
+7,8-bis(chloranyl)-9-methyl-3,4-dihydro-2H-pyrido[3,4-b]indol-1-one
+
+>  <Synonyms>
+Dihydro-Bauerine C
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H10 Cl2 N2 O
+
+>  <MolecularWeight>
+269.127
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10Cl2N2O/c1-16-10-6(2-3-8(13)9(10)14)7-4-5-15-12(17)11(7)16/h2-3H,4-5H2,1H3,(H,15,17)
+
+>  <InChIKey>
+MYIBLDZPAOEFTB-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1c2c(ccc(c2Cl)Cl)c3c1C(=O)NCC3
+
+$$$$

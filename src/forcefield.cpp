@@ -19,16 +19,22 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
+#include <set>
+
 #include <openbabel/forcefield.h>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
+#include <openbabel/ring.h>
 #include <openbabel/obiter.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
+#include <openbabel/grid.h>
+#include <openbabel/griddata.h>
 #include <openbabel/elements.h>
+#include "rand.h"
 
 using namespace std;
 
@@ -179,7 +185,7 @@ namespace OpenBabel
       // Fix the binding pocket atoms
       OBFFConstraints constraints;
       FOR_ATOMS_OF_MOL (a, mol) {
-      if (pocket.BitIsOn(a->GetIdx())
+      if (pocket.BitIsSet(a->GetIdx())
       constraints.AddAtomConstraint(a->GetIdx());
       }
 
@@ -828,7 +834,7 @@ namespace OpenBabel
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
-      _mol.UnsetSSSRPerceived();
+      _mol.SetSSSRPerceived(false);
       _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
 
       if (!SetTypes()) {
@@ -885,7 +891,7 @@ namespace OpenBabel
       if (_mol.NumAtoms() && _constraints.Size())
         _constraints.Setup(_mol);
 
-      _mol.UnsetSSSRPerceived();
+      _mol.SetSSSRPerceived(false);
       _mol.DeleteData(OBGenericDataType::TorsionData); // bug #1954233
 
       if (!SetTypes()) {
@@ -949,11 +955,11 @@ namespace OpenBabel
         return true;
       if (atom->GetAtomicNum() != (mol.GetAtom(atom->GetIdx()))->GetAtomicNum())
         return true;
-      if (atom->GetValence() != (mol.GetAtom(atom->GetIdx()))->GetValence())
+      if (atom->GetExplicitDegree() != (mol.GetAtom(atom->GetIdx()))->GetExplicitDegree())
         return true;
     }
     FOR_BONDS_OF_MOL (bond, _mol) {
-      if (bond->GetBO() != (mol.GetBond(bond->GetIdx()))->GetBO())
+      if (bond->GetBondOrder() != (mol.GetBond(bond->GetIdx()))->GetBondOrder())
         return true;
       if (bond->GetBeginAtom()->GetAtomicNum()
           != (mol.GetBond(bond->GetIdx()))->GetBeginAtom()->GetAtomicNum()
@@ -2178,21 +2184,21 @@ namespace OpenBabel
       if (HasGroups()) {
         bool isIncludedPair = false;
         for (size_t i=0; i < _interGroup.size(); ++i) {
-          if (_interGroup[i].BitIsOn(a->GetIdx()) &&
-              _interGroup[i].BitIsOn(b->GetIdx())) {
+          if (_interGroup[i].BitIsSet(a->GetIdx()) &&
+              _interGroup[i].BitIsSet(b->GetIdx())) {
             isIncludedPair = true;
             break;
           }
         }
         if (!isIncludedPair) {
           for (size_t i=0; i < _interGroups.size(); ++i) {
-            if (_interGroups[i].first.BitIsOn(a->GetIdx()) &&
-                _interGroups[i].second.BitIsOn(b->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(a->GetIdx()) &&
+                _interGroups[i].second.BitIsSet(b->GetIdx())) {
               isIncludedPair = true;
               break;
             }
-            if (_interGroups[i].first.BitIsOn(b->GetIdx()) &&
-                _interGroups[i].second.BitIsOn(a->GetIdx())) {
+            if (_interGroups[i].first.BitIsSet(b->GetIdx()) &&
+                _interGroups[i].second.BitIsSet(a->GetIdx())) {
               isIncludedPair = true;
               break;
             }
@@ -2792,7 +2798,7 @@ namespace OpenBabel
           }
 
           // check to see how large the gradients are
-          if (dir.length_2() > maxgrad)
+          if (dir.length_2() < maxgrad)
             maxgrad = dir.length_2();
 
           if (!_constraints.IsXFixed(idx))
@@ -2998,7 +3004,7 @@ namespace OpenBabel
           }
 
           // check to see how large the gradients are
-          if (grad2.length_2() > maxgrad)
+          if (grad2.length_2() < maxgrad)
             maxgrad = grad2.length_2();
 
           if (!_constraints.IsXFixed(idx))
@@ -3419,8 +3425,7 @@ namespace OpenBabel
     generator.TimeSeed();
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
-    double velocity, kB;
-    kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+    double velocity;
 
     _velocityPtr = new double[_ncoords];
     memset(_velocityPtr, '\0', sizeof(double)*_ncoords);
@@ -3436,7 +3441,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
         }
 
@@ -3445,7 +3450,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+1] = velocity; // idem
         }
 
@@ -3454,7 +3459,7 @@ namespace OpenBabel
           for (int i=0; i < 12; ++i)
             velocity += generator.NextFloat();
           velocity -= 6.0;
-          velocity *= sqrt((kB * _temp)/ (1000 * a->GetAtomicMass()));
+          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+2] = velocity; // idem
         }
       }
@@ -3467,12 +3472,11 @@ namespace OpenBabel
   {
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
-    double velocity, kB, E_kin, E_kin2, factor;
-    kB = 0.00831451 / KCAL_TO_KJ; // kcal/(mol*K)
+    double velocity, E_kin, E_kin2, factor;
 
-    // E_kin = 0.5 * Ndf * kB * T
-    E_kin = _ncoords * kB * _temp;
-    //cout << "E_{kin} = Ndf * kB * T = " << E_kin << endl;
+    // E_kin = 0.5 * Ndf * R * T
+    E_kin = _ncoords * GAS_CONSTANT * _temp;
+    //cout << "E_{kin} = Ndf * R * T = " << E_kin << endl;
 
     // E_kin = 0.5 * sum( m_i * v_i^2 )
     E_kin2 = 0.0;

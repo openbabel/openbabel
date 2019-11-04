@@ -1,0 +1,113 @@
+1VJE_MSE_A_301
+  RCSB PDB12061704203D
+Coordinates from PDB:1VJE:A:301 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   31.6760  -13.5790   41.2360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7480  -12.6230   41.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9690  -12.9560   41.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8870  -12.7760   43.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1040  -12.8150   41.3420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1750  -11.2460   41.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0820  -10.1000   41.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0460   -8.5100   41.0270  Se 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1250   -8.7120   39.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OXT
+A    6
+CB
+A    7
+CG
+A    8
+SE
+A    9
+CE
+M  END
+>  <InstanceId>
+1VJE_MSE_A_301
+
+>  <ChemCompId>
+MSE
+
+>  <PdbId>
+1VJE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O2 Se
+
+>  <Name>
+SELENOMETHIONINE
+
+>  <SystematicName>
+(2S)-2-amino-4-methylselanyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C5 H11 N O2 Se
+
+>  <MolecularWeight>
+196.106
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+MET
+
+>  <OneLetterCode>
+M
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO2Se/c1-9-3-2-4(6)5(7)8/h4H,2-3,6H2,1H3,(H,7,8)/t4-/m0/s1
+
+>  <InChIKey>
+RJFAYQIBOAGBLC-BYPYZUCNSA-N
+
+>  <SMILES>
+C[Se]CC[C@@H](C(=O)O)N
+
+$$$$

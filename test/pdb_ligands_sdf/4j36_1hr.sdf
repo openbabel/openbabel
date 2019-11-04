@@ -1,0 +1,143 @@
+4J36_1HR_B_402
+  RCSB PDB12061713063D
+Coordinates from PDB:4J36:B:402 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    5.8510   47.2280   65.6750   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5590   46.4210   64.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5350   46.6760   63.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1980   44.9930   65.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6800   44.6270   66.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1890   44.8240   66.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4070   43.5090   66.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9530   42.4600   65.9720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0710   43.5250   66.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4340   44.6850   67.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0980   44.6280   67.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7310   46.0400   68.1020  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5980   43.4270   67.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2540   43.3800   68.0350  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0350   42.2710   67.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3660   42.3260   66.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 16  9  2  0  0  0  0
+ 16 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 15 13  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+OAA
+A    2
+CAJ
+A    3
+OAC
+A    4
+CAO
+A    5
+CAI
+A    6
+CAP
+A    7
+CAK
+A    8
+OAB
+A    9
+CAN
+A   10
+CAH
+A   11
+CAM
+A   12
+CL2
+A   13
+CAL
+A   14
+CLA
+A   15
+CAF
+A   16
+CAG
+M  END
+>  <InstanceId>
+4J36_1HR_B_402
+
+>  <ChemCompId>
+1HR
+
+>  <PdbId>
+4J36
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O3 Cl2
+
+>  <Name>
+(1S,2S)-2-(3,4-dichlorobenzoyl)cyclopropanecarboxylic acid
+
+>  <SystematicName>
+(1S,2S)-2-(3,4-dichlorophenyl)carbonylcyclopropane-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H8 Cl2 O3
+
+>  <MolecularWeight>
+259.085
+
+>  <ModifiedDate>
+2013-04-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H8Cl2O3/c12-8-2-1-5(3-9(8)13)10(14)6-4-7(6)11(15)16/h1-3,6-7H,4H2,(H,15,16)/t6-,7-/m0/s1
+
+>  <InChIKey>
+ZBRKMOHDGFGXLN-BQBZGAKWSA-N
+
+>  <SMILES>
+c1cc(c(cc1C(=O)[C@H]2C[C@@H]2C(=O)O)Cl)Cl
+
+$$$$

@@ -12,16 +12,22 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
+#include <cstdlib>
 #include <sstream>
 #include <string>
 #include <openbabel/alias.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/op.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/builder.h>
+#include <openbabel/obiter.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/mcdlutil.h>
 #include <openbabel/shared_ptr.h>
 #include <openbabel/elements.h>
+#include <openbabel/generic.h>
 
 #define MARK_UNUSED(x) (void)(x)
 
@@ -111,7 +117,7 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   */
 
   OBAtom* XxAtom = mol.GetAtom(atomindex);
-/*  if(XxAtom->GetValence()>1)
+/*  if(XxAtom->GetExplicitDegree()>1)
   {
     obErrorLog.ThrowError(__FUNCTION__, _alias + " is multivalent, which is currently not supported.", obWarning);
     return false;
@@ -145,9 +151,11 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
   OBAtom* firstAttachAtom = XxAtom->BeginNbrAtom(bi);
   unsigned mainAttachIdx = firstAttachAtom ? firstAttachAtom->GetIdx() : 0;
   unsigned int firstAttachFlags = 0;
-  if (firstAttachAtom)
+  unsigned int firstAttachOrder = 1;
+  if (firstAttachAtom) {
     firstAttachFlags = mol.GetBond(XxAtom, firstAttachAtom)->GetFlags();
-
+    firstAttachOrder = mol.GetBond(XxAtom, firstAttachAtom)->GetBondOrder();
+  }
   //++Make list of other attachments* of XxAtom
   // (Added later so that the existing bonding of the XXAtom are retained)
   vector<pair<OBAtom*, unsigned> > otherAttachments;
@@ -176,8 +184,9 @@ bool AliasData::FromNameLookup(OBMol& mol, const unsigned int atomindex)
     builder.Build(obFrag);
     obFrag.DeleteAtom(obFrag.GetAtom(1));//remove dummy atom
     mol += obFrag; //Combine with main molecule
-    if(mainAttachIdx)
-      builder.Connect(mol, mainAttachIdx, newFragIdx);
+    if(mainAttachIdx) {
+      builder.Connect(mol, mainAttachIdx, newFragIdx,XxAtom->GetVector(),firstAttachOrder);
+    }
   }
   else // 0D, 2D
   {

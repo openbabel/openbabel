@@ -1,0 +1,122 @@
+2AY2_CXP_B_414
+  RCSB PDB12061705033D
+Coordinates from PDB:2AY2:B:414 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  101.0710   44.8070   11.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.9520   45.4070   12.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.1340   44.3550   13.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.5830   43.3040   12.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.7010   42.6700   11.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  100.4930   43.7440   10.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  101.9090   45.8550   10.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  103.1460   46.3530   11.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.8110   47.1200   12.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  102.1190   48.1570   12.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  103.2200   46.6910   14.0230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+2AY2_CXP_B_414
+
+>  <ChemCompId>
+CXP
+
+>  <PdbId>
+2AY2
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+CYCLOHEXANE PROPIONIC ACID
+
+>  <SystematicName>
+3-cyclohexylpropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 O2
+
+>  <MolecularWeight>
+156.222
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16O2/c10-9(11)7-6-8-4-2-1-3-5-8/h8H,1-7H2,(H,10,11)
+
+>  <InChIKey>
+HJZLEGIHUQOJBA-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(CC1)CCC(=O)O
+
+$$$$

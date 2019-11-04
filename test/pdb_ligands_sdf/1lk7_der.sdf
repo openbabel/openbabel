@@ -1,0 +1,129 @@
+1LK7_DER_A_1001
+  RCSB PDB12061703113D
+Coordinates from PDB:1LK7:A:1001 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   15.3090   10.5100   90.6770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3410   11.1430   90.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2950   12.1710   91.6100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6640   10.6730   90.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6940   10.6620   91.3580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0260   11.6680   89.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1360   12.9290   89.9020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3310   11.3190   88.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2900    9.9640   88.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4240    9.5400   87.0690   P 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9600    8.3440   86.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6430    9.2950   87.9200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5230   10.7050   86.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+OH2
+A    2
+C1
+A    3
+OH1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+P
+A   11
+O1P
+A   12
+O2P
+A   13
+O3P
+M  END
+>  <InstanceId>
+1LK7_DER_A_1001
+
+>  <ChemCompId>
+DER
+
+>  <PdbId>
+1LK7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O8 P
+
+>  <Name>
+D-4-PHOSPHOERYTHRONIC ACID
+
+>  <SystematicName>
+(2R,3S)-2,3-dihydroxy-4-phosphonooxy-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H9 O8 P
+
+>  <MolecularWeight>
+216.083
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H9O8P/c5-2(3(6)4(7)8)1-12-13(9,10)11/h2-3,5-6H,1H2,(H,7,8)(H2,9,10,11)/t2-,3+/m0/s1
+
+>  <InChIKey>
+ZCZXOHUILRHRQJ-STHAYSLISA-N
+
+>  <SMILES>
+C([C@@H]([C@H](C(=O)O)O)O)OP(=O)(O)O
+
+$$$$

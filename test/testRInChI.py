@@ -36,7 +36,7 @@ class TestReactionInChIWriter(BaseTest):
                 # Example: esterification of acetic acid
                 ("OCC.CC(=O)O>S(=O)(=O)(O)O>CC(=O)OCC.O", "RInChI=1.00.1S/C2H4O2/c1-2(3)4/h1H3,(H,3,4)!C2H6O/c1-2-3/h3H,2H2,1H3<>C4H8O2/c1-3-6-4(2)5/h3H2,1-2H3!H2O/h1H2<>H2O4S/c1-5(2,3)4/h(H2,1,2,3,4)/d+"),
                 # Example: alkaline ring opening
-                ("CC[C@]1(C)O[C@H]1C.[OH-]>>CC[C@](C)(O)[C@@H](C)O", "RInChI=1.00.1S/C6H12O/c1-4-6(3)5(2)7-6/h5H,4H2,1-3H3/t5-,6-/m0/s1!H2O/h1H2/p-1<>C6H14O2/c1-4-6(3,8)5(2)7/h5,7-8H,4H2,1-3H3/t5-,6+/m1/s1/d+"), 
+                ("CC[C@]1(C)O[C@H]1C.[OH-]>>CC[C@](C)(O)[C@@H](C)O", "RInChI=1.00.1S/C6H12O/c1-4-6(3)5(2)7-6/h5H,4H2,1-3H3/t5-,6-/m0/s1!H2O/h1H2/p-1<>C6H14O2/c1-4-6(3,8)5(2)7/h5,7-8H,4H2,1-3H3/t5-,6+/m1/s1/d+"),
                 # Partial reactions
                 (">>C1CC=C(O)CC1", "RInChI=1.00.1S/<>C6H10O/c7-6-4-2-1-3-5-6/h4,7H,1-3,5H2/d+"),
                 ("C1CC=C(O)CC1>>", "RInChI=1.00.1S/<>C6H10O/c7-6-4-2-1-3-5-6/h4,7H,1-3,5H2/d-"),
@@ -53,11 +53,11 @@ class TestReactionInChIWriter(BaseTest):
         for eqm in [False, True]:
             for rsmi, rinchi in data:
                 if eqm:
-                    output, error = run_exec('obabel -:%s -irsmi -orinchi -xe' % rsmi)
+                    output, error = run_exec('obabel -:%s -ismi -orinchi -xe' % rsmi)
                     ans = rinchi.replace("/d-", "/d=").replace("/d+", "/d=")
                     self.assertEqual(output.rstrip(), ans)
                 else:
-                    output, error = run_exec('obabel -:%s -irsmi -orinchi' % rsmi)
+                    output, error = run_exec('obabel -:%s -ismi -orinchi' % rsmi)
                     self.assertEqual(output.rstrip(), rinchi)
 
     def testRInChIOfficialExamples(self):
@@ -65,7 +65,8 @@ class TestReactionInChIWriter(BaseTest):
         for rxnfile in glob.glob(os.path.join(here, "rinchi", "*.rxn")):
             dirname, fname = os.path.split(rxnfile)
             output, error = run_exec('obabel %s -orinchi' % rxnfile)
-            ans = open(os.path.join(dirname, fname.split(".")[0]+".txt")).readlines()[0]
+            with open(os.path.join(dirname, fname.split(".")[0]+".txt")) as inp:
+                ans = inp.readlines()[0]
             self.assertEqual(output.rstrip(), ans.rstrip())
 
 if __name__ == "__main__":

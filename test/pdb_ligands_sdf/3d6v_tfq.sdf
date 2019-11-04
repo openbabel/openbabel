@@ -1,0 +1,146 @@
+2Q1I_TFQ_A_400
+  RCSB PDB12061706423D
+Coordinates from PDB:2Q1I:A:400 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   -5.7730   22.3370    5.5250   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6090   23.4310    6.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4590   23.2840    6.8510   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4550   24.4730    5.3800   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8660   23.5290    7.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0400   23.3700    6.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9220   22.2990    6.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0150   22.2320    5.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3010   24.3470    5.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3880   24.2720    4.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2840   23.2110    4.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4720   23.1310    3.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2070   24.4670    3.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0730   24.9400    4.2690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1440   24.3770    1.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.8710   23.6280    1.0360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1950   25.0840    2.0960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+A    1
+F16
+A    2
+C14
+A    3
+F17
+A    4
+F15
+A    5
+C13
+A    6
+C1
+A    7
+C6
+A    8
+C5
+A    9
+C2
+A   10
+C3
+A   11
+C4
+A   12
+C7
+A   13
+C8
+A   14
+N9
+A   15
+C10
+A   16
+O12
+A   17
+O11
+M  END
+>  <InstanceId>
+2Q1I_TFQ_A_400
+
+>  <ChemCompId>
+TFQ
+
+>  <PdbId>
+2Q1I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 F3
+
+>  <Name>
+4-(2,2,2-TRIFLUOROETHYL)-L-PHENYLALANINE
+
+>  <SystematicName>
+(2S)-2-amino-3-[4-(2,2,2-trifluoroethyl)phenyl]propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C11 H12 F3 N O2
+
+>  <MolecularWeight>
+247.214
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+PHE
+
+>  <OneLetterCode>
+F
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12F3NO2/c12-11(13,14)6-8-3-1-7(2-4-8)5-9(15)10(16)17/h1-4,9H,5-6,15H2,(H,16,17)/t9-/m0/s1
+
+>  <InChIKey>
+VXIZYDKGLBPCAQ-VIFPVBQESA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@@H](C(=O)O)N)CC(F)(F)F
+
+$$$$

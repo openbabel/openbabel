@@ -2,6 +2,7 @@
 #include <openbabel/op.h>
 #include <openbabel/obconversion.h>
 #include <vector>
+#include <algorithm>
 
 namespace OpenBabel
 {

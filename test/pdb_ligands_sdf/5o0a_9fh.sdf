@@ -1,0 +1,139 @@
+5O0A_9FH_A_201
+  RCSB PDB12061719153D
+Coordinates from PDB:5O0A:A:201 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -10.0770  -36.4120  -20.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6910  -33.5580  -20.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6940  -36.9330  -22.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8570  -36.7600  -20.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3630  -36.3450  -19.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7230  -36.1180  -19.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5560  -36.3090  -20.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0590  -36.7100  -21.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9450  -36.0670  -20.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4520  -34.8590  -20.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8580  -35.0250  -20.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8850  -36.9670  -20.7320   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8580  -33.9350  -20.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4760  -32.7550  -19.9470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0750  -34.1900  -20.3340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2 10  1  0  0  0  0
+ 15 13  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+  4  3  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 11  1  1  0  0  0  0
+  3  8  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 12  1  2  0  0  0  0
+A    1
+C10
+A    2
+C15
+A    3
+C01
+A    4
+C02
+A    5
+C03
+A    6
+C04
+A    7
+C05
+A    8
+C06
+A    9
+N07
+A   10
+C08
+A   11
+C09
+A   12
+N11
+A   13
+C12
+A   14
+O13
+A   15
+O14
+M  END
+>  <InstanceId>
+5O0A_9FH_A_201
+
+>  <ChemCompId>
+9FH
+
+>  <PdbId>
+5O0A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+5-methyl-1-phenyl-pyrazole-4-carboxylic acid
+
+>  <SystematicName>
+5-methyl-1-phenyl-pyrazole-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2 O2
+
+>  <MolecularWeight>
+202.209
+
+>  <ModifiedDate>
+2017-06-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O2/c1-8-10(11(14)15)7-12-13(8)9-5-3-2-4-6-9/h2-7H,1H3,(H,14,15)
+
+>  <InChIKey>
+USSMIQWDLWJQDQ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(cnn1c2ccccc2)C(=O)O
+
+$$$$

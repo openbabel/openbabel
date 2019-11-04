@@ -1,0 +1,138 @@
+5HH6_60N_A_402
+  RCSB PDB12061718003D
+Coordinates from PDB:5HH6:A:402 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -21.4340   22.8020    3.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8550   24.1090    3.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7980   24.2780    4.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0280   26.0780    0.3200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3120   26.1570    0.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.5380   26.3060   -0.7440   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3200   25.0140   -1.4900   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0280   27.5230   -1.4820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8810   26.4500   -0.0650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6810   24.9770    1.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2320   23.7140    1.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6120   22.5830    1.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6950   23.4250    5.4590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4610   25.2480    4.8110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4720   25.1410    2.6440   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  8  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 10 15  1  0  0  0  0
+ 12  1  2  0  0  0  0
+ 15  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3 14  2  0  0  0  0
+  3 13  1  0  0  0  0
+A    1
+C10
+A    2
+C11
+A    3
+C12
+A    4
+O01
+A    5
+C02
+A    6
+P03
+A    7
+O04
+A    8
+O05
+A    9
+O06
+A   10
+C07
+A   11
+C08
+A   12
+C09
+A   13
+O13
+A   14
+O14
+A   15
+N15
+M  END
+>  <InstanceId>
+5HH6_60N_A_402
+
+>  <ChemCompId>
+60N
+
+>  <PdbId>
+5HH6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O6 P
+
+>  <Name>
+6-[(~{S})-oxidanyl(phosphono)methyl]pyridine-2-carboxylic acid
+
+>  <SystematicName>
+6-[(~{S})-oxidanyl(phosphono)methyl]pyridine-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N O6 P
+
+>  <MolecularWeight>
+233.115
+
+>  <ModifiedDate>
+2017-01-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8NO6P/c9-6(10)4-2-1-3-5(8-4)7(11)15(12,13)14/h1-3,7,11H,(H,9,10)(H2,12,13,14)/t7-/m0/s1
+
+>  <InChIKey>
+BMLFSBIYIPWZDN-ZETCQYMHSA-N
+
+>  <SMILES>
+c1cc(nc(c1)C(=O)O)[C@@H](O)P(=O)(O)O
+
+$$$$

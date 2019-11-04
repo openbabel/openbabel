@@ -1,0 +1,113 @@
+1FX5_XYL_A_259
+  RCSB PDB12061702323D
+Coordinates from PDB:1FX5:A:259 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   -7.7800  -26.2780   44.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5960  -26.5070   43.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9890  -25.8740   43.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6750  -26.2890   44.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7940  -25.9170   46.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9010  -25.9420   42.4570   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7820  -26.2780   42.5320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9270  -25.6270   45.0220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5310  -26.6150   46.0530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O2
+A    7
+O3
+A    8
+O4
+A    9
+O5
+M  END
+>  <InstanceId>
+1FX5_XYL_A_259
+
+>  <ChemCompId>
+XYL
+
+>  <PdbId>
+1FX5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+259
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+D-XYLITOL
+
+>  <SystematicName>
+(2S,4R)-pentane-1,2,3,4,5-pentol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O5
+
+>  <MolecularWeight>
+152.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O5/c6-1-3(8)5(10)4(9)2-7/h3-10H,1-2H2/t3-,4+,5+
+
+>  <InChIKey>
+HEBKCHPVOIAQTA-SCDXWVJYSA-N
+
+>  <SMILES>
+C([C@@H](C([C@@H](CO)O)O)O)O
+
+$$$$

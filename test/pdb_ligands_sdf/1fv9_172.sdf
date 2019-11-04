@@ -1,0 +1,123 @@
+1FV9_172_A_246
+  RCSB PDB12061702323D
+Coordinates from PDB:1FV9:A:246 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   21.0210   16.0610   33.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0130   17.3660   34.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8440   18.0310   33.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7770   17.5240   33.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6710   16.2560   33.0310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8380   15.4740   33.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7560   19.3420   34.2640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4010   19.5750   33.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7440   18.4180   33.4490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7880   20.7780   34.1480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1710   15.3420   33.6520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N10
+A    8
+C11
+A    9
+N12
+A   10
+N14
+A   11
+O17
+M  END
+>  <InstanceId>
+1FV9_172_A_246
+
+>  <ChemCompId>
+172
+
+>  <PdbId>
+1FV9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+246
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O
+
+>  <Name>
+2-AMINO-5-HYDROXY-BENZIMIDAZOLE
+
+>  <SystematicName>
+2-amino-1H-benzimidazol-5-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N3 O
+
+>  <MolecularWeight>
+149.15
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N3O/c8-7-9-5-2-1-4(11)3-6(5)10-7/h1-3,11H,(H3,8,9,10)
+
+>  <InChIKey>
+FNSYWIPPPFVBAV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1O)nc([nH]2)N
+
+$$$$

@@ -1,0 +1,139 @@
+5C29_4XY_A_803
+  RCSB PDB12061717013D
+Coordinates from PDB:5C29:A:803 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    4.8620   12.5830   43.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5790   14.4130   40.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9200   15.8480   39.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5560   10.5320   42.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5880   11.1960   43.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2090   10.5290   43.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6910   14.5570   43.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7470   14.9190   42.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4260   14.0960   41.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9680   12.9440   42.0950   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1960   13.4030   44.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5350   15.2710   39.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0380   13.0760   45.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8110   15.7030   44.6720  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4140   11.4470   43.8980   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  3  1  0  0  0  0
+ 12  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  6 15  1  0  0  0  0
+  1 15  1  0  0  0  0
+  1 11  2  0  0  0  0
+  7 11  1  0  0  0  0
+  7 14  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C3
+A    2
+C5
+A    3
+C7
+A    4
+C9
+A    5
+C10
+A    6
+C11
+A    7
+C
+A    8
+N
+A    9
+C1
+A   10
+N2
+A   11
+C4
+A   12
+C6
+A   13
+C8
+A   14
+CL
+A   15
+N12
+M  END
+>  <InstanceId>
+5C29_4XY_A_803
+
+>  <ChemCompId>
+4XY
+
+>  <PdbId>
+5C29
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 Cl
+
+>  <Name>
+6-chloro-2-cyclopropyl-5-methyl-N-propylpyrimidin-4-amine
+
+>  <SystematicName>
+6-chloranyl-2-cyclopropyl-5-methyl-N-propyl-pyrimidin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H16 Cl N3
+
+>  <MolecularWeight>
+225.718
+
+>  <ModifiedDate>
+2015-09-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H16ClN3/c1-3-6-13-10-7(2)9(12)14-11(15-10)8-4-5-8/h8H,3-6H2,1-2H3,(H,13,14,15)
+
+>  <InChIKey>
+YWNJZQBPACVEDC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCNc1c(c(nc(n1)C2CC2)Cl)C
+
+$$$$

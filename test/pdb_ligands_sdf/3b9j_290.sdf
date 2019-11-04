@@ -1,0 +1,123 @@
+3B9J_290_C_1335
+  RCSB PDB12061707593D
+Coordinates from PDB:3B9J:C:1335 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -55.7190  -18.1200   18.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.4670  -18.2080   20.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.9930  -19.5380   20.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.8230  -16.1590   19.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.6720  -20.5550   19.5860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.4460  -19.1770   18.0790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.6340  -21.3260   17.7310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.9210  -20.3760   18.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.8010  -19.7490   21.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.3330  -16.8480   18.6640   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.5300  -16.9600   20.5550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4 10  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C8
+A    5
+N1
+A    6
+N3
+A    7
+O2
+A    8
+C2
+A    9
+C61
+A   10
+N9
+A   11
+N7
+M  END
+>  <InstanceId>
+3B9J_290_C_1335
+
+>  <ChemCompId>
+290
+
+>  <PdbId>
+3B9J
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1335
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O
+
+>  <Name>
+6-methyl-3,9-dihydro-2H-purin-2-one
+
+>  <SystematicName>
+6-methyl-3,9-dihydropurin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N4 O
+
+>  <MolecularWeight>
+150.138
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N4O/c1-3-4-5(8-2-7-4)10-6(11)9-3/h2H,1H3,(H2,7,8,9,10,11)
+
+>  <InChIKey>
+PTQIZCPBAIYYII-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=NC(=O)Nc2c1nc[nH]2
+
+$$$$

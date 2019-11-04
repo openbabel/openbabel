@@ -33,7 +33,7 @@ The example script below creates atoms and bonds one-by-one using the OBMol, OBA
 </p>
 
 <pre>
-import openbabel
+from openbabel import openbabel
 
 mol = openbabel.OBMol()
 print 'Should print 0 (atoms)'
@@ -58,7 +58,7 @@ More commonly, Open Babel can be used to read in molecules using the OBConversio
 </p>
 
 <pre>
-import openbabel
+from openbabel import openbabel
 
 mol = openbabel.OBMol()
 obConversion = openbabel.OBConversion()
@@ -81,7 +81,7 @@ The following script writes out a file using a filename, rather than reading and
 </p>
 
 <pre>
-import openbabel
+from openbabel import openbabel
 
 mol = openbabel.OBMol()
 obConversion = openbabel.OBConversion()

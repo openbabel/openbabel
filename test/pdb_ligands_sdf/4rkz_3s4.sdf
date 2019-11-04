@@ -1,0 +1,133 @@
+4RKZ_3S4_A_402
+  RCSB PDB12061714393D
+Coordinates from PDB:4RKZ:A:402 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   54.0790   24.3840    6.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.7650   23.4630    3.4300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6470   23.3350    8.1630   P 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6450   22.9400    6.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5880   20.2080    7.3700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6330   22.6120    5.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.6830   19.7830    5.5280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4070   23.8400    4.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0740   22.7330    7.8320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8390   22.0210    6.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.3320   24.5890    7.4350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3460   20.5890    6.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5170   22.4310    7.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.4580   23.6690    9.5950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  8  1  0  0  0  0
+ 11  3  2  0  0  0  0
+ 13  3  1  0  0  0  0
+ 14  3  1  0  0  0  0
+  3  9  1  0  0  0  0
+  6  4  1  0  0  0  0
+  9  4  1  0  0  0  0
+  4 10  1  0  0  0  0
+ 12  5  1  0  0  0  0
+  8  6  1  0  0  0  0
+  7 12  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C
+A    2
+O
+A    3
+P
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+O2
+A    8
+C3
+A    9
+O3
+A   10
+C4
+A   11
+O4
+A   12
+C5
+A   13
+O5
+A   14
+O6
+M  END
+>  <InstanceId>
+4RKZ_3S4_A_402
+
+>  <ChemCompId>
+3S4
+
+>  <PdbId>
+4RKZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7 P
+
+>  <Name>
+(3R)-5-hydroxy-3-methyl-3-(phosphonooxy)pentanoic acid
+
+>  <SystematicName>
+(3R)-3-methyl-5-oxidanyl-3-phosphonooxy-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 O7 P
+
+>  <MolecularWeight>
+228.137
+
+>  <ModifiedDate>
+2014-12-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13O7P/c1-6(2-3-7,4-5(8)9)13-14(10,11)12/h7H,2-4H2,1H3,(H,8,9)(H2,10,11,12)/t6-/m1/s1
+
+>  <InChIKey>
+VWCNCYQNEAUWMQ-ZCFIWIBFSA-N
+
+>  <SMILES>
+C[C@@](CCO)(CC(=O)O)OP(=O)(O)O
+
+$$$$

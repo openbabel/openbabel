@@ -1,0 +1,123 @@
+1EOC_4NC_B_999
+  RCSB PDB12061702243D
+Coordinates from PDB:1EOC:B:999 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    9.9140  -13.0470   41.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6060  -14.1390   40.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5980  -14.9680   40.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9150  -14.6950   40.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2350  -13.6020   41.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2300  -12.7810   41.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8990  -12.2270   41.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2720  -14.3830   40.2150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9680  -15.5560   39.8370   N 0  3  0  0  0  0  0  0  0  0  0  0
+   12.7050  -16.5400   39.1140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1730  -15.3430   40.0940   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+M  CHG  2   9   1  11  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+A    9
+N9
+A   10
+O10
+A   11
+O11
+M  END
+>  <InstanceId>
+1EOC_4NC_B_999
+
+>  <ChemCompId>
+4NC
+
+>  <PdbId>
+1EOC
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+4-NITROCATECHOL
+
+>  <SystematicName>
+4-nitrobenzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 N O4
+
+>  <MolecularWeight>
+155.108
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5NO4/c8-5-2-1-4(7(10)11)3-6(5)9/h1-3,8-9H
+
+>  <InChIKey>
+XJNPNXSISMKQEX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1[N+](=O)[O-])O)O
+
+$$$$

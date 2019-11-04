@@ -17,8 +17,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-#include <openbabel/obiter.h>
-#include <iterator>
+#include <openbabel/mol.h>
+#ifdef HAVE_SHARED_POINTER
+  #include <openbabel/reaction.h>
+#endif
+
+#include <algorithm>
 
 using namespace std;
 namespace OpenBabel
@@ -99,8 +103,10 @@ namespace OpenBabel
 
     OBMol* ptmol = NULL;
     //Molecule is valid if it has some atoms
+    //or it represents a reaction
     //or the format allows zero-atom molecules and it has a title or properties
     if(ret && (pmol->NumAtoms() > 0 
+      || pmol->IsReaction()
       || (pFormat->Flags()&ZEROATOMSOK && (*pmol->GetTitle() || pmol->HasData(1)))))
     {
       ptmol = static_cast<OBMol*>(pmol->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv));

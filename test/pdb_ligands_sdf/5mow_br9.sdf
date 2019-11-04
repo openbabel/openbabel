@@ -1,0 +1,114 @@
+5MOW_BR9_A_401
+  RCSB PDB12061719043D
+Coordinates from PDB:5MOW:A:401 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    8.9550  133.7990  364.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0250  133.0640  363.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8160  131.9820  361.6040   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8170  132.6680  362.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5680  134.3510  365.4080  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7390  134.1260  365.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5770  133.7500  364.5720   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5970  133.0320  363.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4280  132.7100  362.8710   N 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  1  0  0  0  0
+  4  2  2  0  0  0  0
+  4  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  8  7  2  0  0  0  0
+  1  6  2  0  0  0  0
+  1  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+A    1
+C2
+A    2
+C1
+A    3
+N
+A    4
+C
+A    5
+BR
+A    6
+C3
+A    7
+N1
+A    8
+C4
+A    9
+N2
+M  END
+>  <InstanceId>
+5MOW_BR9_A_401
+
+>  <ChemCompId>
+BR9
+
+>  <PdbId>
+5MOW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 Br
+
+>  <Name>
+5-bromopyridine-2,3-diamine
+
+>  <SystematicName>
+5-bromanylpyridine-2,3-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H6 Br N3
+
+>  <MolecularWeight>
+188.025
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6BrN3/c6-3-1-4(7)5(8)9-2-3/h1-2H,7H2,(H2,8,9)
+
+>  <InChIKey>
+YRGMYJUKFJPNPD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cnc(c1N)N)Br
+
+$$$$

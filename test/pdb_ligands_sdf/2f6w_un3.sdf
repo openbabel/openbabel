@@ -1,0 +1,147 @@
+2F6W_UN3_A_608
+  RCSB PDB12061705313D
+Coordinates from PDB:2F6W:A:608 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   41.4760   17.0280   12.0410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4080   15.9130   12.3130   S 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8060   16.4030   12.3050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4040   14.6600   11.5400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7530   15.3800   13.6880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6990   14.3030   14.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4360   14.5310   15.6000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2510   15.6900   16.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2860   13.3580   16.3330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0810   13.0590   14.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4780   12.4930   15.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1690   11.1430   16.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0380   10.3510   16.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9690    9.0770   16.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0680    8.6340   17.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2260    9.4150   17.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2810   10.6790   16.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  2  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 17  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O3
+A    2
+S1
+A    3
+O1
+A    4
+O2
+A    5
+N3
+A    6
+C5
+A    7
+N2
+A    8
+C4
+A    9
+N1
+A   10
+C6
+A   11
+C3
+A   12
+C2
+A   13
+C7
+A   14
+C8
+A   15
+C9
+A   16
+C10
+A   17
+C1
+M  END
+>  <InstanceId>
+2F6W_UN3_A_608
+
+>  <ChemCompId>
+UN3
+
+>  <PdbId>
+2F6W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+608
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O3 S
+
+>  <Name>
+(2-METHYL-5-PHENYL-2H-PYRAZOL-3-YL)-SULFAMIC ACID
+
+>  <SystematicName>
+(2-methyl-5-phenyl-pyrazol-3-yl)sulfamic acid
+
+>  <Synonyms>
+1-METHYL-3-PHENYL-1H-PYRAZOL-5-YLSULFAMIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 N3 O3 S
+
+>  <MolecularWeight>
+253.278
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3O3S/c1-13-10(12-17(14,15)16)7-9(11-13)8-5-3-2-4-6-8/h2-7,12H,1H3,(H,14,15,16)
+
+>  <InChIKey>
+OTZLVSGSRPNRFT-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1c(cc(n1)c2ccccc2)NS(=O)(=O)O
+
+$$$$

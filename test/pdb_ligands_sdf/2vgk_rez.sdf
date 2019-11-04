@@ -1,0 +1,141 @@
+2J9P_REZ_A_500
+  RCSB PDB12061706013D
+Coordinates from PDB:2J9P:A:500 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+    7.4020    9.3440   69.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4090    9.6520   68.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1900    8.8790   67.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1680    9.3720   66.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2140    8.5220   64.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2300    9.0780   63.8670   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5340    7.0750   65.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7150    6.7770   65.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5960    6.2590   65.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8090   10.0120   70.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2670   11.0440   71.2110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7940    9.4190   71.4630   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2990    9.9960   72.6850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5390   10.8290   72.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6300    8.9660   73.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7520    7.7640   73.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+CA1
+A    2
+CB1
+A    3
+CG1
+A    4
+CD1
+A    5
+CE1
+A    6
+NZ1
+A    7
+CZ1
+A    8
+OH1
+A    9
+OH2
+A   10
+C1
+A   11
+O1
+A   12
+N
+A   13
+CA
+A   14
+CB
+A   15
+C
+A   16
+O
+M  END
+>  <InstanceId>
+2J9P_REZ_A_500
+
+>  <ChemCompId>
+REZ
+
+>  <PdbId>
+2J9P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C10 N2 O4
+
+>  <Name>
+(2R)-2-AMINO-7-{[(1R)-1-CARBOXYETHYL]AMINO}-7-OXOHEPTANOIC ACID
+
+>  <SystematicName>
+(2R)-2-amino-7-[[(2R)-1-hydroxy-1-oxo-propan-2-yl]amino]-7-oxo-heptanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 N2 O5
+
+>  <MolecularWeight>
+246.26
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C10H18N2O5/c1-6(9(14)15)12-8(13)5-3-2-4-7(11)10(16)17/h6-7H,2-5,11H2,1H3,(H,12,13)(H,14,15)(H,16,17)/t6-,7-/m1/s1
+
+>  <InChIKey>
+GMHVWLJCMCGBKZ-RNFRBKRXSA-N
+
+>  <SMILES>
+C[C@H](C(=O)O)NC(=O)CCCC[C@H](C(=O)O)N
+
+$$$$

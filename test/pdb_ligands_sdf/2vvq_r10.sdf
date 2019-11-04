@@ -1,0 +1,137 @@
+2VVQ_R10_A_200
+  RCSB PDB12061707093D
+Coordinates from PDB:2VVQ:A:200 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   23.2660   -9.0940   13.7060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7260   -7.7040   13.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3330   -7.4000   12.1650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2050   -5.7990   13.5520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2020   -8.0260   13.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3070   -8.7230   12.6200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1800   -9.1290   14.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1100   -8.5660   16.2820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3730  -10.0720   14.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9410   -7.1320   14.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3320  -11.1110   15.8540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5960  -12.0610   16.1460   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8730  -12.7550   14.8570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0240  -12.9170   17.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8020  -11.2580   16.5210   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  9  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+O2
+A    2
+C5
+A    3
+O1
+A    4
+O3
+A    5
+C3
+A    6
+O4
+A    7
+C2
+A    8
+O5
+A    9
+C1
+A   10
+C4
+A   11
+O6
+A   12
+P1
+A   13
+O9
+A   14
+O7
+A   15
+O8
+M  END
+>  <InstanceId>
+2VVQ_R10_A_200
+
+>  <ChemCompId>
+R10
+
+>  <PdbId>
+2VVQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O9 P
+
+>  <Name>
+5-O-phosphono-D-ribonic acid
+
+>  <SystematicName>
+(2R,3R,4R)-2,3,4-trihydroxy-5-phosphonooxy-pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H11 O9 P
+
+>  <MolecularWeight>
+246.109
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C5H11O9P/c6-2(1-14-15(11,12)13)3(7)4(8)5(9)10/h2-4,6-8H,1H2,(H,9,10)(H2,11,12,13)/t2-,3-,4-/m1/s1
+
+>  <InChIKey>
+HNECGPFIYSOYHF-BXXZVTAOSA-N
+
+>  <SMILES>
+C([C@H]([C@H]([C@H](C(=O)O)O)O)O)OP(=O)(O)O
+
+$$$$

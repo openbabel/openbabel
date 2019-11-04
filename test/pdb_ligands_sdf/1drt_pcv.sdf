@@ -1,0 +1,134 @@
+1DRT_PCV_A_327
+  RCSB PDB12061702183D
+Coordinates from PDB:1DRT:A:327 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    2.9350    6.8710    5.7630   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3100    6.5720    5.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3160    7.1050    5.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0180    5.3430    6.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5840    5.7230    6.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1770    7.9770    5.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9700    7.5080    4.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2840    6.2750    3.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8680    6.6930    1.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1740    6.0560    0.8280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1250    7.1800    5.0400   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7340    9.0060    6.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7690   10.3040    5.9140   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3450    8.6820    7.3090   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+N1
+A    2
+C8
+A    3
+O1
+A    4
+C9
+A    5
+C7
+A    6
+C1
+A    7
+C2
+A    8
+C4
+A    9
+C5
+A   10
+N2
+A   11
+O3
+A   12
+C3
+A   13
+O2
+A   14
+O4
+M  END
+>  <InstanceId>
+1DRT_PCV_A_327
+
+>  <ChemCompId>
+PCV
+
+>  <PdbId>
+1DRT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+327
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+5-AMINO-3-HYDROXY-2-(2-OXO-AZETIDIN-1-YL)-PENTANOIC ACID
+
+>  <SystematicName>
+(2S,3R)-5-amino-3-hydroxy-2-(2-oxoazetidin-1-yl)pentanoic acid
+
+>  <Synonyms>
+PROCLAVAMINIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H14 N2 O4
+
+>  <MolecularWeight>
+202.208
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H14N2O4/c9-3-1-5(11)7(8(13)14)10-4-2-6(10)12/h5,7,11H,1-4,9H2,(H,13,14)/t5-,7+/m1/s1
+
+>  <InChIKey>
+NMCINKPVAOXDJH-VDTYLAMSSA-N
+
+>  <SMILES>
+C1CN(C1=O)[C@@H]([C@@H](CCN)O)C(=O)O
+
+$$$$

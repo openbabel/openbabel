@@ -1,0 +1,101 @@
+1O4N_OXD_A_109
+  RCSB PDB12061703303D
+Coordinates from PDB:1O4N:A:109 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   15.1570   28.5040   17.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6000   28.3120   17.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0390   28.1190   19.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4950   28.2440   18.3880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3100   28.7370   17.0430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8690   28.0340   16.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  5  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+O3
+A    4
+O4
+A    5
+O5
+A    6
+O6
+M  END
+>  <InstanceId>
+1O4N_OXD_A_109
+
+>  <ChemCompId>
+OXD
+
+>  <PdbId>
+1O4N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+109
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O4
+
+>  <Name>
+OXALIC ACID
+
+>  <SystematicName>
+ethanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H2 O4
+
+>  <MolecularWeight>
+90.035
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H2O4/c3-1(4)2(5)6/h(H,3,4)(H,5,6)
+
+>  <InChIKey>
+MUBZPKHOEPUJKR-UHFFFAOYSA-N
+
+>  <SMILES>
+C(=O)(C(=O)O)O
+
+$$$$

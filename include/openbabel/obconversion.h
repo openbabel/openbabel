@@ -46,7 +46,6 @@ GNU General Public License for more details.
 	#define OBDLL
 #endif
 
-//using namespace std;
 namespace OpenBabel {
 
   // Needed to preserve deprecated API

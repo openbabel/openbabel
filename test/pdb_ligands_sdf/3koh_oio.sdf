@@ -1,0 +1,138 @@
+3KOH_OIO_A_1
+  RCSB PDB12061709293D
+Coordinates from PDB:3KOH:A:1 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -4.4450    3.9210   12.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7650    4.7870   13.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9130    4.4290   15.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7820    5.4490   16.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1550    6.0750   17.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1690    6.8930   18.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5010    7.9620   18.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5540    8.8580   19.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4720    8.3470   20.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4690   10.0810   19.3850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3650    4.6800   11.5890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3640    5.1630   10.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8180    5.8070    9.8370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5040    5.6950    9.8940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2400    5.0010   10.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 10  8  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 14  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+O9
+A   10
+O10
+A   11
+N11
+A   12
+C12
+A   13
+C13
+A   14
+N14
+A   15
+C15
+M  END
+>  <InstanceId>
+3KOH_OIO_A_1
+
+>  <ChemCompId>
+OIO
+
+>  <PdbId>
+3KOH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+8-(1H-imidazol-1-yl)octanoic acid
+
+>  <SystematicName>
+8-imidazol-1-yloctanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H18 N2 O2
+
+>  <MolecularWeight>
+210.273
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H18N2O2/c14-11(15)6-4-2-1-3-5-8-13-9-7-12-10-13/h7,9-10H,1-6,8H2,(H,14,15)
+
+>  <InChIKey>
+OUQGDTNNZRAKIB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cn(cn1)CCCCCCCC(=O)O
+
+$$$$

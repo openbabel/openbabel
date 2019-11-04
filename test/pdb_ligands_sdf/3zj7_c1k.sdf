@@ -1,0 +1,147 @@
+3ZJ7_C1K_A_1509
+  RCSB PDB12061711293D
+Coordinates from PDB:3ZJ7:A:1509 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -36.3410    5.5390   -9.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.9680    5.8470   -8.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.1170    6.2470   -7.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1800    7.3840   -7.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8100    7.8180   -8.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.4420    6.6150   -9.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.6090    6.0310   -8.5790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.9970    6.2020   -9.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.9910    5.0560   -8.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.5030    4.2550   -9.7800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.1900    5.8110   -8.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.8220    5.0470   -6.9870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.5570    7.0360   -7.4820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.5380    8.0290   -7.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.6600    7.4940   -8.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.6210    8.4170   -7.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.7280    9.7180   -8.5370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+CAI
+A    2
+CAF
+A    3
+CAE
+A    4
+CAG
+A    5
+CAJ
+A    6
+CAL
+A    7
+NAK
+A    8
+CAQ
+A    9
+CAO
+A   10
+OAD
+A   11
+CAM
+A   12
+OAB
+A   13
+CAN
+A   14
+OAC
+A   15
+CAP
+A   16
+CAH
+A   17
+OAA
+M  END
+>  <InstanceId>
+3ZJ7_C1K_A_1509
+
+>  <ChemCompId>
+C1K
+
+>  <PdbId>
+3ZJ7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1509
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O4
+
+>  <Name>
+(1R,2S,3S,4R,5R)-4-(cyclohexylamino)-5-(hydroxymethyl)cyclopentane-1,2,3-triol
+
+>  <SystematicName>
+(1R,2S,3S,4R,5R)-4-(cyclohexylamino)-5-(hydroxymethyl)cyclopentane-1,2,3-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H23 N O4
+
+>  <MolecularWeight>
+245.315
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H23NO4/c14-6-8-9(11(16)12(17)10(8)15)13-7-4-2-1-3-5-7/h7-17H,1-6H2/t8-,9+,10+,11-,12-/m0/s1
+
+>  <InChIKey>
+ODXSPHZWZNYGJU-KNZXXDILSA-N
+
+>  <SMILES>
+C1CCC(CC1)N[C@@H]2[C@@H]([C@H]([C@@H]([C@H]2O)O)O)CO
+
+$$$$

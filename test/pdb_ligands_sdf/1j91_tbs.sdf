@@ -1,0 +1,131 @@
+1J91_TBS_A_338
+  RCSB PDB12061702553D
+Coordinates from PDB:1J91:A:338 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -11.5580    5.4450    4.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9420    5.7270    3.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0550    4.6430    2.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2970    4.0910    5.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.2270    1.7100    4.1120   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4160    3.0770    4.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7750    3.3400    2.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8070    2.1200    2.0310   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4910    1.2070    2.8120   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7940    3.6310    6.8020  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4000    6.8510    5.8860  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2990    7.5300    2.6470  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5560    4.9120    0.4870  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  7  2  0  0  0  0
+  3 13  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+N8
+A    9
+N9
+A   10
+BR10
+A   11
+BR11
+A   12
+BR12
+A   13
+BR13
+M  END
+>  <InstanceId>
+1J91_TBS_A_338
+
+>  <ChemCompId>
+TBS
+
+>  <PdbId>
+1J91
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+338
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 Br4
+
+>  <Name>
+4,5,6,7-TETRABROMOBENZOTRIAZOLE
+
+>  <SystematicName>
+4,5,6,7-tetrabromo-1H-benzotriazole
+
+>  <Synonyms>
+TETRABROMO-2-BENZOTRIAZOLE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H Br4 N3
+
+>  <MolecularWeight>
+434.708
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6HBr4N3/c7-1-2(8)4(10)6-5(3(1)9)11-13-12-6/h(H,11,12,13)
+
+>  <InChIKey>
+OMZYUVOATZSGJY-UHFFFAOYSA-N
+
+>  <SMILES>
+c12c(c(c(c(c1Br)Br)Br)Br)nn[nH]2
+
+$$$$

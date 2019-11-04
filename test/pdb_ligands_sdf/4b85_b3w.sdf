@@ -1,0 +1,150 @@
+4B85_B3W_A_600
+  RCSB PDB12061711483D
+Coordinates from PDB:4B85:A:600 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   28.0710   19.2670   11.9720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4320   19.5210   12.2780   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2650   18.4030   12.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5000   20.5300   13.5920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5430   21.6640   13.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3580   21.4590   14.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8150   20.0490   14.5260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5570   19.9610   13.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9550   21.3520   13.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0840   20.4060   11.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3520   21.4050   10.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9110   22.1340    9.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2220   21.8480    8.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9700   20.8770    9.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3900   20.1670   10.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6800   19.3360   15.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3560   17.9710   15.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9650   22.7080    7.6030  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 16  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 15  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 18  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O2
+A    2
+S1
+A    3
+O1
+A    4
+N4
+A    5
+C22
+A    6
+C21
+A    7
+N17
+A    8
+C16
+A    9
+C20
+A   10
+C5
+A   11
+C10
+A   12
+C9
+A   13
+C8
+A   14
+C7
+A   15
+C6
+A   16
+C11
+A   17
+C12
+A   18
+CL8
+M  END
+>  <InstanceId>
+4B85_B3W_A_600
+
+>  <ChemCompId>
+B3W
+
+>  <PdbId>
+4B85
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2 S Cl
+
+>  <Name>
+4-chloranyl-N-[2-(diethylamino)ethyl]benzenesulfonamide
+
+>  <SystematicName>
+4-chloranyl-N-[2-(diethylamino)ethyl]benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H19 Cl N2 O2 S
+
+>  <MolecularWeight>
+290.809
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H19ClN2O2S/c1-3-15(4-2)10-9-14-18(16,17)12-7-5-11(13)6-8-12/h5-8,14H,3-4,9-10H2,1-2H3
+
+>  <InChIKey>
+KVQQWVRVJDYYMC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCN(CC)CCNS(=O)(=O)c1ccc(cc1)Cl
+
+$$$$

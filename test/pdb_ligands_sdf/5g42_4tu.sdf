@@ -1,0 +1,131 @@
+5G42_4TU_A_1510
+  RCSB PDB12061717483D
+Coordinates from PDB:5G42:A:1510 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -27.0210    6.0200  -13.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8210    7.3840  -13.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.6440    7.5070  -14.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.8400    6.1550  -14.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0510    5.4220  -13.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.6360    8.1120  -14.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0970    3.0630  -13.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8620    5.3390  -15.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.5240    3.9420  -15.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4520    4.0690  -14.0340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7880    1.8760  -13.2770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2330    3.1470  -12.2520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4380    9.8150  -14.5090  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  1  0  0  0  0
+  8  4  1  0  0  0  0
+  9 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 13  6  1  0  0  0  0
+  6  2  2  0  0  0  0
+ 10  5  1  0  0  0  0
+ 10  7  1  0  0  0  0
+  5  1  2  0  0  0  0
+  2  1  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  7 12  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+N10
+A   11
+N11
+A   12
+O12
+A   13
+CL1
+M  END
+>  <InstanceId>
+5G42_4TU_A_1510
+
+>  <ChemCompId>
+4TU
+
+>  <PdbId>
+5G42
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1510
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O Cl
+
+>  <Name>
+5-chloranyl-2,3-dihydroindole-1-carboxamide
+
+>  <SystematicName>
+5-chloranyl-2,3-dihydroindole-1-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 Cl N2 O
+
+>  <MolecularWeight>
+196.634
+
+>  <ModifiedDate>
+2016-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9ClN2O/c10-7-1-2-8-6(5-7)3-4-12(8)9(11)13/h1-2,5H,3-4H2,(H2,11,13)
+
+>  <InChIKey>
+BOMYLDVQOSGKAD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)CCN2C(=O)N
+
+$$$$

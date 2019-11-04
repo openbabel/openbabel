@@ -1,0 +1,121 @@
+4ZUN_SS9_A_401
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZUN:A:401 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -10.4520    0.8360  -28.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.4220    1.7670  -26.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3550    2.9580  -27.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9280    5.1390  -26.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7420    5.8950  -27.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4210    7.2630  -27.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1910    8.2180  -28.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1730    9.3940  -28.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6430   -0.3210  -27.8450   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4250    3.7720  -25.9940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1460   10.4890  -29.7400   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4 10  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+N1
+A   10
+N5
+A   11
+S11
+M  END
+>  <InstanceId>
+4ZUN_SS9_A_401
+
+>  <ChemCompId>
+SS9
+
+>  <PdbId>
+4ZUN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 S
+
+>  <Name>
+5-[(3-aminopropyl)amino]pentane-1-thiol
+
+>  <SystematicName>
+5-(3-azanylpropylamino)pentane-1-thiol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H20 N2 S
+
+>  <MolecularWeight>
+176.323
+
+>  <ModifiedDate>
+2015-07-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H20N2S/c9-5-4-7-10-6-2-1-3-8-11/h10-11H,1-9H2
+
+>  <InChIKey>
+UEAAWEWNMXIYCA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCNCCCN)CCS
+
+$$$$

@@ -1,0 +1,152 @@
+3C2N_CKR_A_400
+  RCSB PDB12061708063D
+Coordinates from PDB:3C2N:A:400 Model:1 without hydrogens
+ 18 20  0  0  0  0            999 V2000
+   19.0520   17.9880   17.9690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3200   17.7410   19.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7230   17.7180   20.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7050   17.4320   21.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9770   17.5480   22.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1050   17.8280   23.1940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0010   17.3140   23.6690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7920   16.9220   23.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8910   16.5540   24.1940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4990   16.6730   21.9100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4670   16.9090   20.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1380   16.8150   19.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0940   17.2560   18.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0630   17.3180   17.3040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2120   17.9560   16.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6250   18.1240   15.6630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5080   18.0160   14.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0050   18.1300   13.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 15  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+N2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+O1
+A    7
+N7
+A    8
+C8
+A    9
+N22
+A   10
+N9
+A   11
+C10
+A   12
+C11
+A   13
+C12
+A   14
+N13
+A   15
+C1
+A   16
+N14
+A   17
+C2
+A   18
+C7
+M  END
+>  <InstanceId>
+3C2N_CKR_A_400
+
+>  <ChemCompId>
+CKR
+
+>  <PdbId>
+3C2N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+6
+
+>  <ObservedFormula>
+C11 N6 O
+
+>  <Name>
+6-amino-2-[(2-morpholin-4-ylethyl)amino]-3,7-dihydro-8H-imidazo[4,5-g]quinazolin-8-one
+
+>  <SystematicName>
+6-amino-2-(2-morpholin-4-ylethylamino)-3,7-dihydroimidazo[4,5-g]quinazolin-8-one
+
+>  <Synonyms>
+6-Amino-2-[(2-morpholin-4-ylethyl)amino]-8-oxo-7,8-dihydro-1H-imidazo[4,5-G]quinazolin
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H19 N7 O2
+
+>  <MolecularWeight>
+329.357
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H19N7O2/c16-14-18-10-8-12-11(7-9(10)13(23)21-14)19-15(20-12)17-1-2-22-3-5-24-6-4-22/h7-8H,1-6H2,(H2,17,19,20)(H3,16,18,21,23)
+
+>  <InChIKey>
+JUHXOBNFTFUPKQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2c(cc3c1nc([nH]3)NCCN4CCOCC4)N=C(NC2=O)N
+
+$$$$

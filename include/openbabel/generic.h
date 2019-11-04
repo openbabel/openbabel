@@ -138,13 +138,6 @@ namespace OpenBabel
       {return new OBPairTemplate<ValueT>(*this);}
     void SetValue(const ValueT t)             { _value = t;     }
     virtual const ValueT &GetGenericValue() const    { return(_value); }
-    const ValueT &GetGenericValueDef(const ValueT &def_val) const
-    { 
-      if(this == NULL)
-	return def_val;
-      else	
-        return GetGenericValue(); 
-    }
   };
 
   //! Store arbitrary key/value integer data like OBPairData
@@ -765,51 +758,6 @@ namespace OpenBabel
     }
   };
 
-  enum atomreftype{
-    output,     //!<
-    input,      //!<
-    calcvolume  //!<
-  }; // sets which atom4ref is accessed by OBChiralData
-
-  //! \class OBChiralData generic.h <openbabel/generic.h>
-  //! \brief Used to hold chiral inforamtion about the atom as OBGenericData
-  //! \deprecated Used OBStereoFacade instead
- class OBAPI OBChiralData : public OBGenericData
-  {
-    friend class OBMol;
-    friend class OBAtom;
-
-  protected:
-    std::vector<unsigned int> _atom4refs; //!< input atom references
-    std::vector<unsigned int> _atom4refo; //!< output atom references
-    std::vector<unsigned int> _atom4refc; //!< calcvolume references
-
-    //! The parity of the vector (of length 4)
-    //! 1234 returns 0, 1243 returns 1
-    int parity;
-
-  public:
-
-    OBChiralData();
-    OBChiralData(const OBChiralData &src);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
-      { return new OBChiralData(*this); }
-    OBChiralData &operator =(const OBChiralData &);
-    ~OBChiralData(){}
-
-    void Clear();
-
-    //! \return a vector of all 4 atom references of type @p t
-    std::vector<unsigned int> GetAtom4Refs(atomreftype t) const;
-    //! \return the atom reference specified by @p a of type @p t
-    unsigned int GetAtomRef(int a,atomreftype t);
-
-    bool SetAtom4Refs(std::vector<unsigned int> atom4refs, atomreftype t);
-    int AddAtomRef(unsigned int atomref, atomreftype t);
-
-    //! \return the size of the atom references of a given type @p t
-    unsigned int GetSize(atomreftype t) const;
-  };
 
   //! \class OBSerialNums generic.h <openbabel/generic.h>
   //! \brief Defines a map between serial numbers (e.g., in a PDB file) and OBAtom objects inside a molecule
@@ -1192,7 +1140,7 @@ namespace OpenBabel
 
     int NumPartialCharges() 
     { 
-      return _PartialCharge.size(); 
+      return (int)_PartialCharge.size(); 
     }
     
     void AddPartialCharge(std::vector<double> q)

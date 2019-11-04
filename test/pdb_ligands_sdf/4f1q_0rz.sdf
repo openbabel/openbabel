@@ -1,0 +1,146 @@
+4F1Q_0RZ_A_1801
+  RCSB PDB12061712283D
+Coordinates from PDB:4F1Q:A:1801 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   38.9190   22.0640  -25.8630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4130   21.1480  -25.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3740   20.4540  -25.5860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8280   20.8900  -23.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3790   19.7620  -22.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7670   19.5150  -21.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.2040   18.6350  -20.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.7890   20.3870  -21.1940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0220   20.3120  -20.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3220   21.4760  -19.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7800   19.1510  -19.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8790   19.1920  -18.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2100   20.3730  -17.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4320   21.5170  -18.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7790   22.6880  -18.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3950   22.9130  -17.3100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5620   23.5020  -19.4810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 17 15  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 15 16  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAB
+A    2
+CAM
+A    3
+OAE
+A    4
+CAF
+A    5
+CAG
+A    6
+CAO
+A    7
+OAD
+A    8
+NAL
+A    9
+CAP
+A   10
+CAK
+A   11
+CAI
+A   12
+CAH
+A   13
+CAJ
+A   14
+CAQ
+A   15
+CAN
+A   16
+OAC
+A   17
+NAA
+M  END
+>  <InstanceId>
+4F1Q_0RZ_A_1801
+
+>  <ChemCompId>
+0RZ
+
+>  <PdbId>
+4F1Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4
+
+>  <Name>
+(2E)-4-[(3-carbamoylphenyl)amino]-4-oxobut-2-enoic acid
+
+>  <SystematicName>
+(E)-4-[(3-aminocarbonylphenyl)amino]-4-oxidanylidene-but-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2 O4
+
+>  <MolecularWeight>
+234.208
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2O4/c12-11(17)7-2-1-3-8(6-7)13-9(14)4-5-10(15)16/h1-6H,(H2,12,17)(H,13,14)(H,15,16)/b5-4+
+
+>  <InChIKey>
+GNFSYBNDPOBXLJ-SNAWJCMRSA-N
+
+>  <SMILES>
+c1cc(cc(c1)NC(=O)/C=C/C(=O)O)C(=O)N
+
+$$$$

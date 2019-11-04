@@ -127,6 +127,7 @@ namespace OpenBabel
       _init = false;
       _rvdw = 7.0;
       _rele = 15.0;
+      _epsilon = 1.0; // electrostatics not used
       _pairfreq = 10;
       _cutoff = false;
       _linesearch = LineSearchType::Newton2Num;

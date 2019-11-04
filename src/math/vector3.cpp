@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <float.h>
 
 #include <openbabel/math/vector3.h>
+#include "../rand.h"
 #include <openbabel/obutil.h>
 
 using namespace std;
@@ -84,22 +85,14 @@ namespace OpenBabel
 
   /*! Replaces *this with a random unit vector, which is (supposed
     to be) uniformly distributed over the unit sphere. Uses the
-    random number generator obRand, or uses the system number
-    generator with a time seed if obRand == NULL.
+    system number generator with a time seed.
 
-    @param obRandP random number generator to use, or NULL, if a singleton
-    system random number generator (with time seed) should be used
   */
-  void vector3::randomUnitVector(OBRandom *obRandP)
+  void vector3::randomUnitVector()
   {
     OBRandom *ptr;
-    if (!obRandP)
-      {
-        static OBRandom singleRand(true);
-        ptr = &singleRand;
-      }
-    else
-      ptr = obRandP;
+    static OBRandom singleRand(true);
+    ptr = &singleRand;
 
     // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
     // the vector to obtain a random vector of length 1.0.

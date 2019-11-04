@@ -1,0 +1,142 @@
+4YQT_4H8_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YQT:A:301 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+  -16.5930   41.7490  -12.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6360   39.9600  -10.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6890   41.1160   -8.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8990   41.6860   -7.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9420   43.2040   -5.8560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7270   42.3730   -7.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8950   40.6800   -8.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0980   42.0560   -6.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5170   39.6980  -13.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0360   41.3670  -12.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6870   40.7080  -11.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6180   42.1020   -7.8700   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7910   40.3900   -9.0100   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0570   39.9440   -8.5300   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5030   40.8630   -9.5060   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1580   41.4480   -6.7000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  2 15  1  0  0  0  0
+ 15  3  1  0  0  0  0
+ 13  3  2  0  0  0  0
+ 13  7  1  0  0  0  0
+  3 12  1  0  0  0  0
+ 14  7  1  0  0  0  0
+  7  4  2  0  0  0  0
+ 12  6  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  8  1  0  0  0  0
+ 16  8  2  0  0  0  0
+  8  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C7
+A    4
+C10
+A    5
+N12
+A    6
+C9
+A    7
+C14
+A    8
+C11
+A    9
+C1
+A   10
+C3
+A   11
+C2
+A   12
+N8
+A   13
+N16
+A   14
+N15
+A   15
+N6
+A   16
+O13
+M  END
+>  <InstanceId>
+4YQT_4H8_A_301
+
+>  <ChemCompId>
+4H8
+
+>  <PdbId>
+4YQT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N5 O
+
+>  <Name>
+4-amino-2-[(2,2-dimethylpropyl)amino]pyrimidine-5-carboxamide
+
+>  <SystematicName>
+4-azanyl-2-(2,2-dimethylpropylamino)pyrimidine-5-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H17 N5 O
+
+>  <MolecularWeight>
+223.275
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H17N5O/c1-10(2,3)5-14-9-13-4-6(8(12)16)7(11)15-9/h4H,5H2,1-3H3,(H2,12,16)(H3,11,13,14,15)
+
+>  <InChIKey>
+PYEPYUBHFUICHO-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)CNc1ncc(c(n1)N)C(=O)N
+
+$$$$

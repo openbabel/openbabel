@@ -1,0 +1,110 @@
+1LQP_FCN_A_4002
+  RCSB PDB12061703123D
+Coordinates from PDB:1LQP:A:4002 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   37.5240   34.0810   16.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6630   33.2520   16.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5190   33.5640   15.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2970   32.7950   16.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8820   35.5290   16.0090   P 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9350   36.2010   16.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1150   34.9400   14.7720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0090   36.4370   15.5520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O
+A    5
+P
+A    6
+O1P
+A    7
+O2P
+A    8
+O3P
+M  END
+>  <InstanceId>
+1LQP_FCN_A_4002
+
+>  <ChemCompId>
+FCN
+
+>  <PdbId>
+1LQP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O4 P
+
+>  <Name>
+FOSFOMYCIN
+
+>  <SystematicName>
+[(2R,3S)-3-methyloxiran-2-yl]phosphonic acid
+
+>  <Synonyms>
+1,2-EPOXYPROPYLPHOSPHONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 O4 P
+
+>  <MolecularWeight>
+138.059
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7O4P/c1-2-3(7-2)8(4,5)6/h2-3H,1H3,(H2,4,5,6)/t2-,3+/m0/s1
+
+>  <InChIKey>
+YMDXZJFXQJVXBF-STHAYSLISA-N
+
+>  <SMILES>
+C[C@H]1[C@H](O1)P(=O)(O)O
+
+$$$$

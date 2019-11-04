@@ -1,0 +1,123 @@
+5EWH_5SG_A_801
+  RCSB PDB12061717333D
+Coordinates from PDB:5EWH:A:801 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    8.9440  -10.9260    6.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9030  -11.8280    5.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7330  -12.4660    4.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6090  -12.2000    3.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4470  -12.8380    2.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3180  -12.5830    1.8910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3550  -11.6730    2.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5230  -11.0340    3.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6480  -11.3000    4.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8220  -10.6690    5.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8450   -9.7990    5.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  1  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9  4  1  0  0  0  0
+  7  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+CAD
+A    2
+CAB
+A    3
+CAE
+A    4
+CAJ
+A    5
+CAG
+A    6
+NAH
+A    7
+CAC
+A    8
+CAF
+A    9
+CAK
+A   10
+CAI
+A   11
+OAA
+M  END
+>  <InstanceId>
+5EWH_5SG_A_801
+
+>  <ChemCompId>
+5SG
+
+>  <PdbId>
+5EWH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O
+
+>  <Name>
+isoquinolin-5-ol
+
+>  <SystematicName>
+isoquinolin-5-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N O
+
+>  <MolecularWeight>
+145.158
+
+>  <ModifiedDate>
+2016-06-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7NO/c11-9-3-1-2-7-6-10-5-4-8(7)9/h1-6,11H
+
+>  <InChIKey>
+CSNXUYRHPXGSJD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cnccc2c(c1)O
+
+$$$$

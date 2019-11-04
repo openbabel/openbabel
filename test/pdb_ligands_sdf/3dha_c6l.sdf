@@ -1,0 +1,137 @@
+3DHA_C6L_A_257
+  RCSB PDB12061708193D
+Coordinates from PDB:3DHA:A:257 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -17.8600   -5.3680   17.4540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3060   -5.8550   16.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4630   -5.3860   14.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8230   -5.4790   14.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9590   -6.1740   15.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1930   -6.3450   14.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3570   -6.9840   14.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4960   -6.9170   16.6060   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2400   -7.5920   17.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7770   -8.0190   18.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3200   -8.3900   16.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1550   -7.9750   19.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1080   -8.8810   17.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9750   -9.7460   19.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6520   -9.1590   20.2960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  8  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 13  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 14  1  0  0  0  0
+A    1
+O4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N1
+A    9
+C3
+A   10
+C4
+A   11
+O2
+A   12
+O1
+A   13
+C2
+A   14
+C1
+A   15
+O3
+M  END
+>  <InstanceId>
+3DHA_C6L_A_257
+
+>  <ChemCompId>
+C6L
+
+>  <PdbId>
+3DHA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+257
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4
+
+>  <Name>
+N-hexanoyl-L-homoserine
+
+>  <SystematicName>
+(2S)-2-(hexanoylamino)-4-hydroxy-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H19 N O4
+
+>  <MolecularWeight>
+217.262
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H19NO4/c1-2-3-4-5-9(13)11-8(6-7-12)10(14)15/h8,12H,2-7H2,1H3,(H,11,13)(H,14,15)/t8-/m0/s1
+
+>  <InChIKey>
+BJLILZXVIKTHKQ-QMMMGPOBSA-N
+
+>  <SMILES>
+CCCCCC(=O)N[C@@H](CCO)C(=O)O
+
+$$$$

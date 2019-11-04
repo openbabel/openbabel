@@ -1,0 +1,114 @@
+4NEJ_2K1_A_201
+  RCSB PDB12061713533D
+Coordinates from PDB:4NEJ:A:201 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   20.1910   22.0660   23.4840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9770   22.3830   23.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3340   22.7880   24.2320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3030   22.2690   21.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8980   22.0960   20.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7700   22.0570   19.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9860   22.3230   21.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6390   22.1970   20.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2520   22.2200   20.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O
+A    2
+C5
+A    3
+O1
+A    4
+C4
+A    5
+C3
+A    6
+C2
+A    7
+O2
+A    8
+C1
+A    9
+C
+M  END
+>  <InstanceId>
+4NEJ_2K1_A_201
+
+>  <ChemCompId>
+2K1
+
+>  <PdbId>
+4NEJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+5-methylfuran-2-carboxylic acid
+
+>  <SystematicName>
+5-methylfuran-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O3
+
+>  <MolecularWeight>
+126.11
+
+>  <ModifiedDate>
+2014-11-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O3/c1-4-2-3-5(9-4)6(7)8/h2-3H,1H3,(H,7,8)
+
+>  <InChIKey>
+OVOCLWJUABOAPL-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(o1)C(=O)O
+
+$$$$

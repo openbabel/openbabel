@@ -1,0 +1,136 @@
+5VDV_9BV_A_602
+  RCSB PDB12061720003D
+Coordinates from PDB:5VDV:A:602 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+  -30.1140   18.6760  -24.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.0420   16.7220  -23.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8800   16.6220  -25.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3770   18.8790  -21.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.4880   17.2170  -26.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.9170   18.5290  -26.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.7400   19.2560  -25.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6720   17.3290  -24.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.8990   17.5040  -21.9350   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.9610   19.4440  -22.9650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.0490   19.3100  -20.6500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4460   18.3320  -19.9480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.3460   17.2480  -20.6920   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.6380   15.4880  -23.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  6  1  0  0  0  0
+  5  3  2  0  0  0  0
+  6  7  2  0  0  0  0
+  3  8  1  0  0  0  0
+  7  1  1  0  0  0  0
+  8  1  1  0  0  0  0
+  8  2  2  0  0  0  0
+  1 10  2  0  0  0  0
+ 14  2  1  0  0  0  0
+  2  9  1  0  0  0  0
+ 10  4  1  0  0  0  0
+  9  4  1  0  0  0  0
+  9 13  1  0  0  0  0
+  4 11  2  0  0  0  0
+ 13 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C4
+A    2
+C7
+A    3
+C6
+A    4
+C9
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+C5
+A    9
+N8
+A   10
+N10
+A   11
+N11
+A   12
+N12
+A   13
+N13
+A   14
+O14
+M  END
+>  <InstanceId>
+5VDV_9BV_A_602
+
+>  <ChemCompId>
+9BV
+
+>  <PdbId>
+5VDV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N5 O
+
+>  <Name>
+tetrazolo[5,1-b]quinazolin-9-ol
+
+>  <SystematicName>
+[1,2,3,4]tetrazolo[5,1-b]quinazolin-9-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H5 N5 O
+
+>  <MolecularWeight>
+187.158
+
+>  <ModifiedDate>
+2017-09-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H5N5O/c14-7-5-3-1-2-4-6(5)9-8-10-11-12-13(7)8/h1-4,14H
+
+>  <InChIKey>
+MBODJNHSMUWROS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(n3c(n2)nnn3)O
+
+$$$$
