@@ -478,7 +478,7 @@ endif()
 #cjh
 
 
-find_package(Boost)
+find_package(Boost COMPONENTS filesystem iostreams unit_test_framework)
 if(Boost_FOUND AND BUILD_SHARED)
     include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
     option(WITH_MAEPARSER "Build Maestro support" ON)
