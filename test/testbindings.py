@@ -54,6 +54,13 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testSmartsSupportsHashZero(self):
+        """Ensure that we can match asterisks in SMILES with SMARTS"""
+        mol = pybel.readstring("smi", "*O")
+        # The following used to raise an OSError (SMARTS parse failure)
+        matches = pybel.Smarts("[#0]O").findall(mol)
+        self.assertEqual(matches, [(1, 2)])
+
     def testInChIIsotopes(self):
         """Ensure that we correctly set and read isotopes in InChIs"""
         with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
