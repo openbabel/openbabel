@@ -498,7 +498,7 @@ if(WITH_MAEPARSER)
 
     else()
 
-      set(MAEPARSER_VERSION "master")
+      set(MAEPARSER_VERSION "v1.2.2" CACHE STRING "Maeparser fallback version to download")
 
       set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
 
@@ -517,9 +517,13 @@ if(WITH_MAEPARSER)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf "maeparser-${MAEPARSER_VERSION}.tar.gz"
               WORKING_DIRECTORY "${MAEPARSER_DIR}")
 
-          file(RENAME "${MAEPARSER_DIR}/maeparser-${MAEPARSER_VERSION}" "${MAEPARSER_DIR}/maeparser")
+          message(STATUS "${MAEPARSER_DIR}")
 
-          if(EXISTS "${MAEPARSER_DIR}/maeparser/CMakeLists.txt")
+          find_path(MAEPARSER_UNPACK_DIR "CMakeLists.txt" PATH "${MAEPARSER_DIR}/*" NO_DEFAULT_PATH)
+          message(STATUS ${MAEPARSER_UNPACK_DIR})
+
+          if(MAEPARSER_UNPACK_DIR)
+            file(RENAME "${MAEPARSER_UNPACK_DIR}" "${MAEPARSER_DIR}/maeparser")
             message(STATUS "Downloaded MaeParser '${MAEPARSER_VERSION}' to ${MAEPARSER_DIR}.")
           else()
             message(FATAL_ERROR "Failed getting or unpacking Maeparser '${MAEPARSER_VERSION}'.")
@@ -554,7 +558,7 @@ if(WITH_COORDGEN)
 
     else()
 
-      set(COORDGEN_VERSION "master")
+      set(COORDGEN_VERSION "v1.3.2" CACHE STRING "Coordgen fallback version to download")
 
       set(COORDGEN_DIR "${openbabel_SOURCE_DIR}/external/coordgen-${COORDGEN_VERSION}")
 
@@ -574,9 +578,10 @@ if(WITH_COORDGEN)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf "coordgenlibs-${COORDGEN_VERSION}.tar.gz"
               WORKING_DIRECTORY "${COORDGEN_DIR}")
 
-          file(RENAME "${COORDGEN_DIR}/coordgenlibs-${COORDGEN_VERSION}" "${COORDGEN_DIR}/coordgen")
+          find_path(COORDGEN_UNPACK_DIR "CMakeLists.txt" PATH "${COORDGEN_DIR}/*" NO_DEFAULT_PATH)
 
-          if(EXISTS "${COORDGEN_DIR}/coordgen/CMakeLists.txt")
+          if(COORDGEN_UNPACK_DIR)
+            file(RENAME "${COORDGEN_UNPACK_DIR}" "${COORDGEN_DIR}/coordgen")
             message(STATUS "Downloaded Coordgen '${COORDGEN_VERSION}' to ${COORDGEN_DIR}.")
           else()
             message(FATAL_ERROR "Failed getting or unpacking Coordgen '${COORDGEN_VERSION}'.")
