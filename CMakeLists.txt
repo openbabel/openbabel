@@ -498,7 +498,7 @@ if(WITH_MAEPARSER)
 
     else()
 
-      set(MAEPARSER_VERSION "v1.2.2" CACHE STRING "Maeparser fallback version to download")
+      set(MAEPARSER_VERSION "master" CACHE STRING "Maeparser fallback version to download")
 
       set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
 
@@ -517,10 +517,7 @@ if(WITH_MAEPARSER)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf "maeparser-${MAEPARSER_VERSION}.tar.gz"
               WORKING_DIRECTORY "${MAEPARSER_DIR}")
 
-          message(STATUS "${MAEPARSER_DIR}")
-
           find_path(MAEPARSER_UNPACK_DIR "CMakeLists.txt" PATH "${MAEPARSER_DIR}/*" NO_DEFAULT_PATH)
-          message(STATUS ${MAEPARSER_UNPACK_DIR})
 
           if(MAEPARSER_UNPACK_DIR)
             file(RENAME "${MAEPARSER_UNPACK_DIR}" "${MAEPARSER_DIR}/maeparser")
@@ -558,7 +555,7 @@ if(WITH_COORDGEN)
 
     else()
 
-      set(COORDGEN_VERSION "v1.3.2" CACHE STRING "Coordgen fallback version to download")
+      set(COORDGEN_VERSION "master" CACHE STRING "Coordgen fallback version to download")
 
       set(COORDGEN_DIR "${openbabel_SOURCE_DIR}/external/coordgen-${COORDGEN_VERSION}")
 
