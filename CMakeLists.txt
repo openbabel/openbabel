@@ -482,31 +482,125 @@ find_package(Boost COMPONENTS filesystem iostreams unit_test_framework)
 if(Boost_FOUND AND BUILD_SHARED)
     include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
     option(WITH_MAEPARSER "Build Maestro support" ON)
+    option(WITH_COORDGEN "Build Coordgen support" ON)
 else()
     option(WITH_MAEPARSER "Build Maestro support" OFF)
+    option(WITH_COORDGEN "Build Coordgen support" OFF)
+endif()
+
+if(WITH_MAEPARSER)
+
+    find_package(maeparser MODULE QUIET)
+
+    if (maeparser_FOUND)
+
+      message(STATUS "Maestro formats will be supported. Using MaeParser libraries at ${maeparser_LIBRARIES}.")
+
+    else()
+
+      set(MAEPARSER_VERSION "master" CACHE STRING "Maeparser fallback version to download")
+
+      set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
+
+      # Do not build the test, as it will be put into the bin dir, where it won't be found by the test runner.
+      set(MAEPARSER_BUILD_TESTS OFF CACHE BOOL "Disable Maeparser tests")
+
+      if(EXISTS "${MAEPARSER_DIR}/maeparser/CMakeLists.txt")
+
+        message(STATUS "Building existing MaeParser '${MAEPARSER_VERSION}' source at ${MAEPARSER_DIR}.")
+
+      else()
+
+          file(DOWNLOAD "https://github.com/schrodinger/maeparser/archive/${MAEPARSER_VERSION}.tar.gz"
+              "${MAEPARSER_DIR}/maeparser-${MAEPARSER_VERSION}.tar.gz")
+
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf "maeparser-${MAEPARSER_VERSION}.tar.gz"
+              WORKING_DIRECTORY "${MAEPARSER_DIR}")
+
+          find_path(MAEPARSER_UNPACK_DIR "CMakeLists.txt" PATH "${MAEPARSER_DIR}/*" NO_DEFAULT_PATH)
+
+          if(MAEPARSER_UNPACK_DIR)
+            file(RENAME "${MAEPARSER_UNPACK_DIR}" "${MAEPARSER_DIR}/maeparser")
+            message(STATUS "Downloaded MaeParser '${MAEPARSER_VERSION}' to ${MAEPARSER_DIR}.")
+          else()
+            message(FATAL_ERROR "Failed getting or unpacking Maeparser '${MAEPARSER_VERSION}'.")
+          endif()
+
+      endif()
+
+      add_subdirectory("${MAEPARSER_DIR}/maeparser")
+
+      set(maeparser_INCLUDE_DIRS "${MAEPARSER_DIR}")
+      set(maeparser_LIBRARIES maeparser)
+
+      message(STATUS "Maestro formats will be supported. Using MaeParser '${MAEPARSER_VERSION}' at ${MAEPARSER_DIR}")
+
+    endif()
+
+    include_directories(${maeparser_INCLUDE_DIRS})
+    set(libs ${libs} ${maeparser_LIBRARIES})
+
+else()
+    message(STATUS "Maestro formats will NOT be supported. Please install Boost to enable Maestro formats.")
 endif()
 
 
-if(WITH_MAEPARSER)
-    set (CMAKE_CXX_STANDARD 11)
+if(WITH_COORDGEN)
 
-    set(MAEPARSER_VERSION 1.1)
-    if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
-        file(DOWNLOAD "https://github.com/schrodinger/maeparser/archive/v${MAEPARSER_VERSION}.tar.gz"
-            "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.tar.gz" STATUS status)
-        execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
-            ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.tar.gz
-            WORKING_DIRECTORY ${openbabel_SOURCE_DIR}/external)
-        message(STATUS "Downloaded MaeParser to ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}.")
+    find_package(coordgen MODULE QUIET)
+
+    if (coordgen_FOUND)
+
+      message(STATUS "Coordinate generation with Coordgen will be supported. Using Coordgen libraries at ${coordgen_LIBRARIES}.")
+
+    else()
+
+      set(COORDGEN_VERSION "master" CACHE STRING "Coordgen fallback version to download")
+
+      set(COORDGEN_DIR "${openbabel_SOURCE_DIR}/external/coordgen-${COORDGEN_VERSION}")
+
+      # These won't work, since openbabel relocates them to the "bin" dir
+      set(COORDGEN_BUILD_TESTS OFF CACHE BOOL "Disable building Coordgen tests")
+      set(COORDGEN_BUILD_EXAMPLE OFF CACHE BOOL "Disable building Coordgen example")
+
+      if(EXISTS "${COORDGEN_DIR}/coordgen/CMakeLists.txt")
+
+        message(STATUS "Building existing Coordgen '${COORDGEN_VERSION}' source at ${COORDGEN_DIR}.")
+
+      else()
+
+          file(DOWNLOAD "https://github.com/schrodinger/coordgenlibs/archive/${COORDGEN_VERSION}.tar.gz"
+              "${COORDGEN_DIR}/coordgenlibs-${COORDGEN_VERSION}.tar.gz")
+
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf "coordgenlibs-${COORDGEN_VERSION}.tar.gz"
+              WORKING_DIRECTORY "${COORDGEN_DIR}")
+
+          find_path(COORDGEN_UNPACK_DIR "CMakeLists.txt" PATH "${COORDGEN_DIR}/*" NO_DEFAULT_PATH)
+
+          if(COORDGEN_UNPACK_DIR)
+            file(RENAME "${COORDGEN_UNPACK_DIR}" "${COORDGEN_DIR}/coordgen")
+            message(STATUS "Downloaded Coordgen '${COORDGEN_VERSION}' to ${COORDGEN_DIR}.")
+          else()
+            message(FATAL_ERROR "Failed getting or unpacking Coordgen '${COORDGEN_VERSION}'.")
+          endif()
+
+      endif()
+
+      add_subdirectory("${COORDGEN_DIR}/coordgen")
+
+      set(coordgen_INCLUDE_DIRS "${COORDGEN_DIR}")
+      set(coordgen_LIBRARIES coordgen)
+
+
+      message(STATUS "Coordinate generation with Coordgen will be supported Using Coordgen '${COORDGEN_VERSION}' at ${COORDGEN_DIR}")
+
     endif()
-    set(MAEPARSER_DIR ${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION})
-    add_subdirectory(${MAEPARSER_DIR})
-    include_directories(${MAEPARSER_DIR})
-    set(libs ${libs} maeparser)
 
-    message(STATUS "Maestro formats will be supported. Using MaeParser ${MAEPARSER_VERSION} at ${MAEPARSER_INCLUDE_DIRS}")
+    include_directories(${coordgen_INCLUDE_DIRS})
+    set(libs ${libs} ${coordgen_LIBRARIES})
+
 else()
-    message(STATUS "Maestro formats will NOT be supported. Please install Boost to enable Maestro formats.")
+    message(STATUS "Coordinate generation with Coordgen will NOT be supported. Please install Boost to enable Maestro formats.")
 endif()
 
 option(WITH_JSON "Build JSON support" ON)

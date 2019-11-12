@@ -3,7 +3,7 @@ set(SOVERSION 6)
 set(LIBRARY_VERSION 6.0.0)
 
 
-find_package(Boost 1.45.0 COMPONENTS system) 
+find_package(Boost 1.45.0 COMPONENTS system)
 
 
 
@@ -248,8 +248,8 @@ add_library(openbabel ${BUILD_TYPE}
   )
 
 target_link_libraries(openbabel ${libs})
-if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS}) 
+if(Boost_FOUND AND (BUILD_SHARED OR BUILD_MIXED))
+    include_directories(${Boost_INCLUDE_DIRS})
     target_link_libraries(openbabel ${Boost_LIBRARIES} )
     find_package(Threads REQUIRED)
     if(THREADS_HAVE_PTHREAD_ARG)

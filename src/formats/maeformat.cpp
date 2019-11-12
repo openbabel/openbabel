@@ -29,9 +29,9 @@ GNU General Public License for more details.
 #include <iostream>
 #include <map>
 
-#include <MaeConstants.hpp>
-#include <Reader.hpp>
-#include <Writer.hpp>
+#include <maeparser/MaeConstants.hpp>
+#include <maeparser/Reader.hpp>
+#include <maeparser/Writer.hpp>
 
 using namespace std;
 using namespace schrodinger::mae;
