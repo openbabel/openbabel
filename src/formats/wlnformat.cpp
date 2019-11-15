@@ -38,7 +38,7 @@ namespace OpenBabel
     virtual const char* Description() //required
     {
       return
-        "Wisswesser Line Notation\n"
+        "Wiswesser Line Notation\n"
         "Note that this reader does not yet offer complete support of all of WLN.\n";
     };
 

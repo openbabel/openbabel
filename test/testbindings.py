@@ -91,7 +91,7 @@ class TestSuite(PythonBindings):
                 ("QVY3&1VQ", "OC(=O)C(CCC)CC(=O)O"),
                 ("L66J BMR& DSWQ IN1&1", "CN(C=1C=C2C(=CC(=CC2=CC1)S(=O)(=O)O)NC1=CC=CC=C1)C"),
                 # The following is not supported
-                # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"), 
+                # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"),
                ]
         for wln, smi in data:
             mol = pybel.readstring("wln", wln)
