@@ -16,9 +16,10 @@ GNU General Public License for more details.
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/kekulize.h>
 
 #include <vector>
-#include "wln-obfunctions.cpp"
 
 #define PENDING_NONE   0
 #define PENDING_DEPROT 1
@@ -34,6 +35,49 @@ GNU General Public License for more details.
 
 
 unsigned int debug_wln_read = 0;
+
+
+
+OpenBabel::OBAtom* NMOBMolNewAtom(OpenBabel::OBMol* mol, unsigned int elem)
+{
+  OpenBabel::OBAtom* result = mol->NewAtom();
+  result->SetAtomicNum(elem);
+  return result;
+}
+
+
+OpenBabel::OBBond* NMOBMolNewBond(OpenBabel::OBMol* mol,
+  OpenBabel::OBAtom* beg,
+  OpenBabel::OBAtom* end,
+  unsigned int order, bool arom)
+{
+  if (!mol->AddBond(beg->GetIdx(), end->GetIdx(), order))
+    return (OpenBabel::OBBond*)0;
+  OpenBabel::OBBond* bptr = mol->GetBond(mol->NumBonds() - 1);
+  if (arom)
+    bptr->SetAromatic();
+  return bptr;
+}
+
+
+void NMOBAtomSetAromatic(OpenBabel::OBAtom* atm, bool arom)
+{
+  OpenBabel::OBMol* mol = (OpenBabel::OBMol*)atm->GetParent();
+  if (mol && !mol->HasAromaticPerceived())
+    mol->SetAromaticPerceived();
+
+  atm->SetAromatic(arom);
+}
+
+
+bool NMOBSanitizeMol(OpenBabel::OBMol* mol)
+{
+  if (!OBKekulize(mol))
+    return false;
+  mol->SetAromaticPerceived(false);
+  return true;
+}
+
 
 struct WLNParser {
   OpenBabel::OBMol* mol;

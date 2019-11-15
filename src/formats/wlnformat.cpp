@@ -17,6 +17,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
+#include <openbabel/base.h>
+#include <openbabel/mol.h>
+
 bool NMReadWLN(const char *ptr, OpenBabel::OBMol* mol);
 
 using namespace std;
@@ -29,7 +32,7 @@ namespace OpenBabel
     //Register this format type ID
     WLNFormat()
     {
-      OBConversion::RegisterFormat("WLN", this);
+      OBConversion::RegisterFormat("wln", this);
     }
 
     virtual const char* Description() //required
