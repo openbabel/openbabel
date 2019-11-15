@@ -72,6 +72,32 @@ class TestSuite(PythonBindings):
                 msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
                 self.assertEqual(msmi, smi)
 
+    def testWLN(self):
+        """Test basic WLN conversion"""
+        data = [ # taken from Wikipedia
+                ("1H", "C"),
+                ("2H", "CC"),
+                ("3H", "CCC"),
+                ("1Y", "CC(C)C"),
+                ("1X", "CC(C)(C)C"),
+                ("Q1", "CO"),
+                ("1R", "c1ccccc1C"),
+                ("1V1", "CC(=O)C"),
+                ("2O2", "CCOCC"),
+                ("1VR", "CC(=O)c1ccccc1"),
+                ("ZR CVQ", "c1ccc(N)cc1C(=O)O"),
+                ("QVYZ1R", "NC(Cc1ccccc1)C(=O)O"),
+                ("QX2&2&2", "CCC(O)(CC)CC"),
+                ("QVY3&1VQ", "OC(=O)C(CCC)CC(=O)O"),
+                ("L66J BMR& DSWQ IN1&1", "CN(C=1C=C2C(=CC(=CC2=CC1)S(=O)(=O)O)NC1=CC=CC=C1)C"),
+                # The following is not supported
+                # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"), 
+               ]
+        for wln, smi in data:
+            mol = pybel.readstring("wln", wln)
+            ans = pybel.readstring("smi", smi).write("can")
+            self.assertEqual(ans, mol.write("can"))
+
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
         and not otherwise"""
