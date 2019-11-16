@@ -73,8 +73,8 @@ class TestSuite(PythonBindings):
                 self.assertEqual(msmi, smi)
 
     def testWLN(self):
-        """Test basic WLN conversion"""
-        data = [ # taken from Wikipedia
+        """Test some WLN conversions"""
+        data = [ # Taken from Wikipedia
                 ("1H", "C"),
                 ("2H", "CC"),
                 ("3H", "CCC"),
@@ -92,6 +92,24 @@ class TestSuite(PythonBindings):
                 ("L66J BMR& DSWQ IN1&1", "CN(C=1C=C2C(=CC(=CC2=CC1)S(=O)(=O)O)NC1=CC=CC=C1)C"),
                 # The following is not supported
                 # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"),
+
+                # The following are from:
+                # https://www.nextmovesoftware.com/posters/Sayle_WisswesserLineNotation_BioIT_201904.pdf
+                ("WN3", "[O-][N+](=O)CCC"),
+                ("G1UU1G", "ClC#CCl"),
+                ("VH3", "O=CCCC"),
+                ("NCCN", "N#CC#N"),
+                ("ZYZUM", "NC(=N)N"),
+                ("QY", "CC(C)O"),
+                ("OV1 &-NA-", "CC(=O)[O-].[Na+]"),
+                ("RM1R", "c1ccccc1NCc2ccccc2"),
+                ("QVR BNUNR DN1&1", "OC(=O)c1ccccc1N=Nc2ccc(cc2)N(C)C"),
+                ("L6TJ A- AL6TJ AVO2N2&2 &GH",
+                 "CCN(CC)CCOC(=O)C1(CCCCC1)C2CCCCC2.Cl"),
+                ("T56 BMJ B D- DT6N CNJ BMR BO1 DN1&2N1&1 EMV1U1",
+                 "Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C"),
+                ("T56 AN CN GNJ B- BT5MTJ AV1UU2& DR DVM- BT6NJ&& FZ",
+                 "CC#CC(=O)N1CCCC1c2nc(c3n2ccnc3N)c4ccc(cc4)C(=O)Nc5ccccn5"),
                ]
         for wln, smi in data:
             mol = pybel.readstring("wln", wln)
