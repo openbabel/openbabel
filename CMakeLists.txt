@@ -755,6 +755,8 @@ configure_file("${openbabel_SOURCE_DIR}/OpenBabel3ConfigVersion.cmake.in"
 # Now to configure the installed config file.
 set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/cmake/openbabel3")
 set(OpenBabel3_INCLUDE_DIRS "\${OpenBabel3_INSTALL_PREFIX}/${OB_INCLUDE_DIRS}")
+set(OpenBabel3_LIBRARY "$<TARGET_FILE:openbabel>")
+
 set(OB_EXPORTS_FILE
   "\${OpenBabel3_INSTALL_PREFIX}/${OB_CONFIG_DIR}/OpenBabel3_EXPORTS.cmake")
 set(REL_REF)
