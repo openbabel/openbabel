@@ -499,8 +499,8 @@ namespace OpenBabel {
     // OK, check and correct double bond cis/trans stereochemistry
     // Get CisTransStereos and make a vector of corresponding OBStereoUnits
     OBStereoUnitSet sgunits;
-    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data)
+    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         if (ct->GetConfig().specified) {
@@ -660,8 +660,8 @@ namespace OpenBabel {
     OBBond *bc;
 
     OBStereoUnitSet sgunits;
-    //std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    for (std::vector<OBGenericData*>::iterator data = _vdata.begin(); data != _vdata.end(); ++data)
+    std::vector<OBGenericData*> vdata = _mol.GetAllData(OBGenericDataType::StereoData);
+    for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data)
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         if (ct->GetConfig().specified) {
@@ -1074,7 +1074,6 @@ namespace OpenBabel {
     }
     return true;
   }
-
 
   bool OBDistanceGeometry::firstMinimization(void) {
     unsigned int N = _mol.NumAtoms();
