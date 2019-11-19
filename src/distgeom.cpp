@@ -912,7 +912,7 @@ namespace OpenBabel {
   bool OBDistanceGeometry::CheckStereoConstraints()
   {
     // Check stereo by canonical SMILES
-    _mol.SetChiralityPerceived();
+    StereoFrom3D(&_mol, true);
     OBConversion conv;
     conv.SetOutFormat("can");
     std::string predicted_smiles = conv.WriteString(&_mol, true);
