@@ -33,14 +33,15 @@ class TestDistanceGeomStereo(BaseTest):
             'c1ccccc1',  # benzene
             'C/C=C\\C',  # Z-butene
             'C/C=C/C',  # E-butene
-            'CCC[C@@H]([C@H](CC(C)C)C)C',
-            'C1CC[C@H]2[C@@H](C1)CCCC2',  # cis-decalin
-            'C1CC[C@@H]2[C@@H](C1)CCCC2',  # trans-decalin
-            'CCCNC1=C(C)C(=O)C2=C(C1=O)[C@@H](COC(=O)N)[C@]1(N2C[C@H]2[C@H]1N2)OC',
-            'CN([C@H]1C(=O)C(=C([C@]2([C@@H]1C[C@@H]1Cc3c(C(=C1C2=O)O)c(O)ccc3N(C)C)O)O)C(=O)N)C',
-            'CN([C@@H]1C(=O)C(=C([C@@]2([C@H]1C[C@@H]1C(=C(O)c3c([C@@]1(C)O)c(Cl)ccc3O)C2=O)O)O)C(=O)N)C',
-            'C[C@@H](CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C)O',
-            'CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C'
+            'N[C@](Br)(O)C',
+            #'CCC[C@@H]([C@H](CC(C)C)C)C',
+            #'C1CC[C@H]2[C@@H](C1)CCCC2',  # cis-decalin
+            #'C1CC[C@@H]2[C@@H](C1)CCCC2',  # trans-decalin
+            #'CCCNC1=C(C)C(=O)C2=C(C1=O)[C@@H](COC(=O)N)[C@]1(N2C[C@H]2[C@H]1N2)OC',
+            #'CN([C@H]1C(=O)C(=C([C@]2([C@@H]1C[C@@H]1Cc3c(C(=C1C2=O)O)c(O)ccc3N(C)C)O)O)C(=O)N)C',
+            #'CN([C@@H]1C(=O)C(=C([C@@]2([C@H]1C[C@@H]1C(=C(O)c3c([C@@]1(C)O)c(Cl)ccc3O)C2=O)O)O)C(=O)N)C',
+            #'C[C@@H](CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C)O',
+            #'CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C'
             ]
         for smi in self.smiles:
             # generate a canonical SMILES in case the ordering changes
