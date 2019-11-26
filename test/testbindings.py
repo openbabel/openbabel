@@ -505,6 +505,7 @@ H         -0.26065        0.64232       -2.62218
             # Is the symbol parsed?
             symbol = ob.GetSymbol(N)
             self.assertEqual(N, ob.GetAtomicNum(symbol))
+            self.assertEqual(N, ob.GetAtomicNum(symbol[0].lower() + symbol[1:])) # test lowercase version
             # Has an exact mass been set?
             self.assertNotEqual(0.0, ob.GetExactMass(N))
             # Has the symbol been added to the SMILES parser?
