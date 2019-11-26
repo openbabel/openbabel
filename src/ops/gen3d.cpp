@@ -85,6 +85,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     else if ( (strncasecmp(OptionText, "dist", 4) == 0)
                || (strncasecmp(OptionText, "dg", 2) == 0) ) {
       useDistGeom = true;
+      speed = 5;
     }
   }
 
@@ -105,8 +106,9 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
 #ifdef HAVE_EIGEN
   OBDistanceGeometry dg;
   if (useDistGeom) {
-    dg.Setup(*pmol, attemptBuild); // use the bond lengths and angles if we ran the builder
-    dg.GetGeometry(*pmol); // ensured to have correct stereo
+    // use the bond lengths and angles if we ran the builder
+    dg.GetGeometry(*pmol, attemptBuild); // ensured to have correct stereo
+    speed = 3;
   }
 #endif
 
