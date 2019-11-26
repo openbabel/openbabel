@@ -317,6 +317,8 @@ namespace OpenBabel
         break;
       case 'D':
         switch (ptr[1]) {
+        case '\0': // D
+          return 1; // Deuterium
         case 'b':
           if (ptr[2] == '\0') { // Db
             return 105; // Dubnium
@@ -719,6 +721,8 @@ namespace OpenBabel
         break;
       case 'T':
         switch (ptr[1]) {
+        case '\0': // T
+          return 1; // Tritium
         case 'a':
           if (ptr[2] == '\0') { // Ta
             return 73; // Tantalum

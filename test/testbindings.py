@@ -497,6 +497,11 @@ H         -0.26065        0.64232       -2.62218
         config = ob.toTetrahedralStereo(stereodata).GetConfig()
         self.assertEqual(config.from_or_towards, 4294967294)
 
+    def testHydrogenIsotopes(self):
+        """Are D and T supported by GetAtomicNum?"""
+        for symbol in "DT":
+            self.assertEqual(1, ob.GetAtomicNum(symbol))
+
     def testWhetherAllElementsAreSupported(self):
         """Check whether a new element has been correctly added"""
         N = 0
