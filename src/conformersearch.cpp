@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
 #include "rand.h"
+#include <algorithm>
 
 #if defined(_MSC_VER) && (_MSC_VER < 1800)
  #define OB_ISNAN _isnan

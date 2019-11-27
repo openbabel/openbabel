@@ -33,6 +33,7 @@ as an example.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/math/align.h>
+#include <algorithm>
 
 using namespace std;
 namespace OpenBabel
