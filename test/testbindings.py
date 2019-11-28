@@ -54,6 +54,24 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testReadsLowerCaseInTurbmol(self):
+        """Support lowercase when reading Turbomole. Fix for #2063"""
+        tmol = """$coord
+    2.02871026746136      0.00016096463521      0.09107555338913      c
+    4.89930048862534      0.04854048717752      0.11762901668325      c
+    5.90748259036722      2.39968480185142      1.42109501042332      c
+    1.34938005428171     -1.70839952555376     -0.85607794562344      h
+    1.26886043300105      1.63876093409995     -0.91749501051641      h
+    1.26913011943130      0.01286165737104      2.01525659069294      h
+    5.60784060607910     -0.01912944162451     -1.82662623368806      h
+    5.60811561474418     -1.63627235546083      1.09011360983431      h
+    5.27020211768512      4.11415935313881      0.45463376946747      h
+    7.97573431608248      2.39090324576822      1.41600146807434      h
+    5.27052201944755      2.48814711866854      3.38732271725103      h
+$end"""
+        inchikey = pybel.readstring("tmol", tmol).write("inchikey").rstrip()
+        self.assertEqual("ATUOYWHBWRKTHZ-UHFFFAOYSA-N", inchikey)
+
     def testSmartsSupportsHashZero(self):
         """Ensure that we can match asterisks in SMILES with SMARTS"""
         mol = pybel.readstring("smi", "*O")
@@ -510,7 +528,7 @@ H         -0.26065        0.64232       -2.62218
             # Is the symbol parsed?
             symbol = ob.GetSymbol(N)
             self.assertEqual(N, ob.GetAtomicNum(symbol))
-            self.assertEqual(N, ob.GetAtomicNum(symbol[0].lower() + symbol[1:])) # test lowercase version
+            self.assertEqual(N, ob.GetAtomicNum(symbol.lower())) # test lowercase version
             # Has an exact mass been set?
             self.assertNotEqual(0.0, ob.GetExactMass(N))
             # Has the symbol been added to the SMILES parser?
