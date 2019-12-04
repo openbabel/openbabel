@@ -86,6 +86,13 @@ void testAliases()
 
 int aliastest(int argc, char* argv[])
 {
+  // Define location of file formats for testing
+#ifdef FORMATDIR
+    char env[BUFF_SIZE];
+    snprintf(env, BUFF_SIZE, "BABEL_LIBDIR=%s", FORMATDIR);
+    putenv(env);
+#endif
+
   int defaultchoice = 1;
 
   int choice = defaultchoice;
