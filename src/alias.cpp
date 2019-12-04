@@ -344,13 +344,9 @@ bool AliasData::AddAliases(OBMol* pmol)
     LoadFile(smtable);
   set<int> AllExAtoms;
   SmartsTable::iterator iter;
-  // create protonated copy of the molecule for mathing against SMARTS that are all protonated
-  OBMol* protonated = new OBMol(*pmol);
-  unsigned int pmol_atom_count = pmol->NumAtoms();
-  protonated->AddHydrogens();
   for(iter=smtable.begin();iter!=smtable.end();++iter)
   {
-    if((*iter).second->Match(*protonated))
+    if((*iter).second->Match(*pmol))
     {
       vector<std::vector<int> > mlist = (*iter).second->GetUMapList();
       for(unsigned imatch=0;imatch<mlist.size();++imatch) //each match
@@ -361,12 +357,6 @@ bool AliasData::AddAliases(OBMol* pmol)
         for(unsigned iatom=1; iatom<mlist[imatch].size();++iatom)//each atom in match
         {
           int idx = mlist[imatch][iatom];
-          // assume that all atoms added during protonation are added 'on top' of the non-protonated molecule,
-          // so they have ids above pmol_atom_count
-          if (idx > pmol_atom_count) {
-            assert(protonated->GetAtom(idx)->GetAtomicNum() == OBElements::Hydrogen);
-            continue;
-          }
 
           if(AllExAtoms.count(idx))
           {
@@ -392,7 +382,6 @@ bool AliasData::AddAliases(OBMol* pmol)
       }
     }
   }
-  delete protonated;
   return true;
 }
 
