@@ -13,22 +13,22 @@ namespace OpenBabel {
  * common dependencies. A module to find openbabel is included in the
  * release or can be copied below. The filename of modules to find
  * packages must start with Find. For example, the default filename for
- * the openbabel module is FindOpenBabel2.cmake. This file is usually
+ * the openbabel module is FindOpenBabel3.cmake. This file is usually
  * placed in the cmake/modules directory of your project. This path must
  * be specified by setting the CMAKE_MODULE_PATH variable. Next,  calling
  * find_package will execute the module to find openbabel and set 3
  * variables.
  *
- * @li OPENBABEL2_FOUND
- * @li OPENBABEL2_INCLUDE_DIR
- * @li OPENBABEL2_LIBRARIES
+ * @li OPENBABEL3_FOUND
+ * @li OPENBABEL3_INCLUDE_DIR
+ * @li OPENBABEL3_LIBRARIES
  *
  * The find_package command allows you to specify the package is required
  * and cmake will handle this further. If openbabel is optional, the
  * first variable can be used in your cmake logic to optionally build the
  * additional code. Since find_package only sets variables, you still
- * need to call include_directories with OPENBABEL2_INCLUDE_DIR in the
- * argument list. The OPENBABEL2_LIBRARIES variable can be used directly
+ * need to call include_directories with OPENBABEL3_INCLUDE_DIR in the
+ * argument list. The OPENBABEL3_LIBRARIES variable can be used directly
  * in your target_link_libraries command.
  *
  * Below is a minimal but working example of a project. For simplicity,
@@ -49,15 +49,15 @@ project(myproject)
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 # find and setup openbabel
-find_package(OpenBabel2 REQUIRED)
-include_directories(${OPENBABEL2_INCLUDE_DIR})
+find_package(OpenBabel3 REQUIRED)
+include_directories(${OPENBABEL3_INCLUDE_DIR})
 
 # create a list of source files (easier to maintain)
 set(sources main.cpp)
 
 # the executable
 add_executable(myexe ${sources})
-target_link_libraries(myexe ${OPENBABEL2_LIBRARIES})
+target_link_libraries(myexe ${OPENBABEL3_LIBRARIES})
 install(TARGETS myexe DESTINATION bin)
    @endcode
    @b main.cpp
@@ -76,105 +76,105 @@ int main()
 }
    @endcode
 
-   @b cmake/modules/FindOpenBabel2.cmake
+   @b cmake/modules/FindOpenBabel3.cmake
    @code
-# - Try to find OpenBabel2
+# - Try to find OpenBabel3
 # Once done this will define
 #
-#  OPENBABEL2_FOUND - system has OpenBabel2
-#  OPENBABEL2_INCLUDE_DIR - the OpenBabel2 include directory
-#  OPENBABEL2_LIBRARIES - Link these to use OpenBabel2
+#  OPENBABEL3_FOUND - system has OpenBabel3
+#  OPENBABEL3_INCLUDE_DIR - the OpenBabel3 include directory
+#  OPENBABEL3_LIBRARIES - Link these to use OpenBabel3
 #
 # Copyright (c) 2006, 2007 Carsten Niehaus, <cniehaus@gmx.de>
 # Copyright (C) 2008 Marcus D. Hanwell <marcus@cryos.org>
 # Redistribution and use is allowed according to the terms of the BSD license.
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
-if (OPENBABEL2_INCLUDE_DIR AND OPENBABEL2_LIBRARIES AND OPENBABEL2_VERSION_MET)
+if (OPENBABEL3_INCLUDE_DIR AND OPENBABEL3_LIBRARIES AND OPENBABEL3_VERSION_MET)
   # in cache already
-  set(OPENBABEL2_FOUND TRUE)
+  set(OPENBABEL3_FOUND TRUE)
 
-else (OPENBABEL2_INCLUDE_DIR AND OPENBABEL2_LIBRARIES AND OPENBABEL2_VERSION_MET)
+else (OPENBABEL3_INCLUDE_DIR AND OPENBABEL3_LIBRARIES AND OPENBABEL3_VERSION_MET)
   if(NOT WIN32)
 
     # Use the newer PkgConfig stuff
     find_package(PkgConfig REQUIRED)
-    pkg_check_modules(OPENBABEL2 openbabel-2.0>=2.2.0)
+    pkg_check_modules(OPENBABEL3 openbabel-3>=3.0.0)
 
     # Maintain backwards compatibility with previous version of module
-    if(OPENBABEL2_FOUND STREQUAL "1")
-      set(OPENBABEL2_VERSION_MET TRUE)
-      set(OPENBABEL2_INCLUDE_DIR ${OPENBABEL2_INCLUDE_DIRS})
-    endif(OPENBABEL2_FOUND STREQUAL "1")
+    if(OPENBABEL3_FOUND STREQUAL "1")
+      set(OPENBABEL3_VERSION_MET TRUE)
+      set(OPENBABEL3_INCLUDE_DIR ${OPENBABEL3_INCLUDE_DIRS})
+    endif(OPENBABEL3_FOUND STREQUAL "1")
 
   else(NOT WIN32)
-    set(OPENBABEL2_VERSION_MET TRUE)
+    set(OPENBABEL3_VERSION_MET TRUE)
   endif(NOT WIN32)
 
-  if(OPENBABEL2_VERSION_MET)
+  if(OPENBABEL3_VERSION_MET)
 
     if(WIN32)
-      if(NOT OPENBABEL2_INCLUDE_DIR)
-        find_path(OPENBABEL2_INCLUDE_DIR openbabel-2.0/openbabel/obconversion.h
+      if(NOT OPENBABEL3_INCLUDE_DIR)
+        find_path(OPENBABEL3_INCLUDE_DIR openbabel-3/openbabel/obconversion.h
           PATHS
           ${_obIncDir}
           ${GNUWIN32_DIR}/include
-          $ENV{OPENBABEL2_INCLUDE_DIR}
+          $ENV{OPENBABEL3_INCLUDE_DIR}
         )
-        if(OPENBABEL2_INCLUDE_DIR)
-          set(OPENBABEL2_INCLUDE_DIR ${OPENBABEL2_INCLUDE_DIR}/openbabel-2.0)
-        endif(OPENBABEL2_INCLUDE_DIR)
-      endif(NOT OPENBABEL2_INCLUDE_DIR)
+        if(OPENBABEL3_INCLUDE_DIR)
+          set(OPENBABEL3_INCLUDE_DIR ${OPENBABEL3_INCLUDE_DIR}/openbabel-3)
+        endif(OPENBABEL3_INCLUDE_DIR)
+      endif(NOT OPENBABEL3_INCLUDE_DIR)
     endif(WIN32)
 
-    find_library(OPENBABEL2_LIBRARIES NAMES openbabel openbabel-2
+    find_library(OPENBABEL3_LIBRARIES NAMES openbabel openbabel-3
       PATHS
       ${_obLinkDir}
       ${GNUWIN32_DIR}/lib
-      $ENV{OPENBABEL2_LIBRARIES}
+      $ENV{OPENBABEL3_LIBRARIES}
     )
-  endif(OPENBABEL2_VERSION_MET)
+  endif(OPENBABEL3_VERSION_MET)
 
-  if(OPENBABEL2_INCLUDE_DIR AND OPENBABEL2_LIBRARIES AND OPENBABEL2_VERSION_MET)
-    set(OPENBABEL2_FOUND TRUE)
-  endif(OPENBABEL2_INCLUDE_DIR AND OPENBABEL2_LIBRARIES AND OPENBABEL2_VERSION_MET)
+  if(OPENBABEL3_INCLUDE_DIR AND OPENBABEL3_LIBRARIES AND OPENBABEL3_VERSION_MET)
+    set(OPENBABEL3_FOUND TRUE)
+  endif(OPENBABEL3_INCLUDE_DIR AND OPENBABEL3_LIBRARIES AND OPENBABEL3_VERSION_MET)
 
-  if (OPENBABEL2_FOUND)
-    if (NOT OpenBabel2_FIND_QUIETLY)
-      message(STATUS "Found OpenBabel 2.2 or later: ${OPENBABEL2_LIBRARIES}")
-    endif (NOT OpenBabel2_FIND_QUIETLY)
-  else (OPENBABEL2_FOUND)
-    if (OpenBabel2_FIND_REQUIRED)
-      message(FATAL_ERROR "Could NOT find OpenBabel 2.2 or later ")
-    endif (OpenBabel2_FIND_REQUIRED)
-  endif (OPENBABEL2_FOUND)
+  if (OPENBABEL3_FOUND)
+    if (NOT OpenBabel3_FIND_QUIETLY)
+      message(STATUS "Found OpenBabel 3.0 or later: ${OPENBABEL3_LIBRARIES}")
+    endif (NOT OpenBabel3_FIND_QUIETLY)
+  else (OPENBABEL3_FOUND)
+    if (OpenBabel3_FIND_REQUIRED)
+      message(FATAL_ERROR "Could NOT find OpenBabel 3.0 or later ")
+    endif (OpenBabel3_FIND_REQUIRED)
+  endif (OPENBABEL3_FOUND)
 
-  mark_as_advanced(OPENBABEL2_INCLUDE_DIR OPENBABEL2_LIBRARIES)
+  mark_as_advanced(OPENBABEL3_INCLUDE_DIR OPENBABEL3_LIBRARIES)
 
-endif (OPENBABEL2_INCLUDE_DIR AND OPENBABEL2_LIBRARIES AND OPENBABEL2_VERSION_MET)
+endif (OPENBABEL3_INCLUDE_DIR AND OPENBABEL3_LIBRARIES AND OPENBABEL3_VERSION_MET)
 
-# Search for Open Babel2 executable
-if(OPENBABEL2_EXECUTABLE)
+# Search for Open Babel3 executable
+if(OPENBABEL3_EXECUTABLE)
 
   # in cache already
-  set(OPENBABEL2_EXECUTABLE_FOUND TRUE)
+  set(OPENBABEL3_EXECUTABLE_FOUND TRUE)
 
-else(OPENBABEL2_EXECUTABLE)
-  find_program(OPENBABEL2_EXECUTABLE NAMES babel
+else(OPENBABEL3_EXECUTABLE)
+  find_program(OPENBABEL3_EXECUTABLE NAMES babel
     PATHS
-    [HKEY_CURRENT_USER\\SOFTWARE\\OpenBabel\ 2.2.0]
-    $ENV{OPENBABEL2_EXECUTABLE}
+    [HKEY_CURRENT_USER\\SOFTWARE\\OpenBabel\ 3]
+    $ENV{OPENBABEL3_EXECUTABLE}
   )
 
-  if(OPENBABEL2_EXECUTABLE)
-    set(OPENBABEL2_EXECUTABLE_FOUND TRUE)
-  endif(OPENBABEL2_EXECUTABLE)
+  if(OPENBABEL3_EXECUTABLE)
+    set(OPENBABEL3_EXECUTABLE_FOUND TRUE)
+  endif(OPENBABEL3_EXECUTABLE)
 
-  if(OPENBABEL2_EXECUTABLE_FOUND)
-    message(STATUS "Found OpenBabel2 executable: ${OPENBABEL2_EXECUTABLE}")
-  endif(OPENBABEL2_EXECUTABLE_FOUND)
+  if(OPENBABEL3_EXECUTABLE_FOUND)
+    message(STATUS "Found OpenBabel3 executable: ${OPENBABEL3_EXECUTABLE}")
+  endif(OPENBABEL3_EXECUTABLE_FOUND)
 
-endif(OPENBABEL2_EXECUTABLE)
+endif(OPENBABEL3_EXECUTABLE)
    @endcode
  *
  */

@@ -1,0 +1,151 @@
+4UVG_A0C_A_1273
+  RCSB PDB12061715193D
+Coordinates from PDB:4UVG:A:1273 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   51.8600   57.5630    8.2130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.8860   57.4520    8.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.9030   58.3020    8.8530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.9990   56.3490    9.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2470   55.1670    9.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7640   56.3940   10.9880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.4900   55.1760   11.6690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.5950   54.4760   10.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1390   53.1480   11.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.2160   52.3470   12.6220   S 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4700   51.6840   11.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3960   51.9320   10.2840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3890   51.4320    9.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3040   51.6790    8.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4060   50.6770   10.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.4550   51.0360   12.2450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3950   50.4680   11.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4710   49.6990   12.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 16  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 17  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+O1
+A    2
+C9
+A    3
+N3
+A    4
+C8
+A    5
+C7
+A    6
+N2
+A    7
+O
+A    8
+C6
+A    9
+C5
+A   10
+S
+A   11
+C4
+A   12
+N
+A   13
+C3
+A   14
+C10
+A   15
+C2
+A   16
+N1
+A   17
+C1
+A   18
+C
+M  END
+>  <InstanceId>
+4UVG_A0C_A_1273
+
+>  <ChemCompId>
+A0C
+
+>  <PdbId>
+4UVG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1273
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O2 S
+
+>  <Name>
+5-[(4,6-dimethylpyrimidin-2-yl)sulfanylmethyl]isoxazole-3-carboxamide
+
+>  <SystematicName>
+5-[(4,6-dimethylpyrimidin-2-yl)sulfanylmethyl]-1,2-oxazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H12 N4 O2 S
+
+>  <MolecularWeight>
+264.304
+
+>  <ModifiedDate>
+2015-09-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N4O2S/c1-6-3-7(2)14-11(13-6)18-5-8-4-9(10(12)16)15-17-8/h3-4H,5H2,1-2H3,(H2,12,16)
+
+>  <InChIKey>
+LDIXARLLVUNHKY-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc(n1)SCc2cc(no2)C(=O)N)C
+
+$$$$

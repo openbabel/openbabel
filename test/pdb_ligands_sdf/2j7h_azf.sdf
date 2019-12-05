@@ -1,0 +1,118 @@
+2J7H_AZF_A_1446
+  RCSB PDB12061706003D
+Coordinates from PDB:2J7H:A:1446 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -1.6300   10.6580    6.7330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1360   10.6320    8.0810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3170   11.9080    8.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8150   12.0560    7.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1820   11.9810    9.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8370   11.4630   10.8000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3020   10.5360    9.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2410    9.3710    8.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5130    8.1500    8.9590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6760   10.4190   10.3790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C3
+A    4
+O3
+A    5
+C2
+A    6
+N
+A    7
+C5
+A    8
+C6
+A    9
+O6
+A   10
+N2
+M  END
+>  <InstanceId>
+2J7H_AZF_A_1446
+
+>  <ChemCompId>
+AZF
+
+>  <PdbId>
+2J7H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1446
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O3
+
+>  <Name>
+AZAFAGOMINE
+
+>  <SystematicName>
+(3R,4R,5R)-3-(hydroxymethyl)-1,2-diazinane-4,5-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N2 O3
+
+>  <MolecularWeight>
+148.16
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C5H12N2O3/c8-2-3-5(10)4(9)1-6-7-3/h3-10H,1-2H2/t3-,4-,5-/m1/s1
+
+>  <InChIKey>
+PPPMSBCQTLJPKM-UOWFLXDJSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H]([C@H](NN1)CO)O)O
+
+$$$$

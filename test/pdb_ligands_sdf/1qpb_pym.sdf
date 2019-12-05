@@ -1,0 +1,101 @@
+1QPB_PYM_A_602
+  RCSB PDB12061703483D
+Coordinates from PDB:1QPB:A:602 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   99.1890   61.2920   -8.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.6260   61.1530   -7.6190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  100.4600   61.5030   -8.8760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   98.3820   61.2370   -9.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   97.1650   61.0420  -10.0230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   98.7150   61.3480  -11.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+O1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+M  END
+>  <InstanceId>
+1QPB_PYM_A_602
+
+>  <ChemCompId>
+PYM
+
+>  <PdbId>
+1QPB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+602
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O2
+
+>  <Name>
+PYRUVAMIDE
+
+>  <SystematicName>
+2-oxopropanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 N O2
+
+>  <MolecularWeight>
+87.077
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5NO2/c1-2(5)3(4)6/h1H3,(H2,4,6)
+
+>  <InChIKey>
+FPOLWERNILTNDK-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)C(=O)N
+
+$$$$

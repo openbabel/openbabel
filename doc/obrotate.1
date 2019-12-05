@@ -1,5 +1,5 @@
-.Dd July 4, 2008
-.Os "Open Babel" 2.2
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.0
 .Dt obrotate 1 URM
 .Sh NAME
 .Nm obrotate
@@ -24,7 +24,7 @@ The four atom IDs required are indexes into the SMARTS pattern, which
 starts at atom 0 (zero). The angle supplied is in degrees. The two
 atoms used to set the dihedral angle <atom1> and <atom4> do not need
 to be connected to the atoms of the bond <atom2> and <atom3> in any
-way. 
+way.
 .Pp
 The order of the atoms matters -- the portion of the molecule attached
 to <atom1> and <atom2> remain fixed, but the portion bonded to <atom3>
@@ -51,12 +51,11 @@ Keep the pyridyl ring fixed and moves the aliphatic chain:
 Keep the aliphatic chain fixed and move the pyridyl ring:
 .Dl "obrotate 'c1ccncc1CCC' pyridines.sdf 8 7 6 5 90"
 .Sh SEE ALSO
-.Xr babel 1 ,
+.Xr obabel 1 ,
 .Xr obchiral 1 ,
 .Xr obfit 1 ,
 .Xr obgrep 1 ,
-.Xr obprop 1 ,
-.Xr obrotate 1 .
+.Xr obprop 1 .
 .Pp
 .Pp
 The web pages for Open Babel can be found at:
@@ -72,21 +71,21 @@ The obgrep program was contributed by
 Open Babel is developed by a cast of many, including currrent maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
-.An Michael Banck , 
-and innumerable others who have contributed fixes and additions. 
-For more contributors to Open Babel, see 
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
 \%<\fBhttp://openbabel.org/wiki/THANKS\fR>
 .Sh COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc. 
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
 .br
 Some portions Copyright (C) 2001-2005 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
- This program is free software; you can redistribute it and/or modify
+This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
 .Pp
- This program is distributed in the hope that it will be useful, but
+This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
 General Public License for more details.

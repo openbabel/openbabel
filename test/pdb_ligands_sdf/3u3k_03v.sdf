@@ -1,0 +1,123 @@
+3U3K_03V_A_2002
+  RCSB PDB12061710593D
+Coordinates from PDB:3U3K:A:2002 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   16.9720   -6.2430   -7.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5350   -4.1210   -8.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9000   -5.4150   -8.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1320   -5.8930   -8.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3660   -7.2630   -8.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3440   -8.1490   -8.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1840   -7.6000   -7.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5460   -9.5000   -7.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7620  -10.0480   -8.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7300   -9.2250   -8.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5370   -7.8440   -9.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+ 11  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  9  8  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+M  END
+>  <InstanceId>
+3U3K_03V_A_2002
+
+>  <ChemCompId>
+03V
+
+>  <PdbId>
+3U3K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+naphthalen-2-ol
+
+>  <SystematicName>
+naphthalen-2-ol
+
+>  <Synonyms>
+2-Naphtol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 O
+
+>  <MolecularWeight>
+144.17
+
+>  <ModifiedDate>
+2011-11-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8O/c11-10-6-5-8-3-1-2-4-9(8)7-10/h1-7,11H
+
+>  <InChIKey>
+JWAZRIHNYRIHIV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2cc(ccc2c1)O
+
+$$$$

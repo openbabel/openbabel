@@ -1,0 +1,163 @@
+1TOU_B1V_A_501
+  RCSB PDB12061704083D
+Coordinates from PDB:1TOU:A:501 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   21.4910    5.6460    4.6240   F 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3120    5.0570    4.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6730    5.4360    5.6480   F 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4800    3.7460    4.6790   F 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5870    5.4220    3.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9250    4.8530    2.2500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5770    6.3840    3.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9330    6.7110    2.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9360    7.6350    2.2460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3000    6.1190    1.1250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2910    5.1970    1.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7160    4.4530   -0.4020   S 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0660    3.3370    0.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4160    3.9900   -0.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6210    4.6460   -1.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4750    3.8060    0.7610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0240    3.8540    2.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1510    3.3950    3.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4890    4.0960    2.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7870    4.3780    1.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5500    4.7960    0.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 21  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 20 21  1  0  0  0  0
+A    1
+F27
+A    2
+C24
+A    3
+F25
+A    4
+F26
+A    5
+C9
+A    6
+N11
+A    7
+C7
+A    8
+C5
+A    9
+O13
+A   10
+N3
+A   11
+C1
+A   12
+S14
+A   13
+C15
+A   14
+C16
+A   15
+O23
+A   16
+N17
+A   17
+C18
+A   18
+C19
+A   19
+C20
+A   20
+C21
+A   21
+C22
+M  END
+>  <InstanceId>
+1TOU_B1V_A_501
+
+>  <ChemCompId>
+B1V
+
+>  <PdbId>
+1TOU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O2 S F3
+
+>  <Name>
+2-[(2-OXO-2-PIPERIDIN-1-YLETHYL)SULFANYL]-6-(TRIFLUOROMETHYL)PYRIMIDIN-4-OL
+
+>  <SystematicName>
+2-[4-hydroxy-6-(trifluoromethyl)pyrimidin-2-yl]sulfanyl-1-piperidin-1-yl-ethanone
+
+>  <Synonyms>
+2-[(2-OXO-2-PIPERIDIN-1-YLETHYL)THIO]-6-(TRIFLUOROMETHYL)PYRIMIDIN-4(1H)-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 F3 N3 O2 S
+
+>  <MolecularWeight>
+321.319
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14F3N3O2S/c13-12(14,15)8-6-9(19)17-11(16-8)21-7-10(20)18-4-2-1-3-5-18/h6H,1-5,7H2,(H,16,17,19)
+
+>  <InChIKey>
+UDBHGUOSOKOIAX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc(nc1O)SCC(=O)N2CCCCC2)C(F)(F)F
+
+$$$$

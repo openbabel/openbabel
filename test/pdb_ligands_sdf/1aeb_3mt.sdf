@@ -1,0 +1,103 @@
+1AEB_3MT_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEB:A:296 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   33.7990   92.5870   47.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4910   93.2520   47.9520   N 0  3  0  0  0  0  0  0  0  0  0  0
+   31.5320   93.3090   46.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4100   93.9650   47.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5560   94.5140   48.9800   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1140   93.8450   49.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+M  CHG  1   2   1
+A    1
+C1
+A    2
+N7
+A    3
+C5
+A    4
+C11
+A    5
+S10
+A    6
+C8
+M  END
+>  <InstanceId>
+1AEB_3MT_A_296
+
+>  <ChemCompId>
+3MT
+
+>  <PdbId>
+1AEB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N S
+
+>  <Name>
+3-METHYLTHIAZOLIUM ION
+
+>  <SystematicName>
+3-methyl-1,3-thiazol-3-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N S
+
+>  <MolecularWeight>
+100.162
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6NS/c1-5-2-3-6-4-5/h2-4H,1H3/q+1
+
+>  <InChIKey>
+PIDRHKDECUFWTG-UHFFFAOYSA-N
+
+>  <SMILES>
+C[n+]1ccsc1
+
+$$$$

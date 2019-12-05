@@ -1,0 +1,109 @@
+1KZI_DTU_A_800
+  RCSB PDB12061703083D
+Coordinates from PDB:1KZI:A:800 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+  100.1770   33.1040    0.4520   S 0  0  0  0  0  0  0  0  0  0  0  0
+   99.5770   34.3710    1.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.3700   35.1790    1.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.4410   36.4710    1.5980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   96.9960   34.5480    1.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.0780   34.7730    0.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   96.3560   35.1620    2.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.8230   34.1420    3.1360   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+S1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+S4
+M  END
+>  <InstanceId>
+1KZI_DTU_A_800
+
+>  <ChemCompId>
+DTU
+
+>  <PdbId>
+1KZI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2 S2
+
+>  <Name>
+(2R,3S)-1,4-DIMERCAPTOBUTANE-2,3-DIOL
+
+>  <SystematicName>
+(2S,3R)-1,4-bis-sulfanylbutane-2,3-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 O2 S2
+
+>  <MolecularWeight>
+154.251
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10O2S2/c5-3(1-7)4(6)2-8/h3-8H,1-2H2/t3-,4+
+
+>  <InChIKey>
+VHJLVAABSRFDPM-ZXZARUISSA-N
+
+>  <SMILES>
+C([C@H]([C@H](CS)O)O)S
+
+$$$$

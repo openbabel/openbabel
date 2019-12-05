@@ -1,0 +1,158 @@
+5ELY_5PU_A_817
+  RCSB PDB12061717303D
+Coordinates from PDB:5ELY:A:817 Model:1 without hydrogens
+ 20 20  0  0  0  0            999 V2000
+   23.1410   46.9490   41.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8430   46.3120   40.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3990   45.0650   40.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2440   44.2830   39.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3360   44.8170   38.5430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8490   43.2300   39.9730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3160   44.4760   41.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6300   45.0700   42.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0520   46.3170   42.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3000   46.9600   43.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7670   47.1240   43.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1980   47.8770   44.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8180   47.2020   45.8920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3320   49.1060   44.9080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1220   45.7300   43.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6420   45.7430   43.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0950   44.3070   43.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5620   43.3280   42.6150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0910   44.1830   44.0810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6950   42.9370   44.5000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  4  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  3  7  1  0  0  0  0
+  1  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+ 18 17  2  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 15 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 14 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAG
+A    2
+CAI
+A    3
+CAS
+A    4
+CAO
+A    5
+OAE
+A    6
+OAA
+A    7
+CAJ
+A    8
+CAH
+A    9
+CAR
+A   10
+CAM
+A   11
+CAT
+A   12
+CAP
+A   13
+OAF
+A   14
+OAB
+A   15
+CAL
+A   16
+CAK
+A   17
+CAQ
+A   18
+OAC
+A   19
+NAN
+A   20
+OAD
+M  END
+>  <InstanceId>
+5ELY_5PU_A_817
+
+>  <ChemCompId>
+5PU
+
+>  <PdbId>
+5ELY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+817
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O6
+
+>  <Name>
+4-[(2~{R})-2-carboxy-5-(oxidanylamino)-5-oxidanylidene-pentyl]benzoic acid
+
+>  <SystematicName>
+4-[(2~{R})-2-carboxy-5-(oxidanylamino)-5-oxidanylidene-pentyl]benzoic acid
+
+>  <Synonyms>
+JHU242
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H15 N O6
+
+>  <MolecularWeight>
+281.261
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H15NO6/c15-11(14-20)6-5-10(13(18)19)7-8-1-3-9(4-2-8)12(16)17/h1-4,10,20H,5-7H2,(H,14,15)(H,16,17)(H,18,19)/t10-/m1/s1
+
+>  <InChIKey>
+VUDGMYIWOPKVSL-SNVBAGLBSA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@@H](CCC(=O)NO)C(=O)O)C(=O)O
+
+$$$$

@@ -1,0 +1,147 @@
+5FL1_DV1_A_1716
+  RCSB PDB12061717423D
+Coordinates from PDB:5FL1:A:1716 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   30.6250   49.7660  247.8880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4100   50.5020  247.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4440   50.1680  248.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1700   48.7660  248.8350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7030   51.9940  247.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4190   52.8240  247.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4420   52.3370  248.6820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1670   50.9370  248.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1370   50.5650  249.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6500   50.9110  250.9970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2710   52.2990  246.3640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4340   52.6160  245.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8840   52.8520  246.0480   S 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7530   52.7630  244.1800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7910   53.1950  243.1930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5200   53.6740  241.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9080   53.7450  240.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+C4
+A    7
+O3
+A    8
+C5
+A    9
+C6
+A   10
+O4
+A   11
+N1
+A   12
+C7
+A   13
+S1
+A   14
+N2
+A   15
+C8
+A   16
+C9
+A   17
+C10
+M  END
+>  <InstanceId>
+5FL1_DV1_A_1716
+
+>  <ChemCompId>
+DV1
+
+>  <PdbId>
+5FL1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1716
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4 S
+
+>  <Name>
+(3~{a}~{R},5~{R},6~{S},7~{R},7~{a}~{R})-5-(hydroxymethyl)-2-(prop-2-enylamino)-5,6,7,7~{a}-tetrahydro-3~{a}~{H}-pyrano[3,2-d][1,3]thiazole-6,7-diol
+
+>  <SystematicName>
+(3aR,5R,6S,7R,7aR)-5-(hydroxymethyl)-2-(prop-2-enylamino)-5,6,7,7a-tetrahydro-3aH-pyrano[3,2-d][1,3]thiazole-6,7-diol
+
+>  <Synonyms>
+Propyleneaminothiazoline
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N2 O4 S
+
+>  <MolecularWeight>
+260.31
+
+>  <ModifiedDate>
+2016-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N2O4S/c1-2-3-11-10-12-6-8(15)7(14)5(4-13)16-9(6)17-10/h2,5-9,13-15H,1,3-4H2,(H,11,12)/t5-,6-,7-,8-,9-/m1/s1
+
+>  <InChIKey>
+RFYRJQYZBZAHNY-JGKVKWKGSA-N
+
+>  <SMILES>
+C=CCNC1=N[C@@H]2[C@H]([C@@H]([C@H](O[C@@H]2S1)CO)O)O
+
+$$$$

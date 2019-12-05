@@ -1,0 +1,139 @@
+5JAO_6HX_A_504
+  RCSB PDB12061718233D
+Coordinates from PDB:5JAO:A:504 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   13.9620    7.6970   -6.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2870    7.3510   -5.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4910    6.0540   -5.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7340    6.6040   -4.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5330    7.8940   -5.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3260    8.2890   -5.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8390   10.0990   -7.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7430   11.4040   -7.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0230   12.3360   -7.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3960   11.9710   -5.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4910   10.6670   -5.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6950    5.6820   -4.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9250    6.2500   -4.1490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2080    9.7070   -6.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6910   10.2360   -4.0610  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  7 14  1  0  0  0  0
+  9 10  2  0  0  0  0
+  1  2  1  0  0  0  0
+ 14  6  1  0  0  0  0
+ 14 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 11 15  1  0  0  0  0
+  3 12  2  0  0  0  0
+  5  4  2  0  0  0  0
+ 12  4  1  0  0  0  0
+  4 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+C7
+A    6
+C8
+A    7
+C10
+A    8
+C11
+A    9
+C12
+A   10
+C13
+A   11
+C14
+A   12
+C4
+A   13
+N6
+A   14
+C9
+A   15
+CL
+M  END
+>  <InstanceId>
+5JAO_6HX_A_504
+
+>  <ChemCompId>
+6HX
+
+>  <PdbId>
+5JAO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+504
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N Cl
+
+>  <Name>
+2'-chloro-6-methyl[1,1'-biphenyl]-3-amine
+
+>  <SystematicName>
+3-(2-chlorophenyl)-4-methyl-aniline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H12 Cl N
+
+>  <MolecularWeight>
+217.694
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H12ClN/c1-9-6-7-10(15)8-12(9)11-4-2-3-5-13(11)14/h2-8H,15H2,1H3
+
+>  <InChIKey>
+QLKVQWRDOWGQQP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(cc1c2ccccc2Cl)N
+
+$$$$

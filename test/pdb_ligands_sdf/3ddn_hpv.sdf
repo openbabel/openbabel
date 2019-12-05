@@ -1,0 +1,121 @@
+3DDN_HPV_B_600
+  RCSB PDB12061708183D
+Coordinates from PDB:3DDN:B:600 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   17.7110   47.4870  -20.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8530   45.8100  -16.6820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5260   46.4570  -18.0450   P 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5190   45.6530  -18.8910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2700   47.9690  -17.9810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8950   46.3890  -18.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2890   47.5590  -19.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9700   47.0470  -21.1990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7660   48.0100  -19.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5770   49.1880  -18.8720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7780   47.3080  -18.9290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+C2
+A    2
+O4P
+A    3
+P
+A    4
+O2P
+A    5
+O3P
+A    6
+O1P
+A    7
+C3
+A    8
+O3
+A    9
+C1
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+3DDN_HPV_B_600
+
+>  <ChemCompId>
+HPV
+
+>  <PdbId>
+3DDN
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O7 P
+
+>  <Name>
+2-oxo-3-(phosphonooxy)propanoic acid
+
+>  <SystematicName>
+2-oxo-3-phosphonooxy-propanoic acid
+
+>  <Synonyms>
+Hydroxypyruvic acid phosphate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 O7 P
+
+>  <MolecularWeight>
+184.041
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5O7P/c4-2(3(5)6)1-10-11(7,8)9/h1H2,(H,5,6)(H2,7,8,9)
+
+>  <InChIKey>
+LFLUCDOSQPJJBE-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)C(=O)O)OP(=O)(O)O
+
+$$$$

@@ -1,0 +1,114 @@
+4Y4W_46W_A_412
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4W:A:412 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -15.4540    8.6300   57.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6440    7.5300   58.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9760    4.6710   58.6070   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4530    6.7460   59.5260   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3360    5.4220   59.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5350    4.8260   60.8090   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1370    9.5110   58.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0340    8.6560   59.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2680    7.5200   60.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+N1
+A    4
+N2
+A    5
+C
+A    6
+N
+A    7
+C3
+A    8
+C2
+A    9
+C1
+M  END
+>  <InstanceId>
+4Y4W_46W_A_412
+
+>  <ChemCompId>
+46W
+
+>  <PdbId>
+4Y4W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+412
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 N3
+
+>  <Name>
+4-methylpiperidine-1-carboximidamide
+
+>  <SystematicName>
+4-methylpiperidine-1-carboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 N3
+
+>  <MolecularWeight>
+141.214
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15N3/c1-6-2-4-10(5-3-6)7(8)9/h6H,2-5H2,1H3,(H3,8,9)
+
+>  <InChIKey>
+NIWNTTFADJMCIT-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\N)/N1CCC(CC1)C
+
+$$$$

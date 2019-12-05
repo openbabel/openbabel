@@ -1,0 +1,135 @@
+3CCB_B2Y_A_800
+  RCSB PDB12061708083D
+Coordinates from PDB:3CCB:A:800 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   41.6190    3.4230   18.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.1900    1.3830   17.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5140    0.0750   16.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6580   -0.6500   16.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4830   -0.0740   15.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1530    1.2480   15.8900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6450    1.3740   15.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8530    3.4480   13.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7350    3.4040   17.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0260    1.9780   16.7160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9030    1.8440   15.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5150    1.9680   15.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6090    2.9990   14.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9840    2.8710   14.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7 11  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8 13  1  0  0  0  0
+  8 14  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C10
+A    8
+C13
+A    9
+C2
+A   10
+C3
+A   11
+C9
+A   12
+C11
+A   13
+C12
+A   14
+C14
+M  END
+>  <InstanceId>
+3CCB_B2Y_A_800
+
+>  <ChemCompId>
+B2Y
+
+>  <PdbId>
+3CCB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N
+
+>  <Name>
+1-biphenyl-2-ylmethanamine
+
+>  <SystematicName>
+(2-phenylphenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H13 N
+
+>  <MolecularWeight>
+183.249
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H13N/c14-10-12-8-4-5-9-13(12)11-6-2-1-3-7-11/h1-9H,10,14H2
+
+>  <InChIKey>
+YHXKXVFQHWJYOD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2ccccc2CN
+
+$$$$

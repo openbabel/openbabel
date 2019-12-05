@@ -1,0 +1,114 @@
+1A7C_RIP_A_951
+  RCSB PDB12061701573D
+Coordinates from PDB:1A7C:A:951 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   -4.0130   -3.1170   22.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9790   -4.2380   22.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0360   -4.0440   23.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8440   -4.0270   25.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8980   -2.9080   25.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2540   -4.2440   21.5890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0600   -5.0870   24.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4770   -5.2790   25.4820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7320   -3.0860   24.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O2
+A    7
+O3
+A    8
+O4
+A    9
+O5
+M  END
+>  <InstanceId>
+1A7C_RIP_A_951
+
+>  <ChemCompId>
+RIP
+
+>  <PdbId>
+1A7C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+951
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+RIBOSE(PYRANOSE FORM)
+
+>  <SystematicName>
+(2R,3R,4R,5R)-oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C5 H10 O5
+
+>  <MolecularWeight>
+150.13
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O5/c6-2-1-10-5(9)4(8)3(2)7/h2-9H,1H2/t2-,3-,4-,5-/m1/s1
+
+>  <InChIKey>
+SRBFZHDQGSBBOR-TXICZTDVSA-N
+
+>  <SMILES>
+C1[C@H]([C@H]([C@H]([C@@H](O1)O)O)O)O
+
+$$$$

@@ -1,0 +1,126 @@
+2R9K_SGI_A_600
+  RCSB PDB12061706543D
+Coordinates from PDB:2R9K:A:600 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   50.7060   51.7680   -0.5540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0580   50.7750   -1.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.1470   50.7760   -1.9180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.0620   49.6780   -1.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.4970   49.1210   -0.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6740   47.8850   -0.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2320   46.6240   -0.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.5710   45.4800   -0.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3980   45.6020   -1.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8190   44.4840   -1.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9000   46.8690   -1.7090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4640   47.9960   -1.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+N
+A    4
+CA
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CE1
+A    9
+CZ
+A   10
+OH
+A   11
+CE2
+A   12
+CD2
+M  END
+>  <InstanceId>
+2R9K_SGI_A_600
+
+>  <ChemCompId>
+SGI
+
+>  <PdbId>
+2R9K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2
+
+>  <Name>
+3-(4-hydroxyphenyl)propanamide
+
+>  <SystematicName>
+3-(4-hydroxyphenyl)propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N O2
+
+>  <MolecularWeight>
+165.189
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H11NO2/c10-9(12)6-3-7-1-4-8(11)5-2-7/h1-2,4-5,11H,3,6H2,(H2,10,12)
+
+>  <InChIKey>
+OEHZEBOCZWCVMK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CCC(=O)N)O
+
+$$$$

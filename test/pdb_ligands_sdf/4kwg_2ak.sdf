@@ -1,0 +1,131 @@
+4KWG_2AK_A_601
+  RCSB PDB12061713263D
+Coordinates from PDB:4KWG:A:601 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    3.9470  -26.9290   49.1570  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0930  -27.2150   49.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3310  -26.5960   50.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0490  -26.8160   50.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8150  -26.1180   51.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7330  -27.6680   49.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4400  -28.1270   48.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9070  -28.8580   47.3230   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8700  -29.5170   46.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9520  -30.3110   45.7790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3750  -29.2440   47.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0240  -28.3070   48.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5380  -29.7060   47.2380   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  2  0  0  0  0
+  8  9  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 13  2  0  0  0  0
+A    1
+BR1
+A    2
+C5
+A    3
+C4
+A    4
+C3
+A    5
+C12
+A    6
+C2
+A    7
+C6
+A    8
+N7
+A    9
+C8
+A   10
+O11
+A   11
+C9
+A   12
+C1
+A   13
+O10
+M  END
+>  <InstanceId>
+4KWG_2AK_A_601
+
+>  <ChemCompId>
+2AK
+
+>  <PdbId>
+4KWG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 Br
+
+>  <Name>
+7-bromo-5-methyl-1H-indole-2,3-dione
+
+>  <SystematicName>
+7-bromanyl-5-methyl-1H-indole-2,3-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 Br N O2
+
+>  <MolecularWeight>
+240.053
+
+>  <ModifiedDate>
+2014-04-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6BrNO2/c1-4-2-5-7(6(10)3-4)11-9(13)8(5)12/h2-3H,1H3,(H,11,12,13)
+
+>  <InChIKey>
+NPDJRIGMWAQKTQ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc2c(c(c1)Br)NC(=O)C2=O
+
+$$$$

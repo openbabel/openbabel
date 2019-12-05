@@ -1,0 +1,151 @@
+3VLJ_DDJ_A_801
+  RCSB PDB12061711143D
+Coordinates from PDB:3VLJ:A:801 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+  136.9580  -12.7640   45.7110   N 0  0  0  0  0  0  0  0  0  0  0  0
+  135.7290  -13.7140   37.2690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  134.8760  -14.5300   45.4800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  135.4930  -13.5530   39.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.7400  -14.0480   43.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.3220  -13.8370   44.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.4050  -12.9740   44.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.2460  -13.4070   42.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.3320  -12.5470   42.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.9100  -12.3290   43.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.9490  -13.8040   38.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.7050  -13.6760   40.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.6130  -14.1730   38.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.8250  -14.2960   39.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.3710  -14.0490   40.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  135.6710  -12.3860   36.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.7980  -13.8320   46.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.0900  -14.4050   37.0620   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  2 11  1  0  0  0  0
+  2 16  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3 17  1  0  0  0  0
+  4 11  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 10  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 15  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 18  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+NAA
+A    2
+OAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+NAR
+M  END
+>  <InstanceId>
+3VLJ_DDJ_A_801
+
+>  <ChemCompId>
+DDJ
+
+>  <PdbId>
+3VLJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O2
+
+>  <Name>
+3,3'-dimethoxybiphenyl-4,4'-diamine
+
+>  <SystematicName>
+4-(4-azanyl-3-methoxy-phenyl)-2-methoxy-aniline
+
+>  <Synonyms>
+o-Dianisidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H16 N2 O2
+
+>  <MolecularWeight>
+244.289
+
+>  <ModifiedDate>
+2012-11-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H16N2O2/c1-17-13-7-9(3-5-11(13)15)10-4-6-12(16)14(8-10)18-2/h3-8H,15-16H2,1-2H3
+
+>  <InChIKey>
+JRBJSXQPQWSCCF-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(ccc1N)c2ccc(c(c2)OC)N
+
+$$$$

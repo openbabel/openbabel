@@ -48,7 +48,7 @@ bool DLHandler::getConvDirectory(string& convPath)
     HMODULE handle = GetModuleHandle("OBError.dll");
   #endif
   if(!handle)
-    handle = GetModuleHandle("openbabel-2.dll");//CMake/VC++2008 build will use this.
+    handle = GetModuleHandle("openbabel-3.dll");//CMake/VC++2008 build will use this.
   if(!handle)
     handle = GetModuleHandle(NULL); // If all else fails try the exe file module
   if (!handle)

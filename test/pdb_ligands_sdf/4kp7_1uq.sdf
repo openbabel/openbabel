@@ -1,0 +1,150 @@
+4KP7_1UQ_A_503
+  RCSB PDB12061713243D
+Coordinates from PDB:4KP7:A:503 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   24.2400   -6.6870   18.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0900   -6.0130   19.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6780   -6.8170   20.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7140   -7.2400   18.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9300   -4.2120   22.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8950   -4.8690   21.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7350   -4.9910   20.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7670   -3.7190   21.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6560   -3.7330   20.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6020   -4.4170   19.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4430   -4.5160   18.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3460   -3.2520   17.2160   P 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9110   -3.2690   17.5050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1330   -3.4920   15.7680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7790   -1.8940   17.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9470   -6.1880   17.5760   S 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8990   -6.4680   17.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3370   -6.4900   19.3810   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 12  2  0  0  0  0
+ 17  1  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 16 11  1  0  0  0  0
+ 16  4  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1 18  1  0  0  0  0
+  2 18  1  0  0  0  0
+ 18  3  1  0  0  0  0
+ 10  7  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  8  2  0  0  0  0
+  6  5  2  0  0  0  0
+  8  5  1  0  0  0  0
+A    1
+C2
+A    2
+O4
+A    3
+C5
+A    4
+C6
+A    5
+C19
+A    6
+C15
+A    7
+C14
+A    8
+C17
+A    9
+C16
+A   10
+C13
+A   11
+C8
+A   12
+P9
+A   13
+O12
+A   14
+O11
+A   15
+O10
+A   16
+S7
+A   17
+O1
+A   18
+N3
+M  END
+>  <InstanceId>
+4KP7_1UQ_A_503
+
+>  <ChemCompId>
+1UQ
+
+>  <PdbId>
+4KP7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O5 P S
+
+>  <Name>
+[(S)-({2-[hydroxy(methyl)amino]-2-oxoethyl}sulfanyl)(phenyl)methyl]phosphonic acid
+
+>  <SystematicName>
+[(S)-[2-[methyl(oxidanyl)amino]-2-oxidanylidene-ethyl]sulfanyl-phenyl-methyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N O5 P S
+
+>  <MolecularWeight>
+291.261
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14NO5PS/c1-11(13)9(12)7-18-10(17(14,15)16)8-5-3-2-4-6-8/h2-6,10,13H,7H2,1H3,(H2,14,15,16)/t10-/m0/s1
+
+>  <InChIKey>
+IWQBQVIYTMIQRL-JTQLQIEISA-N
+
+>  <SMILES>
+CN(C(=O)CS[C@@H](c1ccccc1)P(=O)(O)O)O
+
+$$$$

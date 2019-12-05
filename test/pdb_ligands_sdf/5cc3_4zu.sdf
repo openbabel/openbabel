@@ -1,0 +1,131 @@
+5CC3_4ZU_A_803
+  RCSB PDB12061717043D
+Coordinates from PDB:5CC3:A:803 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   35.0780   77.3460   64.7350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3310   76.3240   64.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3400   75.3540   65.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3350   76.2550   63.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2040   77.1240   62.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1300   76.6500   61.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5210   77.0480   60.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4550   76.3250   59.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0110   75.1710   60.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5260   74.1300   59.7290  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5690   74.7210   61.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6290   75.4490   62.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3830   75.2540   63.3620   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9 11  2  0  0  0  0
+  6 12  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 13  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+BR10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+M  END
+>  <InstanceId>
+5CC3_4ZU_A_803
+
+>  <ChemCompId>
+4ZU
+
+>  <PdbId>
+5CC3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 Br
+
+>  <Name>
+6-bromanyl-1H-indole-2-carboxylic acid
+
+>  <SystematicName>
+6-bromanyl-1H-indole-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 Br N O2
+
+>  <MolecularWeight>
+240.053
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6BrNO2/c10-6-2-1-5-3-8(9(12)13)11-7(5)4-6/h1-4,11H,(H,12,13)
+
+>  <InChIKey>
+SVBVYRYROZWKNJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc2c1cc([nH]2)C(=O)O)Br
+
+$$$$

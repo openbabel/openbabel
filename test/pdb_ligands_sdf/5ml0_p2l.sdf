@@ -1,0 +1,147 @@
+5ML0_P2L_A_901
+  RCSB PDB12191704023D
+Coordinates from PDB:5ML0:A:901 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -14.8940   16.3570    9.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8680   16.3660   10.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6170   14.3150    8.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4740   16.9770   13.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4170   17.0540   12.1620   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7160   18.4510   11.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7590   18.5240   10.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2940   17.7680    9.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3710   15.6030    8.7390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4080   13.5140    9.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7020   12.2680    9.1850   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2220   11.6600    8.0650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5990   10.2560    7.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4470   12.2560    7.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0710   11.6340    6.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1510   13.6430    7.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1670   14.4460    6.1870  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  2  0  0  0  0
+ 17 16  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 16  3  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  3  9  1  0  0  0  0
+  3 10  1  0  0  0  0
+  9  1  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  8  1  1  0  0  0  0
+  8  7  1  0  0  0  0
+  1  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  2  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+A    1
+C15
+A    2
+C17
+A    3
+C22
+A    4
+C01
+A    5
+N05
+A    6
+C06
+A    7
+C09
+A    8
+C12
+A    9
+N20
+A   10
+C23
+A   11
+N25
+A   12
+N26
+A   13
+C27
+A   14
+C31
+A   15
+O32
+A   16
+C33
+A   17
+CL1
+M  END
+>  <InstanceId>
+5ML0_P2L_A_901
+
+>  <ChemCompId>
+P2L
+
+>  <PdbId>
+5ML0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O Cl
+
+>  <Name>
+4-chlorol-2-methyl-5-[[(3~{R})-1-methylpiperidin-3-yl]amino]pyridazin-3-one
+
+>  <SystematicName>
+4-chloranyl-2-methyl-5-[[(3~{R})-1-methylpiperidin-3-yl]amino]pyridazin-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 Cl N4 O
+
+>  <MolecularWeight>
+256.732
+
+>  <ModifiedDate>
+2017-12-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17ClN4O/c1-15-5-3-4-8(7-15)14-9-6-13-16(2)11(17)10(9)12/h6,8,14H,3-5,7H2,1-2H3/t8-/m1/s1
+
+>  <InChIKey>
+LEPPHANDICKARV-MRVPVSSYSA-N
+
+>  <SMILES>
+CN1CCC[C@H](C1)NC2=C(C(=O)N(N=C2)C)Cl
+
+$$$$

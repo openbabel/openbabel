@@ -1,0 +1,127 @@
+4MRW_MRW_A_900
+  RCSB PDB12061713473D
+Coordinates from PDB:4MRW:A:900 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    3.0590  -26.2230  -35.8960   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8100  -27.2400  -35.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3810  -28.0580  -36.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1610  -29.1270  -36.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3710  -29.3800  -34.7470   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8270  -28.5970  -33.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0690  -28.8900  -32.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5090  -28.0830  -31.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8160  -28.4480  -29.7940  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7160  -26.9890  -31.8230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4740  -26.6950  -33.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0310  -27.5010  -34.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2 12  2  0  0  0  0
+  5  6  2  0  0  0  0
+ 12  6  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  7  8  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+CL9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+4MRW_MRW_A_900
+
+>  <ChemCompId>
+MRW
+
+>  <PdbId>
+4MRW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O Cl
+
+>  <Name>
+7-chloroquinolin-4-ol
+
+>  <SystematicName>
+7-chloranylquinolin-4-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 Cl N O
+
+>  <MolecularWeight>
+179.603
+
+>  <ModifiedDate>
+2014-05-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6ClNO/c10-6-1-2-7-8(5-6)11-4-3-9(7)12/h1-5H,(H,11,12)
+
+>  <InChIKey>
+XMFXTXKSWIDMER-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(ccnc2cc1Cl)O
+
+$$$$

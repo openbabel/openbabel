@@ -1,0 +1,114 @@
+3D9D_N6C_A_600
+  RCSB PDB12061708173D
+Coordinates from PDB:3D9D:A:600 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   20.4220  -19.7520  -16.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2140  -19.4060  -18.1050   N 0  3  0  0  0  0  0  0  0  0  0  0
+   21.0680  -18.7320  -18.6760   O 0  5  0  0  0  0  0  0  0  0  0  0
+   18.9490  -19.8030  -18.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8960  -19.4820  -20.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6720  -20.1120  -20.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3500  -21.5060  -20.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8280  -22.5880  -21.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4260  -24.0460  -21.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+M  CHG  2   2   1   3  -1
+A    1
+O1
+A    2
+N1
+A    3
+O2
+A    4
+C1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+3D9D_N6C_A_600
+
+>  <ChemCompId>
+N6C
+
+>  <PdbId>
+3D9D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2
+
+>  <Name>
+1-nitrohexane
+
+>  <SystematicName>
+1-nitrohexane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O2
+
+>  <MolecularWeight>
+131.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO2/c1-2-3-4-5-6-7(8)9/h2-6H2,1H3
+
+>  <InChIKey>
+FEYJIFXFOHFGCC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCC[N+](=O)[O-]
+
+$$$$

@@ -1,0 +1,127 @@
+2AGW_TSS_D_3001
+  RCSB PDB12061705003D
+Coordinates from PDB:2AGW:D:3001 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    0.5740    3.9460    6.2860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1160    4.3920    7.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4380    3.7080    7.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0500    3.9490    9.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4750    5.1410    9.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0070    4.8580   10.9140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9440    3.5210   11.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3550    2.9420    9.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3150    2.6950   12.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1080    1.3280   12.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5230    0.7600   10.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1340    1.5840    9.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N1
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD1
+A    6
+NE1
+A    7
+CE2
+A    8
+CD2
+A    9
+CZ2
+A   10
+CH2
+A   11
+CZ3
+A   12
+CE3
+M  END
+>  <InstanceId>
+2AGW_TSS_D_3001
+
+>  <ChemCompId>
+TSS
+
+>  <PdbId>
+2AGW
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2
+
+>  <Name>
+2-(1H-INDOL-3-YL)ETHANAMINE
+
+>  <SystematicName>
+2-(1H-indol-3-yl)ethanamine
+
+>  <Synonyms>
+TRYPTAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 N2
+
+>  <MolecularWeight>
+160.216
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12N2/c11-6-5-8-7-12-10-4-2-1-3-9(8)10/h1-4,7,12H,5-6,11H2
+
+>  <InChIKey>
+APJYDQYYACXCRM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)CCN
+
+$$$$

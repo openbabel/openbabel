@@ -1,0 +1,113 @@
+4BZS_9X6_A_1613
+  RCSB PDB12061711573D
+Coordinates from PDB:4BZS:A:1613 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   28.4040   16.4790    2.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0010   16.0200    2.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3660   18.2470    3.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5370   19.1760    3.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7810   17.1470    1.9290   S 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0990   15.7750    1.4360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8400   17.5370    2.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2360   19.0490    4.4720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7740   20.0280    2.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  2  0  0  0  0
+  1  7  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  9  2  0  0  0  0
+  4  8  1  0  0  0  0
+A    1
+C3
+A    2
+C4
+A    3
+C2
+A    4
+C1
+A    5
+S2
+A    6
+O4
+A    7
+O3
+A    8
+O2
+A    9
+O1
+M  END
+>  <InstanceId>
+4BZS_9X6_A_1613
+
+>  <ChemCompId>
+9X6
+
+>  <PdbId>
+4BZS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1613
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O4 S
+
+>  <Name>
+thiodiglycolic acid
+
+>  <SystematicName>
+2-(2-hydroxy-2-oxoethylsulfanyl)ethanoic acid
+
+>  <Synonyms>
+2-(2-hydroxy-2-oxoethylsulfanyl)ethanoic acid
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C4 H6 O4 S
+
+>  <MolecularWeight>
+150.153
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O4S/c5-3(6)1-9-2-4(7)8/h1-2H2,(H,5,6)(H,7,8)
+
+>  <InChIKey>
+UVZICZIVKIMRNE-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(=O)O)SCC(=O)O
+
+$$$$

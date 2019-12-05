@@ -1,0 +1,101 @@
+6FCS_66N_A_707
+  RCSB PDB04141810343D
+Coordinates from PDB:6FCS:A:707 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   22.7910  143.4020   12.4310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2240  141.9830   10.1790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6840  143.3540   10.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1400  143.2820   10.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2050  144.0280   11.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9920  145.4630   11.7880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  1  5  2  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+O3
+A    2
+N11
+A    3
+C33
+A    4
+C35
+A    5
+C34
+A    6
+N12
+M  END
+>  <InstanceId>
+6FCS_66N_A_707
+
+>  <ChemCompId>
+66N
+
+>  <PdbId>
+6FCS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+707
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N2 O
+
+>  <Name>
+L-alaninamide
+
+>  <SystematicName>
+(2~{S})-2-azanylpropanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H8 N2 O
+
+>  <MolecularWeight>
+88.108
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H8N2O/c1-2(4)3(5)6/h2H,4H2,1H3,(H2,5,6)/t2-/m0/s1
+
+>  <InChIKey>
+HQMLIDZJXVVKCW-REOHCLBHSA-N
+
+>  <SMILES>
+C[C@@H](C(=O)N)N
+
+$$$$

@@ -1,0 +1,122 @@
+5TEJ_7FN_B_302
+  RCSB PDB12061719403D
+Coordinates from PDB:5TEJ:B:302 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -2.5070    2.5740   26.1580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5660    3.2160   25.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2150    2.7260   24.1520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9020    4.3690   24.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7470    4.8720   23.7200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0680    5.9780   23.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7530    6.6960   22.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1400    7.5760   22.7250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3130    6.4200   21.6240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7730    6.1970   25.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2960    5.1730   25.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  6 10  2  0  0  0  0
+  3  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAH
+A    2
+CAF
+A    3
+OAI
+A    4
+CAA
+A    5
+OAE
+A    6
+CAD
+A    7
+CAG
+A    8
+OAK
+A    9
+OAJ
+A   10
+CAC
+A   11
+CAB
+M  END
+>  <InstanceId>
+5TEJ_7FN_B_302
+
+>  <ChemCompId>
+7FN
+
+>  <PdbId>
+5TEJ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+2,5 Furan Dicarboxylic Acid
+
+>  <SystematicName>
+furan-2,5-dicarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H4 O5
+
+>  <MolecularWeight>
+156.093
+
+>  <ModifiedDate>
+2017-10-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4O5/c7-5(8)3-1-2-4(11-3)6(9)10/h1-2H,(H,7,8)(H,9,10)
+
+>  <InChIKey>
+CHTHALBTIRVDBM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1C(=O)O)C(=O)O
+
+$$$$

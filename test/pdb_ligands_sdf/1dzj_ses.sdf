@@ -1,0 +1,130 @@
+1DZJ_SES_A_700
+  RCSB PDB12061702193D
+Coordinates from PDB:1DZJ:A:700 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    2.9710   26.0680   12.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5240   26.4140   10.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1060   26.9660   11.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1530   25.9620   11.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1960   27.1630   15.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0080   25.7390   15.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4800   25.4930   14.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6270   27.6650   11.6020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7270   28.1160   12.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3410   29.1710   11.7080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4050   27.2700   13.8150  Se 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9090   26.1760   13.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0960   26.6040   12.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C11
+A    6
+C12
+A    7
+C13
+A    8
+N21
+A    9
+C22
+A   10
+N22
+A   11
+SE1
+A   12
+C24
+A   13
+C25
+M  END
+>  <InstanceId>
+1DZJ_SES_A_700
+
+>  <ChemCompId>
+SES
+
+>  <PdbId>
+1DZJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 Se
+
+>  <Name>
+4-butyl-5-propyl-1,3-selenazol-2-amine
+
+>  <SystematicName>
+4-butyl-5-propyl-1,3-selenazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 N2 Se
+
+>  <MolecularWeight>
+245.223
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18N2Se/c1-3-5-7-8-9(6-4-2)13-10(11)12-8/h3-7H2,1-2H3,(H2,11,12)
+
+>  <InChIKey>
+DOUUMUUUWUAPPC-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCc1c([se]c(n1)N)CCC
+
+$$$$

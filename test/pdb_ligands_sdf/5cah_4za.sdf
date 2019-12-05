@@ -1,0 +1,123 @@
+5CAH_4ZA_A_803
+  RCSB PDB12061717043D
+Coordinates from PDB:5CAH:A:803 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   31.8760   77.8090   62.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6360   77.8960   65.2750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4500   78.8980   64.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9680   80.0210   64.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4610   78.7400   63.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2130   79.5910   62.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2110   79.0150   61.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4510   79.2310   60.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5910   78.2230   60.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6890   76.9660   61.3360   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6240   77.6510   63.2690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  7  1  2  0  0  0  0
+  7  6  1  0  0  0  0
+  1 11  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 11  5  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+C10
+A    2
+O01
+A    3
+C02
+A    4
+O03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+C08
+A   10
+S09
+A   11
+N11
+M  END
+>  <InstanceId>
+5CAH_4ZA_A_803
+
+>  <ChemCompId>
+4ZA
+
+>  <PdbId>
+5CAH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2 S
+
+>  <Name>
+6H-thieno[2,3-b]pyrrole-5-carboxylic acid
+
+>  <SystematicName>
+6H-thieno[2,3-b]pyrrole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N O2 S
+
+>  <MolecularWeight>
+167.185
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5NO2S/c9-7(10)5-3-4-1-2-11-6(4)8-5/h1-3,8H,(H,9,10)
+
+>  <InChIKey>
+SEPXFZLYPWFMSY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1csc2c1cc([nH]2)C(=O)O
+
+$$$$

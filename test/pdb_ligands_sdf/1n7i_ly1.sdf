@@ -1,0 +1,131 @@
+1N7I_LY1_A_3002
+  RCSB PDB12061703233D
+Coordinates from PDB:1N7I:A:3002 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   28.7410   42.9880   18.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2040   42.9620   18.9620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5990   44.0970   19.8420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5780   45.4320   19.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1820   45.8330   18.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7280   45.1740   17.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5330   45.9550   16.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1150   45.3690   15.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8760   43.9940   15.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0670   43.1600   16.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5030   43.7870   17.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4610   43.4860   13.6900  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7990   41.6700   16.1480  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C4A
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+C8A
+A   12
+CL1
+A   13
+CL2
+M  END
+>  <InstanceId>
+1N7I_LY1_A_3002
+
+>  <ChemCompId>
+LY1
+
+>  <PdbId>
+1N7I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3002
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N Cl2
+
+>  <Name>
+8,9-DICHLORO-2,3,4,5-TETRAHYDRO-1H-BENZO[C]AZEPINE
+
+>  <SystematicName>
+8,9-dichloro-2,3,4,5-tetrahydro-1H-2-benzazepine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 Cl2 N
+
+>  <MolecularWeight>
+216.107
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11Cl2N/c11-9-4-3-7-2-1-5-13-6-8(7)10(9)12/h3-4,13H,1-2,5-6H2
+
+>  <InChIKey>
+IADAQXMUWITWNG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c2c1CCCNC2)Cl)Cl
+
+$$$$

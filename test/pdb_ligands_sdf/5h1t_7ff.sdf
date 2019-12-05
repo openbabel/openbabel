@@ -1,0 +1,139 @@
+5H1T_7FF_A_1103
+  RCSB PDB12061717553D
+Coordinates from PDB:5H1T:A:1103 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    3.1230   -2.2970   30.9280   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0680   -3.7860   29.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4730   -4.8090   30.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8400   -5.0550   28.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4230   -6.2010   29.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6330   -1.1240   30.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1880   -7.5090   28.5640   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4200   -2.5150   28.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2360   -2.9250   34.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8870   -3.6440   30.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2390   -2.1920   32.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5470   -1.1720   32.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9520   -3.3000   33.1720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2430   -6.0710   30.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2870   -1.2970   28.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  2  0  0  0  0
+  5 14  2  0  0  0  0
+  8  2  1  0  0  0  0
+  8 15  1  0  0  0  0
+  2 10  1  0  0  0  0
+ 14  3  1  0  0  0  0
+ 15  6  1  0  0  0  0
+ 10  3  2  0  0  0  0
+ 10  1  1  0  0  0  0
+  6  1  1  0  0  0  0
+  1 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13  9  1  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C7
+A    5
+C8
+A    6
+C10
+A    7
+N12
+A    8
+C13
+A    9
+C15
+A   10
+C2
+A   11
+C3
+A   12
+O6
+A   13
+O9
+A   14
+C11
+A   15
+C14
+M  END
+>  <InstanceId>
+5H1T_7FF_A_1103
+
+>  <ChemCompId>
+7FF
+
+>  <PdbId>
+5H1T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1103
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+methyl 6-azanyl-3,4-dihydro-2H-quinoline-1-carboxylate
+
+>  <SystematicName>
+methyl 6-azanyl-3,4-dihydro-2~{H}-quinoline-1-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 N2 O2
+
+>  <MolecularWeight>
+206.241
+
+>  <ModifiedDate>
+2017-02-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14N2O2/c1-15-11(14)13-6-2-3-8-7-9(12)4-5-10(8)13/h4-5,7H,2-3,6,12H2,1H3
+
+>  <InChIKey>
+NRFKTHKRWVPCRM-UHFFFAOYSA-N
+
+>  <SMILES>
+COC(=O)N1CCCc2c1ccc(c2)N
+
+$$$$

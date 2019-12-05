@@ -1,0 +1,147 @@
+5FE8_5WT_A_901
+  RCSB PDB12061717403D
+Coordinates from PDB:5FE8:A:901 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    6.1470    4.9900  102.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3010    5.2570  101.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3540    6.0240  102.4690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5170    6.2990  101.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4170    6.9880  102.2250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6530    5.8140  100.4890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9170    6.1770   99.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6310    5.0500   99.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7280    4.5220   98.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4420    4.7450  100.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4200    3.9500  100.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5580    3.4700   98.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7290    3.7400   98.0530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9560    3.3390   96.7890   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6070    2.1170   96.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0440    1.2420   97.0110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9700    1.8790   94.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 15  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13  9  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  6  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 10  2  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAB
+A    2
+CAM
+A    3
+CAH
+A    4
+CAN
+A    5
+OAE
+A    6
+NAQ
+A    7
+CAC
+A    8
+CAP
+A    9
+CAI
+A   10
+CAO
+A   11
+CAG
+A   12
+CAF
+A   13
+CAL
+A   14
+NAJ
+A   15
+CAK
+A   16
+OAD
+A   17
+CAA
+M  END
+>  <InstanceId>
+5FE8_5WT_A_901
+
+>  <ChemCompId>
+5WT
+
+>  <PdbId>
+5FE8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O2
+
+>  <Name>
+~{N}-(1,4-dimethyl-2-oxidanylidene-quinolin-7-yl)ethanamide
+
+>  <SystematicName>
+~{N}-(1,4-dimethyl-2-oxidanylidene-quinolin-7-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H14 N2 O2
+
+>  <MolecularWeight>
+230.262
+
+>  <ModifiedDate>
+2016-01-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H14N2O2/c1-8-6-13(17)15(3)12-7-10(14-9(2)16)4-5-11(8)12/h4-7H,1-3H3,(H,14,16)
+
+>  <InChIKey>
+YAOZNWQIDDSLHQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CC(=O)N(c2c1ccc(c2)NC(=O)C)C
+
+$$$$

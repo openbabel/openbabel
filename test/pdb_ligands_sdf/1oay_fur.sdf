@@ -1,0 +1,144 @@
+1OAY_FUR_H_500
+  RCSB PDB12061703313D
+Coordinates from PDB:1OAY:H:500 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   40.5940   53.8500   81.7770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4910   54.2830   81.4830   N 0  3  0  0  0  0  0  0  0  0  0  0
+   38.9170   55.0460   82.2420   O 0  5  0  0  0  0  0  0  0  0  0  0
+   38.9110   53.9290   80.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8950   54.6490   79.4890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0260   52.9210   79.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4440   52.8150   78.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6690   53.6930   78.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9260   53.7860   77.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1130   53.9850   76.4430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6940   52.9440   75.5820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5700   53.0240   74.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7560   53.9340   74.8900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4580   51.7210   75.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5630   50.9720   74.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4330   51.8160   74.1190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 16  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+M  CHG  2   2   1   3  -1
+A    1
+O3
+A    2
+N1
+A    3
+O2
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+N2
+A   11
+N3
+A   12
+C8
+A   13
+O5
+A   14
+C6
+A   15
+C7
+A   16
+O4
+M  END
+>  <InstanceId>
+1OAY_FUR_H_500
+
+>  <ChemCompId>
+FUR
+
+>  <PdbId>
+1OAY
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O5
+
+>  <Name>
+Furazolidone
+
+>  <SystematicName>
+3-[(5-nitrofuran-2-yl)methylideneamino]-1,3-oxazol-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H5 N3 O5
+
+>  <MolecularWeight>
+223.142
+
+>  <ModifiedDate>
+2012-08-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H5N3O5/c12-8-10(3-4-15-8)9-5-6-1-2-7(16-6)11(13)14/h1-5H/b9-5+
+
+>  <InChIKey>
+OEJYWOUVKXLNIN-WEVVVXLNSA-N
+
+>  <SMILES>
+c1cc(oc1C=NN2C=COC2=O)[N+](=O)[O-]
+
+$$$$

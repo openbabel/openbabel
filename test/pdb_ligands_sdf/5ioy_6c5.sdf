@@ -1,0 +1,135 @@
+5IOY_6C5_A_301
+  RCSB PDB12061718123D
+Coordinates from PDB:5IOY:A:301 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   15.4860   28.9650    0.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8810   29.1110    2.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2870   29.7130    2.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4530   27.8650    1.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4410   26.8170    2.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2180   27.3430    2.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9970   26.4360    2.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6640   27.5580    2.3530   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2420   26.6800    4.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9370   27.7370    4.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3290   27.9470    4.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0790   27.6060    0.1150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6090   28.5310    1.5800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4910   29.8350    1.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  4  2  0  0  0  0
+  1 14  1  0  0  0  0
+  1 13  1  0  0  0  0
+ 14  3  1  0  0  0  0
+  4 13  1  0  0  0  0
+  4  8  1  0  0  0  0
+ 13  2  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  6 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N1
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+O
+A   13
+N
+A   14
+C
+M  END
+>  <InstanceId>
+5IOY_6C5_A_301
+
+>  <ChemCompId>
+6C5
+
+>  <PdbId>
+5IOY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O
+
+>  <Name>
+N-(cyclopentylmethyl)pyrrolidine-1-carboxamide
+
+>  <SystematicName>
+~{N}-(cyclopentylmethyl)pyrrolidine-1-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H20 N2 O
+
+>  <MolecularWeight>
+196.289
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H20N2O/c14-11(13-7-3-4-8-13)12-9-10-5-1-2-6-10/h10H,1-9H2,(H,12,14)
+
+>  <InChIKey>
+OWSBTCNFAQNXTJ-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(C1)CNC(=O)N2CCCC2
+
+$$$$

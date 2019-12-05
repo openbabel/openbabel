@@ -1,0 +1,135 @@
+5J9M_6HD_A_401
+  RCSB PDB12061718233D
+Coordinates from PDB:5J9M:A:401 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   19.1020   17.7050   23.5160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9700   17.4030   23.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9500   17.1680   23.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7130   17.3290   21.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4740   16.9300   21.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2200   16.9560   19.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7280   17.7320   20.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4660   17.7610   19.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2240   17.3870   18.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2110   17.5680   17.5120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2120   18.1620   18.3170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4170   18.0290   17.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8350   18.3550   16.0110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0170   18.2310   14.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+  7  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+O
+A    2
+C6
+A    3
+N2
+A    4
+C5
+A    5
+C4
+A    6
+C3
+A    7
+C7
+A    8
+C8
+A    9
+C2
+A   10
+N1
+A   11
+N3
+A   12
+C1
+A   13
+N
+A   14
+C
+M  END
+>  <InstanceId>
+5J9M_6HD_A_401
+
+>  <ChemCompId>
+6HD
+
+>  <PdbId>
+5J9M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O
+
+>  <Name>
+2-(methylamino)-1H-benzimidazole-5-carboxamide
+
+>  <SystematicName>
+2-(methylamino)-1~{H}-benzimidazole-5-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 N4 O
+
+>  <MolecularWeight>
+190.202
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N4O/c1-11-9-12-6-3-2-5(8(10)14)4-7(6)13-9/h2-4H,1H3,(H2,10,14)(H2,11,12,13)
+
+>  <InChIKey>
+LOKXPWIZESGCLZ-UHFFFAOYSA-N
+
+>  <SMILES>
+CNc1[nH]c2ccc(cc2n1)C(=O)N
+
+$$$$

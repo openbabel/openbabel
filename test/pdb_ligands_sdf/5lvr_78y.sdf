@@ -1,0 +1,139 @@
+5LVR_78Y_A_904
+  RCSB PDB12061718533D
+Coordinates from PDB:5LVR:A:904 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -10.8700   17.7750   80.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7930   16.7410   80.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1890   16.3350   81.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6640   19.2660   78.5750   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6750   16.9520   82.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7480   17.9710   82.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5520   18.2850   78.7480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3340   18.3830   81.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1680   17.8490   77.6360   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8680   20.5860   75.3910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8340   20.4540   76.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0240   21.1340   77.3970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6810   19.4970   77.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.6320   18.6060   76.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0270   18.4410   75.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 14  9  2  0  0  0  0
+ 13  4  2  0  0  0  0
+  9  7  1  0  0  0  0
+  4  7  1  0  0  0  0
+  7  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  8  6  2  0  0  0  0
+  3  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+N3
+A   10
+O
+A   11
+C
+A   12
+N
+A   13
+C1
+A   14
+C2
+A   15
+C3
+M  END
+>  <InstanceId>
+5LVR_78Y_A_904
+
+>  <ChemCompId>
+78Y
+
+>  <PdbId>
+5LVR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+904
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O
+
+>  <Name>
+5-methyl-2-phenyl-1,2,3-triazole-4-carboxamide
+
+>  <SystematicName>
+5-methyl-2-phenyl-1,2,3-triazole-4-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N4 O
+
+>  <MolecularWeight>
+202.213
+
+>  <ModifiedDate>
+2016-10-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N4O/c1-7-9(10(11)15)13-14(12-7)8-5-3-2-4-6-8/h2-6H,1H3,(H2,11,15)
+
+>  <InChIKey>
+IHPOVUXVIZRYAC-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(nn(n1)c2ccccc2)C(=O)N
+
+$$$$

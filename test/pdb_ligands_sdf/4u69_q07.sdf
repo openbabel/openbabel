@@ -1,0 +1,121 @@
+4U69_Q07_A_404
+  RCSB PDB12061715033D
+Coordinates from PDB:4U69:A:404 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   22.3340   -2.2570   12.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7360   -2.6270   11.2900   P 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2920   -3.1470   11.3050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8200   -1.2710   10.4660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8680   -3.7470   10.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0170   -2.9660    9.8980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2980   -4.9780   11.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1820   -5.5700   12.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9020   -6.0210   10.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6700   -7.1530   11.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1270   -8.4900   10.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  2  1  0  0  0  0
+  4  2  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+O2
+A    2
+P
+A    3
+O
+A    4
+O1
+A    5
+C5
+A    6
+N
+A    7
+C3
+A    8
+C4
+A    9
+C2
+A   10
+C1
+A   11
+C
+M  END
+>  <InstanceId>
+4U69_Q07_A_404
+
+>  <ChemCompId>
+Q07
+
+>  <PdbId>
+4U69
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3 P
+
+>  <Name>
+[(1R,2S)-1-amino-2-methylpentyl]phosphonic acid
+
+>  <SystematicName>
+[(1R,2S)-1-azanyl-2-methyl-pentyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H16 N O3 P
+
+>  <MolecularWeight>
+181.17
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H16NO3P/c1-3-4-5(2)6(7)11(8,9)10/h5-6H,3-4,7H2,1-2H3,(H2,8,9,10)/t5-,6+/m0/s1
+
+>  <InChIKey>
+AMCULSZUZIHVRH-NTSWFWBYSA-N
+
+>  <SMILES>
+CCC[C@H](C)[C@H](N)P(=O)(O)O
+
+$$$$

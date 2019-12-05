@@ -1,0 +1,139 @@
+4YQ9_4GO_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YQ9:A:301 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -21.4260   40.8770   -8.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3650   40.4840   -9.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9270   42.4360   -7.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2010   41.8860   -7.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0760   41.1310   -8.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3370   42.3300   -6.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8510   42.1210   -7.9120   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1580   43.4840   -5.7870   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9910   40.9530   -9.7090   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4070   41.7050   -6.4610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2000   41.4000  -12.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7220   41.1890  -12.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9680   40.4320  -11.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6120   40.0930  -11.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9790   40.0390  -10.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15  9  1  0  0  0  0
+  9  5  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  1  1  0  0  0  0
+  5  7  1  0  0  0  0
+  1  4  2  0  0  0  0
+  7  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C10
+A    4
+C1
+A    5
+C4
+A    6
+C
+A    7
+N2
+A    8
+N
+A    9
+N1
+A   10
+O
+A   11
+C7
+A   12
+C8
+A   13
+C6
+A   14
+C9
+A   15
+C5
+M  END
+>  <InstanceId>
+4YQ9_4GO_A_301
+
+>  <ChemCompId>
+4GO
+
+>  <PdbId>
+4YQ9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O
+
+>  <Name>
+6-(cyclopentylamino)pyridine-3-carboxamide
+
+>  <SystematicName>
+6-(cyclopentylamino)pyridine-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 N3 O
+
+>  <MolecularWeight>
+205.256
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15N3O/c12-11(15)8-5-6-10(13-7-8)14-9-3-1-2-4-9/h5-7,9H,1-4H2,(H2,12,15)(H,13,14)
+
+>  <InChIKey>
+HTKJVDABQHUEPR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1C(=O)N)NC2CCCC2
+
+$$$$

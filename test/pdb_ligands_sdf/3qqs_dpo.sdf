@@ -1,0 +1,114 @@
+3QQS_DPO_D_401
+  RCSB PDB12061710273D
+Coordinates from PDB:3QQS:D:401 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   57.8070   -3.0410   10.5570   P 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7430   -2.9430   11.7780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.1740   -3.3280   11.3260   O 0  5  0  0  0  0  0  0  0  0  0  0
+   57.5970   -4.1130    9.5590   O 0  5  0  0  0  0  0  0  0  0  0  0
+   58.1510   -1.5480    9.9780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2550   -0.2960    9.3770   P 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0680    0.9380    9.3630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.8630   -0.0370   10.1910   O 0  5  0  0  0  0  0  0  0  0  0  0
+   56.9240   -0.7110    7.8400   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+M  CHG  4   3  -1   4  -1   8  -1   9  -1
+A    1
+P1
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+A    6
+P2
+A    7
+O5
+A    8
+O6
+A    9
+O7
+M  END
+>  <InstanceId>
+3QQS_DPO_D_401
+
+>  <ChemCompId>
+DPO
+
+>  <PdbId>
+3QQS
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+O7 P2
+
+>  <Name>
+DIPHOSPHATE
+
+>  <SystematicName>
+phosphonato phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+O7 P2
+
+>  <MolecularWeight>
+173.943
+
+>  <ModifiedDate>
+2014-03-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/H4O7P2/c1-8(2,3)7-9(4,5)6/h(H2,1,2,3)(H2,4,5,6)/p-4
+
+>  <InChIKey>
+XPPKVPWEQAFLFU-UHFFFAOYSA-J
+
+>  <SMILES>
+[O-]P(=O)([O-])OP(=O)([O-])[O-]
+
+$$$$

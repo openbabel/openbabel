@@ -1,0 +1,78 @@
+2MT2_CDZ_?_102
+  RCSB PDB12061706203D
+Coordinates from PDB:2MT2:?:102 Model:1 without hydrogens
+  0  0  0  0  0  0            999 V2000
+M  END
+>  <InstanceId>
+2MT2_CDZ_?_102
+
+>  <ChemCompId>
+CDZ
+
+>  <PdbId>
+2MT2
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+102
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+29
+
+>  <ObservedFormula>
+
+
+>  <Name>
+3,5-dihydroxy-4,6,6-tris(3-methylbut-2-en-1-yl)-2-(2-methylpropanoyl)cyclohexa-2,4-dien-1-one
+
+>  <SystematicName>
+3,5-dihydroxy-4,6,6-tris(3-methylbut-2-enyl)-2-(2-methylpropanoyl)cyclohexa-2,4-dien-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C25 H36 O4
+
+>  <MolecularWeight>
+400.551
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C25H36O4/c1-15(2)9-10-19-22(27)20(21(26)18(7)8)24(29)25(23(19)28,13-11-16(3)4)14-12-17(5)6/h9,11-12,18,27-28H,10,13-14H2,1-8H3
+
+>  <InChIKey>
+UNCDMWKTFLUPHZ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)C(=O)C1=C(C(=C(C(C1=O)(CC=C(C)C)CC=C(C)C)O)CC=C(C)C)O
+
+$$$$

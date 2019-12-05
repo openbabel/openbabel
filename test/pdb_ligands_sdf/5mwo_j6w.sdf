@@ -1,0 +1,127 @@
+5MWO_J6W_A_301
+  RCSB PDB12061719063D
+Coordinates from PDB:5MWO:A:301 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    4.4490   26.0820    4.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5030   27.8440    4.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2740   27.3590    4.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0930   26.9950    3.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1590   27.1120    2.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3630   27.5980    2.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5700   27.9770    4.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4540   27.6870    1.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7200   26.4870    2.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9070   26.5150    3.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6390   27.2150    4.2510   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8200   27.0810    5.2530   S 0  0  0  0  0  0  0  0  0  0  0  0
+  8  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  6  7  1  0  0  0  0
+  9  4  1  0  0  0  0
+  9 10  2  0  0  0  0
+  4  3  2  0  0  0  0
+ 10  1  1  0  0  0  0
+ 10 12  1  0  0  0  0
+  1 11  1  0  0  0  0
+  7  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3 12  1  0  0  0  0
+A    1
+C10
+A    2
+C01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+C08
+A   10
+C09
+A   11
+O11
+A   12
+S12
+M  END
+>  <InstanceId>
+5MWO_J6W_A_301
+
+>  <ChemCompId>
+J6W
+
+>  <PdbId>
+5MWO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O S
+
+>  <Name>
+(5-methyl-1-benzothiophen-2-yl)methanol
+
+>  <SystematicName>
+(5-methyl-1-benzothiophen-2-yl)methanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O S
+
+>  <MolecularWeight>
+178.251
+
+>  <ModifiedDate>
+2017-05-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10OS/c1-7-2-3-10-8(4-7)5-9(6-11)12-10/h2-5,11H,6H2,1H3
+
+>  <InChIKey>
+NPSSZIBANMLQHP-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc2c(c1)cc(s2)CO
+
+$$$$

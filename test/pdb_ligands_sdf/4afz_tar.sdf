@@ -1,0 +1,117 @@
+1CB7_TAR_B_900
+  RCSB PDB12061702093D
+Coordinates from PDB:1CB7:B:900 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    3.6980   -8.3430   84.1730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4780   -7.5360   86.0530   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6140   -7.5140   85.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5390   -6.4760   85.2350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7500   -6.2430   84.0720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6120   -6.6970   86.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5710   -7.6220   86.0780   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0470   -5.3700   86.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1500   -5.0740   86.6130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7920   -4.5830   87.5350   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+O1
+A    2
+O11
+A    3
+C1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+O41
+M  END
+>  <InstanceId>
+1CB7_TAR_B_900
+
+>  <ChemCompId>
+TAR
+
+>  <PdbId>
+1CB7
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O6
+
+>  <Name>
+D(-)-TARTARIC ACID
+
+>  <SystematicName>
+(2S,3S)-2,3-dihydroxybutanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O6
+
+>  <MolecularWeight>
+150.087
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O6/c5-1(3(7)8)2(6)4(9)10/h1-2,5-6H,(H,7,8)(H,9,10)/t1-,2-/m0/s1
+
+>  <InChIKey>
+FEWJPZIEWOKRBE-LWMBPPNESA-N
+
+>  <SMILES>
+[C@H]([C@@H](C(=O)O)O)(C(=O)O)O
+
+$$$$

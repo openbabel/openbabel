@@ -1,0 +1,133 @@
+1NFS_DED_A_301
+  RCSB PDB12061703243D
+Coordinates from PDB:1NFS:A:301 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   11.0840    2.4940   10.3280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7230    2.2890   12.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8570    2.0930   11.1060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1960    2.7640   11.2820   P 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9230    4.2670   11.4440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6080    5.9160   11.8150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5470    3.8890   13.1840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8440    4.9960   12.4350   P 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9300    5.6960   13.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7930    7.0970   13.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6410    7.6540   14.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8850    9.0930   14.2480   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1490    9.3880   15.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0470    9.4560   13.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+O3
+A    4
+P4
+A    5
+O5
+A    6
+O6
+A    7
+O7
+A    8
+P8
+A    9
+O9
+A   10
+C10
+A   11
+C11
+A   12
+N12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+1NFS_DED_A_301
+
+>  <ChemCompId>
+DED
+
+>  <PdbId>
+1NFS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O7 P2
+
+>  <Name>
+2-DIMETHYLAMINO-ETHYL-DIPHOSPHATE
+
+>  <SystematicName>
+2-dimethylaminoethyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H13 N O7 P2
+
+>  <MolecularWeight>
+249.096
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H13NO7P2/c1-5(2)3-4-11-14(9,10)12-13(6,7)8/h3-4H2,1-2H3,(H,9,10)(H2,6,7,8)
+
+>  <InChIKey>
+QGKJQRINUQGSJM-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)CCO[P@@](=O)(O)OP(=O)(O)O
+
+$$$$

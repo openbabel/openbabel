@@ -1,0 +1,138 @@
+1MMV_3AR_A_1785
+  RCSB PDB12061703183D
+Coordinates from PDB:1MMV:A:1785 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+    9.4840   -1.1740   26.2020   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0660   -1.5300   24.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9150   -3.0400   24.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2860   -3.8170   25.5890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1130   -0.9800   23.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1050    0.5640   23.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2380    1.2920   24.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4710    0.4450   24.4120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5700    0.6450   23.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7180    1.6440   22.8280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5420   -0.2090   23.8460   N 0  3  0  0  0  0  0  0  0  0  0  0
+   14.4990    1.4220   21.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1680    2.5300   20.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7880    2.2740   19.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4060   -3.4460   23.6460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 15  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+M  CHG  1  11   1
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+NE
+A    9
+CZ
+A   10
+NH1
+A   11
+NH2
+A   12
+C1
+A   13
+C2
+A   14
+C3
+A   15
+OXT
+M  END
+>  <InstanceId>
+1MMV_3AR_A_1785
+
+>  <ChemCompId>
+3AR
+
+>  <PdbId>
+1MMV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1785
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O2
+
+>  <Name>
+N-OMEGA-PROPYL-L-ARGININE
+
+>  <SystematicName>
+[[[(4S)-4-amino-5-hydroxy-5-oxo-pentyl]amino]-propylamino-methylidene]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H21 N4 O2
+
+>  <MolecularWeight>
+217.289
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H20N4O2/c1-2-5-12-9(11)13-6-3-4-7(10)8(14)15/h7H,2-6,10H2,1H3,(H,14,15)(H3,11,12,13)/p+1/t7-/m0/s1
+
+>  <InChIKey>
+AOMXURITGZJPKB-ZETCQYMHSA-O
+
+>  <SMILES>
+CCCNC(=[NH2+])NCCC[C@@H](C(=O)O)N
+
+$$$$

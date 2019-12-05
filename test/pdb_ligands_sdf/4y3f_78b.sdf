@@ -1,0 +1,126 @@
+4Y3F_78B_A_407
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3F:A:407 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   22.2780   -1.5130   60.4950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3200   -0.3330   60.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2810    0.3710   61.1580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0590   -0.3860   61.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5280    0.4990   60.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7160   -0.0840   60.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8690    0.6680   60.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8710    2.0150   60.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1180    2.8190   60.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1770    3.5840   58.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6830    2.6000   60.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5230    1.8560   60.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8 11  2  0  0  0  0
+  1  2  2  0  0  0  0
+  5  2  1  0  0  0  0
+  5 12  2  0  0  0  0
+  2  3  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+N1
+A   11
+C8
+A   12
+C9
+M  END
+>  <InstanceId>
+4Y3F_78B_A_407
+
+>  <ChemCompId>
+78B
+
+>  <PdbId>
+4Y3F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+407
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 N O2
+
+>  <Name>
+ethyl 4-(aminomethyl)benzoate
+
+>  <SystematicName>
+ethyl 4-(aminomethyl)benzoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O2
+
+>  <MolecularWeight>
+179.216
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO2/c1-2-13-10(12)9-5-3-8(7-11)4-6-9/h3-6H,2,7,11H2,1H3
+
+>  <InChIKey>
+WCTQEHGXBKFLKG-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1ccc(cc1)CN
+
+$$$$

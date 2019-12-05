@@ -135,15 +135,17 @@ public:
       "ChemDraw binary format\n"
       "Read only\n"
       "The whole file is read in one call.\n"
-      "Reactions if present are read and output as OBReaction objects.\n"
-      "Any molecules not involved in a reaction are output as OBMol objects.\n"
-      "Most molecule formats will output the reactants and products when\n"
-      "given an OBReaction object.\n"
+      "Note that a file may contain a mixture of reactions and\n"
+      "molecules.\n"
+
       "With the -ad option, a human-readable representation of the CDX tree\n"
-      "structure is output as an OBText object. Use textformat to view it:\n"
-      "    obabel input.cdx -otext -ad\n"
+      "structure is output as an OBText object. Use textformat to view it::\n\n"
+
+      "    obabel input.cdx -otext -ad\n\n"
+
       "Many reactions in CDX files are not fully specified with reaction data\n"
-      "structures, and may not be completely interpreted by this parser.\n"
+      "structures, and may not be completely interpreted by this parser.\n\n"
+
       "Read Options, e.g. -am\n"
       " m read molecules only; no reactions\n"
       " d output CDX tree to OBText object\n"
@@ -442,10 +444,20 @@ bool ChemDrawBinaryXFormat::DoFragment(CDXReader& cdxr, OBMol* pmol)
   pmol->EndModify();
 
   //Expand any aliases after molecule constructed
+  //Need to save aliases in list first and expand later
+  vector<OBAtom*> aliasatoms;
   for(int idx=1; idx<=pmol->NumAtoms();++idx)
   {
     OBAtom* pAtom = pmol->GetAtom(idx);
     AliasData* ad = dynamic_cast<AliasData*>(pAtom->GetData(AliasDataType));
+    if(ad && !ad->IsExpanded())
+      aliasatoms.push_back(pAtom);
+  }
+  for(vector<OBAtom*>::iterator vit=aliasatoms.begin();
+      vit!=aliasatoms.end(); ++vit)
+  {
+    int idx = (*vit)->GetIdx();
+    AliasData* ad = dynamic_cast<AliasData*>((*vit)->GetData(AliasDataType));
     if(ad && !ad->IsExpanded())
       ad->Expand(*pmol, idx); //Make chemically meaningful, if possible.
   }

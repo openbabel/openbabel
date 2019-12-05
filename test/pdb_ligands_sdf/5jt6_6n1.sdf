@@ -1,0 +1,139 @@
+5JT6_6N1_A_404
+  RCSB PDB12061718293D
+Coordinates from PDB:5JT6:A:404 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   17.2750   17.7240   21.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0870   17.1100   21.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7790   16.9660   19.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6830   17.4510   18.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5700   18.4700   18.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8790   18.0550   19.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1890   18.1920   20.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6520   18.2000   23.5400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5340   17.9130   23.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4870   17.7580   23.9340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6070   17.8840   25.3320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7990   18.1330   17.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6630   17.5160   17.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1270   18.4130   15.9430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2990   18.1040   14.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12  5  1  0  0  0  0
+ 13  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4  3  1  0  0  0  0
+  6  7  1  0  0  0  0
+  3  2  2  0  0  0  0
+  7  1  2  0  0  0  0
+  2  1  1  0  0  0  0
+  1  9  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C12
+A    7
+C13
+A    8
+O
+A    9
+C
+A   10
+N1
+A   11
+N
+A   12
+C5
+A   13
+N2
+A   14
+N3
+A   15
+C6
+M  END
+>  <InstanceId>
+5JT6_6N1_A_404
+
+>  <ChemCompId>
+6N1
+
+>  <PdbId>
+5JT6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+7
+
+>  <ObservedFormula>
+C9 N5 O
+
+>  <Name>
+2-{[2-(morpholin-4-yl)ethyl]amino}-1H-benzimidazole-6-carbohydrazide
+
+>  <SystematicName>
+2-(2-morpholin-4-ylethylamino)-3~{H}-benzimidazole-5-carbohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H20 N6 O2
+
+>  <MolecularWeight>
+304.348
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H20N6O2/c15-19-13(21)10-1-2-11-12(9-10)18-14(17-11)16-3-4-20-5-7-22-8-6-20/h1-2,9H,3-8,15H2,(H,19,21)(H2,16,17,18)
+
+>  <InChIKey>
+IGHUHXQGMJQAFS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1C(=O)NN)[nH]c(n2)NCCN3CCOCC3
+
+$$$$

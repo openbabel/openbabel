@@ -1,0 +1,151 @@
+2EVC_FC3_A_999
+  RCSB PDB12061705303D
+Coordinates from PDB:2EVC:A:999 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   -1.6830   -0.9390    8.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5820   -0.6950    9.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7450   -0.5010    8.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8660   -0.5700    7.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9390   -0.6680   10.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3350   -0.9150   10.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7590   -1.0760    9.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7320   -0.2750    9.2490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1290   -1.3610    8.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3160   -0.5850    8.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5800   -0.9380    8.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7100   -2.0430    7.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5770   -2.8140    7.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3070   -2.4760    7.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2580    0.6140    9.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2430    1.3850    9.5890   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3780    1.3030    9.8170   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1000    0.1940   11.1560   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 18  1  0  0  0  0
+A    1
+OA
+A    2
+CA
+A    3
+C
+A    4
+OB
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+OXT
+A    9
+C1
+A   10
+C2
+A   11
+C3
+A   12
+C4
+A   13
+C5
+A   14
+C6
+A   15
+CL1
+A   16
+F1
+A   17
+F2
+A   18
+F3
+M  END
+>  <InstanceId>
+2EVC_FC3_A_999
+
+>  <ChemCompId>
+FC3
+
+>  <PdbId>
+2EVC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O3 F3
+
+>  <Name>
+5-[2-(TRIFLUOROMETHYL)PHENYL]-2-FUROIC ACID
+
+>  <SystematicName>
+5-[2-(trifluoromethyl)phenyl]furan-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H7 F3 O3
+
+>  <MolecularWeight>
+256.177
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H7F3O3/c13-12(14,15)8-4-2-1-3-7(8)9-5-6-10(18-9)11(16)17/h1-6H,(H,16,17)
+
+>  <InChIKey>
+IJPNRBZMRINMMR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)c2ccc(o2)C(=O)O)C(F)(F)F
+
+$$$$

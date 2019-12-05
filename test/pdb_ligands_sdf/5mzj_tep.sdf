@@ -1,0 +1,131 @@
+1EHT_TEP_A_34
+  RCSB PDB12061702233D
+Coordinates from PDB:1EHT:A:34 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   -4.8800   -7.2370    9.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2720   -6.6780   10.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4450   -7.5150   12.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2420   -8.7140   11.8090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8280   -7.1080   13.2630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9950   -7.9730   14.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0290   -5.7620   13.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8550   -4.9380   12.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4620   -5.3350   10.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2910   -4.6350    9.9870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1440   -3.6590   12.7310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4710   -3.7950   14.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4190   -5.0270   14.4630   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+C2
+A    4
+O2
+A    5
+N3
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+O6
+A   11
+N7
+A   12
+C8
+A   13
+N9
+M  END
+>  <InstanceId>
+1EHT_TEP_A_34
+
+>  <ChemCompId>
+TEP
+
+>  <PdbId>
+1EHT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+34
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N4 O2
+
+>  <Name>
+THEOPHYLLINE
+
+>  <SystematicName>
+1,3-dimethyl-7H-purine-2,6-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N4 O2
+
+>  <MolecularWeight>
+180.164
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8N4O2/c1-10-5-4(8-3-9-5)6(12)11(2)7(10)13/h3H,1-2H3,(H,8,9)
+
+>  <InChIKey>
+ZFXYFBGIUFBOJW-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1c2c([nH]cn2)C(=O)N(C1=O)C
+
+$$$$

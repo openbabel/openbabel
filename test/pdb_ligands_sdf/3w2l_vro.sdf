@@ -1,0 +1,163 @@
+3W2L_VRO_A_401
+  RCSB PDB12061711183D
+Coordinates from PDB:3W2L:A:401 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+    7.1110   18.3260   14.4800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3780   17.3240   14.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1440   17.4020   14.6040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9190   15.9110   14.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3460   15.0800   15.5350   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6380   13.7240   15.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1190   12.9610   16.4530   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5600   13.2890   14.6660   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1250   14.0570   13.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9080   13.5350   12.8380   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7240   15.4110   13.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2580   16.2330   12.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7430   15.8530   11.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3950   16.2030   11.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0270   17.4120   10.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6920   17.8620   10.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6850   17.0270   10.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3620   17.4650   10.8460   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2990   16.4290   10.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0340   15.7540   11.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3860   15.3360   11.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 19 18  1  0  0  0  0
+ 20 21  2  0  0  0  0
+ 20 17  1  0  0  0  0
+ 21 14  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 17 16  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 11  9  1  0  0  0  0
+ 11  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  1  2  2  0  0  0  0
+  8  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+A    1
+OAB
+A    2
+CAO
+A    3
+OAE
+A    4
+CAR
+A    5
+NAL
+A    6
+CAT
+A    7
+OAC
+A    8
+NAM
+A    9
+CAU
+A   10
+OAD
+A   11
+CAS
+A   12
+CAK
+A   13
+CAJ
+A   14
+CAP
+A   15
+CAF
+A   16
+CAH
+A   17
+CAQ
+A   18
+OAN
+A   19
+CAA
+A   20
+CAI
+A   21
+CAG
+M  END
+>  <InstanceId>
+3W2L_VRO_A_401
+
+>  <ChemCompId>
+VRO
+
+>  <PdbId>
+3W2L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O5
+
+>  <Name>
+5-[2-(4-methoxyphenyl)ethyl]-2,6-dioxo-1,2,3,6-tetrahydropyrimidine-4-carboxylic acid
+
+>  <SystematicName>
+5-[2-(4-methoxyphenyl)ethyl]-2,4-bis(oxidanylidene)-1H-pyrimidine-6-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H14 N2 O5
+
+>  <MolecularWeight>
+290.271
+
+>  <ModifiedDate>
+2013-11-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H14N2O5/c1-21-9-5-2-8(3-6-9)4-7-10-11(13(18)19)15-14(20)16-12(10)17/h2-3,5-6H,4,7H2,1H3,(H,18,19)(H2,15,16,17,20)
+
+>  <InChIKey>
+XBHJLUPPMAQXSR-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc(cc1)CCC2=C(NC(=O)NC2=O)C(=O)O
+
+$$$$

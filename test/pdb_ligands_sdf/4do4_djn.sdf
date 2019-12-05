@@ -1,0 +1,134 @@
+4DO4_DJN_A_510
+  RCSB PDB12061712143D
+Coordinates from PDB:4DO4:A:510 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   58.0300   -1.9300   18.0920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3240   -2.5520   18.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.4130   -1.8710   19.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3220   -3.8880   18.8960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2610   -4.6800   18.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.6440   -5.5760   17.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.7370   -4.8760   16.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7910   -6.1900   16.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.5020   -5.1490   15.5950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7340   -6.9340   17.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9630   -7.4480   16.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.8690   -8.1030   17.3410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1930   -6.2030   18.3970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0680   -5.5520   19.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  6  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 10 13  1  0  0  0  0
+  1  2  2  0  0  0  0
+  5  4  1  0  0  0  0
+  5 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+O7
+A    2
+C7
+A    3
+C8
+A    4
+N2
+A    5
+C2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+C5
+A   11
+C6
+A   12
+O6
+A   13
+N5
+A   14
+C1
+M  END
+>  <InstanceId>
+4DO4_DJN_A_510
+
+>  <ChemCompId>
+DJN
+
+>  <PdbId>
+4DO4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+510
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+N-[(3S,4R,5S,6R)-4,5-dihydroxy-6-(hydroxymethyl)piperidin-3-yl]acetamide
+
+>  <SystematicName>
+N-[(3S,4R,5S,6R)-6-(hydroxymethyl)-4,5-bis(oxidanyl)piperidin-3-yl]ethanamide
+
+>  <Synonyms>
+2-acetamido-1,2-dideoxy-D-galacto-nojirimycin, DGJNAc
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N2 O4
+
+>  <MolecularWeight>
+204.224
+
+>  <ModifiedDate>
+2012-10-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O4/c1-4(12)10-5-2-9-6(3-11)8(14)7(5)13/h5-9,11,13-14H,2-3H2,1H3,(H,10,12)/t5-,6+,7+,8-/m0/s1
+
+>  <InChIKey>
+GBRAQQUMMCVTAV-OSMVPFSASA-N
+
+>  <SMILES>
+CC(=O)N[C@H]1CN[C@@H]([C@@H]([C@@H]1O)O)CO
+
+$$$$

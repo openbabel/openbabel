@@ -1,0 +1,117 @@
+1C7Z_G3H_A_501
+  RCSB PDB12061702093D
+Coordinates from PDB:1C7Z:A:501 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   27.9970   12.6990   29.3510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0670   11.6460   29.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8100   10.3410   29.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4960    9.6310   30.3690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3190    9.4640   27.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4060    8.3900   28.3940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0560    7.6560   27.4410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1810    8.4140   29.7960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4410   10.0420   27.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7510    8.6270   28.3940   P 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O1P
+A    7
+O2P
+A    8
+O3P
+A    9
+O4P
+A   10
+P
+M  END
+>  <InstanceId>
+1C7Z_G3H_A_501
+
+>  <ChemCompId>
+G3H
+
+>  <PdbId>
+1C7Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+GLYCERALDEHYDE-3-PHOSPHATE
+
+>  <SystematicName>
+[(2R)-2-hydroxy-3-oxo-propyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 O6 P
+
+>  <MolecularWeight>
+170.058
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7O6P/c4-1-3(5)2-9-10(6,7)8/h1,3,5H,2H2,(H2,6,7,8)/t3-/m0/s1
+
+>  <InChIKey>
+LXJXRIRHZLFYRP-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@H](C=O)O)OP(=O)(O)O
+
+$$$$

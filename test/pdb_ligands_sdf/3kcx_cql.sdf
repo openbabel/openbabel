@@ -1,0 +1,131 @@
+3KCX_CQL_A_1
+  RCSB PDB12061709253D
+Coordinates from PDB:3KCX:A:1 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -23.4310   25.4730    6.5070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6190   25.1650    7.9850  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0000   24.0640    4.1630   I 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8130   26.8550   10.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1570   26.9010    9.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8610   26.2910    9.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8200   24.7240    6.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5560   26.4200    8.8210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3560   25.2230    7.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0990   25.3810    6.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1880   24.8070    5.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2870   25.7870    8.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6440   25.8700    7.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 12  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 11  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAA
+A    2
+CLAB
+A    3
+IAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+M  END
+>  <InstanceId>
+3KCX_CQL_A_1
+
+>  <ChemCompId>
+CQL
+
+>  <PdbId>
+3KCX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O Cl I
+
+>  <Name>
+5-chloro-7-iodoquinolin-8-ol
+
+>  <SystematicName>
+5-chloro-7-iodo-quinolin-8-ol
+
+>  <Synonyms>
+Clioquinol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H5 Cl I N O
+
+>  <MolecularWeight>
+305.5
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H5ClINO/c10-6-4-7(11)9(13)8-5(6)2-1-3-12-8/h1-4,13H
+
+>  <InChIKey>
+QCDFBFJGMNKBDO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc(c(c2nc1)O)I)Cl
+
+$$$$

@@ -1,0 +1,117 @@
+3P4W_DSF_A_319
+  RCSB PDB12061710123D
+Coordinates from PDB:3P4W:A:319 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   47.9420   -6.1330   45.6450   F 0  0  0  0  0  0  0  0  0  0  0  0
+   47.7900   -7.4350   47.2700   F 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6950   -9.6200   46.6550   F 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5090  -10.8990   44.2870   F 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4140  -10.6000   44.7540   F 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3760   -9.4190   43.2650   F 0  0  0  0  0  0  0  0  0  0  0  0
+   46.3560   -7.7050   45.4630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0320   -6.8040   46.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9960   -8.9940   45.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5600  -10.0040   44.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+FAA
+A    2
+FAB
+A    3
+FAC
+A    4
+FAD
+A    5
+FAE
+A    6
+FAF
+A    7
+OAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+M  END
+>  <InstanceId>
+3P4W_DSF_A_319
+
+>  <ChemCompId>
+DSF
+
+>  <PdbId>
+3P4W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+319
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O F6
+
+>  <Name>
+(2S)-2-(difluoromethoxy)-1,1,1,2-tetrafluoroethane
+
+>  <SystematicName>
+(2S)-2-(difluoromethoxy)-1,1,1,2-tetrafluoro-ethane
+
+>  <Synonyms>
+DESFLURANE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H2 F6 O
+
+>  <MolecularWeight>
+168.038
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H2F6O/c4-1(3(7,8)9)10-2(5)6/h1-2H/t1-/m1/s1
+
+>  <InChIKey>
+DPYMFVXJLLWWEU-PVQJCKRUSA-N
+
+>  <SMILES>
+[C@H](C(F)(F)F)(OC(F)F)F
+
+$$$$

@@ -1,0 +1,114 @@
+1N5M_GMN_A_951
+  RCSB PDB12061703223D
+Coordinates from PDB:1N5M:A:951 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   37.4020   24.4800    6.9870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4570   24.1780   10.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1890   23.4340    9.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2210   23.5500    7.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4510   24.3610    8.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6240   25.0390    9.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6480   24.9530   10.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9760   22.8640    6.6840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9860   22.6540    8.9170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+A    1
+O2
+A    2
+C20
+A    3
+C21
+A    4
+C22
+A    5
+C23
+A    6
+C24
+A    7
+C19
+A    8
+O1
+A    9
+O3
+M  END
+>  <InstanceId>
+1N5M_GMN_A_951
+
+>  <ChemCompId>
+GMN
+
+>  <PdbId>
+1N5M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+951
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+27
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+2,2',2"-[1,2,3-BENZENE-TRIYLTRIS(OXY)]TRIS[N,N,N-TRIETHYLETHANAMINIUM]
+
+>  <SystematicName>
+2-[2,6-bis(2-triethylazaniumylethoxy)phenoxy]ethyl-triethyl-azanium
+
+>  <Synonyms>
+GALLAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C30 H60 N3 O3
+
+>  <MolecularWeight>
+510.816
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C30H60N3O3/c1-10-31(11-2,12-3)22-25-34-28-20-19-21-29(35-26-23-32(13-4,14-5)15-6)30(28)36-27-24-33(16-7,17-8)18-9/h19-21H,10-18,22-27H2,1-9H3/q+3
+
+>  <InChIKey>
+OZLPUNFFCJDMJD-UHFFFAOYSA-N
+
+>  <SMILES>
+CC[N+](CC)(CC)CCOc1cccc(c1OCC[N+](CC)(CC)CC)OCC[N+](CC)(CC)CC
+
+$$$$

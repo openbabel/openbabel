@@ -35,7 +35,10 @@ namespace OpenBabel
 
 
   //! Global OBBondTyper for perception of bond order assignment.
-  OBBondTyper  bondtyper;
+#if __cplusplus >= 201103L
+  thread_local //this is required for correct multi-threading
+#endif
+	OBBondTyper  bondtyper;
 
   /*! \class OBBondTyper bondtyper.h <openbabel/bondtyper.cpp>
     \brief Assigns bond types for file formats without bond information
@@ -150,8 +153,8 @@ namespace OpenBabel
       } // for(functional groups)
 
     // FG with distance and/or bond criteria
-    // Carbonyl oxygen C=O
-    OBSmartsPattern carbo; carbo.Init("[#8D1][#6](*)(*)");
+    // Carbonyl oxygen C=O (O must be neutral)
+    OBSmartsPattern carbo; carbo.Init("[#8D1;!-][#6](*)(*)");
 
     if (carbo.Match(mol))
       {

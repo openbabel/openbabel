@@ -1,0 +1,144 @@
+5FBH_TCR_B_609
+  RCSB PDB12061717373D
+Coordinates from PDB:5FBH:B:609 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+  -35.0330  -22.6760   29.5690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.7720  -23.2310   28.4640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.6380  -22.3120   27.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.9270  -20.9220   27.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.4760  -19.8100   26.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.5690  -18.6960   27.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8220  -19.6890   25.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.7700  -20.4230   29.0570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1370  -19.1170   29.1190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0410  -17.4790   27.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2940  -18.4310   25.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3960  -17.3480   26.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.2930  -21.3580   30.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.0340  -24.4520   28.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.1100  -24.8230   28.8880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3410  -24.9590   26.9400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD2
+A    6
+CE2
+A    7
+CE3
+A    8
+CD1
+A    9
+NE1
+A   10
+CZ2
+A   11
+CZ3
+A   12
+CH2
+A   13
+C9
+A   14
+C
+A   15
+OXT
+A   16
+O1
+M  END
+>  <InstanceId>
+5FBH_TCR_B_609
+
+>  <ChemCompId>
+TCR
+
+>  <PdbId>
+5FBH
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+609
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2 O2
+
+>  <Name>
+CYCLOMETHYLTRYPTOPHAN
+
+>  <SystematicName>
+(3S)-2,3,4,9-tetrahydro-1H-pyrido[3,4-b]indole-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C12 H12 N2 O2
+
+>  <MolecularWeight>
+216.236
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+TRP
+
+>  <OneLetterCode>
+W
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12N2O2/c15-12(16)10-5-8-7-3-1-2-4-9(7)14-11(8)6-13-10/h1-4,10,13-14H,5-6H2,(H,15,16)/t10-/m0/s1
+
+>  <InChIKey>
+FSNCEEGOMTYXKY-JTQLQIEISA-N
+
+>  <SMILES>
+c1ccc2c(c1)c3c([nH]2)CN[C@@H](C3)C(=O)O
+
+$$$$

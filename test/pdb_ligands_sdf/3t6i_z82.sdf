@@ -1,0 +1,114 @@
+3LBW_Z82_A_24
+  RCSB PDB12061709353D
+Coordinates from PDB:3LBW:A:24 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   -4.8520   -3.6880    5.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1470   -5.8150    5.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3830   -2.9200    6.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1370   -1.7870    6.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3630   -1.4400    5.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3920    0.0880    4.8690  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8430   -2.2100    4.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0840   -3.3380    4.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0450   -4.8940    6.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  9  2  0  0  0  0
+  3  1  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  1  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+BR4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+M  END
+>  <InstanceId>
+3LBW_Z82_A_24
+
+>  <ChemCompId>
+Z82
+
+>  <PdbId>
+3LBW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+24
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 O Br
+
+>  <Name>
+4-bromobenzoic acid
+
+>  <SystematicName>
+4-bromobenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 Br O2
+
+>  <MolecularWeight>
+201.017
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5BrO2/c8-6-3-1-5(2-4-6)7(9)10/h1-4H,(H,9,10)
+
+>  <InChIKey>
+TUXYZHVUPGXXQG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)O)Br
+
+$$$$

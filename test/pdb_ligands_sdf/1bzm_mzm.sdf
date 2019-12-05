@@ -1,0 +1,134 @@
+1BZM_MZM_A_262
+  RCSB PDB12061702073D
+Coordinates from PDB:1BZM:A:262 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   36.3600   17.8050  -15.7860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9080   17.3530  -16.1370   S 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6790   16.0280  -15.6410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0480   18.4260  -15.8230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8760   17.1320  -17.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2110   15.7370  -18.6070   S 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3950   16.5430  -20.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9250   17.7320  -20.0140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2870   18.6210  -21.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1730   18.1010  -18.7010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5060   16.0660  -21.0220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7970   15.0930  -21.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7640   14.2200  -20.2590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9350   14.8680  -22.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 11  7  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 10  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+  5  2  1  0  0  0  0
+  2  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+A    1
+N1
+A    2
+S1
+A    3
+O1
+A    4
+O2
+A    5
+C1
+A    6
+S2
+A    7
+C2
+A    8
+N2
+A    9
+C5
+A   10
+N3
+A   11
+N4
+A   12
+C3
+A   13
+O3
+A   14
+C4
+M  END
+>  <InstanceId>
+1BZM_MZM_A_262
+
+>  <ChemCompId>
+MZM
+
+>  <PdbId>
+1BZM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+262
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N4 O3 S2
+
+>  <Name>
+N-(3-methyl-5-sulfamoyl-1,3,4-thiadiazol-2(3H)-ylidene)acetamide
+
+>  <SystematicName>
+(~{N}~{Z})-~{N}-(3-methyl-5-sulfamoyl-1,3,4-thiadiazol-2-ylidene)ethanamide
+
+>  <Synonyms>
+Methazolamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 N4 O3 S2
+
+>  <MolecularWeight>
+236.272
+
+>  <ModifiedDate>
+2016-03-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8N4O3S2/c1-3(10)7-4-9(2)8-5(13-4)14(6,11)12/h1-2H3,(H2,6,11,12)/b7-4-
+
+>  <InChIKey>
+FLOSMHQXBMRNHR-DAXSKMNVSA-N
+
+>  <SMILES>
+CC(=O)/N=C\1/N(N=C(S1)S(=O)(=O)N)C
+
+$$$$

@@ -1,0 +1,123 @@
+1Z10_COU_A_501
+  RCSB PDB12061704503D
+Coordinates from PDB:1Z10:A:501 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   57.1610   78.1330   60.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2810   76.9860   60.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0140   77.0290   60.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4690   78.2240   59.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1500   78.3250   59.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7030   79.4910   58.6090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5820   80.6170   58.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8960   80.5470   59.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3280   79.3440   59.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3050   78.1680   61.0960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.6500   79.2920   60.1100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O1
+A   11
+O2
+M  END
+>  <InstanceId>
+1Z10_COU_A_501
+
+>  <ChemCompId>
+COU
+
+>  <PdbId>
+1Z10
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+COUMARIN
+
+>  <SystematicName>
+chromen-2-one
+
+>  <Synonyms>
+2H-1-BENZOPYRAN-2-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 O2
+
+>  <MolecularWeight>
+146.143
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6O2/c10-9-6-5-7-3-1-2-4-8(7)11-9/h1-6H
+
+>  <InChIKey>
+ZYGHJZDHTFUPRJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C=CC(=O)O2
+
+$$$$

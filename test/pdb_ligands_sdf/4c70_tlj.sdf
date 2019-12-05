@@ -1,0 +1,142 @@
+4C70_TLJ_A_1423
+  RCSB PDB12061711593D
+Coordinates from PDB:4C70:A:1423 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   -9.0420  -17.5140    9.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0940  -23.9120    8.3910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1920  -21.5570    8.4310   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7600  -18.5790    8.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7320  -22.6680    5.5500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5040  -19.2210    8.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1610  -18.6030    8.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5040  -20.3790    7.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3140  -21.1850    6.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4760  -20.4740    5.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0070  -23.3050    7.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8860  -23.6470    6.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9910  -25.0310    6.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9690  -25.9850    7.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3680  -26.6890    8.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6650  -22.5930    6.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  2  0  0  0  0
+  2 11  2  0  0  0  0
+  3  9  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5 16  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 16  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C
+A    2
+O
+A    3
+S
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+C7
+A   12
+C8
+A   13
+C9
+A   14
+C10
+A   15
+C11
+A   16
+C12
+M  END
+>  <InstanceId>
+4C70_TLJ_A_1423
+
+>  <ChemCompId>
+TLJ
+
+>  <PdbId>
+4C70
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1423
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O2 S
+
+>  <Name>
+(5R)-4-hydroxy-5-methyl-5-[(1E)-2-methylbuta-1,3-dien-1-yl]-3-propylthiophen-2(5H)-one
+
+>  <SystematicName>
+(5R)-5-methyl-5-[(1E)-2-methylbuta-1,3-dienyl]-4-oxidanyl-3-propyl-thiophen-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H18 O2 S
+
+>  <MolecularWeight>
+238.346
+
+>  <ModifiedDate>
+2013-10-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H18O2S/c1-5-7-10-11(14)13(4,16-12(10)15)8-9(3)6-2/h6,8,14H,2,5,7H2,1,3-4H3/b9-8+/t13-/m1/s1
+
+>  <InChIKey>
+FWXFBNQENPGUSS-MMQHEFTJSA-N
+
+>  <SMILES>
+CCCC1=C([C@@](SC1=O)(C)/C=C(\C)/C=C)O
+
+$$$$

@@ -1,0 +1,141 @@
+2Z50_028_A_1201
+  RCSB PDB12061707423D
+Coordinates from PDB:2Z50:A:1201 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   27.3790   46.2490   12.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0750   46.2160   11.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9700   47.4440   11.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7290   47.3890   10.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7400   47.2400    8.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4360   47.2600    7.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4240   46.7520    6.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2760   48.0840    5.9670   P 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6360   48.4230    4.4360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8550   47.3310    5.9390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2500   49.3010    6.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2710   45.8560    5.2070   P 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7140   45.3590    5.7230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3230   44.5590    5.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3510   46.6300    3.9510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6480   45.7200    7.2150   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 16  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 12 15  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAA
+A    2
+CAI
+A    3
+CAJ
+A    4
+CAK
+A    5
+CAL
+A    6
+CAM
+A    7
+CAN
+A    8
+PAO
+A    9
+OAE
+A   10
+OAF
+A   11
+OAB
+A   12
+PAP
+A   13
+OAG
+A   14
+OAH
+A   15
+OAC
+A   16
+OAD
+M  END
+>  <InstanceId>
+2Z50_028_A_1201
+
+>  <ChemCompId>
+028
+
+>  <PdbId>
+2Z50
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7 P2
+
+>  <Name>
+(1-HYDROXYHEPTANE-1,1-DIYL)BIS(PHOSPHONIC ACID)
+
+>  <SystematicName>
+(1-hydroxy-1-phosphono-heptyl)phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H18 O7 P2
+
+>  <MolecularWeight>
+276.161
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H18O7P2/c1-2-3-4-5-6-7(8,15(9,10)11)16(12,13)14/h8H,2-6H2,1H3,(H2,9,10,11)(H2,12,13,14)
+
+>  <InChIKey>
+IJEGNOYPWRBKAE-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCC(O)(P(=O)(O)O)P(=O)(O)O
+
+$$$$

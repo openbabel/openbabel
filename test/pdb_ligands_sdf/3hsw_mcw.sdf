@@ -1,0 +1,118 @@
+3HSW_MCW_A_500
+  RCSB PDB12061708563D
+Coordinates from PDB:3HSW:A:500 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -33.4280   18.2420   -8.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.2560   18.6350   -6.9560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.6040   18.3120   -6.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.3070   18.1210   -8.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.6380   17.7890   -8.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.2590   17.6270   -9.1400   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.3190   17.6530   -6.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.6450   17.8550   -5.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.2990   18.1800   -5.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.7520   18.3380   -4.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C7
+A    2
+O3
+A    3
+C6
+A    4
+C5
+A    5
+C3
+A    6
+O1
+A    7
+C1
+A    8
+C2
+A    9
+C4
+A   10
+O2
+M  END
+>  <InstanceId>
+3HSW_MCW_A_500
+
+>  <ChemCompId>
+MCW
+
+>  <PdbId>
+3HSW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3
+
+>  <Name>
+2-methoxycyclohexa-2,5-diene-1,4-dione
+
+>  <SystematicName>
+2-methoxycyclohexa-2,5-diene-1,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 O3
+
+>  <MolecularWeight>
+138.121
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6O3/c1-10-7-4-5(8)2-3-6(7)9/h2-4H,1H3
+
+>  <InChIKey>
+ZJKWJHONFFKJHG-UHFFFAOYSA-N
+
+>  <SMILES>
+COC1=CC(=O)C=CC1=O
+
+$$$$

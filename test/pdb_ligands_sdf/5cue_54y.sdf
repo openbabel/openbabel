@@ -1,0 +1,122 @@
+5CUE_54Y_A_2001
+  RCSB PDB12061717093D
+Coordinates from PDB:5CUE:A:2001 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   13.1550   42.7990   31.3730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0160   42.8540   30.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8860   41.1950   29.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3060   40.0910   30.5280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1490   39.9760   30.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7240   38.8740   29.5260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5850   37.7050   29.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1220   41.0150   30.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0850   40.3610   28.5530  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3100   42.2590   30.3800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2350   42.0400   31.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  3 10  1  0  0  0  0
+  3  8  2  0  0  0  0
+  2 10  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 10  1  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 11  1  2  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+O
+A    5
+C1
+A    6
+N
+A    7
+C
+A    8
+C2
+A    9
+CL
+A   10
+N2
+A   11
+C3
+M  END
+>  <InstanceId>
+5CUE_54Y_A_2001
+
+>  <ChemCompId>
+54Y
+
+>  <PdbId>
+5CUE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O Cl
+
+>  <Name>
+5-chloro-N,1-dimethyl-1H-pyrazole-4-carboxamide
+
+>  <SystematicName>
+5-chloranyl-N,1-dimethyl-pyrazole-4-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 Cl N3 O
+
+>  <MolecularWeight>
+173.6
+
+>  <ModifiedDate>
+2015-09-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8ClN3O/c1-8-6(11)4-3-9-10(2)5(4)7/h3H,1-2H3,(H,8,11)
+
+>  <InChIKey>
+GWOXCPZAAJXFDL-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=O)c1cnn(c1Cl)C
+
+$$$$

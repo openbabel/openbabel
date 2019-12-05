@@ -1,0 +1,130 @@
+4Y4E_46R_A_403
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4E:A:403 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   19.9580   11.0560  110.7980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8340   11.0210  109.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2780   10.9900  110.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8080   10.3900  114.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8930   11.8300  115.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6950   12.3780  115.3530   F 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6090   12.6810  114.4660   F 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4580   11.7870  116.3840   F 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2680   10.5180  113.1740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0000   10.8990  112.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1980   11.1640  112.2130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6400   11.1340  109.4210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7930   11.1100  108.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13  2  2  0  0  0  0
+ 12  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  1  3  2  0  0  0  0
+  3 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+C6
+A    6
+F2
+A    7
+F
+A    8
+F1
+A    9
+N
+A   10
+C4
+A   11
+O
+A   12
+O1
+A   13
+C1
+M  END
+>  <InstanceId>
+4Y4E_46R_A_403
+
+>  <ChemCompId>
+46R
+
+>  <PdbId>
+4Y4E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O2 F3
+
+>  <Name>
+N-(2,2,2-trifluoroethyl)-1,2-oxazole-3-carboxamide
+
+>  <SystematicName>
+N-[2,2,2-tris(fluoranyl)ethyl]-1,2-oxazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 F3 N2 O2
+
+>  <MolecularWeight>
+194.111
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5F3N2O2/c7-6(8,9)3-10-5(12)4-1-2-13-11-4/h1-2H,3H2,(H,10,12)
+
+>  <InChIKey>
+OOPKAKDUIYDDGZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1conc1C(=O)NCC(F)(F)F
+
+$$$$

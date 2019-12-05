@@ -1,0 +1,143 @@
+1CTT_DHZ_A_295
+  RCSB PDB12061702123D
+Coordinates from PDB:1CTT:A:295 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   35.3030   48.9280    9.0090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2150   48.0430    8.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3770   48.3610    8.1860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7260   46.7830    8.1070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3520   46.2460    8.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4730   47.4160    9.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9940   48.6440    9.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8860   50.3090    9.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8290   51.7290    9.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.6940   51.9520    8.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0520   52.5330   10.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4510   52.6540   10.5530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4790   51.5220   11.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6150   50.1690   11.0250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0690   51.5920   11.9880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3570   51.9390   10.7650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C1'
+A    9
+C2'
+A   10
+O2'
+A   11
+C3'
+A   12
+O3'
+A   13
+C4'
+A   14
+O4'
+A   15
+C5'
+A   16
+O5'
+M  END
+>  <InstanceId>
+1CTT_DHZ_A_295
+
+>  <ChemCompId>
+DHZ
+
+>  <PdbId>
+1CTT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+295
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5
+
+>  <Name>
+3,4-DIHYDRO-1H-PYRIMIDIN-2-ONE NUCLEOSIDE
+
+>  <SystematicName>
+1-[(2R,3R,4S,5R)-3,4-dihydroxy-5-(hydroxymethyl)oxolan-2-yl]-3,4-dihydropyrimidin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H14 N2 O5
+
+>  <MolecularWeight>
+230.218
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14N2O5/c12-4-5-6(13)7(14)8(16-5)11-3-1-2-10-9(11)15/h1,3,5-8,12-14H,2,4H2,(H,10,15)/t5-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+NVRAAJMSMZQKRW-WCTZXXKLSA-N
+
+>  <SMILES>
+C1C=CN(C(=O)N1)[C@H]2[C@@H]([C@@H]([C@H](O2)CO)O)O
+
+$$$$

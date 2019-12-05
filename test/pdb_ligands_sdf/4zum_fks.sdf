@@ -1,0 +1,145 @@
+4ZUM_FKS_A_404
+  RCSB PDB12061716423D
+Coordinates from PDB:4ZUM:A:404 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+  -10.9610    0.4090  -28.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.7140    1.3390  -26.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5800    2.5920  -27.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0470    4.7400  -25.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.9790    5.5670  -27.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6560    6.9110  -26.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6940    7.7100  -28.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9810    9.1800  -27.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4420   10.0240  -28.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.6520   11.4700  -28.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4840   11.5860  -27.5830   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1470   12.1380  -29.6460   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.5270   12.0470  -28.2620   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3340    3.4740  -25.8650   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1590   -0.7930  -27.9400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4850    9.9720  -30.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6780    9.5370  -29.5360   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 16  9  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 17  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  1 15  1  0  0  0  0
+  1  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3 14  1  0  0  0  0
+ 14  4  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C6
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+C10
+A    9
+C11
+A   10
+C12
+A   11
+F15
+A   12
+F16
+A   13
+F17
+A   14
+N5
+A   15
+N1
+A   16
+O13
+A   17
+O14
+M  END
+>  <InstanceId>
+4ZUM_FKS_A_404
+
+>  <ChemCompId>
+FKS
+
+>  <PdbId>
+4ZUM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 F3
+
+>  <Name>
+7-[(3-aminopropyl)amino]-1,1,1-trifluoroheptane-2,2-diol
+
+>  <SystematicName>
+7-(3-azanylpropylamino)-1,1,1-tris(fluoranyl)heptane-2,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H21 F3 N2 O2
+
+>  <MolecularWeight>
+258.281
+
+>  <ModifiedDate>
+2015-07-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H21F3N2O2/c11-10(12,13)9(16,17)5-2-1-3-7-15-8-4-6-14/h15-17H,1-8,14H2
+
+>  <InChIKey>
+IVRAKANOVJJYCX-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCC(C(F)(F)F)(O)O)CCNCCCN
+
+$$$$

@@ -1,0 +1,143 @@
+2UW8_GVQ_A_1351
+  RCSB PDB12061707003D
+Coordinates from PDB:2UW8:A:1351 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   10.9790   10.4960    1.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8140   11.4510    1.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7810   12.0510    2.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9300   11.7090    3.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6960   10.4470    3.2780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4160   10.9900    4.5290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3680   10.9210    5.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5970   10.3160    5.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2300    9.1220    3.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9240    9.8390    3.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8780    9.7700    4.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1270   10.1490    3.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0960   10.7570    3.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1490    7.8480    2.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5040    7.2980    2.7980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8270   13.2460    1.3960  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  5 10  2  0  0  0  0
+  8 11  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  1 12  2  0  0  0  0
+  9 12  1  0  0  0  0
+  4 13  2  0  0  0  0
+ 12 13  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  3 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C11
+A   11
+C12
+A   12
+C13
+A   13
+C14
+A   14
+C15
+A   15
+N1
+A   16
+CL1
+M  END
+>  <InstanceId>
+2UW8_GVQ_A_1351
+
+>  <ChemCompId>
+GVQ
+
+>  <PdbId>
+2UW8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N Cl
+
+>  <Name>
+(2R)-2-(4-CHLOROPHENYL)-2-PHENYLETHANAMINE
+
+>  <SystematicName>
+(2R)-2-(4-chlorophenyl)-2-phenyl-ethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H14 Cl N
+
+>  <MolecularWeight>
+231.721
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C14H14ClN/c15-13-8-6-12(7-9-13)14(10-16)11-4-2-1-3-5-11/h1-9,14H,10,16H2/t14-/m1/s1
+
+>  <InChIKey>
+PNKKPFLBOWGVSF-CQSZACIVSA-N
+
+>  <SMILES>
+c1ccc(cc1)[C@@H](CN)c2ccc(cc2)Cl
+
+$$$$

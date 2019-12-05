@@ -1,0 +1,155 @@
+3GGC_H26_A_218
+  RCSB PDB12061708443D
+Coordinates from PDB:3GGC:A:218 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+   21.7310   60.1660   12.0890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6880   60.3340   13.1700   P 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3250   61.7710   13.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9540   59.4800   14.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1820   59.6540   12.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4320   59.5390   10.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7970   58.3610   10.4480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8870   58.6630    9.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6020   58.5710    8.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3670   57.3260    7.9430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6190   57.1440    8.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0090   55.8750    8.1240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9500   56.1760    7.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9850   55.2570    7.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7900   55.7990    6.7930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6450   54.5520    6.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6340   53.6500    6.4190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8130   53.9720    7.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8170   53.0490    7.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 18  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  2  0  0  0  0
+A    1
+OAD
+A    2
+PAT
+A    3
+OAE
+A    4
+OAC
+A    5
+CAJ
+A    6
+CAH
+A    7
+OAN
+A    8
+CAG
+A    9
+CAI
+A   10
+N9
+A   11
+C8
+A   12
+N7
+A   13
+C4
+A   14
+C5
+A   15
+N3
+A   16
+C2
+A   17
+N1
+A   18
+C6
+A   19
+O6
+M  END
+>  <InstanceId>
+3GGC_H26_A_218
+
+>  <ChemCompId>
+H26
+
+>  <PdbId>
+3GGC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+218
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O5 P
+
+>  <Name>
+{2-[2-(6-oxo-1,6-dihydro-9H-purin-9-yl)ethoxy]ethyl}phosphonic acid
+
+>  <SystematicName>
+2-[2-(6-oxo-1H-purin-9-yl)ethoxy]ethylphosphonic acid
+
+>  <Synonyms>
+9-(2-phosphonoethoxyethyl)hypoxanthine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H13 N4 O5 P
+
+>  <MolecularWeight>
+288.197
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N4O5P/c14-9-7-8(10-5-11-9)13(6-12-7)1-2-18-3-4-19(15,16)17/h5-6H,1-4H2,(H,10,11,14)(H2,15,16,17)
+
+>  <InChIKey>
+ARUATFPHVPUVFJ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1nc2c(n1CCOCCP(=O)(O)O)N=CNC2=O
+
+$$$$

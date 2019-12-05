@@ -1,0 +1,142 @@
+3TRU_ISJ_D_173
+  RCSB PDB12061710553D
+Coordinates from PDB:3TRU:D:173 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+  -34.8120  -21.3840  -42.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.0910  -20.1330  -42.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.7670  -19.2340  -41.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1990  -19.5230  -41.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.7580  -20.6460  -41.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1450  -21.7890  -42.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.1330  -18.0540  -40.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.0820  -17.7670  -41.0870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.8070  -17.3100  -39.9990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0680  -22.1900  -43.0690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -33.8530  -22.4650  -42.9100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.3490  -23.7630  -43.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.5040  -24.3830  -44.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.0470  -23.7270  -45.3520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.0210  -25.5970  -44.7040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.6470  -24.5440  -42.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O8
+A    9
+O9
+A   10
+O10
+A   11
+O11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+A   16
+C16
+M  END
+>  <InstanceId>
+3TRU_ISJ_D_173
+
+>  <ChemCompId>
+ISJ
+
+>  <PdbId>
+3TRU
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+173
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O6
+
+>  <Name>
+(3R,4R)-3-[(1-carboxyethenyl)oxy]-4-hydroxycyclohexa-1,5-diene-1-carboxylic acid
+
+>  <SystematicName>
+(3R,4R)-4-oxidanyl-3-(3-oxidanyl-3-oxidanylidene-prop-1-en-2-yl)oxy-cyclohexa-1,5-diene-1-carboxylic acid
+
+>  <Synonyms>
+Chorismic Acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 O6
+
+>  <MolecularWeight>
+226.183
+
+>  <ModifiedDate>
+2011-09-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10O6/c1-5(9(12)13)16-8-4-6(10(14)15)2-3-7(8)11/h2-4,7-8,11H,1H2,(H,12,13)(H,14,15)/t7-,8-/m1/s1
+
+>  <InChIKey>
+WTFXTQVDAKGDEY-HTQZYQBOSA-N
+
+>  <SMILES>
+C=C(C(=O)O)O[C@@H]1C=C(C=C[C@H]1O)C(=O)O
+
+$$$$

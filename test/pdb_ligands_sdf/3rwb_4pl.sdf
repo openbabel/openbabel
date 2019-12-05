@@ -1,0 +1,127 @@
+3RWB_4PL_A_252
+  RCSB PDB12061710383D
+Coordinates from PDB:3RWB:A:252 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   30.3410   14.7450   21.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3030   12.4280   20.7770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4910   12.8240   21.6270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1780   16.4810   19.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4650   15.5640   19.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9930   16.2020   20.4420   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0690   14.3520   19.7540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1370   13.5820   20.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7350   15.0120   21.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2030   15.5440   19.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7240   14.0350   21.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9670   14.3080   20.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3 11  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+OAC
+A    4
+CAD
+A    5
+CAE
+A    6
+NAF
+A    7
+OAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+M  END
+>  <InstanceId>
+3RWB_4PL_A_252
+
+>  <ChemCompId>
+4PL
+
+>  <PdbId>
+3RWB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+252
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3
+
+>  <Name>
+7-hydroxy-6-methylfuro[3,4-c]pyridin-1(3H)-one
+
+>  <SystematicName>
+6-methyl-7-oxidanyl-3H-furo[3,4-c]pyridin-1-one
+
+>  <Synonyms>
+4-Pyridoxolactone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O3
+
+>  <MolecularWeight>
+165.146
+
+>  <ModifiedDate>
+2012-05-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO3/c1-4-7(10)6-5(2-9-4)3-12-8(6)11/h2,10H,3H2,1H3
+
+>  <InChIKey>
+HHPDVQLBYQFYFA-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c2c(cn1)COC2=O)O
+
+$$$$

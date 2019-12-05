@@ -1,0 +1,131 @@
+3KXN_K8X_A_1
+  RCSB PDB12061709313D
+Coordinates from PDB:3KXN:A:1 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   21.5410    8.2060   19.9850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4840    7.4410   19.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0670    6.3490   19.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7070    6.0220   21.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7670    6.7870   21.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1850    7.8770   21.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6600    9.8520   19.0430   I 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7660    9.0270   22.2970   I 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2250    6.2960   23.8640   I 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5840    4.3780   22.1850   I 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0100    7.5260   18.0710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8970    6.5160   17.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9290    5.7980   19.0710   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  1  0  0  0  0
+  2  1  2  0  0  0  0
+  1  6  1  0  0  0  0
+ 11  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 13  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  6  5  2  0  0  0  0
+  5  9  1  0  0  0  0
+  6  8  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+I13
+A    8
+I15
+A    9
+I17
+A   10
+I19
+A   11
+N21
+A   12
+C23
+A   13
+N25
+M  END
+>  <InstanceId>
+3KXN_K8X_A_1
+
+>  <ChemCompId>
+K8X
+
+>  <PdbId>
+3KXN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 I4
+
+>  <Name>
+4,5,6,7-tetraiodo-1H-benzimidazole
+
+>  <SystematicName>
+4,5,6,7-tetraiodo-1H-benzimidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H2 I4 N2
+
+>  <MolecularWeight>
+621.722
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H2I4N2/c8-2-3(9)5(11)7-6(4(2)10)12-1-13-7/h1H,(H,12,13)
+
+>  <InChIKey>
+ZUHFPYANLLWSJR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]c2c(n1)c(c(c(c2I)I)I)I
+
+$$$$

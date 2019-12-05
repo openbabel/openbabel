@@ -1,0 +1,123 @@
+5I40_67N_A_206
+  RCSB PDB12061718063D
+Coordinates from PDB:5I40:A:206 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -16.7130    6.0720    9.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3090    6.5160   10.5520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8580    7.2700   11.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3830    5.3980    9.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8840    7.3640   12.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6420    6.1600   10.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7740    5.0290    8.7510   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4770    5.3540    8.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5460    4.2530    7.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9660    6.6930   12.0360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5550    5.0740   10.1180   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  1  2  0  0  0  0
+  7  4  1  0  0  0  0
+  1  2  1  0  0  0  0
+  4 11  2  0  0  0  0
+  4  6  1  0  0  0  0
+  2  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  6 10  1  0  0  0  0
+  3  5  2  0  0  0  0
+ 10  5  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C11
+A    5
+C7
+A    6
+C10
+A    7
+N2
+A    8
+C3
+A    9
+C1
+A   10
+N8
+A   11
+O12
+M  END
+>  <InstanceId>
+5I40_67N_A_206
+
+>  <ChemCompId>
+67N
+
+>  <PdbId>
+5I40
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+206
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+6-methyl-1,6-dihydro-7H-pyrrolo[2,3-c]pyridin-7-one
+
+>  <SystematicName>
+6-methyl-1~{H}-pyrrolo[2,3-c]pyridin-7-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N2 O
+
+>  <MolecularWeight>
+148.162
+
+>  <ModifiedDate>
+2016-10-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N2O/c1-10-5-3-6-2-4-9-7(6)8(10)11/h2-5,9H,1H3
+
+>  <InChIKey>
+ZLKWLYKVKAVOMD-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1C=Cc2cc[nH]c2C1=O
+
+$$$$

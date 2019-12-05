@@ -1,0 +1,150 @@
+2I80_G1L_A_400
+  RCSB PDB12061705533D
+Coordinates from PDB:2I80:A:400 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   15.3360    2.0630   -0.1630   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4260    1.3260   -0.0430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2760    1.7380   -0.9760   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9770    1.3750    1.1750   F 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1500   -0.1220   -0.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2630   -0.9290   -0.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1530   -2.2800   -0.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9050   -0.6920   -0.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8020   -2.0760   -0.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9370   -2.8890   -0.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8780   -4.2370   -0.8630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9310   -5.0830   -0.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0900   -4.7490   -0.5930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6490   -6.5530   -1.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2320   -6.7900   -1.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6100   -7.1930   -2.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8890   -7.2260    0.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3260   -6.7770    1.2240  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+F23
+A    2
+C20
+A    3
+F21
+A    4
+F22
+A    5
+C3
+A    6
+C2
+A    7
+C1
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+N11
+A   12
+C12
+A   13
+O18
+A   14
+C13
+A   15
+C14
+A   16
+C15
+A   17
+C16
+A   18
+CL17
+M  END
+>  <InstanceId>
+2I80_G1L_A_400
+
+>  <ChemCompId>
+G1L
+
+>  <PdbId>
+2I80
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O F3 Cl
+
+>  <Name>
+3-CHLORO-2,2-DIMETHYL-N-[4-(TRIFLUOROMETHYL)PHENYL]PROPANAMIDE
+
+>  <SystematicName>
+3-chloro-2,2-dimethyl-N-[4-(trifluoromethyl)phenyl]propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 Cl F3 N O
+
+>  <MolecularWeight>
+279.686
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C12H13ClF3NO/c1-11(2,7-13)10(18)17-9-5-3-8(4-6-9)12(14,15)16/h3-6H,7H2,1-2H3,(H,17,18)
+
+>  <InChIKey>
+QCQZFHOGRCQNIH-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(CCl)C(=O)Nc1ccc(cc1)C(F)(F)F
+
+$$$$

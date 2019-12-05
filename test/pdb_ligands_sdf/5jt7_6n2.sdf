@@ -1,0 +1,139 @@
+5JT7_6N2_A_404
+  RCSB PDB12061718293D
+Coordinates from PDB:5JT7:A:404 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  104.2020   16.5590   24.7750   N 0  0  0  0  0  0  0  0  0  0  0  0
+  107.5330   17.0000   21.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.5910   17.9530   18.4760   N 0  0  0  0  0  0  0  0  0  0  0  0
+  107.9640   17.5330   19.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  107.9140   18.7280   16.3830   N 0  0  0  0  0  0  0  0  0  0  0  0
+  107.6100   18.2370   17.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  106.9420   19.3980   15.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.2900   16.8290   24.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  106.5520   17.0060   24.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+  105.1950   16.9410   22.7010   N 0  0  0  0  0  0  0  0  0  0  0  0
+  106.1590   17.0690   21.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.6840   17.3040   20.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  106.5990   17.5750   19.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.4470   17.2170   20.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  106.3950   18.0190   18.0520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 15  2  0  0  0  0
+  6  3  1  0  0  0  0
+ 15 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 13  4  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  4 14  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 14  2  2  0  0  0  0
+ 11  2  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  1  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+N4
+A    6
+C5
+A    7
+C6
+A    8
+C
+A    9
+N
+A   10
+N2
+A   11
+C1
+A   12
+C13
+A   13
+C12
+A   14
+C3
+A   15
+N6
+M  END
+>  <InstanceId>
+5JT7_6N2_A_404
+
+>  <ChemCompId>
+6N2
+
+>  <PdbId>
+5JT7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+7
+
+>  <ObservedFormula>
+C9 N6
+
+>  <Name>
+N-(2-{[2-(morpholin-4-yl)ethyl]amino}-1H-benzimidazol-5-yl)guanidine
+
+>  <SystematicName>
+1-[2-(2-morpholin-4-ylethylamino)-1~{H}-benzimidazol-5-yl]guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H21 N7 O
+
+>  <MolecularWeight>
+303.363
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H21N7O/c15-13(16)18-10-1-2-11-12(9-10)20-14(19-11)17-3-4-21-5-7-22-8-6-21/h1-2,9H,3-8H2,(H4,15,16,18)(H2,17,19,20)
+
+>  <InChIKey>
+GUEKBGQUTZFSQX-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\Nc1ccc2c(c1)nc([nH]2)NCCN3CCOCC3
+
+$$$$

@@ -1,0 +1,147 @@
+3NTB_T1N_A_3
+  RCSB PDB12061709583D
+Coordinates from PDB:3NTB:A:3 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -58.4530   41.8110  -10.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.1930   46.0170  -19.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -56.5820   48.1780  -17.4780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.6950   48.8300  -17.6920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -60.9550   44.0420  -13.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.1600   44.9900  -16.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -60.8290   44.8100  -14.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.2810   44.2110  -15.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.6320   43.3880  -13.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -59.4820   45.6340  -16.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -60.0590   42.3830  -11.4070   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -57.7800   47.9830  -17.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -59.8600   43.3340  -12.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.2650   45.6910  -16.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.5030   44.1530  -14.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -59.6050   44.8630  -15.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -58.1820   46.5690  -18.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  1  1  0  0  0  0
+  2 17  1  0  0  0  0
+ 12  3  1  0  0  0  0
+  4 12  2  0  0  0  0
+  7  5  2  0  0  0  0
+  5 13  1  0  0  0  0
+ 14  6  2  0  0  0  0
+  6  8  1  0  0  0  0
+ 16  7  1  0  0  0  0
+  8 15  2  0  0  0  0
+ 15  9  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 14 10  1  0  0  0  0
+ 10 16  2  0  0  0  0
+ 13 11  1  0  0  0  0
+ 17 12  1  0  0  0  0
+ 17 14  1  0  0  0  0
+ 16 15  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+SAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+M  END
+>  <InstanceId>
+3NTB_T1N_A_3
+
+>  <ChemCompId>
+T1N
+
+>  <PdbId>
+3NTB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O2 S
+
+>  <Name>
+(2S)-2-[6-(methylsulfanyl)naphthalen-2-yl]propanoic acid
+
+>  <SystematicName>
+(2S)-2-(6-methylsulfanylnaphthalen-2-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H14 O2 S
+
+>  <MolecularWeight>
+246.325
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H14O2S/c1-9(14(15)16)10-3-4-12-8-13(17-2)6-5-11(12)7-10/h3-9H,1-2H3,(H,15,16)/t9-/m0/s1
+
+>  <InChIKey>
+DZFJDDMBLJXLJL-VIFPVBQESA-N
+
+>  <SMILES>
+C[C@@H](c1ccc2cc(ccc2c1)SC)C(=O)O
+
+$$$$

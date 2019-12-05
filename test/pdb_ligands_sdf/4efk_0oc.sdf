@@ -1,0 +1,122 @@
+4EFK_0OC_A_401
+  RCSB PDB12061712223D
+Coordinates from PDB:4EFK:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   13.8160    9.8840    6.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7950    8.9570    7.7000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7080    7.5100    7.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0790    9.6110    9.2260   S 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4200   11.0090    9.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3190    8.5500   10.0090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6710    9.9220   10.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5160    8.9220   10.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7200    9.3090   11.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5220   11.0950   11.0200   S 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9690   11.2150   10.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  6  2  0  0  0  0
+  4  7  1  0  0  0  0
+  7 11  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CAA
+A    2
+NAJ
+A    3
+CAB
+A    4
+SAK
+A    5
+OAC
+A    6
+OAD
+A    7
+CAI
+A    8
+CAF
+A    9
+CAE
+A   10
+SAH
+A   11
+CAG
+M  END
+>  <InstanceId>
+4EFK_0OC_A_401
+
+>  <ChemCompId>
+0OC
+
+>  <PdbId>
+4EFK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2 S2
+
+>  <Name>
+N,N-dimethylthiophene-3-sulfonamide
+
+>  <SystematicName>
+N,N-dimethylthiophene-3-sulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H9 N O2 S2
+
+>  <MolecularWeight>
+191.271
+
+>  <ModifiedDate>
+2013-03-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H9NO2S2/c1-7(2)11(8,9)6-3-4-10-5-6/h3-5H,1-2H3
+
+>  <InChIKey>
+ULWLGURUKSRLMX-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)S(=O)(=O)c1ccsc1
+
+$$$$

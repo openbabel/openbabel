@@ -1,0 +1,127 @@
+2AN5_TTL_A_1401
+  RCSB PDB12061705013D
+Coordinates from PDB:2AN5:A:1401 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   29.4990   46.3790   17.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6720   45.3280   18.1970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1850   44.4470   17.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7580   45.0510   15.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2590   44.2820   14.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1880   42.8970   14.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6160   42.2970   16.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1190   43.0610   17.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6160   42.3150   18.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7050   43.2460   19.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4420   44.5370   19.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6170   45.3720   20.4560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+OAB
+A    2
+CAL
+A    3
+CAJ
+A    4
+CAF
+A    5
+CAD
+A    6
+CAC
+A    7
+CAE
+A    8
+CAI
+A    9
+CAG
+A   10
+CAH
+A   11
+CAK
+A   12
+NAA
+M  END
+>  <InstanceId>
+2AN5_TTL_A_1401
+
+>  <ChemCompId>
+TTL
+
+>  <PdbId>
+2AN5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O
+
+>  <Name>
+TRANS-(1S,2S)-2-AMINO-1,2,3,4-TETRAHYDRONAPHTHALEN-1-OL
+
+>  <SystematicName>
+(1S,2S)-2-amino-1,2,3,4-tetrahydronaphthalen-1-ol
+
+>  <Synonyms>
+TRANS-(1S,2S)-1-HYDROXY-2-AMINO-1,2,3,4 TETRAHYDRONAPHTHALENE, TRANS-(1S,2S)-2-AMINO-1-TETRALOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O
+
+>  <MolecularWeight>
+163.216
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO/c11-9-6-5-7-3-1-2-4-8(7)10(9)12/h1-4,9-10,12H,5-6,11H2/t9-,10-/m0/s1
+
+>  <InChIKey>
+IIMSEFZOOYSTDO-UWVGGRQHSA-N
+
+>  <SMILES>
+c1ccc2c(c1)CC[C@@H]([C@H]2O)N
+
+$$$$

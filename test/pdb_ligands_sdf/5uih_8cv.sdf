@@ -1,0 +1,138 @@
+5UIH_8CV_A_201
+  RCSB PDB12061719523D
+Coordinates from PDB:5UIH:A:201 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    0.0480    6.8000  -26.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2350    7.6820  -26.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0150    7.2860  -27.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0040    5.4850  -26.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9050    8.5310  -24.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1030    6.4710  -27.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0890    4.6700  -26.3310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0490    9.3080  -24.4240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1430    5.1630  -27.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3370    9.5830  -23.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5340    9.4280  -22.1020   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5760   10.0340  -22.8910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2310    9.6040  -22.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4890   10.3180  -22.9110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4310    9.0320  -21.0290   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  3  2  0  0  0  0
+  6  9  1  0  0  0  0
+  3  1  1  0  0  0  0
+  9  7  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  2  0  0  0  0
+  7  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N1
+A    9
+C8
+A   10
+C9
+A   11
+N2
+A   12
+N3
+A   13
+C10
+A   14
+N4
+A   15
+N5
+M  END
+>  <InstanceId>
+5UIH_8CV_A_201
+
+>  <ChemCompId>
+8CV
+
+>  <PdbId>
+5UIH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N5
+
+>  <Name>
+N-(2-phenylethyl)imidodicarbonimidic diamide
+
+>  <SystematicName>
+1-carbamimidoyl-3-(2-phenylethyl)guanidine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N5
+
+>  <MolecularWeight>
+205.26
+
+>  <ModifiedDate>
+2017-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N5/c11-9(12)15-10(13)14-7-6-8-4-2-1-3-5-8/h1-5H,6-7H2,(H6,11,12,13,14,15)
+
+>  <InChIKey>
+ICFJFFQQTFMIBG-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\N/C(=N/[H])/NCCc1ccccc1
+
+$$$$

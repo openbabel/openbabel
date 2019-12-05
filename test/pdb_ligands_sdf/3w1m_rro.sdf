@@ -1,0 +1,126 @@
+3W1M_RRO_A_403
+  RCSB PDB12061711183D
+Coordinates from PDB:3W1M:A:403 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    4.4730   52.1650   75.3040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7700   52.0490   75.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4500   53.0590   75.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2390   50.7290   75.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0440   50.2290   74.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8870   51.3950   73.0290  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3580   48.8710   74.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0310   48.3870   73.2240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7770   48.0140   75.0670   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9080   48.4660   76.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4230   47.6700   76.8740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6560   49.8310   76.1220   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  5  1  0  0  0  0
+  7  9  1  0  0  0  0
+  5  4  2  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4 12  1  0  0  0  0
+  1  2  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+OAA
+A    2
+CAH
+A    3
+OAD
+A    4
+CAI
+A    5
+CAJ
+A    6
+BR
+A    7
+CAL
+A    8
+OAC
+A    9
+NAG
+A   10
+CAK
+A   11
+OAB
+A   12
+NAF
+M  END
+>  <InstanceId>
+3W1M_RRO_A_403
+
+>  <ChemCompId>
+RRO
+
+>  <PdbId>
+3W1M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O4 Br
+
+>  <Name>
+5-bromo-2,6-dioxo-1,2,3,6-tetrahydropyrimidine-4-carboxylic acid
+
+>  <SystematicName>
+5-bromanyl-2,4-bis(oxidanylidene)-1H-pyrimidine-6-carboxylic acid
+
+>  <Synonyms>
+5-bromoorotic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H3 Br N2 O4
+
+>  <MolecularWeight>
+234.992
+
+>  <ModifiedDate>
+2013-11-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H3BrN2O4/c6-1-2(4(10)11)7-5(12)8-3(1)9/h(H,10,11)(H2,7,8,9,12)
+
+>  <InChIKey>
+YQYHIPBLZSIHDI-UHFFFAOYSA-N
+
+>  <SMILES>
+C1(=C(NC(=O)NC1=O)C(=O)O)Br
+
+$$$$

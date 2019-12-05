@@ -1,0 +1,121 @@
+1Q4N_TAM_X_900
+  RCSB PDB12061703443D
+Coordinates from PDB:1Q4N:X:900 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    6.3780   45.3200   19.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4020   45.3740   18.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0400   45.2200   20.6380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3950   44.1810   19.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8720   45.1080   18.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1330   45.0200   21.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9110   43.7900   17.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5430   46.5190   19.0230   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7680   44.7560   17.3070   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7760   45.4960   23.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1500   44.8020   17.3130   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+A    1
+C
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+N
+A    9
+O4
+A   10
+O5
+A   11
+O6
+M  END
+>  <InstanceId>
+1Q4N_TAM_X_900
+
+>  <ChemCompId>
+TAM
+
+>  <PdbId>
+1Q4N
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+TRIS(HYDROXYETHYL)AMINOMETHANE
+
+>  <SystematicName>
+3-amino-3-(2-hydroxyethyl)pentane-1,5-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H17 N O3
+
+>  <MolecularWeight>
+163.215
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H17NO3/c8-7(1-4-9,2-5-10)3-6-11/h9-11H,1-6,8H2
+
+>  <InChIKey>
+GKODZWOPPOTFGA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CO)C(CCO)(CCO)N
+
+$$$$

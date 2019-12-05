@@ -1,0 +1,133 @@
+5OTA_AQQ_A_301
+  RCSB PDB12191704023D
+Coordinates from PDB:5OTA:A:301 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+    5.8840   19.2790  -12.2500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7380   20.4790  -11.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3180   21.0350  -11.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7970   21.7700  -12.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3440   19.9980  -11.2840   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6080   19.2440  -10.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4760   18.2210   -9.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5900   17.2110   -9.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3780   18.4020  -10.5310   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6190   20.2040   -8.8850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2380   19.7250   -7.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0350   20.8160   -6.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3150   20.3510   -5.1770   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7650   21.2220  -11.8990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+CA
+A    4
+CB
+A    5
+N
+A    6
+CAN
+A    7
+CAL
+A    8
+OAF
+A    9
+OAD
+A   10
+CAI
+A   11
+CAH
+A   12
+CAG
+A   13
+NAB
+A   14
+OXT
+M  END
+>  <InstanceId>
+5OTA_AQQ_A_301
+
+>  <ChemCompId>
+AQQ
+
+>  <PdbId>
+5OTA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+(2~{S})-5-azanyl-2-[[(2~{R})-1-oxidanyl-1-oxidanylidene-propan-2-yl]amino]pentanoic acid
+
+>  <SystematicName>
+(2~{S})-5-azanyl-2-[[(2~{R})-1-oxidanyl-1-oxidanylidene-propan-2-yl]amino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N2 O4
+
+>  <MolecularWeight>
+204.224
+
+>  <ModifiedDate>
+2017-12-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O4/c1-5(7(11)12)10-6(8(13)14)3-2-4-9/h5-6,10H,2-4,9H2,1H3,(H,11,12)(H,13,14)/t5-,6+/m1/s1
+
+>  <InChIKey>
+ZQKXJZFWRBQTIO-RITPCOANSA-N
+
+>  <SMILES>
+C[C@H](C(=O)O)N[C@@H](CCCN)C(=O)O
+
+$$$$

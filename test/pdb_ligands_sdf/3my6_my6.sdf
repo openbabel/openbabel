@@ -1,0 +1,127 @@
+3MY6_MY6_A_247
+  RCSB PDB12061709493D
+Coordinates from PDB:3MY6:A:247 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   21.5320    8.1170    9.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7140    5.0610    8.2400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3290    6.3430    8.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9990    6.7270    9.4440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1740    5.6920   10.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0070    5.4360   11.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5720    6.3930   12.6150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3150    4.1800   12.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7660    3.1500   11.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0550    1.9500   11.9400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9250    3.3730   10.0700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6410    4.6100    9.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 12  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 11  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+N8
+A    9
+C9
+A   10
+N10
+A   11
+N11
+A   12
+C12
+M  END
+>  <InstanceId>
+3MY6_MY6_A_247
+
+>  <ChemCompId>
+MY6
+
+>  <PdbId>
+3MY6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+247
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N5 O
+
+>  <Name>
+2-amino-7-methyl-1,7-dihydro-6H-purin-6-one
+
+>  <SystematicName>
+2-azanyl-7-methyl-1H-purin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N5 O
+
+>  <MolecularWeight>
+165.153
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N5O/c1-11-2-8-4-3(11)5(12)10-6(7)9-4/h2H,1H3,(H3,7,9,10,12)
+
+>  <InChIKey>
+FZWGECJQACGGTI-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1cnc2c1C(=O)NC(=N2)N
+
+$$$$

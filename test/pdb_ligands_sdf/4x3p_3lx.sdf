@@ -1,0 +1,133 @@
+4R8M_3LX_C_600
+  RCSB PDB12061714353D
+Coordinates from PDB:4R8M:C:600 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   45.7350   -2.2660  108.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3310   -0.9600  108.8950   S 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7390   -2.9660  107.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7330   -3.7080  108.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7090   -4.4720  107.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2760   -4.0020  107.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3080   -4.9150  106.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8440   -4.5280  106.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8910   -5.6790  106.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.6720   -5.8470  105.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4280   -5.0970  104.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2860   -5.1170  103.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2380   -3.7090  102.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9480   -3.7370  101.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+A    1
+C1
+A    2
+S1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+C12
+A   14
+C13
+M  END
+>  <InstanceId>
+4R8M_3LX_C_600
+
+>  <ChemCompId>
+3LX
+
+>  <PdbId>
+4R8M
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 S
+
+>  <Name>
+tridecanethial
+
+>  <SystematicName>
+tridecanethial
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H26 S
+
+>  <MolecularWeight>
+214.411
+
+>  <ModifiedDate>
+2015-03-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H26S/c1-2-3-4-5-6-7-8-9-10-11-12-13-14/h13H,2-12H2,1H3
+
+>  <InChIKey>
+OPHBCQJSGYOCBI-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCC=S
+
+$$$$

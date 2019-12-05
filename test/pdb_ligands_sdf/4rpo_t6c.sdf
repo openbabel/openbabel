@@ -1,0 +1,118 @@
+4KMV_T6C_A_203
+  RCSB PDB12061713233D
+Coordinates from PDB:4KMV:A:203 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+    4.3220    0.2170   16.4580  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6840    1.1800   16.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9520    0.6000   16.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0120    1.3570   17.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6420    0.7320   17.3320  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1810   -0.7640   16.3380   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4350    2.3250   17.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5070    3.0820   18.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2680    4.7360   18.5610  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8150    2.6040   17.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  2  2  0  0  0  0
+  7  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  8 10  2  0  0  0  0
+  3  6  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 10  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+CL2
+A    2
+C2
+A    3
+C1
+A    4
+C6
+A    5
+CL6
+A    6
+O1
+A    7
+C3
+A    8
+C4
+A    9
+CL4
+A   10
+C5
+M  END
+>  <InstanceId>
+4KMV_T6C_A_203
+
+>  <ChemCompId>
+T6C
+
+>  <PdbId>
+4KMV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+203
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O Cl3
+
+>  <Name>
+2,4,6-trichlorophenol
+
+>  <SystematicName>
+2,4,6-tris(chloranyl)phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H3 Cl3 O
+
+>  <MolecularWeight>
+197.446
+
+>  <ModifiedDate>
+2013-08-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H3Cl3O/c7-3-1-4(8)6(10)5(9)2-3/h1-2,10H
+
+>  <InChIKey>
+LINPIYWFGCPVIE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1Cl)O)Cl)Cl
+
+$$$$

@@ -1,0 +1,146 @@
+3VEH_0GA_A_501
+  RCSB PDB12061711133D
+Coordinates from PDB:3VEH:A:501 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   -4.5340   -0.6590   33.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4250    0.5220   33.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9380    0.7580   34.8560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6480    1.6290   32.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6820    2.9420   33.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8570    3.9230   31.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7950    1.2830   31.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7640    0.6510   30.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5170    0.3290   31.2140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5080   -0.2640   30.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7710   -0.5850   29.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0470    0.3390   29.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2230    0.6970   28.7330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9970   -0.2750   28.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3500   -0.5640   27.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4950   -0.1950   26.5850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4830   -1.1750   26.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 15  2  0  0  0  0
+ 16 15  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 14 11  2  0  0  0  0
+ 14 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 12  8  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAD
+A    2
+CAL
+A    3
+OAB
+A    4
+CAN
+A    5
+CAG
+A    6
+CAA
+A    7
+OAK
+A    8
+CAP
+A    9
+CAI
+A   10
+CAH
+A   11
+CAJ
+A   12
+CAO
+A   13
+OAF
+A   14
+CAQ
+A   15
+CAM
+A   16
+OAC
+A   17
+OAE
+M  END
+>  <InstanceId>
+3VEH_0GA_A_501
+
+>  <ChemCompId>
+0GA
+
+>  <PdbId>
+3VEH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O6
+
+>  <Name>
+3-{[(1Z)-1-carboxyprop-1-en-1-yl]oxy}-2-hydroxybenzoic acid
+
+>  <SystematicName>
+2-oxidanyl-3-[(Z)-1-oxidanyl-1-oxidanylidene-but-2-en-2-yl]oxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 O6
+
+>  <MolecularWeight>
+238.193
+
+>  <ModifiedDate>
+2012-06-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10O6/c1-2-7(11(15)16)17-8-5-3-4-6(9(8)12)10(13)14/h2-5,12H,1H3,(H,13,14)(H,15,16)/b7-2-
+
+>  <InChIKey>
+MPHSNGOSXHODDD-UQCOIBPSSA-N
+
+>  <SMILES>
+C/C=C(/C(=O)O)\Oc1cccc(c1O)C(=O)O
+
+$$$$

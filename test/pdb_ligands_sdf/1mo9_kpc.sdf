@@ -1,0 +1,121 @@
+1MO9_KPC_A_1015
+  RCSB PDB12061703183D
+Coordinates from PDB:1MO9:A:1015 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   25.8590   -2.4910   10.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0350   -2.2760   11.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8620   -1.9060   11.6220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6770   -2.5120   13.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4450   -2.4000   14.4240   S 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8590   -4.1260   14.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4920   -4.3100   13.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9590   -6.0530   13.8530   S 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9780   -6.8770   13.1260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8410   -6.5270   15.2700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6260   -6.1740   13.1790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  2  0  0  0  0
+A    1
+CAK
+A    2
+CAJ
+A    3
+OAC
+A    4
+CAI
+A    5
+SAH
+A    6
+CAG
+A    7
+CAF
+A    8
+SAE
+A    9
+OAD
+A   10
+OAL
+A   11
+OAB
+M  END
+>  <InstanceId>
+1MO9_KPC_A_1015
+
+>  <ChemCompId>
+KPC
+
+>  <PdbId>
+1MO9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1015
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O4 S2
+
+>  <Name>
+(2-[2-KETOPROPYLTHIO]ETHANESULFONATE
+
+>  <SystematicName>
+2-(2-oxopropylsulfanyl)ethanesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 O4 S2
+
+>  <MolecularWeight>
+198.26
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O4S2/c1-5(6)4-10-2-3-11(7,8)9/h2-4H2,1H3,(H,7,8,9)
+
+>  <InChIKey>
+CRNXHFXAXBWIRH-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)CSCCS(=O)(=O)O
+
+$$$$

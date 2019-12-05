@@ -1,0 +1,109 @@
+1EBU_HSE_D_1301
+  RCSB PDB12061702223D
+Coordinates from PDB:1EBU:D:1301 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   38.5900   23.6200   61.2020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9870   23.7300   61.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8480   23.8780   63.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.6540   24.9250   61.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8760   23.9810   63.9770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6510   23.8750   63.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0980   25.1920   61.4120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6800   26.2960   60.7100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+NA
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+O1
+A    6
+O2
+A    7
+C4
+A    8
+O3
+M  END
+>  <InstanceId>
+1EBU_HSE_D_1301
+
+>  <ChemCompId>
+HSE
+
+>  <PdbId>
+1EBU
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+1301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O3
+
+>  <Name>
+L-HOMOSERINE
+
+>  <SystematicName>
+(2S)-2-amino-4-hydroxy-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H9 N O3
+
+>  <MolecularWeight>
+119.119
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+SER
+
+>  <OneLetterCode>
+S
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H9NO3/c5-3(1-2-6)4(7)8/h3,6H,1-2,5H2,(H,7,8)/t3-/m0/s1
+
+>  <InChIKey>
+UKAUYVFTDYCKQA-VKHMYHEASA-N
+
+>  <SMILES>
+C(CO)[C@@H](C(=O)O)N
+
+$$$$

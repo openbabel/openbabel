@@ -39,6 +39,9 @@ USER_CHARGES
      32 H           0.8599    7.2333   -0.4021 H       1  UNL1        0.0000
      33 H           0.0990    5.6318   -0.5589 H       1  UNL1        0.0000
      34 O          -0.9001    6.8739    1.7063 O.co2   1  UNL1        0.0000
+@<TRIPOS>UNITY_ATOM_ATTR
+34 1
+charge -1
 @<TRIPOS>BOND
      1     1     2    1
      2     1    21    1

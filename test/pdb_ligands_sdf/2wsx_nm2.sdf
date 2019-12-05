@@ -1,0 +1,118 @@
+2WSX_NM2_A_1504
+  RCSB PDB12061707193D
+Coordinates from PDB:2WSX:A:1504 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    3.1210    4.9740   -5.9610   N 0  3  0  0  0  0  0  0  0  0  0  0
+    3.7050    4.5800   -7.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7490    3.9990   -0.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6120    4.0010   -1.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8270    3.2350   -2.1990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4360    4.9700   -2.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0960    4.7540   -4.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9170    4.1700   -5.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7730    6.3960   -6.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6350    5.4490   -3.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C8
+A    3
+O4
+A    4
+C5
+A    5
+O7
+A    6
+C6
+A    7
+C2
+A    8
+C9
+A    9
+C10
+A   10
+C3
+M  END
+>  <InstanceId>
+2WSX_NM2_A_1504
+
+>  <ChemCompId>
+NM2
+
+>  <PdbId>
+2WSX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1504
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+3-CARBOXY-N,N,N-TRIMETHYLPROPAN-1-AMINIUM
+
+>  <SystematicName>
+(4-hydroxy-4-oxo-butyl)-trimethyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H16 N O2
+
+>  <MolecularWeight>
+146.207
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO2/c1-8(2,3)6-4-5-7(9)10/h4-6H2,1-3H3/p+1
+
+>  <InChIKey>
+JHPNVNIEXXLNTR-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+](C)(C)CCCC(=O)O
+
+$$$$

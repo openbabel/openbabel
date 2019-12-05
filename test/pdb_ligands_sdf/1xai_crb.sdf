@@ -1,0 +1,146 @@
+1DQS_CRB_A_401
+  RCSB PDB12061702183D
+Coordinates from PDB:1DQS:A:401 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   42.8020   33.0050   47.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3220   33.4090   46.6160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7640   33.4550   48.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4720   31.7400   48.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8320   31.7500   47.8060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5130   31.6460   49.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8690   30.2510   50.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8830   30.2070   51.7610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9990   29.1750   49.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2770   27.8840   50.2170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2160   29.2070   48.1740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4980   28.0930   47.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7140   30.5660   47.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1390   27.8610   45.6630   P 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8190   29.0770   44.8270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4430   26.6080   45.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6550   27.5810   45.7710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 13  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 17  1  0  0  0  0
+A    1
+C1
+A    2
+O11
+A    3
+O12
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+A   11
+C6
+A   12
+C7
+A   13
+C8
+A   14
+P1
+A   15
+O91
+A   16
+O92
+A   17
+O93
+M  END
+>  <InstanceId>
+1DQS_CRB_A_401
+
+>  <ChemCompId>
+CRB
+
+>  <PdbId>
+1DQS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O8 P
+
+>  <Name>
+[1R-(1ALPHA,3BETA,4ALPHA,5BETA)]-5-(PHOSPHONOMETHYL)-1,3,4-TRIHYDROXYCYCLOHEXANE-1-CARBOXYLIC ACID
+
+>  <SystematicName>
+(1S,3R,4R,5S)-1,3,4-trihydroxy-5-(phosphonomethyl)cyclohexane-1-carboxylic acid
+
+>  <Synonyms>
+CARBAPHOSPHONATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H15 O8 P
+
+>  <MolecularWeight>
+270.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H15O8P/c9-5-2-8(13,7(11)12)1-4(6(5)10)3-17(14,15)16/h4-6,9-10,13H,1-3H2,(H,11,12)(H2,14,15,16)/t4-,5-,6-,8+/m1/s1
+
+>  <InChIKey>
+BKLICLLAHMTUPK-UNGCPHIMSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H](C[C@@]1(C(=O)O)O)O)O)CP(=O)(O)O
+
+$$$$

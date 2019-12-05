@@ -1,0 +1,131 @@
+2JJB_3CU_A_1547
+  RCSB PDB12061706033D
+Coordinates from PDB:2JJB:A:1547 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   -6.2250  -33.8360   45.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7560  -34.4580   43.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8140  -34.2240   42.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9550  -35.3600   41.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0630  -36.2200   42.0480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1090  -34.6490   40.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8160  -35.5040   39.2950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0060  -33.5830   40.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1400  -32.4130   39.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3970  -31.8030   39.5920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0530  -33.3090   41.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0810  -32.5080   42.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4790  -33.7090   43.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+O7
+A    2
+C7
+A    3
+C7A
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+O2
+A    8
+C3
+A    9
+C8
+A   10
+O8
+A   11
+N4
+A   12
+C5
+A   13
+C6
+M  END
+>  <InstanceId>
+2JJB_3CU_A_1547
+
+>  <ChemCompId>
+3CU
+
+>  <PdbId>
+2JJB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1547
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 N O4
+
+>  <Name>
+CASUARINE
+
+>  <SystematicName>
+(1R,2R,3R,4S,6S,7S,8R)-3-(hydroxymethyl)-2,3,5,6,7,8-hexahydro-1H-pyrrolizine-1,2,6,7-tetrol
+
+>  <Synonyms>
+(1R,2R,3R,6S,7S,7aR)-3-(hydroxymethyl)hexahydro-1H-pyrrolizine-1,2,6,7-tetrol
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H15 N O5
+
+>  <MolecularWeight>
+205.208
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H15NO5/c10-2-3-6(12)8(14)5-7(13)4(11)1-9(3)5/h3-8,10-14H,1-2H2/t3-,4+,5-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+AXTGOJVKRHFYBT-XAZAIFFQSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@H]2[N@@]1[C@@H]([C@H]([C@@H]2O)O)CO)O)O
+
+$$$$

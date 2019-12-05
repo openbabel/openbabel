@@ -1,0 +1,134 @@
+2Q5Q_KPV_A_5001
+  RCSB PDB12061706443D
+Coordinates from PDB:2Q5Q:A:5001 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    4.5010   91.9570   24.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1040   91.6900   24.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3760   91.9810   22.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0390   92.5410   21.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4250   92.8050   21.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1590   92.5130   22.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2820   91.6500   25.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9430   90.2720   25.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9780   89.2640   26.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5220   87.8650   25.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5840   86.7200   25.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0280   85.5600   25.2610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4340   86.8200   26.1670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7150   87.6470   25.8590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 14  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+O1
+A   13
+O2
+A   14
+O3
+M  END
+>  <InstanceId>
+2Q5Q_KPV_A_5001
+
+>  <ChemCompId>
+KPV
+
+>  <PdbId>
+2Q5Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O3
+
+>  <Name>
+5-PHENYL-2-KETO-VALERIC ACID
+
+>  <SystematicName>
+2-oxo-5-phenyl-pentanoic acid
+
+>  <Synonyms>
+2-OXO-5-PHENYLPENTANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 O3
+
+>  <MolecularWeight>
+192.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H12O3/c12-10(11(13)14)8-4-7-9-5-2-1-3-6-9/h1-3,5-6H,4,7-8H2,(H,13,14)
+
+>  <InChIKey>
+MJXXAPORLGKVLB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CCCC(=O)C(=O)O
+
+$$$$

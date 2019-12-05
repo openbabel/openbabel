@@ -1,0 +1,136 @@
+3LD4_8NX_A_300
+  RCSB PDB12061709353D
+Coordinates from PDB:3LD4:A:300 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   29.3840   27.2170   36.3510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5680   27.0780   37.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4540   27.5090   37.4810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1110   26.3990   38.5540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3770   26.0090   38.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1960   26.0610   37.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6740   26.7970   36.1840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2650   26.9890   35.1100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3640   25.4610   37.4920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2920   25.0810   38.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1300   25.3220   39.3770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1650   24.3940   39.4790   N 0  3  0  0  0  0  0  0  0  0  0  0
+   33.8780   23.4550   39.0490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2590   24.6470   40.7160   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+M  CHG  2  12   1  14  -1
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+O6
+A    9
+N7
+A   10
+C8
+A   11
+N9
+A   12
+N10
+A   13
+O11
+A   14
+O12
+M  END
+>  <InstanceId>
+3LD4_8NX_A_300
+
+>  <ChemCompId>
+8NX
+
+>  <PdbId>
+3LD4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N5 O4
+
+>  <Name>
+8-nitro-3,7-dihydro-1H-purine-2,6-dione
+
+>  <SystematicName>
+8-nitro-3,7-dihydropurine-2,6-dione
+
+>  <Synonyms>
+8-nitro xanthine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H3 N5 O4
+
+>  <MolecularWeight>
+197.108
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H3N5O4/c11-3-1-2(8-5(12)9-3)7-4(6-1)10(13)14/h(H3,6,7,8,9,11,12)
+
+>  <InChIKey>
+LXDVSSPKQAHSGS-UHFFFAOYSA-N
+
+>  <SMILES>
+c12c(nc([nH]1)[N+](=O)[O-])NC(=O)NC2=O
+
+$$$$

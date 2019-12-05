@@ -1,0 +1,122 @@
+4OWM_3F0_A_404
+  RCSB PDB12061714073D
+Coordinates from PDB:4OWM:A:404 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -20.2830  -34.0490   18.7420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3040  -34.8020   18.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0770  -35.7580   19.3060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4730  -34.5440   17.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6090  -35.5330   16.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7840  -35.2310   15.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8290  -33.9620   15.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6980  -32.9760   15.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7860  -31.6110   15.1800   F 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4880  -33.2800   16.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2870  -32.2950   17.2560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8 10  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAB
+A    2
+CAH
+A    3
+OAC
+A    4
+CAK
+A    5
+CAG
+A    6
+CAE
+A    7
+CAF
+A    8
+CAJ
+A    9
+FAD
+A   10
+CAI
+A   11
+NAA
+M  END
+>  <InstanceId>
+4OWM_3F0_A_404
+
+>  <ChemCompId>
+3F0
+
+>  <PdbId>
+4OWM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2 F
+
+>  <Name>
+2-azanyl-3-fluoranyl-benzoic acid
+
+>  <SystematicName>
+2-azanyl-3-fluoranyl-benzoic acid
+
+>  <Synonyms>
+3-fluoroanthranilate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 F N O2
+
+>  <MolecularWeight>
+155.126
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6FNO2/c8-5-3-1-2-4(6(5)9)7(10)11/h1-3H,9H2,(H,10,11)
+
+>  <InChIKey>
+KUHAYJJXXGBYBW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)F)N)C(=O)O
+
+$$$$

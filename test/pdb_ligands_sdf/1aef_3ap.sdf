@@ -1,0 +1,107 @@
+1AEF_3AP_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEF:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   33.0970   93.1790   47.9000   N 0  3  0  0  0  0  0  0  0  0  0  0
+   32.1970   93.1550   46.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9040   93.6670   47.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6250   94.1900   48.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5900   94.1870   49.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8550   93.6680   49.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9780   93.6590   46.1150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N3
+M  END
+>  <InstanceId>
+1AEF_3AP_A_296
+
+>  <ChemCompId>
+3AP
+
+>  <PdbId>
+1AEF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2
+
+>  <Name>
+3-AMINOPYRIDINE
+
+>  <SystematicName>
+pyridin-1-ium-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H7 N2
+
+>  <MolecularWeight>
+95.122
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H6N2/c6-5-2-1-3-7-4-5/h1-4H,6H2/p+1
+
+>  <InChIKey>
+CUYKNJBYIJFRCU-UHFFFAOYSA-O
+
+>  <SMILES>
+c1cc(c[nH+]c1)N
+
+$$$$

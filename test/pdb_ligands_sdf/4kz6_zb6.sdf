@@ -1,0 +1,138 @@
+4KZ6_ZB6_B_401
+  RCSB PDB12061713273D
+Coordinates from PDB:4KZ6:B:401 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   77.5190    7.7140   27.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.6890    8.0180   28.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.7050    8.7710   27.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.4910    7.8630   26.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.0330    6.6590   27.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.9970    5.9440   28.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2190    6.8560   29.2340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9240    6.7150   30.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.2490    7.5910   31.1600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.3740    5.6000   31.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.6960    5.9550   32.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.7500    4.8300   33.8170   S 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2240    4.9870   27.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.5640    4.8490   26.3960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   78.2320    4.3340   28.0800   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  2  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+N07
+A    8
+C08
+A    9
+O09
+A   10
+C10
+A   11
+C11
+A   12
+S12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+4KZ6_ZB6_B_401
+
+>  <ChemCompId>
+ZB6
+
+>  <PdbId>
+4KZ6
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3 S
+
+>  <Name>
+(2R,6R)-6-methyl-1-(3-sulfanylpropanoyl)piperidine-2-carboxylic acid
+
+>  <SystematicName>
+(2R,6R)-6-methyl-1-(3-sulfanylpropanoyl)piperidine-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H17 N O3 S
+
+>  <MolecularWeight>
+231.312
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H17NO3S/c1-7-3-2-4-8(10(13)14)11(7)9(12)5-6-15/h7-8,15H,2-6H2,1H3,(H,13,14)/t7-,8-/m1/s1
+
+>  <InChIKey>
+UHIOKYGCFGNNCU-HTQZYQBOSA-N
+
+>  <SMILES>
+C[C@@H]1CCC[C@@H](N1C(=O)CCS)C(=O)O
+
+$$$$

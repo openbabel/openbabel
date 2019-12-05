@@ -1,0 +1,158 @@
+1DFO_PLG_A_1001
+  RCSB PDB12061702163D
+Coordinates from PDB:1DFO:A:1001 Model:1 without hydrogens
+ 20 20  0  0  0  0            999 V2000
+    5.5360   90.6470   49.0860   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8090   90.3690   47.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6420   90.1640   46.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1990   90.3040   47.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5160   90.0280   46.1790   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1960   90.5300   48.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5930   90.4500   48.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8450   90.8070   49.7820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4600   90.8680   50.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7110   91.0350   50.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6090   92.1260   50.9330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9270   92.3100   51.7150   P 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6210   91.6870   53.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0030   91.5610   50.8740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3500   93.7400   51.8260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3600   89.1440   45.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2750   88.9250   44.4860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4620   88.8820   44.5420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3260   89.7630   46.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9770   89.7460   46.9730   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 20  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 18  1  0  0  0  0
+ 16 19  1  0  0  0  0
+ 19 20  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C2A
+A    4
+C3
+A    5
+O3
+A    6
+C4
+A    7
+C4A
+A    8
+C5
+A    9
+C6
+A   10
+C5A
+A   11
+OP4
+A   12
+P
+A   13
+OP1
+A   14
+OP2
+A   15
+OP3
+A   16
+C
+A   17
+O
+A   18
+OXT
+A   19
+CA
+A   20
+N
+M  END
+>  <InstanceId>
+1DFO_PLG_A_1001
+
+>  <ChemCompId>
+PLG
+
+>  <PdbId>
+1DFO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O7 P
+
+>  <Name>
+N-GLYCINE-[3-HYDROXY-2-METHYL-5-PHOSPHONOOXYMETHYL-PYRIDIN-4-YL-METHANE]
+
+>  <SystematicName>
+2-[[3-hydroxy-2-methyl-5-(phosphonooxymethyl)pyridin-4-yl]methylamino]ethanoic acid
+
+>  <Synonyms>
+N-PYRIDOXYL-GLYCINE-5-MONOPHOSPHATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N2 O7 P
+
+>  <MolecularWeight>
+306.209
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N2O7P/c1-6-10(15)8(3-11-4-9(13)14)7(2-12-6)5-19-20(16,17)18/h2,11,15H,3-5H2,1H3,(H,13,14)(H2,16,17,18)
+
+>  <InChIKey>
+FEVQWBMNLWUBTF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(c(cn1)COP(=O)(O)O)CNCC(=O)O)O
+
+$$$$

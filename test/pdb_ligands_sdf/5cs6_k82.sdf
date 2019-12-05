@@ -1,0 +1,130 @@
+5CS6_K82_A_404
+  RCSB PDB12061717093D
+Coordinates from PDB:5CS6:A:404 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   34.8480  152.3520  337.7990  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6650  153.6000  337.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7710  154.7600  338.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8370  155.7760  338.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9770  157.0330  338.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0180  157.8620  338.3610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8010  155.5890  337.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6920  154.4270  336.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6290  153.4190  336.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6150  152.2290  335.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7880  152.1320  334.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4400  150.6980  334.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1760  150.5450  333.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9  2  1  0  0  0  0
+  7  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+CL
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+N
+A    7
+C8
+A    8
+C9
+A    9
+C3
+A   10
+O
+A   11
+C2
+A   12
+C1
+A   13
+C
+M  END
+>  <InstanceId>
+5CS6_K82_A_404
+
+>  <ChemCompId>
+K82
+
+>  <PdbId>
+5CS6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O Cl
+
+>  <Name>
+1-(3-chloro-4-propoxyphenyl)methanamine
+
+>  <SystematicName>
+(3-chloranyl-4-propoxy-phenyl)methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 Cl N O
+
+>  <MolecularWeight>
+199.677
+
+>  <ModifiedDate>
+2016-07-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14ClNO/c1-2-5-13-10-4-3-8(7-12)6-9(10)11/h3-4,6H,2,5,7,12H2,1H3
+
+>  <InChIKey>
+BVPLWEHIQIGKSU-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCOc1ccc(cc1Cl)CN
+
+$$$$

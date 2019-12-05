@@ -1,0 +1,107 @@
+1CCI_DMI_A_499
+  RCSB PDB12061702093D
+Coordinates from PDB:1CCI:A:499 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   32.6510   93.6730   48.8610   N 0  3  0  0  0  0  0  0  0  0  0  0
+   32.7020   93.2840   47.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7790   92.4750   46.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5810   93.7280   47.0450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1670   93.5030   45.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8430   94.3950   47.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5470   94.3580   49.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C2
+A    3
+CM2
+A    4
+N3
+A    5
+CM3
+A    6
+C4
+A    7
+C5
+M  END
+>  <InstanceId>
+1CCI_DMI_A_499
+
+>  <ChemCompId>
+DMI
+
+>  <PdbId>
+1CCI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+499
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2
+
+>  <Name>
+2,3-DIMETHYLIMIDAZOLIUM ION
+
+>  <SystematicName>
+1,2-dimethylimidazol-3-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H9 N2
+
+>  <MolecularWeight>
+97.138
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8N2/c1-5-6-3-4-7(5)2/h3-4H,1-2H3/p+1
+
+>  <InChIKey>
+GIWQSPITLQVMSG-UHFFFAOYSA-O
+
+>  <SMILES>
+Cc1[nH+]ccn1C
+
+$$$$

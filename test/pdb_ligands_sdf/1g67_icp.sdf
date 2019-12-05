@@ -1,0 +1,114 @@
+1G67_ICP_A_2001
+  RCSB PDB12061702343D
+Coordinates from PDB:1G67:A:2001 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   15.2380   41.2950   15.1080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3720   41.0410   15.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9130   39.6920   15.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9580   41.9550   16.6130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4210   43.2290   16.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0500   44.1110   17.4450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2200   43.5500   15.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6840   42.5430   15.1410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5500   44.8940   15.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+A    1
+N1A
+A    2
+C2A
+A    3
+CM2
+A    4
+N3A
+A    5
+C4A
+A    6
+N4A
+A    7
+C5A
+A    8
+C6A
+A    9
+C7A
+M  END
+>  <InstanceId>
+1G67_ICP_A_2001
+
+>  <ChemCompId>
+ICP
+
+>  <PdbId>
+1G67
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3
+
+>  <Name>
+2-METHYL-5-METHYLENE-5H-PYRIMIDIN-4-YLIDENEAMINE
+
+>  <SystematicName>
+2-methyl-5-methylidene-pyrimidin-4-imine
+
+>  <Synonyms>
+4-IMINO-5-METHIDYL-2-METHYLPYRIMIDINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H7 N3
+
+>  <MolecularWeight>
+121.14
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H7N3/c1-4-3-8-5(2)9-6(4)7/h3,7H,1H2,2H3
+
+>  <InChIKey>
+AXFPKNUSOMMYRV-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=NC(=N)C(=C)C=N1
+
+$$$$

@@ -1,0 +1,121 @@
+1ONP_FOM_A_1001
+  RCSB PDB12061703343D
+Coordinates from PDB:1ONP:A:1001 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    6.4900   -5.7460   34.8370   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7750   -4.5810   35.3160   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0380   -3.5130   34.9670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0960   -3.4330   34.2410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9160   -4.4610   36.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9600   -5.5740   37.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3870   -5.8110   37.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3570   -6.9770   36.9110   P 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4910   -8.3100   36.7320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4770   -6.4190   35.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8220   -7.3140   37.4220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+O2
+A    2
+N1
+A    3
+C1
+A    4
+O1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+PA1
+A    9
+OP1
+A   10
+OP2
+A   11
+OP3
+M  END
+>  <InstanceId>
+1ONP_FOM_A_1001
+
+>  <ChemCompId>
+FOM
+
+>  <PdbId>
+1ONP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O5 P
+
+>  <Name>
+3-[FORMYL(HYDROXY)AMINO]PROPYLPHOSPHONIC ACID
+
+>  <SystematicName>
+3-(hydroxy-methanoyl-amino)propylphosphonic acid
+
+>  <Synonyms>
+FOSMIDOMYCIN
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H10 N O5 P
+
+>  <MolecularWeight>
+183.1
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H10NO5P/c6-4-5(7)2-1-3-11(8,9)10/h4,7H,1-3H2,(H2,8,9,10)
+
+>  <InChIKey>
+GJXWDTUCERCKIX-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CN(C=O)O)CP(=O)(O)O
+
+$$$$

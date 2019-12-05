@@ -1,0 +1,142 @@
+3FVL_BHK_A_311
+  RCSB PDB12061708393D
+Coordinates from PDB:3FVL:A:311 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+  -27.0000    0.6110   -8.8690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2910    0.1580   -8.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7030   -0.0690   -7.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8240    0.1550   -6.2550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5330    0.6060   -6.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1200    0.8370   -7.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7100    1.3740   -8.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8660    0.4410   -8.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4280    0.4130  -10.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6820   -0.7090  -10.8640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5940    1.5150  -10.9390   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4370    0.9880   -8.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4980    0.0780   -9.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1710   -1.0220   -9.3500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9490    0.5640  -11.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6300    0.0600  -11.3630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+CAH
+A    2
+CAI
+A    3
+CAJ
+A    4
+CAK
+A    5
+CAL
+A    6
+CAG
+A    7
+CAD
+A    8
+CAB
+A    9
+CAC
+A   10
+OAN
+A   11
+OAM
+A   12
+CAA
+A   13
+CAE
+A   14
+OAO
+A   15
+CAF
+A   16
+OAP
+M  END
+>  <InstanceId>
+3FVL_BHK_A_311
+
+>  <ChemCompId>
+BHK
+
+>  <PdbId>
+3FVL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O4
+
+>  <Name>
+(2R)-2-benzyl-5-hydroxy-4-oxopentanoic acid
+
+>  <SystematicName>
+(2R)-5-hydroxy-4-oxo-2-(phenylmethyl)pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H14 O4
+
+>  <MolecularWeight>
+222.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H14O4/c13-8-11(14)7-10(12(15)16)6-9-4-2-1-3-5-9/h1-5,10,13H,6-8H2,(H,15,16)/t10-/m1/s1
+
+>  <InChIKey>
+HHXVRTWUQBYAFG-SNVBAGLBSA-N
+
+>  <SMILES>
+c1ccc(cc1)C[C@H](CC(=O)CO)C(=O)O
+
+$$$$

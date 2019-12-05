@@ -1,0 +1,139 @@
+3R01_UNE_A_1
+  RCSB PDB12061710293D
+Coordinates from PDB:3R01:A:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   22.2000   33.4440    0.6570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6210   33.1260    1.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1870   34.2310    2.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1240   35.2700    1.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5240   34.7710    0.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2890   35.5080   -0.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6670   36.8490   -0.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2910   37.3540    0.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5590   36.6820    1.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7680   39.1750    0.1570  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6800   34.9840   -1.8390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6890   35.7180   -3.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4320   31.7800    2.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8660   30.9710    1.6980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8940   31.5170    3.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  1  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2 13  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  9  2  0  0  0  0
+  6  5  2  0  0  0  0
+ 11  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 10  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+BR10
+A   11
+O11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+A   15
+O15
+M  END
+>  <InstanceId>
+3R01_UNE_A_1
+
+>  <ChemCompId>
+UNE
+
+>  <PdbId>
+3R01
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4 Br
+
+>  <Name>
+5-bromo-7-methoxy-1-benzofuran-2-carboxylic acid
+
+>  <SystematicName>
+5-bromo-7-methoxy-1-benzofuran-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 Br O4
+
+>  <MolecularWeight>
+271.064
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7BrO4/c1-14-7-4-6(11)2-5-3-8(10(12)13)15-9(5)7/h2-4H,1H3,(H,12,13)
+
+>  <InChIKey>
+OEICZFFUNDGUEF-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(cc2c1oc(c2)C(=O)O)Br
+
+$$$$

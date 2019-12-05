@@ -1,0 +1,141 @@
+4F8Z_BL2_A_402
+  RCSB PDB12061712303D
+Coordinates from PDB:4F8Z:A:402 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   66.6110  -55.7390   11.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.6390  -54.6140   11.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.8190  -53.8100   11.1710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   68.9930  -54.3010   10.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.9020  -53.1230   10.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.6230  -55.4360   11.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.8890  -54.6910    9.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.9160  -53.7010   11.9930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   64.6680  -54.1630   12.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4610  -53.6170   11.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.5070  -53.4410   10.6150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.5940  -53.7550   14.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.7490  -54.2180   14.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.7300  -53.4830   16.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.6940  -55.7230   15.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.4150  -53.3410   12.4200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  6  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  8  1  0  0  0  0
+ 10 16  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O1
+A    2
+CX
+A    3
+O2
+A    4
+CT
+A    5
+C1
+A    6
+C2
+A    7
+C3
+A    8
+N
+A    9
+CA
+A   10
+C
+A   11
+O
+A   12
+CB
+A   13
+CG
+A   14
+CD1
+A   15
+CD2
+A   16
+OXT
+M  END
+>  <InstanceId>
+4F8Z_BL2_A_402
+
+>  <ChemCompId>
+BL2
+
+>  <PdbId>
+4F8Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O4
+
+>  <Name>
+N-(tert-butoxycarbonyl)-L-leucine
+
+>  <SystematicName>
+(2S)-4-methyl-2-[(2-methylpropan-2-yl)oxycarbonylamino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C11 H21 N O4
+
+>  <MolecularWeight>
+231.289
+
+>  <ModifiedDate>
+2013-05-17
+
+>  <Parent>
+LEU
+
+>  <OneLetterCode>
+L
+
+>  <SubcomponentList>
+BOC LEU
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H21NO4/c1-7(2)6-8(9(13)14)12-10(15)16-11(3,4)5/h7-8H,6H2,1-5H3,(H,12,15)(H,13,14)/t8-/m0/s1
+
+>  <InChIKey>
+MDXGYYOJGPFFJL-QMMMGPOBSA-N
+
+>  <SMILES>
+CC(C)C[C@@H](C(=O)O)NC(=O)OC(C)(C)C
+
+$$$$

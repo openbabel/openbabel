@@ -1,0 +1,126 @@
+2E4W_C5A_A_1001
+  RCSB PDB12061705243D
+Coordinates from PDB:2E4W:A:1001 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   19.2290   -5.6960   50.3960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3480   -4.7070   50.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3240   -3.7760   49.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.7080   -4.1250   48.1510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9100   -2.6800   49.2210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6220   -5.5300   50.4710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2400   -3.9220   51.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1920   -4.6800   52.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6350   -5.9410   51.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0150   -6.4130   52.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0990   -7.3140   53.2570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0440   -5.9060   51.9040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+OXT
+A    6
+CB1
+A    7
+CB2
+A    8
+CG2
+A    9
+CD
+A   10
+CE
+A   11
+OZ1
+A   12
+OZ2
+M  END
+>  <InstanceId>
+2E4W_C5A_A_1001
+
+>  <ChemCompId>
+C5A
+
+>  <PdbId>
+2E4W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4
+
+>  <Name>
+(1S,3S)-1-aminocyclopentane-1,3-dicarboxylic acid
+
+>  <SystematicName>
+(1S,3S)-1-aminocyclopentane-1,3-dicarboxylic acid
+
+>  <Synonyms>
+1S,3S-ACPD
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N O4
+
+>  <MolecularWeight>
+173.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H11NO4/c8-7(6(11)12)2-1-4(3-7)5(9)10/h4H,1-3,8H2,(H,9,10)(H,11,12)/t4-,7-/m0/s1
+
+>  <InChIKey>
+YFYNOWXBIBKGHB-FFWSUHOLSA-N
+
+>  <SMILES>
+C1C[C@](C[C@H]1C(=O)O)(C(=O)O)N
+
+$$$$

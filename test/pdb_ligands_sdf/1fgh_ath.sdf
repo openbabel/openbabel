@@ -1,0 +1,130 @@
+1FGH_ATH_A_755
+  RCSB PDB12061702293D
+Coordinates from PDB:1FGH:A:755 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   38.1350   34.7870   73.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7570   34.3560   73.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9570   33.8910   72.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3440   33.6810   70.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4850   34.5410   70.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5090   33.5860   72.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2590   35.9590   72.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1440   34.0230   73.2900   O 0  5  0  0  0  0  0  0  0  0  0  0
+   35.3820   35.7660   70.2270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9050   33.9780   69.0640   O 0  5  0  0  0  0  0  0  0  0  0  0
+   33.6320   33.4240   71.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2180   33.4420   74.0060   O 0  5  0  0  0  0  0  0  0  0  0  0
+   36.3940   32.2810   70.6280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  9  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6 11  2  0  0  0  0
+  6 12  1  0  0  0  0
+M  CHG  3   8  -1  10  -1  12  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+OH
+M  END
+>  <InstanceId>
+1FGH_ATH_A_755
+
+>  <ChemCompId>
+ATH
+
+>  <PdbId>
+1FGH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+755
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7
+
+>  <Name>
+4-HYDROXY-ACONITATE ION
+
+>  <SystematicName>
+(E,3R)-3-hydroxyprop-1-ene-1,2,3-tricarboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H3 O7
+
+>  <MolecularWeight>
+187.084
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O7/c7-3(8)1-2(5(10)11)4(9)6(12)13/h1,4,9H,(H,7,8)(H,10,11)(H,12,13)/p-3/b2-1+/t4-/m1/s1
+
+>  <InChIKey>
+WUUVSJBKHXDKBS-ROFOPDMZSA-K
+
+>  <SMILES>
+C(=C(/[C@H](C(=O)[O-])O)\C(=O)[O-])/C(=O)[O-]
+
+$$$$

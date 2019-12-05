@@ -1,0 +1,114 @@
+4UD9_FQI_H_1257
+  RCSB PDB12061715053D
+Coordinates from PDB:4UD9:H:1257 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  126.3490  -10.3320  166.4450  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  125.9800  -11.7850  165.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.0300  -13.7830  165.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.1890  -14.5720  162.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.8340  -14.1650  161.9930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  125.7080  -15.8060  163.0780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  125.9290  -13.6620  164.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.0570  -12.7080  165.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.8220  -12.1810  164.1850   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  8  2  0  0  0  0
+  2  9  1  0  0  0  0
+  8  3  1  0  0  0  0
+  3  7  2  0  0  0  0
+  9  7  1  0  0  0  0
+  7  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+A    1
+CL
+A    2
+C4
+A    3
+C2
+A    4
+C
+A    5
+O
+A    6
+N
+A    7
+C1
+A    8
+C3
+A    9
+S
+M  END
+>  <InstanceId>
+4UD9_FQI_H_1257
+
+>  <ChemCompId>
+FQI
+
+>  <PdbId>
+4UD9
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+1257
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O S Cl
+
+>  <Name>
+5-CHLORO-2-THIOPHENECARBOXAMIDE
+
+>  <SystematicName>
+5-chloranylthiophene-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H4 Cl N O S
+
+>  <MolecularWeight>
+161.609
+
+>  <ModifiedDate>
+2015-08-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4ClNOS/c6-4-2-1-3(9-4)5(7)8/h1-2H,(H2,7,8)
+
+>  <InChIKey>
+OMOBWMBJNNCUFO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1C(=O)N)Cl
+
+$$$$

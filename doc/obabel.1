@@ -1,1 +1,375 @@
-.so man1/babel.1
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.0
+.Dt obabel 1 URM
+.Sh NAME
+.Nm obabel
+.Nd "a converter for chemistry and molecular modeling data files"
+.Sh SYNOPSIS
+.Nm
+.Op Fl H Ar help-options
+.Nm
+.Op Ar OPTIONS
+.Op Fl i Ar input-type | Fl : Qo Ar SMILES-string Qc
+.Ar infile
+.Op Fl o Ar output-type
+.Fl O Ar outfile
+.Sh DESCRIPTION
+.Nm
+is a cross-platform program designed to interconvert
+between many file formats used in molecular modeling and computational
+chemistry and related areas.
+.Pp
+Open Babel is also a complete programmers toolkit for developing
+chemistry software. For more information, se the Open Babel web pages
+\%<\fBhttp://openbabel.org/\fR>.
+.Sh OPTIONS
+If only input and output files are given, Open Babel will guess the
+file type from the filename extension.
+.Bl -tag -width flag
+.It Fl : Qo Ar SMILES-string Qc
+Enter SMILES string and use it in place of an input file. The SMILES string
+should be enclosed in quotation marks. More than one can be used, and a molecule
+title can be included if enclosed in quotes.
+.It Fl a Ar options
+Format-specific input options. See
+.Fl H Ar format-ID
+for options allowed by a particular format
+.It Fl -addtotitle
+Append text to the current molecule title
+.It Fl -addformula
+Append the molecular formula after the current molecule title
+.It Fl b
+Convert dative bonds: e.g., [N+]([O-])=O to N(=O)=O
+.It Fl c
+Center atomic coordinates at (0,0,0)
+.It Fl C
+Combine molecules in first file with others having the same name
+.It Fl e
+Continue after errors
+.It Fl d
+Delete Hydrogens
+.It Fl --errorlevel Ar 2
+Filter the level of errors and warnings displayed:
+.br
+       1 = critical errors only
+       2 = include warnings too (default)
+       3 = include informational messages too
+       4 = include "audit log" messages of changes to data
+       5 = include debugging messages too
+.It Fl f Ar #
+For multiple entry input, start import with molecule # as the first entry
+.It Fl F
+Output the available fingerprint types
+.It Fl h
+Add hydrogens
+.It Fl H
+Output usage information
+.It Fl H Ar format-ID
+Output formatting information and options for format specified
+.It Fl Hall
+Output formatting information and options for all formats
+.It Fl i<format-ID>
+Specifies input format, see below for the available formats
+.It Fl j
+.It Fl -join
+Join all input molecules into a single output molecule entry
+.It Fl k
+Translate computational chemistry modeling keywords (e.g., GAMESS and Gaussian)
+.It Fl m
+Produce multiple output files, to allow:
+.Bl -dash -offset indent -compact
+.It
+Splitting one input file - put each molecule into consecutively
+numbered output files
+.It
+Batch conversion - convert each of multiple input files into a
+specified output format
+.El
+.It Fl l Ar #
+For multiple entry input, stop import with molecule # as the last entry
+.It Fl o Ar format-ID
+Specifies output format, see below for the available formats
+.It Fl O Ar outfile
+Specify the output file. This option applies to
+.Nm obabel
+only.
+.It Fl p
+Add Hydrogens appropriate for pH (use transforms in phmodel.txt)
+.It Fl -property
+Add or replace a property (e.g., in an MDL SD file)
+.It Fl s Ar SMARTS
+Convert only molecules matching the SMARTS pattern specified
+.It Fl -separate
+Separate disconnected fragments into individual molecular records
+.It Fl t
+All input files describe a single molecule
+.It Fl -title Ar title
+Add or replace molecular title
+.It Fl x Ar options
+Format-specific output options. See
+.Fl H Ar format-ID
+for options allowed by a particular format
+.It Fl v Ar SMARTS
+Convert only molecules \fBNOT\fP matching SMARTS pattern specified
+.It Fl V
+Output version number and exit
+.It Fl z
+Compress the output with gzip
+.El
+.Sh "FILE FORMATS"
+The following formats are currently supported by Open Babel:
+.Bl -item -offset indent -compact
+.It
+acr -- Carine ASCI Crystal
+.It
+alc -- Alchemy format
+.It
+arc -- Accelrys/MSI Biosym/Insight II CAR format [Read-only]
+.It
+bgf -- MSI BGF format
+.It
+box -- Dock 3.5 Box format
+.It
+bs -- Ball and Stick format
+.It
+c3d1 -- Chem3D Cartesian 1 format
+.It
+c3d2 -- Chem3D Cartesian 2 format
+.It
+caccrt -- Cacao Cartesian format
+.It
+cache -- CAChe MolStruct format [Write-only]
+.It
+cacint -- Cacao Internal format [Write-only]
+.It
+can -- Canonical SMILES format
+.It
+car -- Accelrys/MSI Biosym/Insight II CAR format [Read-only]
+.It
+ccc -- CCC format [Read-only]
+.It
+cdx -- ChemDraw binary format [Read-only]
+.It
+cdxml -- ChemDraw CDXML format
+.It
+cht -- Chemtool format [Write-only]
+.It
+cif -- Crystallographic Information File
+.It
+cml --  Chemical Markup Language
+.It
+cmlr --  CML Reaction format
+.It
+com -- Gaussian Cartesian Input [Write-only]
+.It
+copy -- Copies raw text [Write-only]
+.It
+crk2d -- Chemical Resource Kit 2D diagram format
+.It
+crk3d -- Chemical Resource Kit 3D format
+.It
+csr -- Accelrys/MSI Quanta CSR format [Write-only]
+.It
+cssr -- CSD CSSR format [Write-only]
+.It
+ct -- ChemDraw Connection Table format
+.It
+dmol -- DMol3 coordinates format
+.It
+ent -- Protein Data Bank format
+.It
+fa -- FASTA format [Write-only]
+.It
+fasta -- FASTA format [Write-only]
+.It
+fch -- Gaussian formatted checkpoint file format [Read-only]
+.It
+fchk -- Gaussian formatted checkpoint file format [Read-only]
+.It
+fck -- Gaussian formatted checkpoint file format [Read-only]
+.It
+feat -- Feature format
+.It
+fh -- Fenske-Hall Z-Matrix format [Write-only]
+.It
+fix -- SMILES FIX format [Write-only]
+.It
+fpt -- Fingerprint format [Write-only]
+.It
+fract -- Free Form Fractional format
+.It
+fs -- Open Babel FastSearching database
+.It
+fsa -- FASTA format [Write-only]
+.It
+g03 -- Gaussian 98/03 Output [Read-only]
+.It
+g98 -- Gaussian 98/03 Output [Read-only]
+.It
+gam -- GAMESS Output [Read-only]
+.It
+gamin -- GAMESS Input [Write-only]
+.It
+gamout -- GAMESS Output [Read-only]
+.It
+gau -- Gaussian Cartesian Input [Write-only]
+.It
+gjc -- Gaussian Cartesian Input [Write-only]
+.It
+gjf -- Gaussian Cartesian Input [Write-only]
+.It
+gpr -- Ghemical format
+.It
+gr96 -- GROMOS96 format [Write-only]
+.It
+gzmat -- Gaussian Z-Matrix Input
+.It
+hin -- HyperChem HIN format
+.It
+inchi -- IUPAC InChI [Write-only]
+.It
+inp -- GAMESS Input [Write-only]
+.It
+ins -- ShelX format [Read-only]
+.It
+jin -- Jaguar input format [Write-only]
+.It
+jout -- Jaguar output format [Read-only]
+.It
+mdl -- MDL MOL format
+.It
+mmd -- MacroModel format
+.It
+mmod -- MacroModel format
+.It
+mol -- MDL MOL format
+.It
+mol2 -- Sybyl Mol2 format
+.It
+molreport -- Open Babel molecule report [Write-only]
+.It
+moo -- MOPAC Output format [Read-only]
+.It
+mop -- MOPAC Cartesian format
+.It
+mopcrt -- MOPAC Cartesian format
+.It
+mopin -- MOPAC Internal
+.It
+mopout -- MOPAC Output format [Read-only]
+.It
+mpc -- MOPAC Cartesian format
+.It
+mpd -- Sybyl descriptor format [Write-only]
+.It
+mpqc -- MPQC output format [Read-only]
+.It
+mpqcin -- MPQC simplified input format [Write-only]
+.It
+nw -- NWChem input format [Write-only]
+.It
+nwo -- NWChem output format [Read-only]
+.It
+pc --  PubChem format  [Read-only]
+.It
+pcm --  PCModel format
+.It
+pdb -- Protein Data Bank format
+.It
+pov -- POV-Ray input format [Write-only]
+.It
+pqs -- Parallel Quantum Solutions format
+.It
+prep -- Amber Prep format [Read-only]
+.It
+qcin -- Q-Chem input format [Write-only]
+.It
+qcout -- Q-Chem output format [Read-only]
+.It
+report -- Open Babel report format [Write-only]
+.It
+res -- ShelX format [Read-only]
+.It
+rxn -- MDL RXN format
+.It
+sd -- MDL MOL format
+.It
+sdf -- MDL MOL format
+.It
+smi -- SMILES format
+.It
+sy2 -- Sybyl Mol2 format
+.It
+tdd -- Thermo format
+.It
+test -- Test format [Write-only]
+.It
+therm -- Thermo format
+.It
+tmol -- TurboMole Coordinate format
+.It
+txyz -- Tinker MM2 format [Write-only]
+.It
+unixyz -- UniChem XYZ format
+.It
+vmol -- ViewMol format
+.It
+xed -- XED format [Write-only]
+.It
+xml --  General XML format [Read-only]
+.It
+xyz -- XYZ cartesian coordinates format
+.It
+yob -- YASARA.org YOB format
+.It
+zin -- ZINDO input format [Write-only]
+.El
+.Sh "FORMAT OPTIONS"
+Individual file formats may have additional formatting options.
+.Pp
+Input format options are preceded by 'a', e.g. \-as
+.Pp
+Output format options are preceded by 'x', e.g. \-xn
+.Pp
+For further specific information and options, use \-H<format-type>
+.br
+ e.g., \-Hcml
+.Sh EXAMPLES
+Standard conversion:
+.Dl "obabel ethanol.xyz \-Oethanol.pdb"
+Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT:
+.Dl "obabel \-ismi \-omol2"
+Split a multi-molecule file into new1.smi, new2.smi, etc.:
+.Dl "obabel infile.mol -Onew.smi \-m"
+.Sh SEE ALSO
+.Xr obenergy 1 ,
+.Xr obfit 1 ,
+.Xr obgrep 1 ,
+.Xr obminimize 1 ,
+.Xr obprop 1 ,
+.Xr obrotate 1 ,
+.Xr obrotamer 1 .
+The web pages for Open Babel can be found at:
+\%<\fBhttp://openbabel.org/\fR>
+.Sh AUTHORS
+.An -nosplit
+A cast of many, including the currrent maintainers
+.An Geoff Hutchison ,
+.An Chris Morley ,
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
+\%<\fBhttp://openbabel.org/wiki/THANKS\fR>
+.Sh COPYRIGHT
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+.br
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
+.Pp
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+.Pp
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.

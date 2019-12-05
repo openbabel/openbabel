@@ -32,6 +32,13 @@ USER_CHARGES
      25 H3          0.1919   -2.7244    2.4304 H       1  ARG1        0.0000
      26 NH2        -1.4759    3.7094    2.5501 N.pl3   1  ARG1        0.0000
      27 HH22       -1.9250    3.2546    3.3537 H       1  ARG1        0.0000
+@<TRIPOS>UNITY_ATOM_ATTR
+23 1
+charge -1
+24 1
+charge 1
+26 1
+charge 1
 @<TRIPOS>BOND
      1     1     2    1
      2     1     7    1

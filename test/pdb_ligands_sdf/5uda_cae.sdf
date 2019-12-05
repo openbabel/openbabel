@@ -1,0 +1,119 @@
+5UDA_CAE_A_502
+  RCSB PDB12061719513D
+Coordinates from PDB:5UDA:A:502 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+    3.8670   -5.8520  -24.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0750   -6.0960  -23.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0190   -6.8410  -24.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2220   -6.9240  -25.7560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0720   -7.9080  -25.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1220   -7.1660  -24.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4890   -5.6210  -25.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4390   -5.5290  -26.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4420   -4.4240  -25.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9630   -4.7120  -23.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+M  END
+>  <InstanceId>
+5UDA_CAE_A_502
+
+>  <ChemCompId>
+CAE
+
+>  <PdbId>
+5UDA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+CAMPHANE
+
+>  <SystematicName>
+1,7,7-trimethylbicyclo[2.2.1]heptane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18
+
+>  <MolecularWeight>
+138.25
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18/c1-9(2)8-4-6-10(9,3)7-5-8/h8H,4-7H2,1-3H3/t8-,10+
+
+>  <InChIKey>
+BEWYHVAWEKZDPP-WAAGHKOSSA-N
+
+>  <SMILES>
+CC1(C2CCC1(CC2)C)C
+
+$$$$

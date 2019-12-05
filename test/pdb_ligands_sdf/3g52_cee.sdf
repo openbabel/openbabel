@@ -1,0 +1,114 @@
+3G52_CEE_A_150
+  RCSB PDB12061708413D
+Coordinates from PDB:3G52:A:150 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   39.9020    0.4410   32.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8160    1.1220   31.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5670    2.3170   31.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4170    2.8380   32.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4920    2.1470   33.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7480    0.9670   33.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1000   -0.7960   33.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2720   -0.3110   34.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0660   -1.3740   34.8590  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  1  7  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1'
+A    8
+C2'
+A    9
+CL1
+M  END
+>  <InstanceId>
+3G52_CEE_A_150
+
+>  <ChemCompId>
+CEE
+
+>  <PdbId>
+3G52
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+150
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 Cl
+
+>  <Name>
+(2-chloroethyl)benzene
+
+>  <SystematicName>
+2-chloroethylbenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 Cl
+
+>  <MolecularWeight>
+140.61
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9Cl/c9-7-6-8-4-2-1-3-5-8/h1-5H,6-7H2
+
+>  <InChIKey>
+MNNZINNZIQVULG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)CCCl
+
+$$$$

@@ -1,0 +1,131 @@
+4Z02_4K8_A_1101
+  RCSB PDB12061716323D
+Coordinates from PDB:4Z02:A:1101 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   44.1530   37.8280    0.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2050   33.6550    2.9330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.2740   33.9850    1.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5620   33.6270    0.7820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3880   35.0000    1.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3020   35.4830    2.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2480   36.4420    1.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2340   37.0070    2.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1300   37.9110    2.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0880   38.3410    0.8970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2170   36.8870    0.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2270   36.3340   -0.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3510   35.4240    0.0860   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  1 11  2  0  0  0  0
+  1 10  1  0  0  0  0
+ 13  5  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  4  3  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  5  3  1  0  0  0  0
+  5  6  2  0  0  0  0
+  3  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+C10
+A    2
+O01
+A    3
+C02
+A    4
+O03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+C08
+A   10
+C09
+A   11
+C11
+A   12
+C12
+A   13
+N13
+M  END
+>  <InstanceId>
+4Z02_4K8_A_1101
+
+>  <ChemCompId>
+4K8
+
+>  <PdbId>
+4Z02
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+isoquinoline-3-carboxylic acid
+
+>  <SystematicName>
+isoquinoline-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 N O2
+
+>  <MolecularWeight>
+173.168
+
+>  <ModifiedDate>
+2015-04-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7NO2/c12-10(13)9-5-7-3-1-2-4-8(7)6-11-9/h1-6H,(H,12,13)
+
+>  <InChIKey>
+KVMMIDQDXZOPAB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2cnc(cc2c1)C(=O)O
+
+$$$$

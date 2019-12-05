@@ -1,0 +1,134 @@
+2W67_F34_A_1716
+  RCSB PDB12061707123D
+Coordinates from PDB:2W67:A:1716 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -16.2050    2.8620   -3.5010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0350    2.7940   -3.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6370    2.1650   -5.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0380    3.3180   -3.1330   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1600    3.9600   -1.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.6830    2.9220   -0.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5300    2.1410   -0.4030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3270    3.4800    0.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5900    2.3270    1.1740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5870    4.3380    0.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6180    3.6160    0.8590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1020    4.6030   -1.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2080    5.3070   -2.1390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.8300    5.3410   -1.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O8
+A    2
+C8
+A    3
+C9
+A    4
+N2
+A    5
+C3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+O5
+A   10
+C6
+A   11
+O6
+A   12
+C7
+A   13
+N1
+A   14
+C2
+M  END
+>  <InstanceId>
+2W67_F34_A_1716
+
+>  <ChemCompId>
+F34
+
+>  <PdbId>
+2W67
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1716
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+N-[(3S,4R,5R,6R)-4,5,6-trihydroxyazepan-3-yl]acetamide
+
+>  <SystematicName>
+N-[(3S,4R,5R,6R)-4,5,6-trihydroxyazepan-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H16 N2 O4
+
+>  <MolecularWeight>
+204.224
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O4/c1-4(11)10-5-2-9-3-6(12)8(14)7(5)13/h5-9,12-14H,2-3H2,1H3,(H,10,11)/t5-,6+,7+,8+/m0/s1
+
+>  <InChIKey>
+RGHXJBVAPJFIEQ-LXGUWJNJSA-N
+
+>  <SMILES>
+CC(=O)N[C@H]1CNC[C@H]([C@H]([C@@H]1O)O)O
+
+$$$$

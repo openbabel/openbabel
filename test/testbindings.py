@@ -54,6 +54,31 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testReadsLowerCaseInTurbmol(self):
+        """Support lowercase when reading Turbomole. Fix for #2063"""
+        tmol = """$coord
+    2.02871026746136      0.00016096463521      0.09107555338913      c
+    4.89930048862534      0.04854048717752      0.11762901668325      c
+    5.90748259036722      2.39968480185142      1.42109501042332      c
+    1.34938005428171     -1.70839952555376     -0.85607794562344      h
+    1.26886043300105      1.63876093409995     -0.91749501051641      h
+    1.26913011943130      0.01286165737104      2.01525659069294      h
+    5.60784060607910     -0.01912944162451     -1.82662623368806      h
+    5.60811561474418     -1.63627235546083      1.09011360983431      h
+    5.27020211768512      4.11415935313881      0.45463376946747      h
+    7.97573431608248      2.39090324576822      1.41600146807434      h
+    5.27052201944755      2.48814711866854      3.38732271725103      h
+$end"""
+        inchikey = pybel.readstring("tmol", tmol).write("inchikey").rstrip()
+        self.assertEqual("ATUOYWHBWRKTHZ-UHFFFAOYSA-N", inchikey)
+
+    def testSmartsSupportsHashZero(self):
+        """Ensure that we can match asterisks in SMILES with SMARTS"""
+        mol = pybel.readstring("smi", "*O")
+        # The following used to raise an OSError (SMARTS parse failure)
+        matches = pybel.Smarts("[#0]O").findall(mol)
+        self.assertEqual(matches, [(1, 2)])
+
     def testInChIIsotopes(self):
         """Ensure that we correctly set and read isotopes in InChIs"""
         with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
@@ -64,6 +89,50 @@ class TestSuite(PythonBindings):
                 self.assertEqual(minchi, inchi)
                 msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
                 self.assertEqual(msmi, smi)
+
+    def testWLN(self):
+        """Test some WLN conversions"""
+        data = [ # Taken from Wikipedia
+                ("1H", "C"),
+                ("2H", "CC"),
+                ("3H", "CCC"),
+                ("1Y", "CC(C)C"),
+                ("1X", "CC(C)(C)C"),
+                ("Q1", "CO"),
+                ("1R", "c1ccccc1C"),
+                ("1V1", "CC(=O)C"),
+                ("2O2", "CCOCC"),
+                ("1VR", "CC(=O)c1ccccc1"),
+                ("ZR CVQ", "c1ccc(N)cc1C(=O)O"),
+                ("QVYZ1R", "NC(Cc1ccccc1)C(=O)O"),
+                ("QX2&2&2", "CCC(O)(CC)CC"),
+                ("QVY3&1VQ", "OC(=O)C(CCC)CC(=O)O"),
+                ("L66J BMR& DSWQ IN1&1", "CN(C=1C=C2C(=CC(=CC2=CC1)S(=O)(=O)O)NC1=CC=CC=C1)C"),
+                # The following is not supported
+                # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"),
+
+                # The following are from:
+                # https://www.nextmovesoftware.com/posters/Sayle_WisswesserLineNotation_BioIT_201904.pdf
+                ("WN3", "[O-][N+](=O)CCC"),
+                ("G1UU1G", "ClC#CCl"),
+                ("VH3", "O=CCCC"),
+                ("NCCN", "N#CC#N"),
+                ("ZYZUM", "NC(=N)N"),
+                ("QY", "CC(C)O"),
+                ("OV1 &-NA-", "CC(=O)[O-].[Na+]"),
+                ("RM1R", "c1ccccc1NCc2ccccc2"),
+                ("QVR BNUNR DN1&1", "OC(=O)c1ccccc1N=Nc2ccc(cc2)N(C)C"),
+                ("L6TJ A- AL6TJ AVO2N2&2 &GH",
+                 "CCN(CC)CCOC(=O)C1(CCCCC1)C2CCCCC2.Cl"),
+                ("T56 BMJ B D- DT6N CNJ BMR BO1 DN1&2N1&1 EMV1U1",
+                 "Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C"),
+                ("T56 AN CN GNJ B- BT5MTJ AV1UU2& DR DVM- BT6NJ&& FZ",
+                 "CC#CC(=O)N1CCCC1c2nc(c3n2ccnc3N)c4ccc(cc4)C(=O)Nc5ccccn5"),
+               ]
+        for wln, smi in data:
+            mol = pybel.readstring("wln", wln)
+            ans = pybel.readstring("smi", smi).write("can")
+            self.assertEqual(ans, mol.write("can"))
 
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
@@ -446,6 +515,11 @@ H         -0.26065        0.64232       -2.62218
         config = ob.toTetrahedralStereo(stereodata).GetConfig()
         self.assertEqual(config.from_or_towards, 4294967294)
 
+    def testHydrogenIsotopes(self):
+        """Are D and T supported by GetAtomicNum?"""
+        for symbol in "DT":
+            self.assertEqual(1, ob.GetAtomicNum(symbol))
+
     def testWhetherAllElementsAreSupported(self):
         """Check whether a new element has been correctly added"""
         N = 0
@@ -454,6 +528,7 @@ H         -0.26065        0.64232       -2.62218
             # Is the symbol parsed?
             symbol = ob.GetSymbol(N)
             self.assertEqual(N, ob.GetAtomicNum(symbol))
+            self.assertEqual(N, ob.GetAtomicNum(symbol.lower())) # test lowercase version
             # Has an exact mass been set?
             self.assertNotEqual(0.0, ob.GetExactMass(N))
             # Has the symbol been added to the SMILES parser?

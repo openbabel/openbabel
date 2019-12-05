@@ -1,0 +1,119 @@
+4JMV_1LY_A_302
+  RCSB PDB12061713123D
+Coordinates from PDB:4JMV:A:302 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   30.4970   90.2600   48.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7410   89.6650   48.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3160   88.9020   47.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4640   88.2260   47.4970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5520   87.6260   46.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4630   87.9060   45.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7050   88.6970   46.3830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4750   89.2590   46.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8560   90.0340   47.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6620   90.5590   46.7400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  2  0  0  0  0
+  4  3  2  0  0  0  0
+  6  7  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  1  2  0  0  0  0
+  8  9  2  0  0  0  0
+  1  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CAC
+A    2
+CAD
+A    3
+CAI
+A    4
+NAG
+A    5
+CAB
+A    6
+CAE
+A    7
+NAJ
+A    8
+CAF
+A    9
+CAH
+A   10
+NAA
+M  END
+>  <InstanceId>
+4JMV_1LY_A_302
+
+>  <ChemCompId>
+1LY
+
+>  <PdbId>
+4JMV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3
+
+>  <Name>
+imidazo[1,2-a]pyridin-6-amine
+
+>  <SystematicName>
+imidazo[1,2-a]pyridin-6-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N3
+
+>  <MolecularWeight>
+133.151
+
+>  <ModifiedDate>
+2013-04-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N3/c8-6-1-2-7-9-3-4-10(7)5-6/h1-5H,8H2
+
+>  <InChIKey>
+FBEUDMIHYYXAJG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2nccn2cc1N
+
+$$$$

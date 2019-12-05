@@ -1,0 +1,113 @@
+2HOZ_HOZ_A_1
+  RCSB PDB12061705493D
+Coordinates from PDB:2HOZ:A:1 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   13.8280   12.3700  -52.9240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2520   13.5580  -52.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4460   14.5700  -53.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0810   14.9030  -52.6300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3820   14.2300  -51.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3290   15.2670  -52.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3460   15.8130  -51.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9850   16.6520  -50.2350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5330   15.4170  -51.1960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+N1
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+OE1
+A    9
+OE2
+M  END
+>  <InstanceId>
+2HOZ_HOZ_A_1
+
+>  <ChemCompId>
+HOZ
+
+>  <PdbId>
+2HOZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O2
+
+>  <Name>
+(4S)-4,5-DIAMINOPENTANOIC ACID
+
+>  <SystematicName>
+(4S)-4,5-diaminopentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N2 O2
+
+>  <MolecularWeight>
+132.161
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N2O2/c6-3-4(7)1-2-5(8)9/h4H,1-3,6-7H2,(H,8,9)/t4-/m0/s1
+
+>  <InChIKey>
+PQGAAJQIFBEYSA-BYPYZUCNSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@@H](CN)N
+
+$$$$

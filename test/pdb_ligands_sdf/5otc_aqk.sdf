@@ -1,0 +1,129 @@
+5OTC_AQK_A_301
+  RCSB PDB12191704023D
+Coordinates from PDB:5OTC:A:301 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -42.3200  -16.8570   -0.9360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6920  -17.9300   -0.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.4670  -17.9400   -0.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.3530  -19.2160   -0.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.6040  -20.1910   -1.7230   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.3550  -20.4640   -2.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.6860  -21.8900   -2.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -43.6830  -22.3150   -3.6380   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.4360  -20.1440   -4.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.9380  -19.4080   -5.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.9170  -19.1940   -6.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.4430  -19.0140   -7.6550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.9660  -22.7190   -2.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7 13  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAB
+A    2
+CAK
+A    3
+OAD
+A    4
+CAI
+A    5
+N
+A    6
+CA
+A    7
+C
+A    8
+O
+A    9
+CB
+A   10
+CAG
+A   11
+CAF
+A   12
+NAA
+A   13
+OXT
+M  END
+>  <InstanceId>
+5OTC_AQK_A_301
+
+>  <ChemCompId>
+AQK
+
+>  <PdbId>
+5OTC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 O4
+
+>  <Name>
+(2~{S})-5-azanyl-2-(2-hydroxy-2-oxoethylamino)pentanoic acid
+
+>  <SystematicName>
+(2~{S})-5-azanyl-2-(2-hydroxy-2-oxoethylamino)pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H14 N2 O4
+
+>  <MolecularWeight>
+190.197
+
+>  <ModifiedDate>
+2017-12-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14N2O4/c8-3-1-2-5(7(12)13)9-4-6(10)11/h5,9H,1-4,8H2,(H,10,11)(H,12,13)/t5-/m0/s1
+
+>  <InChIKey>
+YVSBHPGVGNJMHM-YFKPBYRVSA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)NCC(=O)O)CN
+
+$$$$

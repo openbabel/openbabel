@@ -1,0 +1,139 @@
+2CM8_F16_A_1299
+  RCSB PDB12061705163D
+Coordinates from PDB:2CM8:A:1299 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   46.4620   15.4340    3.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6680   16.1830    3.7160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8320   17.0770    4.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8430   17.0340    5.8710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6240   15.8500    5.4680   S 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0340   16.5070    5.1850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6450   14.4680    6.4180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7880   17.8380    4.9280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9650   14.4120    3.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7520   14.6610    2.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2480   13.6250    1.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9570   12.3400    1.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1700   12.0930    1.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6780   13.1250    2.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8200   10.9240    1.8610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+C1
+A    2
+C3
+A    3
+C4
+A    4
+N5
+A    5
+S6
+A    6
+O7
+A    7
+O8
+A    8
+O9
+A    9
+C10
+A   10
+C11
+A   11
+C12
+A   12
+C13
+A   13
+C14
+A   14
+C15
+A   15
+O1
+M  END
+>  <InstanceId>
+2CM8_F16_A_1299
+
+>  <ChemCompId>
+F16
+
+>  <PdbId>
+2CM8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1299
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4 S
+
+>  <Name>
+5-(3-HYDROXYPHENYL)ISOTHIAZOL-3(2H)-ONE 1,1-DIOXIDE
+
+>  <SystematicName>
+5-(3-hydroxyphenyl)-1,1-dioxo-1,2-thiazol-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N O4 S
+
+>  <MolecularWeight>
+225.221
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H7NO4S/c11-7-3-1-2-6(4-7)8-5-9(12)10-15(8,13)14/h1-5,11H,(H,10,12)
+
+>  <InChIKey>
+FJABEDRGNJSWCC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)O)C2=CC(=O)NS2(=O)=O
+
+$$$$

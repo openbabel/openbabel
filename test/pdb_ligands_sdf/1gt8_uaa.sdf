@@ -1,0 +1,126 @@
+1GT8_UAA_A_1035
+  RCSB PDB12061702383D
+Coordinates from PDB:1GT8:A:1035 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   44.8760   75.7500   49.4020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3300   73.7160   48.5860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3170   72.3540   48.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0500   71.7310   49.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6840   72.5340   50.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4830   71.9240   51.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9520   71.7330   51.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4160   71.9950   50.2790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.7740   71.2670   52.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7340   71.7080   47.6950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9390   74.5400   49.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6200   73.9210   50.4870   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1 11  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O2
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+O8A
+A    9
+O8B
+A   10
+O4
+A   11
+C2
+A   12
+N1
+M  END
+>  <InstanceId>
+1GT8_UAA_A_1035
+
+>  <ChemCompId>
+UAA
+
+>  <PdbId>
+1GT8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1035
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O4
+
+>  <Name>
+URACIL-6-ACETIC ACID
+
+>  <SystematicName>
+2-(2,6-dioxo-3H-pyrimidin-4-yl)ethanoic acid
+
+>  <Synonyms>
+6-CARBOXYMETHYLURACIL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N2 O4
+
+>  <MolecularWeight>
+170.123
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N2O4/c9-4-1-3(2-5(10)11)7-6(12)8-4/h1H,2H2,(H,10,11)(H2,7,8,9,12)
+
+>  <InChIKey>
+NQAUNZZEYKWTHM-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(NC(=O)NC1=O)CC(=O)O
+
+$$$$

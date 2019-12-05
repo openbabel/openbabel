@@ -1,0 +1,118 @@
+4C5W_NM3_A_401
+  RCSB PDB12061711583D
+Coordinates from PDB:4C5W:A:401 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   22.5500   31.9820   87.7510   N 0  3  0  0  0  0  0  0  0  0  0  0
+   23.9350   31.6850   87.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9210   26.5240   88.5520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5770   27.4570   88.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8290   27.4880   88.0170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7650   28.5440   87.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8650   30.7030   88.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5740   32.8170   88.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8550   32.7430   86.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5580   29.7670   86.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C8
+A    3
+O4
+A    4
+C5
+A    5
+O7
+A    6
+C6
+A    7
+C2
+A    8
+C9
+A    9
+C10
+A   10
+C3
+M  END
+>  <InstanceId>
+4C5W_NM3_A_401
+
+>  <ChemCompId>
+NM3
+
+>  <PdbId>
+4C5W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+ethyl-dimethyl-(4-oxidanyl-4-oxidanylidene-butyl)azanium
+
+>  <SystematicName>
+ethyl-dimethyl-(4-oxidanyl-4-oxidanylidene-butyl)azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H18 N O2
+
+>  <MolecularWeight>
+160.234
+
+>  <ModifiedDate>
+2014-05-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO2/c1-4-9(2,3)7-5-6-8(10)11/h4-7H2,1-3H3/p+1
+
+>  <InChIKey>
+ISMYCKWHOZKHNJ-UHFFFAOYSA-O
+
+>  <SMILES>
+CC[N+](C)(C)CCCC(=O)O
+
+$$$$

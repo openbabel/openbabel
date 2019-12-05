@@ -1,0 +1,117 @@
+4Y7F_48X_A_402
+  RCSB PDB12061716223D
+Coordinates from PDB:4Y7F:A:402 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    7.1520   -1.5700  -32.7880   P 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1560   -2.1220  -27.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9650   -0.4040  -28.3190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2020   -0.4950  -32.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9440   -0.9980  -32.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6880   -2.0770  -34.1370   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7950   -2.7450  -31.9330   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5010   -2.4230  -30.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5860   -2.4390  -29.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2680   -1.6140  -28.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  1  2  0  0  0  0
+  4  1  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10  3  2  0  0  0  0
+ 10  2  1  0  0  0  0
+A    1
+P
+A    2
+O1
+A    3
+O2
+A    4
+O4P
+A    5
+O2P
+A    6
+O3P
+A    7
+O1P
+A    8
+C3
+A    9
+C2
+A   10
+C1
+M  END
+>  <InstanceId>
+4Y7F_48X_A_402
+
+>  <ChemCompId>
+48X
+
+>  <PdbId>
+4Y7F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+3-(phosphonooxy)propanoic acid
+
+>  <SystematicName>
+3-phosphonooxypropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H7 O6 P
+
+>  <MolecularWeight>
+170.058
+
+>  <ModifiedDate>
+2015-07-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H7O6P/c4-3(5)1-2-9-10(6,7)8/h1-2H2,(H,4,5)(H2,6,7,8)
+
+>  <InChIKey>
+QMMAAPSPIPKBBV-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COP(=O)(O)O)C(=O)O
+
+$$$$

@@ -1,0 +1,135 @@
+1HNN_SKF_A_3001
+  RCSB PDB12061702443D
+Coordinates from PDB:1HNN:A:3001 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   28.3480   46.0370   16.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8990   45.5320   15.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8220   44.1470   15.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1930   43.2860   16.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2610   43.4900   13.8470   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6420   43.7900   17.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7200   45.1740   17.8070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4850   44.4300   12.7700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8660   43.1330   13.8730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1050   42.1870   13.5730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9650   42.8430   18.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2110   44.8480   20.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4880   45.7050   18.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7000   43.4830   19.8600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  8  2  0  0  0  0
+  5  9  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+S
+A    6
+C8
+A    7
+C9
+A    8
+O1
+A    9
+O2
+A   10
+N
+A   11
+C1
+A   12
+C2
+A   13
+C3
+A   14
+N1
+M  END
+>  <InstanceId>
+1HNN_SKF_A_3001
+
+>  <ChemCompId>
+SKF
+
+>  <PdbId>
+1HNN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O2 S
+
+>  <Name>
+1,2,3,4-TETRAHYDRO-ISOQUINOLINE-7-SULFONIC ACID AMIDE
+
+>  <SystematicName>
+1,2,3,4-tetrahydroisoquinoline-7-sulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O2 S
+
+>  <MolecularWeight>
+212.269
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2O2S/c10-14(12,13)9-2-1-7-3-4-11-6-8(7)5-9/h1-2,5,11H,3-4,6H2,(H2,10,12,13)
+
+>  <InChIKey>
+UGLLZXSYRBMNOS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1S(=O)(=O)N)CNCC2
+
+$$$$

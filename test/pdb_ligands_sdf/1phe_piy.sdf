@@ -1,0 +1,123 @@
+1PHE_PIY_A_422
+  RCSB PDB12061703393D
+Coordinates from PDB:1PHE:A:422 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   44.4420   45.1950   16.9730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6850   44.8470   16.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4920   45.1070   17.6720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5470   45.5920   18.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7790   45.5050   18.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1820   44.3260   15.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2950   44.0900   14.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7340   43.6690   12.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0730   43.3090   12.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9610   43.4660   13.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5010   43.9490   15.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  1  4  1  0  0  0  0
+  6  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  5  1  0  0  0  0
+  4  5  2  0  0  0  0
+  7  6  2  0  0  0  0
+ 11  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+M  END
+>  <InstanceId>
+1PHE_PIY_A_422
+
+>  <ChemCompId>
+PIY
+
+>  <PdbId>
+1PHE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+422
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+2-phenyl-1H-imidazole
+
+>  <SystematicName>
+2-phenyl-1H-imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2
+
+>  <MolecularWeight>
+144.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2/c1-2-4-8(5-3-1)9-10-6-7-11-9/h1-7H,(H,10,11)
+
+>  <InChIKey>
+ZCUJYXPAKHMBAZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2[nH]ccn2
+
+$$$$

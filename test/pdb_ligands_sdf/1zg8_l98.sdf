@@ -1,0 +1,142 @@
+1ZG8_L98_A_401
+  RCSB PDB12061704523D
+Coordinates from PDB:1ZG8:A:401 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   34.7250   12.1120   60.2400   S 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6830   11.5460   58.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1530   11.5200   59.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0180   11.2870   58.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.7750   10.0980   57.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5980    9.8990   56.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.0990   12.2890   57.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.9110   12.0940   55.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6550   10.9110   55.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3090    8.7820   56.5090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0270    8.0930   57.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6200    6.9840   56.9450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.1270    8.4530   58.6650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3760   10.5100   60.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.1340    9.2900   60.1590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.8030   10.8900   61.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+S
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+N9
+A   11
+C10
+A   12
+N11
+A   13
+N12
+A   14
+C13
+A   15
+O14
+A   16
+O15
+M  END
+>  <InstanceId>
+1ZG8_L98_A_401
+
+>  <ChemCompId>
+L98
+
+>  <PdbId>
+1ZG8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O2 S
+
+>  <Name>
+(2R)-2-(3-{[AMINO(IMINO)METHYL]AMINO}PHENYL)-3-SULFANYLPROPANOIC ACID
+
+>  <SystematicName>
+(2R)-2-(3-carbamimidamidophenyl)-3-sulfanyl-propanoic acid
+
+>  <Synonyms>
+2-(3-GUANIDINOPHENYL)-3-MERCAPTOPROPANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N3 O2 S
+
+>  <MolecularWeight>
+239.294
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13N3O2S/c11-10(12)13-7-3-1-2-6(4-7)8(5-16)9(14)15/h1-4,8,16H,5H2,(H,14,15)(H4,11,12,13)/t8-/m1/s1
+
+>  <InChIKey>
+YHBCRXAIIVZWEW-MRVPVSSYSA-N
+
+>  <SMILES>
+c1cc(cc(c1)NC(=N)N)[C@@H](CS)C(=O)O
+
+$$$$

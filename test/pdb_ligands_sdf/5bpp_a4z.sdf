@@ -1,0 +1,142 @@
+5BPP_A4Z_A_706
+  RCSB PDB12061716583D
+Coordinates from PDB:5BPP:A:706 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   34.8570   91.6880    0.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7950   90.7920    0.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4760   91.0380    0.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4690   90.2010   -0.1100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7240   89.0950   -0.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0730   88.8550   -1.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0920   89.6880   -0.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2050   91.3150    2.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3040   90.8450    2.5540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1560   91.2470    2.9080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1370   90.4690    2.3840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6950   88.2900   -1.3770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3180   88.7430   -1.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1400   87.8420   -1.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9220   87.5570    0.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4870   87.1700    0.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12  5  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  2  2  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 15 16  1  0  0  0  0
+  1  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+O9
+A   10
+N10
+A   11
+O11
+A   12
+O12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+C16
+M  END
+>  <InstanceId>
+5BPP_A4Z_A_706
+
+>  <ChemCompId>
+A4Z
+
+>  <PdbId>
+5BPP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+706
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O3
+
+>  <Name>
+2-(4-butoxyphenyl)-N-hydroxyacetamide
+
+>  <SystematicName>
+2-(4-butoxyphenyl)-N-oxidanyl-ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H17 N O3
+
+>  <MolecularWeight>
+223.268
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H17NO3/c1-2-3-8-16-11-6-4-10(5-7-11)9-12(14)13-15/h4-7,15H,2-3,8-9H2,1H3,(H,13,14)
+
+>  <InChIKey>
+MXJWRABVEGLYDG-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCOc1ccc(cc1)CC(=O)NO
+
+$$$$

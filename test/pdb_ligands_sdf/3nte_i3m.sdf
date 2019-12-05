@@ -1,0 +1,90 @@
+3NTE_I3M_A_234
+  RCSB PDB12061709583D
+Coordinates from PDB:3NTE:A:234 Model:1 without hydrogens
+  3  2  0  0  0  0            999 V2000
+  -37.3620   27.3260   15.6030   I 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.1250   25.1150   14.5540   I 0  5  0  0  0  0  0  0  0  0  0  0
+  -34.6770   22.9690   13.5880   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+M  CHG  1   2  -1
+A    1
+I01
+A    2
+I02
+A    3
+I03
+M  END
+>  <InstanceId>
+3NTE_I3M_A_234
+
+>  <ChemCompId>
+I3M
+
+>  <PdbId>
+3NTE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+234
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+I3
+
+>  <Name>
+Tri-iodode Anion
+
+>  <SystematicName>
+triiodide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+I3
+
+>  <MolecularWeight>
+380.713
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/I3/c1-3-2/q-1
+
+>  <InChIKey>
+WRTMQOHKMFDUKX-UHFFFAOYSA-N
+
+>  <SMILES>
+I[I-]I
+
+$$$$

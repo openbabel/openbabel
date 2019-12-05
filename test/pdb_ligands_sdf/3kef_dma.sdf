@@ -1,0 +1,133 @@
+1UBY_DMA_A_401
+  RCSB PDB12061704123D
+Coordinates from PDB:1UBY:A:401 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+    4.7370   31.2640  103.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7030   29.9620  103.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3980   31.1190  101.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9050   31.5860  100.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6370   32.3760  100.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7600   31.2920   99.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5750   29.7150  105.2780   P 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4630   30.6810  105.9090   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0960   28.1760  105.3410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9060   30.0160  106.1320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3870   29.7260  105.7020   P 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2290   28.8540  106.7470   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0810   31.1460  105.4130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2160   28.8750  104.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+PA
+A    8
+O1A
+A    9
+O2A
+A   10
+O3A
+A   11
+PB
+A   12
+O1B
+A   13
+O2B
+A   14
+O3B
+M  END
+>  <InstanceId>
+1UBY_DMA_A_401
+
+>  <ChemCompId>
+DMA
+
+>  <PdbId>
+1UBY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O7 P2
+
+>  <Name>
+DIMETHYLALLYL DIPHOSPHATE
+
+>  <SystematicName>
+3-methylbut-2-enyl phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O7 P2
+
+>  <MolecularWeight>
+246.092
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O7P2/c1-5(2)3-4-11-14(9,10)12-13(6,7)8/h3H,4H2,1-2H3,(H,9,10)(H2,6,7,8)
+
+>  <InChIKey>
+CBIDRCWHNCKSTO-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=CCO[P@@](=O)(O)OP(=O)(O)O)C
+
+$$$$

@@ -1,0 +1,134 @@
+2E82_IM3_A_352
+  RCSB PDB12061705253D
+Coordinates from PDB:2E82:A:352 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   29.9310  -68.8460  -16.2010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0550  -67.6540  -16.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9240  -67.3060  -17.3940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1360  -66.6850  -15.9460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5070  -67.0660  -14.9180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8670  -65.2820  -16.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6700  -65.2850  -17.3970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3710  -65.2350  -16.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2930  -65.2460  -17.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0090  -65.1970  -17.3210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5300  -65.3000  -19.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4750  -65.3030  -20.1000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8330  -65.3630  -19.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8800  -65.3510  -18.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 14  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 11  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+OXT
+A    2
+C
+A    3
+O
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CG
+A    8
+CD2
+A    9
+CE2
+A   10
+O14
+A   11
+CZ
+A   12
+OH
+A   13
+CE1
+A   14
+CD1
+M  END
+>  <InstanceId>
+2E82_IM3_A_352
+
+>  <ChemCompId>
+IM3
+
+>  <PdbId>
+2E82
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+352
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O4
+
+>  <Name>
+(2E)-3-(3,4-DIHYDROXYPHENYL)-2-IMINOPROPANOIC ACID
+
+>  <SystematicName>
+3-(3,4-dihydroxyphenyl)-2-imino-propanoic acid
+
+>  <Synonyms>
+IMINO-DOPA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O4
+
+>  <MolecularWeight>
+195.172
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H9NO4/c10-6(9(13)14)3-5-1-2-7(11)8(12)4-5/h1-2,4,10-12H,3H2,(H,13,14)/b10-6+
+
+>  <InChIKey>
+VFINRVRRNHRWEQ-UXBLZVDNSA-N
+
+>  <SMILES>
+[H]/N=C(\Cc1ccc(c(c1)O)O)/C(=O)O
+
+$$$$

@@ -1,0 +1,122 @@
+1RG2_OTR_A_996
+  RCSB PDB12061703533D
+Coordinates from PDB:1RG2:A:996 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    8.7750   53.8350   -3.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1730   53.7360   -2.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8920   53.2150   -2.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3170   53.1190   -0.9060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2020   52.7980   -3.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7990   52.9040   -4.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0860   53.4230   -4.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7170   53.5320   -6.0340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3650   54.7810   -6.6490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2360   53.4150   -5.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6030   51.9910   -5.7660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  2  0  0  0  0
+  3  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+O4
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C7
+A    9
+O7
+A   10
+C8
+A   11
+N8
+M  END
+>  <InstanceId>
+1RG2_OTR_A_996
+
+>  <ChemCompId>
+OTR
+
+>  <PdbId>
+1RG2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+996
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2
+
+>  <Name>
+4-(2R-AMINO-1-HYDROXYETHYL)PHENOL
+
+>  <SystematicName>
+4-[(1R)-2-amino-1-hydroxy-ethyl]phenol
+
+>  <Synonyms>
+R-OCTOPAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O2
+
+>  <MolecularWeight>
+153.178
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H11NO2/c9-5-8(11)6-1-3-7(10)4-2-6/h1-4,8,10-11H,5,9H2/t8-/m0/s1
+
+>  <InChIKey>
+QHGUCRYDKWKLMG-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(ccc1[C@H](CN)O)O
+
+$$$$

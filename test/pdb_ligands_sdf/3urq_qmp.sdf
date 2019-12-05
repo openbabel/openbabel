@@ -1,0 +1,122 @@
+3URN_QMP_A_902
+  RCSB PDB12061711063D
+Coordinates from PDB:3URN:A:902 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   13.4120   32.2290   35.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8090   31.7650   36.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5120   31.0780   35.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6770   29.8960   34.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2810   30.3680   34.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5710   31.0480   35.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2960   31.5220   34.8910   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9460   30.8360   35.4360   P 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6290   31.5410   34.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9920   29.3590   35.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7240   31.3650   36.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8 11  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+A    1
+CAG
+A    2
+CAE
+A    3
+CAD
+A    4
+CAF
+A    5
+CAH
+A    6
+CAJ
+A    7
+OAI
+A    8
+PAK
+A    9
+CAA
+A   10
+OAC
+A   11
+OAB
+M  END
+>  <InstanceId>
+3URN_QMP_A_902
+
+>  <ChemCompId>
+QMP
+
+>  <PdbId>
+3URN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3 P
+
+>  <Name>
+cyclohexyl methylphosphonate
+
+>  <SystematicName>
+cyclohexyloxy(methyl)phosphinic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 O3 P
+
+>  <MolecularWeight>
+178.166
+
+>  <ModifiedDate>
+2012-07-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15O3P/c1-11(8,9)10-7-5-3-2-4-6-7/h7H,2-6H2,1H3,(H,8,9)
+
+>  <InChIKey>
+SWYGLBJVTQMYSE-UHFFFAOYSA-N
+
+>  <SMILES>
+CP(=O)(O)OC1CCCCC1
+
+$$$$

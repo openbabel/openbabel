@@ -1,0 +1,138 @@
+3F1A_HS7_A_0
+  RCSB PDB12061708323D
+Coordinates from PDB:3F1A:A:0 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -3.2280   -2.8730   -4.0420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0720   -2.9710   -4.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6250   -2.2740   -5.4770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5160   -1.4250   -6.1220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0770   -3.8840   -3.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5600   -5.2490   -3.7800   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3690   -6.1880   -5.0640   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1670   -5.8050   -5.7600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3210   -7.5460   -4.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6150   -6.0230   -6.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4580   -5.4100   -7.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8770   -6.5050   -5.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9650   -6.3790   -6.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7910   -5.7730   -7.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5370   -5.2870   -8.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+O3
+A    2
+C7
+A    3
+N2
+A    4
+O4
+A    5
+C8
+A    6
+N1
+A    7
+S1
+A    8
+O1
+A    9
+O2
+A   10
+C3
+A   11
+C1
+A   12
+C6
+A   13
+C5
+A   14
+C4
+A   15
+C2
+M  END
+>  <InstanceId>
+3F1A_HS7_A_0
+
+>  <ChemCompId>
+HS7
+
+>  <PdbId>
+3F1A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4 S
+
+>  <Name>
+N-oxo-2-(phenylsulfonylamino)ethanamide
+
+>  <SystematicName>
+N-oxo-2-(phenylsulfonylamino)ethanamide
+
+>  <Synonyms>
+N-(2-nitroso-2-oxoethyl)benzenesulfonamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N2 O4 S
+
+>  <MolecularWeight>
+228.225
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N2O4S/c11-8(10-12)6-9-15(13,14)7-4-2-1-3-5-7/h1-5,9H,6H2
+
+>  <InChIKey>
+LBEMJFIVKDOIBO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)S(=O)(=O)NCC(=O)N=O
+
+$$$$

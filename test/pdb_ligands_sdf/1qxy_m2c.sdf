@@ -1,0 +1,138 @@
+1QXY_M2C_A_3001
+  RCSB PDB12061703493D
+Coordinates from PDB:1QXY:A:3001 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    6.2870    3.1910   -1.6160   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4300    3.8770   -2.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4750    5.2400   -2.0250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0230    3.2670   -2.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9090    4.1360   -2.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4980    3.5620   -2.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2040    4.5530   -3.5070   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7150    5.1960   -2.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7660    2.7620   -1.0590   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9930    3.7210   -3.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1290    2.4990   -4.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6540    2.4000   -5.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1350    3.5200   -6.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0160    4.7260   -5.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4530    4.8160   -4.4340   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+OA
+A    2
+C7
+A    3
+O8
+A    4
+C9
+A    5
+C11
+A    6
+C12
+A    7
+S13
+A    8
+C14
+A    9
+N10
+A   10
+C1
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+C5
+A   15
+N6
+M  END
+>  <InstanceId>
+1QXY_M2C_A_3001
+
+>  <ChemCompId>
+M2C
+
+>  <PdbId>
+1QXY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 S
+
+>  <Name>
+(2S)-2-AMINO-4-(METHYLSULFANYL)-1-PYRIDIN-2-YLBUTANE-1,1-DIOL
+
+>  <SystematicName>
+(2S)-2-amino-4-methylsulfanyl-1-pyridin-2-yl-butane-1,1-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N2 O2 S
+
+>  <MolecularWeight>
+228.311
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N2O2S/c1-15-7-5-8(11)10(13,14)9-4-2-3-6-12-9/h2-4,6,8,13-14H,5,7,11H2,1H3/t8-/m0/s1
+
+>  <InChIKey>
+JPZQHIBHGCCNKS-QMMMGPOBSA-N
+
+>  <SMILES>
+CSCC[C@@H](C(c1ccccn1)(O)O)N
+
+$$$$

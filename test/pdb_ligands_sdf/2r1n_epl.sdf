@@ -1,0 +1,146 @@
+2R1N_EPL_A_701
+  RCSB PDB12061706523D
+Coordinates from PDB:2R1N:A:701 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   27.3900   19.5130   -1.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1440   19.8790   -0.1460   P 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6080   19.2460   -0.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6560   19.7860    0.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7510   19.0080    1.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2670   21.4390    0.1640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5110   22.4080   -0.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0040   23.6640   -0.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6110   19.2930    1.2690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3210   19.2760    1.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6370   18.0670    1.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3530   17.9930    2.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7450   19.1490    2.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4560   19.1190    3.2840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6310   17.9510    3.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4430   20.3580    2.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7320   20.4230    2.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 17  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 16  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+O1
+A    2
+P
+A    3
+O2
+A    4
+C8
+A    5
+C9
+A    6
+O4
+A    7
+C10
+A    8
+C11
+A    9
+O3
+A   10
+C4
+A   11
+C2
+A   12
+C3
+A   13
+C1
+A   14
+O5
+A   15
+C7
+A   16
+C5
+A   17
+C6
+M  END
+>  <InstanceId>
+2R1N_EPL_A_701
+
+>  <ChemCompId>
+EPL
+
+>  <PdbId>
+2R1N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O5 P
+
+>  <Name>
+DIETHYL 4-METHOXYPHENYL PHOSPHATE
+
+>  <SystematicName>
+diethyl (4-methoxyphenyl) phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 O5 P
+
+>  <MolecularWeight>
+260.223
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H17O5P/c1-4-14-17(12,15-5-2)16-11-8-6-10(13-3)7-9-11/h6-9H,4-5H2,1-3H3
+
+>  <InChIKey>
+GDWXALVJBAAUJN-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOP(=O)(OCC)Oc1ccc(cc1)OC
+
+$$$$

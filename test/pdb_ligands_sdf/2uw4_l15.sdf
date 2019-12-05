@@ -1,0 +1,139 @@
+2UW4_L15_A_1351
+  RCSB PDB12061707003D
+Coordinates from PDB:2UW4:A:1351 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+    4.3990   10.0450    1.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1070    9.9090    2.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8250    9.8090    2.9440   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7950    9.6980    4.2990   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0830    9.7300    4.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9410    9.8660    3.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4090    9.9020    3.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0930   10.2060    4.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4750   10.2060    4.8130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2000    9.8970    3.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7080    9.8970    3.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2940    8.4980    3.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7360    7.6090    2.6270   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5140    9.5880    2.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1370    9.5850    2.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 10 14  2  0  0  0  0
+  7 15  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+N13
+A   14
+C14
+A   15
+C15
+M  END
+>  <InstanceId>
+2UW4_L15_A_1351
+
+>  <ChemCompId>
+L15
+
+>  <PdbId>
+2UW4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3
+
+>  <Name>
+2-[4-(3-METHYL-1H-PYRAZOL-4-YL)PHENYL]ETHANAMINE
+
+>  <SystematicName>
+2-[4-(3-methyl-1H-pyrazol-4-yl)phenyl]ethanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H15 N3
+
+>  <MolecularWeight>
+201.268
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C12H15N3/c1-9-12(8-14-15-9)11-4-2-10(3-5-11)6-7-13/h2-5,8H,6-7,13H2,1H3,(H,14,15)
+
+>  <InChIKey>
+ILTOXASLQDKYJW-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c[nH]n1)c2ccc(cc2)CCN
+
+$$$$

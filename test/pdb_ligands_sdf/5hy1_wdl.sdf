@@ -1,0 +1,114 @@
+3ZGS_WDL_A_1366
+  RCSB PDB12061711293D
+Coordinates from PDB:3ZGS:A:1366 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+  -38.7740   10.3550   -9.4880   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.1880   10.9160   -8.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5960   12.1890   -8.1060   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2470   10.3620   -7.6580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.9140    9.1260   -8.0480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.4040    8.4370   -9.0790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.9580    8.4870   -7.3170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.3320    9.1220   -9.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.9050    8.4950  -10.8360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  4  1  0  0  0  0
+  5  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  1  1  0  0  0  0
+A    1
+NAE
+A    2
+CAH
+A    3
+OAB
+A    4
+N6
+A    5
+CAI
+A    6
+NAF
+A    7
+OAC
+A    8
+CAG
+A    9
+OAA
+M  END
+>  <InstanceId>
+3ZGS_WDL_A_1366
+
+>  <ChemCompId>
+WDL
+
+>  <PdbId>
+3ZGS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1366
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N3 O3
+
+>  <Name>
+1,3,5-triazine-2,4,6-triol
+
+>  <SystematicName>
+1,3,5-triazine-2,4,6-triol
+
+>  <Synonyms>
+Cyanuric Acid
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C3 H3 N3 O3
+
+>  <MolecularWeight>
+129.074
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H3N3O3/c7-1-4-2(8)6-3(9)5-1/h(H3,4,5,6,7,8,9)
+
+>  <InChIKey>
+ZFSLODLOARCGLH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1(nc(nc(n1)O)O)O
+
+$$$$

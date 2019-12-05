@@ -1,0 +1,156 @@
+1W1Y_TYP_A_1507
+  RCSB PDB12061704293D
+Coordinates from PDB:1W1Y:A:1507 Model:1 without hydrogens
+ 19 21  0  0  0  0            999 V2000
+   17.9710   43.0160  100.4770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8720   42.5860  101.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4970   43.8150  102.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6540   43.8030  102.5850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9510   41.6650  100.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3380   40.3010  100.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6840   40.0680   99.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1010   38.8100   99.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8270   38.0250  101.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4100   39.2790  101.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1710   37.7900  100.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5920   36.5780   99.9300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7050   44.9510  102.3990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2770   44.8930  101.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1890   44.1680  100.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4730   44.5830   99.7290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8370   46.3580  101.9130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1340   47.1680  101.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1040   46.3240  102.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 15  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 19  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 17  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CE1
+A    9
+CE2
+A   10
+CD2
+A   11
+CZ
+A   12
+OH
+A   13
+NP
+A   14
+CAP
+A   15
+CP
+A   16
+OP
+A   17
+CBP
+A   18
+CGP
+A   19
+CDP
+M  END
+>  <InstanceId>
+1W1Y_TYP_A_1507
+
+>  <ChemCompId>
+TYP
+
+>  <PdbId>
+1W1Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1507
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O3
+
+>  <Name>
+CYCLO-(L-TYROSINE-L-PROLINE) INHIBITOR
+
+>  <SystematicName>
+(3S,8aS)-3-[(4-hydroxyphenyl)methyl]-2,3,6,7,8,8a-hexahydropyrrolo[2,1-f]pyrazine-1,4-dione
+
+>  <Synonyms>
+(3S,8AR)-3-(4-HYDROXYBENZYL)HEXAHYDROPYRROLO[1,2-A]PYRAZINE-1,4-DIONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H16 N2 O3
+
+>  <MolecularWeight>
+260.288
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H16N2O3/c17-10-5-3-9(4-6-10)8-11-14(19)16-7-1-2-12(16)13(18)15-11/h3-6,11-12,17H,1-2,7-8H2,(H,15,18)/t11-,12-/m0/s1
+
+>  <InChIKey>
+LSGOTAXPWMCUCK-RYUDHWBXSA-N
+
+>  <SMILES>
+c1cc(ccc1C[C@H]2C(=O)N3CCC[C@H]3C(=O)N2)O
+
+$$$$

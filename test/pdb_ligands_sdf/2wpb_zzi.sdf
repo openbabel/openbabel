@@ -1,0 +1,137 @@
+2WPB_ZZI_A_1298
+  RCSB PDB12061707173D
+Coordinates from PDB:2WPB:A:1298 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+    4.5120  -12.6610   27.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6290  -11.4100   28.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4550  -11.6820   29.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1590  -10.4850   30.8390   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3540   -9.1070   30.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3390   -8.2580   31.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7620   -8.8290   31.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6600  -10.7050   32.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4760  -11.8310   32.5260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3580   -9.5030   32.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7640   -9.7730   34.3670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8770   -9.0980   32.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7160   -8.5080   31.5990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4980   -8.0660   33.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2510   -6.8610   33.7640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+NAH
+A    5
+CAG
+A    6
+CAF
+A    7
+CAE
+A    8
+CAI
+A    9
+OAD
+A   10
+CAJ
+A   11
+OAN
+A   12
+CAK
+A   13
+OAO
+A   14
+CAL
+A   15
+OAM
+M  END
+>  <InstanceId>
+2WPB_ZZI_A_1298
+
+>  <ChemCompId>
+ZZI
+
+>  <PdbId>
+2WPB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1298
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4
+
+>  <Name>
+(2R,3R)-2,3,4-TRIHYDROXY-N,N-DIPROPYLBUTANAMIDE
+
+>  <SystematicName>
+(2R,3R)-2,3,4-trihydroxy-N,N-dipropyl-butanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H21 N O4
+
+>  <MolecularWeight>
+219.278
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H21NO4/c1-3-5-11(6-4-2)10(15)9(14)8(13)7-12/h8-9,12-14H,3-7H2,1-2H3/t8-,9-/m1/s1
+
+>  <InChIKey>
+JYHQCIGUBKFYNN-RKDXNWHRSA-N
+
+>  <SMILES>
+CCCN(CCC)C(=O)[C@@H]([C@@H](CO)O)O
+
+$$$$

@@ -1,0 +1,150 @@
+2C97_JCL_A_701
+  RCSB PDB12061705133D
+Coordinates from PDB:2C97:A:701 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+  -24.0530   -0.7470    6.6790   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5450   -2.5420    5.2400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8090   -1.7380    4.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0600   -2.4610    3.0870  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6120   -0.3030    4.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8080    0.6350    3.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.1540   -2.0540    6.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3310    0.1700    5.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8160   -2.8710    6.9850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2490    1.3840    6.3310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3480    0.2740    3.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6430    1.5650    3.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3620    1.6740    1.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7170    2.8580    0.9330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7350    4.1070    0.5960   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6540    5.2710    0.9050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5600    3.9090    1.5270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3970    4.0610   -0.8760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 18  2  0  0  0  0
+A    1
+N3
+A    2
+N1
+A    3
+C6
+A    4
+CL
+A    5
+C5
+A    6
+C7
+A    7
+C2
+A    8
+C4
+A    9
+O1
+A   10
+O2
+A   11
+C8
+A   12
+C9
+A   13
+C10
+A   14
+O27
+A   15
+P
+A   16
+O1P
+A   17
+O2P
+A   18
+O3P
+M  END
+>  <InstanceId>
+2C97_JCL_A_701
+
+>  <ChemCompId>
+JCL
+
+>  <PdbId>
+2C97
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O6 P Cl
+
+>  <Name>
+4-(6-CHLORO-2,4-DIOXO-1,2,3,4-TETRAHYDROPYRIMIDIN-5-YL) BUTYL PHOSPHATE
+
+>  <SystematicName>
+4-(4-chloro-2,6-dioxo-3H-pyrimidin-5-yl)butyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H12 Cl N2 O6 P
+
+>  <MolecularWeight>
+298.617
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12ClN2O6P/c9-6-5(7(12)11-8(13)10-6)3-1-2-4-17-18(14,15)16/h1-4H2,(H2,14,15,16)(H2,10,11,12,13)
+
+>  <InChIKey>
+DAUATIBSDSXXHA-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCOP(=O)(O)O)CC1=C(NC(=O)NC1=O)Cl
+
+$$$$

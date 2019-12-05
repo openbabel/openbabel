@@ -23,6 +23,8 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 
+#include <iostream>
+
 #ifndef OBAPI
   #define OBAPI
 #endif
@@ -30,13 +32,38 @@ GNU General Public License for more details.
 #ifdef HAVE_EIGEN
 
 #include <Eigen/Core>
+#include <LBFGS.h>
 
 namespace OpenBabel {
 
   class DistanceGeometryPrivate;
   class OBCisTransStereo;
 
+  class TetrahedralInfo {
+    int c;
+    std::vector<unsigned long> nbrs;
+    double lb, ub;
+    public:
+    TetrahedralInfo(int center, std::vector<unsigned long> neighbors,
+                    double lower_bound, double upper_bound) :
+                    c(center), nbrs(neighbors),
+                    lb(lower_bound), ub(upper_bound) {}
+    int GetCenter() {
+      return c;
+    }
+    std::vector<unsigned long> GetNeighbors() {
+      return nbrs;
+    }
+    double GetUpperBound() {
+      return ub;
+    }
+    double GetLowerBound() {
+      return lb;
+    }
+  };
+
   class OBAPI OBDistanceGeometry {
+    friend class DistgeomFunc;
   public:
     OBDistanceGeometry();
     OBDistanceGeometry(const OBMol &mol, bool useCurrentGeometry);
@@ -53,6 +80,7 @@ namespace OpenBabel {
      */
     bool Setup(const OBMol &mol, bool useCurrentGeom = false);
 
+    void Generate();
     void AddConformer();
     void GetConformers(OBMol &mol);
 
@@ -70,11 +98,23 @@ namespace OpenBabel {
      * \return Success or failure (e.g., bounds matrix does not match the number of atoms)
      */
     bool SetBoundsMatrix(const Eigen::MatrixXf bounds);
-
+    float GetUpperBounds(int i, int j);
+    float GetLowerBounds(int i, int j);
+    unsigned int GetDimension() {return dim;};
+    std::vector<TetrahedralInfo>  _stereo;       //!< Internal private data, including stereo info
   private:
     OBMol                     _mol;
+    std::vector<OBGenericData*> _vdata;
     DistanceGeometryPrivate  *_d;    //!< Internal private data, including bounds matrix
+    Eigen::VectorXd _coord;          // one-dimensional vector containing coordinates of atoms
+    std::string input_smiles;
 
+    unsigned int dim;
+
+    bool generateInitialCoords();
+    bool firstMinimization();
+    bool minimizeFourthDimension();
+    
     //! \brief Set the default upper bounds for the constraint matrix
     //! Upper bounds = maximum length of the molecule, or 1/2 the body diagonal in a unit cell
     void SetUpperBounds();
@@ -93,7 +133,7 @@ namespace OpenBabel {
     //! \returns 0 if not in the same ring, or the ring size otherwise
     int AreInSameRing(OBAtom *a, OBAtom *b);
     //! \brief Self-consistently smooth the bounds matrix using the triangle inequality
-    void TriangleSmooth(int iterations = 8);
+    void TriangleSmooth();
     //! \brief Set the lower bounds to retain VdW distances after all 1-X bounds are set
     void SetLowerBounds();
 
@@ -109,8 +149,19 @@ namespace OpenBabel {
     //! \return True if the bounds are met
     bool CheckBounds();
   };
+  class DistGeomFunc {
+    OBDistanceGeometry* const owner;
+    public:
+      DistGeomFunc(OBDistanceGeometry* owner) : owner(owner) {}
+      double operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad);
+  };
 
-
+  class DistGeomFunc4D {
+    OBDistanceGeometry* const owner;
+    public:
+      DistGeomFunc4D(OBDistanceGeometry* owner) : owner(owner) {}
+      double operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad);
+  };
 }
 
 #endif

@@ -1,0 +1,138 @@
+1ZH6_4AF_A_315
+  RCSB PDB12061704523D
+Coordinates from PDB:1ZH6:A:315 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   75.0640   44.4720   -7.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.1700   43.2740   -7.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.1780   43.0220   -7.9230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.4850   42.3380   -6.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.5530   41.3370   -5.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.7570   40.4210   -4.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.6440   42.4320   -5.3400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.8410   41.4900   -4.3440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.9030   40.4890   -4.1350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.0410   39.4570   -3.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.3400   38.7350   -3.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.3240   37.7280   -1.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.9540   36.6810   -2.0030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.6840   37.9530   -0.8770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.4490   38.0630   -4.3800   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+A    1
+C11
+A    2
+C8
+A    3
+O2
+A    4
+C7
+A    5
+C9
+A    6
+C10
+A    7
+C6
+A    8
+C5
+A    9
+C4
+A   10
+C3
+A   11
+C1
+A   12
+C2
+A   13
+OX1
+A   14
+O
+A   15
+N
+M  END
+>  <InstanceId>
+1ZH6_4AF_A_315
+
+>  <ChemCompId>
+4AF
+
+>  <PdbId>
+1ZH6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+315
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O3
+
+>  <Name>
+4-ACETYL-L-PHENYLALANINE
+
+>  <SystematicName>
+(2S)-2-azanyl-3-(4-ethanoylphenyl)propanoic acid
+
+>  <Synonyms>
+P-ACETYLPHENYLALANINE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C11 H13 N O3
+
+>  <MolecularWeight>
+207.226
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+PHE
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H13NO3/c1-7(13)9-4-2-8(3-5-9)6-10(12)11(14)15/h2-5,10H,6,12H2,1H3,(H,14,15)/t10-/m0/s1
+
+>  <InChIKey>
+ZXSBHXZKWRIEIA-JTQLQIEISA-N
+
+>  <SMILES>
+CC(=O)c1ccc(cc1)C[C@@H](C(=O)O)N
+
+$$$$

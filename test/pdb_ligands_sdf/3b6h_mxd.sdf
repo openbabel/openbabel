@@ -1,0 +1,140 @@
+3B6H_MXD_A_551
+  RCSB PDB12061707583D
+Coordinates from PDB:3B6H:A:551 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   69.5840   51.1490   42.1660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   70.2790   52.2580   42.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.9610   53.0280   41.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.3300   52.6530   43.8930   N 0  3  0  0  0  0  0  0  0  0  0  0
+   69.7360   51.9920   44.7590   O 0  5  0  0  0  0  0  0  0  0  0  0
+   71.0010   53.7550   44.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.0270   54.1320   45.5630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   71.6620   54.4930   43.3510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   71.6600   54.1560   42.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.3720   54.9820   41.1550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   73.0980   56.1270   41.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.3510   54.6940   39.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.7980   54.7050   39.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.5710   55.9490   39.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.7570   56.8770   40.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+M  CHG  2   4   1   5  -1
+A    1
+NAO
+A    2
+CAE
+A    3
+CAF
+A    4
+NAC
+A    5
+OAN
+A    6
+CAA
+A    7
+NAM
+A    8
+NAB
+A    9
+CAD
+A   10
+NAI
+A   11
+CAG
+A   12
+CAK
+A   13
+CAL
+A   14
+CAJ
+A   15
+CAH
+M  END
+>  <InstanceId>
+3B6H_MXD_A_551
+
+>  <ChemCompId>
+MXD
+
+>  <PdbId>
+3B6H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+551
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N5 O
+
+>  <Name>
+6-PIPERIDIN-1-YLPYRIMIDINE-2,4-DIAMINE 3-OXIDE
+
+>  <SystematicName>
+3-oxido-6-piperidin-1-yl-pyrimidin-3-ium-2,4-diamine
+
+>  <Synonyms>
+MINOXIDIL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H15 N5 O
+
+>  <MolecularWeight>
+209.248
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15N5O/c10-7-6-8(12-9(11)14(7)15)13-4-2-1-3-5-13/h6H,1-5,10H2,(H2,11,12)
+
+>  <InChIKey>
+ZFMITUMMTDLWHR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c([n+](c(nc1N2CCCCC2)N)[O-])N
+
+$$$$

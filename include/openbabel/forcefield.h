@@ -64,7 +64,8 @@ namespace OpenBabel
 #define OBFF_NUMERICAL_GRADIENT  	(1 << 0)  //!< use numerical gradients
 #define OBFF_ANALYTICAL_GRADIENT	(1 << 1)  //!< use analytical gradients
 
-#define KCAL_TO_KJ	4.1868
+const double KCAL_TO_KJ = 4.1868;
+const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 K^-1 (2018 CODATA recommended value)
 
   // inline if statements for logging.
 #define IF_OBFF_LOGLVL_LOW    if(_loglvl >= OBFF_LOGLVL_LOW)
@@ -1383,7 +1384,7 @@ namespace OpenBabel
      *  \code
      *        3N
      *       ----
-     *  0.5  \    m_i * v_i^2 = 0.5 * Ndf * kB * T = E_kin
+     *  0.5  \    m_i * v_i^2 = 0.5 * Ndf * R * T = E_kin
      *       /
      *       ----
      *       i=1
@@ -1392,7 +1393,7 @@ namespace OpenBabel
      *  m_i : mass of atom i
      *  v_i : velocity of atom i
      *  Ndf : number of degrees of freedom (3 * number of atoms)
-     *  kB : Boltzmann's constant
+     *  R : gas constant
      *  T : temperature
      *  \endcode
      *

@@ -1,0 +1,147 @@
+1ASC_NPL_A_409
+  RCSB PDB12061702013D
+Coordinates from PDB:1ASC:A:409 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+  130.8350   38.6110   25.4720   N 0  3  0  0  0  0  0  0  0  0  0  0
+  130.2920   39.9090   25.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.5830   37.7290   24.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  129.7200   38.0530   23.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.1130   36.4780   24.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.7850   35.6240   23.4890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  131.9640   36.1200   25.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.6680   34.6740   25.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.0650   33.9840   26.7440   N 0  0  0  0  0  0  0  0  0  0  0  0
+  132.2630   37.0750   26.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.1480   36.7220   27.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.1460   37.6940   28.6530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  134.5140   38.0020   29.3310   P 0  0  0  0  0  0  0  0  0  0  0  0
+  133.9830   38.9700   30.2640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  135.4270   38.4870   28.3220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  134.9750   36.7720   29.9110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  131.6850   38.2830   26.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1 17  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 17  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 13 16  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C2A
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+C4A
+A    9
+N4
+A   10
+C5
+A   11
+C5A
+A   12
+O4P
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+A   17
+C6
+M  END
+>  <InstanceId>
+1ASC_NPL_A_409
+
+>  <ChemCompId>
+NPL
+
+>  <PdbId>
+1ASC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O5 P
+
+>  <Name>
+N-METHYL-4-DEOXY-4-AMINO-PYRIDOXAL-5-PHOSPHATE
+
+>  <SystematicName>
+[4-(aminomethyl)-5-hydroxy-1,6-dimethyl-pyridin-1-ium-3-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N2 O5 P
+
+>  <MolecularWeight>
+263.208
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H15N2O5P/c1-6-9(12)8(3-10)7(4-11(6)2)5-16-17(13,14)15/h4H,3,5,10H2,1-2H3,(H2-,12,13,14,15)/p+1
+
+>  <InChIKey>
+BDHMQTZHNOSTBZ-UHFFFAOYSA-O
+
+>  <SMILES>
+Cc1c(c(c(c[n+]1C)COP(=O)(O)O)CN)O
+
+$$$$

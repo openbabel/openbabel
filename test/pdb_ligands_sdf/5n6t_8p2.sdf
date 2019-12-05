@@ -1,0 +1,128 @@
+5N6T_8P2_A_505
+  RCSB PDB12061719083D
+Coordinates from PDB:5N6T:A:505 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   15.5530  -26.4480  -19.9770   N 0  3  0  0  0  0  0  0  0  0  0  0
+   12.8040  -25.1740  -21.9850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0000  -24.7960  -20.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7950  -23.9620  -20.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3640  -22.9100  -20.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0470  -23.3740  -18.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7690  -22.9610  -18.0340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8680  -24.3370  -17.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2810  -24.3300  -18.0830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5830  -25.5820  -18.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1780  -26.0210  -19.7000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2300  -27.0290  -20.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+ 12  1  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  4  6  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N1
+A    2
+OAE
+A    3
+CAC
+A    4
+CAK
+A    5
+OAF
+A    6
+CAJ
+A    7
+OAG
+A    8
+CAB
+A    9
+OAI
+A   10
+CAA
+A   11
+CAD
+A   12
+CAH
+M  END
+>  <InstanceId>
+5N6T_8P2_A_505
+
+>  <ChemCompId>
+8P2
+
+>  <PdbId>
+5N6T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+505
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C7 N O4
+
+>  <Name>
+[(1~{R},2~{R},3~{R},4~{S},5~{R},6~{S})-3,4,5-tris(oxidanyl)-7-oxabicyclo[4.1.0]heptan-2-yl]methanediazonium
+
+>  <SystematicName>
+[(1~{R},2~{R},3~{R},4~{S},5~{R},6~{S})-3,4,5-tris(oxidanyl)-7-oxabicyclo[4.1.0]heptan-2-yl]methanediazonium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N2 O4
+
+>  <MolecularWeight>
+187.173
+
+>  <ModifiedDate>
+2017-02-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11N2O4/c8-9-1-2-3(10)4(11)5(12)7-6(2)13-7/h2-7,10-12H,1H2/q+1/t2-,3-,4+,5-,6-,7+/m1/s1
+
+>  <InChIKey>
+KCJIBVJCJMAQKE-GEGSFZHJSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@H]2[C@@H]1O2)O)O)O)[N+]#N
+
+$$$$

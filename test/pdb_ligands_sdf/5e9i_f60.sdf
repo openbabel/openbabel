@@ -1,0 +1,119 @@
+5E9I_F60_A_2001
+  RCSB PDB12061717263D
+Coordinates from PDB:5E9I:A:2001 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+  -28.4950  -11.0130    0.5910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4260  -10.1120    0.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1290  -10.5910    0.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0480   -9.6670    0.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2910   -8.3140    0.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0030   -7.7040    0.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0500   -8.7200    0.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.6920   -9.8720    0.0910   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6160   -7.8270    0.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.6750   -8.7330    0.5460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  2  0  0  0  0
+  8  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  9  1  0  0  0  0
+  3  2  2  0  0  0  0
+  9 10  2  0  0  0  0
+  2 10  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+N08
+A    9
+C09
+A   10
+C10
+M  END
+>  <InstanceId>
+5E9I_F60_A_2001
+
+>  <ChemCompId>
+F60
+
+>  <PdbId>
+5E9I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O
+
+>  <Name>
+1H-indol-6-ol
+
+>  <SystematicName>
+1H-indol-6-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O
+
+>  <MolecularWeight>
+133.147
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO/c10-7-2-1-6-3-4-9-8(6)5-7/h1-5,9-10H
+
+>  <InChIKey>
+XAWPKHNOFIWWNZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(cc2c1cc[nH]2)O
+
+$$$$

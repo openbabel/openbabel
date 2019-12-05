@@ -1,0 +1,119 @@
+4UHX_4FT_A_3007
+  RCSB PDB12061715073D
+Coordinates from PDB:4UHX:A:3007 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+  -21.9260  -20.3480  -41.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5770  -21.6000  -40.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8920  -21.5930  -40.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5640  -22.8280  -40.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8910  -24.0410  -40.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5570  -24.0480  -40.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8950  -22.8420  -40.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5770  -19.1880  -40.8690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8580  -19.1660  -40.4360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5290  -20.3120  -40.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 10  3  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  3  2  1  0  0  0  0
+  9  8  2  0  0  0  0
+  6  7  2  0  0  0  0
+  2  7  1  0  0  0  0
+  2  1  2  0  0  0  0
+  8  1  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N3
+A    9
+N2
+A   10
+C1
+M  END
+>  <InstanceId>
+4UHX_4FT_A_3007
+
+>  <ChemCompId>
+4FT
+
+>  <PdbId>
+4UHX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+3007
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2
+
+>  <Name>
+phthalazine
+
+>  <SystematicName>
+phthalazine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 N2
+
+>  <MolecularWeight>
+130.147
+
+>  <ModifiedDate>
+2015-05-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N2/c1-2-4-8-6-10-9-5-7(8)3-1/h1-6H
+
+>  <InChIKey>
+LFSXCDWNBUNEEM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2cnncc2c1
+
+$$$$

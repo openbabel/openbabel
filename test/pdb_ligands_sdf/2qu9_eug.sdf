@@ -1,0 +1,122 @@
+1DZN_EUG_A_601
+  RCSB PDB12061702193D
+Coordinates from PDB:1DZN:A:601 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  111.4240   47.9710   70.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  111.0760   47.2890   69.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.8980   47.6190   68.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.0530   48.6410   69.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.4070   49.3410   70.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.5620   48.9960   70.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.6220   47.6590   71.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  113.1100   46.4650   71.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.6970   46.5120   66.5550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.7060   46.8280   67.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  107.9010   49.0790   68.4590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+O3
+A   11
+O4
+M  END
+>  <InstanceId>
+1DZN_EUG_A_601
+
+>  <ChemCompId>
+EUG
+
+>  <PdbId>
+1DZN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C9 O2
+
+>  <Name>
+2-methoxy-4-[(1E)-prop-1-en-1-yl]phenol
+
+>  <SystematicName>
+2-methoxy-4-[(E)-prop-1-enyl]phenol
+
+>  <Synonyms>
+Isoeugenol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O2
+
+>  <MolecularWeight>
+164.201
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O2/c1-3-4-8-5-6-9(11)10(7-8)12-2/h3-7,11H,1-2H3/b4-3+
+
+>  <InChIKey>
+BJIOGJUNALELMI-ONEGZZNKSA-N
+
+>  <SMILES>
+C/C=C/c1ccc(c(c1)OC)O
+
+$$$$

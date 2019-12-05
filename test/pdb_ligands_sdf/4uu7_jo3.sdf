@@ -1,0 +1,109 @@
+4UU7_JO3_D_1009
+  RCSB PDB12061715193D
+Coordinates from PDB:4UU7:D:1009 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+  -30.7540  -26.7530   -8.1880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.5200  -27.2140   -7.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.3970  -28.0680   -7.5340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.3790  -26.6820   -5.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.6220  -25.8560   -5.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.1030  -25.8410   -5.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.4930  -24.5110   -5.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.5050  -23.4470   -5.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+OAN
+A    2
+CAM
+A    3
+OAO
+A    4
+CAL
+A    5
+CAQ
+A    6
+CAK
+A    7
+CAJ
+A    8
+OAP
+M  END
+>  <InstanceId>
+4UU7_JO3_D_1009
+
+>  <ChemCompId>
+JO3
+
+>  <PdbId>
+4UU7
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+1009
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O3
+
+>  <Name>
+(2R)-2-methylbutanedioic acid
+
+>  <SystematicName>
+2-methylbutanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 O4
+
+>  <MolecularWeight>
+132.115
+
+>  <ModifiedDate>
+2014-08-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8O4/c1-3(5(8)9)2-4(6)7/h3H,2H2,1H3,(H,6,7)(H,8,9)/t3-/m1/s1
+
+>  <InChIKey>
+WXUAQHNMJWJLTG-GSVOUGTGSA-N
+
+>  <SMILES>
+CC(CC(=O)O)C(=O)O
+
+$$$$

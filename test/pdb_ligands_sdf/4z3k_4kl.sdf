@@ -1,0 +1,139 @@
+4Z3K_4KL_A_802
+  RCSB PDB12061716333D
+Coordinates from PDB:4Z3K:A:802 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -26.7640  149.0020  -20.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4380  147.7530  -19.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3920  146.8700  -19.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9330  145.6450  -18.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7990  144.7600  -18.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3300  143.7630  -17.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.9950  145.0080  -18.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6010  145.3220  -18.7700   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6730  146.1500  -19.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0590  147.3890  -19.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0770  148.2650  -20.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.7370  147.9300  -20.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.3450  146.6930  -19.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3010  145.8010  -19.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9330  144.5840  -18.7330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 15 14  1  0  0  0  0
+  8  4  2  0  0  0  0
+  8  9  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 14  9  2  0  0  0  0
+ 14 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 13 12  2  0  0  0  0
+  3  2  2  0  0  0  0
+ 10  2  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAL
+A    2
+CAJ
+A    3
+CAI
+A    4
+CAH
+A    5
+CAM
+A    6
+OAN
+A    7
+OAO
+A    8
+NAG
+A    9
+CAD
+A   10
+CAE
+A   11
+CAF
+A   12
+CAA
+A   13
+CAB
+A   14
+CAC
+A   15
+OAK
+M  END
+>  <InstanceId>
+4Z3K_4KL_A_802
+
+>  <ChemCompId>
+4KL
+
+>  <PdbId>
+4Z3K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4
+
+>  <Name>
+Xanthuric acid
+
+>  <SystematicName>
+4,8-bis(oxidanyl)quinoline-2-carboxylic acid
+
+>  <Synonyms>
+Xanthurenate; 8-Hydroxykynurenic acid; 4,8-Dihydroxyquinaldic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H7 N O4
+
+>  <MolecularWeight>
+205.167
+
+>  <ModifiedDate>
+2015-11-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H7NO4/c12-7-3-1-2-5-8(13)4-6(10(14)15)11-9(5)7/h1-4,12H,(H,11,13)(H,14,15)
+
+>  <InChIKey>
+FBZONXHGGPHHIY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc(nc2c(c1)O)C(=O)O)O
+
+$$$$

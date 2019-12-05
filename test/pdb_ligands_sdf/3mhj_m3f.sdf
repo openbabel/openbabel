@@ -1,0 +1,160 @@
+3MHJ_M3F_A_2
+  RCSB PDB12061709453D
+Coordinates from PDB:3MHJ:A:2 Model:1 without hydrogens
+ 20 22  0  0  0  0            999 V2000
+   11.3530   45.3340   17.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9940   40.9070   14.3210   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3650   42.3670   21.0090   F 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0980   41.1160   21.1800   F 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2100   43.1820   21.8900   F 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5610   43.9160   12.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2450   44.7040   13.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6980   42.9430   13.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0260   44.5480   15.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9790   43.7960   19.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5980   42.0490   18.5650   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3470   41.5590   16.3860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3550   44.1310   18.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1080   42.7450   19.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6080   41.7040   15.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4790   42.7470   14.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9450   42.3500   17.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1290   43.5710   15.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8520   43.3720   16.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6750   42.3540   20.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 13  1  0  0  0  0
+  2 15  2  0  0  0  0
+  3 20  1  0  0  0  0
+  4 20  1  0  0  0  0
+  5 20  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 16  2  0  0  0  0
+  9 18  2  0  0  0  0
+ 10 13  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 14  2  0  0  0  0
+ 11 17  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 19  1  0  0  0  0
+ 14 20  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 18  1  0  0  0  0
+ 17 19  2  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+FAC
+A    4
+FAD
+A    5
+FAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+NAK
+A   12
+NAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+CAR
+A   19
+CAS
+A   20
+CAT
+M  END
+>  <InstanceId>
+3MHJ_M3F_A_2
+
+>  <ChemCompId>
+M3F
+
+>  <PdbId>
+3MHJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O F3
+
+>  <Name>
+1-methyl-3-(trifluoromethyl)benzo[c][1,8]naphthyridin-6(5H)-one
+
+>  <SystematicName>
+1-methyl-3-(trifluoromethyl)-5H-benzo[c][1,8]naphthyridin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H9 F3 N2 O
+
+>  <MolecularWeight>
+278.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H9F3N2O/c1-7-6-10(14(15,16)17)18-12-11(7)8-4-2-3-5-9(8)13(20)19-12/h2-6H,1H3,(H,18,19,20)
+
+>  <InChIKey>
+DRKNNRNHSWAINH-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(nc2c1-c3ccccc3C(=O)N2)C(F)(F)F
+
+$$$$

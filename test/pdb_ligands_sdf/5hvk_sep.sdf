@@ -1,0 +1,121 @@
+1L7P_SEP_A_770
+  RCSB PDB12061703093D
+Coordinates from PDB:1L7P:A:770 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   51.4160   16.3560    9.2850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   52.2980   15.3650    9.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5850   15.2180    9.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3080   14.8270    7.7290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.6520   15.7690   11.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.9720   16.6610   11.8690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.4000   15.0120   11.9790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.9070   15.4860    6.5290   P 0  0  0  0  0  0  0  0  0  0  0  0
+   53.2130   16.7750    6.2710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7480   14.6000    5.3500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3540   15.7410    6.7680   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+OG
+A    5
+C
+A    6
+O
+A    7
+OXT
+A    8
+P
+A    9
+O1P
+A   10
+O2P
+A   11
+O3P
+M  END
+>  <InstanceId>
+1L7P_SEP_A_770
+
+>  <ChemCompId>
+SEP
+
+>  <PdbId>
+1L7P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+770
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N O6 P
+
+>  <Name>
+PHOSPHOSERINE
+
+>  <SystematicName>
+(2S)-2-amino-3-phosphonooxy-propanoic acid
+
+>  <Synonyms>
+PHOSPHONOSERINE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C3 H8 N O6 P
+
+>  <MolecularWeight>
+185.072
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+SER
+
+>  <OneLetterCode>
+S
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H8NO6P/c4-2(3(5)6)1-10-11(7,8)9/h2H,1,4H2,(H,5,6)(H2,7,8,9)/t2-/m0/s1
+
+>  <InChIKey>
+BZQFBWGGLXLEPQ-REOHCLBHSA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)N)OP(=O)(O)O
+
+$$$$

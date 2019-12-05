@@ -1,0 +1,126 @@
+1V5Z_2HC_A_815
+  RCSB PDB12061704183D
+Coordinates from PDB:1V5Z:A:815 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   65.2630   -0.7080   20.9190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.8440   -0.7690   20.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.5290   -1.8630   19.7980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2260    0.2990   20.2670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.6890    0.6080   21.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.0610    0.7560   22.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.9730   -0.3550   22.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2060   -0.2450   22.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.6330    0.9460   23.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.7550    2.1410   23.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.4010    1.9870   22.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4720    3.0840   22.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+OXT
+A    5
+CB
+A    6
+CG
+A    7
+CD1
+A    8
+CE1
+A    9
+CZ
+A   10
+CE2
+A   11
+CD2
+A   12
+OH
+M  END
+>  <InstanceId>
+1V5Z_2HC_A_815
+
+>  <ChemCompId>
+2HC
+
+>  <PdbId>
+1V5Z
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+815
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O3
+
+>  <Name>
+(2E)-3-(2-HYDROXYPHENYL)ACRYLIC ACID
+
+>  <SystematicName>
+(E)-3-(2-hydroxyphenyl)prop-2-enoic acid
+
+>  <Synonyms>
+TRANS-2-HYDROXYCINNAMIC ACID; O-COUMARIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O3
+
+>  <MolecularWeight>
+164.158
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O3/c10-8-4-2-1-3-7(8)5-6-9(11)12/h1-6,10H,(H,11,12)/b6-5+
+
+>  <InChIKey>
+PMOWTIHVNWZYFI-AATRIKPKSA-N
+
+>  <SMILES>
+c1ccc(c(c1)\C=C\C(=O)O)O
+
+$$$$

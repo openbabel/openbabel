@@ -1,0 +1,135 @@
+4KZ7_1U5_A_401
+  RCSB PDB12061713273D
+Coordinates from PDB:4KZ7:A:401 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   26.1980    7.4910   16.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6800    7.4960   15.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9810    8.5430   16.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2770    7.5940   14.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7550    8.8040   13.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7740    7.2960   14.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6470    6.2130   15.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1000    6.0400   16.0700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3630    5.3090   17.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6600    5.6380   18.3760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2490    4.4300   17.4000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7760    5.3780   14.9820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9140    6.2900   13.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4170    5.9640   12.9250   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  2  0  0  0  0
+  5  4  1  0  0  0  0
+ 13  4  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 12  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 11  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+O10
+A   11
+O11
+A   12
+O12
+A   13
+C13
+A   14
+O14
+M  END
+>  <InstanceId>
+4KZ7_1U5_A_401
+
+>  <ChemCompId>
+1U5
+
+>  <PdbId>
+4KZ7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O4
+
+>  <Name>
+(1R,4S)-4,7,7-trimethyl-3-oxo-2-oxabicyclo[2.2.1]heptane-1-carboxylic acid
+
+>  <SystematicName>
+(1S,4R)-1,7,7-trimethyl-2-oxidanylidene-3-oxabicyclo[2.2.1]heptane-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O4
+
+>  <MolecularWeight>
+198.216
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O4/c1-8(2)9(3)4-5-10(8,6(11)12)14-7(9)13/h4-5H2,1-3H3,(H,11,12)/t9-,10+/m1/s1
+
+>  <InChIKey>
+KPWKPGFLZGMMFX-ZJUUUORDSA-N
+
+>  <SMILES>
+C[C@]12CC[C@](C1(C)C)(OC2=O)C(=O)O
+
+$$$$

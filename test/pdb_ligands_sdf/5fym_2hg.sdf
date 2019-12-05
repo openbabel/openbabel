@@ -1,0 +1,117 @@
+2YBK_2HG_A_601
+  RCSB PDB12061707353D
+Coordinates from PDB:2YBK:A:601 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  -24.0610  -21.5210    4.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2290  -21.6140    3.4560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5210  -21.8220    4.0420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.8090  -21.2040    5.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4130  -21.4370    5.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9060  -21.0700    2.8890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8590  -21.8770    4.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.9500  -21.2640    5.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.7480  -21.5070    6.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.2050  -21.4750    7.3000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+O5
+M  END
+>  <InstanceId>
+2YBK_2HG_A_601
+
+>  <ChemCompId>
+2HG
+
+>  <PdbId>
+2YBK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O5
+
+>  <Name>
+(2R)-2-hydroxypentanedioic acid
+
+>  <SystematicName>
+(2R)-2-hydroxypentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 O5
+
+>  <MolecularWeight>
+148.114
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H8O5/c6-3(5(9)10)1-2-4(7)8/h3,6H,1-2H2,(H,7,8)(H,9,10)/t3-/m1/s1
+
+>  <InChIKey>
+HWXBTNAVRSUOJR-GSVOUGTGSA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@H](C(=O)O)O
+
+$$$$

@@ -1,0 +1,159 @@
+2AX6_HFT_A_1
+  RCSB PDB12061705033D
+Coordinates from PDB:2AX6:A:1 Model:1 without hydrogens
+ 20 20  0  0  0  0            999 V2000
+   23.7050    2.4100    4.2940   F 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8630    3.7240    4.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4930    4.0350    5.6590   F 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0170    4.2710    3.5520   F 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3210    4.1520    4.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3200    3.1750    4.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6930    5.4710    3.8920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8750    6.5160    4.0200   N 0  3  0  0  0  0  0  0  0  0  0  0
+   25.3250    7.8050    3.6280   O 0  5  0  0  0  0  0  0  0  0  0  0
+   23.5390    6.4050    4.4870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0210    5.7700    3.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9990    4.7820    3.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6520    3.4670    3.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6290    2.5590    3.8920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5070    1.2640    4.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4530    0.7050    4.4780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8200    0.4790    4.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1840    0.0020    5.5200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6390   -0.7210    3.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8470    1.3380    3.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 17 20  1  0  0  0  0
+M  CHG  2   8   1   9  -1
+A    1
+F1
+A    2
+C7
+A    3
+F2
+A    4
+F3
+A    5
+C3
+A    6
+C2
+A    7
+C4
+A    8
+N1
+A    9
+O2
+A   10
+O1
+A   11
+C5
+A   12
+C6
+A   13
+C1
+A   14
+N9
+A   15
+C10
+A   16
+O10
+A   17
+C11
+A   18
+C12
+A   19
+C13
+A   20
+O11
+M  END
+>  <InstanceId>
+2AX6_HFT_A_1
+
+>  <ChemCompId>
+HFT
+
+>  <PdbId>
+2AX6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O4 F3
+
+>  <Name>
+HYDROXYFLUTAMIDE
+
+>  <SystematicName>
+2-hydroxy-2-methyl-N-[4-nitro-3-(trifluoromethyl)phenyl]propanamide
+
+>  <Synonyms>
+2-HYDROXY-2-METHYL-N-(4-NITRO-3-(TRIFLUOROMETHYL)PHENYL)PROPANAMIDE; HYDROXYNIPHTHOLIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 F3 N2 O4
+
+>  <MolecularWeight>
+292.211
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11F3N2O4/c1-10(2,18)9(17)15-6-3-4-8(16(19)20)7(5-6)11(12,13)14/h3-5,18H,1-2H3,(H,15,17)
+
+>  <InChIKey>
+YPQLFJODEKMJEF-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C(=O)Nc1ccc(c(c1)C(F)(F)F)[N+](=O)[O-])O
+
+$$$$

@@ -1,0 +1,133 @@
+2FLI_DX5_A_1901
+  RCSB PDB12061705343D
+Coordinates from PDB:2FLI:A:1901 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   58.6530   99.4700   57.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8520   97.9880   56.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0020   97.6530   55.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7480   97.9610   54.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9990   98.2490   53.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5490   99.7700   57.8840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0180   97.4050   58.1170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.3920   96.2630   56.0510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0920   96.8830   53.8050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   60.9500   99.0290   52.5130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0400   99.7090   51.7690   P 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2170   98.6740   51.6410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.3610  100.9640   52.6690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.3300  100.0590   50.3590   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 14  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O1
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O5
+A   11
+P
+A   12
+O1P
+A   13
+O2P
+A   14
+O3P
+M  END
+>  <InstanceId>
+2FLI_DX5_A_1901
+
+>  <ChemCompId>
+DX5
+
+>  <PdbId>
+2FLI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P
+
+>  <Name>
+D-XYLITOL-5-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3R,4S)-2,3,4,5-tetrahydroxypentyl] dihydrogen phosphate
+
+>  <Synonyms>
+D-HYLITOL-5-PHOSPHATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H13 O8 P
+
+>  <MolecularWeight>
+232.126
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H13O8P/c6-1-3(7)5(9)4(8)2-13-14(10,11)12/h3-9H,1-2H2,(H2,10,11,12)/t3-,4+,5+/m0/s1
+
+>  <InChIKey>
+VJDOAZKNBQCAGE-VPENINKCSA-N
+
+>  <SMILES>
+C([C@@H]([C@H]([C@@H](COP(=O)(O)O)O)O)O)O
+
+$$$$

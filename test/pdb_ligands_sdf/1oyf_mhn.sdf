@@ -1,0 +1,113 @@
+1OYF_MHN_A_1001
+  RCSB PDB12061703363D
+Coordinates from PDB:1OYF:A:1001 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   12.9310   33.2960   36.6600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9160   32.2510   36.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1990   32.1450   34.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2540   31.0620   34.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5400   30.9690   33.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6290   29.8840   32.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0640   29.6450   31.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8960   29.9710   30.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2610   30.5440   30.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+O1
+A    2
+C8
+A    3
+C7
+A    4
+C6
+A    5
+C5
+A    6
+C4
+A    7
+C2
+A    8
+C1
+A    9
+C3
+M  END
+>  <InstanceId>
+1OYF_MHN_A_1001
+
+>  <ChemCompId>
+MHN
+
+>  <PdbId>
+1OYF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O
+
+>  <Name>
+6-METHYLHEPTAN-1-OL
+
+>  <SystematicName>
+6-methylheptan-1-ol
+
+>  <Synonyms>
+METHYL HEPTANOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 O
+
+>  <MolecularWeight>
+130.228
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18O/c1-8(2)6-4-3-5-7-9/h8-9H,3-7H2,1-2H3
+
+>  <InChIKey>
+BWDBEAQIHAEVLV-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)CCCCCO
+
+$$$$

@@ -1,0 +1,142 @@
+4K5N_1OU_A_1106
+  RCSB PDB12061713173D
+Coordinates from PDB:4K5N:A:1106 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   13.6560   12.4090   10.4350   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0930   11.7280   11.6170   P 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1370   10.5790   10.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2650   11.1580   12.6060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1770   12.9740   12.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8360   12.8800   11.9380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2730   12.6590   14.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3570   11.7810   14.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3400   11.4740   15.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3100   12.0010   16.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2170   12.9080   16.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2310   13.2280   14.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3140   11.6580   18.1380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5420   10.4130   18.6130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0570    9.5150   17.8430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2030   10.0970   19.9060   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 12 11  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 15 14  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+O1
+A    2
+P
+A    3
+O2
+A    4
+O3
+A    5
+C6
+A    6
+N4
+A    7
+C5
+A    8
+C7
+A    9
+C8
+A   10
+C2
+A   11
+C3
+A   12
+C4
+A   13
+N3
+A   14
+C1
+A   15
+N1
+A   16
+N2
+M  END
+>  <InstanceId>
+4K5N_1OU_A_1106
+
+>  <ChemCompId>
+1OU
+
+>  <PdbId>
+4K5N
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1106
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O3 P
+
+>  <Name>
+[(R)-amino(4-carbamimidamidophenyl)methyl]phosphonic acid
+
+>  <SystematicName>
+[(R)-azanyl-(4-carbamimidamidophenyl)methyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N4 O3 P
+
+>  <MolecularWeight>
+244.188
+
+>  <ModifiedDate>
+2013-06-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13N4O3P/c9-7(16(13,14)15)5-1-3-6(4-2-5)12-8(10)11/h1-4,7H,9H2,(H4,10,11,12)(H2,13,14,15)/t7-/m1/s1
+
+>  <InChIKey>
+BSLYPYFABFFNHY-SSDOTTSWSA-N
+
+>  <SMILES>
+[H]/N=C(/N)\Nc1ccc(cc1)[C@H](N)P(=O)(O)O
+
+$$$$

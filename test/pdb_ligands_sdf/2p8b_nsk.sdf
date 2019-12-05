@@ -1,0 +1,145 @@
+2P8B_NSK_A_501
+  RCSB PDB12061706363D
+Coordinates from PDB:2P8B:A:501 Model:1 without hydrogens
+ 17 16  0  0  0  0            999 V2000
+  -11.6850   31.6680  -28.1300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8520   33.0010  -29.9650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.3210   32.1010  -29.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0600   31.4650  -29.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8100   31.5920  -28.9950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.8280   30.2580  -28.9060   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5990   30.9100  -29.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4630   31.1120  -30.9810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2930   30.6810  -31.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9700   29.1710  -31.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7470   28.8370  -31.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0650   31.5580  -31.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2500   33.0190  -31.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9350   33.7920  -31.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1620   35.2580  -32.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3560   35.3870  -33.6480   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9870   28.4330  -31.3960   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 17  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+N1
+A    9
+C5
+A   10
+C6
+A   11
+O4
+A   12
+C7
+A   13
+C8
+A   14
+C9
+A   15
+C10
+A   16
+N2
+A   17
+O5
+M  END
+>  <InstanceId>
+2P8B_NSK_A_501
+
+>  <ChemCompId>
+NSK
+
+>  <PdbId>
+2P8B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O5
+
+>  <Name>
+N-SUCCINYL LYSINE
+
+>  <SystematicName>
+(2S)-6-amino-2-[(4-hydroxy-4-oxo-butanoyl)amino]hexanoic acid
+
+>  <Synonyms>
+N~2~-(3-CARBOXYPROPANOYL)-L-LYSINE
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C10 H18 N2 O5
+
+>  <MolecularWeight>
+246.26
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+X
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18N2O5/c11-6-2-1-3-7(10(16)17)12-8(13)4-5-9(14)15/h7H,1-6,11H2,(H,12,13)(H,14,15)(H,16,17)/t7-/m0/s1
+
+>  <InChIKey>
+XEOGRHZGJFTETQ-ZETCQYMHSA-N
+
+>  <SMILES>
+C(CCN)C[C@@H](C(=O)O)NC(=O)CCC(=O)O
+
+$$$$

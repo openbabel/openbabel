@@ -1,0 +1,135 @@
+3ZV6_4HB_A_1277
+  RCSB PDB12061711333D
+Coordinates from PDB:3ZV6:A:1277 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   19.7930   -1.4530   40.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7370   -0.4080   40.2710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.3660    0.9100   40.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.0410    1.2100   39.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6520    2.4760   39.5050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0970    0.2020   39.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4690   -1.1140   40.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1520   -2.7890   40.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4870   -3.1320   40.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8670   -4.4480   41.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9240   -5.4670   41.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5920   -5.1510   40.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2070   -3.8300   40.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3140   -6.7530   41.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CA1
+A    2
+CA2
+A    3
+CA3
+A    4
+CA4
+A    5
+OA4
+A    6
+CA5
+A    7
+CA6
+A    8
+CB1
+A    9
+CB2
+A   10
+CB3
+A   11
+CB4
+A   12
+CB5
+A   13
+CB6
+A   14
+OAM
+M  END
+>  <InstanceId>
+3ZV6_4HB_A_1277
+
+>  <ChemCompId>
+4HB
+
+>  <PdbId>
+3ZV6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1277
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2
+
+>  <Name>
+4,4'-DIHYDROXYBIPHENYL
+
+>  <SystematicName>
+4-(4-hydroxyphenyl)phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C12 H10 O2
+
+>  <MolecularWeight>
+186.207
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10O2/c13-11-5-1-9(2-6-11)10-3-7-12(14)8-4-10/h1-8,13-14H
+
+>  <InChIKey>
+VCCBEIPGXKNHFW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2ccc(cc2)O)O
+
+$$$$

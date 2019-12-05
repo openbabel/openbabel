@@ -1,0 +1,136 @@
+4QQ6_36X_A_204
+  RCSB PDB12061714283D
+Coordinates from PDB:4QQ6:A:204 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+    9.6750    0.3060    2.0870   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9860    0.9330    3.0790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7400    0.4410    3.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0200   -0.8370    3.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6550   -0.6870    3.8520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6920    0.5540    4.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9950    1.1710    4.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4930    2.1080    3.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7590    2.8140    4.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5360    2.3720    5.0480   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7810    3.1070    6.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5280    3.9420    5.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6330    4.1400    4.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8110    2.8010    3.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+ 14  8  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  3  7  2  0  0  0  0
+  8  9  2  0  0  0  0
+  5  6  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7 10  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+N1
+A    2
+C6
+A    3
+C5
+A    4
+C4
+A    5
+C3
+A    6
+C2
+A    7
+C1
+A    8
+C7
+A    9
+C11
+A   10
+N
+A   11
+C
+A   12
+C10
+A   13
+C9
+A   14
+C8
+M  END
+>  <InstanceId>
+4QQ6_36X_A_204
+
+>  <ChemCompId>
+36X
+
+>  <PdbId>
+4QQ6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+204
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+4-methyl-2,3,4,5,6,7-hexahydrodicyclopenta[b,e]pyridin-8(1H)-imine
+
+>  <SystematicName>
+4-methyl-1,2,3,5,6,7-hexahydrodicyclopenta[2,1-b:2',1'-f]pyridin-8-imine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H16 N2
+
+>  <MolecularWeight>
+188.269
+
+>  <ModifiedDate>
+2014-08-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H16N2/c1-14-10-6-2-4-8(10)12(13)9-5-3-7-11(9)14/h13H,2-7H2,1H3
+
+>  <InChIKey>
+YOQONBCCIYETRK-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1C2=C(CCC2)C(=N)C3=C1CCC3
+
+$$$$

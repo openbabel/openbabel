@@ -1,0 +1,118 @@
+2WZ0_ZZT_A_158
+  RCSB PDB12061707213D
+Coordinates from PDB:2WZ0:A:158 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -5.1010   -3.5780   34.2070   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6060   -2.3350   34.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9940   -2.1830   34.0440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5520   -0.8980   34.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0410   -0.6610   33.8610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7130    0.2100   34.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3390    0.0600   34.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7660   -1.2120   34.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4350   -1.3570   34.4080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4460   -0.3080   34.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+O9
+A   10
+C10
+M  END
+>  <InstanceId>
+2WZ0_ZZT_A_158
+
+>  <ChemCompId>
+ZZT
+
+>  <PdbId>
+2WZ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+158
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O
+
+>  <Name>
+2-METHOXY-5-METHYLANILINE
+
+>  <SystematicName>
+2-methoxy-5-methyl-aniline
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H11 N O
+
+>  <MolecularWeight>
+137.179
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO/c1-6-3-4-8(10-2)7(9)5-6/h3-5H,9H2,1-2H3
+
+>  <InChIKey>
+WXWCDTXEKCVRRO-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccc(c(c1)N)OC
+
+$$$$

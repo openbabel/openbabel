@@ -25,8 +25,6 @@ GNU General Public License for more details.
 #include <openbabel/isomorphism.h>
 #include <Eigen/Core>
 
-using namespace std;
-
 namespace OpenBabel
 {
   /**
@@ -80,7 +78,7 @@ namespace OpenBabel
     /**
      * Align two vectors of vector3 objects.
      */
-    OBAlign(const vector<vector3> &ref, const vector<vector3> &target);
+    OBAlign(const std::vector<vector3> &ref, const std::vector<vector3> &target);
     //@}
 
     ///@name Partial Setup
@@ -91,12 +89,12 @@ namespace OpenBabel
      * to perform multiple alignments to the same Reference, rather than
      * multiple alignments to the same Target.
      */
-    void SetRef(const vector<vector3> &ref);
+    void SetRef(const std::vector<vector3> &ref);
     /**
      * Set the Target (which will be aligned to the Reference) in
      * terms of a vector of vector3 objects.
      */
-    void SetTarget(const vector<vector3> &target);
+    void SetTarget(const std::vector<vector3> &target);
     /**
      * Set the Reference Molecule (to which the Target Molecule must
      * be aligned). Note that is faster to perform multiple alignments
@@ -163,7 +161,7 @@ namespace OpenBabel
      * This function should only
      * be called after running the alignment (using Align()).
      */
-    vector<vector3> GetAlignment();
+    std::vector<vector3> GetAlignment();
     /**
      * Set the coordinates of an OBMol to those from the alignment.
      * This function should only
@@ -185,13 +183,13 @@ namespace OpenBabel
     const OBMol* _ptargetmol;
     Eigen::MatrixXd _rotMatrix;
     Eigen::Vector3d _ref_centr, _target_centr;
-    const vector<vector3> *_pref;
-    const vector<vector3> *_ptarget;
-    vector<vector3> _refmol_coords;
-    vector<vector3> _targetmol_coords;
+    const std::vector<vector3> *_pref;
+    const std::vector<vector3> *_ptarget;
+    std::vector<vector3> _refmol_coords;
+    std::vector<vector3> _targetmol_coords;
     Eigen::MatrixXd _result;
     Eigen::MatrixXd _mref, _mtarget;
-    void VectorsToMatrix(const vector<vector3> *pcoords, Eigen::MatrixXd &coords);
+    void VectorsToMatrix(const std::vector<vector3> *pcoords, Eigen::MatrixXd &coords);
     Eigen::Vector3d MoveToOrigin(Eigen::MatrixXd &coords);
     void SimpleAlign(const Eigen::MatrixXd &mtarget);
     void TheobaldAlign(const Eigen::MatrixXd &mtarget);
@@ -201,7 +199,7 @@ namespace OpenBabel
     // For example, map(213465) will be converted to newidx(102354).
     // If the atom with Idx=3 is not in the fragment, it will be
     // converted to newidx(10X243) instead.
-    vector<unsigned int> _newidx;
+    std::vector<unsigned int> _newidx;
   };
 }
 

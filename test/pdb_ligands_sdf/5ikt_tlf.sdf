@@ -1,0 +1,151 @@
+4G77_TLF_A_711
+  RCSB PDB12061712393D
+Coordinates from PDB:4G77:A:711 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+    4.7500   11.1980   11.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3160   10.6830   12.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0820   10.0180   12.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0770    9.6270   14.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1700   10.4420   15.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6360   10.4480   16.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9750    9.6760   17.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8810    8.8430   17.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4030    8.7820   15.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2360    7.8930   15.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4360    6.6430   15.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0770    8.4070   15.3530   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5630    9.5300   13.6110   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3660    9.7610   11.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0840    8.9600   11.2330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8510   10.1940    9.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0260    9.9290    8.7040  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0340   10.9510   10.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 16  1  0  0  0  0
+ 16 18  2  0  0  0  0
+ 16 14  1  0  0  0  0
+ 18  1  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14  3  2  0  0  0  0
+  1  2  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3 13  1  0  0  0  0
+ 13  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 12 10  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  2  0  0  0  0
+  6  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C8
+A    5
+C9
+A    6
+C10
+A    7
+C11
+A    8
+C12
+A    9
+C13
+A   10
+C14
+A   11
+O16
+A   12
+O15
+A   13
+N7
+A   14
+C1
+A   15
+C17
+A   16
+C2
+A   17
+CL
+A   18
+C3
+M  END
+>  <InstanceId>
+4G77_TLF_A_711
+
+>  <ChemCompId>
+TLF
+
+>  <PdbId>
+4G77
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+711
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N O2 Cl
+
+>  <Name>
+2-[(3-chloro-2-methylphenyl)amino]benzoic acid
+
+>  <SystematicName>
+2-[(3-chloranyl-2-methyl-phenyl)amino]benzoic acid
+
+>  <Synonyms>
+Tolfenamic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H12 Cl N O2
+
+>  <MolecularWeight>
+261.704
+
+>  <ModifiedDate>
+2012-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H12ClNO2/c1-9-11(15)6-4-8-12(9)16-13-7-3-2-5-10(13)14(17)18/h2-8,16H,1H3,(H,17,18)
+
+>  <InChIKey>
+YEZNLOUZAIOMLT-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(cccc1Cl)Nc2ccccc2C(=O)O
+
+$$$$

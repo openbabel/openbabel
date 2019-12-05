@@ -1,0 +1,147 @@
+1A6W_NIP_H_430
+  RCSB PDB12061701573D
+Coordinates from PDB:1A6W:H:430 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   42.7770   12.7480    2.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7910   12.7990    3.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8300   11.7790    3.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.7900   11.9030    4.1410   N 0  3  0  0  0  0  0  0  0  0  0  0
+   39.2870   12.9640    4.5910   O 0  5  0  0  0  0  0  0  0  0  0  0
+   39.1700   10.8370    4.4010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9500   10.6580    2.2530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0370    9.5900    2.3680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9460   10.5290    1.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0970    8.9160   -0.0050   I 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8420   11.6290    1.2410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7000   13.9080    2.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3320   14.9140    1.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5280   15.8280    1.2580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7890   14.6880   -0.1890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3690   15.4850   -1.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2040   14.7350   -2.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 11  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+M  CHG  2   4   1   5  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+N3
+A    5
+O3A
+A    6
+O3B
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+I5
+A   11
+C6
+A   12
+C7
+A   13
+C8
+A   14
+O8
+A   15
+N9
+A   16
+C10
+A   17
+C11
+M  END
+>  <InstanceId>
+1A6W_NIP_H_430
+
+>  <ChemCompId>
+NIP
+
+>  <PdbId>
+1A6W
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+430
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+6
+
+>  <ObservedFormula>
+C10 N2 O4 I
+
+>  <Name>
+4-HYDROXY-5-IODO-3-NITROPHENYLACETYL-EPSILON-AMINOCAPROIC ACID ANION
+
+>  <SystematicName>
+6-[2-(4-hydroxy-3-iodo-5-nitro-phenyl)ethanoylamino]hexanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H16 I N2 O6
+
+>  <MolecularWeight>
+435.191
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H17IN2O6/c15-10-6-9(7-11(14(10)21)17(22)23)8-12(18)16-5-3-1-2-4-13(19)20/h6-7,21H,1-5,8H2,(H,16,18)(H,19,20)/p-1
+
+>  <InChIKey>
+LKGGMBQFWIIXJM-UHFFFAOYSA-M
+
+>  <SMILES>
+c1c(cc(c(c1[N+](=O)[O-])O)I)CC(=O)NCCCCCC(=O)[O-]
+
+$$$$

@@ -1,0 +1,105 @@
+1ZNE_HE2_A_500
+  RCSB PDB12061704533D
+Coordinates from PDB:1ZNE:A:500 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   52.4970   24.0770   37.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.4250   22.9490   38.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.5580   23.3620   39.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.6320   22.3460   40.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9240   22.8990   41.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.1310   21.9980   43.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5800   22.6390   44.3690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+CAA
+A    2
+CAC
+A    3
+CAE
+A    4
+CAG
+A    5
+CAF
+A    6
+CAD
+A    7
+OAB
+M  END
+>  <InstanceId>
+1ZNE_HE2_A_500
+
+>  <ChemCompId>
+HE2
+
+>  <PdbId>
+1ZNE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O
+
+>  <Name>
+HEXAN-1-OL
+
+>  <SystematicName>
+hexan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O
+
+>  <MolecularWeight>
+102.175
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O/c1-2-3-4-5-6-7/h7H,2-6H2,1H3
+
+>  <InChIKey>
+ZSIAUFGUXNUGDI-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCO
+
+$$$$

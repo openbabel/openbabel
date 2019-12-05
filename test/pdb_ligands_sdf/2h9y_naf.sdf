@@ -1,0 +1,147 @@
+1AMN_NAF_A_594
+  RCSB PDB12061702003D
+Coordinates from PDB:1AMN:A:594 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+    4.2960   67.6090   63.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9600   66.8170   62.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0040   65.3880   62.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4600   64.7860   63.9260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8390   65.5310   64.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7140   66.9180   64.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5830   64.5170   61.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3880   64.4710   61.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6010   65.1840   60.8300   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9730   63.0760   62.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9480   62.3530   62.7050   F 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1910   63.1660   62.7590   F 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2580   62.2570   60.9110   F 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0930   68.9740   63.3730   N 0  3  0  0  0  0  0  0  0  0  0  0
+    4.1310   69.5470   64.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7870   69.3860   62.8310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8130   69.6890   62.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 17  1  0  0  0  0
+M  CHG  1  14   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1'
+A    8
+O1'
+A    9
+O2'
+A   10
+C2'
+A   11
+F1'
+A   12
+F2'
+A   13
+F3'
+A   14
+N1
+A   15
+CM1
+A   16
+CM2
+A   17
+CM3
+M  END
+>  <InstanceId>
+1AMN_NAF_A_594
+
+>  <ChemCompId>
+NAF
+
+>  <PdbId>
+1AMN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+594
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 F3
+
+>  <Name>
+M-(N,N,N-TRIMETHYLAMMONIO)-2,2,2-TRIFLUORO-1,1-DIHYDROXYETHYLBENZENE
+
+>  <SystematicName>
+trimethyl-[3-(2,2,2-trifluoro-1,1-dihydroxy-ethyl)phenyl]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 F3 N O2
+
+>  <MolecularWeight>
+250.238
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15F3NO2/c1-15(2,3)9-6-4-5-8(7-9)10(16,17)11(12,13)14/h4-7,16-17H,1-3H3/q+1
+
+>  <InChIKey>
+KGVDBJQLTHWAJF-UHFFFAOYSA-N
+
+>  <SMILES>
+C[N+](C)(C)c1cccc(c1)C(C(F)(F)F)(O)O
+
+$$$$

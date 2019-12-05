@@ -1,0 +1,129 @@
+4YCB_PGF_B_204
+  RCSB PDB12061716243D
+Coordinates from PDB:4YCB:B:204 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -25.6190   25.8810    3.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.2560   26.6420    3.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3650   25.8140    4.4450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4540   26.5770    5.2820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3810   27.2500    4.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6270   26.2580    3.6750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3640   26.7830    3.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5620   25.7230    2.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2470   25.1960    1.4440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4150   24.2860    0.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2830   23.5050   -0.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1930   22.6630    0.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0060   21.8320   -0.4120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C7
+A    2
+C8
+A    3
+O5
+A    4
+C9
+A    5
+C10
+A    6
+O6
+A    7
+C11
+A    8
+C12
+A    9
+O7
+A   10
+C13
+A   11
+C14
+A   12
+O8
+A   13
+C15
+M  END
+>  <InstanceId>
+4YCB_PGF_B_204
+
+>  <ChemCompId>
+PGF
+
+>  <PdbId>
+4YCB
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+204
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+2,5,8,11-TETRAOXATRIDECANE
+
+>  <SystematicName>
+1-ethoxy-2-[2-(2-methoxyethoxy)ethoxy]ethane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 O4
+
+>  <MolecularWeight>
+192.253
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H20O4/c1-3-11-6-7-13-9-8-12-5-4-10-2/h3-9H2,1-2H3
+
+>  <InChIKey>
+JRRDISHSXWGFRF-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOCCOCCOCCOC
+
+$$$$

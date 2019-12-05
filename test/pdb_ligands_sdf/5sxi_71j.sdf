@@ -1,0 +1,110 @@
+5SXI_71J_B_701
+  RCSB PDB12061719283D
+Coordinates from PDB:5SXI:B:701 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   56.1590   43.7530   73.2910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3560   43.9990   76.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2540   43.4690   75.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5480   45.5010   76.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.4690   46.0710   77.0780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0490   45.6930   74.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0370   45.2050   73.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4450   43.8150   73.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  3  1  0  0  0  0
+  6  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+O
+A    2
+C1
+A    3
+C
+A    4
+C2
+A    5
+O1
+A    6
+C3
+A    7
+C4
+A    8
+C5
+M  END
+>  <InstanceId>
+5SXI_71J_B_701
+
+>  <ChemCompId>
+71J
+
+>  <PdbId>
+5SXI
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O2
+
+>  <Name>
+trans-cyclohexane-1,4-diol
+
+>  <SystematicName>
+cyclohexane-1,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H12 O2
+
+>  <MolecularWeight>
+116.158
+
+>  <ModifiedDate>
+2017-02-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O2/c7-5-1-2-6(8)4-3-5/h5-8H,1-4H2/t5-,6-
+
+>  <InChIKey>
+VKONPUDBRVKQLM-IZLXSQMJSA-N
+
+>  <SMILES>
+C1CC(CCC1O)O
+
+$$$$

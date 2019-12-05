@@ -3,11 +3,18 @@ if(MINIMAL_BUILD)
         obabel
   )
 else(MINIMAL_BUILD)
+  find_package(Boost COMPONENTS program_options iostreams)
+  if(Boost_FOUND)
+    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+  endif()
+
+
   set(tools
         obabel
         obconformer
         obenergy
         obfit
+	obfitall
         obgen
         obminimize
         obmm

@@ -1,0 +1,134 @@
+1MQJ_HWD_A_301
+  RCSB PDB12061703193D
+Coordinates from PDB:1MQJ:A:301 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   16.2660    1.7120   15.4300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3910    0.4090   14.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4680   -0.6340   15.5440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4210    0.3860   13.4680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3400    1.5070   12.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3810    1.3700   11.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2110    2.7990   13.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1540    2.8610   14.6430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1540    1.8670   16.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8540    1.3310   17.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7290    2.3010   17.2460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9480    0.9720   18.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1470    1.4500   19.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9380    0.2100   19.2820   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+N8
+A   12
+C9
+A   13
+O91
+A   14
+O92
+M  END
+>  <InstanceId>
+1MQJ_HWD_A_301
+
+>  <ChemCompId>
+HWD
+
+>  <PdbId>
+1MQJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O4
+
+>  <Name>
+2-AMINO-3-(2,4-DIOXO-3,4-DIHYDRO-2H-PYRIMIDIN-1-YL)-PROPIONIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-3-(2,4-dioxopyrimidin-1-yl)propanoic acid
+
+>  <Synonyms>
+WILLARDIINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H9 N3 O4
+
+>  <MolecularWeight>
+199.164
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H9N3O4/c8-4(6(12)13)3-10-2-1-5(11)9-7(10)14/h1-2,4H,3,8H2,(H,12,13)(H,9,11,14)/t4-/m0/s1
+
+>  <InChIKey>
+FACUYWPMDKTVFU-BYPYZUCNSA-N
+
+>  <SMILES>
+C1=CN(C(=O)NC1=O)C[C@@H](C(=O)O)N
+
+$$$$

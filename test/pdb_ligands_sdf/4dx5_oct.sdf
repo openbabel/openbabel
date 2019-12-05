@@ -1,0 +1,109 @@
+1APM_OCT_E_354
+  RCSB PDB12061702003D
+Coordinates from PDB:1APM:E:354 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   -1.3350   -8.2640   -9.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6100   -8.3010   -9.0160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7350   -9.2050   -9.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1540   -8.8850   -9.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1700  -10.0590   -9.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5720   -9.6900   -9.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7560  -10.1390   -8.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1220   -9.5220   -9.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+M  END
+>  <InstanceId>
+1APM_OCT_E_354
+
+>  <ChemCompId>
+OCT
+
+>  <PdbId>
+1APM
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+354
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8
+
+>  <Name>
+N-OCTANE
+
+>  <SystematicName>
+octane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18
+
+>  <MolecularWeight>
+114.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H18/c1-3-5-7-8-6-4-2/h3-8H2,1-2H3
+
+>  <InChIKey>
+TVMXDCGIABBOFY-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCC
+
+$$$$

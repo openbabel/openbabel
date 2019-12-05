@@ -1,0 +1,133 @@
+2GKE_ZDP_A_700
+  RCSB PDB12061705413D
+Coordinates from PDB:2GKE:A:700 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   21.9130   18.9110    7.4020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8820   17.9440    6.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7030   18.1320    5.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0850   16.5610    7.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6110   15.5910    6.1290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5920   16.3610    7.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9400   14.9720    7.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5300   14.8230    9.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9130   13.4690   10.0450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8830   12.4380    9.7080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9560   13.5630   11.5630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1720   12.4980   12.1730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7570   14.6740   12.1580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2160   12.9430    9.4100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+A    1
+OAE
+A    2
+CAP
+A    3
+OAG
+A    4
+CAS
+A    5
+NAB
+A    6
+CAK
+A    7
+CAJ
+A    8
+CAM
+A    9
+CAT
+A   10
+NAC
+A   11
+CAQ
+A   12
+OAH
+A   13
+OAF
+A   14
+CAN
+M  END
+>  <InstanceId>
+2GKE_ZDP_A_700
+
+>  <ChemCompId>
+ZDP
+
+>  <PdbId>
+2GKE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+(2S,6S)-2,6-DIAMINO-2-METHYLHEPTANEDIOIC ACID
+
+>  <SystematicName>
+(2S,6S)-2,6-diamino-2-methyl-heptanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 N2 O4
+
+>  <MolecularWeight>
+204.224
+
+>  <ModifiedDate>
+2012-01-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16N2O4/c1-8(10,7(13)14)4-2-3-5(9)6(11)12/h5H,2-4,9-10H2,1H3,(H,11,12)(H,13,14)/t5-,8-/m0/s1
+
+>  <InChIKey>
+TVZGBXIJPFGQBJ-XNCJUZBTSA-N
+
+>  <SMILES>
+C[C@](CCC[C@@H](C(=O)O)N)(C(=O)O)N
+
+$$$$

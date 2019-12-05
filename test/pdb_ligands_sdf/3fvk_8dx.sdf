@@ -1,0 +1,155 @@
+3FVK_8DX_A_1
+  RCSB PDB12061708393D
+Coordinates from PDB:3FVK:A:1 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+   -3.6690   16.2690   18.6560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1570   15.2260   18.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4860   14.3940   17.5220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6300   15.0170   18.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0110   13.7190   17.8370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8970   15.1290   19.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3580   15.3890   20.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5520   15.4550   21.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9170   16.6530   19.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1080   16.6300   19.2460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1690   17.6520   19.5570   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1330   14.2700   19.8200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.4680   13.4380   20.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.6020   14.4040   22.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7240   12.6260   20.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9830   13.4830   20.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9550   14.5070   19.6420   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0050   14.1530   22.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8860   15.0410   22.0920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 19  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CB
+A    7
+CAS
+A    8
+CAJ
+A    9
+CAN
+A   10
+OAC
+A   11
+OAE
+A   12
+OAL
+A   13
+CAR
+A   14
+CAQ
+A   15
+CAH
+A   16
+CAP
+A   17
+OAF
+A   18
+CAG
+A   19
+OAK
+M  END
+>  <InstanceId>
+3FVK_8DX_A_1
+
+>  <ChemCompId>
+8DX
+
+>  <PdbId>
+3FVK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O7
+
+>  <Name>
+(2R,3aR,6S,7aR)-2-[(2S)-2-amino-3-hydroxy-3-oxo-propyl]-6-hydroxy-3,3a,5,6,7,7a-hexahydrofuro[4,5-b]pyran-2-carboxylic acid
+
+>  <SystematicName>
+(2R,3aR,6S,7aR)-2-[(2S)-2-amino-3-hydroxy-3-oxo-propyl]-6-hydroxy-3,3a,5,6,7,7a-hexahydrofuro[4,5-b]pyran-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 N O7
+
+>  <MolecularWeight>
+275.255
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17NO7/c12-6(9(14)15)2-11(10(16)17)3-8-7(19-11)1-5(13)4-18-8/h5-8,13H,1-4,12H2,(H,14,15)(H,16,17)/t5-,6-,7+,8+,11+/m0/s1
+
+>  <InChIKey>
+JVLNPAVKDNEYGY-NRURWVQNSA-N
+
+>  <SMILES>
+C1[C@@H](CO[C@H]2[C@@H]1O[C@@](C2)(C[C@@H](C(=O)O)N)C(=O)O)O
+
+$$$$

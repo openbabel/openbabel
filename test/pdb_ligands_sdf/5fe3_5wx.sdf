@@ -1,0 +1,127 @@
+5FE3_5WX_A_904
+  RCSB PDB12061717403D
+Coordinates from PDB:5FE3:A:904 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -10.7590   18.5500  -18.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8270   18.7620  -19.2190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2870   18.4920  -20.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8200   19.2910  -21.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.9920   20.3360  -21.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3380   20.9300  -20.5300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.8580   20.7740  -22.7650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5630   20.0490  -23.5070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.1940   19.1000  -22.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0480   18.1240  -23.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5600   17.2620  -22.1280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1710   17.4370  -20.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+  3 12  2  0  0  0  0
+  3  4  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  7  2  0  0  0  0
+  4  9  2  0  0  0  0
+ 11 10  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+CAA
+A    2
+OAG
+A    3
+CAJ
+A    4
+CAL
+A    5
+CAI
+A    6
+NAB
+A    7
+NAF
+A    8
+OAH
+A    9
+CAK
+A   10
+CAE
+A   11
+CAC
+A   12
+CAD
+M  END
+>  <InstanceId>
+5FE3_5WX_A_904
+
+>  <ChemCompId>
+5WX
+
+>  <PdbId>
+5FE3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+904
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2
+
+>  <Name>
+4-methoxy-1,2-benzoxazol-3-amine
+
+>  <SystematicName>
+4-methoxy-1,2-benzoxazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N2 O2
+
+>  <MolecularWeight>
+164.161
+
+>  <ModifiedDate>
+2016-01-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N2O2/c1-11-5-3-2-4-6-7(5)8(9)10-12-6/h2-4H,1H3,(H2,9,10)
+
+>  <InChIKey>
+YFNIGSJHKGKXEQ-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cccc2c1c(no2)N
+
+$$$$

@@ -1,0 +1,117 @@
+1FWN_PEP_A_1268
+  RCSB PDB12061702323D
+Coordinates from PDB:1FWN:A:1268 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   32.2720   51.6820   22.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0900   52.1710   23.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0820   51.7480   22.6190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9630   50.9850   21.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2920   50.7020   21.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9760   50.4710   20.4690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1070   49.4580   19.2560   P 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7840   48.2480   19.7300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8480   50.0930   18.1270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5950   49.3870   18.8730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2'
+A    4
+C2
+A    5
+C3
+A    6
+O2
+A    7
+P
+A    8
+O1P
+A    9
+O2P
+A   10
+O3P
+M  END
+>  <InstanceId>
+1FWN_PEP_A_1268
+
+>  <ChemCompId>
+PEP
+
+>  <PdbId>
+1FWN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1268
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O6 P
+
+>  <Name>
+PHOSPHOENOLPYRUVATE
+
+>  <SystematicName>
+2-phosphonooxyprop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 O6 P
+
+>  <MolecularWeight>
+168.042
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5O6P/c1-2(3(4)5)9-10(6,7)8/h1H2,(H,4,5)(H2,6,7,8)
+
+>  <InChIKey>
+DTBNBXWJWCWCIK-UHFFFAOYSA-N
+
+>  <SMILES>
+C=C(C(=O)O)OP(=O)(O)O
+
+$$$$

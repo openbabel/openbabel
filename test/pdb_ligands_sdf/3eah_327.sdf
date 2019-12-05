@@ -1,0 +1,135 @@
+3EAH_327_A_864
+  RCSB PDB12061708263D
+Coordinates from PDB:3EAH:A:864 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   10.8050   15.8760   56.5350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7940   17.3490   56.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6910   15.5570   58.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7220   14.5850   56.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6860   15.6190   55.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5330   16.1690   56.5230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3900   16.8650   55.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7560   16.9590   56.0140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6180   18.2880   56.4270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9920   16.7860   58.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6960   17.7920   59.4390   S 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5450   16.5030   60.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0200   15.4110   60.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0970   14.4810   58.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  8  1  0  0  0  0
+  2  9  2  0  0  0  0
+  2 10  1  0  0  0  0
+  3 10  2  0  0  0  0
+  3 13  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+N1
+A    9
+N2
+A   10
+C4
+A   11
+S1
+A   12
+C5
+A   13
+C6
+A   14
+O1
+M  END
+>  <InstanceId>
+3EAH_327_A_864
+
+>  <ChemCompId>
+327
+
+>  <PdbId>
+3EAH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+864
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O S
+
+>  <Name>
+(3S,5E)-3-propyl-3,4-dihydrothieno[2,3-f][1,4]oxazepin-5(2H)-imine
+
+>  <SystematicName>
+(3S)-3-propyl-3,4-dihydro-2H-thieno[2,3-f][1,4]oxazepin-5-imine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 N2 O S
+
+>  <MolecularWeight>
+210.296
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14N2OS/c1-2-3-7-6-13-8-4-5-14-9(8)10(11)12-7/h4-5,7H,2-3,6H2,1H3,(H2,11,12)/t7-/m0/s1
+
+>  <InChIKey>
+JIIBOYBTIWHZFJ-ZETCQYMHSA-N
+
+>  <SMILES>
+[H]/N=C/1\c2c(ccs2)OC[C@@H](N1)CCC
+
+$$$$

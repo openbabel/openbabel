@@ -1,0 +1,130 @@
+4XNB_3FB_A_902
+  RCSB PDB12061716153D
+Coordinates from PDB:4XNB:A:902 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   45.7550  -39.1420  -37.7700   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0790  -37.9570  -37.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0710  -37.4530  -38.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8220  -35.9820  -38.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2650  -35.5180  -39.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9740  -34.1560  -39.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2290  -33.2660  -38.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8110  -33.7520  -37.3750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0810  -35.1050  -37.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2840  -38.1600  -35.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4420  -39.5950  -35.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7450  -40.4820  -35.9360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4450  -39.9290  -34.7530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD1
+A    6
+CE1
+A    7
+CH
+A    8
+CE2
+A    9
+CD2
+A   10
+CCC
+A   11
+C
+A   12
+O
+A   13
+OXT
+M  END
+>  <InstanceId>
+4XNB_3FB_A_902
+
+>  <ChemCompId>
+3FB
+
+>  <PdbId>
+4XNB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+902
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O2
+
+>  <Name>
+(3S)-3-AMINO-4-PHENYLBUTANOIC ACID
+
+>  <SystematicName>
+(3S)-3-azanyl-4-phenyl-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O2
+
+>  <MolecularWeight>
+179.216
+
+>  <ModifiedDate>
+2011-12-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO2/c11-9(7-10(12)13)6-8-4-2-1-3-5-8/h1-5,9H,6-7,11H2,(H,12,13)/t9-/m0/s1
+
+>  <InChIKey>
+OFVBLKINTLPEGH-VIFPVBQESA-N
+
+>  <SMILES>
+c1ccc(cc1)C[C@@H](CC(=O)O)N
+
+$$$$

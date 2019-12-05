@@ -1,0 +1,114 @@
+3O6J_HQN_A_258
+  RCSB PDB12061710013D
+Coordinates from PDB:3O6J:A:258 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   25.0000   61.0060  291.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1820   58.9300  294.0200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3310   60.5310  292.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2410   61.1180  292.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8480   59.3450  292.9220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7880   60.7990  289.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9590   58.7010  292.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6030   59.1960  291.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1360   60.3400  290.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  9  1  2  0  0  0  0
+  1  3  1  0  0  0  0
+  5  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  7  5  1  0  0  0  0
+  6  9  1  0  0  0  0
+  8  7  2  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+3O6J_HQN_A_258
+
+>  <ChemCompId>
+HQN
+
+>  <PdbId>
+3O6J
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+258
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O3
+
+>  <Name>
+benzene-1,2,4-triol
+
+>  <SystematicName>
+benzene-1,2,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 O3
+
+>  <MolecularWeight>
+126.11
+
+>  <ModifiedDate>
+2011-08-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6O3/c7-4-1-2-5(8)6(9)3-4/h1-3,7-9H
+
+>  <InChIKey>
+GGNQRNBDZQJCCN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)O)O
+
+$$$$

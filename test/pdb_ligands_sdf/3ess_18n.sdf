@@ -1,0 +1,140 @@
+3ESS_18N_A_1
+  RCSB PDB12061708303D
+Coordinates from PDB:3ESS:A:1 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+    0.6210    4.7470  -11.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4030    4.1450  -12.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0240    2.9340  -12.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1270    2.2980  -12.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9180    2.8860  -11.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5370    4.0870  -10.6920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3080    4.6780   -9.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9110    5.8820   -9.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2440    6.5280   -9.5210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0250    5.9570  -10.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1870    6.6070  -10.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6020    7.6920  -10.5320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9290    6.0060  -12.0050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5540    4.8340  -12.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2670    4.4350  -13.5360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 14  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14 13  1  0  0  0  0
+ 15 14  2  0  0  0  0
+A    1
+CAO
+A    2
+CAM
+A    3
+CAG
+A    4
+CAC
+A    5
+CAE
+A    6
+CAL
+A    7
+CAF
+A    8
+CAD
+A    9
+CAH
+A   10
+CAN
+A   11
+CAK
+A   12
+OAB
+A   13
+NAI
+A   14
+CAJ
+A   15
+OAA
+M  END
+>  <InstanceId>
+3ESS_18N_A_1
+
+>  <ChemCompId>
+18N
+
+>  <PdbId>
+3ESS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2
+
+>  <Name>
+1H-benzo[de]isoquinoline-1,3(2H)-dione
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+1,8-NAPHTHALIMIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H7 N O2
+
+>  <MolecularWeight>
+197.189
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H7NO2/c14-11-8-5-1-3-7-4-2-6-9(10(7)8)12(15)13-11/h1-6H,(H,13,14,15)
+
+>  <InChIKey>
+XJHABGPPCLHLLV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cccc3c2c(c1)C(=O)NC3=O
+
+$$$$

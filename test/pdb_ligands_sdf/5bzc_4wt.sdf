@@ -1,0 +1,127 @@
+5BZC_4WT_A_201
+  RCSB PDB12061717003D
+Coordinates from PDB:5BZC:A:201 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   10.5200   -6.4900    1.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4910   -5.6060    1.8440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3830   -4.9690    0.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6810   -4.4320   -0.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3330   -3.4860   -1.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7010   -2.9390   -2.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3820   -3.3150   -2.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7290   -4.2430   -1.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3580   -4.8230   -0.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6320   -5.7600    0.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9530   -6.8030   -0.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5460   -5.0100    0.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8  9  2  0  0  0  0
+  5  4  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  9  4  1  0  0  0  0
+  9 10  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+CAH
+A    2
+NAI
+A    3
+CAG
+A    4
+CAJ
+A    5
+CAE
+A    6
+CAC
+A    7
+CAD
+A    8
+CAF
+A    9
+CAK
+A   10
+CAL
+A   11
+CAB
+A   12
+CAA
+M  END
+>  <InstanceId>
+5BZC_4WT_A_201
+
+>  <ChemCompId>
+4WT
+
+>  <PdbId>
+5BZC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N
+
+>  <Name>
+4,4-dimethyl-1,2,3,4-tetrahydroisoquinoline
+
+>  <SystematicName>
+4,4-dimethyl-2,3-dihydro-1H-isoquinoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 N
+
+>  <MolecularWeight>
+161.243
+
+>  <ModifiedDate>
+2016-06-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H15N/c1-11(2)8-12-7-9-5-3-4-6-10(9)11/h3-6,12H,7-8H2,1-2H3
+
+>  <InChIKey>
+QOWZBQAJZICMKD-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(CNCc2c1cccc2)C
+
+$$$$

@@ -1,0 +1,137 @@
+1NFZ_EIP_A_301
+  RCSB PDB12061703243D
+Coordinates from PDB:1NFZ:A:301 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   11.1070    2.6460   10.3080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5290    2.0290   12.4610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8090    2.3510   10.8340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1870    2.8590   11.2500   P 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9840    4.3070   11.6850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6870    6.0140   11.5610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7080    4.4750   13.3690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9020    5.2920   12.3880   P 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0820    6.1530   13.3280   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9490    6.8360   12.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2660    7.7140   13.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3870    8.4100   14.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4360    8.9080   13.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7980    9.6690   15.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8640   10.0270   12.9780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+O3
+A    4
+P4
+A    5
+O5
+A    6
+O6
+A    7
+O7
+A    8
+P8
+A    9
+O9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+O15
+M  END
+>  <InstanceId>
+1NFZ_EIP_A_301
+
+>  <ChemCompId>
+EIP
+
+>  <PdbId>
+1NFZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P2
+
+>  <Name>
+4-HYDROXY-3-METHYL BUTYL DIPHOSPHATE
+
+>  <SystematicName>
+[(3S)-4-hydroxy-3-methyl-butyl] phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H14 O8 P2
+
+>  <MolecularWeight>
+264.107
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H14O8P2/c1-5(4-6)2-3-12-15(10,11)13-14(7,8)9/h5-6H,2-4H2,1H3,(H,10,11)(H2,7,8,9)/t5-/m0/s1
+
+>  <InChIKey>
+URURINNTPGGDIV-YFKPBYRVSA-N
+
+>  <SMILES>
+C[C@@H](CCO[P@](=O)(O)OP(=O)(O)O)CO
+
+$$$$

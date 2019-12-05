@@ -1,0 +1,125 @@
+1T5F_DHH_A_1000
+  RCSB PDB12061704043D
+Coordinates from PDB:1T5F:A:1000 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   88.5700   43.8420   -6.2920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   88.3750   43.9240   -7.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.8260   45.2290   -8.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9680   45.4820   -9.5610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9600   46.1310   -7.4170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.8730   43.5200   -8.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.9270   44.7670   -8.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.5260   44.2260   -8.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.5550   44.9910   -7.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.1140   44.8390   -8.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.3760   44.6790   -6.9920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   81.5480   46.0250   -8.6640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+NP1
+A    2
+C02
+A    3
+C03
+A    4
+O04
+A    5
+O05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+O1
+A   12
+O2
+M  END
+>  <InstanceId>
+1T5F_DHH_A_1000
+
+>  <ChemCompId>
+DHH
+
+>  <PdbId>
+1T5F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4
+
+>  <Name>
+(S)-2-AMINO-7,7-DIHYDROXYHEPTANOIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-7,7-dihydroxy-heptanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 N O4
+
+>  <MolecularWeight>
+177.198
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO4/c8-5(7(11)12)3-1-2-4-6(9)10/h5-6,9-10H,1-4,8H2,(H,11,12)/t5-/m0/s1
+
+>  <InChIKey>
+KSOGSUKZGWOZJN-YFKPBYRVSA-N
+
+>  <SMILES>
+C(CCC(O)O)C[C@@H](C(=O)O)N
+
+$$$$

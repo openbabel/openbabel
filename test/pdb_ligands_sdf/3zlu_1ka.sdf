@@ -1,0 +1,105 @@
+3ZLU_1KA_A_1543
+  RCSB PDB12061711303D
+Coordinates from PDB:3ZLU:A:1543 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   45.6170   -1.8430    7.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.7920   -1.8690    8.5790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6900   -3.0500    7.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6110   -3.1440    7.0640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6500   -4.0960    6.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6280   -5.2330    6.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6670   -6.1520    5.0160   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+C4
+A    7
+O4
+M  END
+>  <InstanceId>
+3ZLU_1KA_A_1543
+
+>  <ChemCompId>
+1KA
+
+>  <PdbId>
+3ZLU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1543
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O3
+
+>  <Name>
+(2-hydroxyethoxy)acetaldehyde
+
+>  <SystematicName>
+2-(2-hydroxyethyloxy)ethanal
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H8 O3
+
+>  <MolecularWeight>
+104.105
+
+>  <ModifiedDate>
+2013-02-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H8O3/c5-1-3-7-4-2-6/h1,6H,2-4H2
+
+>  <InChIKey>
+DSGGHBUAHUMMHN-UHFFFAOYSA-N
+
+>  <SMILES>
+C(COCC=O)O
+
+$$$$

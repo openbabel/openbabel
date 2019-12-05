@@ -1,0 +1,134 @@
+1WQ3_IYR_A_501
+  RCSB PDB12061704333D
+Coordinates from PDB:1WQ3:A:501 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -20.3100   20.2520   77.3210   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9320   20.2930   78.6730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8850   21.5100   78.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1200   22.8300   78.7460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2990   23.2480   79.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5320   24.3950   79.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4420   25.0200   81.4070   I 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5470   25.1490   78.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7940   26.2840   78.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.3360   24.7820   77.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1320   23.6120   77.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.7430   19.0030   78.8150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9200   18.6080   79.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1600   18.4610   77.7810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CC
+A    5
+CD
+A    6
+CE
+A    7
+IE
+A    8
+CF
+A    9
+OF
+A   10
+CG
+A   11
+CH
+A   12
+C
+A   13
+O
+A   14
+OXT
+M  END
+>  <InstanceId>
+1WQ3_IYR_A_501
+
+>  <ChemCompId>
+IYR
+
+>  <PdbId>
+1WQ3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3 I
+
+>  <Name>
+3-IODO-TYROSINE
+
+>  <SystematicName>
+(2S)-2-amino-3-(4-hydroxy-3-iodo-phenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H10 I N O3
+
+>  <MolecularWeight>
+307.085
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+Y
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10INO3/c10-6-3-5(1-2-8(6)12)4-7(11)9(13)14/h1-3,7,12H,4,11H2,(H,13,14)/t7-/m0/s1
+
+>  <InChIKey>
+UQTZMGFTRHFAAM-ZETCQYMHSA-N
+
+>  <SMILES>
+c1cc(c(cc1C[C@@H](C(=O)O)N)I)O
+
+$$$$

@@ -1,0 +1,134 @@
+2XVN_KLS_A_1338
+  RCSB PDB12061707303D
+Coordinates from PDB:2XVN:A:1338 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   -9.9650    8.9660   -2.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2150   10.0720   -3.4240   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4230   10.6300   -3.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3240   10.1990   -2.7360   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6740   11.5840   -4.3560   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7550   12.3330   -4.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8830   12.2440   -3.9360   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6200   13.2490   -5.5940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.6170   14.0750   -6.0020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9210   14.1490   -7.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9490   14.9780   -7.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6630   15.7430   -6.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3670   15.6780   -5.5260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3370   14.8530   -5.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CAM
+A    2
+NAL
+A    3
+CAK
+A    4
+OAJ
+A    5
+NAN
+A    6
+CAB
+A    7
+NAA
+A    8
+NAC
+A    9
+CAD
+A   10
+CAE
+A   11
+CAF
+A   12
+CAG
+A   13
+CAH
+A   14
+CAI
+M  END
+>  <InstanceId>
+2XVN_KLS_A_1338
+
+>  <ChemCompId>
+KLS
+
+>  <PdbId>
+2XVN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1338
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O
+
+>  <Name>
+1-METHYL-3-(N-PHENYLCARBAMIMIDOYL)UREA
+
+>  <SystematicName>
+1-methyl-3-(N-phenylcarbamimidoyl)urea
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H12 N4 O
+
+>  <MolecularWeight>
+192.218
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N4O/c1-11-9(14)13-8(10)12-7-5-3-2-4-6-7/h2-6H,1H3,(H4,10,11,12,13,14)
+
+>  <InChIKey>
+BBCGZOVGNWCXHT-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=O)NC(=N)Nc1ccccc1
+
+$$$$

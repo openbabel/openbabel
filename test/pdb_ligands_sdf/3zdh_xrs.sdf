@@ -1,0 +1,134 @@
+3ZDH_XRS_A_301
+  RCSB PDB12061711283D
+Coordinates from PDB:3ZDH:A:301 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   54.5300   -4.0710  -53.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3550   -4.6400  -53.2060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0420   -4.2550  -51.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.0570   -3.4620  -51.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.9980   -3.3530  -52.4440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   55.2700   -4.1340  -54.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   54.6820   -4.8500  -55.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.3980   -4.5080  -56.9800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.8640   -4.9910  -57.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.7320   -4.5380  -55.9850   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4160   -4.5710  -58.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8920   -3.0650  -55.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.0300   -5.2540  -55.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.2460   -2.6180  -52.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  5  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C10
+A    2
+N13
+A    3
+C9
+A    4
+C8
+A    5
+N12
+A    6
+O14
+A    7
+C6
+A    8
+C5
+A    9
+C4
+A   10
+N11
+A   11
+C3
+A   12
+C2
+A   13
+C1
+A   14
+C7
+M  END
+>  <InstanceId>
+3ZDH_XRS_A_301
+
+>  <ChemCompId>
+XRS
+
+>  <PdbId>
+3ZDH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O
+
+>  <Name>
+(2R)-N,N-dimethyl-4-(1-methylimidazol-2-yl)oxy-butan-2-amine
+
+>  <SystematicName>
+(2R)-N,N-dimethyl-4-(1-methylimidazol-2-yl)oxy-butan-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H19 N3 O
+
+>  <MolecularWeight>
+197.277
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H19N3O/c1-9(12(2)3)5-8-14-10-11-6-7-13(10)4/h6-7,9H,5,8H2,1-4H3/t9-/m1/s1
+
+>  <InChIKey>
+VPQCJEWNIYWNLE-SECBINFHSA-N
+
+>  <SMILES>
+C[C@H](CCOc1nccn1C)N(C)C
+
+$$$$

@@ -656,8 +656,6 @@ namespace OpenBabel
             LexPtr--;
             return( (AtomExpr*)0 );
           }
-        else if( !index )
-          return( (AtomExpr*)0 );
         return( GenerateElement(index) );
 
       case('$'):

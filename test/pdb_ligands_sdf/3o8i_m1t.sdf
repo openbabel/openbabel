@@ -1,0 +1,121 @@
+3O8I_M1T_A_232
+  RCSB PDB12061710023D
+Coordinates from PDB:3O8I:A:232 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -23.6360  -22.0120    4.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5660  -21.2430    4.0050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9700  -19.5560    2.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5970  -21.2460    0.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.3170  -21.0680    1.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.6970  -20.4850    1.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3090  -19.9770    1.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.8510  -20.9930    3.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.5700  -20.9510    4.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2990  -20.9470    3.0400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9090  -20.6070    1.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+  2 10  2  0  0  0  0
+  3 11  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+OAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3O8I_M1T_A_232
+
+>  <ChemCompId>
+M1T
+
+>  <PdbId>
+3O8I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+232
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O4
+
+>  <Name>
+6,6-dihydroxy-1-methoxyhexan-2-one
+
+>  <SystematicName>
+6,6-dihydroxy-1-methoxy-hexan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H14 O4
+
+>  <MolecularWeight>
+162.184
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O4/c1-11-5-6(8)3-2-4-7(9)10/h7,9-10H,2-5H2,1H3
+
+>  <InChIKey>
+SIDFLZMSYWLVLY-UHFFFAOYSA-N
+
+>  <SMILES>
+COCC(=O)CCCC(O)O
+
+$$$$

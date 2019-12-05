@@ -1,0 +1,130 @@
+1MWF_MZP_?_971
+  RCSB PDB12061703203D
+Coordinates from PDB:1MWF:?:971 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -21.5720   34.9220   48.5230   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.2120   35.1940   47.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6910   35.2580   49.9670   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -21.9350   33.5210   48.2340   O 0  5  0  0  0  0  0  0  0  0  0  0
+  -26.3340   36.0070   44.3190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.2220   35.0220   44.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4230   34.3380   43.4360   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -26.6270   34.8940   42.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4900   34.4480   41.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1210   33.4890   40.6670   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9510   35.9380   43.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6380   35.0920   40.1970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0620   36.7270   42.3630   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+M  CHG  4   3  -1   4  -1   7   1  13  -1
+A    1
+P
+A    2
+O1P
+A    3
+O2P
+A    4
+O3P
+A    5
+N1
+A    6
+C2
+A    7
+N3
+A    8
+C4
+A    9
+C6
+A   10
+O6
+A   11
+C5
+A   12
+N6
+A   13
+O5
+M  END
+>  <InstanceId>
+1MWF_MZP_?_971
+
+>  <ChemCompId>
+MZP
+
+>  <PdbId>
+1MWF
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+971
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+9
+
+>  <ObservedFormula>
+C4 N3 O5 P
+
+>  <Name>
+4-CARBAMOYL-1-BETA-D-RIBOFURANOSYL-IMIDAZOLIUM-5-OLATE-5'-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4R,5R)-5-(4-aminocarbonyl-5-oxido-imidazol-3-ium-1-yl)-3,4-dihydroxy-oxolan-2-yl]methyl phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N3 O9 P
+
+>  <MolecularWeight>
+337.18
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H14N3O9P/c10-7(15)4-8(16)12(2-11-4)9-6(14)5(13)3(21-9)1-20-22(17,18)19/h2-3,5-6,9,13-14,16H,1H2,(H2,10,15)(H2,17,18,19)/p-2/t3-,5-,6-,9-/m1/s1
+
+>  <InChIKey>
+KTKAFSMJDTUUAN-UUOKFMHZSA-L
+
+>  <SMILES>
+c1[nH+]c(c(n1[C@H]2[C@@H]([C@@H]([C@H](O2)COP(=O)([O-])[O-])O)O)[O-])C(=O)N
+
+$$$$

@@ -1,0 +1,142 @@
+4KZB_NZ2_A_401
+  RCSB PDB12061713273D
+Coordinates from PDB:4KZB:A:401 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   23.6380    8.1750   17.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8810    6.8900   16.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6140    5.6750   17.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8030    5.7380   18.3200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1730    4.5750   17.0970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1430    6.8280   15.2840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7020    6.8370   15.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9640    5.6690   15.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5840    5.7090   15.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9240    6.9100   15.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6580    8.0660   15.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0430    8.0400   15.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8870    6.4320   13.9060   S 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9110    4.6790   13.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2490    6.9050   14.0640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2160    7.0380   12.7880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  5  3  2  0  0  0  0
+  1  2  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 13  1  0  0  0  0
+ 12  7  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 15 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 16  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+O04
+A    5
+O05
+A    6
+N06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+S13
+A   14
+C14
+A   15
+O15
+A   16
+O16
+M  END
+>  <InstanceId>
+4KZB_NZ2_A_401
+
+>  <ChemCompId>
+NZ2
+
+>  <PdbId>
+4KZB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O4 S
+
+>  <Name>
+N-(methylsulfonyl)-N-phenyl-L-alanine
+
+>  <SystematicName>
+(2S)-2-[methylsulfonyl(phenyl)amino]propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 N O4 S
+
+>  <MolecularWeight>
+243.28
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13NO4S/c1-8(10(12)13)11(16(2,14)15)9-6-4-3-5-7-9/h3-8H,1-2H3,(H,12,13)/t8-/m0/s1
+
+>  <InChIKey>
+RIWCJTAAIOCFTR-QMMMGPOBSA-N
+
+>  <SMILES>
+C[C@@H](C(=O)O)N(c1ccccc1)S(=O)(=O)C
+
+$$$$

@@ -1,0 +1,146 @@
+4CS4_AXZ_A_1480
+  RCSB PDB12061712053D
+Coordinates from PDB:4CS4:A:1480 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+  -16.3360   17.0140   16.9260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7940   16.5890   18.2840   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1270   15.3310   18.7640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3470   17.8840   19.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2810   18.6700   19.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1760   18.0850   20.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8550   19.0640   21.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6640   19.9380   21.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.9220   19.7630   20.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3290   21.0350   22.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4320   16.3600   18.3690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1420   17.5040   17.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3400   17.3060   16.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.5400   17.4880   18.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1420   18.5500   18.7930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1350   16.3830   18.6050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.5400   18.5060   15.7850   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 11  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 17  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+O2S
+A    2
+S
+A    3
+O1S
+A    4
+C1
+A    5
+C2
+A    6
+C6
+A    7
+C5
+A    8
+C4
+A    9
+C3
+A   10
+C7
+A   11
+N
+A   12
+CA
+A   13
+CB
+A   14
+C
+A   15
+O
+A   16
+OXT
+A   17
+O9
+M  END
+>  <InstanceId>
+4CS4_AXZ_A_1480
+
+>  <ChemCompId>
+AXZ
+
+>  <PdbId>
+4CS4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1480
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C10 N O5 S
+
+>  <Name>
+2-{[dihydroxy(4-aminoethylphenyl)-{4}-sulfanyl]amino}-3-hydroxypropanoic acid
+
+>  <SystematicName>
+(2S)-2-[[[4-(2-azanylethyl)phenyl]-bis(oxidanyl)-$l^{4}-sulfanyl]amino]-3-oxidanyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H18 N2 O5 S
+
+>  <MolecularWeight>
+290.336
+
+>  <ModifiedDate>
+2014-04-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H18N2O5S/c12-6-5-8-1-3-9(4-2-8)19(17,18)13-10(7-14)11(15)16/h1-4,10,13-14,17-18H,5-7,12H2,(H,15,16)/t10-/m0/s1
+
+>  <InChIKey>
+SQBHFIANGBPIBX-JTQLQIEISA-N
+
+>  <SMILES>
+c1cc(ccc1CCN)S(N[C@@H](CO)C(=O)O)(O)O
+
+$$$$

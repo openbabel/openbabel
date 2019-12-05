@@ -1,0 +1,130 @@
+3N0T_OPY_A_1001
+  RCSB PDB12061709503D
+Coordinates from PDB:3N0T:A:1001 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -18.5160    1.7490   18.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5900    1.4560   19.6230   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1130    1.0070   18.8580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0200    1.9920   18.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1710    1.3780   17.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6900   -0.5840   15.8540   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3070   -0.1360   17.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.8440    4.1960   15.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.4760    3.3130   16.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3980    4.5380   15.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6620    2.0440   16.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5610    3.2440   16.0990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.2050    2.3280   17.0770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  2  0  0  0  0
+  4  1  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  8  1  0  0  0  0
+ 11  9  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 13 12  1  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+CA
+A    5
+CB
+A    6
+NAA
+A    7
+CAD
+A    8
+CAE
+A    9
+CAF
+A   10
+CAG
+A   11
+CAI
+A   12
+CAJ
+A   13
+NAM
+M  END
+>  <InstanceId>
+3N0T_OPY_A_1001
+
+>  <ChemCompId>
+OPY
+
+>  <PdbId>
+3N0T
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O
+
+>  <Name>
+(3S)-4-oxo-4-piperidin-1-ylbutane-1,3-diamine
+
+>  <SystematicName>
+(2S)-2,4-bis(azanyl)-1-piperidin-1-yl-butan-1-one
+
+>  <Synonyms>
+GSK237826A
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H19 N3 O
+
+>  <MolecularWeight>
+185.267
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H19N3O/c10-5-4-8(11)9(13)12-6-2-1-3-7-12/h8H,1-7,10-11H2/t8-/m0/s1
+
+>  <InChIKey>
+RKBKYSFKXFKBBM-QMMMGPOBSA-N
+
+>  <SMILES>
+C1CCN(CC1)C(=O)[C@H](CCN)N
+
+$$$$

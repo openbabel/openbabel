@@ -1,0 +1,123 @@
+3KQT_ES7_A_290
+  RCSB PDB12061709293D
+Coordinates from PDB:3KQT:A:290 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   28.2460   45.4760   17.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7380   43.4010   18.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8390   44.1530   17.4690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5190   43.6600   16.2080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0480   42.3590   15.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7960   42.1140   14.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.0180   43.1660   13.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4930   44.4620   13.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7390   44.7080   15.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1730   45.8100   15.9180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6550   46.3650   18.3690   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  1 10  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C10
+A    2
+C01
+A    3
+N02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+C07
+A    9
+C08
+A   10
+N09
+A   11
+N11
+M  END
+>  <InstanceId>
+3KQT_ES7_A_290
+
+>  <ChemCompId>
+ES7
+
+>  <PdbId>
+3KQT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3
+
+>  <Name>
+1-methyl-1H-benzimidazol-2-amine
+
+>  <SystematicName>
+1-methylbenzimidazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N3
+
+>  <MolecularWeight>
+147.177
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9N3/c1-11-7-5-3-2-4-6(7)10-8(11)9/h2-5H,1H3,(H2,9,10)
+
+>  <InChIKey>
+XDFZKQJLNGNJAN-UHFFFAOYSA-N
+
+>  <SMILES>
+Cn1c2ccccc2nc1N
+
+$$$$

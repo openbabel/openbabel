@@ -1,0 +1,130 @@
+5N53_8NB_B_301
+  RCSB PDB12061719083D
+Coordinates from PDB:5N53:B:301 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -27.6740   14.2850    5.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7010   13.8430    6.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1360   14.7140    6.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9940   14.7020    9.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.6930   17.1650    4.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.6520   17.1660    2.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.1160   15.9620    4.2580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1010   15.6160    5.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5630   16.0390    6.9920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5380   16.4880    6.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1890   14.1690    7.7730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1940   12.1700    5.9630  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4710   18.1890    4.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4 11  1  0  0  0  0
+ 11  3  1  0  0  0  0
+  9  3  2  0  0  0  0
+  9 10  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  2 12  1  0  0  0  0
+  2  1  2  0  0  0  0
+  8  1  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 13  5  2  0  0  0  0
+  7  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+N1
+A    8
+C3
+A    9
+C1
+A   10
+C2
+A   11
+O1
+A   12
+CL1
+A   13
+O2
+M  END
+>  <InstanceId>
+5N53_8NB_B_301
+
+>  <ChemCompId>
+8NB
+
+>  <PdbId>
+5N53
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 Cl
+
+>  <Name>
+~{N}-(3-chloranyl-4-methoxy-phenyl)ethanamide
+
+>  <SystematicName>
+~{N}-(3-chloranyl-4-methoxy-phenyl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 Cl N O2
+
+>  <MolecularWeight>
+199.634
+
+>  <ModifiedDate>
+2017-03-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10ClNO2/c1-6(12)11-7-3-4-9(13-2)8(10)5-7/h3-5H,1-2H3,(H,11,12)
+
+>  <InChIKey>
+WNOVNNUWOUKIOL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccc(c(c1)Cl)OC
+
+$$$$

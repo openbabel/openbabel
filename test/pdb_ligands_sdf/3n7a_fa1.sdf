@@ -1,0 +1,126 @@
+1GU1_FA1_A_201
+  RCSB PDB12061702383D
+Coordinates from PDB:1GU1:A:201 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   28.6300   50.9780   58.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8860   49.7450   58.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4970   48.8030   57.7520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7740   49.1790   59.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8960   48.1190   59.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4170   50.1340   60.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5280   51.5480   60.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8440   53.1510   59.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0840   53.2610   59.1970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9640   52.5050   58.6850   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4370   54.2040   60.3050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0270   52.0020   59.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  2  0  0  0  0
+  8 12  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+O3
+A    4
+C4
+A    5
+O4
+A    6
+C5
+A    7
+C6
+A    8
+C
+A    9
+O1
+A   10
+O30
+A   11
+O2
+A   12
+C1
+M  END
+>  <InstanceId>
+1GU1_FA1_A_201
+
+>  <ChemCompId>
+FA1
+
+>  <PdbId>
+1GU1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O5
+
+>  <Name>
+2,3 -ANHYDRO-QUINIC ACID
+
+>  <SystematicName>
+(1R,4R,5R)-1,4,5-trihydroxycyclohex-2-ene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H10 O5
+
+>  <MolecularWeight>
+174.151
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H10O5/c8-4-1-2-7(12,6(10)11)3-5(4)9/h1-2,4-5,8-9,12H,3H2,(H,10,11)/t4-,5-,7+/m1/s1
+
+>  <InChIKey>
+VTEDVYGIJPLVFF-XAHCXIQSSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](C=C[C@]1(C(=O)O)O)O)O
+
+$$$$

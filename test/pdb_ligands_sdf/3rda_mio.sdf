@@ -1,0 +1,106 @@
+3RDA_MIO_X_1
+  RCSB PDB12061710333D
+Coordinates from PDB:3RDA:X:1 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+    8.5090   21.2020   18.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4900   24.6310   17.0030   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9210   23.1230   18.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4470   21.8390   16.4880   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5810   22.8170   16.0400   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6120   22.0570   17.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2940   23.5780   17.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+CAA
+A    2
+NAB
+A    3
+CAC
+A    4
+NAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+M  END
+>  <InstanceId>
+3RDA_MIO_X_1
+
+>  <ChemCompId>
+MIO
+
+>  <PdbId>
+3RDA
+
+>  <ChainId>
+X
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O
+
+>  <Name>
+3-methyl-1,2-oxazol-5-amine
+
+>  <SystematicName>
+3-methyl-1,2-oxazol-5-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N2 O
+
+>  <MolecularWeight>
+98.103
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N2O/c1-3-2-4(5)7-6-3/h2H,5H2,1H3
+
+>  <InChIKey>
+FNXYWHTZDAVRTB-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(on1)N
+
+$$$$

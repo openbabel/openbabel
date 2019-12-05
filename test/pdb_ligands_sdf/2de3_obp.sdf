@@ -1,0 +1,143 @@
+2DE3_OBP_A_1366
+  RCSB PDB12061705203D
+Coordinates from PDB:2DE3:A:1366 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+  123.3250   11.0970   18.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  122.8970   11.8880   17.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  122.8580   11.3470   16.1420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.2580   10.0300   15.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.6860    9.2460   17.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.7200    9.7790   18.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  122.5390   13.2120   17.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  121.2280   13.5130   18.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  120.8460   14.8260   18.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  121.7830   15.8500   18.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.0960   15.5610   17.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.4700   14.2460   17.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.7550   13.9820   17.2040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  122.2670   12.2760   14.7800   S 0  0  0  0  0  0  0  0  0  0  0  0
+  123.2040   13.3150   14.4830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  122.1150   11.3880   13.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 14  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+CX1
+A    2
+CX2
+A    3
+CX3
+A    4
+CX4
+A    5
+CX5
+A    6
+CX6
+A    7
+CX7
+A    8
+CX8
+A    9
+CX9
+A   10
+CXA
+A   11
+CXB
+A   12
+CXC
+A   13
+OH
+A   14
+SX1
+A   15
+OX1
+A   16
+OX2
+M  END
+>  <InstanceId>
+2DE3_OBP_A_1366
+
+>  <ChemCompId>
+OBP
+
+>  <PdbId>
+2DE3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1366
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O3 S
+
+>  <Name>
+2'-HYDROXY-1,1'-BIPHENYL-2-SULFINIC ACID
+
+>  <SystematicName>
+2-(2-hydroxyphenyl)benzenesulfinic acid
+
+>  <Synonyms>
+2'-HYDROXYBIPHENYL-2-SULFINIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10 O3 S
+
+>  <MolecularWeight>
+234.271
+
+>  <ModifiedDate>
+2012-01-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10O3S/c13-11-7-3-1-5-9(11)10-6-2-4-8-12(10)16(14)15/h1-8,13H,(H,14,15)
+
+>  <InChIKey>
+HPKSNFTYZHYEKV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)c2ccccc2[S@@](=O)O)O
+
+$$$$

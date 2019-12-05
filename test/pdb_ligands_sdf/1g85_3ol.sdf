@@ -1,0 +1,113 @@
+1G85_3OL_A_1001
+  RCSB PDB12061702343D
+Coordinates from PDB:1G85:A:1001 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   -2.0130   -1.2270    3.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2750    0.0060    3.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2220    0.1050    3.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6870    1.3980    3.3500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4690    0.0270    5.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8580   -1.3840    5.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2060   -1.3970    7.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0140   -1.7440    8.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.2660   -3.0670    8.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O1
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+M  END
+>  <InstanceId>
+1G85_3OL_A_1001
+
+>  <ChemCompId>
+3OL
+
+>  <PdbId>
+1G85
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O
+
+>  <Name>
+(3R)-oct-1-en-3-ol
+
+>  <SystematicName>
+(3R)-oct-1-en-3-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 O
+
+>  <MolecularWeight>
+128.212
+
+>  <ModifiedDate>
+2014-02-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16O/c1-3-5-6-7-8(9)4-2/h4,8-9H,2-3,5-7H2,1H3/t8-/m0/s1
+
+>  <InChIKey>
+VSMOENVRRABVKN-QMMMGPOBSA-N
+
+>  <SMILES>
+CCCCC[C@H](C=C)O
+
+$$$$

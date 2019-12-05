@@ -1,0 +1,139 @@
+3H62_NHC_C_0
+  RCSB PDB12061708503D
+Coordinates from PDB:3H62:C:0 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  116.7490   -2.2580   31.4030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  115.8320   -2.2730   30.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  115.7700   -3.1190   29.6330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  114.7650   -1.2130   30.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  113.6860   -1.4180   29.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  114.1810   -1.1650   32.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.6650   -1.3870   32.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  114.8670   -2.1400   33.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  115.8550   -1.7190   33.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  114.4550   -3.3190   33.1010   O 0  0  0  0  0  0  0  0  0  0  0  0
+  115.4170    0.1540   30.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  114.3160    1.1810   30.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  113.6860    1.2240   31.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  114.5490    0.2440   32.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  115.8100    0.4290   31.8620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6 14  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O2
+A    2
+C8
+A    3
+O4
+A    4
+C3
+A    5
+C7
+A    6
+C4
+A    7
+C10
+A    8
+C9
+A    9
+O3
+A   10
+O5
+A   11
+C2
+A   12
+C1
+A   13
+C5
+A   14
+C6
+A   15
+O1
+M  END
+>  <InstanceId>
+3H62_NHC_C_0
+
+>  <ChemCompId>
+NHC
+
+>  <PdbId>
+3H62
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O5
+
+>  <Name>
+(1R,2S,3R,4S)-2,3-dimethyl-7-oxabicyclo[2.2.1]heptane-2,3-dicarboxylic acid
+
+>  <SystematicName>
+(1R,4S,5R,6S)-5,6-dimethyl-7-oxabicyclo[2.2.1]heptane-5,6-dicarboxylic acid
+
+>  <Synonyms>
+Cantharidic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O5
+
+>  <MolecularWeight>
+214.215
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O5/c1-9(7(11)12)5-3-4-6(15-5)10(9,2)8(13)14/h5-6H,3-4H2,1-2H3,(H,11,12)(H,13,14)/t5-,6+,9+,10-
+
+>  <InChIKey>
+NMTNUQBORQILRK-XCVPVQRUSA-N
+
+>  <SMILES>
+C[C@]1([C@H]2CC[C@@H]([C@]1(C)C(=O)O)O2)C(=O)O
+
+$$$$

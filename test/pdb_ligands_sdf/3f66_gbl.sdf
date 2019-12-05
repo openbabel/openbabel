@@ -1,0 +1,102 @@
+2CBI_GBL_A_1627
+  RCSB PDB12061705143D
+Coordinates from PDB:2CBI:A:1627 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   57.3480   -0.9930   62.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9930    0.3340   61.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.4240    1.4030   61.9830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3760   -1.9650   61.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6660   -1.1770   61.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.2830    0.2320   61.3260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+O
+A    4
+CB
+A    5
+CG
+A    6
+OD
+M  END
+>  <InstanceId>
+2CBI_GBL_A_1627
+
+>  <ChemCompId>
+GBL
+
+>  <PdbId>
+2CBI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1627
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O2
+
+>  <Name>
+GAMMA-BUTYROLACTONE
+
+>  <SystematicName>
+oxolan-2-one
+
+>  <Synonyms>
+DIHYDROFURAN-2(3H)-ONE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O2
+
+>  <MolecularWeight>
+86.089
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O2/c5-4-2-1-3-6-4/h1-3H2
+
+>  <InChIKey>
+YEJRWHAVMIAJKC-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CC(=O)OC1
+
+$$$$

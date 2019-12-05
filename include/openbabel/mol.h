@@ -27,6 +27,16 @@ GNU General Public License for more details.
 #ifndef EXTERN
 #  define EXTERN extern
 #endif
+#ifndef THREAD_LOCAL
+#ifdef SWIG
+# define THREAD_LOCAL
+# elif (__cplusplus >= 201103L) 
+//this is required for correct multi-threading
+#  define THREAD_LOCAL thread_local
+# else
+#  define THREAD_LOCAL
+# endif
+#endif
 
 #include <math.h>
 #include <float.h>
@@ -37,6 +47,7 @@ GNU General Public License for more details.
 
 #include <openbabel/base.h>
 
+
 namespace OpenBabel
 {
   class OBAtom;
@@ -45,6 +56,7 @@ namespace OpenBabel
   class OBRing;
   class OBInternalCoord;
   class OBConversion; //used only as a pointer
+
   class vector3;
   class OBBitVec;
   class OBMolAtomDFSIter;

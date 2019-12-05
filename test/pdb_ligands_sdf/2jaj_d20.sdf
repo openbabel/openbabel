@@ -1,0 +1,141 @@
+2JAJ_D20_A_500
+  RCSB PDB12061706013D
+Coordinates from PDB:2JAJ:A:500 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   15.9620    4.3160   67.6130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2440    5.2580   66.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0880    6.2120   66.1790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0110    6.0720   66.8110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6850    4.4490   65.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6210    3.4160   64.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0340    2.6290   63.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2270    3.4680   62.4150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2280    3.8010   61.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9570    3.3550   61.8710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5390    4.5330   60.4840   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7840    3.6540   61.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5330    1.7500   58.0590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3170    7.0690   65.2790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5380    2.9150   58.9320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5600    2.6340   59.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+N
+A    2
+C1
+A    3
+C
+A    4
+O
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+N5
+A    9
+C6
+A   10
+N61
+A   11
+N62
+A   12
+C7
+A   13
+C8
+A   14
+O9
+A   15
+O10
+A   16
+C10
+M  END
+>  <InstanceId>
+2JAJ_D20_A_500
+
+>  <ChemCompId>
+D20
+
+>  <PdbId>
+2JAJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O3
+
+>  <Name>
+N~5~-{IMINO[(2-METHOXYETHYL)AMINO]METHYL}-L-ORNITHINE
+
+>  <SystematicName>
+(2S)-2-amino-5-[(N-(2-methoxyethyl)carbamimidoyl)amino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H20 N4 O3
+
+>  <MolecularWeight>
+232.28
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H20N4O3/c1-16-6-5-13-9(11)12-4-2-3-7(10)8(14)15/h7H,2-6,10H2,1H3,(H,14,15)(H3,11,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+XMBSMMCPKFDGEO-ZETCQYMHSA-N
+
+>  <SMILES>
+COCCNC(=N)NCCC[C@@H](C(=O)O)N
+
+$$$$

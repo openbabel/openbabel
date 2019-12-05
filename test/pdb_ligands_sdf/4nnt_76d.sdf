@@ -1,0 +1,150 @@
+4NNT_76D_A_201
+  RCSB PDB12061713553D
+Coordinates from PDB:4NNT:A:201 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   -3.0110    7.6180  -16.2900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6680    6.6560  -16.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9930    5.6310  -16.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0420    6.7990  -18.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2510    7.3710  -18.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2380    7.8160  -17.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5790    9.2780  -17.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.5130    6.8950  -17.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5880    7.5280  -19.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6770    7.1220  -20.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0340    7.3020  -22.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1540    6.4760  -23.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5210    7.2930  -22.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4610    6.5540  -20.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1230    6.4000  -19.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8190    5.7810  -18.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6920    4.3680  -19.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5750    6.6620  -19.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10 14  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  9  5  2  0  0  0  0
+ 17 16  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15  4  2  0  0  0  0
+ 18 16  1  0  0  0  0
+  5  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  4  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAG
+A    2
+CAK
+A    3
+OAH
+A    4
+CAO
+A    5
+CAM
+A    6
+CAQ
+A    7
+CAD
+A    8
+CAC
+A    9
+CAI
+A   10
+CAL
+A   11
+CAP
+A   12
+CAB
+A   13
+CAA
+A   14
+CAJ
+A   15
+CAN
+A   16
+CAR
+A   17
+CAF
+A   18
+CAE
+M  END
+>  <InstanceId>
+4NNT_76D_A_201
+
+>  <ChemCompId>
+76D
+
+>  <PdbId>
+4NNT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C16 O2
+
+>  <Name>
+2,4,6-tri(propan-2-yl)benzoic acid
+
+>  <SystematicName>
+2,4,6-tri(propan-2-yl)benzoic acid
+
+>  <Synonyms>
+2,4,6-triisopropylbenzoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C16 H24 O2
+
+>  <MolecularWeight>
+248.361
+
+>  <ModifiedDate>
+2014-11-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C16H24O2/c1-9(2)12-7-13(10(3)4)15(16(17)18)14(8-12)11(5)6/h7-11H,1-6H3,(H,17,18)
+
+>  <InChIKey>
+ULVHAZFBJJXIDO-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)c1cc(c(c(c1)C(C)C)C(=O)O)C(C)C
+
+$$$$

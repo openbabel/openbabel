@@ -1,0 +1,135 @@
+19GS_BSP_A_210
+  RCSB PDB12061701563D
+Coordinates from PDB:19GS:A:210 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    6.7360    2.0250   29.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1550    1.1550   30.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1830    1.6860   31.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7830    3.0590   31.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3620    3.9530   30.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3340    3.4280   29.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1120    4.6240   28.4260  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8000    5.8220   30.6670  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0630    1.2960   28.6000  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6480   -0.7180   30.9870  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7730    3.3080   32.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5740    2.1160   33.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1980    4.3600   33.0200   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3880    1.0080   32.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 14  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+C5
+A    2
+C4
+A    3
+C3
+A    4
+C8
+A    5
+C7
+A    6
+C6
+A    7
+BR6
+A    8
+BR7
+A    9
+BR5
+A   10
+BR4
+A   11
+C9
+A   12
+O1
+A   13
+O9
+A   14
+C2
+M  END
+>  <InstanceId>
+19GS_BSP_A_210
+
+>  <ChemCompId>
+BSP
+
+>  <PdbId>
+19GS
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+210
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+22
+
+>  <ObservedFormula>
+C8 O2 Br4
+
+>  <Name>
+3,3'-(4,5,6,7-TETRABROMO-3-OXO-1(3H)-ISOBENZOFURANYLIDENE)BIS [6-HYDROXYBENZENESULFONIC ACID]ANION
+
+>  <SystematicName>
+2-hydroxy-5-[4,5,6,7-tetrabromo-1-(4-hydroxy-3-sulfonato-phenyl)-3-oxo-2-benzofuran-1-yl]benzenesulfonate
+
+>  <Synonyms>
+BROMOSULFALEIN
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C20 H8 Br4 O10 S2
+
+>  <MolecularWeight>
+792.018
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C20H10Br4O10S2/c21-15-13-14(16(22)18(24)17(15)23)20(34-19(13)27,7-1-3-9(25)11(5-7)35(28,29)30)8-2-4-10(26)12(6-8)36(31,32)33/h1-6,25-26H,(H,28,29,30)(H,31,32,33)/p-2
+
+>  <InChIKey>
+OHTXTCNTQJFRIG-UHFFFAOYSA-L
+
+>  <SMILES>
+c1cc(c(cc1C2(c3c(c(c(c(c3Br)Br)Br)Br)C(=O)O2)c4ccc(c(c4)S(=O)(=O)[O-])O)S(=O)(=O)[O-])O
+
+$$$$

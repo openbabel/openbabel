@@ -1,0 +1,122 @@
+5KHP_7K9_A_202
+  RCSB PDB12061718363D
+Coordinates from PDB:5KHP:A:202 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   30.0320   82.3220   64.6320   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4670   81.6930   63.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6540   81.5770   63.2710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4340   81.1340   62.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9140   81.9460   61.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9410   81.4460   60.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4690   80.1450   60.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9790   79.3360   61.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5120   78.0550   62.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9680   79.8350   62.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4770   79.0470   63.7890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  8  2  0  0  0  0
+  6  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+N32
+A    2
+C33
+A    3
+O53
+A    4
+C40
+A    5
+C41
+A    6
+C42
+A    7
+C43
+A    8
+C44
+A    9
+O51
+A   10
+C45
+A   11
+O50
+M  END
+>  <InstanceId>
+5KHP_7K9_A_202
+
+>  <ChemCompId>
+7K9
+
+>  <PdbId>
+5KHP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+43
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+N,N'-(butane-1,4-diyl)bis(N-{3-[(2,3-dihydroxybenzene-1-carbonyl)amino]propyl}-2,3-dihydroxybenzamide)
+
+>  <SystematicName>
+~{N}-[3-[[2,3-bis(oxidanyl)phenyl]carbonyl-[4-[[2,3-bis(oxidanyl)phenyl]carbonyl-[3-[[2,3-bis(oxidanyl)phenyl]carbonylamino]propyl]amino]butyl]amino]propyl]-2,3-bis(oxidanyl)benzamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C38 H42 N4 O12
+
+>  <MolecularWeight>
+746.76
+
+>  <ModifiedDate>
+2017-04-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C38H42N4O12/c43-27-13-3-9-23(31(27)47)35(51)39-17-7-21-41(37(53)25-11-5-15-29(45)33(25)49)19-1-2-20-42(38(54)26-12-6-16-30(46)34(26)50)22-8-18-40-36(52)24-10-4-14-28(44)32(24)48/h3-6,9-16,43-50H,1-2,7-8,17-22H2,(H,39,51)(H,40,52)
+
+>  <InChIKey>
+WNIXXCINEMCWIS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(c(c1)O)O)C(=O)NCCCN(CCCCN(CCCNC(=O)c2cccc(c2O)O)C(=O)c3cccc(c3O)O)C(=O)c4cccc(c4O)O
+
+$$$$

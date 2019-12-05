@@ -1,0 +1,114 @@
+4N1P_WM1_A_201
+  RCSB PDB12061713493D
+Coordinates from PDB:4N1P:A:201 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    0.6630  -13.4020   -5.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0610  -12.1490   -5.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4570  -11.7220   -3.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4190  -12.5250   -2.7190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1590  -13.6880   -2.8060   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6820  -14.1590   -3.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3350  -15.5190   -4.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2540  -15.6040   -4.9130   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9130  -16.4790   -3.1840   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  6  5  2  0  0  0  0
+  3  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+A    1
+CAD
+A    2
+CAG
+A    3
+CAH
+A    4
+CAI
+A    5
+NAF
+A    6
+CAE
+A    7
+CAB
+A    8
+OAC
+A    9
+NAA
+M  END
+>  <InstanceId>
+4N1P_WM1_A_201
+
+>  <ChemCompId>
+WM1
+
+>  <PdbId>
+4N1P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O
+
+>  <Name>
+pyridine-2-carboxamide
+
+>  <SystematicName>
+pyridine-2-carboxamide
+
+>  <Synonyms>
+Picolinamide, 2-Pyridinecarboxamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N2 O
+
+>  <MolecularWeight>
+122.125
+
+>  <ModifiedDate>
+2015-08-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N2O/c7-6(9)5-3-1-2-4-8-5/h1-4H,(H2,7,9)
+
+>  <InChIKey>
+IBBMAWULFFBRKK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccnc(c1)C(=O)N
+
+$$$$

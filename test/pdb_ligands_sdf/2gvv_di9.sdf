@@ -1,0 +1,139 @@
+2GVV_DI9_A_502
+  RCSB PDB12061705443D
+Coordinates from PDB:2GVV:A:502 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   19.6170    4.9840   58.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0620    4.6560   58.1030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4050    3.5080   59.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8830    4.1270   60.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4540    4.4810   59.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6820    3.2760   59.8910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7730    2.8330   61.1460   P 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4800    4.1850   61.9950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5330    2.1360   60.7390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7160    1.9200   62.0790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3480    1.6610   63.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4440    0.1580   63.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9590   -0.0010   63.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2210    1.0740   64.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4320    2.2700   64.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAB
+A    2
+CAJ
+A    3
+CAK
+A    4
+CAL
+A    5
+CAC
+A    6
+OAD
+A    7
+PAE
+A    8
+NAM
+A    9
+OAA
+A   10
+OAF
+A   11
+CAG
+A   12
+CAH
+A   13
+CAI
+A   14
+CAO
+A   15
+CAN
+M  END
+>  <InstanceId>
+2GVV_DI9_A_502
+
+>  <ChemCompId>
+DI9
+
+>  <PdbId>
+2GVV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3 P
+
+>  <Name>
+DICYCLOPENTYL PHOSPHORAMIDATE
+
+>  <SystematicName>
+(amino-cyclopentyloxy-phosphoryl)oxycyclopentane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H20 N O3 P
+
+>  <MolecularWeight>
+233.244
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H20NO3P/c11-15(12,13-9-5-1-2-6-9)14-10-7-3-4-8-10/h9-10H,1-8H2,(H2,11,12)
+
+>  <InChIKey>
+BDYGAPLPLXNVSE-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(C1)OP(=O)(N)OC2CCCC2
+
+$$$$

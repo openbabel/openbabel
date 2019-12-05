@@ -1,0 +1,163 @@
+1O0M_U2P_A_1101
+  RCSB PDB12061703293D
+Coordinates from PDB:1O0M:A:1101 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   39.7830    2.7300   22.6050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3140    1.4790   23.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.1940    0.5690   23.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4190    1.2290   24.5710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0470    0.8860   24.4360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2880    2.1300   24.2150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7540    3.1130   23.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1120    4.2700   23.1800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8870    4.5230   23.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2240    5.5580   23.8050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4630    3.4950   24.6880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0910    2.2930   24.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6200    1.4400   25.6360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9510   -0.1680   23.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0610   -1.4360   23.9550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4750   -2.7590   23.2470   P 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2300   -2.9470   21.9400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7570   -3.8760   24.2380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9830   -2.5350   23.0430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1700    0.1940   22.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6490   -0.8970   21.6990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 20  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 20  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 18  1  0  0  0  0
+ 16 19  1  0  0  0  0
+ 20 21  1  0  0  0  0
+A    1
+O5'
+A    2
+C5'
+A    3
+C4'
+A    4
+O4'
+A    5
+C1'
+A    6
+N1
+A    7
+C6
+A    8
+C5
+A    9
+C4
+A   10
+O4
+A   11
+N3
+A   12
+C2
+A   13
+O2
+A   14
+C2'
+A   15
+O2'
+A   16
+P
+A   17
+O1P
+A   18
+O2P
+A   19
+O3P
+A   20
+C3'
+A   21
+O3'
+M  END
+>  <InstanceId>
+1O0M_U2P_A_1101
+
+>  <ChemCompId>
+U2P
+
+>  <PdbId>
+1O0M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O9 P
+
+>  <Name>
+PHOSPHORIC ACID MONO-[2-(2,4-DIOXO-3,4-DIHYDRO-2H-PYRIMIDIN-1-YL)-4-HYDROXY-5-HYDROXYMETHYL-TETRAHYDRO-FURAN-3-YL] ESTER
+
+>  <SystematicName>
+[(2R,3R,4R,5R)-2-(2,4-dioxopyrimidin-1-yl)-4-hydroxy-5-(hydroxymethyl)oxolan-3-yl] dihydrogen phosphate
+
+>  <Synonyms>
+URIDINE-2'-PHOSPHATE; 2'-URIDINEMONOPHOSPHATE
+
+>  <Type>
+RNA LINKING
+
+>  <Formula>
+C9 H13 N2 O9 P
+
+>  <MolecularWeight>
+324.181
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+U
+
+>  <OneLetterCode>
+U
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13N2O9P/c12-3-4-6(14)7(20-21(16,17)18)8(19-4)11-2-1-5(13)10-9(11)15/h1-2,4,6-8,12,14H,3H2,(H,10,13,15)(H2,16,17,18)/t4-,6-,7-,8-/m1/s1
+
+>  <InChIKey>
+HQIDPEYTETUCNF-XVFCMESISA-N
+
+>  <SMILES>
+C1=CN(C(=O)NC1=O)[C@H]2[C@@H]([C@@H]([C@H](O2)CO)O)OP(=O)(O)O
+
+$$$$

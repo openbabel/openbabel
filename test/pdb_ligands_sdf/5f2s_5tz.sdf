@@ -1,0 +1,139 @@
+5F2S_5TZ_A_403
+  RCSB PDB12061717353D
+Coordinates from PDB:5F2S:A:403 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   11.4820 -107.9690   51.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9990 -108.8610   53.3410   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6190 -107.7810   52.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1200 -108.7490   54.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8770 -107.5960   54.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4470 -106.4680   53.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2090 -105.1870   53.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6770 -104.1230   53.2460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3870 -105.2640   54.0190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3000 -106.5640   52.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1040 -109.2670   51.3490   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7600 -106.9790   51.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5700 -107.6140   50.0720   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1120 -109.2220   50.4830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5450 -110.3010   49.9320   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 11  2  0  0  0  0
+ 12  1  2  0  0  0  0
+ 11  1  1  0  0  0  0
+  1  3  1  0  0  0  0
+  3 10  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  8  7  2  0  0  0  0
+  2  4  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  2  0  0  0  0
+  7  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C8
+A    8
+O1
+A    9
+O
+A   10
+C7
+A   11
+N1
+A   12
+C2
+A   13
+S
+A   14
+C
+A   15
+N
+M  END
+>  <InstanceId>
+5F2S_5TZ_A_403
+
+>  <ChemCompId>
+5TZ
+
+>  <PdbId>
+5F2S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O2 S
+
+>  <Name>
+2-(2-azanyl-1,3-thiazol-4-yl)pyridine-4-carboxylic acid
+
+>  <SystematicName>
+2-(2-azanyl-1,3-thiazol-4-yl)pyridine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N3 O2 S
+
+>  <MolecularWeight>
+221.236
+
+>  <ModifiedDate>
+2016-01-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7N3O2S/c10-9-12-7(4-15-9)6-3-5(8(13)14)1-2-11-6/h1-4H,(H2,10,12)(H,13,14)
+
+>  <InChIKey>
+FAOZNCYQMCTIBT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnc(cc1C(=O)O)c2csc(n2)N
+
+$$$$

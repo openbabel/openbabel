@@ -1,0 +1,129 @@
+1BY3_OES_A_715
+  RCSB PDB12061702073D
+Coordinates from PDB:1BY3:A:715 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  103.9470   25.2440   44.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  104.6490   25.6720   42.9070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  105.7520   26.7200   43.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  106.9800   26.1740   43.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  108.3050   26.6700   43.2800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  109.4490   25.6760   43.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.8040   26.1270   42.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  110.8010   26.3490   41.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.4760   26.6460   40.7510   S 0  0  0  0  0  0  0  0  0  0  0  0
+  113.1830   25.0440   40.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  112.5030   24.4840   39.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  113.1580   27.1720   41.9640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  113.0570   23.2380   38.6990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+S2
+A   10
+C22
+A   11
+C23
+A   12
+O2
+A   13
+O3
+M  END
+>  <InstanceId>
+1BY3_OES_A_715
+
+>  <ChemCompId>
+OES
+
+>  <PdbId>
+1BY3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+715
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2 S
+
+>  <Name>
+N-OCTYL-2-HYDROXYETHYL SULFOXIDE
+
+>  <SystematicName>
+2-[(R)-octylsulfinyl]ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H22 O2 S
+
+>  <MolecularWeight>
+206.345
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H22O2S/c1-2-3-4-5-6-7-9-13(12)10-8-11/h11H,2-10H2,1H3/t13-/m1/s1
+
+>  <InChIKey>
+IRJUEMKMQDEOTQ-CYBMUJFWSA-N
+
+>  <SMILES>
+CCCCCCCC[S@@](=O)CCO
+
+$$$$

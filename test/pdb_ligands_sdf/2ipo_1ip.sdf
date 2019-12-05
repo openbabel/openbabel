@@ -1,0 +1,141 @@
+2IPO_1IP_A_401
+  RCSB PDB12061705563D
+Coordinates from PDB:2IPO:A:401 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   46.3370   27.8020   15.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2020   28.9150   16.0730   P 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5620   30.1270   15.0730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1510   29.3620   17.4870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6480   28.1940   15.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4670   29.1140   15.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2250   30.1020   15.1150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7630   28.7530   16.8780   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5790   29.4950   17.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.9650   30.8580   17.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0440   31.5490   18.3970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.1720   31.1850   17.8490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.8350   28.6660   18.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7070   28.3230   19.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3060   27.5270   20.4420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8830   28.9400   19.6600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+OAG
+A    2
+PAP
+A    3
+OAH
+A    4
+OAE
+A    5
+CAJ
+A    6
+CAM
+A    7
+OAC
+A    8
+N
+A    9
+CA
+A   10
+C
+A   11
+O1
+A   12
+O
+A   13
+CB
+A   14
+CG
+A   15
+OD1
+A   16
+ND2
+M  END
+>  <InstanceId>
+2IPO_1IP_A_401
+
+>  <ChemCompId>
+1IP
+
+>  <PdbId>
+2IPO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O7 P
+
+>  <Name>
+N~2~-(PHOSPHONOACETYL)-L-ASPARAGINE
+
+>  <SystematicName>
+(2S)-4-amino-4-oxo-2-(2-phosphonoethanoylamino)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C6 H11 N2 O7 P
+
+>  <MolecularWeight>
+254.135
+
+>  <ModifiedDate>
+2017-06-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+N
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H11N2O7P/c7-4(9)1-3(6(11)12)8-5(10)2-16(13,14)15/h3H,1-2H2,(H2,7,9)(H,8,10)(H,11,12)(H2,13,14,15)/t3-/m0/s1
+
+>  <InChIKey>
+DDKQZYWRWCFCJX-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@@H](C(=O)O)NC(=O)CP(=O)(O)O)C(=O)N
+
+$$$$

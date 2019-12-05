@@ -1,0 +1,125 @@
+1A05_IPM_A_401
+  RCSB PDB12061701563D
+Coordinates from PDB:1A05:A:401 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   10.0750   24.3660   44.4150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3660   23.8310   43.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3920   22.2700   43.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2160   21.6530   43.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7850   21.7920   43.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0080   20.2960   43.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9540   22.6300   43.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5870   24.1860   42.4190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9870   24.3700   45.6530   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1390   24.7560   43.6890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3660   21.3560   41.9390   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1240   21.4860   43.7220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4 11  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+M  END
+>  <InstanceId>
+1A05_IPM_A_401
+
+>  <ChemCompId>
+IPM
+
+>  <PdbId>
+1A05
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O5
+
+>  <Name>
+3-ISOPROPYLMALIC ACID
+
+>  <SystematicName>
+(2R,3S)-2-hydroxy-3-propan-2-yl-butanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H12 O5
+
+>  <MolecularWeight>
+176.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H12O5/c1-3(2)4(6(9)10)5(8)7(11)12/h3-5,8H,1-2H3,(H,9,10)(H,11,12)/t4-,5+/m0/s1
+
+>  <InChIKey>
+RNQHMTFBUSSBJQ-CRCLSJGQSA-N
+
+>  <SMILES>
+CC(C)[C@@H]([C@H](C(=O)O)O)C(=O)O
+
+$$$$

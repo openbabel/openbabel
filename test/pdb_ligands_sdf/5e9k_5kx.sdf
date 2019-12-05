@@ -1,0 +1,102 @@
+5E9K_5KX_A_2001
+  RCSB PDB12061717263D
+Coordinates from PDB:5E9K:A:2001 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+   25.2240   10.9560    0.9170  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5880    9.2610    0.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7690    8.2320    1.1040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4140    7.0750    0.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6500    7.3930    0.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7420    8.7280    0.3000   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  6  2  2  0  0  0  0
+  5  4  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+A    1
+CL1
+A    2
+C02
+A    3
+N03
+A    4
+C04
+A    5
+C05
+A    6
+N06
+M  END
+>  <InstanceId>
+5E9K_5KX_A_2001
+
+>  <ChemCompId>
+5KX
+
+>  <PdbId>
+5E9K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N2 Cl
+
+>  <Name>
+2-chloro-1H-imidazole
+
+>  <SystematicName>
+2-chloranyl-1H-imidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H3 Cl N2
+
+>  <MolecularWeight>
+102.522
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H3ClN2/c4-3-5-1-2-6-3/h1-2H,(H,5,6)
+
+>  <InChIKey>
+OCVXSFKKWXMYPF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnc([nH]1)Cl
+
+$$$$

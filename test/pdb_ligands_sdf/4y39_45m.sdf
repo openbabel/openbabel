@@ -1,0 +1,143 @@
+4Y39_45M_A_405
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y39:A:405 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   27.5400    1.8800   60.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1960    7.2660   58.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2930    8.1360   58.2000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0750    3.6280   59.3450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6940    9.3920   57.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0010    9.7560   57.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7600    3.7500   59.0430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9250    8.9100   58.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5170    7.6590   58.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5510   11.4720   57.4050  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7660    5.9600   59.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9490    5.9110   60.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3480    4.8740   58.8180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8230    3.1720   59.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0270    1.8300   60.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.5300    2.9940   59.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  3  1  0  0  0  0
+  6  8  1  0  0  0  0
+  3  2  2  0  0  0  0
+  8  9  2  0  0  0  0
+  2  9  1  0  0  0  0
+  2 11  1  0  0  0  0
+ 13  4  1  0  0  0  0
+ 13 11  1  0  0  0  0
+  7 16  1  0  0  0  0
+  7 14  2  0  0  0  0
+  4 14  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14  1  1  0  0  0  0
+  1 15  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+N2
+A    8
+C9
+A    9
+C10
+A   10
+BR
+A   11
+C
+A   12
+O
+A   13
+N
+A   14
+C1
+A   15
+C3
+A   16
+C2
+M  END
+>  <InstanceId>
+4Y39_45M_A_405
+
+>  <ChemCompId>
+45M
+
+>  <PdbId>
+4Y39
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O Br
+
+>  <Name>
+4-bromo-N'-(3,4-dihydro-2H-pyrrol-5-yl)benzohydrazide
+
+>  <SystematicName>
+4-bromanyl-N'-(3,4-dihydro-2H-pyrrol-5-yl)benzohydrazide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H12 Br N3 O
+
+>  <MolecularWeight>
+282.136
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12BrN3O/c12-9-5-3-8(4-6-9)11(16)15-14-10-2-1-7-13-10/h3-6H,1-2,7H2,(H,13,14)(H,15,16)
+
+>  <InChIKey>
+QKAHAXIACNFPOK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1C(=O)NNC2=NCCC2)Br
+
+$$$$

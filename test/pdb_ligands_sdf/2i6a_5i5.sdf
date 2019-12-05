@@ -1,0 +1,156 @@
+2I6A_5I5_A_500
+  RCSB PDB12061705533D
+Coordinates from PDB:2I6A:A:500 Model:1 without hydrogens
+ 19 21  0  0  0  0            999 V2000
+    9.2040  -23.2940   19.1150   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7190  -23.4210   20.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5670  -22.3240   21.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9590  -21.0670   20.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4360  -20.9480   19.4080   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5560  -22.0680   18.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1130  -22.0690   22.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2590  -20.6790   22.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7520  -20.0790   21.6460   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4000  -23.3900   23.9530   I 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4410  -24.6810   20.7050   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0150  -16.4550   21.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6100  -17.9290   21.5380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9670  -18.6270   21.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6500  -17.9920   22.5080   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4020  -16.6020   22.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1030  -15.8420   20.4740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7620  -18.0930   20.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4530  -15.9540   23.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 13 18  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 19  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+N2
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+N3
+A   10
+I
+A   11
+N4
+A   12
+C7
+A   13
+C8
+A   14
+C9
+A   15
+O3
+A   16
+C10
+A   17
+O2
+A   18
+O1
+A   19
+C11
+M  END
+>  <InstanceId>
+2I6A_5I5_A_500
+
+>  <ChemCompId>
+5I5
+
+>  <PdbId>
+2I6A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N4 O3 I
+
+>  <Name>
+7-(5-DEOXY-BETA-D-RIBOFURANOSYL)-5-IODO-7H-PYRROLO[2,3-D]PYRIMIDIN-4-AMINE
+
+>  <SystematicName>
+(2R,3R,4S,5R)-2-(4-amino-5-iodo-pyrrolo[2,3-d]pyrimidin-7-yl)-5-methyl-oxolane-3,4-diol
+
+>  <Synonyms>
+5'-DEOXY-5-IODOTUBERCIDIN; (2R,3R,4S,5R)-2-(4-AMINO-5-IODO-7H-PYRROLO[2,3-D]PYRIMIDIN-7-YL)-5-(METHYL)TETRAHYDROFURAN-3,4-DIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H13 I N4 O3
+
+>  <MolecularWeight>
+376.15
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H13IN4O3/c1-4-7(17)8(18)11(19-4)16-2-5(12)6-9(13)14-3-15-10(6)16/h2-4,7-8,11,17-18H,1H3,(H2,13,14,15)/t4-,7-,8-,11-/m1/s1
+
+>  <InChIKey>
+NTXUAWGNGBSCRS-TZQXKBMNSA-N
+
+>  <SMILES>
+C[C@@H]1[C@H]([C@H]([C@@H](O1)n2cc(c3c2ncnc3N)I)O)O
+
+$$$$

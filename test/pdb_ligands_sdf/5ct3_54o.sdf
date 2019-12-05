@@ -1,0 +1,109 @@
+5CT3_54O_B_301
+  RCSB PDB12061717093D
+Coordinates from PDB:5CT3:B:301 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   -3.9240   28.4110  -11.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3080   29.0390  -13.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5680   30.1680  -12.7010   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5570   30.6760  -13.6680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5000   31.2820  -12.3970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7400   29.6370  -11.3560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8680   28.0680  -10.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1860   26.7330  -10.2250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C2
+A    2
+O2
+A    3
+S1
+A    4
+O3
+A    5
+O1
+A    6
+C3
+A    7
+C1
+A    8
+O4
+M  END
+>  <InstanceId>
+5CT3_54O_B_301
+
+>  <ChemCompId>
+54O
+
+>  <PdbId>
+5CT3
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O4 S
+
+>  <Name>
+3-hydroxypropane-1-sulfonic acid
+
+>  <SystematicName>
+3-oxidanylpropane-1-sulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H8 O4 S
+
+>  <MolecularWeight>
+140.158
+
+>  <ModifiedDate>
+2015-08-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H8O4S/c4-2-1-3-8(5,6)7/h4H,1-3H2,(H,5,6,7)
+
+>  <InChIKey>
+WQPMYSHJKXVTME-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CO)CS(=O)(=O)O
+
+$$$$

@@ -1,0 +1,153 @@
+3CZY_AD8_A_901
+  RCSB PDB12061708153D
+Coordinates from PDB:3CZY:A:901 Model:1 without hydrogens
+ 18 21  0  0  0  0            999 V2000
+    5.6060  -18.6190    1.0760   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4030  -19.2510    0.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1140  -18.7910   -1.0170   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1550  -17.8470   -0.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8210  -17.7540    0.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5910  -18.8710    2.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6450  -20.0240    2.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0180  -20.5210    1.8360   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4370  -20.5670    4.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4920  -22.1050    4.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0680  -20.0640    4.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5250  -20.0240    5.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3070  -20.5740    6.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3010  -22.1130    6.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9550  -20.0730    7.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8330  -20.5540    6.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8380  -22.0860    6.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1890  -22.6390    5.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  5  1  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 10 18  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 18 14  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 18 17  1  0  0  0  0
+A    1
+N
+A    2
+CAQ
+A    3
+NAP
+A    4
+CAO
+A    5
+CAN
+A    6
+CA
+A    7
+C
+A    8
+O
+A    9
+CAE
+A   10
+CAF
+A   11
+CAI
+A   12
+CAD
+A   13
+CAC
+A   14
+CAB
+A   15
+CAH
+A   16
+CAJ
+A   17
+CAG
+A   18
+CAA
+M  END
+>  <InstanceId>
+3CZY_AD8_A_901
+
+>  <ChemCompId>
+AD8
+
+>  <PdbId>
+3CZY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N2 O
+
+>  <Name>
+1-(adamantan-1-yl)-2-(1H-imidazol-1-yl)ethanone
+
+>  <SystematicName>
+1-(1-adamantyl)-2-imidazol-1-yl-ethanone
+
+>  <Synonyms>
+2-(1H-imidazol-1-yl)-1-[(3S,5S,7S)-tricyclo[3.3.1.1~3,7~]dec-1-yl]ethanone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H20 N2 O
+
+>  <MolecularWeight>
+244.332
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H20N2O/c18-14(9-17-2-1-16-10-17)15-6-11-3-12(7-15)5-13(4-11)8-15/h1-2,10-13H,3-9H2/t11-,12+,13-,15-
+
+>  <InChIKey>
+BBCQJSMDKDHVKG-BVMXXOESSA-N
+
+>  <SMILES>
+c1cn(cn1)CC(=O)C23CC4CC(C2)CC(C4)C3
+
+$$$$

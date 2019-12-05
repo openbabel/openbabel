@@ -1,0 +1,134 @@
+4WUP_3UF_A_302
+  RCSB PDB12061716053D
+Coordinates from PDB:4WUP:A:302 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   14.1170   36.9040   18.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2790   36.0260   19.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1550   37.7480   21.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0540   36.6880   20.5950   S 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1640   35.5380   21.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6260   37.3160   20.3920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7990   34.7050   19.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1710   34.2300   17.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9870   35.1050   16.8410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4690   36.4290   16.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1600   34.5450   15.3160   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5280   35.3710   15.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0820   35.7590   13.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6820   35.7000   13.9100   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  8  7  2  0  0  0  0
+  1  2  2  0  0  0  0
+  7  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  6  4  1  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  2  0  0  0  0
+A    1
+C6
+A    2
+C5
+A    3
+O4
+A    4
+S2
+A    5
+O1
+A    6
+N3
+A    7
+C10
+A    8
+C9
+A    9
+C8
+A   10
+C7
+A   11
+S11
+A   12
+C12
+A   13
+C13
+A   14
+O14
+M  END
+>  <InstanceId>
+4WUP_3UF_A_302
+
+>  <ChemCompId>
+3UF
+
+>  <PdbId>
+4WUP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S2
+
+>  <Name>
+4-[(2-hydroxyethyl)sulfanyl]benzenesulfonamide
+
+>  <SystematicName>
+4-(2-hydroxyethylsulfanyl)benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N O3 S2
+
+>  <MolecularWeight>
+233.308
+
+>  <ModifiedDate>
+2015-06-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H11NO3S2/c9-14(11,12)8-3-1-7(2-4-8)13-6-5-10/h1-4,10H,5-6H2,(H2,9,11,12)
+
+>  <InChIKey>
+LTXDVFFEVZJDGT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1SCCO)S(=O)(=O)N
+
+$$$$

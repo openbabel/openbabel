@@ -1,0 +1,143 @@
+2XJ7_GC2_A_1000
+  RCSB PDB12061707263D
+Coordinates from PDB:2XJ7:A:1000 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    0.3980  -32.4170   32.3570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5920  -32.5180   32.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9700  -33.2280   30.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6280  -31.9320   32.7010   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5620  -31.1990   33.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2750  -32.2870   35.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4980  -32.7140   35.6260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3750  -31.7170   36.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1720  -32.6840   37.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4970  -30.0730   34.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.1340  -30.5980   34.2970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0010  -31.4410   35.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9490  -29.5930   34.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8890  -29.9530   35.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9680  -30.6780   36.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2490  -29.7020   37.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+O1
+A    2
+C8
+A    3
+C10
+A    4
+N2
+A    5
+C2
+A    6
+C3
+A    7
+O4
+A    8
+C4
+A    9
+O2
+A   10
+C1
+A   11
+N1
+A   12
+C5
+A   13
+C9
+A   14
+C7
+A   15
+C6
+A   16
+O3
+M  END
+>  <InstanceId>
+2XJ7_GC2_A_1000
+
+>  <ChemCompId>
+GC2
+
+>  <PdbId>
+2XJ7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O4
+
+>  <Name>
+6-ACETAMIDO-6-DEOXY-CASTANOSPERMINE
+
+>  <SystematicName>
+N-[(1S,4S,6S,7R,8R,8aR)-1,7,8-trihydroxy-1,2,3,5,6,7,8,8a-octahydroindolizin-6-yl]ethanamide
+
+>  <Synonyms>
+N-[(1S,6S,7R,8R,8AR)-1,7,8-TRIHYDROXYOCTAHYDROINDOLIZIN-6-YL]ACETAMIDE
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H18 N2 O4
+
+>  <MolecularWeight>
+230.261
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18N2O4/c1-5(13)11-6-4-12-3-2-7(14)8(12)10(16)9(6)15/h6-10,14-16H,2-4H2,1H3,(H,11,13)/t6-,7-,8+,9+,10+/m0/s1
+
+>  <InChIKey>
+IHKWXDCSAKJQKM-SRQGCSHVSA-N
+
+>  <SMILES>
+CC(=O)N[C@H]1C[N@@]2CC[C@@H]([C@@H]2[C@H]([C@@H]1O)O)O
+
+$$$$

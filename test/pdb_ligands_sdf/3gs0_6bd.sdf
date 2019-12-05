@@ -1,0 +1,164 @@
+3GS0_6BD_A_128
+  RCSB PDB12061708473D
+Coordinates from PDB:3GS0:A:128 Model:1 without hydrogens
+ 21 23  0  0  0  0            999 V2000
+   20.8160   42.3030    4.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6950   41.4720    5.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9990   40.9710    3.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4150   41.2890    2.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5360   42.1200    2.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2320   42.6210    3.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3440   43.4450    3.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1420   44.0550    2.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2250   44.8640    2.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5110   45.0670    3.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7190   44.4630    4.9860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6300   43.6490    4.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6820   42.9260    5.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5800   42.8300    6.8810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3340   43.5600    7.6780   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5080   42.8990    8.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4430   43.5410   10.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6670   42.6550   11.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8340   44.9170   10.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1670   45.7710   10.9600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0690   45.1080    9.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12  7  2  0  0  0  0
+ 13  1  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 13  2  0  0  0  0
+ 15 14  1  0  0  0  0
+ 16 15  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 19 21  1  0  0  0  0
+ 20 19  2  0  0  0  0
+A    1
+CAQ
+A    2
+CAH
+A    3
+CAD
+A    4
+CAF
+A    5
+CAJ
+A    6
+CAS
+A    7
+CAT
+A    8
+CAK
+A    9
+CAG
+A   10
+CAE
+A   11
+CAI
+A   12
+CAR
+A   13
+CAP
+A   14
+NAM
+A   15
+OAN
+A   16
+CAL
+A   17
+CAU
+A   18
+CAA
+A   19
+CAO
+A   20
+OAC
+A   21
+OAB
+M  END
+>  <InstanceId>
+3GS0_6BD_A_128
+
+>  <ChemCompId>
+6BD
+
+>  <PdbId>
+3GS0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+128
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C17 N O3
+
+>  <Name>
+(2S)-3-[(9H-fluoren-9-ylideneamino)oxy]-2-methylpropanoic acid
+
+>  <SystematicName>
+(2S)-3-(fluoren-9-ylideneamino)oxy-2-methyl-propanoic acid
+
+>  <Synonyms>
+(S)-3-(9H-fluoren-9-ylideneaminooxy)-2-methylpropanoic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C17 H15 N O3
+
+>  <MolecularWeight>
+281.306
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C17H15NO3/c1-11(17(19)20)10-21-18-16-14-8-4-2-6-12(14)13-7-3-5-9-15(13)16/h2-9,11H,10H2,1H3,(H,19,20)/t11-/m0/s1
+
+>  <InChIKey>
+ZHFDVDMCVXUGGF-NSHDSACASA-N
+
+>  <SMILES>
+C[C@@H](CON=C1c2ccccc2-c3c1cccc3)C(=O)O
+
+$$$$

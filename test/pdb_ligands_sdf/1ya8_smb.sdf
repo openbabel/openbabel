@@ -1,0 +1,105 @@
+1UKA_SMB_A_1300
+  RCSB PDB12061704133D
+Coordinates from PDB:1UKA:A:1300 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+    6.5700   39.8790   -5.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6860   38.9290   -6.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3910   39.6310   -7.5680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0480   38.9060   -8.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9260   39.6470   -7.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6320   40.5340   -7.9880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5070   38.7800   -6.6280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+O1
+A    7
+O2
+M  END
+>  <InstanceId>
+1UKA_SMB_A_1300
+
+>  <ChemCompId>
+SMB
+
+>  <PdbId>
+1UKA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O2
+
+>  <Name>
+2-METHYLBUTANOIC ACID
+
+>  <SystematicName>
+(2S)-2-methylbutanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H10 O2
+
+>  <MolecularWeight>
+102.132
+
+>  <ModifiedDate>
+2012-01-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H10O2/c1-3-4(2)5(6)7/h4H,3H2,1-2H3,(H,6,7)/t4-/m0/s1
+
+>  <InChIKey>
+WLAMNBDJUVNPJU-BYPYZUCNSA-N
+
+>  <SMILES>
+CC[C@H](C)C(=O)O
+
+$$$$

@@ -1,0 +1,143 @@
+3QS8_17D_A_600
+  RCSB PDB12061710283D
+Coordinates from PDB:3QS8:A:600 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    8.5540  -14.9310   31.5700   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2890  -13.7400   32.9410   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7190   -8.2500   34.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7230   -9.2210   34.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7370   -8.3650   33.5110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6960  -10.9970   28.6520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6520  -12.0120   28.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7570  -10.3320   33.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7710   -9.4620   32.6550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7840  -10.9110   29.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7010  -12.9570   29.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7350  -11.7000   31.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8730  -13.9230   31.8360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7750  -10.4540   32.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8160  -11.8320   30.7530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7830  -12.8610   30.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 13  2  0  0  0  0
+ 13  2  1  0  0  0  0
+  4  3  2  0  0  0  0
+  3  5  1  0  0  0  0
+  8  4  1  0  0  0  0
+  9  5  2  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8 14  2  0  0  0  0
+ 14  9  1  0  0  0  0
+ 10 15  2  0  0  0  0
+ 11 16  2  0  0  0  0
+ 15 12  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 16 13  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+M  END
+>  <InstanceId>
+3QS8_17D_A_600
+
+>  <ChemCompId>
+17D
+
+>  <PdbId>
+3QS8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 O2
+
+>  <Name>
+2-benzylbenzoic acid
+
+>  <SystematicName>
+2-(phenylmethyl)benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H12 O2
+
+>  <MolecularWeight>
+212.244
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H12O2/c15-14(16)13-9-5-4-8-12(13)10-11-6-2-1-3-7-11/h1-9H,10H2,(H,15,16)
+
+>  <InChIKey>
+FESDHLLVLYZNFY-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)Cc2ccccc2C(=O)O
+
+$$$$

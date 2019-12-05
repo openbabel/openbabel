@@ -90,16 +90,20 @@ namespace OpenBabel {
 
         "Both VASP 4.x and 5.x POSCAR formats are supported.\n\n"
 
+	"By default, atoms are written out in the order they are present in the input\n"
+	"molecule. To sort by atomic number specify ``-xw``. To specify the sort\n"
+	"order, use the ``-xz`` option.\n\n"
+
         "Read Options e.g. -as\n"
         "  s Output single bonds only\n"
         "  b Disable bonding entirely\n\n"
 
-        "Write Options e.g. -xw\n"
-        "  Atoms soring:\n"
-        "    no option: default order (presumably this is the order of atoms in the input molecule)\n"
-        "    -xw : Sort atoms by atomic number\n"
-        "    -xz 'atom1 atom2 ..': atom1 first, atom2 second ..., then default order\n"
-        "    -xw -xz 'atom1 atom2': atom1 first, atom2 second ..., then sort atoms by atomic number\n"
+        "Write Options e.g. -x4\n"
+        " w  Sort atoms by atomic number\n"
+        " z <list of atoms>  Specify the order to write out atoms\n"
+	"       'atom1 atom2 ...': atom1 first, atom2 second, etc. The remaining\n"
+	"       atoms are written in the default order or (if ``-xw`` is specified)\n"
+	"       in order of atomic number.\n"
         "  4 Write a POSCAR using the VASP 4.x specification.\n"
         "    The default is to use the VASP 5.x specification.\n\n"
         ;

@@ -1,0 +1,130 @@
+2WJ6_ZZ8_A_1284
+  RCSB PDB12061707153D
+Coordinates from PDB:2WJ6:A:1284 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    7.9430   73.6330   23.8490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4410   73.5660   22.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8430   73.0130   22.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9350   73.9530   21.5560   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8090   74.6610   21.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9060   75.5440   20.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8640   76.3950   19.8200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6830   76.4300   20.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5330   75.5910   21.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5520   74.7080   22.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3250   73.7530   23.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8130   74.0540   24.2670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6490   72.5480   22.9200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+O21
+A    2
+C8
+A    3
+C11
+A    4
+N7
+A    5
+C6
+A    6
+C1
+A    7
+C2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C10
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+2WJ6_ZZ8_A_1284
+
+>  <ChemCompId>
+ZZ8
+
+>  <PdbId>
+2WJ6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1284
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+2-(ACETYLAMINO)BENZOIC ACID
+
+>  <SystematicName>
+2-acetamidobenzoic acid
+
+>  <Synonyms>
+N-ACETYLANTHRANILATE
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H9 N O3
+
+>  <MolecularWeight>
+179.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO3/c1-6(11)10-8-5-3-2-4-7(8)9(12)13/h2-5H,1H3,(H,10,11)(H,12,13)
+
+>  <InChIKey>
+QSACCXVHEVWNMX-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccccc1C(=O)O
+
+$$$$

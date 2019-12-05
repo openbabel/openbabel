@@ -1,0 +1,147 @@
+2CKE_IQU_A_1302
+  RCSB PDB12061705153D
+Coordinates from PDB:2CKE:A:1302 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+    6.9090   -1.8210   10.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6500   -2.4240   10.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4710   -3.7240   10.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5340   -4.4950    9.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8280   -3.9920    9.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8970   -4.7540    9.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1380   -4.2450    9.3130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4010   -3.0020    9.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3960   -2.1620   10.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0800   -2.6160   10.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0500   -0.3240   11.2870   S 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6430   -0.3580   12.5930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8830    0.4530   10.4110   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6070    0.3880   11.3380   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8110    0.4480   12.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3150    0.4280   12.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5210    0.6280   13.4550   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+S
+A   12
+O1
+A   13
+O2
+A   14
+N1'
+A   15
+C2'
+A   16
+C3'
+A   17
+N4'
+M  END
+>  <InstanceId>
+2CKE_IQU_A_1302
+
+>  <ChemCompId>
+IQU
+
+>  <PdbId>
+2CKE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O2 S
+
+>  <Name>
+N-(2-AMINOETHYL)ISOQUINOLINE-5-SULFONAMIDE
+
+>  <SystematicName>
+N-(2-aminoethyl)isoquinoline-5-sulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H13 N3 O2 S
+
+>  <MolecularWeight>
+251.305
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H13N3O2S/c12-5-7-14-17(15,16)11-3-1-2-9-8-13-6-4-10(9)11/h1-4,6,8,14H,5,7,12H2
+
+>  <InChIKey>
+DCVZSHVZGVWQKV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cnccc2c(c1)S(=O)(=O)NCCN
+
+$$$$

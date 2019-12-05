@@ -1,0 +1,138 @@
+1F5L_AMR_A_301
+  RCSB PDB12061702273D
+Coordinates from PDB:1F5L:A:301 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   31.1120    7.6690   27.6830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5020    6.7410   28.4320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2400    5.3550   28.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5550    5.2790   28.1310   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.2510    4.1770   28.0800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7670    3.0180   28.4620   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4700    4.2400   27.6300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6520    4.3960   29.1150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2610    7.0260   29.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5730    6.0860   29.8140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6930    8.2380   28.8250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3140    9.1790   28.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6660   10.4360   27.8950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5610    8.8800   27.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4320   10.0160   26.4870  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C3
+A    4
+N5
+A    5
+C6
+A    6
+N7
+A    7
+N6
+A    8
+O1
+A    9
+C2
+A   10
+N4
+A   11
+N3
+A   12
+C4
+A   13
+N2
+A   14
+C5
+A   15
+CL1
+M  END
+>  <InstanceId>
+1F5L_AMR_A_301
+
+>  <ChemCompId>
+AMR
+
+>  <PdbId>
+1F5L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N7 O Cl
+
+>  <Name>
+3,5-DIAMINO-N-(AMINOIMINOMETHYL)-6-CHLOROPYRAZINECARBOXAMIDE
+
+>  <SystematicName>
+3,5-diamino-N-carbamimidoyl-6-chloro-pyrazine-2-carboxamide
+
+>  <Synonyms>
+AMILORIDE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 Cl N7 O
+
+>  <MolecularWeight>
+229.627
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8ClN7O/c7-2-4(9)13-3(8)1(12-2)5(15)14-6(10)11/h(H4,8,9,13)(H4,10,11,14,15)
+
+>  <InChIKey>
+XSDQTOBWRPYKKA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1(c(nc(c(n1)Cl)N)N)C(=O)NC(=N)N
+
+$$$$

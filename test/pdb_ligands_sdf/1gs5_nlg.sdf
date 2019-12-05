@@ -1,0 +1,129 @@
+1GS5_NLG_A_1259
+  RCSB PDB12061702383D
+Coordinates from PDB:1GS5:A:1259 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   32.2350   10.7740   40.7150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0020    9.5600   40.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7950    8.7780   39.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0470    8.7570   40.5050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6150   11.8080   39.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0400   11.6300   39.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3980   12.0250   41.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.8270   12.6810   41.9760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2730   11.4470   41.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5250   10.5930   41.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8270   10.7220   41.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0540    9.8180   42.5540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7460   10.9090   40.9420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+CA
+A    2
+C
+A    3
+OXT
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+OE1
+A    9
+OE2
+A   10
+C7
+A   11
+C8
+A   12
+O7
+A   13
+N2
+M  END
+>  <InstanceId>
+1GS5_NLG_A_1259
+
+>  <ChemCompId>
+NLG
+
+>  <PdbId>
+1GS5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1259
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O5
+
+>  <Name>
+N-ACETYL-L-GLUTAMATE
+
+>  <SystematicName>
+(2S)-2-acetamidopentanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N O5
+
+>  <MolecularWeight>
+189.166
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO5/c1-4(9)8-5(7(12)13)2-3-6(10)11/h5H,2-3H2,1H3,(H,8,9)(H,10,11)(H,12,13)/t5-/m0/s1
+
+>  <InChIKey>
+RFMMMVDNIPUKGG-YFKPBYRVSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CCC(=O)O)C(=O)O
+
+$$$$

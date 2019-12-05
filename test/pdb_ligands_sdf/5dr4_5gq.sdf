@@ -1,0 +1,122 @@
+5DR4_5GQ_A_407
+  RCSB PDB12061717213D
+Coordinates from PDB:5DR4:A:407 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    1.2560    4.3690    9.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4210    3.5790    9.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0510    4.6840    8.7300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7810    3.2790    9.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2050    2.1410   10.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5330    4.1720    8.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8890    3.0680   10.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5600    2.7440   10.1220   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.9790    1.6280   10.7550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3070    1.2900   10.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7630    0.0280   11.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  6  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  8  1  0  0  0  0
+  1  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C4
+A    2
+C6
+A    3
+N1
+A    4
+C7
+A    5
+C8
+A    6
+O
+A    7
+C3
+A    8
+N
+A    9
+C2
+A   10
+C1
+A   11
+C
+M  END
+>  <InstanceId>
+5DR4_5GQ_A_407
+
+>  <ChemCompId>
+5GQ
+
+>  <PdbId>
+5DR4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+407
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+7-methyl-3,4-dihydro-2~{H}-pyrido[1,2-a]pyrimidin-3-ol
+
+>  <SystematicName>
+7-methyl-3,4-dihydro-2~{H}-pyrido[1,2-a]pyrimidin-3-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H12 N2 O
+
+>  <MolecularWeight>
+164.204
+
+>  <ModifiedDate>
+2016-09-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H12N2O/c1-7-2-3-9-10-4-8(12)6-11(9)5-7/h2-3,5,8,12H,4,6H2,1H3/t8-/m0/s1
+
+>  <InChIKey>
+ZXHXLZFWEYQXTL-QMMMGPOBSA-N
+
+>  <SMILES>
+CC1=CN2CC(CN=C2C=C1)O
+
+$$$$

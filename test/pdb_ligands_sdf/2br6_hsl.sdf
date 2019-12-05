@@ -1,0 +1,106 @@
+1H0M_HSL_A_1235
+  RCSB PDB12061702403D
+Coordinates from PDB:1H0M:A:1235 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   59.0730   29.5540  131.9630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   58.1140   30.0210  132.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7510   31.0400  133.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.7210   31.7740  133.6120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   57.6890   28.8820  133.8400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.3270   29.5500  135.1480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9150   30.9660  135.0990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+OD
+M  END
+>  <InstanceId>
+1H0M_HSL_A_1235
+
+>  <ChemCompId>
+HSL
+
+>  <PdbId>
+1H0M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1235
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O2
+
+>  <Name>
+HOMOSERINE LACTONE
+
+>  <SystematicName>
+(3S)-3-aminooxolan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H7 N O2
+
+>  <MolecularWeight>
+101.104
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+SER
+
+>  <OneLetterCode>
+S
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H7NO2/c5-3-1-2-7-4(3)6/h3H,1-2,5H2/t3-/m0/s1
+
+>  <InChIKey>
+QJPWUUJVYOJNMH-VKHMYHEASA-N
+
+>  <SMILES>
+C1COC(=O)[C@H]1N
+
+$$$$

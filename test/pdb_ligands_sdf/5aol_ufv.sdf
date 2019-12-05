@@ -1,0 +1,130 @@
+5AOL_UFV_A_1293
+  RCSB PDB12061716523D
+Coordinates from PDB:5AOL:A:1293 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   90.9510   88.8590  -41.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.1710   89.4800  -41.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.3710   90.7770  -41.8770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.3330   91.4330  -42.5180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.1030   90.8090  -42.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.9030   89.5050  -42.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.6580   88.8270  -42.4760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.0450   91.5050  -43.3760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.6830   87.0560  -40.9760  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   93.6910   91.4490  -41.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   94.1690   91.8110  -42.8660   F 0  0  0  0  0  0  0  0  0  0  0  0
+   94.5360   90.6090  -41.0970   F 0  0  0  0  0  0  0  0  0  0  0  0
+   93.5800   92.5200  -40.9000   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N1
+A    8
+N2
+A    9
+BR
+A   10
+C7
+A   11
+F1
+A   12
+F2
+A   13
+F3
+M  END
+>  <InstanceId>
+5AOL_UFV_A_1293
+
+>  <ChemCompId>
+UFV
+
+>  <PdbId>
+5AOL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1293
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N2 Br F3
+
+>  <Name>
+3-BROMO-5-(TRIFLUOROMETHYL)BENZENE-1,2-DIAMINE
+
+>  <SystematicName>
+3-bromanyl-5-(trifluoromethyl)benzene-1,2-diamine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H6 Br F3 N2
+
+>  <MolecularWeight>
+255.035
+
+>  <ModifiedDate>
+2015-12-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6BrF3N2/c8-4-1-3(7(9,10)11)2-5(12)6(4)13/h1-2H,12-13H2
+
+>  <InChIKey>
+OVGAPUVMLZWQQF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(c(c1N)N)Br)C(F)(F)F
+
+$$$$

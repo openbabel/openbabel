@@ -1,0 +1,123 @@
+5U5Y_7W4_A_302
+  RCSB PDB12061719493D
+Coordinates from PDB:5U5Y:A:302 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -21.3060    3.9270    4.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8760    3.4650    4.4210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1240    3.2650    3.2840   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9000    2.8430    3.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7700    2.5380    2.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6310    2.1490    3.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6220    2.1070    5.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7660    2.4180    5.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.8930    2.8020    5.0480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1100    3.1710    5.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4550    3.2050    6.8150   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  4  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2 10  2  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+N03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+N09
+A   10
+C10
+A   11
+N11
+M  END
+>  <InstanceId>
+5U5Y_7W4_A_302
+
+>  <ChemCompId>
+7W4
+
+>  <PdbId>
+5U5Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3
+
+>  <Name>
+2-methylimidazo[1,2-a]pyridin-3-amine
+
+>  <SystematicName>
+2-methylimidazo[1,2-a]pyridin-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H9 N3
+
+>  <MolecularWeight>
+147.177
+
+>  <ModifiedDate>
+2017-01-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9N3/c1-6-8(9)11-5-3-2-4-7(11)10-6/h2-5H,9H2,1H3
+
+>  <InChIKey>
+KTIGGQXUSNNTRK-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(n2ccccc2n1)N
+
+$$$$

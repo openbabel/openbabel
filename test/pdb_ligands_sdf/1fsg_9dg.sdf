@@ -1,0 +1,123 @@
+1FSG_9DG_A_304
+  RCSB PDB12061702313D
+Coordinates from PDB:1FSG:A:304 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   17.8570   39.7410  -15.2030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0950   38.6400  -15.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2910   38.5520  -14.1760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5240   39.6770  -13.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8650   40.1100  -12.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9750   39.5540  -11.5480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4180   41.3280  -11.7960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.3810   42.0220  -12.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7420   43.2050  -11.8300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9970   41.6150  -13.4810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5280   40.4120  -13.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C9
+A    2
+C8
+A    3
+N7
+A    4
+C5
+A    5
+C6
+A    6
+O6
+A    7
+N1
+A    8
+C2
+A    9
+N2
+A   10
+N3
+A   11
+C4
+M  END
+>  <InstanceId>
+1FSG_9DG_A_304
+
+>  <ChemCompId>
+9DG
+
+>  <PdbId>
+1FSG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O
+
+>  <Name>
+9-DEAZAGUANINE
+
+>  <SystematicName>
+2-amino-3,5-dihydropyrrolo[2,3-e]pyrimidin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 N4 O
+
+>  <MolecularWeight>
+150.138
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6N4O/c7-6-9-3-1-2-8-4(3)5(11)10-6/h1-2,8H,(H3,7,9,10,11)
+
+>  <InChIKey>
+FFYPRJYSJODFFD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c[nH]c2c1N=C(NC2=O)N
+
+$$$$
