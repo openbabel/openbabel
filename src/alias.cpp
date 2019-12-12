@@ -357,6 +357,7 @@ bool AliasData::AddAliases(OBMol* pmol)
         for(unsigned iatom=1; iatom<mlist[imatch].size();++iatom)//each atom in match
         {
           int idx = mlist[imatch][iatom];
+
           if(AllExAtoms.count(idx))
           {
             //atom already appears in an alias so abandon this (smaller) alias
@@ -366,9 +367,14 @@ bool AliasData::AddAliases(OBMol* pmol)
           }
           else
           {
-            AllExAtoms.insert(idx);
-            int id  =(pmol->GetAtom(idx))->GetId();
-            ad->AddExpandedAtom(id);
+            OBAtom* a = pmol->GetAtom(idx);
+            // atom might not be present in original molecule, because SMARTS are all with hydrogens added
+            // original molecule might lack them
+            if (a != NULL) {
+              AllExAtoms.insert(idx);
+              int id  = a->GetId();
+              ad->AddExpandedAtom(id);
+            }
           }
         }
         if(ad)
