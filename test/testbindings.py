@@ -333,6 +333,29 @@ H          0.74700        0.50628       -0.64089
         for smi in smis:
             pybel.readstring("smi", smi)
 
+    def testNeutralize(self):
+        """Test the --neutralize operation and its 'changed' option"""
+        neutralize = ob.OBOp.FindType("neutralize")
+        self.assertTrue(neutralize is not None)
+        data = [("C(=O)[O-]", "C(=O)O"),
+                ("C[NH3+]", "CN"),
+                ("C[N+](=O)[O-]", None),
+                ("c1ccc[n+]([O-])c1", None), # pyridine N-oxide
+                ("CC", None),
+                ]
+        for i in range(2):
+            option = "changed" if i==1 else ""
+            for before, after in data:
+                ans = before if not after else after
+                mol = pybel.readstring("smi", before).OBMol
+                changed = neutralize.Do(mol, option)
+                result = pybel.Molecule(mol).write("smi").rstrip()
+                self.assertEqual(ans, result)
+                if not option:
+                    self.assertEqual(True, changed)
+                else:
+                    self.assertEqual(True if after else False, changed)
+
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
         implicitly cis"""
