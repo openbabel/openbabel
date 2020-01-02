@@ -37,7 +37,7 @@ endif()
 ###################
 
 if (PYTHON_BINDINGS)
-  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
+  if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp OR RUN_SWIG)
     find_package(PythonInterp)
     if (NOT PYTHONINTERP_FOUND)
       message(STATUS "Python interpreter NOT found")
@@ -57,10 +57,10 @@ if (PYTHON_BINDINGS)
       message(STATUS "Python bindings will be compiled")
     endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
 
-  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
+  else (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp OR RUN_SWIG)
     message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG=ON.")
 
-  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel-python.cpp OR RUN_SWIG)
+  endif (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp OR RUN_SWIG)
 endif (PYTHON_BINDINGS)
 
 if (DO_PYTHON_BINDINGS)

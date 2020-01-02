@@ -179,7 +179,9 @@
  #define SCANDIR_CONST
 #endif
 
-#define OB_MODULE_PATH "@OB_MODULE_PATH@"
+#ifndef OB_MODULE_PATH
+ #define OB_MODULE_PATH "@OB_MODULE_PATH@"
+#endif
 
 #ifndef TIME_WITH_SYS_TIME
   #ifdef HAVE_SYS_TIME
