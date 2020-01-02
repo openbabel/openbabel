@@ -79,6 +79,7 @@ set(ops
   ops/gen3d.cpp
   ops/largest.cpp
   ops/loader.cpp
+  ops/neutralize.cpp
   ops/opsplit.cpp
   ops/optransform.cpp
   ops/partialcharges.cpp
