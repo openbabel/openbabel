@@ -460,7 +460,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! For non-polar atoms only, convert implicit hydrogens to explicit atoms in the molecular graph
     //! \since version 2.4
     bool AddNonPolarHydrogens();
-    //! For polar or non-polar atoms only, convert implicit hydrogens to explicit atoms in the molecular graph
+    //! For polar and/or non-polar atoms, convert implicit hydrogens to explicit atoms in the molecular graph
     //! \since verison 2.4
     bool AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH=false, double pH=7.4);
 
