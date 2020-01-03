@@ -31,10 +31,7 @@ public:
   const char* Description() {
     return "Neutralize +1 and -1 charges\n\n"
 
-      "Note: this method accepts an optional argument 'changed' which is\n"
-      "described below.\n\n"
-
-      "This method uses a simple procedure to generate the neutral form of a\n"
+      "Neutralize uses a simple procedure to generate the neutral form of a\n"
       "molecule. It does not attempt to balance charges but simply to convert\n"
       "all atoms with a +1 or -1 charge to neutral by addition or subtraction\n"
       "of H+.\n\n"
@@ -71,7 +68,10 @@ bool OpNeutralize::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCo
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
     return false;
-  
+
+  // The algorithm assumes that hydrogens are suppressed
+  pmol->DeleteHydrogens();
+
   const char *p = OptionText;
   // If "changed" is given as an option, then return true if the molecule was altered
   // by neutralizing some charges, and false if left unchanged.
