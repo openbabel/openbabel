@@ -430,37 +430,37 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void Rotate(const double m[9],int nconf);
     //! Translate to the center of all coordinates (for this conformer)
     void Center();
-    //! Delete all hydrogens from the molecule
+    //! Suppress hydrogens by converting explicit hydrogen atoms to implicit
     //! \return Success
     bool DeleteHydrogens();
-    //! Delete all hydrogens from the supplied atom
+    //! Suppress explicit hydrogen atoms on the supplied atom
     //! \return Success
     bool DeleteHydrogens(OBAtom*);
-    //! Delete all hydrogen atoms connected to a polar atom
+    //! Suppress explicit hydrogen atoms connected to a polar atom
     //! \see OBAtom::IsPolarHydrogen
     //! \since version 2.4
     bool DeletePolarHydrogens();
-    //! Delete all hydrogen atoms connected to a non-polar atom
+    //! Suppress explicit hydrogen atoms connected to a non-polar atom
     //! \see OBAtom::IsNonPolarHydrogen
     bool DeleteNonPolarHydrogens();
-    //! Delete the supplied atom if it is a hydrogen
+    //! Suppress the supplied atom if it is a hydrogen
     //! (Helper function for DeleteHydrogens)
     bool DeleteHydrogen(OBAtom*);
-    //! Add hydrogens to the entire molecule to fill out implicit valence spots
+    //! Convert implicit hydrogens to explicit atoms in the molecular graph
     //! \param polaronly    Whether to add hydrogens only to polar atoms
     //! (i.e., not to C atoms)
     //! \param correctForPH Whether to call CorrectForPH() first
     //! \param pH The pH to use for CorrectForPH() modification
     //! \return Whether any hydrogens were added
     bool AddHydrogens(bool polaronly=false,bool correctForPH=false, double pH=7.4);
-    //! Add hydrogens only to the supplied atom to fill out implicit valence
+    //! For a particular atom, convert implicit hydrogens to explicit atoms in the molecular graph
     bool AddHydrogens(OBAtom*);
-    //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
+    //! For polar atoms only, convert implicit hydrogens to explicit atoms in the molecular graph
     bool AddPolarHydrogens();
-    //! Add only nonpolar hydrogens (i.e., attached to C)
+    //! For non-polar atoms only, convert implicit hydrogens to explicit atoms in the molecular graph
     //! \since version 2.4
     bool AddNonPolarHydrogens();
-    //! Add polar and/or nonpolar hydrogens
+    //! For polar and/or non-polar atoms, convert implicit hydrogens to explicit atoms in the molecular graph
     //! \since verison 2.4
     bool AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH=false, double pH=7.4);
 
