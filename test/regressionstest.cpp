@@ -455,6 +455,48 @@ void test_github_issue_1794()
   OB_ASSERT(pFF->Setup(mol));
 }
 
+void test_github_issue_2111_impl(const std::string &smiles)
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInAndOutFormats("smi", "inchi");
+
+  conv.ReadString(&mol, smiles);
+  mol.DeleteHydrogens();
+  conv.WriteString(&mol);
+}
+
+// https://github.com/openbabel/openbabel/issues/2111
+void test_github_issue_2111()
+{
+  test_github_issue_2111_impl("[H][C@@H](I)F"); // tetrahedral with 2 implicit refs
+  test_github_issue_2111_impl("[H]/N=C/F"); // cis/trans with 2 implicit refs on the left
+  test_github_issue_2111_impl("F/N=C/[H]"); // cis/trans with 2 implicit refs on the right
+
+  //
+  // Tetrahedral
+  //
+
+  // example from bug report
+  test_github_issue_2111_impl("[C@@H]12C[C@H](OCC3=CC=CC=C3)[C@@H](COCC3=CC=CC=C3)[C@]1([H])O2");
+
+  // implicit ref in all positions
+  test_github_issue_2111_impl("[H][C@](C)(F)I");
+  test_github_issue_2111_impl("C[C@]([H])(F)I");
+  test_github_issue_2111_impl("C[C@](F)([H])I");
+  test_github_issue_2111_impl("C[C@](F)(I)[H]");
+
+  //
+  // Cis/Trans
+  //
+
+  // implicit ref in all positions
+  test_github_issue_2111_impl("[H]/N(C)=C/F");
+  test_github_issue_2111_impl("C/N([H])=C/F");
+  test_github_issue_2111_impl("F/N=C(/[H])C");
+  test_github_issue_2111_impl("F/N=C(/C)[H]");
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -514,7 +556,10 @@ int regressionstest(int argc, char* argv[])
   case 1794:
     test_github_issue_1794();
     break;
-    //case N:
+  case 2111:
+    test_github_issue_2111();
+    break;
+  //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test
   //  break;
