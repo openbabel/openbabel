@@ -7,6 +7,7 @@
 #include <openbabel/obiter.h>
 #include <openbabel/bond.h>
 #include <openbabel/generic.h>
+#include <openbabel/forcefield.h>
 
 #include <iostream>
 #include <string>
@@ -440,6 +441,20 @@ ATOM    275  O   LYS L  14A     -6.892   4.228  24.455  1.00 21.72           O\n
     OB_COMPARE(i, 'A');
 }
 
+// https://github.com/openbabel/openbabel/issues/1794
+void test_github_issue_1794()
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "CC[2H]");
+
+  OBForceField* pFF = OBForceField::FindForceField("UFF");
+  OB_REQUIRE(pFF);
+
+  OB_ASSERT(pFF->Setup(mol));
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -495,6 +510,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 242:
     test_insertioncode_pdbqt();
+    break;
+  case 1794:
+    test_github_issue_1794();
     break;
     //case N:
   //  YOUR_TEST_HERE();

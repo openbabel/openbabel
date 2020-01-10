@@ -769,6 +769,17 @@ namespace OpenBabel {
 
     FOR_ATOMS_OF_MOL(atom, _mol) {
       parameterB = GetParameterUFF(atom->GetType(), _ffparams);
+
+      // GitHub issue #1794
+      if (parameterB == NULL) {
+        snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
+                 atom->GetIdx());
+        obErrorLog.ThrowError(__FUNCTION__, _logbuf, obWarning);
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog(_logbuf);
+        return false;
+      }
+
       if (GetCoordination(&*atom, parameterB->_ipar[0]) == 5) { // we need to do work for trigonal-bipy!
         // First, find the two largest neighbors
         OBAtom *largestNbr, *current, *secondLargestNbr = 0;
@@ -777,10 +788,30 @@ namespace OpenBabel {
         largestNbr = atom->BeginNbrAtom(i);
         // work out the radius
         parameterA = GetParameterUFF(largestNbr->GetType(), _ffparams);
+
+        if (parameterA == NULL) {
+          IF_OBFF_LOGLVL_LOW {
+            snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
+                largestNbr->GetIdx());
+            OBFFLog(_logbuf);
+          }
+          return false;
+        }
+
         largestRadius = parameterA->_dpar[0];
 
         for (current = atom->NextNbrAtom(i); current; current = atom->NextNbrAtom(i)) {
           parameterA = GetParameterUFF(current->GetType(), _ffparams);
+
+          if (parameterA == NULL) {
+            IF_OBFF_LOGLVL_LOW {
+              snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
+                  current->GetIdx());
+              OBFFLog(_logbuf);
+            }
+            return false;
+          }
+
           if (parameterA->_dpar[0] > largestRadius) {
             // New largest neighbor
             secondLargestNbr = largestNbr;
@@ -820,10 +851,30 @@ namespace OpenBabel {
         largestNbr = atom->BeginNbrAtom(i);
         // work out the radius
         parameterA = GetParameterUFF(largestNbr->GetType(), _ffparams);
+
+        if (parameterA == NULL) {
+          IF_OBFF_LOGLVL_LOW {
+            snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
+                largestNbr->GetIdx());
+            OBFFLog(_logbuf);
+          }
+          return false;
+        }
+
         largestRadius = parameterA->_dpar[0];
 
         for (current = atom->NextNbrAtom(i); current; current = atom->NextNbrAtom(i)) {
           parameterA = GetParameterUFF(current->GetType(), _ffparams);
+
+          if (parameterA == NULL) {
+            IF_OBFF_LOGLVL_LOW {
+              snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
+                  current->GetIdx());
+              OBFFLog(_logbuf);
+            }
+            return false;
+          }
+
           if (parameterA->_dpar[0] > largestRadius) {
             // New largest neighbor
             secondLargestNbr = largestNbr;
