@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
 #include <openbabel/obiter.h>
+#include <openbabel/generic.h>
 #include <openbabel/molchrg.h>
 #include <openbabel/ring.h>
 #include <openbabel/phmodel.h>

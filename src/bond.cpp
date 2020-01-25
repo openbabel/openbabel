@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/ring.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <openbabel/generic.h>
 #include <climits>
 
 using namespace std;
