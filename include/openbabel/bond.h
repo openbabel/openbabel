@@ -217,6 +217,8 @@ namespace OpenBabel
       bool IsRotor(bool includeRingBonds=false);
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
            No distinction is made between primary, secondary, and tertiary amides. **/
+      bool IsPeriodic() const;
+      //! \return Is the bond within a periodic unit cell?
       bool IsAmide();
       /** \return Is the bond a primary amide (i.e., between carbonyl C and a NH2)?
            In versions prior to 2.3, this function incorrectly identified secondary amides. **/

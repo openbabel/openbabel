@@ -544,6 +544,7 @@ namespace OpenBabel
   //! a set of internal (z-matrix) coordinates as supplied in the
   //! vector<OBInternalCoord*> argument.
   //! Implements <a href="http://qsar.sourceforge.net/dicts/blue-obelisk/index.xhtml#cartesianCoordinatesIntoZmatrixCoordinates">blue-obelisk:cartesianCoordinatesIntoZmatrixCoordinates</a>.
+  //! \todo Consider lengths, angles, and torsions for periodic systems
   void CartesianToInternal(std::vector<OBInternalCoord*> &vic,OBMol &mol)
   {
     double r,sum;

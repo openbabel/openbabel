@@ -331,6 +331,7 @@ namespace OpenBabel
 
   void OBRotamerList::AddRotamer(double *c)
   {
+    // TODO: consider implementing periodic boundary conditions
     int idx,size;
     double angle,res=255.0/360.0;
     vector3 v1,v2,v3,v4;

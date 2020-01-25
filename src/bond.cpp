@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/ring.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <openbabel/generic.h>
 #include <climits>
 
 using namespace std;
@@ -96,6 +97,7 @@ namespace OpenBabel
     _order = (char)order;
   }
 
+  // TODO: Figure out how to consider periodicity, etc.
   void OBBond::SetLength(OBAtom *fixed, double length)
   {
     unsigned int i;
@@ -181,6 +183,12 @@ namespace OpenBabel
     return (_bgn->GetHvyDegree() > 1 && _end->GetHvyDegree() > 1);
   }
   
+  bool OBBond::IsPeriodic() const
+  {
+    OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+    return mol->IsPeriodic();
+  }
+
    bool OBBond::IsAmide()
    {
       OBAtom *c,*n;
@@ -491,10 +499,7 @@ namespace OpenBabel
               {
                 if (nbrEnd != _bgn)
                   {
-                    torsion=fabs(CalcTorsionAngle(nbrStart->GetVector(),
-                                                  static_cast<OBAtom*>(_bgn)->GetVector(),
-                                                  static_cast<OBAtom*>(_end)->GetVector(),
-                                                  nbrEnd->GetVector()));
+                    torsion=fabs(_parent->GetTorsion(nbrStart, _bgn, _end, nbrEnd));
 
                     // >12&&<168 not enough
                     if (torsion > 15.0  && torsion < 160.0)
@@ -595,11 +600,19 @@ namespace OpenBabel
     begin = GetBeginAtom();
     end = GetEndAtom();
 
-    d2 = SQUARE(begin->GetX() - end->GetX());
-    d2 += SQUARE(begin->GetY() - end->GetY());
-    d2 += SQUARE(begin->GetZ() - end->GetZ());
-
-    return(sqrt(d2));
+    if (!IsPeriodic())
+      {
+        d2 = SQUARE(begin->GetX() - end->GetX());
+        d2 += SQUARE(begin->GetY() - end->GetY());
+        d2 += SQUARE(begin->GetZ() - end->GetZ());
+        return(sqrt(d2));
+      }
+    else
+      {
+        OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+        OBUnitCell *box = (OBUnitCell*)mol->GetData(OBGenericDataType::UnitCell);
+        return (box->MinimumImageCartesian(begin->GetVector() - end->GetVector())).length();
+      }
   }
 
   /*Now in OBBase

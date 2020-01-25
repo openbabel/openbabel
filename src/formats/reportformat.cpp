@@ -372,8 +372,7 @@ namespace OpenBabel
 
                 snprintf(buffer, BUFF_SIZE, "%4d %4d %4d %4d %10.3f",
                         a->GetIdx(), b->GetIdx(),c->GetIdx(),d->GetIdx(),
-                        CalcTorsionAngle(a->GetVector(), b->GetVector(),
-                                         c->GetVector(), d->GetVector()));
+                        mol.GetTorsion(&*a, &*b, &*c, &*d));
                 ofs << buffer << "\n";
               }
           }

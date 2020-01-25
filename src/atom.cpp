@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
 #include <openbabel/obiter.h>
+#include <openbabel/generic.h>
 #include <openbabel/molchrg.h>
 #include <openbabel/ring.h>
 #include <openbabel/phmodel.h>
@@ -802,6 +803,12 @@ namespace OpenBabel
     return stereoFacade.HasTetrahedralStereo(_id);
   }
 
+  bool OBAtom::IsPeriodic() const
+  {
+    OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+    return mol->IsPeriodic();
+  }
+
   bool OBAtom::IsInRingSize(int size) const
   {
     vector<OBRing*> rlist;
@@ -898,9 +905,7 @@ namespace OpenBabel
         k = j;
         for (c = NextNbrAtom(k); c; c = NextNbrAtom(k))
           {
-            v1 = b->GetVector() - GetVector();
-            v2 = c->GetVector() - GetVector();
-            degrees = vectorAngle(v1, v2);
+            degrees = b->GetAngle((OBAtom*)this, c);
             if (degrees < minDegrees)
               minDegrees = degrees;
           }
@@ -924,9 +929,7 @@ namespace OpenBabel
         k = j;
         for (c = NextNbrAtom(k); c; c = NextNbrAtom(k))
           {
-            v1 = b->GetVector() - GetVector();
-            v2 = c->GetVector() - GetVector();
-            degrees = vectorAngle(v1, v2);
+            degrees = b->GetAngle((OBAtom*)this, c);
             avgDegrees += degrees;
             n++;
           }
@@ -1102,13 +1105,21 @@ namespace OpenBabel
 
   double OBAtom::GetDistance(OBAtom *b)
   {
-    return(( this->GetVector() - b->GetVector() ).length());
+    if (!IsPeriodic())
+      {
+        return(( this->GetVector() - b->GetVector() ).length());
+      }
+    else
+      {
+        OBUnitCell *box = (OBUnitCell*)GetParent()->GetData(OBGenericDataType::UnitCell);
+        return (box->MinimumImageCartesian(this->GetVector() - b->GetVector())).length();
+      }
   }
 
   double OBAtom::GetDistance(int b)
   {
     OBMol *mol = (OBMol*)GetParent();
-    return(( this->GetVector() - mol->GetAtom(b)->GetVector() ).length());
+    return( this->GetDistance(mol->GetAtom(b)) );
   }
 
   double OBAtom::GetDistance(vector3 *v)
@@ -1122,6 +1133,13 @@ namespace OpenBabel
 
     v1 = this->GetVector() - b->GetVector();
     v2 = c->GetVector() - b->GetVector();
+    if (IsPeriodic())
+      {
+        OBUnitCell *box = (OBUnitCell*)GetParent()->GetData(OBGenericDataType::UnitCell);
+        v1 = box->MinimumImageCartesian(v1);
+        v2 = box->MinimumImageCartesian(v2);
+      }
+
     if (IsNearZero(v1.length(), 1.0e-3)
       || IsNearZero(v2.length(), 1.0e-3)) {
         return(0.0);
@@ -1133,17 +1151,7 @@ namespace OpenBabel
   double OBAtom::GetAngle(int b, int c)
   {
     OBMol *mol = (OBMol*)GetParent();
-    vector3 v1,v2;
-
-    v1 = this->GetVector() - mol->GetAtom(b)->GetVector();
-    v2 = mol->GetAtom(c)->GetVector() - mol->GetAtom(b)->GetVector();
-
-    if (IsNearZero(v1.length(), 1.0e-3)
-      || IsNearZero(v2.length(), 1.0e-3)) {
-        return(0.0);
-    }
-
-    return(vectorAngle(v1, v2));
+    return(this->GetAngle(mol->GetAtom(b), mol->GetAtom(c)));
   }
 
   bool OBAtom::GetNewBondVector(vector3 &v,double length)
