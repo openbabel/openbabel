@@ -19,7 +19,11 @@ GNU General Public License for more details.
 
 #include "obtest.h"
 #include <openbabel/babelconfig.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <openbabel/obiter.h>
+#include <openbabel/generic.h>
 #include <openbabel/obconversion.h>
 
 #include <string>
