@@ -428,16 +428,22 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.type = INCHI_StereoType_Tetrahedral;
             stereo.central_atom = OBAtomIdToInChIAtomId(mol, config.center);
 
-            bool has_implicit = false; // Does chirality involve implicit lone pair?
-            if (config.from == OBStereo::ImplicitRef || config.refs[0] == OBStereo::ImplicitRef) {
-              has_implicit = true;
-              config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the lone pair
-            }
+            // count number of implicit refs
+            int num_implicit = 0;
+            if (config.from == OBStereo::ImplicitRef)
+              num_implicit = 1;
+            num_implicit += std::count(config.refs.begin(), config.refs.end(), OBStereo::ImplicitRef);
 
-            if (!has_implicit)
-              stereo.neighbor[0] = OBAtomIdToInChIAtomId(mol, config.from);
-            else
+            // ignore invalid cases with more than 1 implicit ref
+            if (num_implicit > 1)
+              continue;
+
+            if (num_implicit) {
+              config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the implicit ref
               stereo.neighbor[0] = stereo.central_atom;
+            } else
+              stereo.neighbor[0] = OBAtomIdToInChIAtomId(mol, config.from);
+
             for(int i=0; i<3; ++i)
               stereo.neighbor[i + 1] = OBAtomIdToInChIAtomId(mol, config.refs[i]);
 
@@ -463,6 +469,13 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.central_atom = NO_ATOM;
             stereo.type = INCHI_StereoType_DoubleBond;
             OBStereo::Refs refs = config.refs;
+
+            // ignore invalid cases with 2 implicit refs on one side
+            if (refs[0] == OBStereo::ImplicitRef && refs[1] == OBStereo::ImplicitRef)
+              continue;
+            if (refs[2] == OBStereo::ImplicitRef && refs[3] == OBStereo::ImplicitRef)
+              continue;
+
             unsigned long start = refs[0];
             if (refs[0]==OBStereo::ImplicitRef)
               start = refs[1];

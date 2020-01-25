@@ -7,6 +7,7 @@
 #include <openbabel/obiter.h>
 #include <openbabel/bond.h>
 #include <openbabel/generic.h>
+#include <openbabel/forcefield.h>
 
 #include <iostream>
 #include <string>
@@ -440,6 +441,62 @@ ATOM    275  O   LYS L  14A     -6.892   4.228  24.455  1.00 21.72           O\n
     OB_COMPARE(i, 'A');
 }
 
+// https://github.com/openbabel/openbabel/issues/1794
+void test_github_issue_1794()
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInFormat("smi");
+  conv.ReadString(&mol, "CC[2H]");
+
+  OBForceField* pFF = OBForceField::FindForceField("UFF");
+  OB_REQUIRE(pFF);
+
+  OB_ASSERT(pFF->Setup(mol));
+}
+
+void test_github_issue_2111_impl(const std::string &smiles)
+{
+  OBMol mol;
+  OBConversion conv;
+  conv.SetInAndOutFormats("smi", "inchi");
+
+  conv.ReadString(&mol, smiles);
+  mol.DeleteHydrogens();
+  conv.WriteString(&mol);
+}
+
+// https://github.com/openbabel/openbabel/issues/2111
+void test_github_issue_2111()
+{
+  test_github_issue_2111_impl("[H][C@@H](I)F"); // tetrahedral with 2 implicit refs
+  test_github_issue_2111_impl("[H]/N=C/F"); // cis/trans with 2 implicit refs on the left
+  test_github_issue_2111_impl("F/N=C/[H]"); // cis/trans with 2 implicit refs on the right
+
+  //
+  // Tetrahedral
+  //
+
+  // example from bug report
+  test_github_issue_2111_impl("[C@@H]12C[C@H](OCC3=CC=CC=C3)[C@@H](COCC3=CC=CC=C3)[C@]1([H])O2");
+
+  // implicit ref in all positions
+  test_github_issue_2111_impl("[H][C@](C)(F)I");
+  test_github_issue_2111_impl("C[C@]([H])(F)I");
+  test_github_issue_2111_impl("C[C@](F)([H])I");
+  test_github_issue_2111_impl("C[C@](F)(I)[H]");
+
+  //
+  // Cis/Trans
+  //
+
+  // implicit ref in all positions
+  test_github_issue_2111_impl("[H]/N(C)=C/F");
+  test_github_issue_2111_impl("C/N([H])=C/F");
+  test_github_issue_2111_impl("F/N=C(/[H])C");
+  test_github_issue_2111_impl("F/N=C(/C)[H]");
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -496,7 +553,13 @@ int regressionstest(int argc, char* argv[])
   case 242:
     test_insertioncode_pdbqt();
     break;
-    //case N:
+  case 1794:
+    test_github_issue_1794();
+    break;
+  case 2111:
+    test_github_issue_2111();
+    break;
+  //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test
   //  break;

@@ -15,12 +15,13 @@ add_definitions(-DFORMATDIR="${FORMATDIR}/")
 
 ################ Add new tests here
 set (cpptests
-     automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
+     alias automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
      cistrans conversion graphsym gzip addh
      implicitH lssr isomorphism multicml periodic regressions rotor shuffle smiles spectrophore
      squareplanar stereo stereoperception tautomer tetrahedral
      tetranonplanar tetraplanar uniqueid
     )
+set (alias_parts 1)
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
 set (builder_parts 1 2 3 4 5)
 set (canonconsistent_parts  1 2 3)
@@ -38,7 +39,7 @@ set (lssr_parts 1 2 3 4 5)
 set (isomorphism_parts 1 2 3 4 5 6 7 8 9)
 set (multicml_parts 1)
 set (periodic_parts 1 2 3 4)
-set (regressions_parts 1 221 222 223 224 225 226 227 228 240 241 242)
+set (regressions_parts 1 221 222 223 224 225 226 227 228 240 241 242 1794 2111)
 set (rotor_parts 1 2 3 4)
 set (shuffle_parts 1 2 3 4 5)
 set (smiles_parts 1 2 3)
