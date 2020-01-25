@@ -31,6 +31,7 @@
 #include <openbabel/ring.h>
 #include <openbabel/obutil.h>
 #include <openbabel/obiter.h>
+#include <openbabel/generic.h>
 #include <openbabel/graphsym.h>
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/canon.h>
