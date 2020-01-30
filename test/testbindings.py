@@ -291,6 +291,8 @@ H          0.74700        0.50628       -0.64089
         # as we write them)
         data = [("Cs1(=O)ccccn1",
                  "CS1(=O)=NC=CC=C1"),
+                ("O=s1(=O)cccn1",
+                 "O=S1(=O)C=CC=N1"),
                 ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
                  "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
         for inp, out in data:
