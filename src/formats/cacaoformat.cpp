@@ -269,6 +269,7 @@ namespace OpenBabel
         a = vit[i]->_a;
         b = vit[i]->_b;
         c = vit[i]->_c;
+        // TODO: fix explicit calculations for PBC?
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector() - a->GetVector();
         vit[i]->_ang = vectorAngle(v1,v2);

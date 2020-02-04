@@ -406,6 +406,33 @@ namespace OpenBabel
     return vector3(x, y, z);
   }
 
+  vector3 OBUnitCell::UnwrapCartesianNear(vector3 new_loc, vector3 ref_loc) const
+  {
+    vector3 bond_dir = MinimumImageCartesian(new_loc - ref_loc);
+    return ref_loc + bond_dir;
+  }
+
+  vector3 OBUnitCell::UnwrapFractionalNear(vector3 new_loc, vector3 ref_loc) const
+  {
+    vector3 bond_dir = MinimumImageFractional(new_loc - ref_loc);
+    return ref_loc + bond_dir;
+  }
+
+  vector3 OBUnitCell::MinimumImageCartesian(vector3 cart) const
+  {
+    vector3 frac = CartesianToFractional(cart);
+    frac = MinimumImageFractional(frac);
+    return FractionalToCartesian(frac);
+  }
+
+  vector3 OBUnitCell::MinimumImageFractional(vector3 frac) const
+  {
+    double x = frac.x() - round(frac.x());
+    double y = frac.y() - round(frac.y());
+    double z = frac.z() - round(frac.z());
+    return vector3(x, y, z);
+  }
+
   OBUnitCell::LatticeType OBUnitCell::GetLatticeType( int spacegroup ) const
   {
     //	1-2 	Triclinic
@@ -667,8 +694,18 @@ namespace OpenBabel
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, CartesianToFractional, vector3);
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, WrapCartesianCoordinate, vector3);
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, WrapFractionalCoordinate, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, MinimumImageCartesian, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG(vector3, MinimumImageFractional, vector3);
   OBUNITCELL_CALL_CONST_OVERLOAD_ARG(int, GetSpaceGroupNumber, std::string);
   OBUNITCELL_CALL_CONST_OVERLOAD(double, GetCellVolume);
+  // Based on OBUNITCELL_CALL_CONST_OVERLOAD_ARG above
+#define OBUNITCELL_CALL_CONST_OVERLOAD_ARG2(_type, _name, _argsig, _argsig2) \
+  _type OBUnitCell::_name( _argsig arg1, _argsig2 arg2 ) \
+  { \
+    return const_cast<const OBUnitCell*>(this)->_name(arg1, arg2); \
+  }
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG2(vector3, UnwrapCartesianNear, vector3, vector3);
+  OBUNITCELL_CALL_CONST_OVERLOAD_ARG2(vector3, UnwrapFractionalNear, vector3, vector3);
 
   double OBUnitCell::GetA() const
   {

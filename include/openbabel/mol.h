@@ -104,7 +104,9 @@ namespace OpenBabel
 #define OB_ATOMSPIN_MOL          (1<<21)
   //! Treat as reaction
 #define OB_REACTION_MOL          (1<<22)
-  // flags 22-32 unspecified
+  //! Molecule is repeating in a periodic unit cell
+#define OB_PERIODIC_MOL          (1<<23)
+  // flags 24-32 unspecified
 
 #define SET_OR_UNSET_FLAG(X) \
   if (value) SetFlag(X); \
@@ -387,16 +389,21 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Mark that ring closure bonds have been assigned by graph traversal
     void   SetClosureBondsPerceived(bool value = true)   { SET_OR_UNSET_FLAG(OB_CLOSURE_MOL);  }
     //! Mark that explicit hydrogen atoms have been added
+
     void   SetHydrogensAdded(bool value = true) { SET_OR_UNSET_FLAG(OB_H_ADDED_MOL); }
     void   SetCorrectedForPH(bool value = true) { SET_OR_UNSET_FLAG(OB_PH_CORRECTED_MOL); }
     void   SetSpinMultiplicityAssigned(bool value = true) { SET_OR_UNSET_FLAG(OB_ATOMSPIN_MOL); }
     //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().
     void   SetIsPatternStructure(bool value = true) { SET_OR_UNSET_FLAG(OB_PATTERN_STRUCTURE); }
-    void   SetIsReaction(bool value = true)               { SET_OR_UNSET_FLAG(OB_REACTION_MOL) };
+    void   SetIsReaction(bool value = true)               { SET_OR_UNSET_FLAG(OB_REACTION_MOL); }
+    //! Mark that distance calculations, etc., should apply periodic boundary conditions through the minimimum image convention.
+    //! Does not automatically recalculate bonding.
+    void   SetPeriodicMol(bool value = true){ SET_OR_UNSET_FLAG(OB_PERIODIC_MOL); }
     bool   HasFlag(int flag)   { return (_flags & flag) ? true : false; }
     void   SetFlag(int flag)   { _flags |= flag; }
     void   UnsetFlag(int flag) { _flags &= (~(flag)); }
     void   SetFlags(int flags) { _flags = flags; }
+
     //@}
 
     //! \name Molecule modification methods
@@ -587,6 +594,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
     //! Does this OBMol represent a reaction?
     bool IsReaction()                  { return HasFlag(OB_REACTION_MOL); }
+    //! Is this molecule periodic? Should periodic boundary conditions be applied?
+    bool IsPeriodic() { return(HasFlag(OB_PERIODIC_MOL)); }
+
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}

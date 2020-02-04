@@ -213,10 +213,10 @@ namespace OpenBabel
 
   double OBMol::GetTorsion(int a,int b,int c,int d)
   {
-    return(CalcTorsionAngle(((OBAtom*)_vatom[a-1])->GetVector(),
-                            ((OBAtom*)_vatom[b-1])->GetVector(),
-                            ((OBAtom*)_vatom[c-1])->GetVector(),
-                            ((OBAtom*)_vatom[d-1])->GetVector()));
+    return(GetTorsion((OBAtom*)_vatom[a-1],
+                      (OBAtom*)_vatom[b-1],
+                      (OBAtom*)_vatom[c-1],
+                      (OBAtom*)_vatom[d-1]));
   }
 
   void OBMol::SetTorsion(OBAtom *a,OBAtom *b,OBAtom *c, OBAtom *d, double ang)
@@ -242,6 +242,7 @@ namespace OpenBabel
     double x,y,z,mag,rotang,sn,cs,t,tx,ty,tz;
 
     //calculate the torsion angle
+    // TODO: fix this calculation for periodic systems
     radang = CalcTorsionAngle(a->GetVector(),
                               b->GetVector(),
                               c->GetVector(),
@@ -307,10 +308,30 @@ namespace OpenBabel
 
   double OBMol::GetTorsion(OBAtom *a,OBAtom *b,OBAtom *c,OBAtom *d)
   {
-    return(CalcTorsionAngle(a->GetVector(),
-                            b->GetVector(),
-                            c->GetVector(),
-                            d->GetVector()));
+    if (!IsPeriodic())
+      {
+        return(CalcTorsionAngle(a->GetVector(),
+                                b->GetVector(),
+                                c->GetVector(),
+                                d->GetVector()));
+      }
+    else
+      {
+        vector3 v1, v2, v3, v4;
+        // Wrap the atomic positions in a continuous chain that makes sense based on the unit cell
+        // Start by extracting the absolute Cartesian coordinates
+        v1 = a->GetVector();
+        v2 = b->GetVector();
+        v3 = c->GetVector();
+        v4 = d->GetVector();
+        // Then redefine the positions based on proximity to the previous atom
+        // to build a continuous chain of expanded Cartesian coordinates
+        OBUnitCell *unitCell = (OBUnitCell * ) GetData(OBGenericDataType::UnitCell);
+        v2 = unitCell->UnwrapCartesianNear(v2, v1);
+        v3 = unitCell->UnwrapCartesianNear(v3, v2);
+        v4 = unitCell->UnwrapCartesianNear(v4, v3);
+        return(CalcTorsionAngle(v1, v2, v3, v4));
+      }
   }
 
   void OBMol::ContigFragList(std::vector<std::vector<int> >&cfl)
@@ -1210,7 +1231,7 @@ namespace OpenBabel
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
-  //OB_TSPIN_MOL, OB_AROMATIC_MOL, OB_CHAINS_MOL and OB_PATTERN_STRUCTURE which are copied
+  //OB_TSPIN_MOL, OB_AROMATIC_MOL, OB_PERIODIC_MOL, OB_CHAINS_MOL and OB_PATTERN_STRUCTURE which are copied
   {
     if (this == &source)
       return *this;
@@ -1250,6 +1271,8 @@ namespace OpenBabel
       this->SetFlag(OB_TCHARGE_MOL);
     if (src.HasFlag(OB_PCHARGE_MOL))
       this->SetFlag(OB_PCHARGE_MOL);
+    if (src.HasFlag(OB_PERIODIC_MOL))
+      this->SetFlag(OB_PERIODIC_MOL);
     if (src.HasFlag(OB_HYBRID_MOL))
       this->SetFlag(OB_HYBRID_MOL);
     if (src.HasFlag(OB_AROMATIC_MOL))
@@ -1403,6 +1426,9 @@ namespace OpenBabel
     // We should do something to update the src coordinates if they're not 3D
     if(src.GetDimension()<_dimension)
       _dimension = src.GetDimension();
+    // TODO: Periodicity is similarly weird (e.g., adding nonperiodic data to
+    // a crystal, or two incompatible lattice parameters).  For now, just assume
+    // we intend to keep the lattice of the source (no updates necessary)
 
     EndModify();
 
@@ -1500,9 +1526,9 @@ namespace OpenBabel
     if (_mod)
       return;
 
-    // wipe all but whether it has aromaticity perceived or is a reaction
+    // wipe all but whether it has aromaticity perceived, is a reaction, or has periodic boundaries enabled
     if (nukePerceivedData)
-      _flags = _flags & (OB_AROMATIC_MOL|OB_REACTION_MOL);
+      _flags = _flags & (OB_AROMATIC_MOL|OB_REACTION_MOL|OB_PERIODIC_MOL);
 
     _c = NULL;
 
@@ -2940,8 +2966,14 @@ namespace OpenBabel
       return;
     if (_dimension != 3) return; // not useful on non-3D structures
 
-    obErrorLog.ThrowError(__FUNCTION__,
-                          "Ran OpenBabel::ConnectTheDots", obAuditMsg);
+    if (IsPeriodic())
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::ConnectTheDots -- using periodic boundary conditions",
+                            obAuditMsg);
+    else
+      obErrorLog.ThrowError(__FUNCTION__,
+                            "Ran OpenBabel::ConnectTheDots", obAuditMsg);
+
 
     int j,k,max;
     double maxrad = 0;
@@ -2983,6 +3015,7 @@ namespace OpenBabel
 
     int idx1, idx2;
     double d2,cutoff,zd;
+    vector3 atom1, atom2, wrapped_coords;  // Only used for periodic coords
     for (j = 0 ; j < max ; ++j)
       {
         double maxcutoff = SQUARE(rad[j]+maxrad+0.45);
@@ -2994,20 +3027,33 @@ namespace OpenBabel
             // bonded if closer than elemental Rcov + tolerance
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
-            zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
-            // bigger than max cutoff, which is determined using largest radius,
-            // not the radius of k (which might be small, ie H, and cause an early  termination)
-            // since we sort by z, anything beyond k will also fail
-            if (zd > maxcutoff )
-              break;
+            // Use minimum image convention if the unit cell is periodic
+            // Otherwise, use a simpler (faster) distance calculation based on raw coordinates
+            if (IsPeriodic())
+              {
+                atom1 = vector3(c[idx1*3], c[idx1*3+1], c[idx1*3+2]);
+                atom2 = vector3(c[idx2*3], c[idx2*3+1], c[idx2*3+2]);
+                OBUnitCell *unitCell = (OBUnitCell * ) GetData(OBGenericDataType::UnitCell);
+                wrapped_coords = unitCell->MinimumImageCartesian(atom1 - atom2);
+                d2 = wrapped_coords.length_2();
+              }
+            else
+              {
+                zd  = SQUARE(c[idx1*3+2] - c[idx2*3+2]);
+                // bigger than max cutoff, which is determined using largest radius,
+                // not the radius of k (which might be small, ie H, and cause an early  termination)
+                // since we sort by z, anything beyond k will also fail
+                if (zd > maxcutoff )
+                  break;
 
-            d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
-            if (d2 > cutoff)
-              continue; // x's bigger than cutoff
-            d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
-            if (d2 > cutoff)
-              continue; // x^2 + y^2 bigger than cutoff
-            d2 += zd;
+                d2  = SQUARE(c[idx1*3]   - c[idx2*3]);
+                if (d2 > cutoff)
+                  continue; // x's bigger than cutoff
+                d2 += SQUARE(c[idx1*3+1] - c[idx2*3+1]);
+                if (d2 > cutoff)
+                  continue; // x^2 + y^2 bigger than cutoff
+                d2 += zd;
+              }
 
             if (d2 > cutoff)
               continue;
@@ -4047,6 +4093,13 @@ namespace OpenBabel
     bool bonds_specified = excludebonds != (OBBitVec*)0;
 
     newmol.SetDimension(GetDimension());
+
+    // If the parent is set to periodic, then also apply boundary conditions to the fragments
+    if (IsPeriodic()) {
+      OBUnitCell* parent_uc = (OBUnitCell*)GetData(OBGenericDataType::UnitCell);
+      newmol.SetData(parent_uc->Clone(NULL));
+      newmol.SetPeriodicMol();
+    }
     // If the parent had aromaticity perceived, then retain that for the fragment
     newmol.SetFlag(_flags & OB_AROMATIC_MOL);
     // The fragment will preserve the "chains perceived" flag of the parent
