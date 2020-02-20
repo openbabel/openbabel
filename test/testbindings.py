@@ -423,6 +423,30 @@ M  END
             mol.OBMol.AssignTotalChargeToAtoms(charge)
             self.assertEqual(mol.write("smi").rstrip(), ans)
 
+    def testParsingChargeInSmiles(self):
+        """Be more strict when parsing charges"""
+        good= [
+                ("[CH3+]", 1),
+                ("[CH2++]", 2),
+                ("[CH2+2]", 2),
+                ("[CH3-]", -1),
+                ("[CH2--]", -2),
+                ("[CH2-2]", -2),
+                ]
+        bad = [
+                "[CH2++2]",
+                "[C+-+-]",
+                "[C+2+]"
+                "[CH2--2]",
+                "[C-+-+]",
+                "[C-2-]"
+                ]
+        for smi, charge in good:
+            mol = pybel.readstring("smi", smi)
+            self.assertEqual(charge, mol.atoms[0].formalcharge)
+        for smi in bad:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+
     def testReadingBenzyne(self):
         """Check that benzyne is read correctly"""
         smi = "c1cccc#c1"
