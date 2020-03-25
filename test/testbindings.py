@@ -376,6 +376,8 @@ H          0.74700        0.50628       -0.64089
         # as we write them)
         data = [("Cs1(=O)ccccn1",
                  "CS1(=O)=NC=CC=C1"),
+                ("O=s1(=O)cccn1",
+                 "O=S1(=O)C=CC=N1"),
                 ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
                  "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
         for inp, out in data:
@@ -527,8 +529,6 @@ H         -0.26065        0.64232       -2.62218
         """The stereo ref for an implicit H ref was being set to 0"""
         smis = ["C", "[C@@H](Br)(Cl)I"]
         mols = [pybel.readstring("smi", smi) for smi in smis]
-        # FIXME - does not seem to be possible to work out whether
-        # tetrahedral or not from Python?
         stereodata = mols[1].OBMol.GetData(ob.StereoData)
         config = ob.toTetrahedralStereo(stereodata).GetConfig()
         self.assertEqual(config.from_or_towards, 4294967294)
@@ -537,6 +537,31 @@ H         -0.26065        0.64232       -2.62218
         stereodata = mols[0].OBMol.GetData(ob.StereoData)
         config = ob.toTetrahedralStereo(stereodata).GetConfig()
         self.assertEqual(config.from_or_towards, 4294967294)
+
+    def testCastToStereoBase(self):
+        """Support casting to StereoBase"""
+        mol = pybel.readstring("smi", "F/C=C/C[C@@H](Cl)Br")
+
+        num_cistrans = 0
+        num_tetra = 0
+        for genericdata in mol.OBMol.GetAllData(ob.StereoData):
+            stereodata = ob.toStereoBase(genericdata)
+            stereotype = stereodata.GetType()
+
+            if stereotype == ob.OBStereo.CisTrans:
+                cistrans = ob.toCisTransStereo(stereodata)
+                cfg = cistrans.GetConfig()
+                if cfg.specified:
+                    num_cistrans += 1
+
+            elif stereotype == ob.OBStereo.Tetrahedral:
+                tetra = ob.toTetrahedralStereo(stereodata)
+                cfg = tetra.GetConfig()
+                if cfg.specified:
+                    num_tetra += 1
+
+        self.assertEqual(1, num_tetra)
+        self.assertEqual(1, num_cistrans)
 
     def testHydrogenIsotopes(self):
         """Are D and T supported by GetAtomicNum?"""
