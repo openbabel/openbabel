@@ -108,15 +108,8 @@
     std::ostream* ostreamToFile(const char *filename) {
        return new std::ofstream(filename);
     }
-    void closeOfstream(std::ofstream* os){
-      os->close();
-    }
     const std::string stringFromOstream(const std::ostringstream* os){
-     // return (os->str()).c_str();
       return os->str();
-    }
-    bool isNullPtr(void *p){
-      return p==NULL;
     }
 %}
 
