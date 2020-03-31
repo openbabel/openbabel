@@ -22,6 +22,9 @@
 #endif
 
 #include <openbabel/babelconfig.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/generic.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/graphsym.h>
@@ -59,9 +62,9 @@ int main(int argc, char *argv[])
   OBAtom *atom;
   OBBond *bond;
   char buffer[BUFF_SIZE];
-  map<string, vector<OBMol> > fragment_list;
-  map<string, int> fragment_count;
-  vector<pair<int, string> > fragment_size;
+  map<std::string, vector<OBMol> > fragment_list;
+  map<std::string, int> fragment_count;
+  vector<pair<int, std::string> > fragment_size;
 
   canFormat = conv.FindFormat("can"); // Canonical SMILES format
   conv.SetOutFormat(canFormat);
@@ -118,6 +121,8 @@ int main(int argc, char *argv[])
       for (unsigned int i = 0; i < fragments.size(); ++i) {
         if (fragments[i].NumAtoms() < 5) // too small to care
           continue;
+        if (!fragments[i].HasNonZeroCoords())
+          continue;
 
         string smiles = conv.WriteString(&fragments[i], true);
 
@@ -141,15 +146,16 @@ int main(int argc, char *argv[])
           if(isDifferent)
             fragment_list[smiles].push_back(fragments[i]);
         }
-      } 
+      }
     } // while reading molecules (in this file)
     ifs.close();
     ifs.clear();
   } // // while reading files
 
   // sort fragments by the number of molecules
-  for (map<string, vector<OBMol> >::iterator i = fragment_list.begin(); i != fragment_list.end(); i++) {
-    fragment_size.push_back(make_pair<int, string>(i->second[0].NumAtoms(), i->first));
+  for (map<std::string, vector<OBMol> >::iterator i = fragment_list.begin(); i != fragment_list.end(); i++) {
+    std::string smiles = i->first;
+    fragment_size.push_back(std::make_pair<int, std::string>(i->second[0].NumAtoms(), smiles.c_str()));
   }
   sort(fragment_size.rbegin(), fragment_size.rend());
 
@@ -159,6 +165,9 @@ int main(int argc, char *argv[])
     vector<OBMol>& fragments = fragment_list[i->second];
     vector<OBMol> t;
     for (size_t idx = 0; idx < fragments.size(); idx++) {
+      if (!fragments[idx].HasNonZeroCoords())
+        continue;
+
       t.push_back(fragments[idx]);
       OBPairData *pd = dynamic_cast<OBPairData*>(fragments[idx].GetData("SMILES Atom Order"));
       istringstream iss(pd->GetValue());
