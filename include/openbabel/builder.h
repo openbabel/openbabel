@@ -70,6 +70,8 @@ namespace OpenBabel
       //@}
 
 
+      //! Used by LoadFragments to check for invalid (all zero coordinates) fragments
+      void AddRingFragment(OBSmartsPattern *sp, const std::vector<vector3> &coords);
       //! Load fragment info from file, if is it has not already been done
       void LoadFragments();
       std::vector<vector3> GetFragmentCoord(std::string smiles);
