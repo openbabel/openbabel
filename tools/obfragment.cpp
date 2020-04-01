@@ -75,7 +75,7 @@ int main(int argc, char *argv[])
     return(-1);
   }
 
-  for (int i = 1; i < argc; i++) {
+  for (int i = 1; i < argc; ++i) {
     cerr << " Reading file " << argv[i] << endl;
 
     inFormat = conv.FormatFromExt(argv[i]);
@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
           fragment_count[smiles]++;
           vector<OBMol> &f = fragment_list[smiles];
           bool isDifferent = true;
-          for (vector<OBMol>::iterator j = f.begin(); j != f.end(); j++) {
+          for (vector<OBMol>::iterator j = f.begin(); j != f.end(); ++j) {
             OBAlign aln(fragments[i], *j, false, false);
             aln.Align();
             if (aln.GetRMSD() < 5.0) {
@@ -153,18 +153,19 @@ int main(int argc, char *argv[])
   } // // while reading files
 
   // sort fragments by the number of molecules
-  for (map<std::string, vector<OBMol> >::iterator i = fragment_list.begin(); i != fragment_list.end(); i++) {
+  for (map<std::string, vector<OBMol> >::iterator i = fragment_list.begin(); i != fragment_list.end(); ++i) {
     std::string smiles = i->first;
     fragment_size.push_back(std::make_pair<int, std::string>(i->second[0].NumAtoms(), smiles.c_str()));
   }
   sort(fragment_size.rbegin(), fragment_size.rend());
 
-  for (vector<pair<int, string> >::iterator i = fragment_size.begin(); i != fragment_size.end(); i++) {
+  for (vector<pair<int, string> >::iterator i = fragment_size.begin(); i != fragment_size.end(); ++i) {
     if (fragment_count[i->second] < 3) continue;
     // OK, now retrieve the canonical SMILES ordering for the fragment
     vector<OBMol>& fragments = fragment_list[i->second];
     vector<OBMol> t;
-    for (size_t idx = 0; idx < fragments.size(); idx++) {
+
+    for (size_t idx = 0; idx < fragments.size(); ++idx) {
       if (!fragments[idx].HasNonZeroCoords())
         continue;
 
