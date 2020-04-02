@@ -35,14 +35,8 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char **argv)
+int main(int argc, char **argv)
 {
-  char *program_name= argv[0];
-  int c;
-  int verbose = 0;
-  bool hydrogens = false;
-  string basename, filename = "", option, option2, ff = "MMFF94";
-  OBConversion conv;
 
   if (argc < 2) {
     cout << "Usage: obenergy [options] <filename>" << endl;
@@ -59,60 +53,59 @@ int main(int argc,char **argv)
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
     exit(-1);
-  } else {
-    int ifile = 1;
-    for (int i = 1; i < argc; i++) {
-      option = argv[i];
-
-      if (option == "-v") {
-        verbose = 1;
-        ifile++;
-        break;
-      }
-
-      if (option == "-h") {
-        hydrogens = true;
-        ifile++;
-      }
-
-      if ((option == "-ff") && (argc > (i+1))) {
-        ff = argv[i+1];
-        ifile += 2;
-      }
-    }
-
-    basename = filename = argv[ifile];
-    size_t extPos = filename.rfind('.');
-
-    if (extPos!= string::npos) {
-      basename = filename.substr(0, extPos);
-    }
-
-
   }
 
+  char *program_name= argv[0];
+  int verbose = 0;
+  bool hydrogens = false;
+  string ff = "MMFF94";
+  int ifile = 1;
+  for (int i = 1; i < argc; i++) {
+    string option = argv[i];
+
+    if (option == "-v") {
+      verbose = 1;
+      ifile++;
+      break;
+    }
+
+    if (option == "-h") {
+      hydrogens = true;
+      ifile++;
+    }
+
+    if ((option == "-ff") && (argc > (i + 1))) {
+      ff = argv[i + 1];
+      ifile += 2;
+    }
+  }
+
+  if (ifile >= argc) {
+    cerr << program_name << ": input file is not passed!" << endl;
+    exit(-1);
+  }
+  string filename = argv[ifile];
+
   // Find Input filetype
+  OBConversion conv;
   OBFormat *format_in = conv.FormatFromExt(filename.c_str());
 
   if (!format_in || !conv.SetInFormat(format_in)) {
     cerr << program_name << ": cannot read input format!" << endl;
-    exit (-1);
+    exit(-1);
   }
-
-  ifstream ifs;
-  ofstream ofs;
 
   // Read the file
-  ifs.open(filename.c_str());
+  ifstream ifs{filename};
   if (!ifs) {
     cerr << program_name << ": cannot read input file!" << endl;
-    exit (-1);
+    exit(-1);
   }
 
-  OBForceField* pFF = OBForceField::FindForceField(ff);
+  OBForceField *pFF = OBForceField::FindForceField(ff);
   if (!pFF) {
     cerr << program_name << ": could not find forcefield '" << ff << "'." <<endl;
-    exit (-1);
+    exit(-1);
   }
   pFF->SetLogFile(&cout);
   if (verbose)
@@ -121,8 +114,7 @@ int main(int argc,char **argv)
     pFF->SetLogLevel(OBFF_LOGLVL_MEDIUM);
 
   OBMol mol;
-  double energy;
-  for (c=1;;c++) {
+  for (int c = 1;; c++) {
     mol.Clear();
     if (!conv.Read(&mol, &ifs))
       break;
@@ -134,10 +126,10 @@ int main(int argc,char **argv)
 
     if (!pFF->Setup(mol)) {
       cerr << program_name << ": could not setup force field." << endl;
-      exit (-1);
+      exit(-1);
     }
 
-    energy = pFF->Energy(false);
+    double energy = pFF->Energy(false);
     if (!isfinite(energy)) {
       cerr << " Title: " << mol.GetTitle() << endl;
       FOR_ATOMS_OF_MOL(atom, mol) {
@@ -145,9 +137,9 @@ int main(int argc,char **argv)
       }
     }
 
-  } // end for loop
+  }  // end for loop
 
-  return(0);
+  return 0;
 }
 
 /* obenergy man page*/
