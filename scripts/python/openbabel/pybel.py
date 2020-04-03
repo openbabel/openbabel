@@ -51,7 +51,7 @@ else:
     from . import openbabel as ob
     _obfuncs = _obconsts = ob
     try:
-        import Tkinter as tk
+        from six.moves import tkinter as tk
         from PIL import Image as PIL
         from PIL import ImageTk as piltk
     except ImportError:  # pragma: no cover

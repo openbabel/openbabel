@@ -126,6 +126,7 @@ setup(
     zip_safe=False,
     cmdclass={'build': CustomBuild, 'build_ext': CustomBuildExt, 'install': CustomInstall, 'sdist': CustomSdist},
     packages=['openbabel'],
+    install_requires=[six],
     ext_modules=[obextension],
     classifiers=[
         'Development Status :: 5 - Production/Stable',
