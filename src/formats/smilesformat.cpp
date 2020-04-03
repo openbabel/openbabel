@@ -1761,19 +1761,37 @@ namespace OpenBabel {
             }
             break;
           case '-':
-            _ptr++;
-            if (!isdigit(*_ptr))
-              charge--;
-            while( isdigit(*_ptr) ) // go number by number
-              charge = charge*10 - ((*_ptr++)-'0');
+            if (charge) {
+              obErrorLog.ThrowError(__FUNCTION__, "Charge can only be specified once", obWarning);
+              return false;
+            }
+            while (*++_ptr == '-')
+              charge--; // handle [O--]
+            if (charge == 0) {
+              while (isdigit(*_ptr)) // handle [O-2]
+                charge = charge * 10 - ((*_ptr++) - '0');
+              if (charge == 0) // handle [Cl-]
+                charge = -1;
+            }
+            else
+              charge--; // finish handling [Ca++]
             _ptr--;
             break;
           case '+':
-            _ptr++;
-            if (!isdigit(*_ptr))
-              charge++;
-            while( isdigit(*_ptr) ) // go number by number
-              charge = charge*10 + ((*_ptr++)-'0');
+            if (charge) {
+              obErrorLog.ThrowError(__FUNCTION__, "Charge can only be specified once", obWarning);
+              return false;
+            }
+            while (*++_ptr == '+')
+              charge++; // handle [Ca++]
+            if (charge == 0) {
+              while (isdigit(*_ptr)) // handle [Ca+2]
+                charge = charge * 10 + ((*_ptr++) - '0');
+              if (charge == 0) // handle [Na+]
+                charge = 1;
+            }
+            else
+              charge++; // finish handling [Ca++]
             _ptr--;
             break;
           case 'H':
