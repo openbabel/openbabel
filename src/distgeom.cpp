@@ -30,6 +30,7 @@ GNU General Public License for more details.
 #include <openbabel/generic.h>
 #include "rand.h"
 #include <LBFGS.h>
+#include "stereo/gen3dstereohelper.h"
 
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
@@ -102,7 +103,9 @@ namespace OpenBabel {
     }
 
     Eigen::MatrixXf bounds, preMet;
-    bool debug; double maxBoxSize; };
+    bool debug; double maxBoxSize;
+    OBGen3DStereoHelper stereoHelper;
+  };
 
 
   OBDistanceGeometry::OBDistanceGeometry(): _d(NULL) {}
@@ -133,13 +136,12 @@ namespace OpenBabel {
     dim = 4;
     _mol = mol;
 
-    OBConversion conv;
-    conv.SetOutFormat("can");
-    input_smiles = conv.WriteString(&_mol, true);
+    _d = new DistanceGeometryPrivate(mol.NumAtoms());
+
+    _d->stereoHelper.Setup(&_mol);
 
     _mol.SetDimension(3);
     _vdata = _mol.GetAllData(OBGenericDataType::StereoData);
-    _d = new DistanceGeometryPrivate(mol.NumAtoms());
 
     SetUpperBounds();
     // Do we use the current geometry for default 1-2 and 1-3 bounds?
@@ -180,15 +182,18 @@ namespace OpenBabel {
         OBTetrahedralStereo::Config config = ts->GetConfig();
         vector<unsigned long> nbrs;
 
-        nbrs.push_back(_mol.GetAtomById(config.from)->GetIdx()-1);
-        for(size_t i=0; i<config.refs.size(); i++) {
-          nbrs.push_back(_mol.GetAtomById(config.refs[i])->GetIdx()-1);
-        }
-
-        // This is required to avoid segfault (why?)
         unsigned long centerIdx = _mol.GetAtomById(config.center)->GetIdx()-1;
-        for(size_t i=0; i<nbrs.size(); i++) {
-          if (nbrs[i] > _mol.NumAtoms()) nbrs[i] = centerIdx;
+
+        if (config.from == OBStereo::ImplicitRef)
+          nbrs.push_back(centerIdx);
+        else
+          nbrs.push_back(_mol.GetAtomById(config.from)->GetIdx()-1);
+
+        for(size_t i=0; i<config.refs.size(); i++) {
+          if (config.refs[i] == OBStereo::ImplicitRef)
+            nbrs.push_back(centerIdx);
+          else
+            nbrs.push_back(_mol.GetAtomById(config.refs[i])->GetIdx()-1);
         }
 
         if(config.winding == OBStereo::Clockwise) {
@@ -287,7 +292,15 @@ namespace OpenBabel {
 
   inline double Calculate13Angle(double a, double b, double c)
   {
-    return acos((SQUARE(a) + SQUARE(b) - SQUARE(c)) / (2.0*a*b));
+    double cosine = (SQUARE(a) + SQUARE(b) - SQUARE(c)) / (2.0*a*b);
+
+    // Handle cases where cosine is outside [-1, 1] range.
+    if (cosine > 1.0)
+      return 0.0;
+    if (cosine < -1.0)
+      return M_PI;
+
+    return acos(cosine);
   }
 
   // When atoms i and j are in a 1-3 relationship, the distance
@@ -911,12 +924,16 @@ namespace OpenBabel {
 
   bool OBDistanceGeometry::CheckStereoConstraints()
   {
+    return _d->stereoHelper.Check(&_mol);
+
+    /*
     // Check stereo by canonical SMILES
     StereoFrom3D(&_mol, true);
     OBConversion conv;
     conv.SetOutFormat("can");
     std::string predicted_smiles = conv.WriteString(&_mol, true);
     return input_smiles == predicted_smiles;
+    */
 
     // Check all stereo constraints
     // First, gather the known, specified stereochemistry
