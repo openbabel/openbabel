@@ -48,7 +48,9 @@ void usage();
 void help();
 
 // There isn't a great way to do this -- we need to save argv[0] for usage()
-static char *program_name;
+namespace {
+char *program_name;
+}
 
 int main(int argc,char *argv[])
 {
