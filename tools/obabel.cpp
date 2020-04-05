@@ -67,7 +67,6 @@ int main(int argc,char *argv[])
   bool SplitOrBatch=false;
 
   char *oext = nullptr;
-  char *iext = nullptr;
 
   //Save name of program without its path (and .exe)
   string pn{argv[0]};
@@ -84,8 +83,7 @@ int main(int argc,char *argv[])
     program_name=argv[0]+pos+1;
 
   const char* p;
-  int arg;
-  for (arg = 1; arg < argc; ++arg)
+  for (int arg = 1; arg < argc; ++arg)
     {
       if (argv[arg])
         {
@@ -104,9 +102,10 @@ int main(int argc,char *argv[])
                   }
 
                 case 'i':
+                  {
                   //Parameter is the input format which overrides any file extensions
                   gotInType = true;
-                  iext = argv[arg] + 2;
+                  char *iext = argv[arg] + 2;
                   if(!*iext)
                     iext = argv[++arg]; //space left after -i: use next argument
 
@@ -125,6 +124,7 @@ int main(int argc,char *argv[])
                       return 1;
                     }
                   break;
+                  }
 
                 case 'o':
                   //Parameter is the output format which overrides any file extension
