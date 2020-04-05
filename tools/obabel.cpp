@@ -85,10 +85,14 @@ int main(int argc,char *argv[])
   const char* p;
   for (int arg = 1; arg < argc; ++arg)
     {
-      if (argv[arg])
-        {
-          if (argv[arg][0] == '-')
+      if (!argv[arg])
+        continue;
+          if (argv[arg][0] != '-')
             {
+              FileList.push_back(argv[arg]);
+              continue;
+            }
+
               char opchar[2]="?";
               opchar[0]=argv[arg][1];
               switch (opchar[0])
@@ -116,7 +120,9 @@ int main(int argc,char *argv[])
                       pInFormat = Conv.FormatFromMIME(iext);
                     }
                   else
+                    {
                       pInFormat = Conv.FindFormat(iext);
+                    }
                   if (pInFormat == nullptr)
                     {
                       cerr << program_name << ": cannot read input format!" << endl;
@@ -140,7 +146,9 @@ int main(int argc,char *argv[])
                       pOutFormat = Conv.FormatFromMIME(oext);
                     }
                   else
+                    {
                     pOutFormat = Conv.FindFormat(oext);
+                    }
 
                   if (pOutFormat == nullptr)
                     {
@@ -202,7 +210,9 @@ int main(int argc,char *argv[])
                                 cout << "Specification at: " << pFormat->SpecificationURL() << endl;
                             }
                           else
+                            {
                             cout << "Format type: " << argv[arg]+2 << " was not recognized" <<endl;
+                            }
                         }
                       else
                         {
@@ -210,7 +220,9 @@ int main(int argc,char *argv[])
                         }
                     }
                   else
+                    {
                     help();
+                    }
                   return 0;
 
                 case '-': //long option --name text
@@ -246,8 +258,10 @@ int main(int argc,char *argv[])
                               }
                           }
                         else
+                          {
                           // Is a normal long option name, e.g --addtotitle
                           Conv.AddOption(nam,OBConversion::GENOPTIONS,txt.c_str());
+                          }
                       }
                   }
                   break;
@@ -286,10 +300,6 @@ int main(int argc,char *argv[])
                   DoOption(p,Conv,OBConversion::GENOPTIONS,arg,argc,argv);
                   break;
                 }
-            }
-          else //filenames
-              FileList.push_back(argv[arg]);
-        }
     }
 
 #if defined(_WIN32) && defined(USING_DYNAMIC_LIBS)
@@ -305,15 +315,12 @@ int main(int argc,char *argv[])
   }
 #endif
 
-  if (!gotInType)
+  if (!gotInType && FileList.empty())
     {
-      if(FileList.empty())
-        {
           cerr << "No input file or format spec or possibly a misplaced option.\n"
             "Most options must come after the input files. (-i -o -O -m can be anywhwere.)\n" <<endl;
           usage();
           return 1;
-        }
     }
 
   if (!gotOutType)
