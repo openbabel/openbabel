@@ -31,7 +31,6 @@ GNU General Public License for more details.
 #if HAVE_CONIO_H
     #include <conio.h>
 #endif
-#include <cstdlib> // for exit() on Linux
 
 #if !HAVE_STRNCASECMP
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
@@ -99,7 +98,7 @@ int main(int argc,char *argv[])
                   {
                     cout << "Open Babel " << BABEL_VERSION << " -- "
                          << __DATE__ << " -- " << __TIME__ << endl;
-                    exit(0);
+                    return 0;
                   }
 
                 case 'i':
@@ -121,7 +120,7 @@ int main(int argc,char *argv[])
                     {
                       cerr << program_name << ": cannot read input format!" << endl;
                       usage();
-                      exit(1);
+                      return 1;
                     }
                   break;
 
@@ -145,7 +144,7 @@ int main(int argc,char *argv[])
                     {
                       cerr << program_name << ": cannot write output format!" << endl;
                       usage();
-                      exit(1);
+                      return 1;
                     }
                   break;
 
@@ -312,7 +311,7 @@ int main(int argc,char *argv[])
           cerr << "No input file or format spec or possibly a misplaced option.\n"
             "Most options must come after the input files. (-i -o -O -m can be anywhwere.)\n" <<endl;
           usage();
-          exit(1);
+          return 1;
         }
     }
 
@@ -325,7 +324,7 @@ int main(int argc,char *argv[])
           cerr << "Missing or unknown output file or format spec or possibly a misplaced option.\n"
             "Options, other than -i -o -O -m, must come after the input files.\n" <<endl;
           usage();
-          exit(1);
+          return 1;
         }
     }
 
@@ -333,13 +332,13 @@ int main(int argc,char *argv[])
     {
       cerr << "Invalid input format" << endl;
       usage();
-      exit(1);
+      return 1;
     }
     if(!Conv.SetOutFormat(pOutFormat, outGzip))
     {
       cerr << "Invalid output format" << endl;
       usage();
-      exit(1);
+      return 1;
     }
 
   if(SplitOrBatch)
