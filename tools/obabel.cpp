@@ -296,13 +296,12 @@ int main(int argc,char *argv[])
   //Expand wildcards in input filenames and add to FileList
   vector<string> tempFileList{FileList};
   FileList.clear();
-  vector<string>::iterator itr;
-  for(itr=tempFileList.begin();itr!=tempFileList.end();++itr)
+  for(const auto& f : tempFileList)
   {
-    if((*itr)[0]=='-')
-      FileList.push_back(*itr);
+    if(f[0]=='-')
+      FileList.push_back(f);
     else
-      DLHandler::findFiles (FileList, *itr);
+      DLHandler::findFiles (FileList, f);
   }
 #endif
 
