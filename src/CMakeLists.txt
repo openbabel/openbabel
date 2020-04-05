@@ -106,6 +106,7 @@ set(stereo_srcs
   stereo/tetrahedral.cpp
   stereo/perception.cpp
   stereo/facade.cpp
+  stereo/gen3dstereohelper.cpp
 )
 
 set(openbabel_srcs
