@@ -2303,7 +2303,7 @@ namespace OpenBabel {
         config.shape = OBStereo::ShapeZ;
 
         if (std::abs(tor12) < 90.0 || std::abs(tor13) > 90.0) {
-          obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obWarning);
+          obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obInfo);
           config.specified = false;
         }
       } else if (std::abs(tor02) > 90.0 && std::abs(tor03) < 90.0) {
@@ -2315,11 +2315,11 @@ namespace OpenBabel {
         config.shape = OBStereo::ShapeU;
 
         if (std::abs(tor12) > 90.0 || std::abs(tor13) < 90.0) {
-          obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obWarning);
+          obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obInfo);
           config.specified = false;
         }
       } else {
-        obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obWarning);
+        obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obInfo);
         config.shape = OBStereo::ShapeU;
         config.specified = false;
       }
