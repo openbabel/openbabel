@@ -403,6 +403,10 @@ namespace OpenBabel {
        */
       unsigned int NumTetrahedralStereo();
       /**
+       * Get all the OBTetrahedralStereo objects.
+       */
+      std::vector<OBTetrahedralStereo*> GetAllTetrahedralStereo();
+      /**
        * Check if atom with @p id is a tetrahedral center.
        * @return True if the atom with @p id has tetrahedral stereochemistry.
        */
@@ -422,6 +426,10 @@ namespace OpenBabel {
        */
       unsigned int NumCisTransStereo();
       /**
+       * Get all the OBCisTransStereo objects.
+       */
+      std::vector<OBCisTransStereo*> GetAllCisTransStereo();
+      /**
        * Check if bond with @p id is a stereogenic cis/trans double bond.
        * @return True if the bond with @p id has cis/trans stereochemistry.
        */
@@ -440,6 +448,10 @@ namespace OpenBabel {
        * Get the number of square-planar stereocenters.
        */
       unsigned int NumSquarePlanarStereo();
+      /**
+       * Get all the OBSquarePlanarStereo objects.
+       */
+      std::vector<OBSquarePlanarStereo*> GetAllSquarePlanarStereo();
       /**
        * Check if atom with @p id is a stereogenic square-planar atom.
        * @return True if the atom with @p id has square-planar stereochemistry.
