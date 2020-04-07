@@ -51,7 +51,10 @@ else:
     from . import openbabel as ob
     _obfuncs = _obconsts = ob
     try:
-        import Tkinter as tk
+        if sys.version_info[0] >= 3:
+            import tkinter as tk
+        else:
+            import Tkinter as tk
         from PIL import Image as PIL
         from PIL import ImageTk as piltk
     except ImportError:  # pragma: no cover
