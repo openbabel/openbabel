@@ -517,8 +517,8 @@ namespace OpenBabel
             bondB = &*bitB;
           }
         }
-        if(otherOxygenOrSulfur->GetFormalCharge() != 0) continue; //formal charge already set on one
         if (!otherOxygenOrSulfur) continue;
+        if(otherOxygenOrSulfur->GetFormalCharge() != 0) continue; //formal charge already set on one
 
         // Now set as C(=O)O
         bondA->SetAromatic(false);
