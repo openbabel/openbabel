@@ -4754,7 +4754,7 @@ namespace OpenBabel {
     //     rated. This array is used for cyclic conditions definition (last bond in
     //     the cycle must be created between already-defined query atoms-no genera-
     //     tion).
-    //TEST-on output contains TRUE, if assignment was successfull, FALSE otherwise
+    //TEST-on output contains TRUE, if assignment was successful, FALSE otherwise
     //TEST1-on output contains TRUE if all bonds, connected to last assigned atom
     //      in structure will be tested, FALSE otherwise. If TEST1=TRUE and TEST=
     //      FALSE it means, that last atom in structure had been unproperly assigned

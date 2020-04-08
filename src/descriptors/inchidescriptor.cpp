@@ -87,7 +87,7 @@ bool InChIFilter::Compare(OBBase* pOb, istream& optionText, bool noEval, std::st
     ret = inchi.compare(inchipos+1, len, InchiFilterString, filterpos, len)==0;
   }
   else
-    // compare upto length of the provided filter string,
+    // compare up to length of the provided filter string,
     // so can match ignoring stereo by providing only the first part of the key.
     ret = (inchi.compare(0,InchiFilterString.size(),InchiFilterString)==0);
 

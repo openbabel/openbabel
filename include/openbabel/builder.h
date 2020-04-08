@@ -103,7 +103,7 @@ namespace OpenBabel
        *  \param a Index for atom in fragment that should not be rotated.
        *  \param b Index for atom in fragment that should be rotated.
        *  \param bondOrder Bond order of the new bond bewtween a and b.
-       *  \returns true if successfull or fails when failed (most likely cause
+       *  \returns true if successful or fails when failed (most likely cause
        *  for failing: a and b are in the same fragment, they are connected)
        */
       static bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);
