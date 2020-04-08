@@ -446,7 +446,7 @@ namespace OpenBabel {
       std::vector<int> niche_map;                     //!< Procide the sharing niche index, given the key inddex
       
       void *d; // Opaque pointer - currently for storing OBRandom* which may be removed in future
-      bool use_sharing;		//!< Wether to use sharing or not.
+      bool use_sharing;		//!< Whether to use sharing or not.
       double alpha_share;	//!< The alpha parameter in sharing function
       double sigma_share;		//!< The sigma parameter in sharing function
       int nb_niches;		//!< The number of dynamic niches to be found
@@ -479,7 +479,7 @@ namespace OpenBabel {
    * Previous OpenBabel releases contained only methods for finding stable (low
    * energy) conformers by using the force fields. The 2.3 release introduces a new
    * flexible class (OBConformerSearch) implementing a genetic algorithm. The scoring
-   * or ranking of conformers is done by a seperate class derived from the abstract
+   * or ranking of conformers is done by a separate class derived from the abstract
    * OBConformerScore class. Reimplementing this class allows for all sorts of scoring
    * functions (e.g. RMSD, torson, energy, ... based).
    *

@@ -180,7 +180,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads coordinates from input stream (ifs) and
   writes it into supplied OBMol object (molecule).
-  Input stream must be set to begining of coordinates
+  Input stream must be set to beginning of coordinates
   table in nwo file. (Line after "Output coordinates...")
   Stream will be set at next line after geometry table.
   If one of input arguments is NULL method returns without
@@ -254,7 +254,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads charge, dipole and quadrupole moment from input stream (ifs)
   and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of Multipole moment
+  Input stream must be set to beginning of Multipole moment
   section in nwo file. (Line after "Multipole analysis of the density")
   Stream will be set to the end of multipole moment section.
   */
@@ -330,7 +330,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads UV Spectra from input stream (ifs)
   and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of TDDFT
+  Input stream must be set to beginning of TDDFT
   calculation in nwo file. (Line after "NWChem TDDFT Module")
   Stream will be set to the end of calculation.
   */
@@ -383,7 +383,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads partial charges from input stream (ifs)
   and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of charges
+  Input stream must be set to beginning of charges
   table in nwo file. (Line after "Mulliken analysis of the total density")
   Stream will be set at next line after charges table.
   If reading charges failed or "molecule" contains
@@ -455,7 +455,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads orbital information from input stream (ifs)
   and writes them to supplied OBMol object (molecule).
-  Input stream must be set to begining of orbital data
+  Input stream must be set to beginning of orbital data
   section in nwo file. (Line after "... Molecular Orbital Analysis")
   Stream will be set at next line after end of orbital section.
   */
@@ -524,7 +524,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads IRC steps from input stream (ifs)
   and writes it to supplied OBMol object (molecule).
-  Input stream must be set to begining of Minimal Energy
+  Input stream must be set to beginning of Minimal Energy
   Path IRC calculation in nwo file.
   (Line after "Gonzalez & Schlegel IRC Optimization")
   Method wont work if "molecule" already contains data
@@ -583,7 +583,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads optimization steps from input stream (ifs)
   and writes it to supplied OBMol object (molecule).
-  Input stream must be set to begining of geometry optimization
+  Input stream must be set to beginning of geometry optimization
   calculation in nwo file. (Line after "NWChem Geometry Optimization")
   If no geometry data found then "molecule" wont be changed.
   After all stream will be set at the end of calculation.
@@ -636,7 +636,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   If any of arguments are NULL method will quit without changes.
   If molecule does not contain geometry data method quits
   without changes.
-  Input stream must be set to begining of frequency
+  Input stream must be set to beginning of frequency
   calculation in nwo file.
   (Line after "NWChem Nuclear Hessian and Frequency Analysis")
   If vibration data not found then only avalible data will be
@@ -739,7 +739,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads single point energy and all avalible data from input
   stream (ifs) and writes it to supplied OBMol object (molecule)
-  Input stream must be set to begining of energy calculation
+  Input stream must be set to beginning of energy calculation
   in nwo file. (Line after "NWChem <theory> Module")
   If energy not found then "molecule" wont be changed.
   */
@@ -777,7 +777,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads beads and their energies from NEB calculation from
   input stream (ifs) and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of NEB calculation
+  Input stream must be set to beginning of NEB calculation
   in nwo file. (Line after "NWChem Minimum Energy Pathway Program (NEB)")
   If method failed then "molecule" wont be changed.
   */
@@ -881,7 +881,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   /**
   Method reads beads and their energies from ZTS calculation from
   input stream (ifs) and writes them to supplied OBMol object (molecule)
-  Input stream must be set to begining of ZTS calculation
+  Input stream must be set to beginning of ZTS calculation
   in nwo file. (Line after "@ String method.")
   If method failed then "molecule" wont be changed.
   */

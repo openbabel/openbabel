@@ -249,7 +249,7 @@ namespace OpenBabel
     OBFormat* pSmiFormat = OBConversion::FindFormat("SMI");
     if(!pSmiFormat)
       return false;
-    pConv->AddOption("smilesonly",OBConversion::OUTOPTIONS);//supresses title and new line
+    pConv->AddOption("smilesonly",OBConversion::OUTOPTIONS);//suppresses title and new line
     pConv->AddOption("c",OBConversion::OUTOPTIONS);//output atom classes if available
 
     OBMol jReactants;

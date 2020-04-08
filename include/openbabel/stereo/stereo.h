@@ -119,7 +119,7 @@ namespace OpenBabel {
     enum View
     {
       ViewFrom = 1, //!< view from the atom (id parameter) towards the center atom
-      ViewTowards = 2 //!< view from center atom towards the atom (id paramater)
+      ViewTowards = 2 //!< view from center atom towards the atom (id parameter)
     };
 
     /**
@@ -982,8 +982,8 @@ namespace OpenBabel {
    * - C11: 1 true stereocenter OR 1 para stereocenter
    *
    * These criteria are analogous to the rules from the Razinger paper on
-   * stereoisomer generation. Since the existance of stereocenters can depend
-   * on the existance of other stereocenters (in the ligands), the stereocenters
+   * stereoisomer generation. Since the existence of stereocenters can depend
+   * on the existence of other stereocenters (in the ligands), the stereocenters
    * are found by iterating until no new stereocenters are found.
    *
    * @verbatim

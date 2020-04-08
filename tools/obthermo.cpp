@@ -214,7 +214,7 @@ int main(int argc,char **argv)
 *     Set the derivative of the second virial coefficient with temperature for cp calculation\n\n
 *
 * \b --kj:
-*     Use Joules instead of Calories in the ouput\n\n
+*     Use Joules instead of Calories in the output\n\n
 *
 * \par EXAMPLES
 *  - View the possible options:

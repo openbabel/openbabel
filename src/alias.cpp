@@ -50,7 +50,7 @@ namespace OpenBabel
   {
     /*
     Interprets the alias text and adds atom(s) as appropriate to mol.
-    Tries the following in turn until one is sucessful:
+    Tries the following in turn until one is successful:
     1) If starts with number treat as isotope+element e.g. 2H
     2) Looks up alias in superatom.txt e.g. COOH Pr
     3) If of the form Rn stored as a * atom with Atom Class data
