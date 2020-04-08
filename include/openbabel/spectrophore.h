@@ -498,7 +498,7 @@ Spectrophores&tm; are recommended.
          NormalizationOption GetNormalization(void) const;
 
          /** Calling this method starts the calculation of the Spectrophore&tm;.
-         After succesful calculation, the Spectrophore&tm; is returned as a
+         After successful calculation, the Spectrophore&tm; is returned as a
          standard vector of 48 doubles. The 48 doubles are organised into 4 sets
          of 12 doubles each:-
          - numbers 01-11: Spectrophore&tm; values calculated from the atomic partial charges;

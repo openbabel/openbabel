@@ -1695,7 +1695,7 @@ namespace OpenBabel
         success = false; // uncorrected bond
       }
 
-      // Reperceive non-ring TetrahedralStereos if an inversion occured
+      // Reperceive non-ring TetrahedralStereos if an inversion occurred
       if (inversion) {
         sgunits.clear();
         for (origth = nonringtetra.begin(); origth != nonringtetra.end(); ++origth)

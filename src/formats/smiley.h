@@ -2462,7 +2462,7 @@ namespace Smiley {
           if (m_str[m_pos] == '.') {
             if (m_index == 0)
               throw Exception(Exception::SyntaxError, LeadingDot,
-                  "Found dot '.' at begining of pattern", 0, 1);
+                  "Found dot '.' at beginning of pattern", 0, 1);
             if (m_pos + 1 >= m_str.size())
               throw Exception(Exception::SyntaxError, TrailingDot,
                   "Found dor '.' at ending of pattern", m_pos - 1, 1);

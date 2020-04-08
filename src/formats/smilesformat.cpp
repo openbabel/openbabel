@@ -308,7 +308,7 @@ namespace OpenBabel {
     // stereochimistry
     bool chiralWatch; // set when a tetrahedral atom is read
     map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
-    map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occured in smiles
+    map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occurred in smiles
     map<unsigned int, char> _chiralLonePair; // for atoms with potential chiral lone pairs, remember when the l.p. was encountered
     bool squarePlanarWatch; // set when a square planar atom is read
     map<OBAtom*, OBSquarePlanarStereo::Config*> _squarePlanarMap;
@@ -3205,7 +3205,7 @@ namespace OpenBabel {
    *       the form of a vector of digit/OBBond* pair.  Some of the digits may
    *       be for newly-opened rings (the matching digit occurs later in the
    *       SMILES string), and some may be for closing rings (the matching
-   *       digit occured earlier in the string).
+   *       digit occurred earlier in the string).
    *
    *       Canonicalization requires that atoms with more than one digit
    *       have the digits assigned in a canonical fashion.  For example,
@@ -3867,7 +3867,7 @@ namespace OpenBabel {
         visited |= fragments.back();
       }
 
-      // Determine symmetry classes for each disconnected fragment seperatly
+      // Determine symmetry classes for each disconnected fragment separatly
       symmetry_classes.resize(mol.NumAtoms());
       for (std::size_t i = 0; i < fragments.size(); ++i) {
         OBGraphSym gs(&mol, &(fragments[i]));

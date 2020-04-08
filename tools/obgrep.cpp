@@ -222,7 +222,7 @@ int main(int argc,char **argv)
 
       pattern_matched = sp.Match(mol);
 
-      // the number of times the match occured may matter
+      // the number of times the match occurred may matter
       if ( ntimes )
         { // ntimes is a positive integer of requested matches
           // Here, a match mean a unique match (same set of atoms)

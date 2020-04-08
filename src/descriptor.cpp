@@ -516,7 +516,7 @@ void OBDescriptor::DeleteProperties(OBBase* pOb, const string& DescrList)
 bool OBDescriptor::Display(std::string&txt, const char* param, const char* ID)
 {
   //Use the base class version except when the parameter is a descriptor ID.
-  //For a paramater which is the matching descriptor set verbose.
+  //For a parameter which is the matching descriptor set verbose.
   //No display for other descriptors.
   //Allows babel descriptors HBA1
   if(param  && FindType(param))

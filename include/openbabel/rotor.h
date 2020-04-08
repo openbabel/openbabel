@@ -532,7 +532,7 @@ namespace OpenBabel
       _fixedatoms.Clear();
     }
     /**
-     * Intialize the private OBRotorRules database from a specific file.
+     * Initialize the private OBRotorRules database from a specific file.
      */
     void Init(std::string &fname)
     {

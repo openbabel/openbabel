@@ -491,7 +491,7 @@ namespace OpenBabel
       }
     }
 
-    // Kekulization is neccessary if an aromatic bond is present
+    // Kekulization is necessary if an aromatic bond is present
     if (needs_kekulization) {
       // "de-aromatize" carboxylates and (di)thiocarboxylates
       // The typical case (in our test suite anyway) is a carboxylate binding to

@@ -59,8 +59,8 @@ namespace OpenBabel {
       /**
        * Constructor.
        * @param atomicNum The atomic number for this query atom.
-       * @param isInRing Specify wether the query atom is in a ring. Default is false.
-       * @param isAromatic Specify wether the query atom is aromatic. Default is false.
+       * @param isInRing Specify whether the query atom is in a ring. Default is false.
+       * @param isAromatic Specify whether the query atom is aromatic. Default is false.
        */
       OBQueryAtom(int atomicNum = 6, bool isInRing = false, bool isAromatic = false) :
         m_atomicNum(atomicNum), m_isInRing(isInRing), m_isAromatic(isAromatic) {}
