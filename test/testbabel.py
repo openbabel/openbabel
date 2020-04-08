@@ -418,7 +418,7 @@ TORSDOF 5
             self.assertEqual(len(outdata), len(cofdata))
             for outline, cofline in zip(outdata, cofdata):
                 self.assertEqual(outline.rstrip('\r\n'), cofline.rstrip('\r\n'))
-                
+
     def testReadMOL2(self):
         '''This is a regression test for a segfault, but could put
         other mol2 test here'''
