@@ -420,11 +420,11 @@ TORSDOF 5
                 self.assertEqual(outline.rstrip('\r\n'), cofline.rstrip('\r\n'))
                 
     def testReadMOL2(self):
-        '''This is a regression test for a segfault, but could put 
+        '''This is a regression test for a segfault, but could put
         other mol2 test here'''
         mol2file = self.getTestFile('5sun_protein.mol2')
-        output, error = run_exec( "obabel -imol2 %s -osdf" % mol2file)
-        self.assertTrue(len(output) > 0, "Did not generate output")
+        outputerr = run_exec( "obabel -imol2 %s -osdf" % mol2file)
+        self.assertTrue(len(outputerr[0]) > 0, "Did not generate output")
 
 
 if __name__ == "__main__":
