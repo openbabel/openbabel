@@ -55,6 +55,9 @@ def run_exec(*args):
                   stdout=PIPE, stderr=PIPE, bufsize=-1)
         stdout, stderr = p.communicate()
 
+    if p.returncode and len(stderr) == 0:
+        #should never exit with an error without an error message
+        raise CalledProcessError(p.returncode,commandline,stdout.decode())
     return stdout.decode(), stderr.decode()
 
 def executable(name):
@@ -112,6 +115,9 @@ class TestOBabel(BaseTest):
         """Ensure that this does not segfault (PR#1818)"""
         self.canFindExecutable("obabel")
         output, error = run_exec("obabel -i")
+        self.assertTrue(len(output) > 1, "Did not generate output")
+        self.assertTrue(len(error) > 1, "Did not generate error message")
+        
 
     def testSMItoInChI(self):
         self.canFindExecutable("obabel")
@@ -412,6 +418,14 @@ TORSDOF 5
             self.assertEqual(len(outdata), len(cofdata))
             for outline, cofline in zip(outdata, cofdata):
                 self.assertEqual(outline.rstrip('\r\n'), cofline.rstrip('\r\n'))
+
+    def testReadMOL2(self):
+        '''This is a regression test for a segfault, but could put
+        other mol2 test here'''
+        mol2file = self.getTestFile('5sun_protein.mol2')
+        outputerr = run_exec( "obabel -imol2 %s -osdf" % mol2file)
+        self.assertTrue(len(outputerr[0]) > 0, "Did not generate output")
+
 
 if __name__ == "__main__":
     unittest.main()
