@@ -3867,7 +3867,7 @@ namespace OpenBabel {
         visited |= fragments.back();
       }
 
-      // Determine symmetry classes for each disconnected fragment separatly
+      // Determine symmetry classes for each disconnected fragment separately
       symmetry_classes.resize(mol.NumAtoms());
       for (std::size_t i = 0; i < fragments.size(); ++i) {
         OBGraphSym gs(&mol, &(fragments[i]));
