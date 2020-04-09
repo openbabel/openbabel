@@ -17,17 +17,6 @@ jobs:
       matrix:
         config:
         - {
-            name: "Windows Latest MSVC", artifact: "Windows-MSVC.tar.xz",
-            os: windows-latest,
-            cc: "cl", cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
-          }
-        - {
-            name: "Windows Latest MinGW", artifact: "Windows-MinGW.tar.xz",
-            os: windows-latest,
-            cc: "gcc", cxx: "g++"
-          }
-        - {
             name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++"
@@ -40,6 +29,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
+
+    - name: Install dependencies
 
     - name: Download Ninja and CMake
       id: cmake_and_ninja
@@ -54,6 +45,10 @@ jobs:
           set(ninja_suffix "win.zip")
           set(cmake_suffix "win64-x64.zip")
           set(cmake_dir "cmake-${cmake_version}-win64-x64/bin")
+
+          set(msvc_deps_url "https://github.com/openbabel/msvc-dependencies/archive/master.zip")
+          file(DOWNLOAD "${msvc_deps}" ./msvc_deps.zip SHOW_PROGRESS)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./msvc_deps.zip)
         elseif ("${{ runner.os }}" STREQUAL "Linux")
           set(ninja_suffix "linux.zip")
           set(cmake_suffix "Linux-x86_64.tar.gz")
@@ -222,4 +217,3 @@ jobs:
       with:
         path: ./${{ matrix.config.artifact }}
         name: ${{ matrix.config.artifact }}
-
