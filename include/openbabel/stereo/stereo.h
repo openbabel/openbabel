@@ -1137,7 +1137,7 @@ namespace OpenBabel {
    * For many file formats no additional code is needed. For example, if a 3D format
    * doesn't require stereo parity flags, writing the coordinates is enough. For 2D
    * file formats it will often suffice to write the coordinates and bond properties.
-   * If parity flags are needed, the OBStereoFacade class can be used to retreive the
+   * If parity flags are needed, the OBStereoFacade class can be used to retrieve the
    * objects for all types of stereochemistry supported by the file format.
    *
    *
