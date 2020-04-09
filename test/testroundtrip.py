@@ -221,6 +221,9 @@ class TestSuite(unittest.TestCase):
 
 
 if __name__ == "__main__":
+  if ob is None:
+    sys.exit()
+
   ob.obErrorLog.SetOutputLevel(ob.obError)  #ignore warnings
   if len(sys.argv) > 1:
     ret = roundtripFile(sys.argv[1])
