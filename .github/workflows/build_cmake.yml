@@ -3,10 +3,7 @@ name: CMake Build Matrix
 on: [push, pull_request]
 
 env:
-  CMAKE_VERSION: 3.16.2
-  NINJA_VERSION: 1.9.0
   BUILD_TYPE: Release
-  CCACHE_VERSION: 3.7.7
 
 jobs:
   build:
@@ -31,6 +28,7 @@ jobs:
             os: windows-latest,
             build_type: "Release", cc: "cl", cxx: "cl",
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+            cmake_flags: "-DLIBXML2_LIBRARIES="%DEPS%\libs-common\i386\libxml2.lib" -DCAIRO_INCLUDE_DIRS="%DEPS%\include\cairo" -DCAIRO_LIBRARIES="%DEPS%\libs-common\i386\cairo.lib" -DLIBXML2_INCLUDE_DIR=. -DZLIB_LIBRARY="%DEPS%\libs-common\i386\zlib1.lib" -DZLIB_INCLUDE_DIR=. -DINCHI_LIBRARY="%DEPS%\libs-common\i386\libinchi.lib" -DINCHI_INCLUDE_DIR=. -DXDR_INCLUDE_DIR="%DEPS%\include" -DXDR_LIBRARY="%DEPS%\libs-common\i386\xdr.lib"  -DJSON_LIBRARY="%DEPS%\libs-vs12\i386\jsoncpp.lib"  -DOPENBABEL_USE_SYSTEM_INCHI=TRUE -DwxWidgets_LIB_DIR="%DEPS%\wx\lib\vc120_dll" -DEIGEN3_INCLUDE_DIR="%DEPS%\include""
           }
 
     steps:
@@ -40,8 +38,10 @@ jobs:
       run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
       if: runner.os == 'Linux'
     - name: Install Dependencies (Windows)
-      run: choco install ninja
-      if: runner.os == 'windows-latest'
+      run: |
+          choco install ninja
+          echo "::set-env name=DEPS::msvc-dependencies-master"
+      if: runner.os == 'Windows'
     - name: Install Dependencies (macOS)
       run: brew install ninja swig eigen boost
       if: runner.os == 'macOS'
@@ -60,7 +60,7 @@ jobs:
       run: |
         mkdir "${{ runner.workspace }}/build"
         cd "${{ runner.workspace }}/build"
-        cmake $GITHUB_WORKSPACE -GNinja
+        cmake $GITHUB_WORKSPACE -GNinja ${{matrix.cmake_flags}}
       shell: bash
 
     - name: Build
@@ -68,23 +68,8 @@ jobs:
       working-directory: ${{ runner.workspace }}/build
 
     - name: Test
-      shell: cmake -P {0}
       working-directory: ${{ runner.workspace }}/build
-      run: |
-        include(ProcessorCount)
-        ProcessorCount(N)
-
-        set(ENV{CTEST_OUTPUT_ON_FAILURE} "ON")
-
-        execute_process(
-          COMMAND ${{ steps.cmake_and_ninja.outputs.cmake_dir }}/ctest -j ${N}
-          WORKING_DIRECTORY build
-          RESULT_VARIABLE result
-        )
-        if (NOT result EQUAL 0)
-          message(FATAL_ERROR "Running tests failed!")
-        endif()
-
+      run: ctest --output-on-failure
 
     - name: Install Strip
       run: ${{ steps.cmake_and_ninja.outputs.cmake_dir }}/cmake --install build --prefix instdir --strip
