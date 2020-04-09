@@ -35,16 +35,16 @@ jobs:
 
     steps:
     - name: Check variables
-      run: echo ${{matrix.os}} ${{matrix.cc}}
+      run: echo "${{runner.os}} ${{matrix.os}} ${{matrix.cc}}"
     - name: Install Dependencies (Linux)
       run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
-      if: matrix.os == 'ubuntu-latest'
+      if: runner.os == 'Linux'
     - name: Install Dependencies (Windows)
       run: choco install ninja
-      if: matrix.os == 'windows-latest'
+      if: runner.os == 'windows-latest'
     - name: Install Dependencies (macOS)
       run: brew install ninja swig eigen boost
-      if: matrix.os == 'macos-latest'
+      if: runner.os == 'macOS'
 
     - uses: actions/checkout@v1
 
