@@ -20,12 +20,6 @@ jobs:
             cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
           }
         - {
-            name: "Ubuntu Latest GCC STATIC",
-            os: ubuntu-latest,
-            cc: "gcc", cxx: "g++",
-            cmake_flags: "-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
-          }
-        - {
             name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++",
@@ -86,7 +80,9 @@ jobs:
       working-directory: ${{ runner.workspace }}/instdir
 
     - name: Upload
+      if: matrix.config.artifact != 0
       uses: actions/upload-artifact@v1
+      working-directory: ${{ runner.workspace }}
       with:
         path: ./${{ matrix.config.artifact }}
         name: ${{ matrix.config.artifact }}
