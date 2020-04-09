@@ -101,7 +101,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     speed = 5;
 
   bool success = false;
-  unsigned int maxIter = 10;
+  unsigned int maxIter = 25;
   for (unsigned int trial = 0; trial < maxIter; trial++) {
     OBMol molCopy = *pmol;
 
@@ -117,7 +117,8 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     OBDistanceGeometry dg;
     if (useDistGeom) {
       // use the bond lengths and angles if we ran the builder
-      dg.GetGeometry(molCopy, attemptBuild); // ensured to have correct stereo
+      if (!dg.GetGeometry(molCopy, attemptBuild)) // ensured to have correct stereo
+        continue;
       speed = 3;
     }
 #endif

@@ -63,6 +63,7 @@ namespace OpenBabel {
       bounds = Eigen::MatrixXf(static_cast<int>(N), static_cast<int>(N));
       preMet = Eigen::MatrixXf(bounds);
       debug = false;
+      success = false;
     }
     ~DistanceGeometryPrivate()
     { }
@@ -105,6 +106,7 @@ namespace OpenBabel {
     Eigen::MatrixXf bounds, preMet;
     bool debug; double maxBoxSize;
     OBGen3DStereoHelper stereoHelper;
+    bool success;
   };
 
 
@@ -1181,22 +1183,24 @@ namespace OpenBabel {
       cerr << " max box size: " << _d->maxBoxSize << endl;
     }
 
-    bool success = false;
-    unsigned int maxIter = 1 * _mol.NumAtoms();
+    _d->success = false;
+    unsigned int maxIter = 10 * _mol.NumAtoms();
     for (unsigned int trial = 0; trial < maxIter; trial++) {
       generateInitialCoords();
       firstMinimization();
       if (dim == 4) minimizeFourthDimension();
       if (CheckStereoConstraints() && CheckBounds()) {
-        success = true;
+        _d->success = true;
         break;
       }
-      if (_d->debug && !success)
+      if (_d->debug && !_d->success)
         cerr << "Stereo unsatisfied, trying again" << endl;
     }
-    if(!success) {
-      obErrorLog.ThrowError(__FUNCTION__, "Distance Geometry failed.", obWarning);
-    }
+  }
+
+  bool OBDistanceGeometry::WasSuccessful() const
+  {
+    return _d->success;
   }
 
   bool OBDistanceGeometry::CheckBounds()
@@ -1279,7 +1283,7 @@ namespace OpenBabel {
     AddConformer();
     GetConformers(mol);
 
-    return true;
+    return _d->success;
   }
 
   double DistGeomFunc::operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad) {
