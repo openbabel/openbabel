@@ -83,6 +83,5 @@ jobs:
       if: matrix.config.artifact != 0
       uses: actions/upload-artifact@v1
       with:
-        path: ../${{ matrix.config.artifact }}
+        path: ${{ runner.workspace }}/instdir/../${{ matrix.config.artifact }}
         name: ${{ matrix.config.artifact }}
-      working-directory: ${{ runner.workspace }}/instdir
