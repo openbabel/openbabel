@@ -30,8 +30,6 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: Install dependencies
-
     - name: Download Ninja and CMake
       id: cmake_and_ninja
       shell: cmake -P {0}
