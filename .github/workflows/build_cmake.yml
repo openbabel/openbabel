@@ -14,10 +14,21 @@ jobs:
       matrix:
         config:
         - {
-            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            name: "Ubuntu Latest GCC with SWIG",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++",
             cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+          }
+        - {
+            name: "Ubuntu Latest GCC STATIC",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+            cmake_flags: "-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
+          }
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
           }
         - {
             name: "macOS Latest Clang", artifact: "macOS.tar.xz",
@@ -72,12 +83,14 @@ jobs:
       run: ctest --output-on-failure
 
     - name: Install Strip
+      if: matrix.config.artifact != 0
       run: cmake --install build --prefix instdir --strip
       working-directory: ${{ runner.workspace }}
 
     - name: Pack
+      if: matrix.config.artifact != 0
       run: cmake -E tar cJfv ../${{ matrix.config.artifact }} .
-      working-directory: instdir
+      working-directory: ${{ runner.workspace }}/instdir
 
     - name: Upload
       uses: actions/upload-artifact@v1
