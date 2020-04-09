@@ -725,7 +725,7 @@ namespace OpenBabel
       if (pos !=0) return (checkBuffer); // do nothing
 
       while (regexec(&myregex, checkBuffer.c_str(), 1, &pm, REG_EXTENDED) == 0) {
-          checkBuffer.insert(pm.rm_eo-1, " ");  // insert whitespace to seperate the columns
+          checkBuffer.insert(pm.rm_eo-1, " ");  // insert whitespace to separate the columns
       }
       return (checkBuffer);
   }

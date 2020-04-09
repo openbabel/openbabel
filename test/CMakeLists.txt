@@ -23,7 +23,7 @@ set (cpptests
     )
 set (alias_parts 1)
 set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
-set (builder_parts 1 2 3 4 5)
+set (builder_parts 1 2 3 4 5 6)
 set (canonconsistent_parts  1 2 3)
 set (canonfragment_parts 1)
 set (canonstable_parts 1)
@@ -226,7 +226,7 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
   if(PYTHON_EXECUTABLE)
     set(pytests
-        babel sym smartssym fastsearch distgeom unique kekule pdbformat roundtrip RInChI)
+        babel sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
       PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
@@ -249,7 +249,7 @@ endif(NOT MINGW AND NOT CYGWIN)
 if (PYTHON_BINDINGS)
   include(UsePythonTest)
   set(pybindtests
-      bindings _pybel example cdjsonformat pcjsonformat)
+      bindings _pybel example roundtrip cdjsonformat pcjsonformat)
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"

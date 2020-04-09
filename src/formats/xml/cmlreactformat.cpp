@@ -610,7 +610,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       if(reaclistPos!=string::npos)
         mollistPos = s.find("<moleculeList",reaclistPos+1);
       footerPos = s.find("</cml");
-      if(footerPos==string::npos)// cml tag may have been supressed
+      if(footerPos==string::npos)// cml tag may have been suppressed
         footerPos = s.size();
       *_pOut << s.substr(0, reaclistPos)                      //header
             << s.substr(mollistPos, footerPos-mollistPos)    //moleculeList

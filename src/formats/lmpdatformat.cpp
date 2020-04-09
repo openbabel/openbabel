@@ -253,7 +253,7 @@ namespace OpenBabel
     }
 
     //For now, a simple cube may be the best way to go.
-    //It may be necessary to set the boxlenght to enforce
+    //It may be necessary to set the boxlength to enforce
     //a density.
     const char *boxLn = pConv->IsOption("d",OBConversion::OUTOPTIONS);
     double xlo,xhi;

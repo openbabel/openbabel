@@ -86,24 +86,24 @@ namespace OpenBabel
 
       /*! Atoms a and b are part of two fragments that are not connected in mol.
        *  Connect will translate and rotate the fragment that contains b so that
-       *  a and b are seperated by a bond. This bond is also added.
+       *  a and b are separated by a bond. This bond is also added.
        *  \param mol The molecule to be modified
        *  \param a Index for atom in fragment that should not be rotated.
        *  \param b Index for atom in fragment that should be rotated.
        *  \param newpos Direction for new bond between a and b
        *  \param bondOrder Bond order of the new bond between a and b.
-       *  \returns true if succesful or fails when failed (most likely cause
+       *  \returns true if successful or fails when failed (most likely cause
        *  for failing: a and b are in the same fragment, they are connected)
        */
       static bool Connect(OBMol &mol, int a, int b, vector3 &newpos, int bondOrder = 1);
       /*! Atoms a and b are part of two fragments that are not connected in mol.
        *  Connect will translate and rotate the fragment that contains b so that
-       *  a and b are seperated by a bond. This bond is also added.
+       *  a and b are separated by a bond. This bond is also added.
        *  \param mol The molecule to be modified
        *  \param a Index for atom in fragment that should not be rotated.
        *  \param b Index for atom in fragment that should be rotated.
        *  \param bondOrder Bond order of the new bond bewtween a and b.
-       *  \returns true if succesfull or fails when failed (most likely cause
+       *  \returns true if successful or fails when failed (most likely cause
        *  for failing: a and b are in the same fragment, they are connected)
        */
       static bool Connect(OBMol &mol, int a, int b, int bondOrder = 1);

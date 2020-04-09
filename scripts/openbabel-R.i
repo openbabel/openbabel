@@ -74,6 +74,14 @@
 %include "std_string.i"
 %include "std_pair.i"
 %include "cpointer.i"
+%include "std/std_iostream.i"
+
+// fix bug in std_Vector.i
+%apply const std::vector<unsigned int>& { std::vector<unsigned int>& }
+%apply const std::vector<vector<int>>& { std::vector<vector<int>>& }
+
+%apply std::vector<unsigned int> &INOUT {std::vector<unsigned int> &};
+
 
 %pointer_class(std::string,stringp)
 %typemap("rtype")  const std::string & "character"; //add typemap for const references
@@ -101,10 +109,8 @@
        return new std::ofstream(filename);
     }
     const std::string stringFromOstream(const std::ostringstream* os){
-     // return (os->str()).c_str();
       return os->str();
     }
-
 %}
 
 

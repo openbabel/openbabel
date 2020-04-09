@@ -591,7 +591,7 @@ namespace OpenBabel
         }
       }
 
-      // Kekulization is neccessary if an aromatic bond is present
+      // Kekulization is necessary if an aromatic bond is present
       if (needs_kekulization) {
         mol.SetAromaticPerceived();
         // First of all, set the atoms at the ends of the aromatic bonds to also
@@ -1433,7 +1433,7 @@ namespace OpenBabel
             int natoms = ReadUIntField(vs[3].c_str());
             //int nbonds = ReadUIntField(vs[4].c_str());
             //int chiral = ReadUIntField(vs[7].c_str());
-            //number of s groups, number of 3D contraints, chiral flag and regno not yet implemented
+            //number of s groups, number of 3D constraints, chiral flag and regno not yet implemented
             mol.ReserveAtoms(natoms);
 
             ReadV3000Block(ifs,mol,pConv,true);//go for contained blocks

@@ -238,11 +238,12 @@ int main(int argc, char **argv)
 	    {"cross", no_argument, 0, 'x'},
 	    {"separate", no_argument, 0, 's'},
 	    {"out", required_argument, 0, 'o'},
-	    {"help", no_argument, 0, 'h'}
+	    {"help", no_argument, 0, 'h'},
+	    {NULL, 0, NULL, 0}
 	};
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "hfmxso:", long_options, &option_index) ) > 0) {
+	while ((c = getopt_long(argc, argv, "hfmxso:", long_options, &option_index) ) != -1) {
 	  switch(c) {
 	    case 'o':
 	      fileOut = optarg;

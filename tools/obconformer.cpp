@@ -21,84 +21,93 @@ GNU General Public License for more details.
 #define USING_OBDLL
 #endif
 
-#include <cstdlib>
-
 #include <openbabel/babelconfig.h>
+#include <openbabel/forcefield.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
-
+#include <openbabel/obutil.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
-#include <openbabel/obutil.h>
 
-#include <openbabel/forcefield.h>
-
-#include <stdio.h>
-#include <iostream>
 #include <fstream>
+#include <iostream>
 
 using namespace std;
 using namespace OpenBabel;
 
-OBRotorList rl;
+int main(int argc, char* argv[]) {
+  if (argc != 4 && argc != 5) {
+    cout << "Usage: obconformer NSteps GeomSteps <file> [forcefield]" << endl;
+    return (-1);
+  }
 
-int main(int argc,char *argv[])
-{
-  if (argc != 4)
-    {
-      cout << "Usage: obconformer NSteps GeomSteps <file>" << endl;
-      return(-1);
-    }
+  const int weightSteps = atoi(argv[1]);
+  const int geomSteps = atoi(argv[2]);
 
-  int weightSteps, geomSteps;
-  weightSteps = atoi(argv[1]);
-  geomSteps = atoi(argv[2]);
+  ifstream ifs{argv[3]};
+  if (!ifs) {
+    cerr << "Error! Cannot read input file!" << endl;
+    return -1;
+  }
 
-  ifstream ifs(argv[3]);
-  if (!ifs)
-    {
-      cerr << "Error! Cannot read input file!" << endl;
-      return(-1);
-    }
+  OBConversion conv{&ifs, &cout};
+  OBFormat* pFormat = conv.FormatFromExt(argv[3]);
 
-  OBConversion conv(&ifs, &cout);
-  OBFormat* pFormat;
+  if (!pFormat) {
+    cerr << "Error! Cannot read file format!" << endl;
+    return -1;
+  }
 
-  pFormat = conv.FormatFromExt(argv[3]);
-  if ( pFormat == NULL )
-    {
-      cerr << "Error! Cannot read file format!" << endl;
-      return(-1);
-    }
+  if (!conv.SetInAndOutFormats(pFormat, pFormat)) {
+    cerr << "Error! File format isn't loaded" << endl;
+    return -1;
+  }
 
-  // Finally, we can do some work!
-  OBMol mol;
-  if (! conv.SetInAndOutFormats(pFormat, pFormat))
-    {
-      cerr << "Error! File format isn't loaded" << endl;
-      return (-1);
-    }
+  // use this if a user doesn't specify forcefield
+  const string default_forcefield = "MMFF94";
+  // use this if a user doesn't specify forcefield and MMFF94 parameters are not found
+  const string fallback_forcefield = "UFF";
 
-  OBForceField *pFF = OBForceField::FindForceField("MMFF94");
+  const bool is_forcefield_supplied = argc == 5;
+  const string forcefield = is_forcefield_supplied ? argv[4] : default_forcefield;
+  OBForceField* pFF = OBForceField::FindForceField(forcefield);
+  if (!pFF) {
+    cerr << "Error! Cannot find forcefield '" << forcefield << "'" << endl;
+    return -1;
+  }
+
   pFF->SetLogFile(&cerr);
   pFF->SetLogLevel(OBFF_LOGLVL_LOW);
 
-  while(ifs.peek() != EOF && ifs.good())
-    {
-      mol.Clear();
-      conv.Read(&mol);
+  OBMol mol;
+  while (ifs.peek() != EOF && ifs.good()) {
+    mol.Clear();
+    conv.Read(&mol);
 
-      if (pFF->Setup(mol)) {
-        pFF->WeightedRotorSearch(weightSteps, geomSteps);
-        pFF->ConjugateGradients(geomSteps); // final cleanup
-        pFF->UpdateCoordinates(mol);
-        conv.Write(&mol);
+    if (pFF->Setup(mol)) {
+      pFF->WeightedRotorSearch(weightSteps, geomSteps);
+      pFF->ConjugateGradients(geomSteps);  // final cleanup
+      pFF->UpdateCoordinates(mol);
+      conv.Write(&mol);
+    } else {
+      cerr << "Error! Cannot set up force field." << endl;
+      if (is_forcefield_supplied) {
+        return 1;
       }
-      else {
+      pFF = OBForceField::FindForceField(fallback_forcefield);
+      assert(pFF);
+      cerr << "Force field is switched to " << fallback_forcefield << '.' << endl;
+      if (!pFF->Setup(mol)) {
         cerr << "Error! Cannot set up force field." << endl;
         return 1;
       }
-    } // while reading molecules
+      pFF->WeightedRotorSearch(weightSteps, geomSteps);
+      pFF->ConjugateGradients(geomSteps);  // final cleanup
+      pFF->UpdateCoordinates(mol);
+      conv.Write(&mol);
+      pFF = OBForceField::FindForceField(forcefield);  // switch back to MMFF94
+    }
+  }  // while reading molecules
 
-  return(0);
+  return 0;
 }

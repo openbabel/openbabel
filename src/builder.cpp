@@ -79,9 +79,9 @@ namespace OpenBabel
   {
     bool hasAllZeroCoords = true;
     for (std::size_t i = 0; i < coords.size(); ++i) {
-      if (std::abs(coords[i].x()) > 10e-8 ||
-          std::abs(coords[i].y()) > 10e-8 ||
-          std::abs(coords[i].z()) > 10e-8) {
+      if (fabs(coords[i].x()) > 10e-8 ||
+          fabs(coords[i].y()) > 10e-8 ||
+          fabs(coords[i].z()) > 10e-8) {
         hasAllZeroCoords = false;
         break;
       }
@@ -186,9 +186,9 @@ namespace OpenBabel
       tokenize(vs, buffer);
       if (vs.size() == 4) { // XYZ coordinates
         vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
-        if (std::abs(coord.x()) > 10e-8 ||
-            std::abs(coord.y()) > 10e-8 ||
-            std::abs(coord.z()) > 10e-8)
+        if (fabs(coord.x()) > 10e-8 ||
+            fabs(coord.y()) > 10e-8 ||
+            fabs(coord.z()) > 10e-8)
           hasAllZeroCoords = false;
         coords.push_back(coord);
       } else if (vs.size() == 1) { // SMARTS pattern
@@ -368,7 +368,7 @@ namespace OpenBabel
         v1 = v1.normalize();
 
         if (atom->GetHyb() == 2)
-          newbond = v1; 
+          newbond = v1;
         else if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
@@ -1695,7 +1695,7 @@ namespace OpenBabel
         success = false; // uncorrected bond
       }
 
-      // Reperceive non-ring TetrahedralStereos if an inversion occured
+      // Reperceive non-ring TetrahedralStereos if an inversion occurred
       if (inversion) {
         sgunits.clear();
         for (origth = nonringtetra.begin(); origth != nonringtetra.end(); ++origth)

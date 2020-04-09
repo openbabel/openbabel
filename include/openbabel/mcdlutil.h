@@ -26,7 +26,7 @@ GNU General Public License for more details.
   1. All atoms, except explicit hydrogens, are replaced with generic ANY_ATOM (matched with any atom in subgraph isomorphisme search)
   2. All bonds are replaces with generic ANY_BOND, which can be matched with any bond in molecule
   3. All hydrogen are removed, but they are used for search-query and structure atom matching is believed fo be
-     sucessfukk if chemical structure contains more or equal number of hydrogens, than query. Using explicitly-defined hydrogens
+     successful if chemical structure contains more or equal number of hydrogens, than query. Using explicitly-defined hydrogens
 	 on query enables ones to remove substitutors attachment for atom, which are sterically hidden on templates
   if the file will not be found, predefined templates will be used
 */

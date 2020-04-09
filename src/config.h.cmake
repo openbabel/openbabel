@@ -95,13 +95,13 @@
 #endif
 
 #ifdef _MSC_VER
- // Supress warning on deprecated functions
+ // Suppress warning on deprecated functions
  #pragma warning(disable : 4996)
- // Supress warning that compiler is ignoring C++ exception specification
+ // Suppress warning that compiler is ignoring C++ exception specification
  #pragma warning( disable : 4290 )
- // Supress warning on signed/unsigned comparison with < or > (harmless, but maybe should be fixed)
+ // Suppress warning on signed/unsigned comparison with < or > (harmless, but maybe should be fixed)
  #pragma warning( disable : 4018 )
- // Supress warning on forcing int etc. value to bool 'true' or 'false' (performance warning)
+ // Suppress warning on forcing int etc. value to bool 'true' or 'false' (performance warning)
  #pragma warning( disable : 4800 )
  //
  #pragma warning( disable : 4251 )

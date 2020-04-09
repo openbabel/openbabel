@@ -527,7 +527,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     OBMol 	_mol; //!< Molecule to be evaluated or minimized
     bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
     std::string	_parFile; //! < parameter file name
-    bool 	_validSetup; //!< was the last call to Setup succesfull
+    bool 	_validSetup; //!< was the last call to Setup successful
     double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
     // logging variables
     std::ostream* _logos; //!< Output for logfile
@@ -623,13 +623,13 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     virtual bool HasAnalyticalGradients() { return false; }
     /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Keep current constraints.
      *  \param mol The OBMol object that contains the atoms and bonds.
-     *  \return True if succesfull.
+     *  \return True if successful.
      */
     bool Setup(OBMol &mol);
     /*! Setup the forcefield for mol (assigns atom types, charges, etc.). Use new constraints.
      *  \param mol The OBMol object that contains the atoms and bonds.
      *  \param constraints The OBFFConstraints object that contains the constraints.
-     *  \return True if succesfull.
+     *  \return True if successful.
      */
     bool Setup(OBMol &mol, OBFFConstraints &constraints);
     /*! Load the parameters (this function is overloaded by the individual forcefields,
@@ -706,26 +706,26 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
 
     /*! Get coordinates for current conformer and attach OBConformerData with energies, forces, ... to mol.
      *  \param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
-     *  \return True if succesfull.
+     *  \return True if successful.
      */
     bool GetCoordinates(OBMol &mol);
     //! \deprecated Use GetCooordinates instead.
     bool UpdateCoordinates(OBMol &mol) {return GetCoordinates(mol); }
     /*! Get coordinates for all conformers and attach OBConformerData with energies, forces, ... to mol.
      *  \param mol The OBMol object to copy the coordinates to (from OBForceField::_mol).
-     *  \return True if succesfull.
+     *  \return True if successful.
      */
     bool GetConformers(OBMol &mol);
     //! \deprecated Use GetConformers instead.
     bool UpdateConformers(OBMol &mol) { return GetConformers(mol); }
     /*! Set coordinates for current conformer.
      *  \param mol the OBMol object to copy the coordinates from (to OBForceField::_mol).
-     *  \return true if succesfull.
+     *  \return true if successful.
      */
     bool SetCoordinates(OBMol &mol);
     /*! Set coordinates for all conformers.
      *  \param mol The OBMol object to copy the coordinates from (to OBForceField::_mol).
-     *  \return True if succesfull.
+     *  \return True if successful.
      */
     bool SetConformers(OBMol &mol);
     /*! Create a grid with spacing @p step and @p padding. Place a probe atom of type probe at every grid point,
@@ -983,7 +983,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     void PrintVelocities();
     /*! Set the stream for logging (can also be &cout for logging to screen).
      *  \param pos Stream (when pos is 0, std::cout wil be used).
-     *  \return True if succesfull.
+     *  \return True if successful.
      */
     bool SetLogFile(std::ostream *pos);
     /*! Set the log level (OBFF_LOGLVL_NONE, OBFF_LOGLVL_LOW, OBFF_LOGLVL_MEDIUM, OBFF_LOGLVL_HIGH).
