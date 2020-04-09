@@ -37,32 +37,31 @@ jobs:
     - name: Check variables
       run: echo "${{runner.os}} ${{matrix.os}} ${{matrix.cc}}"
     - name: Install Dependencies (Linux)
-      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
       if: runner.os == 'Linux'
+      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
     - name: Install Dependencies (Windows)
+      if: runner.os == 'Windows'
       run: |
           choco install ninja
           echo "::set-env name=DEPS::msvc-dependencies-master"
-      if: runner.os == 'Windows'
-    - name: Install Dependencies (macOS)
-      run: brew install ninja swig eigen boost
-      if: runner.os == 'macOS'
-
-    - uses: actions/checkout@v1
-
     - name: Install MSVC Dependencies
-      if: matrix.os == 'windows-latest'
+      if: runner.os == 'Windows'
       shell: cmake -P {0}
       run: |
           set(msvc_deps_url "https://github.com/openbabel/msvc-dependencies/archive/master.zip")
           file(DOWNLOAD "${msvc_deps}" ./msvc_deps.zip SHOW_PROGRESS)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./msvc_deps.zip)
+    - name: Install Dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install ninja swig eigen boost
+
+    - uses: actions/checkout@v1
 
     - name: Configure
       run: |
         mkdir "${{ runner.workspace }}/build"
         cd "${{ runner.workspace }}/build"
-        cmake $GITHUB_WORKSPACE -GNinja ${{matrix.cmake_flags}}
+        cmake $GITHUB_WORKSPACE -GNinja ${{matrix.config.cmake_flags}}
       shell: bash
 
     - name: Build
@@ -74,12 +73,12 @@ jobs:
       run: ctest --output-on-failure
 
     - name: Install Strip
-      run: ${{ steps.cmake_and_ninja.outputs.cmake_dir }}/cmake --install build --prefix instdir --strip
+      run: cmake --install build --prefix instdir --strip
       working-directory: ${{ runner.workspace }}/build
 
     - name: Pack
+      run: cmake -E tar cJfv ../${{ matrix.config.artifact }} .
       working-directory: instdir
-      run: ${{ steps.cmake_and_ninja.outputs.cmake_dir }}/cmake -E tar cJfv ../${{ matrix.config.artifact }} .
 
     - name: Upload
       uses: actions/upload-artifact@v1
