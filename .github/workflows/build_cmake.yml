@@ -1,0 +1,87 @@
+name: CMake Build Matrix
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Ubuntu Latest GCC SWIG",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+            cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+          }
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+          }
+        - {
+            name: "macOS Latest Clang", artifact: "macOS.tar.xz",
+            os: macos-latest,
+            cc: "clang", cxx: "clang++",
+          }
+
+    steps:
+    - name: Check variables
+      run: echo "${{runner.os}} ${{matrix.config.os}} ${{matrix.config.cc}}"
+    - name: Install Dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
+    - name: Install Dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+          choco install ninja
+          echo "::set-env name=DEPS::msvc-dependencies-master"
+    - name: Install MSVC Dependencies
+      if: runner.os == 'Windows'
+      shell: cmake -P {0}
+      run: |
+          set(msvc_deps_url "https://github.com/openbabel/msvc-dependencies/archive/master.zip")
+          file(DOWNLOAD "${msvc_deps}" ./msvc_deps.zip SHOW_PROGRESS)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./msvc_deps.zip)
+    - name: Install Dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install ninja swig eigen boost
+
+    - uses: actions/checkout@v1
+
+    - name: Configure
+      run: |
+        mkdir "${{ runner.workspace }}/build"
+        cd "${{ runner.workspace }}/build"
+        cmake $GITHUB_WORKSPACE -GNinja ${{matrix.config.cmake_flags}}
+      shell: bash
+
+    - name: Build
+      run: cmake --build .
+      working-directory: ${{ runner.workspace }}/build
+
+    - name: Test
+      working-directory: ${{ runner.workspace }}/build
+      run: ctest --output-on-failure
+
+    - name: Install Strip
+      if: matrix.config.artifact != 0
+      run: cmake --install build --prefix instdir --strip
+      working-directory: ${{ runner.workspace }}
+
+    - name: Pack
+      if: matrix.config.artifact != 0
+      run: cmake -E tar cJfv ../${{ matrix.config.artifact }} .
+      working-directory: ${{ runner.workspace }}/instdir
+
+    - name: Upload
+      if: matrix.config.artifact != 0
+      uses: actions/upload-artifact@v1
+      with:
+        path: ${{ runner.workspace }}/instdir/../${{ matrix.config.artifact }}
+        name: ${{ matrix.config.artifact }}

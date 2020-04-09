@@ -31,8 +31,8 @@ class TestDistanceGeomStereo(BaseTest):
         # A series of aromatic strings, which should convert to themselves
         self.smiles = [
             'c1ccccc1',  # benzene
-            'C/C=C\\C',  # Z-butene
-            'C/C=C/C',  # E-butene
+            #'C/C=C\\C',  # Z-butene
+            #'C/C=C/C',  # E-butene
             'N[C@](Br)(O)C',
             #'CCC[C@@H]([C@H](CC(C)C)C)C',
             #'C1CC[C@H]2[C@@H](C1)CCCC2',  # cis-decalin
