@@ -805,8 +805,6 @@ namespace OpenBabel {
       FOR_BONDS_OF_MOL (bond, mol)
         bondOrders.push_back(bond->GetBondOrder());
 
-      // FIXME: move canLabels inside...
-      std::vector<unsigned int> canonLabels;
       if (canonical) {
         // Set all unassigned bonds to single
         FOR_BONDS_OF_MOL (bond, mol)
@@ -818,6 +816,8 @@ namespace OpenBabel {
         std::vector<unsigned int> symmetryClasses;
         OBGraphSym gs(mol);
         gs.GetSymmetry(symmetryClasses);
+
+        std::vector<unsigned int> canonLabels;
         CanonicalLabels(mol, symmetryClasses, canonLabels);
 
         m_canonAtoms.resize(mol->NumAtoms());
