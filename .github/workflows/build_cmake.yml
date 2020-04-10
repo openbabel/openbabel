@@ -52,7 +52,7 @@ jobs:
       if: runner.os == 'macOS'
       run: brew install ninja swig eigen boost
 
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
 
     - name: Configure
       run: |
