@@ -49,7 +49,7 @@ namespace OpenBabel {
     class EnterExit
     {
       public:
-        EnterExit(const std::string &function, int indent = 0) : m_function(function), m_indent(indent)
+        explicit EnterExit(const std::string &function, int indent = 0) : m_function(function), m_indent(indent)
         {
           std::cout << ::OpenBabel::TautomerImpl::indentation(m_indent) << "Enter " << m_function << "()..." << std::endl;
         }
@@ -735,7 +735,7 @@ namespace OpenBabel {
       FOR_ATOMS_OF_MOL(atm, mol) {
         totH += atm->GetImplicitHCount();
       }
-      printf("%sTotal no. of hydrogens in molecule: %d\n", indentation(indent).c_str(), totH);
+      std::cout << indentation(indent) << "Total no. of hydrogens in molecule: " << totH << std::endl;
     }
 #endif
 
@@ -743,7 +743,7 @@ namespace OpenBabel {
     {
       atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
 #ifdef DEBUG
-      printf("%sDecremented %d (%d) to %d\n", indentation(indent).c_str(), atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
+      std::cout << indentation(indent) << "Decremented " << atom->GetIndex() << " (" << atom->GetAtomicNum() << ") to " << atom->GetImplicitHCount() << std::endl;
       SanityCheckHydrogens(atom, indent);
 #endif
     }
