@@ -2233,7 +2233,7 @@ namespace OpenBabel {
       if (config.refs.size() == 1) {
         config.refs.push_back(OBStereo::ImplicitRef);
         vector3 pos;
-        mol->GetAtomById(config.refs.at(0))->GetNewBondVector(pos, 1.0);
+        begin->GetNewBondVector(pos, 1.0);
         // WARNING: GetNewBondVector code has not yet been checked, since it's part of builder.cpp
         if (uc)
           bondVecs.push_back(uc->MinimumImageCartesian(pos - begin->GetVector()));
@@ -2257,36 +2257,72 @@ namespace OpenBabel {
       if (config.refs.size() == 3) {
         config.refs.push_back(OBStereo::ImplicitRef);
         vector3 pos;
-        mol->GetAtomById(config.refs.at(2))->GetNewBondVector(pos, 1.0);
+        end->GetNewBondVector(pos, 1.0);
         if (uc)
           bondVecs.push_back(uc->MinimumImageCartesian(pos - end_vec));
         else
           bondVecs.push_back(pos - end_vec);
       }
 
-      // 0      3     Get signed distance of 0 and 2 to the plane
-      //  \    /      that goes through the double bond and is at
-      //   C==C       right angles to the stereo bonds.
-      //  /    \      If the two signed distances have the same sign
-      // 1      2     then they are cis; if not, then trans.
+      double tor02, tor03, tor12, tor13;
+      if (uc) {
+        vector3 v0 = begin->GetVector() + bondVecs[0];
+        vector3 v1 = begin->GetVector() + bondVecs[1];
+        vector3 v2 = end->GetVector() + bondVecs[2];
+        vector3 v3 = end->GetVector() + bondVecs[3];
 
-      vector3 dbl_bond = end_vec - begin->GetVector();
-      vector3 above_plane = cross(dbl_bond, bondVecs[0]);
-      double d0 = Point2PlaneSigned( mol->GetAtomById(config.refs[0])->GetVector(),
-                                     begin->GetVector(), end->GetVector(), above_plane);
-      double d2 = Point2PlaneSigned( mol->GetAtomById(config.refs[2])->GetVector(),
-                                     begin->GetVector(), end->GetVector(), above_plane);
-      if (uc) {  // Overwrite with the PBC version
-        d0 = Point2PlaneSigned(uc->UnwrapCartesianNear(mol->GetAtomById(config.refs[0])->GetVector(), begin->GetVector()),
-                                      begin->GetVector(), end_vec, above_plane);
-        d2 = Point2PlaneSigned(uc->UnwrapCartesianNear(mol->GetAtomById(config.refs[2])->GetVector(), begin->GetVector()),
-                                      begin->GetVector(), end_vec, above_plane);
+        vector3 b, c, d;
+        b = uc->UnwrapCartesianNear(begin->GetVector(), v0);
+        c = uc->UnwrapCartesianNear(end->GetVector(), b);
+        d = uc->UnwrapCartesianNear(v2, c);
+        tor02 = CalcTorsionAngle(v0, b, c, d);
+
+        d = uc->UnwrapCartesianNear(v3, c);
+        tor03 = CalcTorsionAngle(v0, b, c, d);
+
+        b = uc->UnwrapCartesianNear(begin->GetVector(), v1);
+        c = uc->UnwrapCartesianNear(end->GetVector(), b);
+        d = uc->UnwrapCartesianNear(v2, c);
+        tor12 = CalcTorsionAngle(v1, b, c, d);
+
+        d = uc->UnwrapCartesianNear(v3, c);
+        tor13 = CalcTorsionAngle(v1, b, c, d);
+      } else {
+        tor02 = CalcTorsionAngle(begin->GetVector() + bondVecs[0], begin->GetVector(), end->GetVector(), end->GetVector() + bondVecs[2]);
+        tor03 = CalcTorsionAngle(begin->GetVector() + bondVecs[0], begin->GetVector(), end->GetVector(), end->GetVector() + bondVecs[3]);
+        tor12 = CalcTorsionAngle(begin->GetVector() + bondVecs[1], begin->GetVector(), end->GetVector(), end->GetVector() + bondVecs[2]);
+        tor13 = CalcTorsionAngle(begin->GetVector() + bondVecs[1], begin->GetVector(), end->GetVector(), end->GetVector() + bondVecs[3]);
       }
 
-      if ((d0 > 0 && d2 > 0) || (d0 < 0 && d2 < 0))
+      if (std::abs(tor02) < 90.0 && std::abs(tor03) > 90.0) {
+        // 0      2 //
+        //  \    /  //
+        //   C==C   //
+        //  /    \  //
+        // 1      3 //
         config.shape = OBStereo::ShapeZ;
-      else
+
+        if (std::abs(tor12) < 90.0 || std::abs(tor13) > 90.0) {
+          obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obInfo);
+          config.specified = false;
+        }
+      } else if (std::abs(tor02) > 90.0 && std::abs(tor03) < 90.0) {
+        // 0      3 //
+        //  \    /  //
+        //   C==C   //
+        //  /    \  //
+        // 1      2 //
         config.shape = OBStereo::ShapeU;
+
+        if (std::abs(tor12) > 90.0 || std::abs(tor13) < 90.0) {
+          obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obInfo);
+          config.specified = false;
+        }
+      } else {
+        obErrorLog.ThrowError(__FUNCTION__, "Could not determine cis/trans from 3D coordinates, using unspecified", obInfo);
+        config.shape = OBStereo::ShapeU;
+        config.specified = false;
+      }
 
       OBCisTransStereo *ct = new OBCisTransStereo(mol);
       ct->SetConfig(config);

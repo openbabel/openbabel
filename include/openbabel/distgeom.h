@@ -85,6 +85,13 @@ namespace OpenBabel {
     void GetConformers(OBMol &mol);
 
     /**
+     * Check if last call to AddConformer was successful.
+     *
+     * \return Success or failure.
+     */
+    bool WasSuccessful() const;
+
+    /**
      * Convenience method to set up this molecule, generate a geometry and return it
      *
      * \return Success or failure

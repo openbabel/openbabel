@@ -22,6 +22,8 @@ GNU General Public License for more details.
 #include <openbabel/builder.h>
 #include <openbabel/distgeom.h>
 #include <openbabel/forcefield.h>
+#include <openbabel/oberror.h>
+#include "../stereo/gen3dstereohelper.h"
 
 #include <cstdlib> // needed for strtol and gcc 4.8
 
@@ -54,6 +56,9 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     pmol->UnsetFlag(OB_CHIRALITY_MOL);
     StereoFrom0D(pmol);
   }
+
+  OBGen3DStereoHelper stereoHelper;
+  stereoHelper.Setup(pmol);
 
   // 1 is best quality, slowest
   // 2 is good quality, slow
@@ -95,84 +100,102 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   else if (speed > 5)
     speed = 5;
 
-  // This is done for all speed levels (i.e., create the structure)
-  OBBuilder builder;
-  bool attemptBuild = !useDistGeom;
-  if (attemptBuild && !builder.Build(*pmol) ) {
-    std::cerr << "Warning: Stereochemistry is wrong, using the distance geometry method instead" << std::endl;
-    useDistGeom = true;
-  }
+  bool success = false;
+  unsigned int maxIter = 25;
+  for (unsigned int trial = 0; trial < maxIter; trial++) {
+    OBMol molCopy = *pmol;
+
+    // This is done for all speed levels (i.e., create the structure)
+    OBBuilder builder;
+    bool attemptBuild = !useDistGeom;
+    if (attemptBuild && !builder.Build(molCopy) ) {
+      std::cerr << "Warning: Stereochemistry is wrong, using the distance geometry method instead" << std::endl;
+      useDistGeom = true;
+    }
 
 #ifdef HAVE_EIGEN
-  OBDistanceGeometry dg;
-  if (useDistGeom) {
-    // use the bond lengths and angles if we ran the builder
-    dg.GetGeometry(*pmol, attemptBuild); // ensured to have correct stereo
-    speed = 3;
-  }
+    OBDistanceGeometry dg;
+    if (useDistGeom) {
+      // use the bond lengths and angles if we ran the builder
+      if (!dg.GetGeometry(molCopy, attemptBuild)) // ensured to have correct stereo
+        continue;
+      speed = 3;
+    }
 #endif
 
-  // rule-based builder worked
-  pmol->SetDimension(3);
-  pmol->AddHydrogens(false, false); // Add some hydrogens before running MMFF
+    // rule-based builder worked
+    molCopy.SetDimension(3);
+    molCopy.AddHydrogens(false, false); // Add some hydrogens before running MMFF
 
-  if (speed == 5)
-    return true; // done
+    if (speed == 5)
+      return true; // done
 
-  // All other speed levels do some FF cleanup
-  // Try MMFF94 first and UFF if that doesn't work
-  OBForceField* pFF = OBForceField::FindForceField("MMFF94");
-  if (!pFF)
-    return true;
-  if (!pFF->Setup(*pmol)) {
-    pFF = OBForceField::FindForceField("UFF");
-    if (!pFF || !pFF->Setup(*pmol)) return true; // can't use either MMFF94 or UFF
+    // All other speed levels do some FF cleanup
+    // Try MMFF94 first and UFF if that doesn't work
+    OBForceField* pFF = OBForceField::FindForceField("MMFF94");
+    if (!pFF)
+      return true;
+    if (!pFF->Setup(molCopy)) {
+      pFF = OBForceField::FindForceField("UFF");
+      if (!pFF || !pFF->Setup(molCopy)) return true; // can't use either MMFF94 or UFF
+    }
+
+    // Since we only want a rough geometry, use distance cutoffs for VDW, Electrostatics
+    pFF->EnableCutOff(true);
+    pFF->SetVDWCutOff(10.0);
+    pFF->SetElectrostaticCutOff(20.0);
+    pFF->SetUpdateFrequency(10); // update non-bonded distances infrequently
+
+    // How many cleanup cycles?
+    int iterations = 250;
+    switch (speed) {
+    case 1:
+      iterations = 500;
+      break;
+    case 2:
+      iterations = 250;
+      break;
+    case 3:
+    case 4:
+    default:
+      iterations = 100;
+    }
+
+    // Initial cleanup for every level
+    pFF->ConjugateGradients(iterations, 1.0e-4);
+
+    if (speed == 4) {
+      pFF->UpdateCoordinates(molCopy);
+      return true; // no conformer searching
+    }
+
+    switch(speed) {
+    case 1:
+      pFF->WeightedRotorSearch(250, 10); // maybe based on # of rotatable bonds?
+      break;
+    case 2:
+      pFF->FastRotorSearch(true); // permute central rotors
+      break;
+    case 3:
+    default:
+      pFF->FastRotorSearch(false); // only one permutation
+    }
+
+    // Final cleanup and copy the new coordinates back
+    pFF->ConjugateGradients(iterations, 1.0e-6);
+    pFF->UpdateCoordinates(molCopy);
+
+    // Check stereochemistry
+    success = stereoHelper.Check(&molCopy);
+    if (success) {
+      *pmol = molCopy;
+      break;
+    }
   }
 
-  // Since we only want a rough geometry, use distance cutoffs for VDW, Electrostatics
-  pFF->EnableCutOff(true);
-  pFF->SetVDWCutOff(10.0);
-  pFF->SetElectrostaticCutOff(20.0);
-  pFF->SetUpdateFrequency(10); // update non-bonded distances infrequently
-
-  // How many cleanup cycles?
-  int iterations = 250;
-  switch (speed) {
-  case 1:
-    iterations = 500;
-    break;
-  case 2:
-    iterations = 250;
-    break;
-  case 3:
-  case 4:
-  default:
-    iterations = 100;
+  if (!success) {
+    obErrorLog.ThrowError(__FUNCTION__, "3D coordinate generation failed", obError);
   }
-
-  // Initial cleanup for every level
-  pFF->ConjugateGradients(iterations, 1.0e-4);
-
-  if (speed == 4) {
-    pFF->UpdateCoordinates(*pmol);
-    return true; // no conformer searching
-  }
-
-  switch(speed) {
-  case 1:
-    pFF->WeightedRotorSearch(250, 10); // maybe based on # of rotatable bonds?
-    break;
-  case 2:
-    pFF->FastRotorSearch(true); // permute central rotors
-    break;
-  case 3:
-  default:
-    pFF->FastRotorSearch(false); // only one permutation
-  }
-
-  // Final cleanup and copy the new coordinates back
-  pFF->ConjugateGradients(iterations, 1.0e-6);
-  pFF->UpdateCoordinates(*pmol);
 
   return true;
 }
