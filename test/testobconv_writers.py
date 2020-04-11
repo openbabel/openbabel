@@ -5,10 +5,11 @@ correctly reset to 1 for each format.
 
 """
 
+import os
 import sys
 import unittest
 import tempfile
-import openbabel as ob
+from openbabel import openbabel as ob
 import re
 
 # Set the following to enable a workaround so the tests work on older
@@ -79,7 +80,7 @@ if not _rxn_conv.ReadString(_alchemy_mol, ALCHEMY_RXN):
         # For some reason this record fails under Open Babel 2.4.1
         sys.stderr.write("Unable to parse RXN record? Reaction tests will fail.\n")
     else:
-        raise AssertionError("Cannot parse RNX record")
+        raise AssertionError("Cannot parse RXN record")
 
 # Some of the tests pass in a SMILES string
 _smi_conv = ob.OBConversion()
@@ -161,7 +162,7 @@ def test_write_string(test_case, mol, conv, expected_output, normalize):
         output = normalize(output)
         expected_output = normalize(expected_output)
         
-    test_case.assertMultiLineEqual(output, expected_output)
+    test_case.assertMultiLineEqual(output.replace("\r\n", "\n"), expected_output.replace("\r\n", "\n"))
 
 if type(u"") == type(""):
     # Python 3
@@ -184,14 +185,18 @@ else:
         test_case.assertEqual(output, expected_output)
 
 def test_write_file(test_case, mol, conv, expected_output, normalize):
-    temp_file_object = tempfile.NamedTemporaryFile()
+    temp_file_object = tempfile.NamedTemporaryFile(delete=False) # we will delete it manually
     temp_filename = temp_file_object.name
+    if os.name == 'nt':
+        temp_file_object.close() # Can't write to open file on Windows so we have to close it (but this could lead to a race condition if someone else uses the same temporary file name)
     try:
         test_case.assertTrue(conv.WriteFile(mol, temp_filename))
+        conv.CloseOutFile() # we can't delete it on Windows otherwise
         with open(temp_filename) as f:
             output = f.read()
     finally:
         temp_file_object.close()
+        os.remove(temp_filename)
 
     if 0:
         save_to_pasteboard(output)
@@ -199,7 +204,7 @@ def test_write_file(test_case, mol, conv, expected_output, normalize):
     if normalize is not None:
         output = normalize(output)
         expected_output = normalize(expected_output)
-    test_case.assertMultiLineEqual(output, expected_output)
+    test_case.assertMultiLineEqual(output.replace("\r\n", "\n"), expected_output.replace("\r\n", "\n"))
     
 def test_binary_write_file(test_case, mol, conv, expected_output, normalize):
     temp_file_object = tempfile.NamedTemporaryFile()
