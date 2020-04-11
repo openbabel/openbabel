@@ -29,6 +29,13 @@ jobs:
             os: macos-latest,
             cc: "clang", cxx: "clang++",
           }
+        - {
+            name: "Windows Latest MSVC", artifact: "Windows-MSVC.tar.xz",
+            os: windows-latest,
+            cc: "cl", cxx: "cl",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+            cmake_flags: '-DLIBXML2_LIBRARIES="${DEPS}/libs-common/x64/libxml2" -DCAIRO_INCLUDE_DIRS="${DEPS}/include/cairo" -DCAIRO_LIBRARIES="${DEPS}/libs-common/x64/cairo" -DLIBXML2_INCLUDE_DIR=. -DZLIB_LIBRARY="${DEPS}/libs-common/x64/zlib1" -DZLIB_INCLUDE_DIR=. -DINCHI_LIBRARY="${DEPS}/libs-common/x64/libinchi" -DINCHI_INCLUDE_DIR=. -DXDR_INCLUDE_DIR="${DEPS}/include" -DXDR_LIBRARY="${DEPS}/libs-common/x64/xdr" -DOPENBABEL_USE_SYSTEM_INCHI=TRUE -DwxWidgets_LIB_DIR="${DEPS}/wx/lib/vc120_dll" -DEIGEN3_INCLUDE_DIR="${DEPS}/include" -DWITH_COORDGEN=OFF'
+          }
 
     steps:
     - name: Check variables
@@ -40,29 +47,53 @@ jobs:
       if: runner.os == 'Windows'
       run: |
           choco install ninja
-          echo "::set-env name=DEPS::msvc-dependencies-master"
-    - name: Install MSVC Dependencies
-      if: runner.os == 'Windows'
-      shell: cmake -P {0}
-      run: |
-          set(msvc_deps_url "https://github.com/openbabel/msvc-dependencies/archive/master.zip")
-          file(DOWNLOAD "${msvc_deps}" ./msvc_deps.zip SHOW_PROGRESS)
-          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./msvc_deps.zip)
+          echo "::set-env name=DEPS::${{ runner.workspace }}/msvc-dependencies-master"
     - name: Install Dependencies (macOS)
       if: runner.os == 'macOS'
       run: brew install ninja swig eigen boost
 
     - uses: actions/checkout@v2
 
+    - name: Install MSVC Dependencies
+      if: runner.os == 'Windows'
+      shell: cmake -P {0}
+      run: |
+          set(msvc_deps_url "https://github.com/openbabel/msvc-dependencies/archive/master.zip")
+          file(DOWNLOAD "${msvc_deps_url}" ./msvc_deps.zip SHOW_PROGRESS)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf ./msvc_deps.zip)
+
+    - name: Set Windows Environment
+      if: runner.os == 'Windows'
+      shell: cmake -P {0}
+      run: |
+        set(ENV{CC} ${{ matrix.config.cc }})
+        set(ENV{CXX} ${{ matrix.config.cxx }})
+
+        if ("${{ runner.os }}" STREQUAL "Windows" AND NOT "x${{ matrix.config.environment_script }}" STREQUAL "x")
+          execute_process(
+            COMMAND "${{ matrix.config.environment_script }}" && set
+            OUTPUT_FILE environment_script_output.txt
+          )
+          file(STRINGS environment_script_output.txt output_lines)
+          foreach(line IN LISTS output_lines)
+            if (line MATCHES "^([a-zA-Z0-9_-]+)=(.*)$")
+              set(ENV{${CMAKE_MATCH_1}} "${CMAKE_MATCH_2}")
+              # Set for other steps
+              message("::set-env name=${CMAKE_MATCH_1}::${CMAKE_MATCH_2}")
+            endif()
+          endforeach()
+        endif()
+
     - name: Configure
       run: |
         mkdir "${{ runner.workspace }}/build"
         cd "${{ runner.workspace }}/build"
-        cmake $GITHUB_WORKSPACE -GNinja ${{matrix.config.cmake_flags}}
+        CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake $GITHUB_WORKSPACE -GNinja ${{matrix.config.cmake_flags}}
       shell: bash
 
     - name: Build
-      run: cmake --build .
+      run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build .
+      shell: bash
       working-directory: ${{ runner.workspace }}/build
 
     - name: Test
