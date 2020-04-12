@@ -1354,12 +1354,12 @@ HETATM    4  C   UNL     1       3.303   1.000   0.000  1.00  0.00           C
 HETATM    5  C   UNL     1       3.317   0.000   0.000  1.00  0.00           C  
 HETATM    6  C   UNL     1       0.000   0.000   0.000  1.00  0.00           C  
 HETATM    7  O   UNL     1      -1.000   0.005   0.000  1.00  0.00           O  
-CONECT    1    6    2                                                 
-CONECT    2    1    3                                                 
-CONECT    3    2    4                                                 
-CONECT    4    3    5                                                 
-CONECT    5    4    6                                                 
-CONECT    6    1    5    7                                            
+CONECT    1    6    6    2                                            
+CONECT    2    1    3    3                                            
+CONECT    3    2    2    4                                            
+CONECT    4    3    5    5                                            
+CONECT    5    4    4    6                                            
+CONECT    6    1    1    5    7                                       
 CONECT    7    6                                                      
 MASTER        0    0    0    0    0    0    0    0    7    0    7    0
 END
@@ -2964,12 +2964,12 @@ HETATM    4  C   UNL     1       3.303   1.000   0.000  1.00  0.00           C
 HETATM    5  C   UNL     1       3.317   0.000   0.000  1.00  0.00           C  
 HETATM    6  C   UNL     1       0.000   0.000   0.000  1.00  0.00           C  
 HETATM    7  O   UNL     1      -1.000   0.005   0.000  1.00  0.00           O  
-CONECT    1    6    2                                                 
-CONECT    2    1    3                                                 
-CONECT    3    2    4                                                 
-CONECT    4    3    5                                                 
-CONECT    5    4    6                                                 
-CONECT    6    1    5    7                                            
+CONECT    1    6    6    2                                            
+CONECT    2    1    3    3                                            
+CONECT    3    2    2    4                                            
+CONECT    4    3    5    5                                            
+CONECT    5    4    4    6                                            
+CONECT    6    1    1    5    7                                       
 CONECT    7    6                                                      
 MASTER        0    0    0    0    0    0    0    0    7    0    7    0
 END
