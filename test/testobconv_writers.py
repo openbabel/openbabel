@@ -921,7 +921,8 @@ class TestCOM(unittest.TestCase, WriteMixin):
     maxDiff = None
     def test_default(self):
         self.assertWriters(self.fmt, """\
-#Put Keywords Here, check Charge and Multiplicity.
+!Put Keywords Here, check Charge and Multiplicity.
+#
 
  phenol
 
@@ -1666,7 +1667,8 @@ class TestGAU(unittest.TestCase, WriteMixin):
     maxDiff = None
     def test_default(self):
         self.assertWriters(self.fmt, """\
-#Put Keywords Here, check Charge and Multiplicity.
+!Put Keywords Here, check Charge and Multiplicity.
+#
 
  phenol
 
@@ -1687,7 +1689,8 @@ class TestGJC(unittest.TestCase, WriteMixin):
     maxDiff = None
     def test_default(self):
         self.assertWriters(self.fmt, """\
-#Put Keywords Here, check Charge and Multiplicity.
+!Put Keywords Here, check Charge and Multiplicity.
+#
 
  phenol
 
@@ -1708,7 +1711,8 @@ class TestGJF(unittest.TestCase, WriteMixin):
     maxDiff = None
     def test_default(self):
         self.assertWriters(self.fmt, """\
-#Put Keywords Here, check Charge and Multiplicity.
+!Put Keywords Here, check Charge and Multiplicity.
+#
 
  phenol
 
@@ -1861,7 +1865,8 @@ class TestGZMAT(unittest.TestCase, WriteMixin):
     maxDiff = None
     def test_default(self):
         self.assertWriters(self.fmt, """\
-#Put Keywords Here, check Charge and Multiplicity.
+!Put Keywords Here, check Charge and Multiplicity.
+#
 
  phenol
 
