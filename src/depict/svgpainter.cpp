@@ -151,7 +151,7 @@ namespace OpenBabel
   void SVGPainter::DrawText(double x, double y, const std::string &text)
   {
     m_ofs << "<text x=\"" << x << "\" y=\"" << y << "\""
-      << " fill=" << MakeRGB(m_Pencolor) << "stroke-width='0' font-weight='bold' "
+      << " fill=" << MakeRGB(m_Pencolor) << "stroke-width=\"0\" font-weight=\"bold\" "
       << "font-size=\"" << m_fontPointSize << "\" >"
       << text << "</text>\n";
   }

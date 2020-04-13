@@ -899,14 +899,19 @@ namespace OpenBabel {
 
     if(!pOutFormat || !pOutput) return false;
 
-    SetOneObjectOnly(); //So that IsLast() returns true, which is important for XML formats
-
     // Set the locale for number parsing to avoid locale issues: PR#1785463
     obLocale.SetLocale();
     // Also set the C++ stream locale
     locale originalLocale = pOutput->getloc(); // save the original
     locale cNumericLocale(originalLocale, "C", locale::numeric);
     pOutput->imbue(cNumericLocale);
+
+    // Increment the output counter.
+    // This is done *before* the WriteMolecule because some of
+    // the format plugins initialized when GetOutputIndex() == 1.
+    // This matches the original Convert(), which increments
+    // the count for GetChemObject() before the write.
+    Index++;
 
     // The actual work is done here
     bool success = pOutFormat->WriteMolecule(pOb,this);
@@ -994,11 +999,28 @@ namespace OpenBabel {
     {
       StreamState savedOut;
       savedOut.pushOutput(*this);
+      // The StreamState doesn't save all of the properties so
+      // do it manually here.
+      
+      // Set/reset the Index to 0 so that any initialization
+      // code in the formatters will be executed.
+      int oldIndex = Index;
+      Index = 0;
+      
+      // We'll only send one object, so save those properties too.
+      bool oldOneObjectOnly = OneObjectOnly;
+      bool oldm_IsLast = m_IsLast;
+      
+      SetOneObjectOnly(true);
 
       SetOutStream(&newStream, false);
       Write(pOb);
-
       savedOut.popOutput(*this);
+
+      // Restore the other stream properties
+      m_IsLast = oldm_IsLast;
+      OneObjectOnly = oldOneObjectOnly;
+      Index = oldIndex;
     }
 
     temp = newStream.str();
@@ -1034,6 +1056,12 @@ namespace OpenBabel {
       }
 
     SetOutStream(ofs, true);
+    // Set/reset the Index so that any initialization code
+    // in the formatters will be executed.
+    Index = 0;
+    // We can't touch the Last property because only the caller
+    // knows if the first molecule is also the last molecule.
+    
     return Write(pOb);
   }
 
