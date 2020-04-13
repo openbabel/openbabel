@@ -1504,30 +1504,28 @@ class TestFPS(unittest.TestCase, WriteMixin):
         self.assertTrue(conv.Write(ethane))
         self.assertEqual(conv.GetOutputIndex(), 2)
         conv.CloseOutFile()
-        
+
         with open(filename) as f:
             # Ensure there is a header
             line = f.readline()
             self.assertEqual(line[:5], "#FPS1", line)
             # Skip the rest of the header
             ids = []
+            inheader = True
             for line in f:
                 if line[:1] != "#":
-                    break
-            else:
+                    inheader = False
+                    self.assertEqual(line.count("\t"), 1, "Wrong number of fields?: %r" % (line,))
+                    hex_fp, mid = line.rstrip("\n").split("\t", 1)
+                    ids.append(mid)
+                elif not inheader:
+                    self.fail("Second header?: %r" % (line,))
+            if inheader:
                 self.fail("Reached end of file too early, after: %r" % (line,))
-            while 1:
-                self.assertNotEqual(line[:1], "#", "Second header?: %r" % (line,))
-                self.assertEqual(line.count("\t"), 1, "Wrong number of fields?: %r" % (line,))
-                hex_fp, id = line.rstrip("\n").split("\t", 1)
-                ids.append(id)
-                line = f.readline()
-                if not line:
-                    break
 
             self.assertEqual(ids, ["phenol", "ethane"])
         
-        
+
     def test_MACCS(self):
         self.assertWriters(self.fmt, """\
 #FPS1
@@ -3210,7 +3208,6 @@ O       -1.0004999999999999449      0.0051000000000000004      0.000000000000000
 """)
 
 # pov -- POV-Ray input format [Write-only]
-import re
 _pov_date = re.compile("//Date: [A-Za-z0-9 :]*")
 def normalize_pov_date(content):
     return _pov_date.sub("//Date: Somewhere in time", content)
@@ -3760,7 +3757,7 @@ M  END
 $$$$
 """, normalize=normalize_sd_timestamp)
 
-# 
+
 class _BaseSmiles(object):
     def test_default(self):
         self.assertWriters("smi", "c1ccccc1O\tphenol\n")
@@ -4126,4 +4123,3 @@ class TestZIN(unittest.TestCase, WriteMixin):
 
 if __name__ == "__main__":
     unittest.main()
-    
