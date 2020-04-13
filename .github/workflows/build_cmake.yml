@@ -45,9 +45,7 @@ jobs:
       run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
     - name: Install Dependencies (Windows)
       if: runner.os == 'Windows'
-      run: |
-          choco install ninja
-          echo "::set-env name=DEPS::${{ runner.workspace }}/msvc-dependencies-master"
+      run: choco install ninja
     - name: Install Dependencies (macOS)
       if: runner.os == 'macOS'
       run: brew install ninja swig eigen boost
@@ -88,6 +86,7 @@ jobs:
       run: |
         mkdir "${{ runner.workspace }}/build"
         cd "${{ runner.workspace }}/build"
+        export DEPS="${{ runner.workspace }}/msvc-dependencies-master"
         CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake $GITHUB_WORKSPACE -GNinja ${{matrix.config.cmake_flags}}
       shell: bash
 
