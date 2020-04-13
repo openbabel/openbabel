@@ -3850,7 +3850,7 @@ font-family="sans-serif" stroke="rgb(0,0,0)" stroke-width="2"  stroke-linecap="r
 <line x1="113.1" y1="82.8" x2="112.7" y2="54.5" opacity="1.0" stroke="rgb(0,0,0)"  stroke-width="2.0"/>
 <line x1="112.7" y1="54.5" x2="137.0" y2="40.0" opacity="1.0" stroke="rgb(0,0,0)"  stroke-width="2.0"/>
 <line x1="121.5" y1="57.6" x2="135.5" y2="49.3" opacity="1.0" stroke="rgb(0,0,0)"  stroke-width="2.0"/>
-<text x="22.000000" y="89.925427" fill="rgb(255,12,12)"  stroke="rgb(255,12,12)" stroke-width="1" font-size="16" >HO</text>
+<text x="22.000000" y="89.925427" fill="rgb(255,12,12)" stroke-width="0" font-weight="bold" font-size="16" >HO</text>
 </svg>
 </g>
 <text font-size="18.000000" fill ="black" font-family="sans-serif"
