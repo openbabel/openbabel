@@ -60,7 +60,7 @@ jobs:
       if: runner.os == 'Windows'
       shell: cmake -P {0}
       run: |
-          set(msvc_deps_url "https://github.com/openbabel/msvc-dependencies/archive/master.zip")
+          set(msvc_deps_url "https://github.com/timvdm/msvc-dependencies/archive/master.zip")
           file(DOWNLOAD "${msvc_deps_url}" "$ENV{GITHUB_WORKSPACE}/msvc_deps.zip" SHOW_PROGRESS)
           execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf "$ENV{GITHUB_WORKSPACE}/msvc_deps.zip")
     - name: Install Dependencies (macOS)
