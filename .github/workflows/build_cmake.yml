@@ -30,17 +30,11 @@ jobs:
             cc: "clang", cxx: "clang++",
           }
         - {
-            name: "Windows Latest MSVC", artifact: "Windows-MSVC.tar.xz",
+            name: "Windows Latest MSVC x86", artifact: "Windows-MSVC.tar.xz",
             os: windows-latest,
-<<<<<<< HEAD
             cc: "cl", cxx: "cl",
             environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
-            cmake_flags: '-DLIBXML2_LIBRARIES="${DEPS}/libs-common/x64/libxml2" -DCAIRO_INCLUDE_DIRS="${DEPS}/include/cairo" -DCAIRO_LIBRARIES="${DEPS}/libs-common/x64/cairo" -DLIBXML2_INCLUDE_DIR=. -DZLIB_LIBRARY="${DEPS}/libs-common/x64/zlib1" -DZLIB_INCLUDE_DIR=. -DINCHI_LIBRARY="${DEPS}/libs-common/x64/libinchi" -DINCHI_INCLUDE_DIR=. -DXDR_INCLUDE_DIR="${DEPS}/include" -DXDR_LIBRARY="${DEPS}/libs-common/x64/xdr" -DOPENBABEL_USE_SYSTEM_INCHI=TRUE -DwxWidgets_LIB_DIR="${DEPS}/wx/lib/vc120_dll" -DEIGEN3_INCLUDE_DIR="${DEPS}/include" -DWITH_COORDGEN=OFF'
-=======
-            build_type: "Release", cc: "cl", cxx: "cl",
-            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
             cmake_flags: '-DLIBXML2_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/libxml2.lib" -DCAIRO_INCLUDE_DIRS="$GITHUB_WORKSPACE/$DEPS/include/cairo" -DCAIRO_LIBRARIES="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/cairo.lib" -DLIBXML2_INCLUDE_DIR=. -DZLIB_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/zlib1.lib" -DZLIB_INCLUDE_DIR=. -DINCHI_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/libinchi.lib" -DINCHI_INCLUDE_DIR=. -DXDR_INCLUDE_DIR="$GITHUB_WORKSPACE/$DEPS/include" -DXDR_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/xdr.lib"  -DJSON_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-vs12/i386/jsoncpp.lib"  -DOPENBABEL_USE_SYSTEM_INCHI=TRUE -DwxWidgets_LIB_DIR="$GITHUB_WORKSPACE/$DEPS/wx/lib/vc120_dll" -DEIGEN3_INCLUDE_DIR="$GITHUB_WORKSPACE/$DEPS/include" -DWITH_MAEPARSER=OFF'
->>>>>>> 606d5149d22627d38415b73cf1a3fa0764da0500
           }
 
     steps:
@@ -50,6 +44,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Install MSVC Command Prompt
+      if: runner.os == 'Windows'
       uses: ilammy/msvc-dev-cmd@v1
       with:
         arch: x86
@@ -59,12 +54,13 @@ jobs:
       run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
     - name: Install Dependencies (Windows)
       if: runner.os == 'Windows'
-      run: choco install ninja
+      run: |
+        choco install ninja
+        echo "::set-env name=DEPS::msvc-dependencies-master"
+
     - name: Install Dependencies (macOS)
       if: runner.os == 'macOS'
       run: brew install ninja swig eigen boost
-
-    - uses: actions/checkout@v2
 
     - name: Install MSVC Dependencies
       if: runner.os == 'Windows'
