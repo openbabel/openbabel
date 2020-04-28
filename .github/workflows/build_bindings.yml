@@ -25,7 +25,7 @@ jobs:
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
-      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
+      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev r-base-core r-base-dev mono-devel
 
     - name: Configure
       run: |
