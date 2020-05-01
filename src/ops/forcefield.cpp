@@ -55,8 +55,9 @@ namespace OpenBabel
           " options:         description\n"
           " --log        output a log of the energies (default = no log)\n"
           " --epsilon #  set the dielectric constant for electrostatics\n"
+          " --noh        don't add explicit hydrogens (default = make explicit)\n"
           " --ff #       select a forcefield (default = MMFF94)\n"
-          " The hydrogens are always made explicit before energy evaluation.\n"
+          " The hydrogens are made explicit by default before energy evaluation.\n"
           " The energy is put in an OBPairData object \"Energy\" which is\n"
           "   accessible via an SDF or CML property or --append (to title).\n"
           ;
@@ -78,9 +79,9 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)
       return false;
-    pmol->AddHydrogens(false, false);
 
     bool log = false;
+    bool addh = true;
 
     string ff = "MMFF94";
     double epsilon = 1.0;
@@ -95,6 +96,13 @@ namespace OpenBabel
     iter = pmap->find("log");
     if(iter!=pmap->end())
       log=true;
+
+    iter = pmap->find("noh");
+    if(iter!=pmap->end())
+      addh=false;
+
+    if (addh)
+      pmol->AddHydrogens(false, false);
 
     // set some force field variables
     pFF->SetLogFile(&clog);
@@ -141,11 +149,12 @@ namespace OpenBabel
           " --ff #       select a forcefield (default = Ghemical)\n"
           " --steps #    specify the maximum number of steps (default = 2500)\n"
           " --cut        use cut-off (default = don't use cut-off)\n"
+          " --noh        don't add explicit hydrogens (default = make explicit)\n"
           " --epsilon #  relative dielectric constant (default = 1.0)\n"
           " --rvdw #     specify the VDW cut-off distance (default = 6.0)\n"
           " --rele #     specify the Electrostatic cut-off distance (default = 10.0)\n"
           " --freq #     specify the frequency to update the non-bonded pairs (default = 10)\n"
-          " The hydrogens are always made explicit before minimization.\n"
+          " The hydrogens are made explicit before minimization by default.\n"
           " The energy is put in an OBPairData object \"Energy\" which is\n"
           "   accessible via an SDF or CML property or --append (to title).\n"
           ;
@@ -167,12 +176,12 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)
       return false;
-    pmol->AddHydrogens(false, false);
 
     int steps = 2500;
     double crit = 1e-6;
     bool sd = false;
     bool cut = false;
+    bool addh = true;
     bool newton = true;
     double epsilon = 1.0;
     double rvdw = 6.0;
@@ -197,6 +206,10 @@ namespace OpenBabel
     iter = pmap->find("cut");
     if(iter!=pmap->end())
       cut=true;
+
+    iter = pmap->find("noh");
+    if(iter!=pmap->end())
+      addh=false;
 
     iter = pmap->find("crit");
     if(iter!=pmap->end())
@@ -240,6 +253,9 @@ namespace OpenBabel
     pFF->SetUpdateFrequency(freq);
     pFF->SetDielectricConstant(epsilon);
     pFF->EnableCutOff(cut);
+
+    if (addh)
+      pmol->AddHydrogens(false, false);
 
     if (!pFF->Setup(*pmol)) {
       cerr  << "Could not setup force field." << endl;
