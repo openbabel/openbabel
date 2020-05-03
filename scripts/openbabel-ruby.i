@@ -23,9 +23,9 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
-#include <openbabel/elements.h>
 
 #include <openbabel/base.h>
+#include <openbabel/elements.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
@@ -229,6 +229,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+%include <openbabel/elements.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/mol.h>

@@ -16,6 +16,7 @@
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
 
+#include <openbabel/elements.h>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
@@ -306,8 +307,15 @@ namespace std { class stringbuf {}; }
 %ignore OpenBabel::OBConversion::FindFormat(const char *);
 %ignore OpenBabel::OBConversion::FormatFromExt(const char *);
 %include <openbabel/obconversion.h>
+
+
+//avoid conflicts with OBElement
+%rename(resC) OpenBabel::OBResidueIndex::C;
+%rename(resI) OpenBabel::OBResidueIndex::I;
+%rename(resU) OpenBabel::OBResidueIndex::U;
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+%include <openbabel/elements.h>
 
 %typemap(javacode) OpenBabel::OBAtom
 %{
