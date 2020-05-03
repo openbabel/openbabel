@@ -2,14 +2,14 @@
 obtautomer - Enumerate tautomer smiles and canonical tautomer smiles
 
 Copyright (C) 2011 Tim Vandermeersch
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -31,21 +31,12 @@ using namespace std;
 /**
  * TautomerFunctor to print out smiles for each found tautomer.
  */
-class Functor : public OpenBabel::TautomerFunctor
+class Functor : public OpenBabel::UniqueTautomerFunctor
 {
   public:
-    bool foundTautomers;
-
-    Functor() : foundTautomers(false) 
+    void operator()(OpenBabel::OBMol *mol, const std::string &smiles)
     {
-    }
-  
-    void operator()(OpenBabel::OBMol *mol)
-    {
-      foundTautomers = true;
-      OpenBabel::OBConversion conv;
-      conv.SetOutFormat("can");
-      std::cout << conv.WriteString(mol);
+      std::cout << smiles << std::endl;
     }
 };
 
@@ -70,12 +61,12 @@ int main(int argc,char **argv)
   // Find Input filetype
   OpenBabel::OBConversion conv;
   OpenBabel::OBFormat *format = conv.FormatFromExt(FileIn);
-    
+
   if (!format || !conv.SetInFormat(format)) {
     cerr << program_name << ": cannot read input format!" << endl;
     exit (-1);
   }
-    
+
   if (!conv.SetOutFormat("can")) {
     cerr << program_name << ": cannot find output format!" << endl;
     exit (-1);
@@ -89,7 +80,7 @@ int main(int argc,char **argv)
     cerr << program_name << ": cannot read input file!" << endl;
     exit (-1);
   }
-  
+
   OpenBabel::OBMol mol;
 
 
@@ -105,13 +96,10 @@ int main(int argc,char **argv)
       } else {
         Functor f;
         EnumerateTautomers(&mol, f);
-
-        if (!f.foundTautomers)
-          std::cout << conv.WriteString(&mol);
       }
-      
+
   } // end for loop
-  
+
   return(0);
 }
 

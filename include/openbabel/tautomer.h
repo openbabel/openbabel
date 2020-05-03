@@ -1,7 +1,7 @@
 /**********************************************************************
 tautomer.h - Tautomer support
 
-  Copyright (C) 2011 by Tim Vandermeersch
+  Copyright (C) 2011,2020 by Tim Vandermeersch
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -21,31 +21,33 @@ GNU General Public License for more details.
   #define OBAPI
 #endif
 
+#include <string>
+#include <vector>
+
 namespace OpenBabel {
 
   class OBMol;
 
   /**
    * Functor for tautomer enumeration algorithm. Subclass this class to write
-   * your own functor.
+   * your own functor. This functor will be called for every tautomer that is
+   * found. This may include duplicates. Subclass UniqueTautomerFunctor to
+   * filter these duplicates.
    *
    * Example to write all tautomer smiles to std::cout:
    * @code
    * class WriteSmilesFunctor : public TautomerFunctor
    * {
    *   public:
-   *     WriteSmilesFunctor() : foundTautomer(false)
+   *     WriteSmilesFunctor()
    *     {
    *       m_conv.SetOutFormat("can");
    *     }
    *
    *     void operator()(OBMol *mol)
    *     {
-   *       foundTautomer = true;
-   *       std::cout << m_conv.WriteString(mol);
+   *       std::cout << m_conv.WriteString(mol, true) << std::endl;
    *     }
-   *
-   *     bool foundTautomer;
    *
    *   private:
    *     OBConversion m_conv;
@@ -59,31 +61,74 @@ namespace OpenBabel {
    * WriteSmilesFunctor functor;
    * // write all tautomers to std::cout
    * EnumerateTautomers(mol, functor);
-   * // write the original smiles if there are no tautomers found
-   * if (!functor.foundTautomers) {
-   *   OBConversion conv;
-   *   conv.SetOutFormat("can");
-   *   std::cout << conv.WriteString(&mol);
-   * }
    * @endcode
-   */  
+   */
   class OBAPI TautomerFunctor
   {
     public:
       virtual ~TautomerFunctor() {}
       /**
        * This function is called every time a tautomer is discovered.
+       *
+       * @param mol The tautomer.
        */
       virtual void operator()(OBMol *mol) = 0;
-  }; 
+  };
+
+  /**
+   * Functor for tautomer enumeration algorithm. Subclass this class to write
+   * your own functor. This functor will be called for every unique tautomer
+   * that is found.
+   *
+   * Example to write all unique tautomer smiles to std::cout:
+   * @code
+   * class WriteSmilesFunctor : public UniqueTautomerFunctor
+   * {
+   *   public:
+   *     void operator()(OBMol *mol, const std::string &smiles)
+   *     {
+   *       std::cout << smiles << std::endl;
+   *     }
+   * };
+   * @endcode
+   *
+   * This functor can be used in the following way:
+   * @code
+   * OBMol mol;
+   * ...
+   * WriteSmilesFunctor functor;
+   * // write all unique tautomers to std::cout
+   * EnumerateTautomers(mol, functor);
+   * @endcode
+   */
+  class OBAPI UniqueTautomerFunctor : public TautomerFunctor
+  {
+    public:
+      virtual ~UniqueTautomerFunctor() {}
+      /**
+       * This function is called every time a tautomer is discovered.
+       *
+       * @param mol The tautomer.
+       */
+      void operator()(OBMol *mol);
+      /**
+       * This function is called every time a unique tautomer is discovered.
+       *
+       * @param mol The tautomer.
+       * @param smiles The canonical SMILES for the tautomer.
+       */
+      virtual void operator()(OBMol *mol, const std::string &smiles) = 0;
+    private:
+      std::vector<std::string> m_smiles; //!< unique tautomer SMILES
+  };
 
   /**
    * Enumerate all tautomers for @p mol. Every time a tautomer is discovered,
-   * the @p functor will be invoked with the bonds changed to the tautomer. 
+   * the @p functor will be invoked with the bonds changed to the tautomer.
    * When the enumeration is complete, the bonds will be changed back to the
    * original bond orders.
    *
-   * The algorithm is based on 
+   * The algorithm is based on
    * http://www.daylight.com/meetings/emug99/Delany/taut_html/index.htm
    *
    * @warning This function makes hydrogens implicit.

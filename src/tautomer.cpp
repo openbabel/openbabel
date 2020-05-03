@@ -1,7 +1,7 @@
 /**********************************************************************
 tautomer.cpp - Tautomer support
 
-  Copyright (C) 2011 by Tim Vandermeersch
+  Copyright (C) 2011,2020 by Tim Vandermeersch
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -25,8 +25,11 @@ GNU General Public License for more details.
 #include <openbabel/canon.h>
 #include <openbabel/obconversion.h>
 #include <cassert>
+#include <algorithm>
 
 namespace OpenBabel {
+
+
 
 //#define DEBUG 1
 
@@ -35,6 +38,50 @@ namespace OpenBabel {
    */
   struct TautomerImpl
   {
+
+#ifdef DEBUG
+    static std::string indentation(int n)
+    {
+      return std::string(n * 4, ' ');
+    }
+
+    // Use RAII to keep track of enetering and leaving a function
+    class EnterExit
+    {
+      public:
+        explicit EnterExit(const std::string &function, int indent = 0) : m_function(function), m_indent(indent)
+        {
+          std::cout << ::OpenBabel::TautomerImpl::indentation(m_indent) << "Enter " << m_function << "()..." << std::endl;
+        }
+
+        ~EnterExit()
+        {
+          std::cout << ::OpenBabel::TautomerImpl::indentation(m_indent) << "Exit " << m_function << "()..." << std::endl;
+        }
+
+        std::string indentation() const
+        {
+          return ::OpenBabel::TautomerImpl::indentation(m_indent + 1);
+        }
+
+      private:
+        std::string m_function;
+        int m_indent;
+    };
+#endif
+
+    /*   H
+     *   |        nitrogen donor
+     * --N--
+     *
+     * ==N--      nitrogen acceptor
+     *
+     * --O--H     oxygen(*) donor
+     *
+     * ==O        oxygen(*) acceptor
+     *
+     * (*) sulfur, selenium and tellurium behave the same as oxygen
+     */
     enum AtomNumber {
       Carbon = 6,
       Nitrogen = 7,
@@ -55,83 +102,248 @@ namespace OpenBabel {
       Double
     };
 
+    /**
+     * Use RAII in the backtracking algoirthm to reduce bugs.
+     */
+    class AssignDonorRAII
+    {
+      public:
+        AssignDonorRAII(std::vector<Type> &atomTypes, int &hydrogenCounter, OBAtom *atom) : m_atomTypes(atomTypes), m_atom(atom), m_hydrogenCounter(hydrogenCounter)
+        {
+          redo(atom);
+        }
+
+        ~AssignDonorRAII()
+        {
+          undo();
+        }
+
+        void redo(OBAtom *atom)
+        {
+#ifdef DEBUG
+          std::cout << "AssignDonorRAII::redo(" << atom->GetIndex() << ")" << std::endl;
+#endif
+          assert(m_hydrogenCounter >= 1);
+          m_atom = atom;
+          m_atomTypes[m_atom->GetIndex()] = Donor;
+          m_atom->SetImplicitHCount(m_atom->GetImplicitHCount() + 1);
+          --m_hydrogenCounter;
+        }
+
+        void undo()
+        {
+          if (!m_atom)
+            return;
+#ifdef DEBUG
+          std::cout << "AssignDonorRAII::undo(" << m_atom->GetIndex() << ")" << std::endl;
+#endif
+          m_atomTypes[m_atom->GetIndex()] = Unassigned;
+          m_atom->SetImplicitHCount(m_atom->GetImplicitHCount() - 1);
+          ++m_hydrogenCounter;
+          m_atom = 0;
+        }
+
+        /**
+         * For the canonical tautomer we do not use the functor and exit search
+         * with canonical tautomer. Therefore, the action from redo (increment
+         * implicit hydrogen count) should not be undone. In other words, we
+         * release or "leak" the resource.
+         */
+        void release()
+        {
+          m_atom = 0;
+        }
+
+      private:
+        std::vector<Type> &m_atomTypes;
+        OBAtom *m_atom;
+        int &m_hydrogenCounter;
+    };
+
+    /**
+     * Use RAII in the backtracking algoirthm to reduce bugs.
+     */
+    class AssignAcceptorRAII
+    {
+      public:
+        AssignAcceptorRAII(std::vector<Type> &atomTypes, OBAtom *atom) : m_atomTypes(atomTypes), m_atom(atom)
+        {
+          redo(atom);
+        }
+
+        ~AssignAcceptorRAII()
+        {
+          undo();
+        }
+
+        void redo(OBAtom *atom)
+        {
+#ifdef DEBUG
+          std::cout << "AssignAcceptorRAII::redo(" << atom->GetIndex() << ")" << std::endl;
+#endif
+          m_atom = atom;
+          m_atomTypes[m_atom->GetIndex()] = Acceptor;
+        }
+
+        void undo()
+        {
+          if (!m_atom)
+            return;
+#ifdef DEBUG
+          std::cout << "AssignAcceptorRAII::undo(" << m_atom->GetIndex() << ")" << std::endl;
+#endif
+          m_atomTypes[m_atom->GetIndex()] = Unassigned;
+          m_atom = 0;
+        }
+
+      private:
+        std::vector<Type> &m_atomTypes;
+        OBAtom *m_atom;
+    };
+
+    /**
+     * Use RAII in the backtracking algoirthm to reduce bugs.
+     */
+    class PropagationRAII
+    {
+      public:
+        PropagationRAII(std::vector<Type> &atomTypes, std::vector<Type> &bondTypes, int &hydrogenCounter)
+          : m_atomTypes(atomTypes), m_bondTypes(bondTypes), m_hydrogenCounter(hydrogenCounter)
+        {
+        }
+
+        ~PropagationRAII()
+        {
+          // donors
+          for (std::size_t i = 0; i < m_donors.size(); ++i) {
+            m_atomTypes[m_donors[i]->GetIndex()] = Unassigned;
+            m_donors[i]->SetImplicitHCount(m_donors[i]->GetImplicitHCount() - 1);
+          }
+          m_hydrogenCounter += m_donors.size();
+          // acceptors
+          for (std::size_t i = 0; i < m_acceptors.size(); ++i)
+            m_atomTypes[m_acceptors[i]->GetIndex()] = Unassigned;
+          // bonds
+          for (std::size_t i = 0; i < m_bonds.size(); ++i)
+            m_bondTypes[m_bonds[i]->GetIdx()] = Unassigned;
+        }
+
+        void assignDonor(OBAtom *atom)
+        {
+          assert(m_hydrogenCounter >= 1);
+          m_donors.push_back(atom);
+          m_atomTypes[atom->GetIndex()] = Donor;
+          atom->SetImplicitHCount(atom->GetImplicitHCount() + 1);
+          --m_hydrogenCounter;
+        }
+
+        void assignAcceptor(OBAtom *atom)
+        {
+          m_acceptors.push_back(atom);
+          m_atomTypes[atom->GetIndex()] = Acceptor;
+        }
+
+        void assignBond(OBBond *bond, Type type)
+        {
+          m_bonds.push_back(bond);
+          m_bondTypes[bond->GetIdx()] = type;
+        }
+
+        // see AssignDonorRAII::release()
+        void release()
+        {
+          std::copy(m_donors.begin(), m_donors.end(), std::back_inserter(m_acceptors));
+          m_donors.clear();
+        }
+
+      private:
+        std::vector<Type> &m_atomTypes;
+        std::vector<Type> &m_bondTypes;
+        std::vector<OBAtom*> m_acceptors; //!< propagated atoms
+        std::vector<OBAtom*> m_donors; //!< propagated atoms
+        std::vector<OBBond*> m_bonds; //!< propagated bonds
+        int &m_hydrogenCounter; //!< global hydrogen counter
+    };
+
+
     bool m_canonical, m_foundLeafNode;
+    std::vector<OBAtom*> m_canonAtoms;
 
-    // debug
-    void print_atom_types(const std::vector<Type> &types)
+#ifdef DEBUG
+    void PrintAtomTypes(const std::vector<Type> &atomTypes, int indent = 0)
     {
-      std::cout << "Atom Types:" << std::endl;
-      for(std::size_t i = 0; i < types.size(); ++i) {
-        std::cout << "  " << i << ": ";
-
-        switch (types[i]) {
-          case Assigned:
-            std::cout << "Assigned" << std::endl;
-            break;
-          case Single:
-            std::cout << "Single" << std::endl;
-            break;
-          case Double:
-            std::cout << "Double" << std::endl;
-            break;
+      std::cout << indentation(indent);
+      for(std::size_t i = 0; i < atomTypes.size(); ++i) {
+        std::cout << i;
+        switch (atomTypes[i]) {
           case Donor:
-            std::cout << "Donor" << std::endl;
+            std::cout << "D ";
             break;
           case Acceptor:
-            std::cout << "Acceptor" << std::endl;
+            std::cout << "A ";
             break;
           case Hybridized:
-            std::cout << "Hybridized" << std::endl;
+            std::cout << "H ";
             break;
           case Other:
-            std::cout << "Other" << std::endl;
+            std::cout << "O ";
             break;
           case Unassigned:
-            std::cout << "Unassigned" << std::endl;
+            std::cout << "? ";
             break;
+          default:
+            assert(0);
         }
       }
+      std::cout << std::endl;
     }
 
-    // debug
-    void print_bond_types(const std::vector<Type> &types)
+    void PrintBondTypes(OBMol *mol, const std::vector<Type> &bondTypes, int indent = 0)
     {
-      std::cout << "Bond Types:" << std::endl;
-      for(std::size_t i = 0; i < types.size(); ++i) {
-        std::cout << "  " << i << ": ";
+      std::cout << indentation(indent);
+      for(std::size_t i = 0; i < bondTypes.size(); ++i) {
+        OBBond *bond = mol->GetBond(i);
+        std::cout << bond->GetBeginAtomIdx() - 1;
 
-        switch (types[i]) {
+        switch (bondTypes[i]) {
           case Assigned:
-            std::cout << "Assigned" << std::endl;
+            switch (bond->GetBondOrder()) {
+              case 1:
+                std::cout << "-";
+                break;
+              case 2:
+                std::cout << "=";
+                break;
+              case 3:
+                std::cout << "#";
+                break;
+              default:
+                assert(0);
+            }
             break;
           case Single:
-            std::cout << "Single" << std::endl;
+            std::cout << "-";
             break;
           case Double:
-            std::cout << "Double" << std::endl;
-            break;
-          case Donor:
-            std::cout << "Donor" << std::endl;
-            break;
-          case Acceptor:
-            std::cout << "Acceptor" << std::endl;
-            break;
-          case Hybridized:
-            std::cout << "Hybridized" << std::endl;
-            break;
-          case Other:
-            std::cout << "Other" << std::endl;
+            std::cout << "=";
             break;
           case Unassigned:
-            std::cout << "Unassigned" << std::endl;
+            std::cout << "?";
             break;
+          default:
+            assert(0);
         }
+
+        std::cout << bond->GetEndAtomIdx() - 1 << " ";
       }
+      std::cout << std::endl;
     }
+#endif
 
-
-    void AssignAtomTypes(OBMol *mol, std::vector<Type> &types)
+    std::vector<Type> InitializeAtomTypes(OBMol *mol)
     {
+      std::vector<Type> types;
+
       FOR_ATOMS_OF_MOL (atom, mol) {
         switch (atom->GetAtomicNum()) {
           case Carbon:
@@ -142,9 +354,9 @@ namespace OpenBabel {
             break;
 
           case Nitrogen:
-            if (atom->HasDoubleBond())
+            if (atom->HasDoubleBond() && atom->GetTotalValence() == 3)
               types.push_back(Acceptor);
-            else if (atom->GetImplicitHCount())
+            else if (atom->GetImplicitHCount() && atom->GetTotalValence() == 3)
               types.push_back(Donor);
             else
               types.push_back(Other);
@@ -154,111 +366,101 @@ namespace OpenBabel {
           case Sulfur:
           case Selenium:
           case Tellurium:
-            if (atom->HasDoubleBond())
+            if (atom->HasDoubleBond() && atom->GetTotalValence() == 2)
               types.push_back(Acceptor);
-            else if (atom->GetImplicitHCount())
+            else if (atom->GetImplicitHCount() && atom->GetTotalValence() == 2)
               types.push_back(Donor);
             else
               types.push_back(Other);
             break;
 
           default:
-            types.push_back(Other);        
+            types.push_back(Other);
         }
       }
 
       assert( types.size() == mol->NumAtoms() );
+      return types;
     }
 
-    void AssignBondTypes(OBMol *mol, const std::vector<Type> &atomTypes, std::vector<Type> &bondTypes)
+    std::vector<Type> InitializeBondTypes(OBMol *mol, const std::vector<Type> &atomTypes)
     {
+      std::vector<Type> bondTypes;
+
       FOR_BONDS_OF_MOL (bond, mol) {
         assert( bond->GetBeginAtomIdx() <= mol->NumAtoms() );
         assert( bond->GetEndAtomIdx() <= mol->NumAtoms() );
         if (atomTypes[bond->GetBeginAtomIdx()-1] != Other && atomTypes[bond->GetEndAtomIdx()-1] != Other)
           bondTypes.push_back(Unassigned);
-        else 
+        else
           bondTypes.push_back(Assigned);
       }
+
+      return bondTypes;
     }
 
-    struct Level 
+    bool IsPropagationValid(OBMol *mol, const std::vector<Type> &atomTypes, const std::vector<Type> &bondTypes, int depth)
     {
-      OBAtom *assigned;
-      std::vector<OBAtom*> propagatedAtoms;
-      std::vector<OBBond*> propagatedBonds;
-    };
-
-    static void SanityCheckHydrogens(OBAtom *atom)
-    {
-      OBMol* mol = atom->GetParent();
-      unsigned int totH = 0;
-      FOR_ATOMS_OF_MOL(atm, mol) {
-        totH += atm->GetImplicitHCount();
-      }
-      printf("Total no. of hydrogens in molecule: %d\n", totH);
-    }
-
-    static void DecrementImplicitHCount(OBAtom* atom)
-    {
-      atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
-#ifdef DEBUG
-      printf("Decremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
-      SanityCheckHydrogens(atom);
-#endif
-    }
-
-    static void IncrementImplicitHCount(OBAtom* atom)
-    {
-      atom->SetImplicitHCount(atom->GetImplicitHCount() + 1);
-#ifdef DEBUG
-      printf("Incremented %d (%d) to %d\n", atom->GetIndex(), atom->GetAtomicNum(), atom->GetImplicitHCount());
-      SanityCheckHydrogens(atom);
-#endif
-    }
-
-    void print_assigned(const std::vector<Level> &levels, const std::vector<Type> &atomTypes)
-    {
-      for (std::size_t i = 0; i < levels.size(); ++i)
-        std::cout << levels[i].assigned->GetIndex() << " ";
-      std::cout << std::endl;
-      for (std::size_t i = 0; i < levels.size(); ++i)
-        if (atomTypes[levels[i].assigned->GetIndex()] == Donor)
-          std::cout << "D ";
-        else
-          std::cout << "A ";
-      std::cout << std::endl;
-    }
-
-    void Backtrack(std::vector<Type> &atomTypes, std::vector<Type> &bondTypes, std::vector<Level> &levels, int &numHydrogens)
-    {
-      OBAtom *lastAtom = levels.back().assigned;
-#ifdef DEBUG
-      std::cout << "  Backtrack... " << lastAtom->GetIndex() << std::endl;
-#endif
-      if (atomTypes[lastAtom->GetIndex()] == Donor)
-        DecrementImplicitHCount(lastAtom); // Noel: Why no need for accompanying numHydrogens++?
-      atomTypes[lastAtom->GetIndex()] = Unassigned;
-
-      std::vector<OBAtom*> &propagatedAtoms = levels.back().propagatedAtoms;
-      for (std::size_t i = 0; i < propagatedAtoms.size(); ++i) {
-        if (atomTypes[propagatedAtoms[i]->GetIndex()] == Donor) {
-          DecrementImplicitHCount(propagatedAtoms[i]);
-          numHydrogens++;
+      FOR_ATOMS_OF_MOL (atom, mol) {
+        // Count atom's bond types
+        int numSingleBond = 0, numDoubleBond = 0, numUnassigned = 0;
+        FOR_BONDS_OF_ATOM (bond, &*atom) {
+          if (bondTypes[bond->GetIdx()] == Single)
+            numSingleBond++;
+          if (bondTypes[bond->GetIdx()] == Double)
+            numDoubleBond++;
+          if (bondTypes[bond->GetIdx()] == Unassigned)
+            numUnassigned++;
         }
-        atomTypes[propagatedAtoms[i]->GetIndex()] = Unassigned;
+
+        // A donor can not have any double bonds
+        if (atomTypes[atom->GetIndex()] == Donor)
+          if (numDoubleBond) {
+#ifdef DEBUG
+            std::cout << indentation(depth) << "invalid Donor" << std::endl;
+#endif
+            return false;
+          }
+
+        // An acceptor or hybridized atom should:
+        if (atomTypes[atom->GetIndex()] == Acceptor || atomTypes[atom->GetIndex()] == Hybridized) {
+          // have at least one unassigned or double bond
+          if (!numUnassigned && !numDoubleBond) {
+#ifdef DEBUG
+            std::cout << indentation(depth) << "invalid Acceptor/Hybridized [no unassigned/double bond] for atom " << atom->GetIndex() << std::endl;
+#endif
+            return false;
+          }
+          // have no more than one double bond
+          if (numDoubleBond > 1) {
+#ifdef DEBUG
+            std::cout << indentation(depth) << "invalid Acceptor/Hybridized [multiple double bonds] for atom " << atom->GetIndex() << std::endl;
+#endif
+            return false;
+          }
+        }
       }
 
-      std::vector<OBBond*> &propagatedBonds = levels.back().propagatedBonds;
-      for (std::size_t i = 0; i < propagatedBonds.size(); ++i)
-        bondTypes[propagatedBonds[i]->GetIdx()] = Unassigned;
-
-      levels.pop_back();
+      return true;
     }
 
-    void AssignmentPropagation(OBMol *mol, std::vector<Type> &atomTypes, std::vector<Type> &bondTypes, const std::vector<OBAtom*> &canonAtoms,
-        int &numHydrogens, std::vector<Level> &levels, TautomerFunctor &functor)
+    bool IsLeafNode(const std::vector<Type> &atomTypes) const
     {
+      // Check to see if we are at a leaf node (i.e. no unassigned atoms left)
+      for (std::size_t i = 0; i < atomTypes.size(); ++i)
+        if (atomTypes[i] == Unassigned)
+          return false;
+      return true;
+    }
+
+    void AssignmentPropagation(OBMol *mol, std::vector<Type> &atomTypes, std::vector<Type> &bondTypes,
+        int &numHydrogens, TautomerFunctor &functor, int depth)
+    {
+#ifdef DEBUG
+      EnterExit ee("AssignmentPropagation", depth);
+#endif
+      PropagationRAII propagation(atomTypes, bondTypes, numHydrogens);
+
       bool changed = true;
       while (changed) {
         changed = false;
@@ -268,11 +470,10 @@ namespace OpenBabel {
           if (atomTypes[atom->GetIndex()] == Donor) {
             FOR_BONDS_OF_ATOM (bond, &*atom) {
               if (bondTypes[bond->GetIdx()] == Unassigned) {
-                bondTypes[bond->GetIdx()] = Single;
-                levels.back().propagatedBonds.push_back(&*bond);
+                propagation.assignBond(&*bond, Single);
                 changed = true;
 #ifdef DEBUG
-                std::cout << "    -> Rule 1: Assign " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Single" << std::endl;
+                std::cout << ee.indentation() << "-> Rule 1: Assign " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Single" << std::endl;
 #endif
               }
             }
@@ -280,26 +481,25 @@ namespace OpenBabel {
         }
 
         // Any unassigned atom that has all of its bonds assigned single, must be assigned a donor
-        FOR_ATOMS_OF_MOL (atom, mol) {
-          if (atomTypes[atom->GetIndex()] != Unassigned)
-            continue;
-          bool allBondsSingle = true;
-          FOR_BONDS_OF_ATOM (bond, &*atom) {
-            if (bondTypes[bond->GetIdx()] != Single) {
-              allBondsSingle = false;
-              break;
+        if (numHydrogens) {
+          FOR_ATOMS_OF_MOL (atom, mol) {
+            if (atomTypes[atom->GetIndex()] != Unassigned)
+              continue;
+            bool allBondsSingle = true;
+            FOR_BONDS_OF_ATOM (bond, &*atom) {
+              if (bondTypes[bond->GetIdx()] != Single) {
+                allBondsSingle = false;
+                break;
+              }
             }
-          }
 
-          if (allBondsSingle) {
-            atomTypes[atom->GetIndex()] = Donor; 
-            IncrementImplicitHCount(&*atom);
-            numHydrogens--;
-            levels.back().propagatedAtoms.push_back(&*atom);
-            changed = true;
+            if (allBondsSingle) {
+              propagation.assignDonor(&*atom);
+              changed = true;
 #ifdef DEBUG
-            std::cout << "    -> Rule 2: Assign " << atom->GetIndex() << " Donor" << std::endl;
+              std::cout << ee.indentation() << "-> Rule 2: Assign " << atom->GetIndex() << " Donor" << std::endl;
 #endif
+            }
           }
         }
 
@@ -316,11 +516,10 @@ namespace OpenBabel {
           }
 
           if (hasDoubleBond) {
-            atomTypes[atom->GetIndex()] = Acceptor;
-            levels.back().propagatedAtoms.push_back(&*atom);
+            propagation.assignAcceptor(&*atom);
             changed = true;
 #ifdef DEBUG
-            std::cout << "    -> Rule 3: Assign " << atom->GetIndex() << " Acceptor" << std::endl;
+            std::cout << ee.indentation() << "-> Rule 3: Assign " << atom->GetIndex() << " Acceptor" << std::endl;
 #endif
           }
         }
@@ -340,11 +539,10 @@ namespace OpenBabel {
           if (hasDoubleBond) {
             FOR_BONDS_OF_ATOM (bond, &*atom) {
               if (bondTypes[bond->GetIdx()] == Unassigned) {
-                bondTypes[bond->GetIdx()] = Single;
-                levels.back().propagatedBonds.push_back(&*bond);
+                propagation.assignBond(&*bond, Single);
                 changed = true;
 #ifdef DEBUG
-                std::cout << "    -> Rule 4: Assign " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Single" << std::endl;
+                std::cout << ee.indentation() << "-> Rule 4: Assign " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Single" << std::endl;
 #endif
               }
             }
@@ -364,14 +562,14 @@ namespace OpenBabel {
               numUnassigned++;
           }
 
+
           if (!hasDoubleBond && numUnassigned == 1) {
             FOR_BONDS_OF_ATOM (bond, &*atom) {
               if (bondTypes[bond->GetIdx()] == Unassigned) {
-                bondTypes[bond->GetIdx()] = Double;
-                levels.back().propagatedBonds.push_back(&*bond);
+                propagation.assignBond(&*bond, Double);
                 changed = true;
 #ifdef DEBUG
-                std::cout << "    -> Rule 5: Assign " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Double" << std::endl;
+                std::cout << ee.indentation() << "-> Rule 5: Assign " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Double" << std::endl;
 #endif
               }
             }
@@ -381,191 +579,174 @@ namespace OpenBabel {
       } // while (changed)
 
       // An invalid atom type causes the search to backtrack
-      bool invalid = false;
-      FOR_ATOMS_OF_MOL (atom, mol) {
-          int numSingleBond = 0, numDoubleBond = 0, numUnassigned = 0;
-          FOR_BONDS_OF_ATOM (bond, &*atom) {
-            if (bondTypes[bond->GetIdx()] == Single)
-              numSingleBond++;
-            if (bondTypes[bond->GetIdx()] == Double)
-              numDoubleBond++;
-            if (bondTypes[bond->GetIdx()] == Unassigned)
-              numUnassigned++;
-          }
-
-
-        if (atomTypes[atom->GetIndex()] == Donor)
-          if (numDoubleBond) {
-            invalid = true;
-#ifdef DEBUG
-            std::cout << "invalid Donor" << std::endl;
-#endif
-          }
-
-        if (atomTypes[atom->GetIndex()] == Acceptor || atomTypes[atom->GetIndex()] == Hybridized) {
-          if (!numUnassigned && !numDoubleBond) {
-            invalid = true;
-#ifdef DEBUG
-            std::cout << "invalid Acceptor/Hybridized 1" << std::endl;
-#endif
-          }
-          if (numDoubleBond > 1) {
-            invalid = true;
-#ifdef DEBUG
-            std::cout << "invalid Acceptor/Hybridized 2" << std::endl;
-#endif
-          }
-        }
-      }
+      if (!IsPropagationValid(mol, atomTypes, bondTypes, depth + 1))
+        return;
 
       // Check to see if we are at a leaf node (i.e. no unassigned atoms left)
-      bool leafNode = true;
-      for (std::size_t i = 0; i < atomTypes.size(); ++i)
-        if (atomTypes[i] == Unassigned) {
-          leafNode = false;
-          break;
-        }
+      if (IsLeafNode(atomTypes)) {
 
-      if (leafNode) {
         // Check to make sure there are no unassigned bonds remaining
         // This happens for phenyl rings...
         bool unassignedBonds = false;
         for (std::size_t i = 0; i < bondTypes.size(); ++i)
-        if (bondTypes[i] == Unassigned) {
-          unassignedBonds = true;
-          // Randomly assign a single bond, the other bonds will be propagated
-          bondTypes[i] = Single;
-          break;
-        }
+          if (bondTypes[i] == Unassigned) {
+            unassignedBonds = true;
+            // Randomly assign a single bond, the other bonds will be propagated
+            OBBond *bond = mol->GetBond(i);
+            propagation.assignBond(bond, Single);
+#ifdef DEBUG
+            std::cout << ee.indentation() << "-> Unasigned bonds remaining, assigning " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Single" << std::endl;
+#endif
+            break;
+          }
 
         if (unassignedBonds) {
-          AssignmentPropagation(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
+          AssignmentPropagation(mol, atomTypes, bondTypes, numHydrogens, functor, depth + 1);
+          if (m_canonical && m_foundLeafNode)
+            propagation.release();
           return;
         }
 
-      }
+        //
+        if (!numHydrogens) {
+          m_foundLeafNode = true;
 
-      if (!invalid) {
-        if (leafNode) {
+#ifdef DEBUG
+          std::cout << ee.indentation() << "  --> LeafNode reached..." << std::endl;
+#endif
+          // Copy information to mol and reset aromaticity
+          FOR_ATOMS_OF_MOL (atom, mol)
+            atom->SetAromatic(false);
+
           FOR_BONDS_OF_MOL (bond, mol) {
             if (bondTypes[bond->GetIdx()] == Single)
               bond->SetBondOrder(1);
             if (bondTypes[bond->GetIdx()] == Double)
               bond->SetBondOrder(2);
+            bond->SetAromatic(false);
           }
-          if (!numHydrogens) {
-#ifdef DEBUG
-            std::cout << "  --> LeafNode reached..." << std::endl;
-#endif
-            m_foundLeafNode = true;
-            
-            mol->BeginModify();
-            mol->EndModify();
-            functor(mol);
-          }
-        } else
-          // Go to the next unassigned atom
-          EnumerateRecursive(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
-      }
+          mol->SetAromaticPerceived(false);
 
-    }
-
-    void EnumerateRecursive(OBMol *mol, std::vector<Type> &atomTypes, std::vector<Type> &bondTypes, const std::vector<OBAtom*> &canonAtoms,
-        int numHydrogens, std::vector<Level> &levels, TautomerFunctor &functor)
-    {
-      if (m_canonical && m_foundLeafNode)
-        return;
-#ifdef DEBUG
-      std::cout << "EnumerateRecursive" << std::endl;
-#endif
-      // Select next lowest canonical unassigned atom
-      for (std::size_t i = 0; i < canonAtoms.size(); ++i)
-        if (atomTypes[canonAtoms[i]->GetIndex()] == Unassigned) {
-          if (numHydrogens) {
-            // Assign it a hydrogen if there are hydrogens left
-            atomTypes[canonAtoms[i]->GetIndex()] = Donor;
-            IncrementImplicitHCount(canonAtoms[i]);
-            numHydrogens--;
-#ifdef DEBUG
-            std::cout << "  Assigned " << canonAtoms[i]->GetIndex() << " Donor" << std::endl;
-#endif
-          } else {
-            // Assign it acceptor otherwise
-            atomTypes[canonAtoms[i]->GetIndex()] = Acceptor;
-#ifdef DEBUG
-            std::cout << "  Assigned " << canonAtoms[i]->GetIndex() << " Acceptor" << std::endl;
-#endif
-          }
-
-          // store the atom for backtracking later
-          levels.push_back(Level());
-          levels.back().assigned = canonAtoms[i];
-          break;
+          // Call functor with tautomer
+          functor(mol);
         }
 
+      } else { // IsLeafNode
+        // Go to the next unassigned atom
+        EnumerateRecursive(mol, atomTypes, bondTypes,numHydrogens, functor, depth + 1);
+      }
 
+      if (m_canonical && m_foundLeafNode)
+        propagation.release();
+    }
+
+    OBAtom *SelectNextAtom(const std::vector<Type> &atomTypes) const
+    {
+      // Select next lowest canonical unassigned atom
+      for (std::size_t i = 0; i < m_canonAtoms.size(); ++i)
+        if (atomTypes[m_canonAtoms[i]->GetIndex()] == Unassigned)
+          return m_canonAtoms[i];
+      return 0;
+    }
+
+    bool HasTooManyHydrogensLeft(const std::vector<Type> &atomTypes, int numHydrogens) const
+    {
       // Check to ensure there are at least enough unassigned atoms left to assign hydrogens to
-      int numUnassigned = 0;
-      for (std::size_t i = 0; i < canonAtoms.size(); ++i)
-        if (atomTypes[canonAtoms[i]->GetIndex()] == Unassigned)
-          numUnassigned++;
-      if (numUnassigned < numHydrogens) {
-        // Backtrack
+      return std::count(atomTypes.begin(), atomTypes.end(), Unassigned) < numHydrogens;
+    }
+
+    void EnumerateRecursive(OBMol *mol, std::vector<Type> &atomTypes, std::vector<Type> &bondTypes,
+        int numHydrogens, TautomerFunctor &functor, int depth)
+    {
 #ifdef DEBUG
-        std::cout << "  Backtrack..." << std::endl;
+      EnterExit ee("EnumerateRecursive", depth);
+
+      std::cout << ee.indentation() << numHydrogens << " hydrogens left [1]..." << std::endl;
+      PrintAtomTypes(atomTypes, depth+1);
+      PrintBondTypes(mol, bondTypes, depth+1);
 #endif
-        Backtrack(atomTypes, bondTypes, levels, numHydrogens);
+
+      if (m_canonical && m_foundLeafNode) {
+#ifdef DEBUG
+        std::cout << ee.indentation() << "--> Canonical and leaf node found, backtracking..." << std::endl;
+#endif
         return;
       }
- 
 
-      if (levels.size()) {
-        AssignmentPropagation(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
-        if (m_canonical && m_foundLeafNode)
+      // Select next lowest canonical unassigned atom
+      OBAtom *nextAtom = SelectNextAtom(atomTypes);
+      if (!nextAtom) {
+#ifdef DEBUG
+        std::cout << ee.indentation() << "--> No unassigned atoms left, backtracking..." << std::endl;
+#endif
+        return;
+      }
+
+      // Assign it a hydrogen if there are hydrogens left
+      if (numHydrogens) {
+        AssignDonorRAII donor(atomTypes, numHydrogens, nextAtom);
+#ifdef DEBUG
+        std::cout << ee.indentation() << "-> Assign atom " << nextAtom->GetIndex() << " Donor" << std::endl;
+#endif
+
+        // Propagate...
+        AssignmentPropagation(mol, atomTypes, bondTypes, numHydrogens, functor, depth + 1);
+
+#ifdef DEBUG
+        std::cout << ee.indentation() << numHydrogens << " hydrogens left [1b]..." << std::endl;
+        PrintAtomTypes(atomTypes, depth+1);
+        PrintBondTypes(mol, bondTypes, depth+1);
+#endif
+
+        if (m_canonical && m_foundLeafNode) {
+          donor.release();
           return; // early termination
+        }
+      }
 
 #ifdef DEBUG
-        std::cout << "Change?" << std::endl;
-        print_assigned(levels, atomTypes);
+      std::cout << ee.indentation() << numHydrogens << " hydrogens left [2]..." << std::endl;
+      PrintAtomTypes(atomTypes, depth+1);
+      PrintBondTypes(mol, bondTypes, depth+1);
 #endif
-        
-        OBAtom *lastAtom = levels.back().assigned;
-        if (atomTypes[lastAtom->GetIndex()] == Donor) {
-          // Change atom to acceptor and continue the search
-          atomTypes[lastAtom->GetIndex()] = Acceptor;
-          DecrementImplicitHCount(lastAtom);
-          numHydrogens++;
+
+      // Assign it acceptor after backtracking
+      AssignAcceptorRAII acceptor(atomTypes, nextAtom);
 #ifdef DEBUG
-          std::cout << "  Change " << lastAtom->GetIndex() << " to Acceptor" << std::endl;
+      std::cout << ee.indentation() << "-> Assign atom " << nextAtom->GetIndex() << " Acceptor" << std::endl;
 #endif
 
-          std::vector<OBAtom*> &propagatedAtoms = levels.back().propagatedAtoms;
-          for (std::size_t i = 0; i < propagatedAtoms.size(); ++i) {
-            if (atomTypes[propagatedAtoms[i]->GetIndex()] == Donor) {
-              DecrementImplicitHCount(propagatedAtoms[i]);
-              numHydrogens++;
-            }
-            atomTypes[propagatedAtoms[i]->GetIndex()] = Unassigned;
-          }
-
-          std::vector<OBBond*> &propagatedBonds = levels.back().propagatedBonds;
-          for (std::size_t i = 0; i < propagatedBonds.size(); ++i)
-            bondTypes[propagatedBonds[i]->GetIdx()] = Unassigned;
-
-
-          AssignmentPropagation(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
-          if (m_canonical && m_foundLeafNode)
-            return; // early termination
-        } 
-
-      // Backtrack
+      // Check to ensure there are at least enough unassigned atoms left to assign hydrogens to
+      if (!HasTooManyHydrogensLeft(atomTypes, numHydrogens)) {
+        // Propagate...
+        AssignmentPropagation(mol, atomTypes, bondTypes, numHydrogens, functor, depth + 1);
+      } else {
 #ifdef DEBUG
-        print_assigned(levels, atomTypes);
+        std::cout << ee.indentation() << "--> Too many hydrogens left, backtracking..." << std::endl;
 #endif
-        Backtrack(atomTypes, bondTypes, levels, numHydrogens);
       }
     }
 
+#ifdef DEBUG
+    static void SanityCheckHydrogens(OBAtom *atom, int indent)
+    {
+      OBMol* mol = atom->GetParent();
+      unsigned int totH = 0;
+      FOR_ATOMS_OF_MOL(atm, mol) {
+        totH += atm->GetImplicitHCount();
+      }
+      std::cout << indentation(indent) << "Total no. of hydrogens in molecule: " << totH << std::endl;
+    }
+#endif
+
+    static void DecrementImplicitHCount(OBAtom* atom, int indent)
+    {
+      atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
+#ifdef DEBUG
+      std::cout << indentation(indent) << "Decremented " << atom->GetIndex() << " (" << atom->GetAtomicNum() << ") to " << atom->GetImplicitHCount() << std::endl;
+      SanityCheckHydrogens(atom, indent);
+#endif
+    }
 
     void Enumerate(OBMol *mol, TautomerFunctor &functor, bool canonical)
     {
@@ -575,24 +756,32 @@ namespace OpenBabel {
       mol->DeleteHydrogens();
 
       // Assign atom types
-      std::vector<Type> atomTypes;
-      AssignAtomTypes(mol, atomTypes);
+      std::vector<Type> atomTypes = InitializeAtomTypes(mol);
+      // Assign bond types
+      std::vector<Type> bondTypes = InitializeBondTypes(mol, atomTypes);
+
+      // If all bonds are assigned around an atom, mark it as Other (e.g. sulfon oxygen)
+      // This avoids premature backtracking (see IsPropagationValid)
+      FOR_ATOMS_OF_MOL (atom, mol) {
+        int numUnassignedBonds = 0;
+        FOR_BONDS_OF_ATOM (bond, &*atom)
+          if (bondTypes[bond->GetIdx()] == Unassigned)
+            ++numUnassignedBonds;
+        if (!numUnassignedBonds)
+          atomTypes[atom->GetIndex()] = Other;
+      }
+
 #ifdef DEBUG
-      print_atom_types(atomTypes);
+      PrintAtomTypes(atomTypes);
+      PrintBondTypes(mol, bondTypes);
 #endif
 
-      // Assign bond types
-      std::vector<Type> bondTypes;
-      AssignBondTypes(mol, atomTypes, bondTypes);
-#ifdef DEBUG
-      print_bond_types(bondTypes);
-#endif
       // Store original h counts
       std::vector<unsigned int> hcounts;
       FOR_ATOMS_OF_MOL(atom, mol)
         hcounts.push_back(atom->GetImplicitHCount());
 #ifdef DEBUG
-      SanityCheckHydrogens(mol->GetAtom(1));
+      SanityCheckHydrogens(mol->GetAtom(1), 0);
 #endif
 
       // Count the number of hydrogens
@@ -602,13 +791,13 @@ namespace OpenBabel {
         if (atomTypes[i] == Donor) {
           numHydrogens++;
           OBAtom* atm = mol->GetAtom(i + 1); // off-by-one
-          DecrementImplicitHCount(atm);
+          DecrementImplicitHCount(atm, 0);
         }
         if (atomTypes[i] == Donor || atomTypes[i] == Acceptor)
           atomTypes[i] = Unassigned;
       }
 #ifdef DEBUG
-      print_atom_types(atomTypes);
+      PrintAtomTypes(atomTypes);
 #endif
 
       // Store original bond orders
@@ -616,44 +805,67 @@ namespace OpenBabel {
       FOR_BONDS_OF_MOL (bond, mol)
         bondOrders.push_back(bond->GetBondOrder());
 
-      // FIXME
-      std::vector<unsigned int> canonLabels;
       if (canonical) {
         // Set all unassigned bonds to single
         FOR_BONDS_OF_MOL (bond, mol)
           if (bondTypes[bond->GetIdx()] == Unassigned)
             bond->SetBondOrder(1);
         mol->SetAromaticPerceived(false);
-        
+
+        // Compute canonical labels
         std::vector<unsigned int> symmetryClasses;
         OBGraphSym gs(mol);
         gs.GetSymmetry(symmetryClasses);
+
+        std::vector<unsigned int> canonLabels;
         CanonicalLabels(mol, symmetryClasses, canonLabels);
-      } else {
+
+        m_canonAtoms.resize(mol->NumAtoms());
         for (std::size_t i = 0; i < mol->NumAtoms(); ++i)
-          canonLabels.push_back(i+1);
+          m_canonAtoms[canonLabels[i]-1] = mol->GetAtom(i+1);
+      } else {
+        FOR_ATOMS_OF_MOL (atom, mol)
+          m_canonAtoms.push_back(&*atom);
       }
 
-      std::vector<OBAtom*> canonAtoms(mol->NumAtoms());
-      for (std::size_t i = 0; i < mol->NumAtoms(); ++i)
-        canonAtoms[canonLabels[i]-1] = mol->GetAtom(i+1);
-      
-      std::vector<Level> levels;
-      EnumerateRecursive(mol, atomTypes, bondTypes, canonAtoms, numHydrogens, levels, functor);
+      EnumerateRecursive(mol, atomTypes, bondTypes, numHydrogens, functor, 0);
 
-      if (!canonical) {
-        // Restore original bond orders
-        FOR_BONDS_OF_MOL (bond, mol)
+      if (!canonical || !m_foundLeafNode) {
+        // Restore original bond orders & aromaticity
+        FOR_BONDS_OF_MOL (bond, mol) {
           bond->SetBondOrder(bondOrders[bond->GetIdx()]);
-        // Restore original implicit H counts
-        FOR_ATOMS_OF_MOL(atom, mol)
+          bond->SetAromatic(false);
+        }
+        // Restore original implicit H counts & aromaticity
+        FOR_ATOMS_OF_MOL(atom, mol) {
           atom->SetImplicitHCount(hcounts[atom->GetIndex()]);
+          atom->SetAromatic(false);
+        }
       }
 
+      mol->SetAromaticPerceived(false);
+
+      // If no leaf was found, call functor with input molecule
+      if (!canonical && !m_foundLeafNode)
+        functor(mol);
     }
 
-  
+
   }; // TuatomerImpl
+
+  void UniqueTautomerFunctor::operator()(OBMol *mol)
+  {
+    OpenBabel::OBConversion conv;
+    conv.SetOutFormat("can");
+    std::string smiles = conv.WriteString(mol, true);
+
+    // Make sure the found tautomer is unique
+    if (std::find(m_smiles.begin(), m_smiles.end(), smiles) != m_smiles.end())
+      return;
+
+    m_smiles.push_back(smiles);
+    this->operator()(mol, smiles);
+  }
 
   void EnumerateTautomers(OBMol *mol, TautomerFunctor &functor)
   {
@@ -670,8 +882,6 @@ namespace OpenBabel {
     TautomerImpl impl;
     impl.Enumerate(mol, functor, true);
   }
-
-
 
 }
 
