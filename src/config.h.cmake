@@ -33,8 +33,8 @@
 
 /* Used to export symbols for DLL / shared library builds */
 #if defined(MAKE_OBDLL) // e.g. in src/main.cpp
- #ifndef EXTERN
-  #define EXTERN   OB_EXPORT extern
+ #ifndef OB_EXTERN
+  #define OB_EXTERN   OB_EXPORT extern
  #endif
  #ifndef OBAPI
   #define OBAPI    OB_EXPORT
@@ -63,8 +63,8 @@
 
 #else   // defined(MAKE_OBDLL)
 
- #ifndef EXTERN
-  #define EXTERN   OB_IMPORT extern
+ #ifndef OB_EXTERN
+  #define OB_EXTERN   OB_IMPORT extern
  #endif
  #ifndef OBAPI
   #define OBAPI    OB_IMPORT
@@ -89,7 +89,7 @@
   #ifndef OBDEPICT
  #define OBDEPICT  OB_IMPORT
  #endif
- 
+
  #endif
 
 #endif
@@ -192,4 +192,3 @@
     #define TIME_WITH_SYS_TIME 0
   #endif
 #endif
-

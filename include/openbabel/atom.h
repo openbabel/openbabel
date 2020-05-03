@@ -23,8 +23,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 
 #include <vector>

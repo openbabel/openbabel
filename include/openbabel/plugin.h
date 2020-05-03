@@ -371,7 +371,7 @@ public:
 
 #define OB_STATIC_PLUGIN(className,instanceName) \
   class className; \
-  OBAPI EXTERN className instanceName;
+  OBAPI OB_EXTERN className instanceName;
 
   // formats
   OB_STATIC_PLUGIN(ABINITFormat, theABINITFormat)

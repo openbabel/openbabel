@@ -283,7 +283,7 @@ namespace OpenBabel
     };
 
     //! Global OBChainsParser for detecting macromolecular chains and residues
-    EXTERN  OBChainsParser   chainsparser;
+    OB_EXTERN  OBChainsParser   chainsparser;
 
 }
 #endif // OB_CHAINS_H
