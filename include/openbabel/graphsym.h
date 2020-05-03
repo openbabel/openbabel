@@ -25,8 +25,8 @@ GNU General Public License for more details.
 #include <openbabel/stereo/stereo.h>
 #include <vector>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 
 namespace OpenBabel {
@@ -80,5 +80,3 @@ namespace OpenBabel {
 
 //! \file graphsym.h
 //! \brief Handle and perceive graph symmtery for canonical numbering
-
-
