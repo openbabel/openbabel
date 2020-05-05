@@ -31,7 +31,7 @@ jobs:
       run: |
         mkdir "${{ runner.workspace }}/../build"
         cd "${{ runner.workspace }}/../build"
-        cmake $GITHUB_WORKSPACE -GNinja -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} ${{matrix.config.cmake_flags}}
+        CSHARP_EXECUTABLE=mcs cmake $GITHUB_WORKSPACE -GNinja -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} ${{matrix.config.cmake_flags}}
       shell: bash
       working-directory: ${{ runner.workspace }}/openbabel
 
