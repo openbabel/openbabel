@@ -22,8 +22,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        path: openbabel/openbabel
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
@@ -44,11 +42,13 @@ jobs:
 
     - name: Packing
       run: |
-        ls ${{ runner.workspace }}
-        tar cvjf openbabel.tar.bz2 openbabel
+        mkdir openbabel-latest
+        cp -pr * openbabel-latest
+        mv */build . # omit the build directory
+        tar cvjf openbabel-latest.tar.bz2 openbabel-latest
 
     - name: Upload
       uses: actions/upload-artifact@v2-preview
       with:
-        path: ${{ runner.workspace }}/openbabel.tar.bz2
+        path: ${{ runner.workspace }}/*.tar.bz2
         name: openbabel.tar.bz2
