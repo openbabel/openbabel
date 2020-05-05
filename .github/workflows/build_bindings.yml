@@ -1,4 +1,4 @@
-name: CMake Build Matrix
+name: Build SWIG bindings
 
 on: [push, pull_request]
 
@@ -23,7 +23,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        path: openbabel
+        path: openbabel/openbabel
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
@@ -42,7 +42,7 @@ jobs:
       shell: bash
       working-directory: ${{ runner.workspace }}/build
 
-    - name: Debugging
+    - name: Packing
       run: |
         ls ${{ runner.workspace }}
         tar cvjf openbabel.tar.bz2 openbabel
