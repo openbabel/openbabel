@@ -48,5 +48,6 @@ jobs:
     - name: Upload
       uses: actions/upload-artifact@v2-preview
       with:
-        path: ${{ runner.workspace }}/../openbabel-latest.tar.bz2
+        path: openbabel-latest.tar.bz2
         name: openbabel.tar.bz2
+      working-directory: ${{ runner.workspace }}/..
