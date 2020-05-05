@@ -29,8 +29,8 @@ jobs:
 
     - name: Configure
       run: |
-        mkdir "${{ runner.workspace }}/build"
-        cd "${{ runner.workspace }}/build"
+        mkdir "${{ runner.workspace }}/../build"
+        cd "${{ runner.workspace }}/../build"
         cmake $GITHUB_WORKSPACE -GNinja -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} ${{matrix.config.cmake_flags}}
       shell: bash
       working-directory: ${{ runner.workspace }}/openbabel
@@ -38,17 +38,15 @@ jobs:
     - name: Build
       run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build .
       shell: bash
-      working-directory: ${{ runner.workspace }}/build
+      working-directory: ${{ runner.workspace }}/../build
 
     - name: Packing
       run: |
-        mkdir openbabel-latest
-        cp -pr * openbabel-latest
-        mv */build . # omit the build directory
-        tar cvjf openbabel-latest.tar.bz2 openbabel-latest
+        tar cvjf openbabel-latest.tar.bz2 openbabel
+      working-directory: ${{ runner.workspace }}/..
 
     - name: Upload
       uses: actions/upload-artifact@v2-preview
       with:
-        path: ${{ runner.workspace }}/*.tar.bz2
+        path: ${{ runner.workspace }}/../openbabel-latest.tar.bz2
         name: openbabel.tar.bz2
