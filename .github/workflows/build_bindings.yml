@@ -17,7 +17,7 @@ jobs:
             name: "Linux SWIG All Bindings",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++",
-            cmake_flags: "-DPYTHON_BINDINGS=ON -DPERL_BINDINGS=ON -DJAVA_BINDINGS=ON -DCSHARP_BINDINGS=ON -DRUN_SWIG=ON"
+            cmake_flags: "-DPYTHON_BINDINGS=ON -DPERL_BINDINGS=ON -DRUBY_BINDINGS=ON -DJAVA_BINDINGS=ON -DCSHARP_BINDINGS=ON -DRUN_SWIG=ON"
           }
 
     steps:
