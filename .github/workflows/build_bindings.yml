@@ -42,11 +42,11 @@ jobs:
 
     - name: Packing
       run: |
-        tar cvjf openbabel-latest.tar.bz2 openbabel
-      working-directory: ${{ runner.workspace }}/..
+        tar cvjf openbabel-latest.tar.bz2 openbabel --exclude-vcs --exclude-backups --exclude='.github*'
+      working-directory: ${{ runner.workspace }}
 
     - name: Upload
       uses: actions/upload-artifact@v2-preview
       with:
-        path: /home/runner/openbabel-latest.tar.bz2
+        path: ${{ runner.workspace }}/openbabel-latest.tar.bz2
         name: openbabel.tar.bz2
