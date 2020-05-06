@@ -41,7 +41,7 @@ namespace OpenBabel
   class Kekulizer
   {
   public:
-    Kekulizer(OBMol* mol) : m_mol(mol), needs_dbl_bond((OBBitVec*)0), doubleBonds((OBBitVec*)0), kekule_system((OBBitVec*)0)
+    Kekulizer(OBMol* mol) : m_mol(mol), needs_dbl_bond(nullptr), doubleBonds(nullptr), kekule_system(nullptr)
     {
       atomArraySize = GetMaxAtomIdx(m_mol) + 1;
       bondArraySize = GetMaxBondIdx(m_mol) + 1;

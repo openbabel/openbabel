@@ -122,7 +122,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -355,7 +355,7 @@ namespace OpenBabel
     // connect record, to which the other atoms connect to.
     long int startAtomSerialNumber;
     // A pointer to the first atom.
-    OBAtom *firstAtom = NULL;
+    OBAtom *firstAtom = nullptr;
     // Serial numbers of the atoms which bind to firstAtom, read from
     // columns 12-16, 17-21, 22-27 and 27-31 of the connect record. Note
     // that we reserve space for 5 integers, but read only four of
@@ -402,7 +402,7 @@ namespace OpenBabel
     for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) {
       // atoms may not have residue information, but if they do,
       // check serial numbers
-      if (a1->GetResidue() != NULL &&
+      if (a1->GetResidue() != nullptr &&
           static_cast<long int>(a1->GetResidue()->
                                 GetSerialNum(a1)) == startAtomSerialNumber)
         {
@@ -411,7 +411,7 @@ namespace OpenBabel
         }
     }
 
-    if (firstAtom == NULL)
+    if (firstAtom == nullptr)
       {
         errorMsg << "WARNING: Problems reading a PDB file:\n"
                  << "  Problems reading a CONECT record.\n"
@@ -456,10 +456,10 @@ namespace OpenBabel
     for(unsigned int k=0; boundedAtomsSerialNumbersValid[k]; k++)
       {
         // Find atom that is connected to, write an error message
-        OBAtom *connectedAtom = 0L;
+        OBAtom *connectedAtom = nullptr;
         for (OBAtom *a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i)) {
           // again, atoms may not have residues, but if they do, check serials
-          if (a1->GetResidue() != NULL &&
+          if (a1->GetResidue() != nullptr &&
               static_cast<long int>(a1->GetResidue()->
                                     GetSerialNum(a1)) == boundedAtomsSerialNumbers[k])
             {
@@ -467,7 +467,7 @@ namespace OpenBabel
               break;
             }
         }
-        if (connectedAtom == 0L)
+        if (connectedAtom == nullptr)
           {
             errorMsg << "WARNING: Problems reading a PDB file:\n"
                      << "  Problems reading a CONECT record.\n"
@@ -509,7 +509,7 @@ namespace OpenBabel
   bool PDBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -684,7 +684,7 @@ namespace OpenBabel
             snprintf(type_name, sizeof(type_name), " %-3s", tmp);
           }
 
-        if ( (res = atom->GetResidue()) != 0 )
+        if ((res = atom->GetResidue()) != nullptr)
           {
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
@@ -1128,8 +1128,8 @@ namespace OpenBabel
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
-    OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-    if (res == NULL
+    OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : nullptr;
+    if (res == nullptr
         || res->GetName() != resname
         || res->GetNumString() != resnum
         || res->GetChain() != chain
@@ -1145,7 +1145,7 @@ namespace OpenBabel
             break;
           }
 
-        if (res == NULL) {
+        if (res == nullptr) {
           res = mol.NewResidue();
           res->SetChain(chain);
           res->SetName(resname);

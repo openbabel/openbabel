@@ -128,8 +128,8 @@ namespace OpenBabel
     //Set base coordinates
     unsigned int k,l;
     vector<double*> bc;
-    double *c=NULL;
-    double *cc=NULL;
+    double *c = nullptr;
+    double *cc = nullptr;
     for (k=0 ; k<NumBaseCoordinateSets() ; ++k)
       {
         c = new double [3*NumAtoms()];
@@ -592,8 +592,8 @@ namespace OpenBabel
     _c.clear();
 
     //Copy new data
-    double *c = NULL;
-    double *cc= NULL;
+    double *c  = nullptr;
+    double *cc = nullptr;
     for (i=0 ; i<bc.size() ; ++i)
       {
         c = new double [3*N];

@@ -32,7 +32,7 @@ class MWFilter : public OBDescriptor {
 public:
   MWFilter(const char *ID) : OBDescriptor(ID){};
   virtual const char *Description() { return "Molecular Weight filter"; };
-  virtual double Predict(OBBase *pOb, string *param = NULL) {
+  virtual double Predict(OBBase *pOb, string *param = nullptr) {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -46,7 +46,7 @@ class RotatableBondsFilter : public OBDescriptor {
 public:
   RotatableBondsFilter(const char *ID) : OBDescriptor(ID){};
   virtual const char *Description() { return "Rotatable bonds filter"; };
-  virtual double Predict(OBBase *pOb, string *param = NULL) {
+  virtual double Predict(OBBase *pOb, string *param = nullptr) {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -64,7 +64,7 @@ public:
   SmartsFilter(const char *ID) : OBDescriptor(ID){};
   virtual const char *Description() { return "SMARTS filter"; };
   virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
-                       std::string *param = NULL);
+                       std::string *param = nullptr);
 };
 
 /// For interpreting conditions like s!=c1ccccc1CN
@@ -109,9 +109,9 @@ public:
     return "For comparing a molecule's title";
   };
   virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
-                       std::string *param = NULL);
+                       std::string *param = nullptr);
   virtual double GetStringValue(OBBase *pOb, std::string &svalue,
-                                std::string *param = NULL);
+                                std::string *param = nullptr);
   virtual bool LessThan(OBBase *pOb1, OBBase *pOb2);
 };
 
@@ -136,7 +136,7 @@ double TitleFilter::GetStringValue(OBBase *pOb, std::string &svalue,
 bool TitleFilter::LessThan(OBBase *pOb1, OBBase *pOb2) {
   OBMol *pmol1 = dynamic_cast<OBMol *>(pOb1);
   OBMol *pmol2 = dynamic_cast<OBMol *>(pOb2);
-  if (pmol1 == NULL || pmol2 == NULL)
+  if (pmol1 == nullptr || pmol2 == nullptr)
     return false; // as a default to prevent dereferencing NULL pointers
 
   return strcmp(pmol1->GetTitle(), pmol2->GetTitle()) < 0;
@@ -152,7 +152,7 @@ public:
   virtual const char *Description() { return "Chemical formula"; };
 
   virtual double GetStringValue(OBBase *pOb, std::string &svalue,
-                                std::string *param = NULL) {
+                                std::string *param = nullptr) {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (pmol)
       svalue = pmol->GetSpacedFormula(1, ""); // actually unspaced

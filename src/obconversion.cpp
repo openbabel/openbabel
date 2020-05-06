@@ -228,34 +228,34 @@ namespace OpenBabel {
 //  OBFormat* OBConversion::pDefaultFormat=NULL;
 
   OBConversion::OBConversion(istream* is, ostream* os) :
-    pInput(NULL), pOutput(NULL),
-    pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
+    pInput(nullptr), pOutput(nullptr),
+    pInFormat(nullptr),pOutFormat(nullptr), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
     inFormatGzip(false), outFormatGzip(false),
-    pOb1(NULL),wInpos(0),wInlen(0),pAuxConv(NULL)
+    pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr)
   {
    	SetInStream(is);
    	SetOutStream(os);
 
     //These options take a parameter
-    RegisterOptionParam("f", NULL, 1,GENOPTIONS);
-    RegisterOptionParam("l", NULL, 1,GENOPTIONS);
+    RegisterOptionParam("f", nullptr, 1,GENOPTIONS);
+    RegisterOptionParam("l", nullptr, 1,GENOPTIONS);
   }
 
   /// Convenience constructor.  Sets up streams from specified files.
   /// If format can not be determined from filename, a stream is not opened.
   OBConversion::OBConversion(string infile, string outfile):
-        pInput(NULL), pOutput(NULL),
-        pInFormat(NULL),pOutFormat(NULL), Index(0), StartNumber(1),
+        pInput(nullptr), pOutput(nullptr),
+        pInFormat(nullptr), pOutFormat(nullptr), Index(0), StartNumber(1),
         EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
         MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
         inFormatGzip(false), outFormatGzip(false),
-        pOb1(NULL), wInpos(0),wInlen(0), pAuxConv(NULL)
+        pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr)
   {
     //These options take a parameter
-    RegisterOptionParam("f", NULL, 1,GENOPTIONS);
-    RegisterOptionParam("l", NULL, 1,GENOPTIONS);
+    RegisterOptionParam("f", nullptr, 1,GENOPTIONS);
+    RegisterOptionParam("l", nullptr, 1,GENOPTIONS);
 
     OpenInAndOutFiles(infile, outfile);
   }
@@ -272,9 +272,9 @@ namespace OpenBabel {
     //the original obconversion retains ownership of any allocated streams
     //this means if the original gets destroyed, bad things may happen
     //by doing this first, format isn't initialized, so we add no additional filters
-    pInFormat = NULL;
+    pInFormat = nullptr;
     inFormatGzip = false;
-    pOutFormat = NULL;
+    pOutFormat = nullptr;
     outFormatGzip = false;
     SetInStream(o.pInput, false);
     SetOutStream(o.pOutput, false);
@@ -316,8 +316,8 @@ namespace OpenBabel {
         delete pAuxConv;
       }
     // Free any remaining streams from convenience functions
-    SetInStream(NULL);
-    SetOutStream(NULL);
+    SetInStream(nullptr);
+    SetOutStream(nullptr);
 
   }
   //////////////////////////////////////////////////////
@@ -343,7 +343,7 @@ namespace OpenBabel {
         delete ownedInStreams[i];
       }
       ownedInStreams.clear();
-      pInput = NULL;
+      pInput = nullptr;
 
       if (pIn)
       {
@@ -383,7 +383,7 @@ namespace OpenBabel {
       delete ownedOutStreams[i];
     }
     ownedOutStreams.clear();
-    pOutput = NULL;
+    pOutput = nullptr;
 
     if (pOut)
     {
@@ -424,7 +424,7 @@ namespace OpenBabel {
   bool OBConversion::SetInFormat(OBFormat* pIn, bool gzip)
   {
     inFormatGzip = gzip;
-    if(pIn==NULL)
+    if (pIn == nullptr)
       return true;
     pInFormat=pIn;
     return !(pInFormat->Flags() & NOTREADABLE);
@@ -507,7 +507,7 @@ namespace OpenBabel {
   ///
   int OBConversion::Convert()
   {
-    if(pInput==NULL)
+    if (pInput == nullptr)
       {
         obErrorLog.ThrowError(__FUNCTION__, "input or output stream not set", obError);
         return 0;
@@ -521,7 +521,7 @@ namespace OpenBabel {
 
     ReadyToInput=true;
     m_IsLast=false;
-    pOb1=NULL;
+    pOb1=nullptr;
     wInlen=0;
 
     if(pInFormat->Flags() & READONEONLY)
@@ -602,14 +602,14 @@ namespace OpenBabel {
     m_IsLast= !MoreFilesToCome;
 
     //Output is always occurs at the end with the --OutputAtEnd option
-    bool oae = IsOption("OutputAtEnd",GENOPTIONS)!=NULL;
+    bool oae = IsOption("OutputAtEnd", GENOPTIONS) != nullptr;
     if(pOutFormat && (!oae || m_IsLast))
       if((oae || pOb1) && !pOutFormat->WriteChemObject(this))
         Index--;
 
     //Put AddChemObject() into non-queue mode
     Count= -1;
-    EndNumber=StartNumber=0; pOb1=NULL;//leave tidy
+    EndNumber=StartNumber=0; pOb1=nullptr; //leave tidy
     MoreFilesToCome=false;
     OneObjectOnly=false;
 
@@ -696,7 +696,7 @@ namespace OpenBabel {
                     //faultly write, so finish
                     --Index;
                     //ReadyToInput=false;
-                    pOb1=NULL;
+                    pOb1 = nullptr;
                     return 0;
                   }
                 //Stop after writing with single object output files
@@ -720,7 +720,7 @@ namespace OpenBabel {
                     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
 
                     ReadyToInput = false;
-                    pOb1 = NULL;
+                    pOb1 = nullptr;
                     return Count; // >0
                   }
               }
@@ -881,7 +881,7 @@ namespace OpenBabel {
     // If we failed to read, plus the stream is over, then check if this is a stream from ReadFile
     if (!success && !pInput->good() && ownedInStreams.size() > 0) {
       ifstream *inFstream = dynamic_cast<ifstream*>(ownedInStreams[0]);
-      if (inFstream != 0)
+      if (inFstream != nullptr)
         inFstream->close(); // We will free the stream later, but close the file now
     }
 
@@ -932,14 +932,14 @@ namespace OpenBabel {
     pStream = conv.pInput;
     std::copy(conv.ownedInStreams.begin(), conv.ownedInStreams.end(), std::back_inserter(ownedStreams));
 
-    conv.pInput = NULL;
+    conv.pInput = nullptr;
     conv.ownedInStreams.clear();
   }
 
   //restore state, blowing away whatever is in conv
   void OBConversion::StreamState::popInput(OBConversion& conv)
   {
-    conv.SetInStream(NULL);
+    conv.SetInStream(nullptr);
     conv.pInput =  dynamic_cast<std::istream*>(pStream);
 
     assert(conv.ownedInStreams.size() == 0); //should be empty
@@ -951,7 +951,7 @@ namespace OpenBabel {
       conv.ownedInStreams.push_back(s);
     }
 
-    pStream = NULL;
+    pStream = nullptr;
     ownedStreams.clear();
   }
 
@@ -963,14 +963,14 @@ namespace OpenBabel {
     pStream = conv.pOutput;
     std::copy(conv.ownedOutStreams.begin(), conv.ownedOutStreams.end(), std::back_inserter(ownedStreams));
 
-    conv.pOutput = NULL;
+    conv.pOutput = nullptr;
     conv.ownedOutStreams.clear();
   }
 
   //restore state, blowing away whatever is in conv
   void OBConversion::StreamState::popOutput(OBConversion& conv)
   {
-    conv.SetOutStream(NULL);
+    conv.SetOutStream(nullptr);
     conv.pOutput =  dynamic_cast<std::ostream*>(pStream);
 
     assert(conv.ownedOutStreams.size() == 0); //should be empty
@@ -982,7 +982,7 @@ namespace OpenBabel {
       conv.ownedOutStreams.push_back(s);
     }
 
-    pStream = NULL;
+    pStream = nullptr;
     ownedStreams.clear();
   }
 
@@ -1067,7 +1067,7 @@ namespace OpenBabel {
 
   void OBConversion::CloseOutFile()
   {
-    SetOutStream(NULL);
+    SetOutStream(nullptr);
   }
 
   ////////////////////////////////////////////
@@ -1298,8 +1298,8 @@ namespace OpenBabel {
   {
     OBConversion::OutFilename = OutputFileName; //ready for 2.4.0
 
-    istream* pIs=NULL;
-    ostream* pOs=NULL;
+    istream* pIs = nullptr;
+    ostream* pOs = nullptr;
     ifstream is;
     ofstream os;
     stringstream ssOut, ssIn;
@@ -1317,7 +1317,7 @@ namespace OpenBabel {
 
         //OUTPUT
         if(OutputFileName.empty())
-          pOs = NULL; //use existing stream
+          pOs = nullptr; //use existing stream
         else
           {
             if(OutputFileName.find_first_of('*')!=string::npos) HasMultipleOutputFiles = true;
@@ -1379,7 +1379,7 @@ namespace OpenBabel {
         //INPUT
         if(FileList.empty())
           {
-            pIs = NULL;
+            pIs = nullptr;
             if(HasMultipleOutputFiles)
               {
                 obErrorLog.ThrowError(__FUNCTION__,"Cannot use multiple output files without an input file", obError);
@@ -1501,7 +1501,7 @@ namespace OpenBabel {
                         OutputFileList.push_back(incrfile);
                         SetOutStream(&ofs, false); //pickup possible gzip
                         *pOutput << ss.rdbuf();
-                        SetOutStream(NULL);
+                        SetOutStream(nullptr);
                         ofs.close();
                         ss.clear();
                       }
@@ -1524,7 +1524,7 @@ namespace OpenBabel {
               }
             SetOutStream(&os, false);
             *pOutput << ssOut.rdbuf();
-            SetOutStream(NULL);
+            SetOutStream(nullptr);
           }
         return Count;
       }
@@ -1556,7 +1556,7 @@ namespace OpenBabel {
     else if(!SetFormat)
       {
         pInFormat = FormatFromExt(InFilename.c_str(), inFormatGzip);
-        if(pInFormat==NULL)
+        if (pInFormat == nullptr)
           {
             string::size_type pos = InFilename.rfind('.');
             string ext;
@@ -1610,7 +1610,7 @@ Additional options :
   void OBConversion::AddOption(const char* opt, Option_type opttyp, const char* txt)
   {
     //Also updates an option
-    if(txt==NULL)
+    if (txt == nullptr)
       OptionsArray[opttyp][opt]=string();
     else
       OptionsArray[opttyp][opt]=txt;
@@ -1622,7 +1622,7 @@ Additional options :
     map<string,string>::iterator pos;
     pos = OptionsArray[opttyp].find(opt);
     if(pos==OptionsArray[opttyp].end())
-      return NULL;
+      return nullptr;
     return pos->second.c_str();
   }
 
@@ -1798,14 +1798,14 @@ Additional options :
   bool OBConversion::GetNextFormat(Formatpos& itr, const char*& str,OBFormat*& pFormat)
   {
 
-    pFormat = NULL;
-    if(str==NULL)
+    pFormat = nullptr;
+    if (str == nullptr)
       itr = OBPlugin::Begin("formats");
     else
       itr++;
     if(itr == OBPlugin::End("formats"))
       {
-        str=NULL; pFormat=NULL;
+        str = nullptr; pFormat = nullptr;
         return false;
       }
     static string s;

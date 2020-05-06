@@ -135,7 +135,7 @@ bool LpmdFormat::ReadHeader( std::istream &ifs, OBMol &mol )
 bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
  OBMol* pmol = pOb->CastAndClear<OBMol>();
- if(pmol==NULL) return false;
+ if (pmol == nullptr) return false;
 
  N=0;
  std::istream &ifs = *pConv->GetInStream();
@@ -273,12 +273,12 @@ bool LpmdFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool LpmdFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
  OBMol* pmol = dynamic_cast<OBMol*>(pOb);
- if(pmol==NULL) return false;
+ if (pmol == nullptr) return false;
 
  ostream& ofs = *pConv->GetOutStream();
  OBMol &mol = *pmol;
  OBUnitCell myUC;
- OBUnitCell *uc = NULL;
+ OBUnitCell *uc = nullptr;
 
  std::vector< std::vector< vector3 > > forceslist;
  std::vector< std::vector< vector3 > > velocilist;

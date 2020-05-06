@@ -602,7 +602,7 @@ namespace OpenBabel
         }
       }
 
-    mSpaceGroup=NULL;
+    mSpaceGroup = nullptr;
     // be forgiving - if spg not found, try again
     // Prefer Hall > HM == number, as Hall symbol is truly unique
     if (mSpacegroupSymbolHall.length() > 0) {
@@ -614,13 +614,13 @@ namespace OpenBabel
       }
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupSymbolHall);
     }
-    if((mSpaceGroup == NULL)&& (mSpacegroupHermannMauguin.length() > 0)) {
+    if (mSpaceGroup == nullptr && mSpacegroupHermannMauguin.length() > 0) {
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupHermannMauguin);
     }
-    if((mSpaceGroup == NULL)&&(mSpacegroupNumberIT != 0)) {
+    if (mSpaceGroup == nullptr && mSpacegroupNumberIT != 0) {
       mSpaceGroup = SpaceGroup::GetSpaceGroup(mSpacegroupNumberIT);
     }
-    if(mSpaceGroup == NULL) {
+    if (mSpaceGroup == nullptr) {
       SpaceGroup *sg = new SpaceGroup();
       positem=mvItem.find("_space_group_symop_operation_xyz");
       if(positem==mvItem.end())
@@ -650,13 +650,13 @@ namespace OpenBabel
           }
         if (found)
           mSpaceGroup = SpaceGroup::Find(sg);
-        if (mSpaceGroup == NULL && sg->IsValid())
+        if (mSpaceGroup == nullptr && sg->IsValid())
           mSpaceGroup = sg;
         else
           delete sg;
       }
     }
-    if(mSpaceGroup == NULL)
+    if (mSpaceGroup == nullptr)
     {
         stringstream ss;
         ss << "CIF Error: missing spacegroup description: defaulting to P1... (in data block:"<<mDataBlockName<<")";
@@ -1402,7 +1402,7 @@ namespace OpenBabel
     obErrorLog.ThrowError(__FUNCTION__, "mmCIF parser not found. Using CIF parser.", obDebug);
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     CIF cif(*pConv->GetInStream(),true);
@@ -1530,7 +1530,7 @@ namespace OpenBabel
                       stringstream ss;
                       ss << "  Adding cif bond ? "<<posat1->first<<"-"<<posat2->first;
                       obErrorLog.ThrowError(__FUNCTION__, ss.str(), obDebug);
-                      if(pmol->GetBond(posat1->second,posat2->second)==NULL)
+                      if (pmol->GetBond(posat1->second, posat2->second) == nullptr)
                         {
                            obErrorLog.ThrowError(__FUNCTION__, "  :Bond added !", obDebug);
                            OBBond * bond=pmol->NewBond();
@@ -1561,7 +1561,7 @@ namespace OpenBabel
   bool CIFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
     ostream &ofs = *pConv->GetOutStream();
 
@@ -1573,7 +1573,7 @@ namespace OpenBabel
     // Use pmol->GetTitle() as chemical name, though it will probably be the file name
     ofs <<"_chemical_name_common '"<<pmol->GetTitle()<<"'"<<endl;
     // Print Unit cell if we have it
-    OBUnitCell *pUC=NULL;
+    OBUnitCell *pUC = nullptr;
     if (pmol->HasData(OBGenericDataType::UnitCell))
       {
         pUC = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
@@ -1585,7 +1585,7 @@ namespace OpenBabel
             << "_cell_angle_gamma " << pUC->GetGamma() << endl;
         // Save the space group if known
         const SpaceGroup* pSG = pUC->GetSpaceGroup();
-        if (pSG != NULL)
+        if (pSG != nullptr)
           {
             // Do we have an extended HM symbol, with origin choice as ":1" or ":2" ? If so, remove it.
             size_t n=pSG->GetHMName().find(":");
@@ -1619,7 +1619,7 @@ namespace OpenBabel
       {
          double X, Y, Z; //atom coordinates
          vector3 v = atom->GetVector();
-         if (pUC != NULL) {
+         if (pUC != nullptr) {
            v = pUC->CartesianToFractional(v);
            v = pUC->WrapFractionalCoordinate(v);
          }

@@ -273,26 +273,26 @@ namespace OpenBabel
         return par;
       }
 
-    return NULL;
+    return nullptr;
   }
 
   OBFFParameter* OBForceField::GetParameter(const char* a, const char* b, const char* c,
                                             const char* d, vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
-    if (a == NULL)
-      return NULL;
+    if (a == nullptr)
+      return nullptr;
 
-    if (b == NULL) {
+    if (b == nullptr) {
       string _a(a);
       for (unsigned int idx=0; idx < parameter.size(); idx++)
         if (_a == parameter[idx]._a) {
           par = &parameter[idx];
           return par;
         }
-      return NULL;
+      return nullptr;
     }
-    if (c == NULL) {
+    if (c == nullptr) {
       string _a(a);
       string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); idx++) {
@@ -302,9 +302,9 @@ namespace OpenBabel
           return par;
         }
       }
-      return NULL;
+      return nullptr;
     }
-    if (d == NULL) {
+    if (d == nullptr) {
       string _a(a);
       string _b(b);
       string _c(c);
@@ -315,7 +315,7 @@ namespace OpenBabel
           return par;
         }
       }
-      return NULL;
+      return nullptr;
     }
     string _a(a);
     string _b(b);
@@ -330,7 +330,7 @@ namespace OpenBabel
         return par;
       }
 
-    return NULL;
+    return nullptr;
   }
 
   //////////////////////////////////////////////////////////////////////////////////
@@ -473,7 +473,7 @@ namespace OpenBabel
 
         switch (i->type) {
         case OBFF_CONST_DISTANCE:
-          if ((i->a == NULL) || ((i->b) == NULL))
+          if (i->a == nullptr || (i->b) == nullptr)
             break;
 
           da = (i->a)->GetVector();
@@ -489,7 +489,7 @@ namespace OpenBabel
           i->gradb = dE * db;
           break;
         case OBFF_CONST_ANGLE:
-          if ((i->a == NULL) || ((i->b) == NULL) || ((i->c) == NULL))
+          if (i->a == nullptr || i->b == nullptr || i->c == nullptr)
             break;
 
           da = (i->a)->GetVector();
@@ -507,7 +507,7 @@ namespace OpenBabel
           i->gradc = dE * dc;
           break;
         case OBFF_CONST_TORSION:
-          if ((i->a == NULL) || ((i->b) == NULL) || ((i->c) == NULL) || ((i->d) == NULL))
+          if (i->a == nullptr || i->b == nullptr || i->c == nullptr || i->d == nullptr)
             break;
 
           da = (i->a)->GetVector();
@@ -814,9 +814,9 @@ namespace OpenBabel
     if (!_init) {
       ParseParamFile();
       _init = true;
-      _velocityPtr = NULL;
-      _gradientPtr = NULL;
-      _grad1 = NULL;
+      _velocityPtr = nullptr;
+      _gradientPtr = nullptr;
+      _grad1 = nullptr;
     }
 
     if (IsSetupNeeded(mol)) {
@@ -825,7 +825,7 @@ namespace OpenBabel
 
       if (_velocityPtr)
         delete [] _velocityPtr;
-      _velocityPtr = NULL;
+      _velocityPtr = nullptr;
 
       if (_gradientPtr)
         delete [] _gradientPtr;
@@ -871,8 +871,8 @@ namespace OpenBabel
     if (!_init) {
       ParseParamFile();
       _init = true;
-      _velocityPtr = NULL;
-      _gradientPtr = NULL;
+      _velocityPtr = nullptr;
+      _gradientPtr = nullptr;
     }
 
     if (IsSetupNeeded(mol)) {
@@ -881,7 +881,7 @@ namespace OpenBabel
 
       if (_velocityPtr)
         delete [] _velocityPtr;
-      _velocityPtr = NULL;
+      _velocityPtr = nullptr;
 
       if (_gradientPtr)
         delete [] _gradientPtr;
@@ -1068,7 +1068,7 @@ namespace OpenBabel
     if (_mol.NumConformers() > 0) {
       int k,l;
       vector<double*> conf;
-      double* xyz = NULL;
+      double* xyz = nullptr;
       for (k=0 ; k<_mol.NumConformers() ; ++k) {
         xyz = new double [3*_mol.NumAtoms()];
         for (l=0 ; l<(int) (3*_mol.NumAtoms()) ; ++l)
@@ -1121,7 +1121,7 @@ namespace OpenBabel
     if (mol.NumConformers() > 1) {
       int k,l;
       vector<double*> conf;
-      double* xyz = NULL;
+      double* xyz = nullptr;
       for (k=0 ; k<mol.NumConformers() ; ++k) {
         xyz = new double [3*mol.NumAtoms()];
         for (l=0 ; l<(int) (3*mol.NumAtoms()) ; ++l)
@@ -1441,7 +1441,7 @@ namespace OpenBabel
     generator.TimeSeed();
     _origLogLevel = _loglvl;
 
-    if (_mol.GetCoordinates() == NULL)
+    if (_mol.GetCoordinates() == nullptr)
       return;
 
     OBBitVec fixed = _constraints.GetFixedBitVec();
@@ -1611,7 +1611,7 @@ namespace OpenBabel
     generator.TimeSeed();
     int origLogLevel = _loglvl;
 
-    if (_mol.GetCoordinates() == NULL)
+    if (_mol.GetCoordinates() == nullptr)
       return;
 
     double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
@@ -2041,7 +2041,7 @@ namespace OpenBabel
           continue;
         }
 
-        srand(static_cast <unsigned int> (time(NULL)));
+        srand(static_cast<unsigned int>(time(nullptr)));
         double rand_ab, u_ab, l_ab;
         if (j > i) {
           u_ab = matrix[i][j];
@@ -2892,7 +2892,7 @@ namespace OpenBabel
       OBFFLog("--------------------------------\n");
     }
 
-    if (_grad1 != NULL)
+    if (_grad1 != nullptr)
       delete [] _grad1;
     _grad1 = new double[_ncoords];
     memset(_grad1, '\0', sizeof(double)*_ncoords);

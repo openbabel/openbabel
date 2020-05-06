@@ -101,7 +101,7 @@ namespace OpenBabel
 
     ret=pFormat->ReadMolecule(pmol,pConv);
 
-    OBMol* ptmol = NULL;
+    OBMol* ptmol = nullptr;
     //Molecule is valid if it has some atoms
     //or it represents a reaction
     //or the format allows zero-atom molecules and it has a title or properties
@@ -335,7 +335,7 @@ namespace OpenBabel
           {
             obErrorLog.ThrowError(__FUNCTION__,
                                   "Molecules with name = " + title + " have different formula",obError);
-            return NULL;
+            return nullptr;
           }
         else
           {
@@ -371,7 +371,7 @@ namespace OpenBabel
             if(pData->GetAttribute() == (*igd)->GetAttribute())
               continue;
           }
-        else if(pNewMol->GetData(datatype)!=NULL)
+        else if (pNewMol->GetData(datatype) != nullptr)
           continue;
 
         OBGenericData* pCopiedData = (*igd)->Clone(pNewMol);
@@ -514,7 +514,7 @@ namespace OpenBabel
             return false;
           }
 
-        OBConversion Conv(&datastream,NULL);
+        OBConversion Conv(&datastream, nullptr);
         Conv.SetInFormat(pInFormat);
         OBMol mol;
         streampos pos;

@@ -19,12 +19,12 @@ namespace OpenBabel
 {
 
   //static variable
-  XMLBaseFormat* XMLConversion::_pDefault=NULL;
+  XMLBaseFormat* XMLConversion::_pDefault=nullptr;
 
   XMLConversion::XMLConversion(OBConversion* pConv)
     : OBConversion(*pConv),
       _requestedpos(0), _lastpos(0),
-      _reader(NULL), _writer(NULL),
+      _reader(nullptr), _writer(nullptr),
       _LookingForNamespace(false), _SkipNextRead(false)
   {
     _pConv = pConv;
@@ -53,13 +53,13 @@ namespace OpenBabel
     //Set up a parser from an input stream
     _reader = xmlReaderForIO(
                              ReadStream, //xmlInputReadCallback (static member function)
-                             NULL,//xmlInputCloseCallback (static member function)
+                             nullptr,    //xmlInputCloseCallback (static member function)
                              this,       //context
                              "",         //URL
-                             NULL,       //encoding
+                             nullptr,    //encoding
                              0);         //options
 
-    if (_reader == NULL)
+    if (_reader == nullptr)
       {
         cerr << "Cannot set up libxml2 reader" << endl;
         return false;
@@ -78,9 +78,9 @@ namespace OpenBabel
 
     _buf = xmlOutputBufferCreateIO  (
                                      WriteStream, //xmlOutputWriteCallback
-                                     NULL,         //xmlOutputCloseCallback
+                                     nullptr,     //xmlOutputCloseCallback
                                      this,        //context
-                                     NULL);        //xmlCharEncodingHandlerPtr
+                                     nullptr);    //xmlCharEncodingHandlerPtr
     _writer = xmlNewTextWriter(_buf);
 
     if(!_buf || !_writer)
@@ -104,12 +104,12 @@ namespace OpenBabel
   {
     if(_reader) {
       xmlFreeTextReader(_reader);
-      _reader = NULL;
+      _reader = nullptr;
     }
     if(_writer) {
 //      xmlTextWriterEndDocument(_writer); //if hasn't been called ealier
         xmlFreeTextWriter(_writer);// was crashing
-        _writer = NULL;
+        _writer = nullptr;
     }
     //xmlBufferFree(_buf);
   }
@@ -139,7 +139,7 @@ namespace OpenBabel
         *pConv->GetAuxConv() = *pConv; //ensure they have the same OBConversion data
         pxmlConv = dynamic_cast<XMLConversion*>(pConv->GetAuxConv());
         if (!pxmlConv)
-          return NULL;
+          return nullptr;
       }
 
     if(ForReading)
@@ -150,7 +150,7 @@ namespace OpenBabel
           {
             //Probably a new file; copy some member vars and renew the current reader
             xmlFreeTextReader(pxmlConv->_reader); //need a new reader to read files with <?xml?>
-            pxmlConv->_reader = NULL;
+            pxmlConv->_reader = nullptr;
             pxmlConv->InFilename = pConv->GetInFilename();
             pxmlConv->pInFormat = pConv->GetInFormat();
 
@@ -323,7 +323,7 @@ namespace OpenBabel
     const xmlChar* pvalue = xmlTextReaderConstValue(_reader);
     if(!pvalue)
       return false;
-    value = strtod((const char*)pvalue,NULL);
+    value = strtod((const char*)pvalue, nullptr);
     return true;
   }
 

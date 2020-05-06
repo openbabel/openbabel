@@ -102,7 +102,7 @@ namespace OpenBabel
     OBAtomHOF *oba;
 
     ptr = const_cast<char*>( strchr(line,'#'));
-    if (NULL != ptr)
+    if (nullptr != ptr)
       ptr[0] = '\0';
     if (strlen(line) > 0)
       {
@@ -454,7 +454,7 @@ namespace OpenBabel
     for (a1 = mol.BeginAtom(i);a1;a1 = mol.NextAtom(i))
       {
         r1 = a1->GetResidue();
-        if (r1 == NULL) // atoms may not have residues
+        if (r1 == nullptr) // atoms may not have residues
           continue;
 
         if (skipres.length() && r1->GetNumString() == skipres)
@@ -469,7 +469,7 @@ namespace OpenBabel
         for (j=i,a2 = mol.NextAtom(j);a2;a2 = mol.NextAtom(j))
           {
             r2 = a2->GetResidue();
-            if (r2 == NULL) // atoms may not have residues
+            if (r2 == nullptr) // atoms may not have residues
               continue;
 
             if (r1->GetNumString() != r2->GetNumString())
@@ -532,7 +532,7 @@ namespace OpenBabel
           }
 
         r1 = a1->GetResidue();
-        if (r1 == NULL) continue; // atoms may not have residues
+        if (r1 == nullptr) continue; // atoms may not have residues
         if (skipres.length() && r1->GetNumString() == skipres)
           continue;
 

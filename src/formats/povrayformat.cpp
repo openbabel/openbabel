@@ -173,7 +173,7 @@ namespace OpenBabel
     size_t time_res;                             /* Result of strftime                */
 
     /* ---- Get the system-time ---- */
-    akttime = time((time_t *) NULL);
+    akttime = time((time_t *) nullptr);
     time_res = strftime(timestr,
                         TIME_STR_SIZE,
                         "%a %b %d %H:%M:%S %Z %Y",
@@ -779,7 +779,7 @@ namespace OpenBabel
   bool PovrayFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     // Model-type should be one of "bas", "spf" or "cas"

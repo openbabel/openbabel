@@ -212,11 +212,11 @@ bool ChemDrawBinaryXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   _molmap.clear();
   _graphicmap.clear();
   _groupmap.clear();
-  OBMol* pmol=NULL;
+  OBMol* pmol=nullptr;
   bool ok = true;
 
   CDXReader cdxr(*pConv->GetInStream());
-  readReactions = (pConv->IsOption("m",OBConversion::INOPTIONS)==NULL);
+  readReactions = pConv->IsOption("m", OBConversion::INOPTIONS) == nullptr;
 
   // Write CDX tree only if requested
   if(pConv->IsOption("d",OBConversion::INOPTIONS))
@@ -411,7 +411,7 @@ OBMol* ChemDrawBinaryXFormat::LookupInMolMap(CDXObjectID id)
     stringstream ss;
     ss << "Reactant or product mol not found id = " << hex << showbase << id; 
     obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
-    return NULL;
+    return nullptr;
   }
 }
 
@@ -804,7 +804,7 @@ OBText* CDXReader::WriteTree(const string& filename, unsigned wtoptions)
       }
     }
   }
-  return NULL; //error exit
+  return nullptr; //error exit
 }
 
 ///////////////////////////////////////////////////////////////////////

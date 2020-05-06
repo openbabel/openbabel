@@ -790,8 +790,8 @@ namespace OpenBabel {
       dbl_bond_atoms.push_back(a2);
 
       vector<bool> bond_stereo(2, true); // Store the stereo of the chosen bonds at each end of the dbl bond
-      vector<OBBond*> stereo_bond(2, (OBBond*) NULL); // These are the chosen stereo bonds
-      vector<OBBond*> other_bond(2, (OBBond*) NULL);  // These are the 'other' bonds at each end
+      vector<OBBond*> stereo_bond(2, nullptr); // These are the chosen stereo bonds
+      vector<OBBond*> other_bond(2, nullptr);  // These are the 'other' bonds at each end
       
       for (int i = 0; i < 2; ++i) { // Loop over each end of the double bond in turn
 
@@ -822,7 +822,7 @@ namespace OpenBabel {
             continue;
           }
           
-          if (stereo_bond[i] == NULL) { // This is a first stereo bond
+          if (stereo_bond[i] == nullptr) { // This is a first stereo bond
             stereo_bond[i] = b; // Use this for the 'stereo' bond
             bond_stereo[i] = stereo;
           }
@@ -832,17 +832,17 @@ namespace OpenBabel {
             }
             else  {
               obErrorLog.ThrowError(__FUNCTION__, "Error in cis/trans stereochemistry specified for the double bond\n", obWarning);
-              stereo_bond[i] = (OBBond*) NULL;
+              stereo_bond[i] = nullptr;
             }
           }
         }
       }
 
-      if (stereo_bond[0] == NULL || stereo_bond[1] == NULL) continue; // No cis/trans
+      if (stereo_bond[0] == nullptr || stereo_bond[1] == nullptr) continue; // No cis/trans
 
       // other_bond will contain NULLs if there are bonds to implicit hydrogens
-      unsigned int second = (other_bond[0] == NULL) ? OBStereo::ImplicitRef : other_bond[0]->GetNbrAtom(a1)->GetId();
-      unsigned int fourth = (other_bond[1] == NULL) ? OBStereo::ImplicitRef : other_bond[1]->GetNbrAtom(a2)->GetId();
+      unsigned int second = (other_bond[0] == nullptr) ? OBStereo::ImplicitRef : other_bond[0]->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (other_bond[1] == nullptr) ? OBStereo::ImplicitRef : other_bond[1]->GetNbrAtom(a2)->GetId();
 
 
       OBCisTransStereo *ct = new OBCisTransStereo(&mol);
@@ -2298,7 +2298,7 @@ namespace OpenBabel {
   OBCanSmiNode::OBCanSmiNode(OBAtom *atom)
   {
     _atom = atom;
-    _parent = NULL;
+    _parent = nullptr;
     _child_nodes.clear();
     _child_bonds.clear();
   }
@@ -2365,7 +2365,7 @@ namespace OpenBabel {
       delete _stereoFacade;
     }
 
-    void         Init(OBMol* pmol, bool canonicalOutput = true, OBConversion* pconv=NULL);
+    void         Init(OBMol* pmol, bool canonicalOutput = true, OBConversion* pconv=nullptr);
 
     void         CreateCisTrans(OBMol&);
     char         GetCisTransBondSymbol(OBBond *, OBCanSmiNode *);
@@ -2427,8 +2427,8 @@ namespace OpenBabel {
     _pconv = pconv;
     _canonicalOutput = canonical;
 
-    _endatom = NULL;
-    _startatom = NULL;
+    _endatom = nullptr;
+    _startatom = nullptr;
   }
 
 
@@ -2604,7 +2604,7 @@ namespace OpenBabel {
         if (lookup != cfg.refs.end() && (cfg.begin == centeratom || cfg.end == centeratom))
         { // Atoms endatom and centeratom are in this OBCisTransStereo
 
-          std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
+          std::vector<OBBond *> refbonds(4, nullptr);
           refbonds[0] = mol->GetBond(mol->GetAtomById(cfg.refs[0]), mol->GetAtomById(cfg.begin));
 
           if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
@@ -2641,7 +2641,7 @@ namespace OpenBabel {
               }
           // Set the configuration
           for(int i=0;i<4;i++)
-            if (refbonds[i] != NULL)
+            if (refbonds[i] != nullptr)
               _isup[refbonds[i]] = config[i] ^ use_same_config;
           _unvisited_cistrans.erase(ChiralSearch);
           break; // break out of the ChiralSearch
@@ -2737,13 +2737,13 @@ namespace OpenBabel {
       || (options.showatomclass && atom->HasData("Atom Class")) ) // If the molecule has Atom Class data and -xa option set and atom has data
       bracketElement = true;
 
-    const char* stereo = (const char*)0;
+    const char* stereo = nullptr;
     if (GetSmilesValence(atom) > 2 && options.isomeric) {
       stereo = GetTetrahedralStereo(node, chiral_neighbors, symmetry_classes);
-      if (stereo == (const char*)0)
+      if (stereo == nullptr)
         stereo = GetSquarePlanarStereo(node, chiral_neighbors, symmetry_classes);
     }
-    if (stereo != (const char*)0)
+    if (stereo != nullptr)
       bracketElement = true;
 
     if (!bracketElement) {
@@ -2842,7 +2842,7 @@ namespace OpenBabel {
     }
 
     // If chiral, append '@' or '@@'...unless we're creating a SMARTS ("s") and it's @H or @@H
-    if (stereo != (const char*)0 && !(options.smarts && atom->GetImplicitHCount() > 0))
+    if (stereo != nullptr && !(options.smarts && atom->GetImplicitHCount() > 0))
       buffer += stereo;
 
     // Add extra hydrogens.
@@ -2850,7 +2850,7 @@ namespace OpenBabel {
     if (hcount > 0 && (atom == _endatom || atom == _startatom)) // Leave a free valence for attachment
       hcount--;
     if (hcount > 0) {
-      if (options.smarts && stereo == (const char*)0) {
+      if (options.smarts && stereo == nullptr) {
         char tcount[10];
         for (int i = 0; i < hcount; ++i) {
           buffer += "!H";
@@ -2940,20 +2940,20 @@ namespace OpenBabel {
   {
     // If not enough chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
-      return (const char*)0;
+      return nullptr;
 
     OBAtom *atom = node->GetAtom();
     OBTetrahedralStereo *ts = _stereoFacade->GetTetrahedralStereo(atom->GetId());
     // If atom is not a tetrahedral center, we're done
     if (!ts)
-      return (const char*)0;
+      return nullptr;
 
     // get the Config struct defining the stereochemistry
     OBTetrahedralStereo::Config atomConfig = ts->GetConfig();
 
     // Unspecified or unknown stereochemistry
     if (!atomConfig.specified || (atomConfig.specified && atomConfig.winding==OBStereo::UnknownWinding))
-      return (const char*)0;
+      return nullptr;
 
     // create a Config struct with the chiral_neighbors in canonical output order
     OBStereo::Refs canonRefs;
@@ -2992,20 +2992,20 @@ namespace OpenBabel {
   {
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
-      return (const char*)0;
+      return nullptr;
     
     OBAtom *atom = node->GetAtom();
 
     OBSquarePlanarStereo *sp = _stereoFacade->GetSquarePlanarStereo(atom->GetId());
     // If atom is not a square-planar center, we're done
     if (!sp)
-      return (const char*)0;
+      return nullptr;
 
     // get the Config struct defining the stereochemistry
     OBSquarePlanarStereo::Config atomConfig = sp->GetConfig();
 
     if (!atomConfig.specified)
-      return (const char*)0;
+      return nullptr;
 
     // create a Config struct with the chiral_neighbors in canonical output order
     OBStereo::Refs canonRefs = OBStereo::MakeRefs(chiral_neighbors[0]->GetId(),
@@ -3026,7 +3026,7 @@ namespace OpenBabel {
     if (atomConfig == canConfig)
       return "@SP3";
 
-    return (const char*)0;
+    return nullptr;
   }
 
   //! Adaptation of OBMol::FindChildren to allow a vector of OBAtoms to be passed in
@@ -3445,7 +3445,7 @@ namespace OpenBabel {
 
       // Handle implict H by adding a NULL OBAtom*
       if(atom->GetImplicitHCount() == 1)
-        chiral_neighbors.push_back(static_cast<OBAtom*> (NULL));
+        chiral_neighbors.push_back(nullptr);
 
       // Ok, done with H. Now we need to consider the case where there is a chiral
       // lone pair. If it exists (and we won't know for sure until we've counted up
@@ -3474,7 +3474,7 @@ namespace OpenBabel {
       // Handle a chiral lone-pair on a sulfur, by inserting a NULL OBAtom* at the
       // appropriate location
       if (chiral_neighbors.size() == 3 && CanHaveLonePair(atom->GetAtomicNum())) // Handle sulfur
-        chiral_neighbors.insert(chiral_neighbors.begin() + lonepair_location, static_cast<OBAtom*> (NULL));
+        chiral_neighbors.insert(chiral_neighbors.begin() + lonepair_location, nullptr);
 
     }
 
@@ -3679,7 +3679,7 @@ namespace OpenBabel {
     }*/
     OBConversion MolConv;
     MolConv.SetOutFormat("InChI");
-    MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
+    MolConv.SetAuxConv(nullptr); //temporary until a proper OBConversion copy constructor written
     stringstream newstream;
     MolConv.SetOutStream(&newstream);
     // I'm sure there's a better way of preventing InChI warning output
@@ -3836,7 +3836,7 @@ namespace OpenBabel {
     if (ppo) {
       tokenize(s_atom_order,ppo,"-()");
       if (s_atom_order.size() != mol.NumHvyAtoms())
-        ppo = NULL;
+        ppo = nullptr;
       else {
         for (vector<string>::const_iterator cit=s_atom_order.begin(); cit!=s_atom_order.end(); ++cit)
           atom_order.push_back(atoi(cit->c_str()));
@@ -3939,7 +3939,7 @@ namespace OpenBabel {
       // a good place to start the canonical SMILES.
       OBAtom *root_atom;
       unsigned int lowest_canorder = 999999;
-      root_atom = NULL;
+      root_atom = nullptr;
 
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
       if (_startatom)
@@ -3948,7 +3948,7 @@ namespace OpenBabel {
            (!isrxn || rxn.GetRole(_startatom)==rxnrole))
           root_atom = _startatom;
 
-      if (root_atom == NULL) {
+      if (root_atom == nullptr) {
         for (atom = mol.BeginAtom(ai); atom; atom = mol.NextAtom(ai)) {
           int idx = atom->GetIdx();
           if (//atom->GetAtomicNum() != OBElements::Hydrogen       // don't start with a hydrogen
@@ -3980,7 +3980,7 @@ namespace OpenBabel {
 
       // No atom found?  If it's not a reaction, then we've done all fragments.
       // If it is, then increment the rxn role and try again.
-      if (root_atom == NULL) {
+      if (root_atom == nullptr) {
         if (mol.IsReaction()) {
           rxnrole++;
           if (rxnrole==4)
@@ -4050,7 +4050,7 @@ namespace OpenBabel {
 
   void CreateCansmiString(OBMol &mol, std::string &buffer, OBBitVec &frag_atoms, OBConversion* pConv)
   {
-    bool canonical = pConv->IsOption("c") != NULL;
+    bool canonical = pConv->IsOption("c") != nullptr;
 
     OutOptions options(!pConv->IsOption("i"), pConv->IsOption("k"),
       pConv->IsOption("a"),
@@ -4116,7 +4116,7 @@ namespace OpenBabel {
     OBConversion MolConv;
 
     OBFormat* pInChIFormat = MolConv.FindFormat("InChI");
-    if(pInChIFormat==NULL) {
+    if (pInChIFormat == nullptr) {
       obErrorLog.ThrowError(__FUNCTION__, "InChI format not available", obError);
       return false;
     }
@@ -4289,7 +4289,7 @@ namespace OpenBabel {
   bool FIXFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

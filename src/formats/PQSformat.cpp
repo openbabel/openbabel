@@ -114,7 +114,7 @@ namespace OpenBabel
                           "cuto","preo"};         //55-56
     lowerit(s);
     for (i=0; i<56; i++)
-      if (strstr(s,input_cards[i])!=NULL)
+      if (strstr(s, input_cards[i]) != nullptr)
         return true;
     return false;
   }
@@ -178,7 +178,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -198,35 +198,35 @@ namespace OpenBabel
     while (!geom_found && ifs.getline(buffer,BUFF_SIZE))
       {
         lowerit(buffer);      //look for geom except in title or text
-        if (strstr(buffer,"geom")!=NULL &&
+        if (strstr(buffer, "geom") != nullptr &&
             (strncmp(buffer,"text",4)!=0 && strncmp(buffer,"titl",4)!=0))
           {
             geom_found=true;
             lowerit(buffer);
 
-            if (strstr(buffer,"bohr")!=NULL)
+            if (strstr(buffer, "bohr") != nullptr)
               bohr_to_angstrom=0.529177249;
             else
               bohr_to_angstrom=1.0;
             input_style=0;
-            if (strstr(buffer,"=tx90")!=NULL)
+            if (strstr(buffer, "=tx90") != nullptr)
               input_style=1;
-            if (strstr(buffer,"=tx92")!=NULL)
+            if (strstr(buffer, "=tx92") != nullptr)
               input_style=0;
-            if (strstr(buffer,"=pqs" )!=NULL)
+            if (strstr(buffer, "=pqs") != nullptr)
               input_style=0;
 
-            if (strstr(buffer,"file=")!=NULL)
+            if (strstr(buffer, "file=") != nullptr)
               {  //external geometry file
                 strncpy(coord_file,strstr(buffer,"file=")+5, sizeof(coord_file));
                 coord_file[sizeof(coord_file) - 1] = '\0';
-                if (strrchr(coord_file,' ')!=NULL)
+                if (strrchr(coord_file, ' ') != nullptr)
                   *strrchr(coord_file,' ')='\0';
                 if (coord_file[0]!='/')
                   {
                     strncpy(full_coord_path,title, sizeof(full_coord_path));
                     full_coord_path[sizeof(full_coord_path)-1] = '\0';
-                    if (strrchr(full_coord_path,'/')!=NULL)
+                    if (strrchr(full_coord_path, '/') != nullptr)
                       *(strrchr(full_coord_path,'/')+1)='\0';
                     else
                       full_coord_path[0] = '\0';
@@ -252,13 +252,13 @@ namespace OpenBabel
                     //New framework mods
                     OBConversion coordconv(&coordFileStream);
                     OBFormat* pFormat;
-                    if (strstr(buffer,"=car" )!=NULL)
+                    if (strstr(buffer, "=car" ) != nullptr)
                       pFormat =OBConversion::FindFormat("BIOSYM");
-                    if (strstr(buffer,"=hin" )!=NULL)
+                    if (strstr(buffer, "=hin" ) != nullptr)
                       pFormat = OBConversion::FindFormat("HIN");
-                    if (strstr(buffer,"=pdb" )!=NULL)
+                    if (strstr(buffer, "=pdb" ) != nullptr)
                       pFormat = OBConversion::FindFormat("PDB");
-                    if (strstr(buffer,"=mop" )!=NULL)
+                    if (strstr(buffer, "=mop" ) != nullptr)
                       pFormat = OBConversion::FindFormat("MOPAC");
                     return pFormat->ReadMolecule(&mol,&coordconv);
 
@@ -289,7 +289,7 @@ namespace OpenBabel
           {   //try .coord file
             strncpy(coord_file,title, sizeof(coord_file));
             coord_file[sizeof(coord_file) - 1] = '\0';
-            if (strrchr(coord_file,'.')!=NULL)
+            if (strrchr(coord_file, '.') != nullptr)
               *strrchr(coord_file,'.')='\0';
             strcat(coord_file,".coord");
             coordFileStream.open(coord_file);
@@ -321,7 +321,7 @@ namespace OpenBabel
   bool PQSFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

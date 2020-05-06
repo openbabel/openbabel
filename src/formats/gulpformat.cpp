@@ -79,7 +79,7 @@ namespace OpenBabel {
   bool GULPFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -320,7 +320,7 @@ namespace OpenBabel {
 
         ifs.getline(buffer,BUFF_SIZE);
 
-        while (strstr(buffer, "kJ/(mole unit cells)") == 0) {
+        while (strstr(buffer, "kJ/(mole unit cells)") == nullptr) {
           if (strstr(buffer, "Pressure*volume")) {
             tokenize(vs, buffer);
             pv_eV = atof(vs[2].c_str());

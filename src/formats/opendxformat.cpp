@@ -64,7 +64,7 @@ namespace OpenBabel
     }
 
     // Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return 0; };
+    virtual const char* GetMIMEType() { return nullptr; }
 
     // Skip to object: used for multi-object file formats.
     virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
@@ -89,7 +89,7 @@ namespace OpenBabel
 bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol == 0)
+    if (pmol == nullptr)
       return false;
 
     istream& ifs = *pConv->GetInStream();
@@ -242,7 +242,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
   bool OBOpenDXCubeFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     ostream &ofs = *pConv->GetOutStream();
@@ -253,7 +253,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     stringstream errorMsg;
 
     OBGridData *gd = (OBGridData*)mol.GetData(OBGenericDataType::GridData);
-    if (gd == NULL) {
+    if (gd == nullptr) {
       errorMsg << "The molecule has no grid.";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false;

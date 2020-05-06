@@ -83,7 +83,7 @@ namespace OpenBabel {
         StereoFrom3D(mol, force);
         break;
       case 2:
-        StereoFrom2D(mol, 0, force);
+        StereoFrom2D(mol, nullptr, force);
         break;
       default:
         StereoFrom0D(mol);
@@ -1076,7 +1076,7 @@ namespace OpenBabel {
         case C11:
           {
             // find the ligand
-            OBAtom *ligandAtom = 0;
+            OBAtom *ligandAtom = nullptr;
             FOR_NBORS_OF_ATOM (nbr, begin) {
               if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
                 ligandAtom = &*nbr;
@@ -1113,7 +1113,7 @@ namespace OpenBabel {
         case C11:
           {
             // find the ligand
-            OBAtom *ligandAtom = 0;
+            OBAtom *ligandAtom = nullptr;
             FOR_NBORS_OF_ATOM (nbr, end) {
               if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
                 ligandAtom = &*nbr;
@@ -1482,7 +1482,7 @@ namespace OpenBabel {
    */
   OBAtom* findAtomWithSymmetryClass(OBAtom *atom, unsigned int symClass, const std::vector<unsigned int> &symClasses)
   {
-    OBAtom *ligandAtom = 0;
+    OBAtom *ligandAtom = nullptr;
     FOR_NBORS_OF_ATOM (nbr, atom)
       if (symClasses.at(nbr->GetIndex()) == symClass)
         ligandAtom = &*nbr;
@@ -1758,7 +1758,7 @@ namespace OpenBabel {
             case C11:
               {
                 // find the ligand
-                OBAtom *ligandAtom = 0;
+                OBAtom *ligandAtom = nullptr;
                 FOR_NBORS_OF_ATOM (nbr, bond->GetBeginAtom()) {
                   if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
                     ligandAtom = &*nbr;
@@ -1782,7 +1782,7 @@ namespace OpenBabel {
             case C11:
               {
                 // find the ligand
-                OBAtom *ligandAtom = 0;
+                OBAtom *ligandAtom = nullptr;
                 FOR_NBORS_OF_ATOM (nbr, bond->GetEndAtom()) {
                   if ((nbr->GetIdx() != bond->GetBeginAtomIdx()) && (nbr->GetIdx() != bond->GetEndAtomIdx())) {
                     ligandAtom = &*nbr;
@@ -2798,7 +2798,7 @@ namespace OpenBabel {
         OBTetrahedralStereo::Config cfg = ts->GetConfig();
 
         if (cfg.specified) {
-          OBBond* chosen = (OBBond*) NULL;
+          OBBond* chosen = nullptr;
           OBAtom* center = mol.GetAtomById(cfg.center);
           vector3 center_coord = center->GetVector();
 
@@ -2808,8 +2808,8 @@ namespace OpenBabel {
           FOR_NBORS_OF_ATOM(a, center)
             nbrs.push_back(&*a);
           double min_angle = 359.0;
-          OBBond *close_bond_a = (OBBond*) NULL;
-          OBBond *close_bond_b = (OBBond*) NULL;
+          OBBond *close_bond_a = nullptr;
+          OBBond *close_bond_b = nullptr;
           for (unsigned int i=0; i<nbrs.size() - 1; ++i)
             for (unsigned int j=i+1; j<nbrs.size(); ++j) {
               double angle = abs(nbrs[i]->GetAngle(center, nbrs[j]));
@@ -2821,8 +2821,8 @@ namespace OpenBabel {
             }
 
           if (min_angle > DELTA_ANGLE_FOR_OVERLAPPING_BONDS) {
-            close_bond_a = (OBBond*) NULL;
-            close_bond_b = (OBBond*) NULL;
+            close_bond_a = nullptr;
+            close_bond_b = nullptr;
           }
 
           // Find the best candidate bond to set to up/down
@@ -2869,7 +2869,7 @@ namespace OpenBabel {
             }
           }
 
-          if (chosen==NULL) { // There is a remote possibility of this but let's worry about 99.9% of cases first
+          if (chosen == nullptr) { // There is a remote possibility of this but let's worry about 99.9% of cases first
             obErrorLog.ThrowError(__FUNCTION__,
               "Failed to set stereochemistry as unable to find an available bond", obError);
             return false;

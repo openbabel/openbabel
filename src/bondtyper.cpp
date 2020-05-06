@@ -93,7 +93,7 @@ namespace OpenBabel
         else
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
           }
       }
   }

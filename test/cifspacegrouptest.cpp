@@ -47,7 +47,7 @@ void testSpaceGroupUniqueTransformations()
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
   SpaceGroup* sg = new SpaceGroup(*pSG);
   pSG = SpaceGroup::Find(sg);
-  OB_ASSERT( pSG != NULL );
+  OB_ASSERT(pSG != nullptr);
 
   // Check also for errors and warnings
   string summary = obErrorLog.GetMessageSummary();
@@ -69,7 +69,7 @@ void testSpaceGroupClean()
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
   SpaceGroup* sg = new SpaceGroup(*pSG);
   pSG = SpaceGroup::Find(sg);
-  OB_ASSERT( pSG != NULL );
+  OB_ASSERT(pSG != nullptr);
 
   // Check also for errors and warnings
   string summary = obErrorLog.GetMessageSummary();
@@ -159,7 +159,7 @@ void testDecayToP1()
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
   SpaceGroup* sg = new SpaceGroup(*pSG);
   pSG = SpaceGroup::Find(sg);
-  OB_ASSERT( pSG != NULL );
+  OB_ASSERT(pSG != nullptr);
 
   // Check also for errors and warnings
   string summary = obErrorLog.GetMessageSummary();
@@ -182,7 +182,7 @@ void testAlternativeOrigin()
 
   string summary = obErrorLog.GetMessageSummary();
   OB_ASSERT( summary.find("warning") == string::npos);
-  OB_ASSERT( pSG != NULL );
+  OB_ASSERT( pSG != nullptr );
   OB_ASSERT( pSG->GetOriginAlternative() == 1);
 }
 

@@ -496,7 +496,7 @@ namespace OpenBabel
   void OBRotor::SetRings()
   {
     _rings.clear();
-    if (_bond == NULL)
+    if (_bond == nullptr)
       return; // nothing to do
 
     vector<OBRing*> rlist;
@@ -504,7 +504,7 @@ namespace OpenBabel
 
     OBMol *mol = _bond->GetParent();
 
-    if (mol == NULL)
+    if (mol == nullptr)
       return; // nothing to do
 
     rlist = mol->GetSSSR();

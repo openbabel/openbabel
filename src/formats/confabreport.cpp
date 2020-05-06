@@ -149,7 +149,7 @@ void ConfabReport::WriteOutput(ostream& ofs)
 bool ConfabReport::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   ostream& ofs = *pConv->GetOutStream();
@@ -160,7 +160,7 @@ bool ConfabReport::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       cerr << "Need to specify a reference file\n";
       return false;
     }
-    OBFormat *prFormat = NULL;
+    OBFormat *prFormat = nullptr;
     if (!prFormat) {
       prFormat = rconv.FormatFromExt(rfilename);
       if (!prFormat) {

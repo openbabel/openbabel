@@ -65,7 +65,7 @@ namespace OpenBabel
 
       virtual bool WorksWith(OBBase* pOb) const
       {
-        return dynamic_cast<OBMol*>(pOb) != NULL;
+        return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   };
@@ -162,7 +162,7 @@ namespace OpenBabel
 
       virtual bool WorksWith(OBBase* pOb) const
       {
-        return dynamic_cast<OBMol*>(pOb) != NULL;
+        return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   };

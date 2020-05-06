@@ -47,7 +47,7 @@ void NegativeTestCases(int &molCount, unsigned int &testCount)
                            "N1S[SH+]C=C1",
                            "S1C=[NH+]=[NH+]=C1",
                            "C1(N23)=CC=CC2=CC=CC3=CC=C1", // pyrido[2,1,6-de]quinolizine - no atom is Daylight aromatic
-                           0 };
+                           nullptr };
   OBMol mol;
   OBConversion conv;
   conv.SetInFormat("smi");
@@ -112,7 +112,7 @@ int aromatest(int argc, char* argv[])
   OBFormat* pFormat;
   
   pFormat = conv.FormatFromExt("aromatics.smi");
-  if ( pFormat == NULL )
+  if (pFormat == nullptr)
     {
       cout << "Bail out! Cannot read file format!" << endl;
       return(-1);

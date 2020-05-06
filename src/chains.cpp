@@ -425,17 +425,17 @@ namespace OpenBabel
         return (result);
       }
     result->type = type;
-    result->eval.next     = NULL;
-    result->count.tcond   = NULL;
-    result->count.fcond   = NULL;
-    result->elem.tcond    = NULL;
-    result->elem.fcond    = NULL;
-    result->ident.tcond   = NULL;
-    result->ident.fcond   = NULL;
-    result->local.tcond   = NULL;
-    result->local.fcond   = NULL;
-    result->assign.atomid = NULL;
-    result->assign.bflags = NULL;
+    result->eval.next     = nullptr;
+    result->count.tcond   = nullptr;
+    result->count.fcond   = nullptr;
+    result->elem.tcond    = nullptr;
+    result->elem.fcond    = nullptr;
+    result->ident.tcond   = nullptr;
+    result->ident.fcond   = nullptr;
+    result->local.tcond   = nullptr;
+    result->local.fcond   = nullptr;
+    result->assign.atomid = nullptr;
+    result->assign.bflags = nullptr;
 
     return (result);
   }
@@ -443,7 +443,7 @@ namespace OpenBabel
   //! Free a ByteCode and all corresponding data
   static void DeleteByteCode(ByteCode *node)
   {
-    if (node == NULL)
+    if (node == nullptr)
       return;
     else
       {
@@ -451,13 +451,13 @@ namespace OpenBabel
           {
           case BC_ASSIGN:
 
-            if (node->assign.atomid != NULL) {
+            if (node->assign.atomid != nullptr) {
               delete [] node->assign.atomid;
-              node->assign.atomid = NULL; // prevent double-free
+              node->assign.atomid = nullptr; // prevent double-free
             }
-            if (node->assign.bflags != NULL) {
+            if (node->assign.bflags != nullptr) {
               delete [] node->assign.bflags;
-              node->assign.bflags = NULL; // prevent double-free
+              node->assign.bflags = nullptr; // prevent double-free
             }
 
             break;
@@ -492,7 +492,7 @@ namespace OpenBabel
           }
 
         delete node;
-        node = NULL;
+        node = nullptr;
       }
   }
 
@@ -529,7 +529,7 @@ namespace OpenBabel
             if (!found)
               {
                 ptr = AllocateByteCode(BC_IDENT);
-                ptr->ident.tcond = (ByteCode*)0;
+                ptr->ident.tcond = nullptr;
                 ptr->ident.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->ident.tcond;
@@ -559,7 +559,7 @@ namespace OpenBabel
             if (!found)
               {
                 ptr = AllocateByteCode(BC_LOCAL);
-                ptr->local.tcond = (ByteCode*)0;
+                ptr->local.tcond = nullptr;
                 ptr->local.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->local.tcond;
@@ -592,7 +592,7 @@ namespace OpenBabel
             if( !found )
               {
                 ptr = AllocateByteCode(BC_ELEM);
-                ptr->elem.tcond = (ByteCode*)0;
+                ptr->elem.tcond = nullptr;
                 ptr->elem.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->elem.tcond;
@@ -654,7 +654,7 @@ namespace OpenBabel
             if( !found )
               {
                 ptr = AllocateByteCode(BC_COUNT);
-                ptr->count.tcond = (ByteCode*)0;
+                ptr->count.tcond = nullptr;
                 ptr->count.fcond = *node;
                 *node = ptr;
                 node = (ByteCode**)&ptr->count.tcond;
@@ -669,7 +669,7 @@ namespace OpenBabel
             node = (ByteCode**)&ptr->eval.next;
 
             ptr = AllocateByteCode(BC_COUNT);
-            ptr->count.tcond = (ByteCode*)0;
+            ptr->count.tcond = nullptr;
             ptr->count.fcond = *node;
             *node = ptr;
             node = (ByteCode**)&ptr->count.tcond;
@@ -764,7 +764,7 @@ namespace OpenBabel
   {
     int i, res = RESIDMIN;
 
-    PDecisionTree = (ByteCode*)0;
+    PDecisionTree = (ByteCode*)nullptr;
     for( i=0 ; i < AMINOMAX ; i++ )
       {
         strncpy(ChainsResName[res],AminoAcids[i].name, sizeof(ChainsResName[res]) - 1);
@@ -773,7 +773,7 @@ namespace OpenBabel
         res++;
       }
 
-    NDecisionTree = (ByteCode*)0;
+    NDecisionTree = (ByteCode*)nullptr;
     for( i=0 ; i< NUCLEOMAX ; i++ )
       {
         strncpy(ChainsResName[res],Nucleotides[i].name, sizeof(ChainsResName[res]) - 1);
@@ -1226,10 +1226,10 @@ namespace OpenBabel
   {
     static OBAtom *neighbour[6];
     Template *pep;
-    OBAtom *na = (OBAtom*)0;
-    OBAtom *nb = (OBAtom*)0;
-    OBAtom *nc = (OBAtom*)0;
-    OBAtom *nd = (OBAtom*)0;
+    OBAtom *na = nullptr;
+    OBAtom *nb = nullptr;
+    OBAtom *nc = nullptr;
+    OBAtom *nd = nullptr;
     OBAtom *atom, *nbr;
     bool change, result;
     int i, count;
@@ -1303,7 +1303,7 @@ namespace OpenBabel
 
   bool OBChainsParser::MatchConstraint(OBAtom *atom, int mask)
   {
-    if (atom == NULL)
+    if (atom == nullptr)
       return (false);
 
     if( mask < 0 )
@@ -1314,7 +1314,7 @@ namespace OpenBabel
 
   bool OBChainsParser::Match2Constraints(Template *tmpl, OBAtom *na, OBAtom *nb)
   {
-    if (na == NULL || nb == NULL)
+    if (na == nullptr || nb == nullptr)
       return (false); // don't even try to evaluate it
 
     if( MatchConstraint(na,tmpl->n2) )
@@ -1328,7 +1328,7 @@ namespace OpenBabel
 
   bool OBChainsParser::Match3Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, OBAtom *nc)
   {
-    if (na == NULL || nb == NULL || nc == NULL)
+    if (na == nullptr || nb == nullptr || nc == nullptr)
       return (false); // don't even try to evaluate it
 
     if( MatchConstraint(na,tmpl->n3) )
@@ -1345,7 +1345,7 @@ namespace OpenBabel
 
   bool OBChainsParser::Match4Constraints(Template *tmpl, OBAtom *na, OBAtom *nb, OBAtom *nc, OBAtom *nd)
   {
-    if (na == NULL || nb == NULL || nc == NULL || nd == NULL)
+    if (na == nullptr || nb == nullptr || nc == nullptr || nd == nullptr)
       return (false); // don't even try to evaluate it
 
     if( MatchConstraint(na,tmpl->n4) )
@@ -1834,7 +1834,7 @@ namespace OpenBabel
       if(atom->GetAtomicNum() == OBElements::Hydrogen)
         {
           nbr = atom->BeginNbrAtom(b);
-          if (nbr != NULL)
+          if (nbr != nullptr)
             {
               idx  = atom->GetIdx() - 1;
               sidx = nbr->GetIdx() - 1;
@@ -1854,7 +1854,7 @@ namespace OpenBabel
       if (atom->GetAtomicNum() == OBElements::Hydrogen)
         {
           nbr = atom->BeginNbrAtom(b);
-          if (nbr != NULL && hcounts[nbr->GetIdx()-1] == 1)
+          if (nbr != nullptr && hcounts[nbr->GetIdx()-1] == 1)
             hcounts[atom->GetIdx()-1] = 0;
         }
 

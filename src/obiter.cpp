@@ -221,7 +221,7 @@ namespace OpenBabel
             _notVisited.SetBitOff(next);
           }
         else
-          _ptr = NULL;
+          _ptr = nullptr;
       }
 
     if (_ptr)
@@ -372,12 +372,12 @@ namespace OpenBabel
         if (next != _notVisited.EndBit())
           {
             _ptr = _parent->GetAtom(next + 1); // Atom index issue
-            if (_ptr != NULL)
+            if (_ptr != nullptr)
               _depth[_ptr->GetIdx()] = 1; // new island
             _notVisited.SetBitOff(next);
           }
         else
-          _ptr = NULL;
+          _ptr = nullptr;
       }
 
     if (_ptr)
@@ -406,7 +406,7 @@ namespace OpenBabel
 
   int OBMolAtomBFSIter::CurrentDepth() const
   {
-    if (_ptr == NULL)
+    if (_ptr == nullptr)
       return 0;
 
     return _depth[_ptr->GetIdx()];
@@ -457,7 +457,7 @@ namespace OpenBabel
   {
     unsigned int numbonds = _parent->NumBonds();
     if (numbonds == 0) {
-      _ptr = 0; // mark as invalid
+      _ptr = nullptr; // mark as invalid
       return;
     }
     _ptr = _parent->GetBond(StartIndex);
@@ -496,7 +496,7 @@ namespace OpenBabel
   {
     unsigned int numbonds = _parent->NumBonds();
     if (numbonds == 0) {
-      _ptr = 0; // mark as invalid
+      _ptr = nullptr; // mark as invalid
       return;
     }
     _ptr = _parent->GetBond(StartIndex);
@@ -565,12 +565,12 @@ namespace OpenBabel
       if (next != _notVisited.EndBit())
       {
         _ptr = _parent->GetBond(next + 1); // Bond index issue
-        if (_ptr != NULL)
+        if (_ptr != nullptr)
           _depth[_ptr->GetIdx()] = 1; // new island
         _notVisited.SetBitOff(next);
       }
       else
-        _ptr = NULL;
+        _ptr = nullptr;
     }
 
     if (_ptr) {
@@ -603,7 +603,7 @@ namespace OpenBabel
 
   int OBMolBondBFSIter::CurrentDepth() const
   {
-    if (_ptr == NULL)
+    if (_ptr == nullptr)
       return 0;
 
     return _depth[_ptr->GetIdx()];

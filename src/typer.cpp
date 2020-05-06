@@ -87,7 +87,7 @@ namespace OpenBabel
         else
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse INTHYB line in atom type table from atomtyp.txt", obInfo);
             return;
           }
@@ -106,7 +106,7 @@ namespace OpenBabel
         else
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
             return;
           }
@@ -266,7 +266,7 @@ namespace OpenBabel
         _ringtyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
       else {
         delete sp;
-        sp = NULL;
+        sp = nullptr;
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse RING line in ring type table from ringtyp.txt", obInfo);
         return;
       }

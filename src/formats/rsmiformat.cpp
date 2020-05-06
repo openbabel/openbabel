@@ -85,9 +85,9 @@ namespace OpenBabel
         return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
       else
       {
-        pConv->AddChemObject(NULL);
+        pConv->AddChemObject(nullptr);
         delete pReact;
-        pReact=NULL;
+        pReact=nullptr;
         return false;
       }
     }
@@ -97,7 +97,7 @@ namespace OpenBabel
       //WriteChemObject() always deletes the object retrieved by GetChemObject
       OBBase* pOb = pConv->GetChemObject();
       OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-      if(pReact==NULL)
+      if (pReact == nullptr)
         return false;
 
       bool ret=false;
@@ -241,7 +241,7 @@ namespace OpenBabel
     //It's really a reaction, not a molecule.
     //Cast output object to the class type need, i.e. OBReaction
     OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-    if(pReact==NULL)
+    if (pReact == nullptr)
       return false;
     ostream &ofs = *pConv->GetOutStream();
 

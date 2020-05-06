@@ -68,7 +68,7 @@ namespace OpenBabel
   bool MSIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -119,19 +119,19 @@ namespace OpenBabel
     while (ifs.getline(buffer,BUFF_SIZE))
       {
         // model record
-        if (strstr(buffer, "Model") != NULL) {
+        if (strstr(buffer, "Model") != nullptr) {
           openParens++;
           continue;
         }
 
         // atom record
-        if (!bondRecord && strstr(buffer, "Atom") != NULL) {
+        if (!bondRecord && strstr(buffer, "Atom") != nullptr) {
           atomRecord = true;
           openParens++;
           continue;
         }
 
-        if (strstr(buffer, "Bond") != NULL) {
+        if (strstr(buffer, "Bond") != nullptr) {
           bondRecord = true;
           startBondAtom = endBondAtom = 0;
           bondOrder = 1;
@@ -145,7 +145,7 @@ namespace OpenBabel
            (A D C3 (0 0 6.9960000000000004))
            (A C SpaceGroup "63 5")
         */
-        if (strstr(buffer, "PeriodicType") != NULL) {
+        if (strstr(buffer, "PeriodicType") != nullptr) {
           ifs.getline(buffer,BUFF_SIZE); // next line should be translation vector
           tokenize(vs,buffer);
             while (vs.size() == 6) {
@@ -160,7 +160,7 @@ namespace OpenBabel
             }
         }
 
-        if (strstr(buffer, "SpaceGroup") != NULL) {
+        if (strstr(buffer, "SpaceGroup") != nullptr) {
           tokenize(vs, buffer);
           if (vs.size() != 5)
             continue; // invalid space group
@@ -170,7 +170,7 @@ namespace OpenBabel
 
         // atom information
         if (atomRecord) {
-          if (strstr(buffer, "ACL") != NULL) {
+          if (strstr(buffer, "ACL") != nullptr) {
             tokenize(vs, buffer);
             // size should be 5 -- need a test here
             if (vs.size() != 5) return false; // timvdm 18/06/2008
@@ -184,7 +184,7 @@ namespace OpenBabel
             atom->SetAtomicNum(atomicNum);
             continue;
           }
-          else if (strstr(buffer, "XYZ") != NULL) {
+          else if (strstr(buffer, "XYZ") != nullptr) {
             tokenize(vs, buffer);
             // size should be 6 -- need a test here
             if (vs.size() != 6) return false; // timvdm 18/06/2008
@@ -199,21 +199,21 @@ namespace OpenBabel
 
         // bond information
         if (bondRecord) {
-          if (strstr(buffer, "Atom1") != NULL) {
+          if (strstr(buffer, "Atom1") != nullptr) {
             tokenize(vs, buffer);
             if (vs.size() < 4) return false; // timvdm 18/06/2008
             vs[3].erase(vs[3].length()-1,1);
             startBondAtom = atoi(vs[3].c_str());
             continue;
           }
-          else if (strstr(buffer, "Atom2") != NULL) {
+          else if (strstr(buffer, "Atom2") != nullptr) {
             tokenize(vs, buffer);
             if (vs.size() < 4) return false; // timvdm 18/06/2008
             vs[3].erase(vs[3].length()-1,1);
             endBondAtom = atoi(vs[3].c_str());
             continue;
           }
-          else if (strstr(buffer, "Type") != NULL) {
+          else if (strstr(buffer, "Type") != nullptr) {
             tokenize(vs, buffer);
             if (vs.size() < 4) return false; // timvdm 18/06/2008
             vs[3].erase(vs[3].length()-1,1);
@@ -229,7 +229,7 @@ namespace OpenBabel
         }
 
         // ending a "tag" -- a lone ")" on a line
-        if (strstr(buffer,")") != NULL && strstr(buffer, "(") == NULL) {
+        if (strstr(buffer, ")") != nullptr && strstr(buffer, "(") == nullptr) {
           openParens--;
           if (atomRecord) {
             atomRecord = false;

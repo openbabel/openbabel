@@ -146,7 +146,7 @@ namespace OpenBabel {
   bool VASPFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     // Move stream to EOF, some apps check ifs position to check for multimolecule files.
@@ -600,9 +600,9 @@ namespace OpenBabel {
     const char *noBonding  = pConv->IsOption("b", OBConversion::INOPTIONS);
     const char *singleOnly = pConv->IsOption("s", OBConversion::INOPTIONS);
 
-    if (noBonding == NULL) {
+    if (noBonding == nullptr) {
       pmol->ConnectTheDots();
-      if (singleOnly == NULL) {
+      if (singleOnly == nullptr) {
         pmol->PerceiveBondOrders();
       }
     }
@@ -619,7 +619,7 @@ namespace OpenBabel {
     //output looks nice, this can be reversed by using command line flag "-xw".
     //
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if (pmol == NULL) {
+    if (pmol == nullptr) {
       return false;
     }
 
@@ -627,7 +627,7 @@ namespace OpenBabel {
     OBMol &mol = *pmol;
 
     char buffer[BUFF_SIZE];
-    OBUnitCell *uc = NULL;
+    OBUnitCell *uc = nullptr;
     vector<vector3> cell;
 
     const char * sortAtomsNum = pConv->IsOption("w", OBConversion::OUTOPTIONS);
@@ -644,7 +644,7 @@ namespace OpenBabel {
 
     std::vector<int> custom_sort_nums;
     
-    if (sortAtomsCustom != NULL)
+    if (sortAtomsCustom != nullptr)
     {
       vector<string> vs;
       tokenize(vs, sortAtomsCustom);
@@ -652,7 +652,7 @@ namespace OpenBabel {
         custom_sort_nums.push_back(OBElements::GetAtomicNum(vs[i].c_str()));
     }
 
-    compare_sort_items csi(custom_sort_nums, sortAtomsNum != NULL);
+    compare_sort_items csi(custom_sort_nums, sortAtomsNum != nullptr);
     std::stable_sort(atoms_sorted.begin(), atoms_sorted.end(), csi);
 
     // Use the atomicNums vector to determine the composition line.

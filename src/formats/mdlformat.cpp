@@ -677,7 +677,7 @@ namespace OpenBabel
           int value = ReadUIntField((line.substr(pos+4,3)).c_str());
           if (line.substr(3, 3) == "ZBO") {
             OBBond *bo;
-            if (number==0 || (bo=mol.GetBond(number-1))==NULL) {
+            if (number == 0 || (bo = mol.GetBond(number-1)) == nullptr) {
               obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
               return false;
             }
@@ -685,7 +685,7 @@ namespace OpenBabel
             foundZBO = true;
           } else {
             OBAtom *at;
-            if (number==0 || (at=mol.GetAtom(number))==NULL) {
+            if (number == 0 || (at = mol.GetAtom(number)) == nullptr) {
               obErrorLog.ThrowError(__FUNCTION__, "Error in line:\n" + line, obError);
               return false;
             }
@@ -904,10 +904,10 @@ namespace OpenBabel
         mol.SetDimension(0);
       // Atom parities from the MOL file will be used to create tetrahedral stereochemistry
       // unless you specified the S option (but not s).
-      if (pConv->IsOption("s", OBConversion::INOPTIONS) || pConv->IsOption("S", OBConversion::INOPTIONS)==NULL)
+      if (pConv->IsOption("s", OBConversion::INOPTIONS) || pConv->IsOption("S", OBConversion::INOPTIONS) == nullptr)
         TetStereoFromParity(mol, parities);
       StereoFrom0D(&mol);
-      if (pConv->IsOption("S", OBConversion::INOPTIONS)==NULL)
+      if (pConv->IsOption("S", OBConversion::INOPTIONS) == nullptr)
         CisTransFromUpDown(&mol, &updown);
     }
 
@@ -1225,7 +1225,7 @@ namespace OpenBabel
           if ( (from_cit==from.end() && atom->GetIdx()==bond->GetBeginAtomIdx()) ||
                (from_cit!=from.end() && from_cit->second == atom->GetId()) ) {
             int stereo = 0;
-            if(mol.GetDimension() == 2 && pConv->IsOption("w", pConv->OUTOPTIONS)!=NULL) {
+            if(mol.GetDimension() == 2 && pConv->IsOption("w", pConv->OUTOPTIONS) != nullptr) {
                 if (bond->IsWedge())
                   stereo = 1;
                 else if (bond->IsHash())
@@ -1750,7 +1750,7 @@ namespace OpenBabel
         OBCisTransStereo::Config cfg = ct->GetConfig();
 
         // ****************** START OF HANDLING ONE DOUBLE BOND ******************************
-        std::vector<OBBond *> refbonds(4, (OBBond*)NULL);
+        std::vector<OBBond *> refbonds(4, nullptr);
         if (cfg.refs[0] != OBStereo::ImplicitRef) // Could be a hydrogen
           refbonds[0] = mol.GetBond(mol.GetAtomById(cfg.refs[0]), mol.GetAtomById(cfg.begin));
         if (cfg.refs[1] != OBStereo::ImplicitRef) // Could be a hydrogen
@@ -1776,7 +1776,7 @@ namespace OpenBabel
         OBBond* dbl_bond = mol.GetBond(mol.GetAtomById(cfg.begin), mol.GetAtomById(cfg.end));
         stereodbl.insert(dbl_bond);
         for(int i=0;i<4;i++)
-          if (refbonds[i] != NULL)
+          if (refbonds[i] != nullptr)
             updown[refbonds[i]] = use_alt_config ? alt_config[i] : config[i];
         // ******************** END OF HANDLING ONE DOUBLE BOND ******************************
 
@@ -1887,7 +1887,7 @@ namespace OpenBabel
   int MDLFormat::ReadIntField(const char *s)
   {
     char *end;
-    if (s == NULL) return 0;
+    if (s == nullptr) return 0;
     int n = strtol(s, &end, 10);
     if (*end != '\0' && *end != ' ') return 0;
     return n;
@@ -1896,7 +1896,7 @@ namespace OpenBabel
   unsigned int MDLFormat::ReadUIntField(const char *s)
   {
     char *end;
-    if (s == NULL) return 0;
+    if (s == nullptr) return 0;
     int n = strtoul(s, &end, 10);
     if (*end != '\0' && *end != ' ') return 0;
     return n;
@@ -1983,13 +1983,13 @@ namespace OpenBabel
       OBBond* dbl_bond = mol->GetBond(a1, a2);
 
       // Get the bonds of neighbors of atom1 and atom2
-      OBBond *a1_b1 = NULL, *a1_b2 = NULL, *a2_b1 = NULL, *a2_b2 = NULL;
+      OBBond *a1_b1 = nullptr, *a1_b2 = nullptr, *a2_b1 = nullptr, *a2_b2 = nullptr;
       OBStereo::BondDirection a1_stereo, a2_stereo;
 
       FOR_BONDS_OF_ATOM(bi, a1) {
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;  // skip the double bond we're working on
-        if (a1_b1 == NULL && updown->find(b) != updown->end())
+        if (a1_b1 == nullptr && updown->find(b) != updown->end())
         {
           a1_b1 = b;    // remember a stereo bond of Atom1
           a1_stereo = (*updown)[b];
@@ -2001,7 +2001,7 @@ namespace OpenBabel
       FOR_BONDS_OF_ATOM(bi, a2) {
         OBBond *b = &(*bi);
         if (b == dbl_bond) continue;
-        if (a2_b1 == NULL && updown->find(b) != updown->end())
+        if (a2_b1 == nullptr && updown->find(b) != updown->end())
         {
           a2_b1 = b;    // remember a stereo bond of Atom2
           a2_stereo = (*updown)[b];
@@ -2010,13 +2010,13 @@ namespace OpenBabel
           a2_b2 = b;    // remember a 2nd bond of Atom2
       }
 
-      if (a1_b1 == NULL || a2_b1 == NULL) continue; // No cis/trans
+      if (a1_b1 == nullptr || a2_b1 == nullptr) continue; // No cis/trans
 
       cfg.specified = true;
 
       // a1_b2 and/or a2_b2 will be NULL if there are bonds to implicit hydrogens
-      unsigned int second = (a1_b2 == NULL) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
-      unsigned int fourth = (a2_b2 == NULL) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
+      unsigned int second = (a1_b2 == nullptr) ? OBStereo::ImplicitRef : a1_b2->GetNbrAtom(a1)->GetId();
+      unsigned int fourth = (a2_b2 == nullptr) ? OBStereo::ImplicitRef : a2_b2->GetNbrAtom(a2)->GetId();
 
       // If a1_stereo==a2_stereo, this means cis for a1_b1 and a2_b1.
       if (a1_stereo == a2_stereo)

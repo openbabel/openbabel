@@ -149,7 +149,7 @@ namespace OpenBabel
   bool PDBQTFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
     return false;
 
 
@@ -345,7 +345,7 @@ namespace OpenBabel
       snprintf(type_name, sizeof(type_name), " %-3s", tmp);
     }
 
-    if ( (res = atom->GetResidue()) != 0 )
+    if ((res = atom->GetResidue()) != nullptr)
     {
       snprintf(the_res,4,"%s",(char*)res->GetName().c_str());
       snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
@@ -694,7 +694,7 @@ namespace OpenBabel
   static bool IsAmidine(OBBond* querybond)
   {
     OBAtom *c, *n;
-    c = n = NULL;
+    c = n = nullptr;
 
     // Look for C-N bond
     OBAtom* bgn = querybond->GetBeginAtom();
@@ -764,7 +764,7 @@ namespace OpenBabel
       for (unsigned int j=0; j < branched.size(); j++)
       {
         the_bond=mol.GetBond(mol.GetAtom(root.at(i)), mol.GetAtom(branched.at(j)));
-        if (the_bond != NULL)
+        if (the_bond != nullptr)
         {
           root_atom=root.at(i);
           branch_atom=branched.at(j);
@@ -831,7 +831,7 @@ namespace OpenBabel
   bool PDBQTFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -844,7 +844,7 @@ namespace OpenBabel
 
     if (pConv->IsOption("b",OBConversion::OUTOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
     vector <OBMol> all_pieces;
-    if ( ((pConv->IsOption("c",OBConversion::OUTOPTIONS)!=NULL) && (pConv->IsOption("r",OBConversion::OUTOPTIONS)!=NULL))
+    if ((pConv->IsOption("c", OBConversion::OUTOPTIONS) != nullptr && pConv->IsOption("r", OBConversion::OUTOPTIONS) != nullptr)
       || (pConv->IsOption("n",OBConversion::OUTOPTIONS))
     )
     {
@@ -923,7 +923,7 @@ namespace OpenBabel
               strncpy(type_name, OBElements::GetSymbol(rotBondTable[rotBondId][bondAtomNum]->GetAtomicNum()), sizeof(type_name));
               if (strlen(type_name) > 1)
                 type_name[1] = toupper(type_name[1]);
-              if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != 0)
+              if ((res = rotBondTable[rotBondId][bondAtomNum]->GetResidue()) != nullptr)
               {
                 snprintf(type_name,5,"%s",(char*)res->GetAtomID(rotBondTable[rotBondId][bondAtomNum]).c_str());
                 // AtomIDs may start with space if read from a PDB file (rather than perceived)
@@ -1191,8 +1191,8 @@ namespace OpenBabel
     char icode = sbuf[20];
     if(icode == ' ') icode = 0;
 
-    OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-    if (res == NULL || res->GetName() != resname
+    OBResidue *res = mol.NumResidues() > 0 ? mol.GetResidue(mol.NumResidues()-1) : nullptr;
+    if (res == nullptr || res->GetName() != resname
       || res->GetNumString() != resnum || res->GetInsertionCode() != icode)
     {
       vector<OBResidue*>::iterator ri;
@@ -1203,7 +1203,7 @@ namespace OpenBabel
         && static_cast<int>(res->GetChain()) == chain)
         break;
 
-      if (res == NULL)
+      if (res == nullptr)
       {
         res = mol.NewResidue();
         res->SetChain(chain);

@@ -342,7 +342,7 @@ double OBDescriptor::PredictAndSave(OBBase* pOb, string* param)
 
   OBPairData *dp = static_cast<OBPairData *> (pOb->GetData(attr));
   bool PreviouslySet = true;
-  if (dp == NULL)
+  if (dp == nullptr)
   {
     PreviouslySet = false;
     dp = new OBPairData;

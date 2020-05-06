@@ -109,7 +109,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -134,7 +134,7 @@ namespace OpenBabel
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"ATOMIC COORDINATES") != NULL)
+        if (strstr(buffer, "ATOMIC COORDINATES") != nullptr)
           {
             // mol.EndModify();
             mol.Clear();
@@ -170,19 +170,19 @@ namespace OpenBabel
                 tokenize(vs,buffer);
               }
           } // if "ATOMIC COORDINATES"
-        if(strstr(buffer,"Normal Modes") != NULL && strstr(buffer,"of") == NULL) {
+        if (strstr(buffer, "Normal Modes") != nullptr && strstr(buffer, "of") == nullptr) {
           vibration_state = 1;
           continue;
         }
-        if(strstr(buffer,"Normal Modes of imag") != NULL) {
+        if (strstr(buffer, "Normal Modes of imag") != nullptr) {
           vibration_state = 2;
           continue;
         }
-        if(strstr(buffer,"Normal Modes of low") != NULL) {
+        if (strstr(buffer, "Normal Modes of low") != nullptr) {
           vibration_state = 3;
           continue;
         }
-        if(strstr(buffer,"Wavenumbers [cm-1]") != NULL && vibration_state < 3)
+        if (strstr(buffer, "Wavenumbers [cm-1]") != nullptr && vibration_state < 3)
           {
             // freq, intens and vib are auxiliary vectors which hold the data
             // for every block of 5 vibrations.
@@ -233,7 +233,7 @@ namespace OpenBabel
               Lx.push_back(vib[i]);
             }
           } // if "Normal Modes"
-        if(strstr(buffer,"STATE") != NULL && strstr(buffer,"DIPOLE MOMENT") != NULL)
+        if (strstr(buffer, "STATE") != nullptr && strstr(buffer, "DIPOLE MOMENT") != nullptr)
           {
             tokenize(vs,buffer);
             if (vs.size() == 8) {
@@ -285,7 +285,7 @@ namespace OpenBabel
   bool MolproInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
