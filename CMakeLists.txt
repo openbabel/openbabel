@@ -363,7 +363,7 @@ else()
 endif()
 message(STATUS "Use ${OB_SHARED_PTR_IMPLEMENTATION} in ${OB_SHARED_PTR_HEADER}")
 
-find_package(Boost COMPONENTS program_options iostreams)
+find_package(Boost COMPONENTS program_options iostreams unit_test_framework)
   if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
  endif()
@@ -478,9 +478,7 @@ endif()
 #cjh
 
 
-find_package(Boost COMPONENTS filesystem iostreams unit_test_framework)
 if(Boost_FOUND)
-  include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
   option(WITH_MAEPARSER "Build Maestro support" ON)
   if(BUILD_SHARED)
     option(WITH_COORDGEN "Build Coordgen support" ON)
