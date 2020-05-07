@@ -8,7 +8,7 @@ set(OpenBabel3_VERSION_PATCH   "@BABEL_PATCH_VER@")
 set(OpenBabel3_VERSION         "@BABEL_VERSION@")
 
 set(OpenBabel3_INCLUDE_DIRS "@OpenBabel3_INCLUDE_DIRS@")
-set(OpenBabel3_LIBRARY "@OpenBabel3_LIBRARY@")
+set(OpenBabel3_LIBRARIES "@OpenBabel3_LIBRARIES@")
 set(OpenBabel3_EXPORTS_FILE "@OB_EXPORTS_FILE@")
 set(OpenBabel3_ENABLE_VERSIONED_FORMATS "@ENABLE_VERSIONED_FORMATS@")
 
