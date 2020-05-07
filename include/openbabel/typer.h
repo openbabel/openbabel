@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #define OB_TYPER_H
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
+#include <openbabel/mol.h>  //needed for THREAD_LOCAL definition
 
 #include <vector>
 #include <string>
