@@ -111,7 +111,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   //Read name if requested e.g InChI=1/CH4/h1H4 methane
   //OR InChI=1/CH4/h1H4 "First alkane"  Quote can be any punct char and
-  //uses upto the end of the line if second quote is not found
+  //uses up to the end of the line if second quote is not found
   if(pConv->IsOption("n",OBConversion::INOPTIONS))
   {
     string name;

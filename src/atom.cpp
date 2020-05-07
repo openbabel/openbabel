@@ -45,7 +45,7 @@ using namespace std;
 
 namespace OpenBabel
 {
-  EXTERN OBChainsParser chainsparser;
+  OB_EXTERN OBChainsParser chainsparser;
   /** \class OBAtom atom.h <openbabel/atom.h>
       \brief Atom class
 
@@ -107,8 +107,8 @@ namespace OpenBabel
   extern THREAD_LOCAL OBAromaticTyper  aromtyper;
   extern THREAD_LOCAL OBAtomTyper      atomtyper;
   extern THREAD_LOCAL OBPhModel        phmodel;
-  EXTERN OBTypeTable      ttab;
-  
+  OB_EXTERN OBTypeTable      ttab;
+
   //
   // OBAtom member functions
   //
@@ -677,7 +677,7 @@ namespace OpenBabel
 
   // Helper function for IsHBondAcceptor
   static bool IsSulfoneOxygen(OBAtom* atm)
-  // Stefano Forli 
+  // Stefano Forli
   //atom is connected to a sulfur that has a total
   //of 2 attached free oxygens, and it's not a sulfonamide
   //e.g. C-SO2-C
@@ -978,7 +978,7 @@ namespace OpenBabel
   unsigned int OBAtom::GetExplicitValence() const
   {
     unsigned int bosum = 0;
-    
+
     OBBondIterator i;
     for (OBBond *bond = ((OBAtom*)this)->BeginBond(i); bond; bond = ((OBAtom*)this)->NextBond(i))
       bosum += bond->GetBondOrder();
@@ -1745,21 +1745,21 @@ namespace OpenBabel
   }
 
   // new function, Stefano Forli
-  // Incorporate ideas and data from Kubyni and others. 
+  // Incorporate ideas and data from Kubyni and others.
   // [1] Kubinyi, H. "Changing paradigms in drug discovery.
   //    "SPECIAL PUBLICATION-ROYAL SOCIETY OF CHEMISTRY 304.1 (2006): 219-232.
   //
-  // [2] Kingsbury, Charles A. "Why are the Nitro and Sulfone 
+  // [2] Kingsbury, Charles A. "Why are the Nitro and Sulfone
   //     Groups Poor Hydrogen Bonders?." (2015).
   //
-  // [3] Per Restorp, Orion B. Berryman, Aaron C. Sather, Dariush Ajami 
+  // [3] Per Restorp, Orion B. Berryman, Aaron C. Sather, Dariush Ajami
   //     and Julius Rebek Jr., Chem. Commun., 2009, 5692 DOI: 10.1039/b914171e
   //
   // [4] Dunitz, Taylor. "Organic fluorine hardly ever accepts
   //     hydrogen bonds." Chemistry-A European Journal 3.1 (1997): 83-92.
   //
   // This function has a finer grain than the original
-  // implementation, checking also the neighbor atoms. 
+  // implementation, checking also the neighbor atoms.
   // Accordingly to these rules, the function will return:
   //
   //    aliph-O-aliph ether   -> true   [1]
@@ -1775,7 +1775,7 @@ namespace OpenBabel
   //    aromatic O            -> false  [1]
   //    O-nitro               -> false  [2]
   //    organic F (R-F)       -> false  [4]
-  //    
+  //
   bool OBAtom::IsHbondAcceptor() {
       if (_ele == 8) {
         // oxygen; this should likely be a separate function
@@ -1794,20 +1794,20 @@ namespace OpenBabel
           return(false);
           }
         FOR_NBORS_OF_ATOM(nbr, this){
-          if (nbr->IsAromatic()){ 
+          if (nbr->IsAromatic()){
             aroCount += 1;
             if (aroCount == 2){ // aromatic ether (aro-O-aro) (NO)
-              return(false); 
+              return(false);
             }
           }
-          else { 
+          else {
             if (nbr->GetAtomicNum() == OBElements::Hydrogen) { // hydroxyl (YES)
-              return(true); 
+              return(true);
             }
             else {
               bond = nbr->GetBond(this);
-              if ( (bond->IsEster()) && (!(IsCarboxylOxygen()))) 
-                 return(false); 
+              if ( (bond->IsEster()) && (!(IsCarboxylOxygen())))
+                 return(false);
             }
           }
         }

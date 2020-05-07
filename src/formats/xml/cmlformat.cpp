@@ -1434,7 +1434,7 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, "Cannot find CMLReact format", obError);
           return false;
         }
-        //Disable list option and supress topping and tailing in CMLReactFormat.
+        //Disable list option and suppress topping and tailing in CMLReactFormat.
         _pxmlConv->AddOption("l", OBConversion::OUTOPTIONS);
         _pxmlConv->AddOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
         bool ret = pCMLRFormat->WriteMolecule(pOb,_pxmlConv);

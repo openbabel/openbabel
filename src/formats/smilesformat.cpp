@@ -308,7 +308,7 @@ namespace OpenBabel {
     // stereochimistry
     bool chiralWatch; // set when a tetrahedral atom is read
     map<OBAtom*, OBTetrahedralStereo::Config*> _tetrahedralMap; // map of tetrahedral atoms and their data
-    map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occured in smiles
+    map<OBBond*, char> _upDownMap; // store the '/' & '\' as they occurred in smiles
     map<unsigned int, char> _chiralLonePair; // for atoms with potential chiral lone pairs, remember when the l.p. was encountered
     bool squarePlanarWatch; // set when a square planar atom is read
     map<OBAtom*, OBSquarePlanarStereo::Config*> _squarePlanarMap;
@@ -1761,19 +1761,37 @@ namespace OpenBabel {
             }
             break;
           case '-':
-            _ptr++;
-            if (!isdigit(*_ptr))
-              charge--;
-            while( isdigit(*_ptr) ) // go number by number
-              charge = charge*10 - ((*_ptr++)-'0');
+            if (charge) {
+              obErrorLog.ThrowError(__FUNCTION__, "Charge can only be specified once", obWarning);
+              return false;
+            }
+            while (*++_ptr == '-')
+              charge--; // handle [O--]
+            if (charge == 0) {
+              while (isdigit(*_ptr)) // handle [O-2]
+                charge = charge * 10 - ((*_ptr++) - '0');
+              if (charge == 0) // handle [Cl-]
+                charge = -1;
+            }
+            else
+              charge--; // finish handling [Ca++]
             _ptr--;
             break;
           case '+':
-            _ptr++;
-            if (!isdigit(*_ptr))
-              charge++;
-            while( isdigit(*_ptr) ) // go number by number
-              charge = charge*10 + ((*_ptr++)-'0');
+            if (charge) {
+              obErrorLog.ThrowError(__FUNCTION__, "Charge can only be specified once", obWarning);
+              return false;
+            }
+            while (*++_ptr == '+')
+              charge++; // handle [Ca++]
+            if (charge == 0) {
+              while (isdigit(*_ptr)) // handle [Ca+2]
+                charge = charge * 10 + ((*_ptr++) - '0');
+              if (charge == 0) // handle [Na+]
+                charge = 1;
+            }
+            else
+              charge++; // finish handling [Ca++]
             _ptr--;
             break;
           case 'H':
@@ -3187,7 +3205,7 @@ namespace OpenBabel {
    *       the form of a vector of digit/OBBond* pair.  Some of the digits may
    *       be for newly-opened rings (the matching digit occurs later in the
    *       SMILES string), and some may be for closing rings (the matching
-   *       digit occured earlier in the string).
+   *       digit occurred earlier in the string).
    *
    *       Canonicalization requires that atoms with more than one digit
    *       have the digits assigned in a canonical fashion.  For example,
@@ -3849,7 +3867,7 @@ namespace OpenBabel {
         visited |= fragments.back();
       }
 
-      // Determine symmetry classes for each disconnected fragment seperatly
+      // Determine symmetry classes for each disconnected fragment separately
       symmetry_classes.resize(mol.NumAtoms());
       for (std::size_t i = 0; i < fragments.size(); ++i) {
         OBGraphSym gs(&mol, &(fragments[i]));

@@ -96,7 +96,7 @@ bool doSMILESBuilderTest(string smiles)
 
   OBBuilder builder;
   OB_REQUIRE(builder.Build(mol, false)); // some stereo errors are known
-  return mol.Has3D();
+  return (mol.Has3D() && mol.HasNonZeroCoords());
 }
 
 int buildertest(int argc, char* argv[])
@@ -146,6 +146,10 @@ int buildertest(int argc, char* argv[])
   case 5:
     // from Martin Guetlein -- PR#3107218 ("OBBuilder terminates while building 3d")
     OB_ASSERT( doSMILESBuilderTest("N12[C@@H]([C@@H](NC([C@@H](c3ccsc3)C(=O)O)=O)C2=O)SC(C)(C)[C@@-]1C(=O)O") );
+    break;
+  case 6:
+    // from Hubertus van Dam -- #2144
+    OB_ASSERT( doSMILESBuilderTest("OC1(C2=CN(CC3=CC=CC=C3F)N=N2)CCOC1") );
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

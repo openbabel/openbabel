@@ -491,7 +491,7 @@ namespace OpenBabel
       }
     }
 
-    // Kekulization is neccessary if an aromatic bond is present
+    // Kekulization is necessary if an aromatic bond is present
     if (needs_kekulization) {
       // "de-aromatize" carboxylates and (di)thiocarboxylates
       // The typical case (in our test suite anyway) is a carboxylate binding to
@@ -517,8 +517,8 @@ namespace OpenBabel
             bondB = &*bitB;
           }
         }
-        if(otherOxygenOrSulfur->GetFormalCharge() != 0) continue; //formal charge already set on one
         if (!otherOxygenOrSulfur) continue;
+        if(otherOxygenOrSulfur->GetFormalCharge() != 0) continue; //formal charge already set on one
 
         // Now set as C(=O)O
         bondA->SetAromatic(false);

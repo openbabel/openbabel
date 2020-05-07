@@ -49,6 +49,42 @@ namespace OpenBabel {
     return static_cast<unsigned int> (m_squarePlanarMap.size());
   }
 
+  std::vector<OBTetrahedralStereo*> OBStereoFacade::GetAllTetrahedralStereo()
+  {
+    EnsureInit();
+
+    typedef std::map<unsigned long, OBTetrahedralStereo*>::iterator Iter;
+    std::vector<OBTetrahedralStereo*> result;
+    for (Iter it = m_tetrahedralMap.begin(); it != m_tetrahedralMap.end(); ++it)
+      result.push_back(it->second);
+
+    return result;
+  }
+
+  std::vector<OBCisTransStereo*> OBStereoFacade::GetAllCisTransStereo()
+  {
+    EnsureInit();
+
+    typedef std::map<unsigned long, OBCisTransStereo*>::iterator Iter;
+    std::vector<OBCisTransStereo*> result;
+    for (Iter it = m_cistransMap.begin(); it != m_cistransMap.end(); ++it)
+      result.push_back(it->second);
+
+    return result;
+  }
+
+  std::vector<OBSquarePlanarStereo*> OBStereoFacade::GetAllSquarePlanarStereo()
+  {
+    EnsureInit();
+
+    typedef std::map<unsigned long, OBSquarePlanarStereo*>::iterator Iter;
+    std::vector<OBSquarePlanarStereo*> result;
+    for (Iter it = m_squarePlanarMap.begin(); it != m_squarePlanarMap.end(); ++it)
+      result.push_back(it->second);
+
+    return result;
+  }
+
   bool OBStereoFacade::HasTetrahedralStereo(unsigned long atomId)
   {
     EnsureInit();

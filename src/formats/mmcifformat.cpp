@@ -626,8 +626,6 @@ namespace OpenBabel
            string residue_name, atom_label, atom_mol_label, tmpSymbol;
            int atomicNum;
            OBPairData *label;
-           OBPairFloatingPoint * occup;
-           double occupancy = 1.0;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
              if (column_idx == 0)
@@ -785,15 +783,14 @@ namespace OpenBabel
                residue_num = token.as_unsigned();
                break;
              case CIFTagID::_atom_site_occupancy: // The occupancy of the site.
-               occup = new OBPairFloatingPoint;
-               occup->SetAttribute("_atom_site_occupancy");
-               occupancy = token.as_number();
-               if (occupancy <= 0.0 || occupancy > 1.0){
-                 occupancy = 1.0;
-               }
-               occup->SetValue(occupancy);
-               occup->SetOrigin(fileformatInput);
-               atom->SetData(occup);
+               {
+                 OBPairFloatingPoint * occup = new OBPairFloatingPoint;
+                 occup->SetAttribute("_atom_site_occupancy");
+                 double occupancy = std::max(0.0, std::min(1.0, token.as_number())); // clamp occupancy to [0.0, 1.0] bugfix  
+                 occup->SetValue(occupancy);
+                 occup->SetOrigin(fileformatInput);
+                 atom->SetData(occup);
+               }  
                break;
              case CIFTagID::unread_CIFDataName:
              default:

@@ -33,8 +33,8 @@
 
 /* Used to export symbols for DLL / shared library builds */
 #if defined(MAKE_OBDLL) // e.g. in src/main.cpp
- #ifndef EXTERN
-  #define EXTERN   OB_EXPORT extern
+ #ifndef OB_EXTERN
+  #define OB_EXTERN   OB_EXPORT extern
  #endif
  #ifndef OBAPI
   #define OBAPI    OB_EXPORT
@@ -63,8 +63,8 @@
 
 #else   // defined(MAKE_OBDLL)
 
- #ifndef EXTERN
-  #define EXTERN   OB_IMPORT extern
+ #ifndef OB_EXTERN
+  #define OB_EXTERN   OB_IMPORT extern
  #endif
  #ifndef OBAPI
   #define OBAPI    OB_IMPORT
@@ -89,19 +89,19 @@
   #ifndef OBDEPICT
  #define OBDEPICT  OB_IMPORT
  #endif
- 
+
  #endif
 
 #endif
 
 #ifdef _MSC_VER
- // Supress warning on deprecated functions
+ // Suppress warning on deprecated functions
  #pragma warning(disable : 4996)
- // Supress warning that compiler is ignoring C++ exception specification
+ // Suppress warning that compiler is ignoring C++ exception specification
  #pragma warning( disable : 4290 )
- // Supress warning on signed/unsigned comparison with < or > (harmless, but maybe should be fixed)
+ // Suppress warning on signed/unsigned comparison with < or > (harmless, but maybe should be fixed)
  #pragma warning( disable : 4018 )
- // Supress warning on forcing int etc. value to bool 'true' or 'false' (performance warning)
+ // Suppress warning on forcing int etc. value to bool 'true' or 'false' (performance warning)
  #pragma warning( disable : 4800 )
  //
  #pragma warning( disable : 4251 )
@@ -192,4 +192,3 @@
     #define TIME_WITH_SYS_TIME 0
   #endif
 #endif
-

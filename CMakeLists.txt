@@ -31,7 +31,7 @@ endif()
 # Note that for "beta" releases, we should start at x.90.0 -- we've
 # had too many 1.100.1 releases. :-)
 set(BABEL_MAJ_VER   3)
-set(BABEL_MIN_VER   0)
+set(BABEL_MIN_VER   1)
 set(BABEL_PATCH_VER 0)
 
 # This should be phased out in preference for just using the target name
@@ -479,13 +479,16 @@ endif()
 
 
 find_package(Boost COMPONENTS filesystem iostreams unit_test_framework)
-if(Boost_FOUND AND BUILD_SHARED)
-    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-    option(WITH_MAEPARSER "Build Maestro support" ON)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
+  option(WITH_MAEPARSER "Build Maestro support" ON)
+  if(BUILD_SHARED)
     option(WITH_COORDGEN "Build Coordgen support" ON)
-else()
-    option(WITH_MAEPARSER "Build Maestro support" OFF)
+  else()
     option(WITH_COORDGEN "Build Coordgen support" OFF)
+  endif()
+else()
+  option(WITH_COORDGEN "Build Coordgen support" OFF)
 endif()
 
 if(WITH_MAEPARSER)
@@ -498,9 +501,11 @@ if(WITH_MAEPARSER)
 
     else()
 
-      set(MAEPARSER_VERSION "master" CACHE STRING "Maeparser fallback version to download")
+      set(MAEPARSER_VERSION "v1.2.3" CACHE STRING "Maeparser fallback version to download")
 
       set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
+
+      option(MAEPARSER_BUILD_SHARED_LIBS "Build maeparser as a shared library" ${BUILD_SHARED})
 
       # Do not build the test, as it will be put into the bin dir, where it won't be found by the test runner.
       set(MAEPARSER_BUILD_TESTS OFF CACHE BOOL "Disable Maeparser tests")

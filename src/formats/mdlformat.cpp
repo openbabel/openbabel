@@ -591,7 +591,7 @@ namespace OpenBabel
         }
       }
 
-      // Kekulization is neccessary if an aromatic bond is present
+      // Kekulization is necessary if an aromatic bond is present
       if (needs_kekulization) {
         mol.SetAromaticPerceived();
         // First of all, set the atoms at the ends of the aromatic bonds to also
@@ -857,14 +857,28 @@ namespace OpenBabel
         mol.SetDimension(3);
       // use 3D coordinates to determine stereochemistry
       StereoFrom3D(&mol);
+      OpenBabel::OBStereoFacade facade(&mol);
+
       if (pConv->IsOption("s", OBConversion::INOPTIONS)) { // Use the parities for tet stereo instead
         TetStereoFromParity(mol, parities, true); // True means "delete existing TetStereo first"
+      } else {
+        // Set stereo to unspecified for atom stereo parity 3 (1 & 2 determined from 3D coords)
+        for (std::size_t i = 0; i < parities.size(); ++i) {
+          if (parities[i] != Unknown)
+            continue;
+          unsigned long atomId = mol.GetAtom(i+1)->GetId();
+          OBTetrahedralStereo *ts = facade.GetTetrahedralStereo(atomId);
+          if (!ts)
+            continue;
+          OBTetrahedralStereo::Config config = ts->GetConfig();
+          config.specified = false;
+          ts->SetConfig(config);
+        }
       }
 
       // For unspecified cis/trans stereos, set their Configs to unspecified
       // This should really be done in CisTransFrom3D like in CisTransFrom2D but can't change the API now :-/
       map<OBBond*, OBStereo::BondDirection>::const_iterator bd_it;
-      OpenBabel::OBStereoFacade facade(&mol);
       for(bd_it=updown.begin(); bd_it!=updown.end(); ++bd_it) {
         OBBond* bond = bd_it->first;
         if (bond->GetBondOrder()!=2 || bd_it->second != OBStereo::UnknownDir)
@@ -1419,7 +1433,7 @@ namespace OpenBabel
             int natoms = ReadUIntField(vs[3].c_str());
             //int nbonds = ReadUIntField(vs[4].c_str());
             //int chiral = ReadUIntField(vs[7].c_str());
-            //number of s groups, number of 3D contraints, chiral flag and regno not yet implemented
+            //number of s groups, number of 3D constraints, chiral flag and regno not yet implemented
             mol.ReserveAtoms(natoms);
 
             ReadV3000Block(ifs,mol,pConv,true);//go for contained blocks

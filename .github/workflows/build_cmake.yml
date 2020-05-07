@@ -1,0 +1,108 @@
+name: CMake Build Matrix
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Ubuntu Latest GCC SWIG",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+            cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+          }
+        - {
+            name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+          }
+        - {
+            name: "macOS Latest Clang", artifact: "macOS.tar.xz",
+            os: macos-latest,
+            cc: "clang", cxx: "clang++",
+          }
+        - {
+            name: "Windows Latest MSVC x86", artifact: "Windows-MSVC.tar.xz",
+            os: windows-latest,
+            cc: "cl", cxx: "cl",
+            environment_script: "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat",
+            cmake_flags: '-DLIBXML2_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/libxml2.lib" -DCAIRO_INCLUDE_DIRS="$GITHUB_WORKSPACE/$DEPS/include/cairo" -DCAIRO_LIBRARIES="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/cairo.lib" -DLIBXML2_INCLUDE_DIR=. -DZLIB_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/zlib1.lib" -DZLIB_INCLUDE_DIR=. -DINCHI_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/libinchi.lib" -DINCHI_INCLUDE_DIR=. -DXDR_INCLUDE_DIR="$GITHUB_WORKSPACE/$DEPS/include" -DXDR_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/xdr.lib"  -DJSON_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-vs12/i386/jsoncpp.lib"  -DOPENBABEL_USE_SYSTEM_INCHI=TRUE -DwxWidgets_LIB_DIR="$GITHUB_WORKSPACE/$DEPS/wx/lib/vc120_dll" -DEIGEN3_INCLUDE_DIR="$GITHUB_WORKSPACE/$DEPS/include" -DWITH_MAEPARSER=OFF'
+          }
+
+    steps:
+    - name: Check variables
+      run: echo "${{runner.os}} ${{matrix.config.os}} ${{matrix.config.cc}}"
+
+    - uses: actions/checkout@v2
+
+    - name: Install MSVC Command Prompt
+      if: runner.os == 'Windows'
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x86
+
+    - name: Install Dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
+    - name: Install Dependencies (Windows)
+      if: runner.os == 'Windows'
+      run: |
+        choco install ninja
+        echo "::set-env name=DEPS::msvc-dependencies-master"
+
+    - name: Install Dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install ninja swig eigen boost
+
+    - name: Install MSVC Dependencies
+      if: runner.os == 'Windows'
+      shell: cmake -P {0}
+      run: |
+          set(msvc_deps_url "https://github.com/timvdm/msvc-dependencies/archive/master.zip")
+          file(DOWNLOAD "${msvc_deps_url}" "$ENV{GITHUB_WORKSPACE}/msvc_deps.zip" SHOW_PROGRESS)
+          execute_process(COMMAND ${CMAKE_COMMAND} -E tar xvf "$ENV{GITHUB_WORKSPACE}/msvc_deps.zip")
+    - name: Install Dependencies (macOS)
+      if: runner.os == 'macOS'
+      run: brew install ninja swig eigen boost
+
+    - name: Configure
+      run: |
+        mkdir "${{ runner.workspace }}/build"
+        cd "${{ runner.workspace }}/build"
+        cmake $GITHUB_WORKSPACE -GNinja -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} ${{matrix.config.cmake_flags}}
+      shell: bash
+
+    - name: Build
+      run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build .
+      shell: bash
+      working-directory: ${{ runner.workspace }}/build
+
+    - name: Test
+      if: runner.os != 'Windows'
+      working-directory: ${{ runner.workspace }}/build
+      run: ctest --output-on-failure
+
+    - name: Install Strip
+      if: matrix.config.artifact != 0
+      run: cmake --install build --prefix instdir --strip
+      working-directory: ${{ runner.workspace }}
+
+    - name: Pack
+      if: matrix.config.artifact != 0
+      run: cmake -E tar cJfv ../${{ matrix.config.artifact }} .
+      working-directory: ${{ runner.workspace }}/instdir
+
+    - name: Upload
+      if: matrix.config.artifact != 0
+      uses: actions/upload-artifact@v1
+      with:
+        path: ${{ runner.workspace }}/instdir/../${{ matrix.config.artifact }}
+        name: ${{ matrix.config.artifact }}

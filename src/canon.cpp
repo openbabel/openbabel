@@ -613,7 +613,7 @@ namespace OpenBabel {
       /**
        * Indexes for the stereo center neighbor atoms. Tetrahedral centers have
        * all neighbor atoms in nbrIndexes1. CisTrans stereo centers store the
-       * neighbor atoms for each double bond atom seperatly.
+       * neighbor atoms for each double bond atom separately.
        */
       std::vector<unsigned int> nbrIndexes1, nbrIndexes2;
     };

@@ -1,0 +1,15 @@
+name-template: v$NEXT_PATCH_VERSION
+tag-template: openbabel-$NEXT_PATCH_VERSION
+categories:
+  - title: Features
+    label: feature
+  - title: Bug Fixes
+    label: fix
+tag-template: - $TITLE @$AUTHOR (#$NUMBER)
+template: |
+  ## Changes
+
+  $CHANGES
+
+Thanks to many, including:
+$CONTRIBUTORS

@@ -23,8 +23,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 
 #include <vector>
@@ -371,6 +371,10 @@ namespace OpenBabel
           return false;
         else
           return _residue->IsHetAtom(this);
+      }
+      //! \return Is the specified element, as specified by atom number (see OBElement namespace)?
+      bool IsElement(const unsigned int e) const {
+           return e == _ele;
       }
       //! \return Is the atom aromatic?
       bool IsAromatic()      const;

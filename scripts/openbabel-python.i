@@ -282,6 +282,17 @@ namespace std { class stringbuf {}; }
 %include <openbabel/format.h>
 %include <openbabel/obconversion.h>
 %include <openbabel/obfunctions.h>
+
+//avoid conflicts with OBElement; for consistency prefix all single 
+//character residue abbreviations with res
+%rename(resA) OpenBabel::OBResidueIndex::A;
+%rename(resC) OpenBabel::OBResidueIndex::C;
+%rename(resG) OpenBabel::OBResidueIndex::G;
+%rename(resT) OpenBabel::OBResidueIndex::T;
+%rename(resI) OpenBabel::OBResidueIndex::I;
+%rename(resU) OpenBabel::OBResidueIndex::U;
+
+%include <openbabel/elements.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
 %include <openbabel/atom.h>
@@ -322,7 +333,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 // wrap GetRGB parameters
 %include "typemaps.i"
 %apply double *OUTPUT { double *r, double *g, double *b };
-%include <openbabel/elements.h>
+
 // void GetRGB(unsigned int atomic_number, double *r, double *g, double *b);
 %clear double *r, double *g, double *b;
 
@@ -524,6 +535,7 @@ ttab = cvar.ttab
 atomtyper = cvar.atomtyper
 aromtyper = cvar.aromtyper
 %}
+
 
 // Functions to set the log file to std::cout and std::cerr
 

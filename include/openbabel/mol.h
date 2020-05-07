@@ -24,13 +24,13 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 #ifndef THREAD_LOCAL
 #ifdef SWIG
 # define THREAD_LOCAL
-# elif (__cplusplus >= 201103L) 
+# elif (__cplusplus >= 201103L)
 //this is required for correct multi-threading
 #  define THREAD_LOCAL thread_local
 # else

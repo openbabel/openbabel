@@ -1,6 +1,6 @@
 # Library versioning
-set(SOVERSION 6)
-set(LIBRARY_VERSION 6.0.0)
+set(SOVERSION 7)
+set(LIBRARY_VERSION 7.0.0)
 
 
 find_package(Boost 1.45.0 COMPONENTS system)
@@ -106,6 +106,7 @@ set(stereo_srcs
   stereo/tetrahedral.cpp
   stereo/perception.cpp
   stereo/facade.cpp
+  stereo/gen3dstereohelper.cpp
 )
 
 set(openbabel_srcs

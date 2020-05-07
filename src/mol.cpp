@@ -3353,7 +3353,7 @@ namespace OpenBabel
           }
       }
 
-    // Kekulization is neccessary if an aromatic bond is present
+    // Kekulization is necessary if an aromatic bond is present
     if (needs_kekulization) {
       this->SetAromaticPerceived();
       // First of all, set the atoms at the ends of the aromatic bonds to also

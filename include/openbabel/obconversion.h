@@ -318,7 +318,7 @@ namespace OpenBabel {
       /// and will usually followed by a call to Convert().
       /// Will set format from file extension if format has not already been set.
       /// Files will be opened even if format cannot be determined, but not if file path is empty.
-      /// \return false if unsucessful.
+      /// \return false if unsuccessful.
       bool OpenInAndOutFiles(std::string infilepath, std::string outfilepath);
 
       /// @brief Sends a message like "2 molecules converted" to clog
