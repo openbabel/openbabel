@@ -956,7 +956,7 @@ namespace OpenBabel {
     double r1,r2,s1,s3;
 
     if (bkExt != NULL) bk=bkExt; else {
-      bk=(neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
+      bk=(neighbourlist *)calloc(nAtoms(), sizeof(adjustedlist));
       defineBondConn(bk);
     };
     nBondNo=0;
@@ -1867,7 +1867,7 @@ namespace OpenBabel {
     neighbourlist *bk;
 
     if (nBonds() == 0) return;
-    bk=(neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
+    bk=(neighbourlist *)calloc(nAtoms(), sizeof(adjustedlist));
     defineBondConn(bk);
     //initial values for MainList-number of bonds, connected to each atom and their numbers in array BOND
     for (i=0; i<nBonds(); i++) {
@@ -2215,7 +2215,7 @@ namespace OpenBabel {
     allAboutCycles();
 
     test=true;
-    bk = (neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
+    bk = (neighbourlist *)calloc(nAtoms(), sizeof(adjustedlist));
     defineBondConn(bk);
     //{Start clean for LISTATOMCLEAN and LISTBONDCLEAN atoms and bonds}
     baseCycle=0;
@@ -3279,7 +3279,7 @@ namespace OpenBabel {
     } else {
       for (i=0; i<em->nBonds(); i++) if ((em->getBond(i)->tb >= 9) && (em->getBond(i)->tb <= 11)) em->getBond(i)->tb=1;
     };
-    bk=(neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
+    bk=(neighbourlist *)calloc(nAtoms(), sizeof(adjustedlist));
     em->defineBondConn(bk);
     //
     for (i=0; i<em->nAtoms(); i++) a[i]=em->getAtom(i)->allAtAtom();
@@ -4461,7 +4461,7 @@ namespace OpenBabel {
     };
 
     //Initializinf arrays
-    neighbourlist *queryBK=(neighbourlist *)malloc(listarSize()*sizeof(adjustedlist));
+    neighbourlist *queryBK=(neighbourlist *)calloc(listarSize(),sizeof(adjustedlist));
     queryQHydr.resize(listarSize());
     queryAGer.resize(listarSize());
     queryAQTested.resize(listarSize());
@@ -4857,18 +4857,14 @@ namespace OpenBabel {
     if (this->listarSize()>queryAQTested.size()) queryAQTested.resize(this->listarSize());
 
     // Initialise aEQ, a 2D bool matrix of size [molecule1->nAtoms()][nAtoms()] and set all to false
-    bool **aEQ = (bool **)malloc(molecule1->nAtoms()*sizeof(bool *));
+    bool **aEQ = (bool **)calloc(molecule1->nAtoms(),sizeof(bool *));
     for (int i=0; i<molecule1->nAtoms(); ++i) {
-      aEQ[i] = (bool *)malloc(nAtoms()*sizeof(bool ));
-      for (int j=0; j<nAtoms(); ++j)
-        aEQ[i][j] = false;
+      aEQ[i] = (bool *)calloc(nAtoms(),sizeof(bool ));
     }
     // Initialise bEQ, a 2D bool matrix of size [molecule1->nBonds()][nBonds()] and set all to false
-    bool **bEQ = (bool **)malloc(molecule1->nBonds()*sizeof(bool *));
+    bool **bEQ = (bool **)calloc(molecule1->nBonds(),sizeof(bool *));
     for (int i=0; i<molecule1->nBonds(); ++i) {
-      bEQ[i] = (bool *)malloc(nBonds()*sizeof(bool ));
-      for (int j=0; j<nBonds(); ++j)
-        bEQ[i][j] = false;
+      bEQ[i] = (bool *)calloc(nBonds(),sizeof(bool ));
     }
 
     cycleNumber=0;
@@ -4881,7 +4877,7 @@ namespace OpenBabel {
     //{R/S/Z/E description are removed: they are not used in substructure search}
     if (fIOPT13) molecule1->atomBondChange(); //Semipolar bond conversion
     molecule1->defineAtomConn();
-    neighbourlist *structureBK = (neighbourlist *)malloc(molecule1->nAtoms() * sizeof(adjustedlist));
+    neighbourlist *structureBK = (neighbourlist *)calloc(molecule1->nAtoms(), sizeof(adjustedlist));
     molecule1->defineBondConn(structureBK);
     // GRH: 2011-10-15 unused via clang static analyzer
     // stereoS=molecule1->stereoBondChange(); //Stereo bond conversion}
