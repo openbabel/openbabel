@@ -116,7 +116,7 @@ bool fingerprint2::GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbit
 		if(patom->GetAtomicNum() == OBElements::Hydrogen) continue;
 		vector<int> curfrag;
 		vector<int> levels(pmol->NumAtoms());
-		getFragments(levels, curfrag, 1, patom, NULL);
+		getFragments(levels, curfrag, 1, patom, nullptr);
 	}
 
 //	TRACE("%s %d frags before; ",pmol->GetTitle(),fragset.size());

@@ -46,8 +46,8 @@ int OBFormat::RegisterFormat(const char* ID, const char* MIME)
 const char* OBFormat::TargetClassDescription()
 {
   //Provides class of default format unless overridden
-  if(OBFormat::FindType(NULL))
-    return OBFormat::FindType(NULL)->TargetClassDescription();
+  if (OBFormat::FindType(nullptr))
+    return OBFormat::FindType(nullptr)->TargetClassDescription();
   else
     return "";
 }
@@ -56,8 +56,8 @@ const char* OBFormat::TargetClassDescription()
 const type_info& OBFormat::GetType()
 {
   //Provides info on class of default format unless overridden
-  if(OBFormat::FindType(NULL))
-    return OBFormat::FindType(NULL)->GetType();
+  if (OBFormat::FindType(nullptr))
+    return OBFormat::FindType(nullptr)->GetType();
   else
     return typeid(this); //rubbish return if DefaultFormat not set
 }
@@ -66,7 +66,7 @@ const type_info& OBFormat::GetType()
 OBFormat* OBFormat::FormatFromMIME(const char* MIME)
 {
   if(FormatsMIMEMap().find(MIME) == FormatsMIMEMap().end())
-    return NULL;
+    return nullptr;
   else
     return static_cast<OBFormat*>(FormatsMIMEMap()[MIME]);
 }

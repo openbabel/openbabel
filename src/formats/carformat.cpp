@@ -70,7 +70,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -89,7 +89,7 @@ namespace OpenBabel
 
     while (ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"end") != NULL)
+        if(strstr(buffer, "end") != nullptr)
           {
             if (mol.NumAtoms() > 0) // we've already read in a molecule, so exit
               break;
@@ -104,9 +104,9 @@ namespace OpenBabel
             continue;
           }
 
-        if(strstr(buffer,"PBC") != NULL)
+        if (strstr(buffer, "PBC") != nullptr)
           {
-            if(strstr(buffer,"ON") != NULL)
+            if (strstr(buffer, "ON") != nullptr)
               {
                 ifs.getline(buffer,BUFF_SIZE); // title
                 ifs.getline(buffer,BUFF_SIZE); // DATE

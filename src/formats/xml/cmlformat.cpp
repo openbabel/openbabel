@@ -181,7 +181,7 @@ namespace OpenBabel
     string GetMolID();//for error mesaages
     bool WriteInChI(OBMol& mol);
     bool WriteScalarProperty(OBMol& mol, const char* title, double value,
-      const char* dictref=NULL, const char* units=NULL, const char* convention=NULL);
+      const char* dictref=nullptr, const char* units=nullptr, const char* convention=nullptr);
 
     bool WriteVibrationData(OBMol& mol);
     bool WriteRotationData(OBMol& mol);
@@ -256,7 +256,7 @@ namespace OpenBabel
         molWideData.clear();
         CrystalScalarsNeeded=0;
         CrystalVals.clear();
-        pUnitCell = NULL;
+        pUnitCell = nullptr;
         PropertyScalarsNeeded=0;
 
         if(++_embedlevel)
@@ -596,18 +596,18 @@ namespace OpenBabel
   {
     // Try to find a match to 'a' followed by a number followed by _ followed by at least one digit
     if (atomid[0] != 'a')
-      return (const char*)0; // Needs to start with 'a'
+      return nullptr; // Needs to start with 'a'
     const char *p = atomid + 1;
     while(*p >= '0' && *p <= '9')
       p++;
     if (p == atomid + 1)
-      return (const char*)0; // No digits
+      return nullptr; // No digits
     if (*p != '_')
-      return (const char*)0;
+      return nullptr;
     p++;
     if (*p >= '0' && *p <= '9')
       return p;
-    return (const char*)0;
+    return nullptr;
   }
 
   ///Interprets atoms from AtomArray and writes then to an OBMol
@@ -683,17 +683,17 @@ namespace OpenBabel
             if ((using3     && attrname=="x3") ||
                 (using2     && attrname=="x2") ||
                 (usingFract && attrname=="xFract")) {
-              x=strtod(value.c_str(),NULL);
+              x=strtod(value.c_str(),nullptr);
             }
             else if ((using3     && attrname=="y3") ||
                      (using2     && attrname=="y2") ||
                      (usingFract && attrname=="yFract")) {
-              y=strtod(value.c_str(),NULL);
+              y=strtod(value.c_str(),nullptr);
             }
             else if ((using3     && attrname=="z3") ||
                      (using2     && attrname=="z2") ||
                      (usingFract && attrname=="zFract")) {
-              z=strtod(value.c_str(),NULL);
+              z=strtod(value.c_str(),nullptr);
             }
             else if(using2 && attrname=="xy2")
               {
@@ -701,8 +701,8 @@ namespace OpenBabel
                 tokenize(vals,value);
                 if(vals.size()==2)
                   {
-                    x=strtod(vals[0].c_str(),NULL);
-                    y=strtod(vals[1].c_str(),NULL);
+                    x=strtod(vals[0].c_str(),nullptr);
+                    y=strtod(vals[1].c_str(),nullptr);
                   }
               }
             else if(using3 && attrname=="xyz3")
@@ -711,9 +711,9 @@ namespace OpenBabel
                 tokenize(vals,value);
                 if(vals.size()==3)
                   {
-                    x=strtod(vals[0].c_str(),NULL);
-                    y=strtod(vals[1].c_str(),NULL);
-                    z=strtod(vals[2].c_str(),NULL);
+                    x=strtod(vals[0].c_str(),nullptr);
+                    y=strtod(vals[1].c_str(),nullptr);
+                    z=strtod(vals[2].c_str(),nullptr);
                   }
               }
 
@@ -1041,8 +1041,8 @@ namespace OpenBabel
               }
             else //bondStereo
               {
-                OBBond* pbond1=NULL;
-                OBBond* pbond2=NULL;
+                OBBond* pbond1=nullptr;
+                OBBond* pbond2=nullptr;
                 if(atrefsvalue.empty()) // ToDo
                   {
                     OBBond* pDBond = _pmol->GetBond(Idx);
@@ -1319,7 +1319,7 @@ namespace OpenBabel
     size_t time_res;                             /* Result of strftime                */
 
     /* ---- Get the system-time ---- */
-    akttime = time((time_t *) NULL);
+    akttime = time((time_t *) nullptr);
     time_res = strftime(timestr,
                         TIME_STR_SIZE,
                         "%a %b %d %H:%M:%S %Z %Y",
@@ -1398,7 +1398,7 @@ namespace OpenBabel
     bool arrayform = _pxmlConv->IsOption("a");
     bool WriteAromaticBonds =  _pxmlConv->IsOption("A");
     prefix = BAD_CAST _pxmlConv->IsOption("N");
-    xmlChar* uri=NULL;
+    xmlChar* uri=nullptr;
 
     //Write the header on the first object (incl OBReaction)
     //unless x option set or if has been called from elsewhere (e.g. CMLReact)
@@ -1406,7 +1406,7 @@ namespace OpenBabel
       {
         if(!_pxmlConv->IsOption("x"))
           {
-            xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
+            xmlTextWriterStartDocument(writer(), nullptr, nullptr, nullptr);
             if(cml1)
               uri = BAD_CAST CML1NamespaceURI();
             else
@@ -1416,12 +1416,12 @@ namespace OpenBabel
         if(!_pxmlConv->IsLast())
           {
             xmlTextWriterStartElementNS(writer(), prefix, C_CML, uri);
-            uri=NULL;
+            uri=nullptr;
           }
       }
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if(pmol==nullptr)
     {
 #ifdef HAVE_SHARED_POINTER
         OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
@@ -1477,7 +1477,7 @@ namespace OpenBabel
         xmlTextWriterWriteAttribute(writer(), C_ID, BAD_CAST name.c_str());
         if(!isalpha(name[0])) //...and write <name> orig title </name>
           {
-            xmlTextWriterStartElementNS(writer(), prefix, C_NAME, NULL);
+            xmlTextWriterStartElementNS(writer(), prefix, C_NAME, nullptr);
             xmlTextWriterWriteFormatString(writer(),"%s", id);
             xmlTextWriterEndElement(writer());//name
           }
@@ -1494,7 +1494,7 @@ namespace OpenBabel
     if(_pxmlConv->IsOption("m") && _pxmlConv->GetOutputIndex()==1) //only on first molecule
       WriteMetadataList(mol);
 
-    pUnitCell = NULL;
+    pUnitCell = nullptr;
     if (!cml1 && mol.HasData(OBGenericDataType::UnitCell))
       {
         WriteCrystal(mol);//Output will be in crystallographic form
@@ -1527,7 +1527,7 @@ namespace OpenBabel
           WriteFormula(mol);
         else
           {
-            xmlTextWriterStartElementNS(writer(), prefix, C_ATOMARRAY, NULL);
+            xmlTextWriterStartElementNS(writer(), prefix, C_ATOMARRAY, nullptr);
 
             MakeAtomIds(mol, atomIds);//Pre-construct to take into account atom class data
 
@@ -1590,7 +1590,7 @@ namespace OpenBabel
                 else
                   {
                     //Non-array form
-                    xmlTextWriterStartElementNS(writer(), prefix, C_ATOM, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_ATOM, nullptr);
                       xmlTextWriterWriteFormatAttribute(writer(), C_ID,"%s", atomIds[patom->GetIdx()].c_str());
 
                     if(!cml1)
@@ -1651,7 +1651,7 @@ namespace OpenBabel
                                 atomrefs.push_back(atomIds[mol.GetAtomById(*ref)->GetIdx()]);
                             }
 
-                            xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, NULL);
+                            xmlTextWriterStartElementNS(writer(), prefix, C_ATOMPARITY, nullptr);
                             xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
                               atomrefs[0].c_str(), atomrefs[1].c_str(),
                               atomrefs[2].c_str(), atomrefs[3].c_str());
@@ -1664,32 +1664,32 @@ namespace OpenBabel
                     else
                       {
                         //CML1
-                        xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_STRING, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "elementType");
                         xmlTextWriterWriteFormatString(writer(),"%s", el.c_str());
                         xmlTextWriterEndElement(writer());
 
                         if(charge)
                           {
-                            xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+                            xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, nullptr);
                             xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "formalCharge");
                             xmlTextWriterWriteFormatString(writer(),"%d", charge);
                             xmlTextWriterEndElement(writer());
                           }
 
-                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGER, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
                         xmlTextWriterWriteFormatString(writer(),"%d", hcount);
                         xmlTextWriterEndElement(writer());
 
                         if(dim==2 || dim==3)
                           {
-                            xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
+                            xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, nullptr);
                             xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "x",dim);
                             xmlTextWriterWriteFormatString(writer(),"%f", X);
                             xmlTextWriterEndElement(writer());
 
-                            xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
+                            xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, nullptr);
                             xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "y",dim);
                             xmlTextWriterWriteFormatString(writer(),"%f", Y);
                             xmlTextWriterEndElement(writer());
@@ -1697,7 +1697,7 @@ namespace OpenBabel
 
                         if(dim==3)
                           {
-                            xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, NULL);
+                            xmlTextWriterStartElementNS(writer(), prefix, C_FLOAT, nullptr);
                             xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "z",dim);
                             xmlTextWriterWriteFormatString(writer(),"%f", Z);
                             xmlTextWriterEndElement(writer());
@@ -1741,44 +1741,44 @@ namespace OpenBabel
                 else
                   {
                     //CML1
-                    xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, nullptr);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomID");
                     xmlTextWriterWriteFormatString(writer(),"%s", id.str().c_str());
                     xmlTextWriterEndElement(writer());
 
-                    xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, nullptr);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "elementType");
                     xmlTextWriterWriteFormatString(writer(),"%s", eltyp.str().c_str());
                     xmlTextWriterEndElement(writer());
 
                     if(anyChg)
                       {
-                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "formalCharge");
                         xmlTextWriterWriteFormatString(writer(),"%s", chg.str().c_str());
                         xmlTextWriterEndElement(writer());
                       }
 
-                    xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_INTEGERARRAY, nullptr);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "hydrogenCount");
                     xmlTextWriterWriteFormatString(writer(),"%s", hct.str().c_str());
                     xmlTextWriterEndElement(writer());
 
                     if(dim==2 || dim==3)
                       {
-                        xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "x",dim);
                         xmlTextWriterWriteFormatString(writer(),"%s", x.str().c_str());
                         xmlTextWriterEndElement(writer());
 
-                        xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "y",dim);
                         xmlTextWriterWriteFormatString(writer(),"%s", y.str().c_str());
                         xmlTextWriterEndElement(writer());
                       }
                     if(dim==3)
                       {
-                        xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_FLOATARRAY, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s%d", "z",dim);
                         xmlTextWriterWriteFormatString(writer(),"%s", z.str().c_str());
                         xmlTextWriterEndElement(writer());
@@ -1807,7 +1807,7 @@ namespace OpenBabel
 
     if(mol.NumBonds()>0)
       {
-        xmlTextWriterStartElementNS(writer(), prefix, C_BONDARRAY, NULL);
+        xmlTextWriterStartElementNS(writer(), prefix, C_BONDARRAY, nullptr);
 
         stringstream ord;
         string ref1, ref2;
@@ -1826,7 +1826,7 @@ namespace OpenBabel
 
                 ref1 = atomIds[pbond->GetBeginAtomIdx()];
                 ref2 = atomIds[pbond->GetEndAtomIdx()];
-                xmlTextWriterStartElementNS(writer(), prefix, C_BOND, NULL);
+                xmlTextWriterStartElementNS(writer(), prefix, C_BOND, nullptr);
                 //				xmlTextWriterWriteFormatAttribute(writer(), C_ID,"b%d", pbond->GetIdx()); remove bond id
                 if(!cml1)
                   {
@@ -1861,7 +1861,7 @@ namespace OpenBabel
                         atomrefs[3] = atomIds[mol.GetAtomById(endref)->GetIdx()];
 
                         // Create the XML tags
-                        xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
+                        xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, nullptr);
                         xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
                               atomrefs[0].c_str(), atomrefs[1].c_str(),
                               atomrefs[2].c_str(), atomrefs[3].c_str());
@@ -1872,17 +1872,17 @@ namespace OpenBabel
                 else
                   {
                     //CML1
-                    xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_STRING, nullptr);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
                     xmlTextWriterWriteFormatString(writer(),"%s", ref1.c_str());
                     xmlTextWriterEndElement(writer());
 
-                    xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_STRING, nullptr);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
                     xmlTextWriterWriteFormatString(writer(),"%s", ref2.c_str());
                     xmlTextWriterEndElement(writer());
 
-                    xmlTextWriterStartElementNS(writer(), prefix, C_STRING, NULL);
+                    xmlTextWriterStartElementNS(writer(), prefix, C_STRING, nullptr);
                     xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "order");
                     xmlTextWriterWriteFormatString(writer(),"%d", bo);
                     xmlTextWriterEndElement(writer());
@@ -1912,17 +1912,17 @@ namespace OpenBabel
             else
               {
                 //CML1
-                xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+                xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, nullptr);
                 xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
                 xmlTextWriterWriteFormatString(writer(),"%s", ref1.c_str());
                 xmlTextWriterEndElement(writer());
 
-                xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+                xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, nullptr);
                 xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "atomRef");
                 xmlTextWriterWriteFormatString(writer(),"%s", ref2.c_str());
                 xmlTextWriterEndElement(writer());
 
-                xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, NULL);
+                xmlTextWriterStartElementNS(writer(), prefix, C_STRINGARRAY, nullptr);
                 xmlTextWriterWriteFormatAttribute(writer(), C_BUILTIN,"%s", "order");
                 xmlTextWriterWriteFormatString(writer(),"%s", ord.str().c_str());
                 xmlTextWriterEndElement(writer());
@@ -1999,7 +1999,7 @@ namespace OpenBabel
     static const xmlChar C_CONCISE[] = "concise";
     if(mol.NumAtoms()==1)
       mol.AddHydrogens(false,false);
-    xmlTextWriterStartElementNS(writer(), prefix, C_FORMULA, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_FORMULA, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_CONCISE,"%s", mol.GetSpacedFormula().c_str());
     xmlTextWriterEndElement(writer());//formula
   }
@@ -2017,7 +2017,7 @@ namespace OpenBabel
 
     if(ch)
       //this line here because element may not be written with double bond
-      xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
+      xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, nullptr);
     else
     {
       return; // TODO: This code has bit-rotted
@@ -2051,7 +2051,7 @@ namespace OpenBabel
       if(!ud1 || !ud2)
         return;
 
-      xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, NULL);
+      xmlTextWriterStartElementNS(writer(), prefix, C_BONDSTEREO, nullptr);
       xmlTextWriterWriteFormatAttribute(writer(), C_ATOMREFS4, "%s %s %s %s",
 //                        "a%d a%d a%d a%d", idx1, patomA->GetIdx(), patomB->GetIdx(), idx2);
             atomIDs[idx1].c_str(), atomIDs[patomA->GetIdx()].c_str(),
@@ -2076,40 +2076,40 @@ namespace OpenBabel
 
     pUnitCell = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_CRYSTAL, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_CRYSTAL, nullptr);
     //	xmlTextWriterWriteFormatAttribute(writer(), C_z,"%d", number of molecules per cell);
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "a");
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:angstrom");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetA());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "b");
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:angstrom");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetB());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "c");
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:angstrom");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetC());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "alpha");
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetAlpha());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "beta");
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetBeta());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s", "gamma");
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s", "units:degree");
     xmlTextWriterWriteFormatString(writer(),"%f", pUnitCell->GetGamma());
@@ -2119,7 +2119,7 @@ namespace OpenBabel
     string s;
     if (group)
 	  {
-        xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, NULL);
+        xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, nullptr);
         xmlTextWriterWriteAttribute (writer(), C_SPACEGROUP, (const xmlChar*)group->GetHallName().c_str());
         transform3dIterator ti;
         const transform3d *t = group->BeginTransform(ti);
@@ -2138,7 +2138,7 @@ namespace OpenBabel
         s = pUnitCell->GetSpaceGroupName();
         if (s.length())
 	      {
-            xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, NULL);
+            xmlTextWriterStartElementNS(writer(), prefix, C_SYMMETRY, nullptr);
             xmlTextWriterWriteAttribute (writer(), C_SPACEGROUP, (const xmlChar*)s.c_str());
             xmlTextWriterEndElement(writer());//symmetry
 	      }
@@ -2166,17 +2166,17 @@ namespace OpenBabel
           {
             if(!propertyListWritten)
               {
-                xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, NULL);
+                xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, nullptr);
                 propertyListWritten=true;
               }
 
-            xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+            xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, nullptr);
             //Title is now on <property>. If the attribute name has a namespace, use dictRef instead.
             string att((*k)->GetAttribute());
             xmlTextWriterWriteFormatAttribute(writer(),
               (att.find(':')==string::npos) ? C_TITLE : C_DICTREF,
               "%s",att.c_str());
-            xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+            xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
 
             //Title used to be on <scalar>...
             //xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",(*k)->GetAttribute().c_str());
@@ -2218,34 +2218,34 @@ namespace OpenBabel
 
     if(!propertyListWritten)
       {
-        xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, NULL);
+        xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTYLIST, nullptr);
         propertyListWritten=true;
       }
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","Thermo_OldNasa");
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","NasaLowT");
     xmlTextWriterWriteFormatString(writer(),"%.1f", pThermoData->GetLoT());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","NasaHighT");
     xmlTextWriterWriteFormatString(writer(),"%.1f", pThermoData->GetHiT());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","NasaMidT");
     xmlTextWriterWriteFormatString(writer(),"%.1f", pThermoData->GetMidT());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","Phase");
     xmlTextWriterWriteFormatString(writer(),"%c", pThermoData->GetPhase());
     xmlTextWriterEndElement(writer());//scalar
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","NasaCoeffs");
     xmlTextWriterWriteFormatAttribute(writer(), C_SIZE,"%d",14);
     for(int i=0;i<14;++i)
@@ -2293,7 +2293,7 @@ namespace OpenBabel
     OBPairData* pData = dynamic_cast<OBPairData*>(mol.GetData("InChI"));
     if(pData)
     {
-      xmlTextWriterStartElementNS(writer(), prefix, C_IDENTIFIER, NULL);
+      xmlTextWriterStartElementNS(writer(), prefix, C_IDENTIFIER, nullptr);
       xmlTextWriterWriteFormatAttribute(writer(), C_CONVENTION,"%s","iupac:inchi");
       xmlTextWriterWriteFormatAttribute(writer(), C_VALUE,"%s", pData->GetValue().c_str());
       xmlTextWriterEndElement(writer());//identifier
@@ -2313,11 +2313,11 @@ namespace OpenBabel
 
     OBVibrationData* vd = (OBVibrationData*)mol.GetData(OBGenericDataType::VibrationData);
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Vibrational Frequencies");
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:vibFreqs");
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
 
     double imaginaryFrequency = 0.0;
@@ -2350,11 +2350,11 @@ namespace OpenBabel
 
     OBRotationData* rd = (OBRotationData*)mol.GetData(OBGenericDataType::RotationData);
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Rotational Constants");
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:rotConsts");
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_ARRAY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s","cm-1");
     const double WAVENUM_TO_GHZ=30.0;
     for (unsigned int i=0; i<rd->GetRotConsts().size(); ++i)
@@ -2362,11 +2362,11 @@ namespace OpenBabel
         xmlTextWriterWriteFormatString(writer(),"%.3lf ", rd->GetRotConsts()[i]/WAVENUM_TO_GHZ);
     xmlTextWriterEndElement(writer());//array
     xmlTextWriterEndElement(writer());//property
-    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s","Symmetry Number");
     xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s","me:symmetryNumber");
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     xmlTextWriterWriteFormatString(writer(),"%d ", rd->GetSymmetryNumber());
     xmlTextWriterEndElement(writer());//scalar
     xmlTextWriterEndElement(writer());//property
@@ -2385,11 +2385,11 @@ namespace OpenBabel
     static const xmlChar C_CONVENTION[]   = "convention";
     static const xmlChar C_ZPEADDED[]   = "zeroPointVibEnergyAdded";
 
-    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_PROPERTY, nullptr);
     xmlTextWriterWriteFormatAttribute(writer(), C_TITLE,"%s",title);
     if(dictref)
       xmlTextWriterWriteFormatAttribute(writer(), C_DICTREF,"%s",dictref);
-    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, NULL);
+    xmlTextWriterStartElementNS(writer(), prefix, C_SCALAR, nullptr);
     if(units)
       xmlTextWriterWriteFormatAttribute(writer(), C_UNITS,"%s",units);
     if(convention)

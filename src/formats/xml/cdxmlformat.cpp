@@ -379,7 +379,7 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     return false;
 
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL)
+  if (pmol == nullptr)
 	return false;
   OBMol &mol = *pmol;
 
@@ -387,8 +387,8 @@ bool ChemDrawXMLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   vector<OBBond*>::iterator j;
   if(_pxmlConv->GetOutputIndex() == 1)
   {
-    xmlTextWriterStartDocument(writer(), NULL, NULL, NULL);
-    xmlTextWriterWriteDTD(writer(), BAD_CAST "CDXML", NULL, BAD_CAST "http://www.camsoft.com/xml/cdxml.dtd", NULL);
+    xmlTextWriterStartDocument(writer(), nullptr, nullptr, nullptr);
+    xmlTextWriterWriteDTD(writer(), BAD_CAST "CDXML", nullptr, BAD_CAST "http://www.camsoft.com/xml/cdxml.dtd", nullptr);
     xmlTextWriterStartElement(writer(), C_CDXML);
     xmlTextWriterWriteFormatAttribute(writer(), C_BONDLENGTH , "30");
     xmlTextWriterStartElement(writer(), C_PAGE); // put everything on one page

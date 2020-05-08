@@ -52,7 +52,7 @@ OpenBabel::OBBond* NMOBMolNewBond(OpenBabel::OBMol* mol,
   unsigned int order, bool arom)
 {
   if (!mol->AddBond(beg->GetIdx(), end->GetIdx(), order))
-    return (OpenBabel::OBBond*)0;
+    return nullptr;
   OpenBabel::OBBond* bptr = mol->GetBond(mol->NumBonds() - 1);
   if (arom)
     bptr->SetAromatic();
@@ -99,7 +99,7 @@ struct WLNParser {
     ptr = wln;
 
     pending = PENDING_NONE;
-    prev = (OpenBabel::OBAtom*)0;
+    prev = nullptr;
     slash = 0;
     order = 0;
     state = 0;
@@ -1635,7 +1635,7 @@ struct WLNParser {
         if (state != 0) {
           drain();
           pending = PENDING_NONE;
-          prev = (OpenBabel::OBAtom*)0;
+          prev = nullptr;
           rings.clear();
           state = 0;
           order = 0;

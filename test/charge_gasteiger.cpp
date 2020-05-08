@@ -95,7 +95,7 @@ int charge_gasteiger(int argc, char* argv[])
       
     pCM = OBChargeModel::FindType("gasteiger");
 
-    if (pCM == NULL) {
+    if (pCM == nullptr) {
       cerr << "Bail out! Cannot load charge model!" << endl;
       return -1; // test failed
     }
@@ -194,7 +194,7 @@ void GenerateGasteigerCharges()
 
   OBChargeModel *pCM = OBChargeModel::FindType("gasteiger");
 
-  if (pCM == NULL) {
+  if (pCM == nullptr) {
     cerr << "Cannot load charge model!" << endl;
     return;
   }

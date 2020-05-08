@@ -46,7 +46,7 @@ void compareMolecules(OBMol *mol1, OBMol *mol2)
     cout << unique1 << " == " << unique2 << endl;
 
   FOR_ATOMS_OF_MOL (a1, mol1) {
-    OBAtom *a2 = 0;
+    OBAtom *a2 = nullptr;
     unsigned int symClass1 = symclasses1.at(a1->GetIndex());
     for (unsigned int i = 0; i < symclasses2.size(); ++i)
       if (symclasses2.at(i) == symClass1) {

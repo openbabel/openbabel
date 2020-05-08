@@ -78,9 +78,9 @@ namespace OpenBabel
     DALTONInputFormat()
     {
       OBConversion::RegisterFormat("dalmol",this, "chemical/x-dalton-input");
-      OBConversion::RegisterOptionParam("a", NULL, 0, OBConversion::OUTOPTIONS); // write atomic units
-      OBConversion::RegisterOptionParam("b", NULL, 0, OBConversion::OUTOPTIONS); // write atombasis format
-      OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS); // specify basis set in .mol file
+      OBConversion::RegisterOptionParam("a", nullptr, 0, OBConversion::OUTOPTIONS); // write atomic units
+      OBConversion::RegisterOptionParam("b", nullptr, 0, OBConversion::OUTOPTIONS); // write atombasis format
+      OBConversion::RegisterOptionParam("k", nullptr, 1, OBConversion::OUTOPTIONS); // specify basis set in .mol file
     }
 
 
@@ -131,7 +131,7 @@ namespace OpenBabel
   bool DALTONInputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     istream &ifs = *pConv->GetInStream();
@@ -154,13 +154,13 @@ namespace OpenBabel
     mol.BeginModify();
     while(ifs.getline(buffer,BUFF_SIZE))
     {
-      if(strstr(buffer,"INTGRL") != NULL)
+      if (strstr(buffer, "INTGRL") != nullptr)
       {
         basisformat = INTGRL;
         cout << "Cannot read INTGRL format" << endl;
         return(false);
       }
-      if(strstr(buffer,"ATOMBASIS") != NULL)
+      if (strstr(buffer, "ATOMBASIS") != nullptr)
       {
         basisformat = ATOMBASIS;
       }
@@ -178,7 +178,7 @@ namespace OpenBabel
       ifs.getline(buffer,BUFF_SIZE); // options
 
       // first check if there are any atoms specified. otherwise bail out
-      if(strstr(buffer,"AtomTypes") != NULL)
+      if (strstr(buffer, "AtomTypes") != nullptr)
       {
         tokenize(vs,(strstr(buffer,"AtomTypes=")), " \t\n=");
         atomtypes = atoi(vs[1].c_str());
@@ -190,25 +190,25 @@ namespace OpenBabel
       }
 
       // then check if there is a NoSymmetry line. otherwise bail out
-      if(strstr(buffer,"NoSymmetry") == NULL)
+      if (strstr(buffer, "NoSymmetry") == nullptr)
       {
         cout << "Only molecules with NoSymmetry can be read" << endl;
         return(false);
       }
 
-      if(strstr(buffer,"Charge") != NULL)
+      if (strstr(buffer, "Charge") != nullptr)
       {
         tokenize(vs,(strstr(buffer,"Charge=")), " \t\n=");
         molcharge = atoi(vs[1].c_str());
       }
 
       // if input is in bohr, convert to angstrom
-      if(strstr(buffer,"Angstrom") == NULL)
+      if (strstr(buffer, "Angstrom") == nullptr)
         factor = BOHR_TO_ANGSTROM;
 
       while(atomtypes >= 0 && ifs.getline(buffer, BUFF_SIZE))
       {
-        if(strstr(buffer, "Atoms") != NULL && strstr(buffer, "Charge") != NULL)
+        if (strstr(buffer, "Atoms") != nullptr && strstr(buffer, "Charge") != nullptr)
         {
            tokenize(vs,(strstr(buffer,"Atoms=")), " \t\n=");
            atomcount = atoi(vs[1].c_str());
@@ -217,7 +217,7 @@ namespace OpenBabel
            atomtypes--;
            continue;
         }
-        if(strstr(buffer, "ZMAT") != NULL)
+        if (strstr(buffer, "ZMAT") != nullptr)
         {
            cout << "ZMAT format not supported" << endl;
            return(false);
@@ -260,7 +260,7 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     basisformat = BASIS; // Always assume BASIS format. We change it below otherwise
 
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -269,7 +269,7 @@ namespace OpenBabel
 
     char buffer[BUFF_SIZE];
     double factor = 1.0f;
-    bool writeatomicunit = pConv->IsOption("a", OBConversion::OUTOPTIONS) != NULL;
+    bool writeatomicunit = pConv->IsOption("a", OBConversion::OUTOPTIONS) != nullptr;
     const char *keywords = pConv->IsOption("k",OBConversion::OUTOPTIONS);
     string atombasis_str = "";
     string basisset = "6-31G*";
@@ -355,7 +355,7 @@ namespace OpenBabel
   bool DALTONOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     istream &ifs = *pConv->GetInStream();
@@ -372,7 +372,7 @@ namespace OpenBabel
     mol.BeginModify();
     while(ifs.getline(buffer,BUFF_SIZE))
     {
-      if(strstr(buffer,"Cartesian Coordinates (a.u.)") != NULL)
+      if (strstr(buffer, "Cartesian Coordinates (a.u.)") != nullptr)
       {
         cout << "Reading coordinates." << endl;
         ifs.getline(buffer,BUFF_SIZE); // ---

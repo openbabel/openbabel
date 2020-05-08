@@ -45,7 +45,7 @@ bool doBuildMoleculeTest(OBMol &mol)
   // Should now be handled by AddHydrogens()
 
   OBForceField* pff = OBForceField::FindType("mmff94");
-  OB_REQUIRE(pff != NULL);
+  OB_REQUIRE(pff != nullptr);
   cout << mol.GetTitle() << endl;
   OB_REQUIRE(pff->Setup(mol));
   // Check for explosions -- PR#3016479

@@ -45,7 +45,7 @@ namespace OpenBabel
       return txt.c_str();
     }
 
-    double Predict(OBBase* pOb, string* param=NULL)
+    double Predict(OBBase* pOb, string* param=nullptr)
     {
       OBMol* pmol = dynamic_cast<OBMol*> (pOb);
       if(!pmol)

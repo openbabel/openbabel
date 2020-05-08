@@ -38,7 +38,7 @@ public:
   {
     OBBase* pOb = pConv->GetChemObject();
 
-    OBMol* pMolCopy = NULL;
+    OBMol* pMolCopy = nullptr;
     if(_pOrigConv)
     {
       //Need to copy pOb. But currently OBBase does not have a virtual Clone() function.
@@ -62,14 +62,14 @@ public:
     {
       _pExtraConv->SetOutputIndex(pConv->GetOutputIndex()-2);
       if(!_pExtraConv->AddChemObject(pOb))
-        _pExtraConv = NULL; //error on extra output stops only it
+        _pExtraConv = nullptr; //error on extra output stops only it
       else // need "else" or we'll dereference a NULL
         _pExtraConv->SetLast(pConv->IsLast());
     }
 
     if(pConv->IsLast())
     {
-      if (_pOrigConv && pMolCopy != NULL) {
+      if (_pOrigConv && pMolCopy != nullptr) {
         _pOrigConv->AddChemObject(pMolCopy); //dummy add to empty queue
         pConv->SetOutFormat(_pOrigConv->GetOutFormat()); //ReportNumberConverted() uses this at end
       }
@@ -82,8 +82,8 @@ public:
 
       delete _pOrigConv;
       delete _pExtraConv;
-      _pOrigConv=NULL;
-      _pExtraConv=NULL;
+      _pOrigConv=nullptr;
+      _pExtraConv=nullptr;
       delete this;//self destruction; was made in new in an OBOp
     }
     return true;
@@ -125,7 +125,7 @@ public:
        "but can also be used to output to two different formats:\n"
        "      obabel infile.sdf  -osmi  --0xout secondout.svg"; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
 };
 
@@ -158,8 +158,8 @@ bool OpExtraOut::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversi
       return true;
     }
     OBConversion* pOrigConv = new OBConversion(*pConv);
-    pOrigConv->SetInStream(NULL); //not used; avoids complications in AddChemObject()
-    pExtraConv->SetInStream(NULL);
+    pOrigConv->SetInStream(nullptr); //not used; avoids complications in AddChemObject()
+    pExtraConv->SetInStream(nullptr);
 
     //Make an instance of ExtraFormat and divert the output to it. It will delete itself.
     pConv->SetOutFormat(new ExtraFormat(pOrigConv, pExtraConv));

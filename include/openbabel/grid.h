@@ -112,7 +112,7 @@ namespace OpenBabel
 
   public:
 
-    OBFloatGrid() : _ival(NULL), _halfSpace(0.0) {}
+    OBFloatGrid() : _ival(nullptr), _halfSpace(0.0) {}
     ~OBFloatGrid()
     {
       if (_ival) delete [] _ival;

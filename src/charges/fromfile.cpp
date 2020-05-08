@@ -106,10 +106,10 @@ namespace OpenBabel
 			OBResidue *res;
 			double q   = 0.;
 			bool found = false;
-			char *name = NULL;
+			char *name = nullptr;
 
 			// First try atom type name
-			if ( (res = a->GetResidue()) != 0 )
+			if ((res = a->GetResidue()) != nullptr)
 			{
 				char *f = name  = (char*)res->GetAtomID( a ).c_str();
 				for( int j = strlen(f)-1; j>=0; j-- ) { if( f[j]==' ' ){ f[j]='\0'; } } // trim trailing whitespace

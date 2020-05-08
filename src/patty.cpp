@@ -85,7 +85,7 @@ namespace OpenBabel
     ifsP= &ifs;
     if (!ifs)
       {
-        if (getenv("BABEL_DATADIR") == NULL)
+        if (getenv("BABEL_DATADIR") == nullptr)
           {
             stringstream errorMsg;
             errorMsg << "The BABEL_DATADIR environment variable is not defined" << endl;

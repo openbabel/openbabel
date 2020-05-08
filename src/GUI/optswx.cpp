@@ -219,12 +219,12 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
       {
         //First the caption
         char* pdef;
-        char* pdefWord=NULL;
+        char* pdefWord=nullptr;
         if(pdef=strcasestr(pCaption,"default"))
         {
           //Put the next word in the editbox
           char* tok=strtok(pdef," :-\t</\"\'");
-          pdefWord = strtok(NULL," :-</\t;,\"\'>");
+          pdefWord = strtok(nullptr," :-</\t;,\"\'>");
 
           //delete caption after default or after <default etc
           *pdef='\0';
@@ -288,7 +288,7 @@ bool DynOptionswx::Construct(const char* OptionsText, const char* StartText, int
         //If 'default appears in caption set the checkbox unless it is followed
         //by one of 'no' 'not' or 'none'
         char* pdef=strcasestr(pCaption,"default");
-        bool SetChk=(pdef!=NULL);
+        bool SetChk=(pdef!=nullptr);
         if(SetChk)
           strcasecmp(pdef,"no") && !strcasecmp(pdef,"not") && strcasecmp(pdef,"none");
 
@@ -411,5 +411,5 @@ char* DynOptionswx::strcasestr(const char* haystack, const char* needle)
     }
     h++;
   }
-  return NULL;
+  return nullptr;
 }

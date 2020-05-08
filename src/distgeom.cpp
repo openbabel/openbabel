@@ -110,16 +110,16 @@ namespace OpenBabel {
   };
 
 
-  OBDistanceGeometry::OBDistanceGeometry(): _d(NULL) {}
+  OBDistanceGeometry::OBDistanceGeometry(): _d(nullptr) {}
 
-  OBDistanceGeometry::OBDistanceGeometry(const OBMol &mol, bool useCurrentGeometry): _d(NULL)
+  OBDistanceGeometry::OBDistanceGeometry(const OBMol &mol, bool useCurrentGeometry): _d(nullptr)
   {
     Setup(mol, useCurrentGeometry);
   }
 
   OBDistanceGeometry::~OBDistanceGeometry()
   {
-    if (_d != NULL)
+    if (_d != nullptr)
       delete _d;
   }
 
@@ -131,7 +131,7 @@ namespace OpenBabel {
   }
   bool OBDistanceGeometry::Setup(const OBMol &mol, bool useCurrentGeometry)
   {
-    if (_d != NULL)
+    if (_d != nullptr)
       delete _d;
     // TODO: add IsSetupNeeded() like OBForceField to prevent duplication of work
 
@@ -245,7 +245,7 @@ namespace OpenBabel {
     // If we're in a unit cell, the maximum distance is 1/2 the longest body diagonal
     //   (remember that the unit cell wraps around)
     OBUnitCell* pUC = (OBUnitCell*)_mol.GetData(OBGenericDataType::UnitCell);
-    if (pUC != NULL) {
+    if (pUC != nullptr) {
       vector<vector3> cellVectors = pUC->GetCellVectors();
 
       if (cellVectors.size() == 3) {
@@ -326,7 +326,7 @@ namespace OpenBabel {
       a = _mol.GetAtom((*angle)[0] + 1);
       b = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
-      if (b->GetBond(c) != NULL)
+      if (b->GetBond(c) != nullptr)
         continue;
       i = (*angle)[1];
       j = (*angle)[2];
@@ -484,7 +484,7 @@ namespace OpenBabel {
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
 
-      if (a->GetBond(d) != NULL)
+      if (a->GetBond(d) != nullptr)
         continue; // these are bonded
       if (_d->GetLowerBounds((*t)[0], (*t)[3]) > 0.01) // we visited this
         continue;
@@ -690,7 +690,7 @@ namespace OpenBabel {
         }
       }
     // didn't find anything, return NULL
-    return NULL;
+    return nullptr;
   }
 
   // - when atoms i and j are in a 1-5 relationship, the lower distance
@@ -724,7 +724,7 @@ namespace OpenBabel {
       B = Calculate13Angle(rAB, rBC, rAC);
       C = Calculate13Angle(rBC, rCD, rBD);
 
-      OBCisTransStereo *stereo = NULL;
+      OBCisTransStereo *stereo = nullptr;
 
       // For neighbors of d
       //  Actually depends on stereo of bond C-D
@@ -733,7 +733,7 @@ namespace OpenBabel {
         stereo = GetCisTransStereo(cd);
       }
       FOR_NBORS_OF_ATOM(e, d) {
-        if (_mol.GetBond(a, &*e) != NULL)
+        if (_mol.GetBond(a, &*e) != nullptr)
           continue; // Already handled by 1,2 interaction
         if (_d->GetLowerBounds((*t)[0], e->GetIdx() - 1) > 0.01) // we visited this
           continue;
@@ -764,13 +764,13 @@ namespace OpenBabel {
 
       // OK now for neighbors of a (i.e., z-a-b-c-d)
       //  Now depends on stereo of bond a-b
-      stereo = NULL; // reset
+      stereo = nullptr; // reset
       ab = _mol.GetBond(a, b);
       if (ab && ab->GetBondOrder() == 2 && !ab->IsAromatic()) {
         stereo = GetCisTransStereo(ab);
       }
       FOR_NBORS_OF_ATOM(z, a) {
-        if (_mol.GetBond(d, &*z) != NULL)
+        if (_mol.GetBond(d, &*z) != nullptr)
           continue; // Already handled by 1,2 interaction
         if (_d->GetLowerBounds((*t)[0], z->GetIdx() - 1) > 0.01) // we visited this
           continue;
@@ -997,14 +997,14 @@ namespace OpenBabel {
   Eigen::MatrixXf OBDistanceGeometry::GetBoundsMatrix()
   {
     Eigen::MatrixXf returnValue;
-    if (_d != NULL)
+    if (_d != nullptr)
       returnValue = _d->bounds;
     return returnValue;
   }
 
   bool OBDistanceGeometry::SetBoundsMatrix(const Eigen::MatrixXf bounds)
   {
-    if (_d != NULL) {
+    if (_d != nullptr) {
       // Check size of bounds matrix
       _d->bounds = bounds;
       return true;
@@ -1263,7 +1263,7 @@ namespace OpenBabel {
     if (_mol.NumConformers() > 0) {
       int k,l;
       vector<double*> conf;
-      double* xyz = NULL;
+      double* xyz = nullptr;
       for (k=0 ; k<_mol.NumConformers() ; ++k) {
         xyz = new double [3*_mol.NumAtoms()];
         for (l=0 ; l<(int) (3*_mol.NumAtoms()) ; ++l)

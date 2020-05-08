@@ -164,12 +164,12 @@ namespace OpenBabel
   bool PointCloudFormat::WriteMolecule( OBBase* pOb, OBConversion* pConv )
   {
     OBMol* pmol = dynamic_cast< OBMol* >(pOb);
-    if( pmol == 0 ) return false;
+    if (pmol == nullptr) return false;
 
     ostream& os = *pConv->GetOutStream();
 
-    const char *radius_list_str  = NULL;
-    const char *density_list_str = NULL;
+    const char *radius_list_str  = nullptr;
+    const char *density_list_str = nullptr;
     double probe_radius = 0.;
     bool format_xyz = false;
 
@@ -203,7 +203,7 @@ namespace OpenBabel
       while( x ) {
         double d = atof(x);
         if( isfinite(d) && d>0. ) { radius_mult_list.push_back( d ); }
-        x = strtok( NULL, "," );
+        x = strtok(nullptr, ",");
       }
       free(a);
     }
@@ -213,7 +213,7 @@ namespace OpenBabel
       while( x ) {
         double d = atof(x);
         if( isfinite(d) && d>0. ) { density_list.push_back( d ); }
-        x = strtok( NULL, "," );
+        x = strtok(nullptr, ",");
       }
       free(a);
     }

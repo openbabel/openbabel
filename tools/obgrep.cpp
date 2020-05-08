@@ -47,7 +47,7 @@ int main(int argc,char **argv)
   unsigned int numMatching = 0; // number of matching molecules (for -c flag)
   bool pattern_matched=false, ntimes_matched=true;
   bool count=false, invert=false, full=false, name_only=false;
-  char *FileIn = NULL, *Pattern = NULL;
+  char *FileIn = nullptr, *Pattern = nullptr;
   char *program_name = argv[0];
   char *iext;
   bool useInFile = true;
@@ -81,7 +81,7 @@ int main(int argc,char **argv)
           // reduction in flexibility (which is not currently used)
           pFormat = conv.FindFormat(iext);
             
-          if(pFormat==NULL)
+          if (pFormat == nullptr)
             {
               cerr << program_name << ": cannot read input format!" << endl;
               exit(-1);
@@ -143,7 +143,7 @@ int main(int argc,char **argv)
     }
 
   ifstream ifs;
-  if (useInFile && FileIn != NULL)
+  if (useInFile && FileIn != nullptr)
     {
       // Read the file
       ifs.open(FileIn);
@@ -156,9 +156,9 @@ int main(int argc,char **argv)
 	
 	
       // Find Input filetype
-      if (pFormat == NULL) {
+      if (pFormat == nullptr) {
           pFormat = conv.FormatFromExt(FileIn);
-          if (pFormat == NULL)
+          if (pFormat == nullptr)
             {
               cerr << program_name << ": cannot read input format!" << endl;
               return (-1);

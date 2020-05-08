@@ -137,7 +137,7 @@ public:
 
   virtual bool ReadChemObject(OBConversion* pConv)
   {
-    bool ret = ReadMolecule(NULL, pConv);
+    bool ret = ReadMolecule(nullptr, pConv);
     pConv->GetChemObject(); //increments output index
     return ret;
   };

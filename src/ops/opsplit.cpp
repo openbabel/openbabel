@@ -69,7 +69,7 @@ public:
            ;
   }
   virtual bool WorksWith(OBBase* pOb)const { return true; } //all OBBase objects
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 private:
   int _inputCount;
   OBFormat* _realOutFormat;
@@ -96,7 +96,7 @@ bool OpSplit::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   {
     _inputCount=0;
     _optionText = OptionText; //because gets overwritten by "inactive"
-    _pDesc = *OptionText ? OBDescriptor::FindType(OptionText) : NULL;
+    _pDesc = *OptionText ? OBDescriptor::FindType(OptionText) : nullptr;
     _realOutFormat = pConv->GetOutFormat();
 
     // If there is an output file specified, delete the file,close and invalidate the outstream so OBConversion is not confused.

@@ -464,12 +464,12 @@ namespace OpenBabel
       bondcalc.b = b;
       bondcalc.bt = bondtype;
 
-      parameter = GetParameterGhemical(bondtype, a->GetType(), b->GetType(), NULL, NULL,  _ffbondparams);
-      if (parameter == NULL) {
-        parameter = GetParameterGhemical(bondtype, "FFFF", a->GetType(), NULL, NULL, _ffbondparams);
-        if (parameter == NULL) {
-          parameter = GetParameterGhemical(bondtype, "FFFF", b->GetType(), NULL, NULL, _ffbondparams);
-          if (parameter == NULL) {
+      parameter = GetParameterGhemical(bondtype, a->GetType(), b->GetType(), nullptr, nullptr, _ffbondparams);
+      if (parameter == nullptr) {
+        parameter = GetParameterGhemical(bondtype, "FFFF", a->GetType(), nullptr, nullptr, _ffbondparams);
+        if (parameter == nullptr) {
+          parameter = GetParameterGhemical(bondtype, "FFFF", b->GetType(), nullptr, nullptr, _ffbondparams);
+          if (parameter == nullptr) {
             bondcalc.kb = KCAL_TO_KJ * 500.0;
             bondcalc.r0 = 1.100;
             bondcalc.SetupPointers();
@@ -527,14 +527,14 @@ namespace OpenBabel
       anglecalc.b = b;
       anglecalc.c = c;
 
-      parameter = GetParameter(a->GetType(), b->GetType(), c->GetType(), NULL, _ffangleparams);
-      if (parameter == NULL) {
-        parameter = GetParameter("FFFF", b->GetType(), c->GetType(), NULL, _ffangleparams);
-        if (parameter == NULL) {
-          parameter = GetParameter(a->GetType(), b->GetType(), "FFFF", NULL, _ffangleparams);
-          if (parameter == NULL) {
-            parameter = GetParameter("FFFF", b->GetType(), "FFFF", NULL, _ffangleparams);
-            if (parameter == NULL) {
+      parameter = GetParameter(a->GetType(), b->GetType(), c->GetType(), nullptr, _ffangleparams);
+      if (parameter == nullptr) {
+        parameter = GetParameter("FFFF", b->GetType(), c->GetType(), nullptr, _ffangleparams);
+        if (parameter == nullptr) {
+          parameter = GetParameter(a->GetType(), b->GetType(), "FFFF", nullptr, _ffangleparams);
+          if (parameter == nullptr) {
+            parameter = GetParameter("FFFF", b->GetType(), "FFFF", nullptr, _ffangleparams);
+            if (parameter == nullptr) {
               anglecalc.ka = KCAL_TO_KJ * 0.020;
               anglecalc.theta0 = 120.0;
               anglecalc.SetupPointers();
@@ -605,13 +605,13 @@ namespace OpenBabel
       torsioncalc.tt = torsiontype;
 
       parameter = GetParameterGhemical(torsiontype, a->GetType(), b->GetType(), c->GetType(), d->GetType(), _fftorsionparams);
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         parameter = GetParameterGhemical(torsiontype, "FFFF", b->GetType(), c->GetType(), d->GetType(), _fftorsionparams);
-        if (parameter == NULL) {
+        if (parameter == nullptr) {
           parameter = GetParameterGhemical(torsiontype, a->GetType(), b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
-          if (parameter == NULL) {
+          if (parameter == nullptr) {
             parameter = GetParameterGhemical(torsiontype, "FFFF", b->GetType(), c->GetType(), "FFFF", _fftorsionparams);
-            if (parameter == NULL) {
+            if (parameter == nullptr) {
               torsioncalc.V = 0.0;
               torsioncalc.s = 1.0;
               torsioncalc.n = 1.0;
@@ -712,8 +712,8 @@ namespace OpenBabel
           continue;
       }
 
-      parameter_a = GetParameter(a->GetType(), NULL, NULL, NULL, _ffvdwparams);
-      if (parameter_a == NULL) { // no vdw parameter -> use hydrogen
+      parameter_a = GetParameter(a->GetType(), nullptr, nullptr, nullptr, _ffvdwparams);
+      if (parameter_a == nullptr) { // no vdw parameter -> use hydrogen
         vdwcalc.Ra = 1.5;
         vdwcalc.ka = 0.042;
 
@@ -726,8 +726,8 @@ namespace OpenBabel
         vdwcalc.ka = parameter_a->_dpar[1];
       }
 
-      parameter_b = GetParameter(b->GetType(), NULL, NULL, NULL, _ffvdwparams);
-      if (parameter_b == NULL) { // no vdw parameter -> use hydrogen
+      parameter_b = GetParameter(b->GetType(), nullptr, nullptr, nullptr, _ffvdwparams);
+      if (parameter_b == nullptr) { // no vdw parameter -> use hydrogen
         vdwcalc.Rb = 1.5;
         vdwcalc.kb = 0.042;
 
@@ -982,7 +982,7 @@ namespace OpenBabel
           _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
         else {
           delete sp;
-          sp = NULL;
+          sp = nullptr;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from ghemical.prm", obInfo);
           return false;
         }
@@ -1103,19 +1103,19 @@ namespace OpenBabel
                                                             vector<OBFFParameter> &parameter)
   {
     OBFFParameter *par;
-    if (a == NULL)
-      return NULL;
+    if (a == nullptr)
+      return nullptr;
 
-    if (b == NULL) {
+    if (b == nullptr) {
       string _a(a);
       for (unsigned int idx=0; idx < parameter.size(); ++idx)
         if ((_a == parameter[idx]._a) && (type == parameter[idx]._ipar[0])) {
           par = &parameter[idx];
           return par;
         }
-      return NULL;
+      return nullptr;
     }
-    if (c == NULL) {
+    if (c == nullptr) {
       string _a(a);
       string _b(b);
       for (unsigned int idx=0; idx < parameter.size(); ++idx) {
@@ -1127,9 +1127,9 @@ namespace OpenBabel
           return par;
         }
       }
-      return NULL;
+      return nullptr;
     }
-    if (d == NULL) {
+    if (d == nullptr) {
       string _a(a);
       string _b(b);
       string _c(c);
@@ -1143,7 +1143,7 @@ namespace OpenBabel
           return par;
         }
       }
-      return NULL;
+      return nullptr;
     }
     string _a(a);
     string _b(b);
@@ -1162,7 +1162,7 @@ namespace OpenBabel
       }
     }
 
-    return NULL;
+    return nullptr;
   }
 
   bool OBForceFieldGhemical::ValidateGradients ()

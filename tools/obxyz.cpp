@@ -2,14 +2,14 @@
 obxyz - Open Babel XYZ transformations
 
 Copyright (C) 2001-2006 Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -37,7 +37,7 @@ int main(int argc,char **argv)
   int transX, transY, transZ, centerIdx;
   transX = transY = transZ = centerIdx = -1;
 
-  char *FileIn = NULL;
+  char *FileIn = nullptr;
   char *program_name = argv[0];
   //   char *iext;
 
@@ -47,7 +47,7 @@ int main(int argc,char **argv)
   // Still need to add:
   // rotate X, Y, or Z by set angle
   // translate X, Y, or Z by set amount
-    
+
   // Parse options
   while ((c = getopt(argc, argv, "x:y:z:c:")) != -1)
     {
@@ -95,10 +95,10 @@ int main(int argc,char **argv)
 
         }
     }
-    
+
   ifstream ifs;
   FileIn  = argv[optind];
-  if (FileIn != NULL)
+  if (FileIn != nullptr)
     {
       // Read the file
       ifs.open(FileIn);
@@ -108,10 +108,10 @@ int main(int argc,char **argv)
           exit (-1);
         }
       conv.SetInStream(&ifs);
-	
+
       // Find Input filetype
       pFormat = conv.FormatFromExt(FileIn);
-      if (pFormat == NULL)
+      if (pFormat == nullptr)
         {
           cerr << program_name << ": cannot read input format!" << endl;
           return (-1);
@@ -147,7 +147,7 @@ int main(int argc,char **argv)
       // (i.e., angle between x and y components)
       gamma = M_PI/2.0 - atan(v.x() / v.y());
 
-      // angle to rotate vector from XZ plane to X axis 
+      // angle to rotate vector from XZ plane to X axis
       // (by rotation along Y-axis)
       beta = atan(v.z() / sqrt(v.y()*v.y() + v.x()*v.x()) );
     }
@@ -159,7 +159,7 @@ int main(int argc,char **argv)
       // (i.e., angle between x and y components)
       gamma = -1.0 * atan(v.x() / v.y());
 
-      // angle to rotate vector from YZ plane to Y axis 
+      // angle to rotate vector from YZ plane to Y axis
       // (by rotation along X-axis)
       alpha = -1.0 * atan(v.z() / sqrt(v.y()*v.y() + v.x()*v.x()) );
     }

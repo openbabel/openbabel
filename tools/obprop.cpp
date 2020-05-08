@@ -50,7 +50,7 @@ int main(int argc,char **argv)
 {
   char *program_name= argv[0];
   int c;
-  char *FileIn = NULL;
+  char *FileIn = nullptr;
 
   if (argc != 2)
     {

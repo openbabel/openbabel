@@ -65,10 +65,10 @@ namespace OpenBabel
     _idx=0;
     _order=0;
     _flags=0;
-    _bgn=NULL;
-    _end=NULL;
+    _bgn=nullptr;
+    _end=nullptr;
     _vdata.clear();
-    _parent=(OBMol*)NULL;
+    _parent=nullptr;
   }
 
   OBBond::~OBBond()
@@ -163,7 +163,7 @@ namespace OpenBabel
     // not in a ring, or in a large ring
     // and if it's a ring, not sp2
     OBRing *ring = FindSmallestRing();
-    if (ring != NULL) {
+    if (ring != nullptr) {
       if(!includeRingBonds)
         return false;
       if (ring->Size() <= 3)
@@ -192,7 +192,7 @@ namespace OpenBabel
    bool OBBond::IsAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -224,7 +224,7 @@ namespace OpenBabel
    bool OBBond::IsPrimaryAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -258,7 +258,7 @@ namespace OpenBabel
    bool OBBond::IsSecondaryAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -292,7 +292,7 @@ namespace OpenBabel
    bool OBBond::IsTertiaryAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -423,7 +423,7 @@ namespace OpenBabel
   bool OBBond::IsEster()
   {
     OBAtom *a1,*a2;
-    a1 = a2 = NULL;
+    a1 = a2 = nullptr;
 
     if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8)
       {
@@ -536,7 +536,7 @@ namespace OpenBabel
     OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
 
     rlist = mol->GetSSSR();
-    OBRing* result = (OBRing*) NULL;
+    OBRing* result = nullptr;
     size_t min_size = UINT_MAX;
     for (i = rlist.begin();i != rlist.end();++i) {
       if ((*i)->IsMember((OBBond*)this) && (*i)->Size() < min_size) {

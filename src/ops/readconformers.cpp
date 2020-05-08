@@ -37,8 +37,8 @@ public:
     "of conformers, but the molecules in each group must be adjacent.\n"
     ; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
   virtual bool ProcessVec(std::vector<OBBase*>& vec);
 };
 
@@ -67,7 +67,7 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
   }
 
   std::string smiles, stored_smiles;
-  OBMol* stored_pmol=NULL;
+  OBMol* stored_pmol=nullptr;
   std::vector<OBBase*>::iterator iter;
   for(iter= vec.begin();iter!=vec.end();++iter)
   {
@@ -84,7 +84,7 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
       memcpy((char*)confCoord,(char*)pmol->GetCoordinates(),sizeof(double)*3*pmol->NumAtoms());
       stored_pmol->AddConformer(confCoord);
       delete pmol;
-      *iter = NULL;
+      *iter = nullptr;
     }
     else
     {
@@ -94,7 +94,7 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
   }
 
   //erase the NULLS
-  vec.erase(std::remove(vec.begin(),vec.end(), (void*)NULL), vec.end());
+  vec.erase(std::remove(vec.begin(), vec.end(), nullptr), vec.end());
   return true;
 }
 
@@ -111,4 +111,3 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
       pOp->ProcessVec(vec);
     vec now contains one or more molecules with multiple conformers
 */
-

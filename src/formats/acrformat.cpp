@@ -83,7 +83,7 @@ namespace OpenBabel
   bool ACRFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     istream& ifs = *pConv->GetInStream();

@@ -62,7 +62,7 @@ namespace OpenBabel {
     public:
       /// @name Construction
       //@{
-      OBConversion(std::istream* is=NULL, std::ostream* os=NULL);
+      OBConversion(std::istream* is=nullptr, std::ostream* os=nullptr);
       OBConversion(std::string inFilename, std::string outFilename="");
       /// @brief Copy constructor.  Stream *ownership* is not copied. Source remains responsible for the memory.
       OBConversion(const OBConversion& o);
@@ -74,7 +74,7 @@ namespace OpenBabel {
       /// @name Collection of formats
       //@{
       /// @brief Called once by each format class
-      static int				RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME = NULL);
+      static int				RegisterFormat(const char* ID, OBFormat* pFormat, const char* MIME = nullptr);
       /// @brief Searches registered formats
       static OBFormat*	FindFormat(const char* ID);
       /// @brief Searches registered formats
@@ -191,7 +191,7 @@ namespace OpenBabel {
         { return &OptionsArray[opttyp];};
 
       ///@brief Set an option of specified type, with optional text
-      void AddOption(const char* opt, Option_type opttyp=OUTOPTIONS, const char* txt=NULL);
+      void AddOption(const char* opt, Option_type opttyp=OUTOPTIONS, const char* txt=nullptr);
 
       bool RemoveOption(const char* opt, Option_type optype);
 
@@ -251,13 +251,13 @@ namespace OpenBabel {
       /// @name Convenience functions
       //@{
       ///The default format is set in a single OBFormat class (generally it is OBMol)
-      static OBFormat* GetDefaultFormat(){return OBFormat::FindType(NULL);};
+      static OBFormat* GetDefaultFormat(){return OBFormat::FindType(nullptr);};
 
       /// @brief Outputs an object of a class derived from OBBase.
 
       /// Part of "API" interface.
       /// The output stream can be specified and the change is retained in the OBConversion instance
-      bool				Write(OBBase* pOb, std::ostream* pout=NULL);
+      bool				Write(OBBase* pOb, std::ostream* pout=nullptr);
 
       /// @brief Outputs an object of a class derived from OBBase as a string
 
@@ -287,7 +287,7 @@ namespace OpenBabel {
       /// Part of "API" interface.
       /// The input stream can be specified and the change is retained in the OBConversion instance
       /// \return false and pOb=NULL on error
-      bool	Read(OBBase* pOb, std::istream* pin=NULL);
+      bool	Read(OBBase* pOb, std::istream* pin=nullptr);
 
       /// Part of "API" interface.
       /// The input stream can be specified and the change is retained in the OBConversion instance
@@ -325,7 +325,7 @@ namespace OpenBabel {
       /// The type of object is taken from the TargetClassDescription
       /// of the specified class (or the output format if not specified)and
       /// is appropriately singular or plural.
-      void ReportNumberConverted(int count, OBFormat* pFormat=NULL);
+      void ReportNumberConverted(int count, OBFormat* pFormat=nullptr);
 
       /// \return the number of objects in the inputstream,
       /// or -1 if error or if SkipObjects for the input format is not implemented
@@ -352,7 +352,7 @@ protected:
           std::ios *pStream; //active stream
           std::vector<std::ios *> ownedStreams; //streams we own the memory to
 
-          StreamState(): pStream(NULL) {}
+          StreamState(): pStream(nullptr) {}
           ~StreamState()
           {
             assert(ownedStreams.size() == 0); //should be popped
@@ -364,7 +364,7 @@ protected:
           void pushOutput(OBConversion& conv);
           void popOutput(OBConversion& conv);
 
-          bool isSet() const { return pStream != NULL; }
+          bool isSet() const { return pStream != nullptr; }
       };
 
       bool             SetStartAndEnd();
@@ -372,7 +372,7 @@ protected:
 //      static FMapType& FormatsMIMEMap();///<contains MIME and pointer to all OBFormat classes
       typedef std::map<std::string,int> OPAMapType;
       static OPAMapType& OptionParamArray(Option_type typ);
-      bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=NULL);
+      bool             OpenAndSetFormat(bool SetFormat, std::ifstream* is, std::stringstream* ss=nullptr);
 
       std::string	  InFilename, OutFilename; //OutFileName added v2.4.0
 

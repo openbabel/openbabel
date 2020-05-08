@@ -70,7 +70,7 @@ namespace OpenBabel
     double  _tor; //!< Torsional/dihedral angle between this, _a, _b, and _c
 
     //! Constructor
-  OBInternalCoord(OBAtom *a= NULL, OBAtom *b= NULL, OBAtom *c= NULL,
+  OBInternalCoord(OBAtom *a= nullptr, OBAtom *b= nullptr, OBAtom *c= nullptr,
                   double dst = 0.0, double ang = 0.0, double tor = 0.0) :
     _a(a), _b(b), _c(c), _dst(dst), _ang(ang), _tor(tor)
       {}

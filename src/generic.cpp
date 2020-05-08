@@ -150,10 +150,10 @@ namespace OpenBabel
       would allow the simple version of Clone() above. See
       OBRotameterData::Clone for an example of a more complicated version.
       For classes which are not intended to support copying, Clone() can
-      return NULL
+      return nullptr
       @code
       virtual OBGenericData* Clone(OBBase* parent) const
-         {return NULL;}
+         {return nullptr;}
       @endcode
       Clone() is a pure virtual function so that you need to decide what
       kind of function you need and include it explicitly.
@@ -256,7 +256,7 @@ namespace OpenBabel
     _mOrtho(matrix3x3()),
     _mOrient(matrix3x3()),
     _offset(vector3()),
-    _spaceGroupName(""), _spaceGroup( NULL ),
+    _spaceGroupName(""), _spaceGroup(nullptr),
     _lattice(Undefined)
   {  }
 
@@ -291,7 +291,7 @@ namespace OpenBabel
   {
     _mOrtho.FillOrth(alpha, beta, gamma, a, b, c);
     _mOrient = matrix3x3(1);
-    _spaceGroup = NULL;
+    _spaceGroup = nullptr;
     _spaceGroupName = "";
     _lattice = OBUnitCell::Undefined;
   }
@@ -307,7 +307,7 @@ namespace OpenBabel
                      v2.length(),        // b
                      v3.length());       // c
     _mOrient = m.transpose() * _mOrtho.inverse();
-    _spaceGroup = NULL;
+    _spaceGroup = nullptr;
     _spaceGroupName = "";
     _lattice = OBUnitCell::Undefined;
   }
@@ -486,7 +486,7 @@ namespace OpenBabel
   {
     if (_lattice != Undefined)
       return _lattice;
-    else if (_spaceGroup != NULL)
+    else if (_spaceGroup != nullptr)
       return GetLatticeType(_spaceGroup->GetId());
 
     double a = GetA();
@@ -572,7 +572,7 @@ namespace OpenBabel
 
     if (name.length () == 0)
       {
-        if (_spaceGroup != NULL)
+        if (_spaceGroup != nullptr)
           return _spaceGroup->GetId();
         else
           name = _spaceGroupName;
@@ -611,7 +611,7 @@ namespace OpenBabel
   {
     const SpaceGroup *sg = GetSpaceGroup(); // the actual space group and transformations for this unit cell
 
-    if(sg == NULL)
+    if (sg == nullptr)
       return ;
 
     // For each atom, we loop through: convert the coords back to inverse space, apply the transformations and create new atoms
@@ -883,13 +883,13 @@ namespace OpenBabel
   OBRing *OBRingData::BeginRing(std::vector<OBRing*>::iterator &i)
   {
     i = _vr.begin();
-    return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
+    return i == _vr.end() ? nullptr : (OBRing*)*i;
   }
 
   OBRing *OBRingData::NextRing(std::vector<OBRing*>::iterator &i)
   {
     ++i;
-    return((i == _vr.end()) ? (OBRing*)NULL : (OBRing*)*i);
+    return i == _vr.end() ? nullptr : (OBRing*)*i;
   }
 
   //
@@ -900,7 +900,7 @@ namespace OpenBabel
   **\brief Angle default constructor
   */
   OBAngle::OBAngle():
-    _vertex((OBAtom *)NULL), _termini((OBAtom *)NULL, (OBAtom *)NULL), _radians(0.0)
+    _vertex(nullptr), _termini(nullptr, nullptr), _radians(0.0)
   {  }
 
   /*!
@@ -940,7 +940,7 @@ namespace OpenBabel
   */
   void OBAngle::Clear()
   {
-    _vertex         = 0;
+    _vertex         = nullptr;
     _termini.first  = 0;
     _termini.second = 0;
     _radians        = 0.0;

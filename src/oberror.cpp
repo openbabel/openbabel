@@ -147,7 +147,7 @@ namespace OpenBabel
   {
     _messageCount[0] = _messageCount[1] = _messageCount[2] = 0;
     _messageCount[3] = _messageCount[4] = 0;
-    _filterStreamBuf = _inWrapStreamBuf = NULL;
+    _filterStreamBuf = _inWrapStreamBuf = nullptr;
     //  StartErrorWrap(); // (don't turn on error wrapping by default)
   }
 
@@ -156,7 +156,7 @@ namespace OpenBabel
     StopErrorWrap();
 
     // free the internal filter streambuf
-    if (_filterStreamBuf != NULL)
+    if (_filterStreamBuf != nullptr)
       delete _filterStreamBuf;
   }
 
@@ -207,12 +207,12 @@ namespace OpenBabel
 
   bool OBMessageHandler::StartErrorWrap()
   {
-    if (_inWrapStreamBuf != NULL)
+    if (_inWrapStreamBuf != nullptr)
       return true; // already wrapped cerr  -- don't go into loops!
 
     _inWrapStreamBuf = cerr.rdbuf();
 
-    if (_filterStreamBuf == NULL)
+    if (_filterStreamBuf == nullptr)
       {
         _filterStreamBuf = new(obLogBuf);
       }
@@ -223,11 +223,11 @@ namespace OpenBabel
 
   bool OBMessageHandler::StopErrorWrap()
   {
-    if (_inWrapStreamBuf == NULL)
+    if (_inWrapStreamBuf == nullptr)
       return true; // never wrapped cerr
 
     cerr.rdbuf(_inWrapStreamBuf);
-    _inWrapStreamBuf=NULL;//shows not wrapped
+    _inWrapStreamBuf = nullptr; //shows not wrapped
 
     // don't delete the filter streambuf yet -- we might start wrapping later
     // it's freed in the dtor

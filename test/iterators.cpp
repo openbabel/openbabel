@@ -134,10 +134,10 @@ int iterators(int argc, char* argv[])
 
       // test ring iterators: PR#2815025
       counter = 0;
-      OBRing *prevRing = 0;
+      OBRing *prevRing = nullptr;
       if (mol.GetSSSR().size() != 0) {
         FOR_RINGS_OF_MOL(ring, mol) {
-          if (prevRing != 0 && &*ring == prevRing) {
+          if (prevRing != nullptr && &*ring == prevRing) {
             break; // OOPS, same ring in a row?!
           }
           prevRing = &*ring;

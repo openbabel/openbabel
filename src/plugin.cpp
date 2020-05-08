@@ -102,17 +102,17 @@ OBPlugin* OBPlugin::BaseFindType(PluginMapType& Map, const char* ID)
   }
 
   if(!ID || !*ID)
-    return NULL;
+    return nullptr;
   PluginMapType::iterator itr = Map.find(ID);
   if(itr==Map.end())
-    return NULL;
+    return nullptr;
   else
     return itr->second;
 }
 
 OBPlugin* OBPlugin::GetPlugin(const char* Type, const char* ID)
 {
-  if(Type!=NULL)
+  if (Type != nullptr)
     return BaseFindType(GetTypeMap(Type), ID);
 
   // Make sure the plugins are loaded
@@ -128,7 +128,7 @@ OBPlugin* OBPlugin::GetPlugin(const char* Type, const char* ID)
     if(result)
       return result;
   }
-  return NULL; //not found
+  return nullptr; //not found
 }
 
 bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<string>& vlist)
@@ -149,7 +149,7 @@ bool OBPlugin::ListAsVector(const char* PluginID, const char* param, vector<stri
       itr = PluginMap().find(PluginID);
       if(itr!=PluginMap().end())
       {
-        bool onlyIDs = param!=NULL && strstr(param,"ids")!=NULL;
+        bool onlyIDs = param != nullptr && strstr(param, "ids") != nullptr;
         //Get map of plugin type (like OBFingerprint) and output its contents
         PluginMapType Map = itr->second->GetMap();
         for(itr=Map.begin(); itr!=Map.end(); ++itr)

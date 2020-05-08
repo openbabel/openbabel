@@ -53,7 +53,7 @@ void mtest_configStruct()
 
 void mtest_IsValid()
 {
-  OBTetrahedralStereo ts(0);
+  OBTetrahedralStereo ts(nullptr);
   OBTetrahedralStereo::Config cfg, cfgCopy;
   cfg.center = 0;
   cfg.from = 1;
@@ -83,7 +83,7 @@ void mtest_IsValid()
 
 void mtest_equalsOperator()
 {
-  OBTetrahedralStereo ts1(0), ts2(0);
+  OBTetrahedralStereo ts1(nullptr), ts2(nullptr);
   OBTetrahedralStereo::Config cfg;
   cfg.center = 0;
   cfg.from = 1;
@@ -100,7 +100,7 @@ void mtest_equalsOperator()
 
 void mtest_GetSetConfig()
 {
-  OBTetrahedralStereo th(0);
+  OBTetrahedralStereo th(nullptr);
   OBTetrahedralStereo::Config cfg;
 
   // set clockwise, viewing from 1
@@ -146,7 +146,7 @@ void mtest_GetSetConfig()
 
 void test_Refs()
 {
-  OBTetrahedralStereo th(0);
+  OBTetrahedralStereo th(nullptr);
  
   // center 2, view from 1, clockwise 9 4 34
   OBTetrahedralStereo::Config cfg;

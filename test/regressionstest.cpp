@@ -25,7 +25,7 @@ void test_Fix1912_PDBReading()
   OB_ASSERT(mol->HasChainsPerceived());
   OBAtom* atom = mol->GetAtom(1);
   OBResidue* res = atom->GetResidue();
-  OB_REQUIRE(res != (OBResidue*)0);
+  OB_REQUIRE(res != nullptr);
   OB_COMPARE(res->GetAtomID(atom), " N19");
   OB_COMPARE(res->GetChain(), 'A');
 }

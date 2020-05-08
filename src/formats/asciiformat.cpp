@@ -108,7 +108,7 @@ ASCIIFormat theASCIIFormat;
 bool ASCIIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   ostream& ofs = *pConv->GetOutStream();

@@ -111,7 +111,7 @@ namespace OpenBabel {
   bool MDFFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     // Move stream to EOF, some apps check ifs position to check for multimolecule files.
@@ -347,7 +347,7 @@ namespace OpenBabel {
     //output looks nice, this can be reversed by using command line flag "-xw".
     //
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if (pmol == NULL) {
+    if (pmol == nullptr) {
       return false;
     }
 
@@ -361,7 +361,7 @@ namespace OpenBabel {
     }            
 
     char buffer[BUFF_SIZE];
-    OBUnitCell *uc = NULL;
+    OBUnitCell *uc = nullptr;
     vector<vector3> cell;
 
     const char * sortAtoms     = pConv->IsOption("w", OBConversion::OUTOPTIONS);
@@ -373,14 +373,14 @@ namespace OpenBabel {
     
     map<int, int> indl; 
     
-    if (sortAtoms != NULL) 
+    if (sortAtoms != nullptr)
     {
       indl.clear();
       for(int i = 0; i < 200; i++)
         indl[i] = i;
     }
     
-    if (sortAtomsList != NULL) 
+    if (sortAtomsList != nullptr)
     {
       indl.clear();
       vector<string> vs;
@@ -477,7 +477,7 @@ namespace OpenBabel {
       ofs << buffer << endl;
     }
     
-    if( writeIONS == NULL)
+    if (writeIONS == nullptr)
       return true;
     
     //Write IONS.POT

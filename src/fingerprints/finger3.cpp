@@ -50,10 +50,10 @@ protected:
   string _patternsfile;
 
 public:
-  PatternFP(const char* ID, const char* filename=NULL,
+  PatternFP(const char* ID, const char* filename=nullptr,
       bool IsDefault=false) : OBFingerprint(ID, IsDefault)
   {
-    if(filename==NULL)
+    if (filename == nullptr)
       _patternsfile="patterns.txt";
     else
       _patternsfile = filename;

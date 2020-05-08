@@ -79,7 +79,7 @@ public:
     }
 
     /// Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return 0; };
+    virtual const char* GetMIMEType() { return nullptr; }
 
       /// Return read/write flag.
     virtual unsigned int Flags()
@@ -111,7 +111,7 @@ OBMoldenFormat moldenFormat__;
 bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 {
     OBMol* pmol = dynamic_cast< OBMol* >(pOb);
-    if( pmol == 0 ) return false;
+    if (pmol == nullptr) return false;
 
     istream& ifs = *pConv->GetInStream();
 
@@ -357,7 +357,7 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 bool OBMoldenFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

@@ -49,8 +49,8 @@ public:
     "     --highlight \"c1ccccc1 green C(=O)O #FFA500\"";
   }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 private:
   bool AddDataToSubstruct(OBMol* pmol,
         const std::vector<int>& atomIdxs,
@@ -81,7 +81,7 @@ bool OpHighlight::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConvers
       string msg = "No color specified for SMARTS string: " + smarts;
       obErrorLog.ThrowError(__FUNCTION__, msg, obError, onceOnly);
       delete pmol;
-      pmol = NULL;
+      pmol = nullptr;
       pConv->SetOneObjectOnly(); //stop conversion
       return false;
     }
@@ -90,7 +90,7 @@ bool OpHighlight::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConvers
     bool match = false;
     //These are a vector of each mapping, each containing atom indxs.
     vector<vector<int> > vecatomvec;
-    vector<vector<int> >* pMappedAtoms = NULL;
+    vector<vector<int> >* pMappedAtoms = nullptr;
     OBSmartsPattern sp;
 
     // Explicit H in SMARTS requires explicit H in the molecule.
@@ -104,7 +104,7 @@ bool OpHighlight::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConvers
       string msg = smarts + " cannot be interpreted as a valid SMARTS ";
       obErrorLog.ThrowError(__FUNCTION__, msg, obError, onceOnly);
       delete pmol;
-      pmol = NULL;
+      pmol = nullptr;
       pConv->SetOneObjectOnly(); //stop conversion
       return false;
     }
