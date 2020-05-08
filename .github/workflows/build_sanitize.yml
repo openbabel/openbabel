@@ -1,0 +1,59 @@
+name: Sanitize Builds
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Debug
+  CC: clang-9
+  CXX: clang++-9
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Address",
+            flags: "-fsanitize=address"
+          }
+        - {
+            name: "Leak",
+            flags: "-fsanitize=leak"
+          }
+        - {
+            name: "Undefined Behavior",
+            flags: "-fsanitize=undefined"
+          }
+        - {
+            name: "Safe Stack",
+            flags: "-fsanitize=safe-stack"
+          }
+
+    steps:
+    - name: Check variables
+      run: echo "${{runner.os}} ${{matrix.config.os}}"
+
+    - uses: actions/checkout@v2
+
+    - name: Install Dependencies
+      if: runner.os == 'Linux'
+      run: sudo apt-get -qq install ninja-build libeigen3-dev libboost-all-dev
+
+    - name: Configure
+      run: |
+        mkdir "${{ runner.workspace }}/build"
+        cd "${{ runner.workspace }}/build"
+        cmake $GITHUB_WORKSPACE -GNinja -DCMAKE_C_COMPILER=${{env.cc}} -DCMAKE_CXX_COMPILER=${{env.cxx}} -DCMAKE_CXX_FLAGS="${{matrix.config.flags}}  -g -O0 -fno-omit-frame-pointer"
+      shell: bash
+
+    - name: Build
+      run: cmake --build .
+      shell: bash
+      working-directory: ${{ runner.workspace }}/build
+
+    - name: Test
+      working-directory: ${{ runner.workspace }}/build
+      run: ctest --output-on-failure
