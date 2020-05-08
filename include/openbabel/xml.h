@@ -85,7 +85,7 @@ namespace OpenBabel
         };
 
       static void RegisterXMLFormat(XMLBaseFormat* pFormat,
-                                    bool IsDefault=false, const char* uri=NULL);
+                                    bool IsDefault=false, const char* uri=nullptr);
 
       ///Returns the extended OBConversion class, making it if necessary
       static XMLConversion* GetDerived(OBConversion* pConv, bool ForReading=true);

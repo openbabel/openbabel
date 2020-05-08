@@ -480,10 +480,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Iterative component of Separate to copy one fragment at a time
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
     // docs in mol.cpp
-    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)0,
+    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)nullptr,
       unsigned int correctvalence=1,
-      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)0,
-      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)0);
+      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)nullptr,
+      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)nullptr);
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
     //! Converts 5-valent N and P only. Return true if conversion occurred.

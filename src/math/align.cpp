@@ -45,7 +45,7 @@ namespace OpenBabel
     _ready = false;
     _symmetry = symmetry;
     _includeH = includeH;
-    _prefmol = 0;
+    _prefmol = nullptr;
   }
 
   OBAlign::OBAlign(const vector<vector3> &ref, const vector<vector3> &target) : _method(OBAlign::Kabsch)
@@ -53,7 +53,7 @@ namespace OpenBabel
     SetRef(ref);
     SetTarget(target);
     _symmetry = false;
-    _prefmol = 0;
+    _prefmol = nullptr;
   }
 
   OBAlign::OBAlign(const OBMol &refmol, const OBMol &targetmol, bool includeH, bool symmetry) : _method(OBAlign::Kabsch)

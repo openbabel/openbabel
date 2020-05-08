@@ -235,7 +235,7 @@ namespace OpenBabel {
         for (unsigned int i = 0; i < begin->GetBonds().size(); ++i)
           if (begin->GetNbrs()[i] == end)
             return begin->GetBonds()[i];
-        return 0;
+        return nullptr;
       }
       /**
        * Add a query atom to the query. This function steals the pointer.

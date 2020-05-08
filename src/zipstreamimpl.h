@@ -57,13 +57,13 @@ basic_zip_streambuf<charT, traits>::basic_zip_streambuf(ostream_reference ostrea
       _buffer(buffer_size, 0),
       _crc(0)
 {
-    _zip_stream.zalloc = (alloc_func) 0;
-    _zip_stream.zfree = (free_func) 0;
+    _zip_stream.zalloc = (alloc_func) nullptr;
+    _zip_stream.zfree = (free_func) nullptr;
 
-    _zip_stream.next_in = NULL;
+    _zip_stream.next_in = nullptr;
     _zip_stream.avail_in = 0;
     _zip_stream.avail_out = 0;
-    _zip_stream.next_out = NULL;
+    _zip_stream.next_out = nullptr;
 
     if(level > 9)
         level = 9;
@@ -319,13 +319,13 @@ void
   basic_unzip_streambuf<charT, traits>::initialize(int window_size)
 {
   // setting zalloc, zfree and opaque
-  _zip_stream.zalloc = (alloc_func) 0;
-  _zip_stream.zfree = (free_func) 0;
+  _zip_stream.zalloc = (alloc_func) nullptr;
+  _zip_stream.zfree = (free_func) nullptr;
 
-  _zip_stream.next_in = NULL;
+  _zip_stream.next_in = nullptr;
   _zip_stream.avail_in = 0;
   _zip_stream.avail_out = 0;
-  _zip_stream.next_out = NULL;
+  _zip_stream.next_out = nullptr;
 
   _err = inflateInit2(&_zip_stream, window_size);
 
