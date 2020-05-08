@@ -113,9 +113,9 @@ public:
     OBPhModel();
     ~OBPhModel();
 
-    void ParseLine(const char*);
+    void ParseLine(const char*) override;
     //! \return the number of chemical transformations
-    size_t GetSize()                 { return _vtsfm.size();}
+    size_t GetSize() override { return _vtsfm.size(); }
     void AssignSeedPartialCharge(OBMol&);
     //void CorrectForPH(OBMol&);
     void CorrectForPH(OBMol&, double pH  = 7.4 );

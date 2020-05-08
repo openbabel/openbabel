@@ -74,7 +74,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("4", this, 0, OBConversion::OUTOPTIONS);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "VASP format\n"
@@ -108,28 +108,30 @@ namespace OpenBabel {
         "    The default is to use the VASP 5.x specification.\n\n"
         ;
 
-    };
+    }
 
-    virtual const char* SpecificationURL(){return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";};
+    const char* SpecificationURL() override {
+      return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";
+    }
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply
        NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
        READBINARY  WRITEBINARY  READXML  ZEROATOMSOK */
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY;
-    };
+    }
 
-    virtual int SkipObjects(int n, OBConversion* pConv)
+    int SkipObjects(int n, OBConversion* pConv) override
     {
       return 0;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// Declarations for the "API" interface functions. Definitions are below
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     /* Add declarations for any local function or member variables used.

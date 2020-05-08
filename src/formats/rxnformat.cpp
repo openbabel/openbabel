@@ -40,7 +40,7 @@ public:
       OBConversion::RegisterFormat("rxn",this);
   }
 
-  virtual const char* Description()
+  const char* Description() override
   {
       return
         "MDL RXN format\n"
@@ -55,12 +55,12 @@ public:
         "            - product - Treat any agent as a product\n"
         "            - ignore - Ignore any agent\n"
         "            - both - Treat as both a reactant and a product\n\n";
-  };
+  }
 
-  virtual const char* GetMIMEType()
-  { return "chemical/x-mdl-rxn"; };
+  const char* GetMIMEType() override
+  { return "chemical/x-mdl-rxn"; }
 
-  virtual const char* TargetClassDescription()
+  const char* TargetClassDescription() override
   {
       return OBMol::ClassDescription();
   }
@@ -68,8 +68,8 @@ public:
 
   ////////////////////////////////////////////////////
   /// The "API" interface functions
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 };
 

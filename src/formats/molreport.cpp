@@ -38,7 +38,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("molreport",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Open Babel molecule report\n"
@@ -70,21 +70,21 @@ namespace OpenBabel
 " :ref:`Open_Babel_report_format`\n\n"
 
 ;
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://openbabel.org/wiki/MolReport";}; //optional
+    const char* SpecificationURL() override
+    { return "http://openbabel.org/wiki/MolReport"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class

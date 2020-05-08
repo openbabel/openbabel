@@ -43,7 +43,7 @@ public:
     OBConversion::RegisterFormat("ascii",this);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
     "ASCII format\n"
@@ -86,15 +86,15 @@ public:
     " t         Write the output molecule index and the title\n"
     " m         Include a margin around the depiction\n\n"
     ;
-  };
+  }
 
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return NOTREADABLE;
-  };
+  }
 
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
   ////////////////////////////////////////////////////
 

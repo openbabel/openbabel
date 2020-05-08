@@ -37,7 +37,7 @@ public:
 	fingerprint2(const char* ID, bool IsDefault=false)
 		: OBFingerprint(ID, IsDefault), _flags(0){};
 
-	virtual const char* Description()
+	const char* Description() override
 	{ return "Indexes linear fragments up to 7 atoms."
     "\n1021 bits.\n"
     "Similar to Daylight fingerprints\n"
@@ -56,7 +56,7 @@ public:
   ;}
 
 	//Calculates the fingerprint
-	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
+	bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0) override;
 
   /// \returns fragment info unless SetFlags(OBFingerprint::FPT_NOINFO) has been called before GetFingerprint() called. 
   /** Structure of a fragment (vector<int>)
@@ -65,11 +65,11 @@ public:
    For the rest, even when stopped by encountering atoms already visited
          0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
   **/
-virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+  std::string DescribeBits(const std::vector<unsigned int> fp, bool bSet=true) override
   { return _ss.str(); }
 
-  virtual unsigned int Flags() { return _flags;};
-  virtual void SetFlags(unsigned int f){ _flags=f; }
+  unsigned int Flags() override { return _flags; }
+  void SetFlags(unsigned int f) override { _flags=f; }
 
 private:
 	typedef std::set<std::vector<int> > Fset;

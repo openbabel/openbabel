@@ -389,10 +389,10 @@ class OpGenAlias : public OBOp
 {
 public:
   OpGenAlias(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Generate aliases as an alternative representation."; }
+  const char* Description() override { return "Generate aliases as an alternative representation."; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
 };
 
 /////////////////////////////////////////////////////////////////

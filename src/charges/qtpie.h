@@ -53,12 +53,12 @@ class QTPIECharges : public OBChargeModel
 public:
   QTPIECharges(void) : OBChargeModel("fake ID", false){};
   QTPIECharges(const char* ID) : OBChargeModel(ID, false){};
-  const char* Description(){ return "Assign QTPIE (charge transfer, polarization and equilibration) partial charges (Chen and Martinez, 2007)"; }
+  const char* Description() override { return "Assign QTPIE (charge transfer, polarization and equilibration) partial charges (Chen and Martinez, 2007)"; }
 
   /// \return whether partial charges were successfully assigned to this molecule
-  bool ComputeCharges(OBMol &mol);
+  bool ComputeCharges(OBMol &mol) override;
 
-  double DipoleScalingFactor() { return 4.041; } // fit from regression
+  double DipoleScalingFactor() override { return 4.041; } // fit from regression
 
 private:
   Eigen::Vector3d GetParameters(unsigned int Z, int Q);

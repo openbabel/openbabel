@@ -37,8 +37,8 @@ public:
 		: OBFingerprint(ID, IsDefault),
       _radius(radius), _keepdups(keepdups), _flags(0){};
 
-	virtual const char* Description()
-	{ 
+	const char* Description() override
+	{
           // Important! The second line is used by some output formats (e.g. FPS)
 	  // to determine the default size
 	  return "Extended-Connectivity Fingerprints (ECFPs)\n"
@@ -47,14 +47,14 @@ public:
 	}
 
 	//Calculates the fingerprint
-	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
+	bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0) override;
 
   /// \returns fragment info unless SetFlags(OBFingerprint::FPT_NOINFO) has been called before GetFingerprint() called.
-  virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+  std::string DescribeBits(const std::vector<unsigned int> fp, bool bSet=true) override
   { return _ss.str(); }
 
-  virtual unsigned int Flags() { return _flags;};
-  virtual void SetFlags(unsigned int f){ _flags=f; }
+  unsigned int Flags() override { return _flags; }
+  void SetFlags(unsigned int f) override { _flags=f; }
 
 private:
   std::vector<unsigned int> v;

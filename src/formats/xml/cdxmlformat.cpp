@@ -58,33 +58,33 @@ public:
 		XMLConversion::RegisterXMLFormat(this, false, "http://www.camsoft.com/xml/cdxml.dtd");
 		XMLConversion::RegisterXMLFormat(this);
 	}
-	virtual const char* NamespaceURI()const{return "http://www.cambridgesoft.com/xml/cdxml.dtd";}
-  virtual const char* Description()
+	const char* NamespaceURI() const override { return "http://www.cambridgesoft.com/xml/cdxml.dtd"; }
+  const char* Description() override
   {
     return
       "ChemDraw CDXML format\n"
       "Minimal support of chemical structure information only.\n\n";
   }
 
-  virtual const char* GetMIMEType()
+  const char* GetMIMEType() override
   { return "chemical/x-cdxml"; };
 
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/";}
 
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return READXML;
   };
 
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-	virtual bool DoElement(const string& name);
-	virtual bool EndElement(const string& name);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool DoElement(const string& name) override;
+    bool EndElement(const string& name) override;
 
 	// EndTag is used so that the stream buffer is is filled with the XML from
 	// complete objects, as far as possible.
-	virtual const char* EndTag(){ return "/fragment>"; };
+	const char* EndTag() override { return "/fragment>"; }
 
     //atoms and bonds might have no content, so EndElement is not always called
     // that's why we need to ensure that atoms and bonds are really added.

@@ -35,31 +35,31 @@ namespace OpenBabel
       OBConversion::RegisterFormat("crk2d", this, "chemical/x-crk2d");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Chemical Resource Kit diagram(2D)\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://crk.sourceforge.net/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://crk.sourceforge.net/"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-crk2d"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-crk2d"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     static bool ReadCRK(std::istream &ifs,OBMol &mol,const char *classTag);
     static void WriteCRK(std::ostream &ofs,OBMol &mol,bool GroupCharges);
@@ -138,31 +138,31 @@ namespace OpenBabel
       OBConversion::RegisterFormat("crk3d", this, "chemical/x-crk3d");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Chemical Resource Kit 3D format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://crk.sourceforge.net/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://crk.sourceforge.net/"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-crk3d"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-crk3d"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

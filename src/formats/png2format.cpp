@@ -37,21 +37,20 @@ public:
     OBConversion::RegisterFormat("_png2",this);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  //required
   {
     return
     "PNG2 format\n"
     "An internal format to write 2D depiction using Cairo\n"
     "Called from PNGFormat\n";
-  };
+  }
 
-
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return NOTREADABLE | WRITEBINARY | DEPICTION2D;
-  };
-  bool WriteChemObject(OBConversion* pConv);
-  bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  }
+  bool WriteChemObject(OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     int _ncols, _nrows, _nmax;

@@ -39,7 +39,7 @@ public:
  }
 
   virtual const char* NamespaceURI()const{return "http://www.w3.org/2000/svg";}
-  virtual const char* Description()
+  const char* Description() override
   {
     return
       "SVG 2D depiction\n"
@@ -153,13 +153,13 @@ public:
     ;
   }
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return NOTREADABLE | ZEROATOMSOK | DEPICTION2D;
   }
 
-  bool WriteChemObject(OBConversion* pConv);
-  bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool WriteChemObject(OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 private:
   bool EmbedCML(OBMol* pmol, OBConversion* pConv, ostream* ofs);

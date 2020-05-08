@@ -36,23 +36,23 @@ namespace OpenBabel
       OBConversion::RegisterFormat("hin",this, "chemical/x-hin");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return "HyperChem HIN format\n"
              "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "";}; //optional
+    const char* SpecificationURL() override
+    { return ""; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-hin";}; //optional
+    const char* GetMIMEType() override
+    { return "chemical/x-hin"; }  // optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

@@ -38,7 +38,7 @@ public:
     OBConversion::RegisterFormat("paint",this);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override //required
   {
     return
     "Painter format\n"
@@ -86,15 +86,14 @@ public:
     " M Do not include a margin around the depiction\n\n"
 
     ;
-  };
+  }
 
-
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return NOTREADABLE;
-  };
+  }
 
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
   ////////////////////////////////////////////////////
 

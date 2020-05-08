@@ -507,29 +507,29 @@ namespace OpenBabel
     }
 
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "GAMESS-UK Input\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.cfs.dl.ac.uk";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.cfs.dl.ac.uk"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gamessuk-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gamessuk-input"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY; // | NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class
@@ -713,18 +713,18 @@ namespace OpenBabel
     GAMESSUKOutputFormat()
     { OBConversion::RegisterFormat("gukout",this, "chemical/x-gamess-output"); }
 
-    virtual const char* Description() //required
-    { return "GAMESS-UK Output\n"; };
+    const char* Description() override  // required
+    { return "GAMESS-UK Output\n"; }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.cfs.dl.ac.uk";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.cfs.dl.ac.uk"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gamessuk-output"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gamessuk-output"; }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     enum RunType_t { UNKNOWN, SINGLEPOINT, OPTXYZ, OPTZMAT, SADDLE, FREQUENCIES };

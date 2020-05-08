@@ -35,7 +35,7 @@ public:
     OBConversion::RegisterOptionParam("y", this, 1, OBConversion::OUTOPTIONS);
   }
 
-  virtual const char* Description()
+  const char* Description() override
   {
     return
     "PNG 2D depiction\n"
@@ -120,9 +120,9 @@ public:
 
     "    :ref:`PNG_2D_depiction`\n\n"
     ;
-  };
+  }
 
-  virtual const char* TargetClassDescription()
+  const char* TargetClassDescription() override
   {
     static string txt;
     txt = " PNG_files\n"; //so reports "n PNG_files converted"
@@ -130,18 +130,18 @@ public:
     return txt.c_str();
   }
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return READONEONLY | READBINARY | WRITEBINARY | DEPICTION2D;
-  };
+  }
 
-  virtual bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   {
     bool ret = ReadMolecule(nullptr, pConv);
     pConv->GetChemObject(); //increments output index
     return ret;
-  };
-  virtual bool WriteChemObject(OBConversion* pConv)
+  }
+  bool WriteChemObject(OBConversion* pConv) override
   {
     //If there is a PNG input file, embed all the subsequent molecules in it
     if(!CopyOfInput.empty() && bytesToIEND>0)
@@ -164,10 +164,10 @@ public:
         pConv->SetOutFormat(""); // report as output objects, not "PNG_files"
       return ret;
     }
-  };
+  }
 
-virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 private:
   int _count; //number of chemical objects converted

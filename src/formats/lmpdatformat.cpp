@@ -39,7 +39,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("d", nullptr, 1, OBConversion::OUTOPTIONS);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
   "The LAMMPS data format\n\n"
@@ -54,19 +54,19 @@ namespace OpenBabel
   "    The default is to make a cube around the molecule\n"
   "    adding 50% to the most positive and negative\n"
   "    cartesian coordinate.\n"
-	;
-    };
+  ;
+    }
 
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-lmpdat"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-lmpdat"; }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

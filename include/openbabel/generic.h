@@ -49,7 +49,7 @@ namespace OpenBabel
   public:
     OBCommentData();
     OBCommentData(const OBCommentData&);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBCommentData(*this);}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return new OBCommentData(*this); }
 
     OBCommentData& operator=(const OBCommentData &src);
 
@@ -59,7 +59,7 @@ namespace OpenBabel
     {_data = d; Trim(_data);     }
     const std::string &GetData()              const
     {        return(_data);      }
-    virtual const std::string &GetValue()              const
+    const std::string &GetValue()             const override
     {        return(_data);      }
   };
 
@@ -95,7 +95,7 @@ namespace OpenBabel
     OBExternalBondData();
 
     //Copying is not used and too much work to set up
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return nullptr;}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return nullptr; }
 
     void SetData(OBAtom*,OBBond*,int);
     std::vector<OBExternalBond> *GetData()
@@ -115,11 +115,11 @@ namespace OpenBabel
     std::string _value; //!< The data for this key/value pair
   public:
     OBPairData();
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    OBGenericData* Clone(OBBase* /*parent*/) const override
       {return new OBPairData(*this);}
     void    SetValue(const char *v)        {      _value = v;    }
     void    SetValue(const std::string &v) {      _value = v;    }
-    virtual const std::string &GetValue() const
+    const std::string &GetValue() const override
     {      return(_value);    }
   };
 
@@ -134,7 +134,7 @@ namespace OpenBabel
   public:
   OBPairTemplate():
     OBGenericData("PairData", OBGenericDataType::PairData) {};
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    OBGenericData* Clone(OBBase* /*parent*/) const override
       {return new OBPairTemplate<ValueT>(*this);}
     void SetValue(const ValueT t)             { _value = t;     }
     virtual const ValueT &GetGenericValue() const    { return(_value); }
@@ -156,7 +156,7 @@ namespace OpenBabel
     std::vector<OBGenericData *> _vdata;
   public:
   OBSetData() : OBGenericData("SetData", OBGenericDataType::SetData) {}
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBSetData(*this);}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return new OBSetData(*this); }
 
     //! Add an OBGenericData element to the set.
     void AddData(OBGenericData *d)
@@ -242,7 +242,7 @@ namespace OpenBabel
     int _stereo;
   public:
     OBVirtualBond();
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBVirtualBond(*this);}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return new OBVirtualBond(*this); }
     OBVirtualBond(unsigned int, unsigned int, unsigned int,int stereo=0);
     unsigned int GetBgn()    {      return(_bgn);    }
     unsigned int GetEnd()    {      return(_end);    }
@@ -264,7 +264,7 @@ namespace OpenBabel
     // exist due to Kekulize() in EndModify() in operator= in OBMol. Having
     // more than one RingData causes problems as one of them can become invalid
     // and cause segfaults.
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return nullptr;}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return nullptr; }
     ~OBRingData();
 
     OBRingData &operator=(const OBRingData &);
@@ -318,7 +318,7 @@ namespace OpenBabel
     //! public constructor
     OBUnitCell();
     OBUnitCell(const OBUnitCell &);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    OBGenericData* Clone(OBBase* /*parent*/) const override
     {return new OBUnitCell(*this);}
     ~OBUnitCell()    {}
 
@@ -543,7 +543,7 @@ namespace OpenBabel
   public:
     OBConformerData();
     OBConformerData(const OBConformerData &);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBConformerData(*this);}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return new OBConformerData(*this); }
     ~OBConformerData()    {}
 
     OBConformerData &operator=(const OBConformerData &);
@@ -580,7 +580,7 @@ namespace OpenBabel
   public:
     OBSymmetryData();
     OBSymmetryData(const OBSymmetryData &);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return new OBSymmetryData(*this);}
+    OBGenericData* Clone(OBBase* /*parent*/) const override { return new OBSymmetryData(*this); }
     ~OBSymmetryData()    {}
 
     OBSymmetryData &operator=(const OBSymmetryData &);
@@ -668,7 +668,7 @@ namespace OpenBabel
     OBTorsionData &operator=(const OBTorsionData &);
 
     //! \todo Needs to be updated to rebase atom pointers (or use indexes)
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    OBGenericData* Clone(OBBase* /*parent*/) const override
     {return new OBTorsionData(*this);}
 
     void Clear();
@@ -765,7 +765,7 @@ namespace OpenBabel
 
   public:
     OBAngleData &operator =(const OBAngleData &);
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    OBGenericData* Clone(OBBase* /*parent*/) const override
     {return new OBAngleData(*this);}
 
     void Clear();
@@ -801,7 +801,7 @@ namespace OpenBabel
     }
     //! Member variables contain OBAtom pointers, so copying only valid within
     //! same molecule, unless the code is modified, as in OBRotamerList
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const
+    OBGenericData* Clone(OBBase* /*parent*/) const override
     {return new OBSerialNums(*this);}
 
     std::map<int,OBAtom*> &GetData()    { return _serialMap;    }
@@ -829,7 +829,7 @@ namespace OpenBabel
   public:
     OBVibrationData(): OBGenericData("VibrationData", OBGenericDataType::VibrationData){};
     virtual ~OBVibrationData() {}
-    virtual OBGenericData* Clone(OBBase*) const
+    OBGenericData* Clone(OBBase*) const override
          {return new OBVibrationData(*this);}
 
     OBVibrationData & operator=(const OBVibrationData &);
@@ -874,7 +874,7 @@ namespace OpenBabel
   public:
     OBDOSData(): OBGenericData("DOSData", OBGenericDataType::DOSData){};
     virtual ~OBDOSData() {}
-    virtual OBGenericData* Clone(OBBase*) const
+    OBGenericData* Clone(OBBase*) const override
          {return new OBDOSData(*this);}
 
     OBDOSData & operator=(const OBDOSData &);
@@ -921,7 +921,7 @@ namespace OpenBabel
     OBOrbitalData(): OBGenericData("OrbitalData", OBGenericDataType::ElectronicData),
       _alphaHOMO(0), _betaHOMO(0), _openShell(false) {};
     virtual ~OBOrbitalData() {}
-    virtual OBGenericData* Clone(OBBase*) const
+    OBGenericData* Clone(OBBase*) const override
          {return new OBOrbitalData(*this);}
 
     OBOrbitalData & operator=(const OBOrbitalData &);
@@ -981,7 +981,7 @@ namespace OpenBabel
   public:
     OBElectronicTransitionData(): OBGenericData("ElectronicTransitionData", OBGenericDataType::ElectronicTransitionData) {}
     virtual ~OBElectronicTransitionData() {}
-    virtual OBGenericData* Clone(OBBase*) const
+    OBGenericData* Clone(OBBase*) const override
          {return new OBElectronicTransitionData(*this);}
 
     OBElectronicTransitionData & operator=(const OBElectronicTransitionData &);
@@ -1013,7 +1013,7 @@ namespace OpenBabel
    enum RType{UNKNOWN, ASYMMETRIC, SYMMETRIC, LINEAR};
    OBRotationData(): OBGenericData("RotationData", OBGenericDataType::RotationData){}
    virtual ~OBRotationData(){};
-   virtual OBGenericData* Clone(OBBase*) const
+   OBGenericData* Clone(OBBase*) const override
          {return new OBRotationData(*this);}
    void SetData(RType RotorType, std::vector<double> RotationalConstants, int SymmetryNumber)
    {
@@ -1042,7 +1042,7 @@ namespace OpenBabel
  public:
    OBVectorData(): OBGenericData("VectorData", OBGenericDataType::VectorData){}
    virtual ~OBVectorData(){};
-   virtual OBGenericData* Clone(OBBase*) const
+   OBGenericData* Clone(OBBase*) const override
          {return new OBVectorData(*this);}
    void SetData(double x, double y, double z)
      { _vec = vector3(x, y, z); }
@@ -1063,7 +1063,7 @@ namespace OpenBabel
   public:
     OBMatrixData(): OBGenericData("MatrixData", OBGenericDataType::MatrixData){}
     virtual ~OBMatrixData(){};
-    virtual OBGenericData* Clone(OBBase*) const
+    OBGenericData* Clone(OBBase*) const override
           {return new OBMatrixData(*this);}
     void SetData(matrix3x3 data)
       { _matrix = data; }
