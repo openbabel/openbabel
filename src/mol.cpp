@@ -3167,7 +3167,8 @@ namespace OpenBabel
         _c = nullptr;
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
           atom->ClearCoordPtr();
-        _vconf.resize(_vconf.size()-1);
+	if (_vconf.size() > 0)
+	  _vconf.resize(_vconf.size()-1);
       }
 
     if (_c != nullptr)
