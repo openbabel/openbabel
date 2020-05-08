@@ -62,7 +62,7 @@ public:
     }
 
     /// Return description.
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
         return
         "Molden format\n"
@@ -73,28 +73,28 @@ public:
 
     /// Return a specification url, not really a specification since
     /// I couldn't find it but close enough.
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
         return "http://www.cmbi.ru.nl/molden/molden_format.html";
     }
 
     /// Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return nullptr; }
+    const char* GetMIMEType() override { return nullptr; }
 
       /// Return read/write flag.
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
         return READONEONLY | WRITEONEONLY ;
-    };
+    }
 
     /// Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+    int SkipObjects(int n, OpenBabel::OBConversion* pConv) override { return 0; }
 
     /// Read.
-    virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
+    bool ReadMolecule(OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv) override;
 
     /// Write.
-    virtual bool WriteMolecule( OpenBabel::OBBase* , OpenBabel::OBConversion* );
+    bool WriteMolecule(OpenBabel::OBBase*, OpenBabel::OBConversion*) override;
 };
 
 //------------------------------------------------------------------------------

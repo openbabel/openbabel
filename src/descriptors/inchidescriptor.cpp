@@ -31,13 +31,13 @@ class InChIFilter : public OBDescriptor
 {
 public:
   InChIFilter(const char* ID, bool useKey=false) : OBDescriptor(ID), bKey(useKey) {};
-  virtual const char* Description()
+  const char* Description() override
   {
     return bKey ? "InChIKey" : "IUPAC InChI identifier";
   }
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=nullptr);
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=nullptr);
-  virtual bool Order(std::string s1, std::string s2)
+  bool Compare(OBBase* pOb, istream& optionText, bool noEval, std::string* param=nullptr) override;
+  double GetStringValue(OBBase* pOb, std::string& svalue, std::string* param=nullptr) override;
+  bool Order(std::string s1, std::string s2) override
   {
     InChIFormat::InchiLess f;
     return f(s1, s2);

@@ -42,14 +42,14 @@ namespace OpenBabel
 {
 public:
   Op2D(const char* ID) : OBOp(ID, false){};
-  const char* Description()
+  const char* Description() override
   {
     return "Generate 2D coordinates\n"
       "Uses RDKit http://www.rdkit.org";
   }
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
 
-  virtual bool Do(OBBase* pOb, OpMap*, const char* OptionText);
+  bool Do(OBBase* pOb, OpMap*, const char* OptionText) override;
 };
 
 Op2D theOp2D("2D"); //Global instance

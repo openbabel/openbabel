@@ -37,7 +37,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("rsmi",this);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "Reaction SMILES format\n"
@@ -47,15 +47,15 @@ namespace OpenBabel
 
     }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-daylight-smiles"; }; // not right, need something else
+    const char* GetMIMEType() override
+    { return "chemical/x-daylight-smiles"; } // not right, need something else
 
-    virtual const char* TargetClassDescription()
+    const char* TargetClassDescription() override
     {
       return OBReaction::ClassDescription();
     }
 
-    const type_info& GetType()
+    const type_info& GetType() override
     {
       return typeid(OBReaction*);
     }
@@ -63,12 +63,12 @@ namespace OpenBabel
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pReact, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pReact, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pReact, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pReact, OBConversion* pConv) override;
 
     ////////////////////////////////////////////////////
     /// The "Convert" interface functions
-    virtual bool ReadChemObject(OBConversion* pConv)
+    bool ReadChemObject(OBConversion* pConv) override
     {
       //Makes a new OBReaction and new associated OBMols
       OBReaction* pReact = new OBReaction;
@@ -92,7 +92,7 @@ namespace OpenBabel
       }
     }
 
-    virtual bool WriteChemObject(OBConversion* pConv)
+    bool WriteChemObject(OBConversion* pConv) override
     {
       //WriteChemObject() always deletes the object retrieved by GetChemObject
       OBBase* pOb = pConv->GetChemObject();

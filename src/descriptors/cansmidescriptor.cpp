@@ -29,12 +29,12 @@ class CanSmiles : public OBDescriptor
 {
 public:
   CanSmiles(const char* ID, bool noStereo) : OBDescriptor(ID), _noStereo(noStereo){};
-  virtual const char* Description()
+  const char* Description() override
   {
     return _noStereo ? "Canonical SMILES without isotopes or stereo" : "Canonical SMILES";
   };
-  virtual bool Compare(OBBase* pOb, istream& optionText, bool noEval, string* param = nullptr);
-  virtual double GetStringValue(OBBase* pOb, std::string& svalue, std::string* = nullptr);
+  bool Compare(OBBase* pOb, istream& optionText, bool noEval, string* param = nullptr) override;
+  double GetStringValue(OBBase* pOb, std::string& svalue, std::string* = nullptr) override;
 private:
   bool _noStereo;
 };

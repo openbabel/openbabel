@@ -36,7 +36,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("pos", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "POS cartesian coordinates format\n"
@@ -51,26 +51,26 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://cst-www.nrl.navy.mil/lattice/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://cst-www.nrl.navy.mil/lattice/"; }  // optional
 
     // it's basically the same as XYZ
-    virtual const char* GetMIMEType()
-    { return "chemical/x-xyz"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-xyz"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
         return READONEONLY|NOTWRITABLE;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

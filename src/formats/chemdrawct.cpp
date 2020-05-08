@@ -34,28 +34,28 @@ namespace OpenBabel
       OBConversion::RegisterFormat("ct",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ChemDraw Connection Table format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "";}; //optional
+    const char* SpecificationURL() override
+    { return ""; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | WRITEONEONLY;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

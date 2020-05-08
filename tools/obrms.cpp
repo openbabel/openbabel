@@ -85,7 +85,7 @@ class Matcher
 		{
 		}
 
-		bool operator()(OBIsomorphismMapper::Mapping &map)
+		bool operator()(OBIsomorphismMapper::Mapping &map) override
 		{
 			unsigned N = map.size();
 			double *refcoord = (double*)alloca(sizeof(double)*N * 3);

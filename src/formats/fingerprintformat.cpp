@@ -35,7 +35,7 @@ namespace OpenBabel
     //Register this format type ID
     FingerprintFormat() {OBConversion::RegisterFormat("fpt",this);}
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     { return
       "Fingerprint format\n"
       "Generate or display molecular fingerprints.\n"
@@ -106,10 +106,10 @@ namespace OpenBabel
       " s  describe each set bit\n"
       " u  describe each unset bit\n"
 ;
-    };
+    }
 
-    virtual unsigned int Flags(){return NOTREADABLE;};
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    unsigned int Flags() override { return NOTREADABLE; }
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     vector<unsigned int> firstfp;

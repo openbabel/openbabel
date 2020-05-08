@@ -195,7 +195,7 @@ namespace OpenBabel
         OBConversion::RegisterFormat("smy", this);
       }
 
-      virtual const char* Description() //required
+      const char* Description() override  // required
       {
         return "SMILES format using Smiley parser\n\n"
 
@@ -298,22 +298,22 @@ namespace OpenBabel
 "  C[C@H2]F\n\n";
       }
 
-      virtual const char* SpecificationURL()
+      const char* SpecificationURL() override
       {
         return "http://opensmiles.org";
       }
 
-      virtual const char* GetMIMEType()
+      const char* GetMIMEType() override
       {
         return "chemical/x-daylight-smiles";
       }
 
-      virtual unsigned int Flags()
+      unsigned int Flags() override
       {
         return NOTWRITABLE;
       }
 
-      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+      bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     private:
       void CreateCisTrans(OBMol *mol, const std::vector<OpenBabelCallback::UpDown> &upDown);

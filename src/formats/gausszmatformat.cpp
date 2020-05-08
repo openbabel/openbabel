@@ -44,7 +44,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("gzmat",this, "chemical/x-gaussian-input");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Gaussian Z-Matrix Input\n"
@@ -54,17 +54,17 @@ namespace OpenBabel
         "Write Options e.g. -xk\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "https://www.gaussian.com/zmat/"; };
+    const char* SpecificationURL() override
+    { return "https://www.gaussian.com/zmat/"; }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gaussian-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gaussian-input"; }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class

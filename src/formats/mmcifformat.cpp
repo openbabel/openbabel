@@ -50,7 +50,7 @@ namespace OpenBabel
      OBConversion::RegisterOptionParam("w", this);
    }
 
-   virtual const char* Description() //required
+   const char* Description() override  // required
    {
      return
        "Macromolecular Crystallographic Info\n "
@@ -59,21 +59,21 @@ namespace OpenBabel
        "  p  Apply periodic boundary conditions for bonds\n"
        "  b  Disable bonding entirely\n"
        "  w  Wrap atomic coordinates into unit cell box\n\n";
-   };
+   }
 
-   virtual const char* SpecificationURL()
-   { return "http://mmcif.pdb.org/";}; //optional
+   const char* SpecificationURL() override
+   { return "http://mmcif.pdb.org/"; }  // optional
    // CIF itself is at http://www.iucr.org/iucr-top/cif/index.html
 
-   virtual const char* GetMIMEType()
-   { return "chemical/x-mmcif"; };
+   const char* GetMIMEType() override
+   { return "chemical/x-mmcif"; }
 
    //*** This section identical for most OBMol conversions ***
    ////////////////////////////////////////////////////
    /// The "API" interface functions
-   virtual int SkipObjects(int n, OBConversion* pConv);
-   virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-   virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+   int SkipObjects(int n, OBConversion* pConv) override;
+   bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+   bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
  };
 
  //Make an instance of the format class

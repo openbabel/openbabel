@@ -82,15 +82,15 @@ namespace OpenBabel
   {
     protected:
       //!  Parses the parameter file
-      bool ParseParamFile();
+      bool ParseParamFile() override;
       //!  Sets atomtypes to Ghemical types in _mol
-      bool SetTypes();
+      bool SetTypes() override;
       //!  Sets partial charges to Ghemical charges in _mol
-      bool SetPartialCharges();
+      bool SetPartialCharges() override;
       //! fill OBFFXXXCalculation vectors
-      bool SetupCalculations();
+      bool SetupCalculations() override;
       //! Setup pointers in OBFFXXXCalculation vectors
-      bool SetupPointers();
+      bool SetupPointers() override;
       //! Same as OBForceField::GetParameter, but takes (bond/angle/torsion) type in account.
       OBFFParameter* GetParameterGhemical(int type, const char* a, const char* b,
           const char* c, const char* d, std::vector<OBFFParameter> &parameter);
@@ -130,64 +130,64 @@ namespace OpenBabel
       OBForceFieldGhemical &operator = (OBForceFieldGhemical &);
 
       //! Get the description for this force field
-      const char* Description()
+      const char* Description() override
       {
         return "Ghemical force field.";
       }
 
       //!Clone the current instance. May be desirable in multithreaded environments
-      virtual OBForceFieldGhemical* MakeNewInstance()
+      OBForceFieldGhemical* MakeNewInstance() override
       {
         return new OBForceFieldGhemical(_id, false);
       }
 
       //! Get the unit in which the energy is expressed
-      std::string GetUnit()
+      std::string GetUnit() override
       {
         return std::string("kJ/mol");
       }
 
       //! \return that analytical gradients are implemented for Ghemical
-      bool HasAnalyticalGradients() { return true; }
+      bool HasAnalyticalGradients() override { return true; }
 
       //! Setup
       bool Setup(OBMol &mol);
 
       //! \return total energy
-      double Energy(bool gradients = true);
+      double Energy(bool gradients = true) override;
       //! Returns the bond stretching energy
       template<bool> double E_Bond();
-      double E_Bond(bool gradients = true)
+      double E_Bond(bool gradients = true) override
       {
         return gradients ? E_Bond<true>() : E_Bond<false>();
       }
       //! Returns the angle bending energy
       template<bool> double E_Angle();
-      double E_Angle(bool gradients = true)
+      double E_Angle(bool gradients = true) override
       {
         return gradients ? E_Angle<true>() : E_Angle<false>();
       }
       //! Returns the torsional energy
       template<bool> double E_Torsion();
-      double E_Torsion(bool gradients = true)
+      double E_Torsion(bool gradients = true) override
       {
         return gradients ? E_Torsion<true>() : E_Torsion<false>();
       }
       //! Returns the Van der Waals energy (Buckingham potential)
       template<bool> double E_VDW();
-      double E_VDW(bool gradients = true)
+      double E_VDW(bool gradients = true) override
       {
         return gradients ? E_VDW<true>() : E_VDW<false>();
       }
       //! Returns the dipole-dipole interaction energy
       template<bool> double E_Electrostatic();
-      double E_Electrostatic(bool gradients = true)
+      double E_Electrostatic(bool gradients = true) override
       {
         return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>();
       }
 
       //! Compare and print the numerical and analytical gradients
-      bool ValidateGradients();
+      bool ValidateGradients() override;
 
   }; // class OBForceFieldGhemical
 

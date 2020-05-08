@@ -27,10 +27,11 @@ class OpAddPolarH : public OBOp
 {
 public:
   OpAddPolarH(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Adds hydrogen to polar atoms only"; }
+  const char* Description() override { return "Adds hydrogen to polar atoms only"; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

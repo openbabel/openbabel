@@ -89,7 +89,7 @@ public:
 	   Finish the options with a blank line as shown, if there are more than one
 	   group of options, or if there are further comments after them.
 	*/
-	virtual const char* Description() //required
+	const char* Description() override //required
 	{
 		return
 		"XXX format\n"
@@ -101,38 +101,38 @@ public:
 		"Read Options e.g. -as\n"
 		"	s  Consider single bonds only\n"
 		;
-  };
+  }
 
   //Optional URL where the file format is specified
-	virtual const char* SpecificationURL(){ return ""; }
+  const char* SpecificationURL() override { return ""; }
 
   //Optional
-	virtual const char* GetMIMEType()
-  { return "chemical/x-xxx"; };
+  const char* GetMIMEType() override
+  { return "chemical/x-xxx"; }
 
 
   /* Flags() can return be any of the following combined by |
 	   or be omitted if none apply
      NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
      READBINARY  WRITEBINARY  READXML  ZEROATOMSOK*/
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
       return READONEONLY;
-  };
+  }
 
  	/* This optional function is for formats which can contain more than one
 	   molecule. It is used to quickly position the input stream after the nth
 	   molecule without have to convert and discard all the n molecules.
 	   See obconversion.cpp for details and mdlformat.cpp for an example.*/
-	virtual int SkipObjects(int n, OBConversion* pConv)
+	int SkipObjects(int n, OBConversion* pConv) override
 	{
 		return 0;
-	};
+	}
 
 	////////////////////////////////////////////////////
   /// Declarations for the "API" interface functions. Definitions are below
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 private:
 	/* Add declarations for any local function or member variables used.

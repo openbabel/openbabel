@@ -28,12 +28,12 @@ class OpAddInIndex : public OBOp
 {
 public:
   OpAddInIndex(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return 
+  const char* Description() override { return
     "Append input index to title\n"
     "These are objects before filtering. Use AddOutIndex for objects after filtering\n"; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return true; } //all objects
-  virtual bool Do(OBBase* pOb, const char*, OpMap*, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return true; }  // all objects
+  bool Do(OBBase* pOb, const char*, OpMap*, OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

@@ -36,7 +36,7 @@ namespace OpenBabel
   public:
     ChemicalJSONFormat() { OBConversion::RegisterFormat("cjson", this); }
 
-    virtual const char *Description()
+    const char *Description() override
     {
       return "Chemical JSON\n"
              "The native file format for Avogadro2 and Open Chemistry\n\n"
@@ -46,10 +46,10 @@ namespace OpenBabel
              " v  verbose output (include default values)\n\n";
     };
 
-    virtual const char *SpecificationURL() { return ""; };
+    const char *SpecificationURL() override { return ""; };
 
-    virtual bool ReadMolecule(OBBase *pOb, OBConversion *pConv);
-    virtual bool WriteMolecule(OBBase *pOb, OBConversion *pConv);
+    bool ReadMolecule(OBBase *pOb, OBConversion *pConv) override;
+    bool WriteMolecule(OBBase *pOb, OBConversion *pConv) override;
 
   private:
     rapidjson::Document inRoot;

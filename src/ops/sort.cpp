@@ -50,13 +50,13 @@ public:
     OBConversion::RegisterOptionParam(ID, nullptr, 1, OBConversion::GENOPTIONS);
   }
 
-  const char* Description(){ return "<desc> Sort by descriptor(~desc for reverse)"
+  const char* Description() override { return "<desc> Sort by descriptor(~desc for reverse)"
     "\n Follow descriptor with + to also add it to the title, e.g. MW+ "
     "\n Custom ordering is possible; see inchi descriptor"; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
-  virtual bool ProcessVec(std::vector<OBBase*>& vec);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv) override;
+  bool ProcessVec(std::vector<OBBase*>& vec) override;
 private:
   OBDescriptor* _pDesc;
   std::string _pDescOption;

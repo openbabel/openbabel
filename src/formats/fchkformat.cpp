@@ -56,7 +56,7 @@ namespace OpenBabel
                                    "chemical/x-gaussian-checkpoint");
     }
 
-    virtual const char * Description()
+    const char * Description() override
     {
       return "Gaussian formatted checkpoint file format\n"
              "A formatted text file containing the results of a Gaussian calculation\n"
@@ -67,19 +67,19 @@ namespace OpenBabel
              " b  No bond perception\n\n";
       // Vibrational analysis not yet supported in OB-2.1.
       //                    v  Do not perform the vibrational analysis\n\n";
-    };
+    }
 
-    virtual const char * GetMIMEType()
+    const char * GetMIMEType() override
     {
       return "chemical/x-gaussian-checkpoint";
-    };
+    }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE;
-    };
+    }
 
-    virtual bool ReadMolecule(OBBase *, OBConversion *);
+    bool ReadMolecule(OBBase *, OBConversion *) override;
 
   private :
     bool static read_int(const char * const, int * const);

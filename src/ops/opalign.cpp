@@ -35,7 +35,7 @@ class OpAlign : public OBOp
 {
 public:
   OpAlign(const char* ID) : OBOp(ID, false), _align(false, false){};
-  const char* Description(){ return 
+  const char* Description() override { return
     "Align coordinates to the first molecule\n"
     "Typical use with a -s option:\n"
     "    obabel pattern.www  dataset.xxx  -O outset.yyy  -s SMARTS  --align\n"
@@ -73,8 +73,9 @@ public:
     ;
 
 }
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 private:
   OBAlign _align;
   OBMol _refMol;

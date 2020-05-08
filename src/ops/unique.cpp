@@ -35,7 +35,7 @@ public:
     OBConversion::RegisterOptionParam("unique", nullptr, 1, OBConversion::GENOPTIONS);
   }
 
-  const char* Description(){ return
+  const char* Description() override { return
     "[param] remove duplicates by descriptor;default inchi\n"
     "param is a descriptor or property, or a truncation spec for InChI\n"
     "(making the comparison less detailed, see below).\n"
@@ -54,8 +54,8 @@ public:
     "/noiso    ignore isotopes\n\n"
 ; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv) override;
 
 private:
 

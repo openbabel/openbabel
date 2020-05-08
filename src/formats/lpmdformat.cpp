@@ -34,7 +34,7 @@ class LpmdFormat : public OBMoleculeFormat
    file_line=0;
    OBConversion::RegisterFormat("lpmd",this);
   }
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
    return
     "LPMD format\n"
@@ -50,19 +50,19 @@ class LpmdFormat : public OBMoleculeFormat
     "        Example: ``-xc 10.0,0,0,0.0,10.0,0.0,0.0,0.0,20.0``\n"
     "  e Add the charge to the output file\n\n"
     ;
-  };
+  }
 
   //Optional URL where the file format is specified
-  virtual const char* SpecificationURL()
-  {return "http://www.lpmd.cl/index.php/documentation/the-lpmd-format";};
+  const char* SpecificationURL() override
+  { return "http://www.lpmd.cl/index.php/documentation/the-lpmd-format"; }
 
   //Optional
-  virtual const char* GetMIMEType()  { return "chemical/lpmd"; };
+  const char* GetMIMEType() override { return "chemical/lpmd"; }
 
-  virtual int SkipObjects(int n, OBConversion* pConv)
+  int SkipObjects(int n, OBConversion* pConv) override
   {
    return 0;
-  };
+  }
 
   ////////////////////////////////////////////////////
   /// Declarations for the "API" interface functions. Definitions are below
@@ -78,8 +78,8 @@ class LpmdFormat : public OBMoleculeFormat
 
   bool ReadHeader(std::istream &ifs, OBMol &mol);
   bool ReadAtom(std::istream &ifs, OBMol &mol);
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
  private:
   char buffer[BUFF_SIZE];

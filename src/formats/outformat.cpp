@@ -41,7 +41,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("dat", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Generic Output file format\n"
@@ -51,22 +51,22 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://openbabel.org/wiki/Output";}; //optional
+    const char* SpecificationURL() override
+    { return "http://openbabel.org/wiki/Output"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

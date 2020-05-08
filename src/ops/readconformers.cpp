@@ -29,7 +29,7 @@ class OpReadConformers : public OBOp
 {
 public:
   OpReadConformers(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return
+  const char* Description() override { return
     "Adjacent conformers combined into a single molecule\n"
     "If a molecule has the same structure as the preceding molecule, as determined\n"
     "from its SMILES, it is not output but its coordinates are added to the\n"
@@ -37,9 +37,9 @@ public:
     "of conformers, but the molecules in each group must be adjacent.\n"
     ; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
-  virtual bool ProcessVec(std::vector<OBBase*>& vec);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr) override;
+  bool ProcessVec(std::vector<OBBase*>& vec) override;
 };
 
 /////////////////////////////////////////////////////////////////

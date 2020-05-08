@@ -34,7 +34,7 @@ using namespace std;
 class Functor : public OpenBabel::UniqueTautomerFunctor
 {
   public:
-    void operator()(OpenBabel::OBMol *mol, const std::string &smiles)
+    void operator()(OpenBabel::OBMol *mol, const std::string &smiles) override
     {
       std::cout << smiles << std::endl;
     }

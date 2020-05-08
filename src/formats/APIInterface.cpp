@@ -31,16 +31,16 @@ public:
 		OBConversion::RegisterOptionParam("-errorlevel", this, 1, OBConversion::GENOPTIONS);
 	}
 
-	const char* Description(){
+	const char* Description() override {
     return
     "Interface to OBAPI internals\n"
     "API options, e.g. ---errorlevel 2\n"
     " errorlevel # min warning level displayed\n\n";
   }
 
-	unsigned int Flags(){ return (NOTWRITABLE | NOTREADABLE);}
+	unsigned int Flags() override { return (NOTWRITABLE | NOTREADABLE); }
 
-	bool WriteMolecule(OBBase* , OBConversion* pConv)
+	bool WriteMolecule(OBBase* , OBConversion* pConv) override
 	{
 		const char* txt = pConv->IsOption("errorlevel",OBConversion::GENOPTIONS);
 		if(txt)

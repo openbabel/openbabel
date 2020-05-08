@@ -35,28 +35,28 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mpqc",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "MPQC output format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "http://www.mpqc.org/mpqc-html/mpqcinp.html";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.mpqc.org/mpqc-html/mpqcinp.html"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE | READONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class
@@ -73,26 +73,26 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mpqcin",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "MPQC simplified input format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "http://www.mpqc.org/mpqc-html/mpqcinp.html";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.mpqc.org/mpqc-html/mpqcinp.html"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

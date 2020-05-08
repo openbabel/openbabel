@@ -90,7 +90,7 @@ namespace OpenBabel {
        * IsGood reimplementation.
        * @return True if all filters pass.
        */
-      bool IsGood(const OBMol &mol, const RotorKey &key, double *coords)
+      bool IsGood(const OBMol &mol, const RotorKey &key, double *coords) override
       {
         for (unsigned int i = 0; i < m_filters.size(); ++i)
           if (!m_filters[i]->IsGood(mol, key, coords))
@@ -115,7 +115,7 @@ namespace OpenBabel {
     public:
       OBStericConformerFilter ();
       OBStericConformerFilter (double cutoff, double vdw_factor = 0.5, bool check_hydrogens = true);
-      bool IsGood(const OBMol &mol, const RotorKey &key, double *coords);
+      bool IsGood(const OBMol &mol, const RotorKey &key, double *coords) override;
     private:
       double m_cutoff; //!< Internal cutoff (used as a squared distance)
       double m_vdw_factor;		//!< Factor applied to Van der Waals distance check

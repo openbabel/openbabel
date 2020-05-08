@@ -47,7 +47,7 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("MDFF",this);      
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "MDFF format\n"
@@ -60,31 +60,30 @@ namespace OpenBabel {
         "Write Options e.g. -xw\n"
         "  w Sort atoms by atomic number\n"
         "  u <elementlist> Sort atoms by list of element symbols provided in comma-separated string w/o spaces\n"
-        "  i Write IONS.POT file\n"              
+        "  i Write IONS.POT file\n"
         ;
+    }
 
-    };
-
-    virtual const char* SpecificationURL(){return "https://code.google.com/p/mdff/";};
+    const char* SpecificationURL() override { return "https://code.google.com/p/mdff/"; }
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply
        NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
        READBINARY  WRITEBINARY  READXML  ZEROATOMSOK */
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY;
-    };
+    }
 
-    virtual int SkipObjects(int n, OBConversion* pConv)
+    int SkipObjects(int n, OBConversion* pConv) override
     {
       return 0;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// Declarations for the "API" interface functions. Definitions are below
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     /* Add declarations for any local function or member variables used.

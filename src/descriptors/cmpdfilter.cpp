@@ -54,7 +54,7 @@ public:
   CompoundFilter(const char* ID, const char* macrotext, const char* descr)
     : OBDescriptor(ID), _descr(descr), _macroText(macrotext){}
 
-  virtual const char* Description()
+  const char* Description() override
   {
     static string txt;
     txt = _descr;
@@ -65,13 +65,13 @@ public:
   }
 
 ///
-  virtual CompoundFilter* MakeInstance(const std::vector<std::string>& textlines)
+  CompoundFilter* MakeInstance(const std::vector<std::string>& textlines) override
   {
     return new CompoundFilter(textlines[1].c_str(),textlines[2].c_str(),textlines[3].c_str());
   }
 
 ///Returns the result of evaluating the conditional expressions in the macrotext
-  virtual bool Compare(OBBase* pOb, istream&, bool noEval, string* param)
+  bool Compare(OBBase* pOb, istream&, bool noEval, string* param) override
   {
     stringstream ss;
     ss.str(_macroText);

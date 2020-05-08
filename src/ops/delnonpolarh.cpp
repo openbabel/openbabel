@@ -27,10 +27,11 @@ class OpDelNonPolarH : public OBOp
 {
 public:
   OpDelNonPolarH(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Deletes hydrogen from nonpolar atoms only"; }
+  const char* Description() override { return "Deletes hydrogen from nonpolar atoms only"; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

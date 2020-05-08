@@ -38,24 +38,24 @@ namespace OpenBabel
       OBConversion::RegisterFormat("jout",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Jaguar output format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "http://www.schrodinger.com/"; }; //optional
+    const char* SpecificationURL() override
+    { return "http://www.schrodinger.com/"; } //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags(){return READONEONLY | NOTWRITABLE;};
+    unsigned int Flags() override { return READONEONLY | NOTWRITABLE; }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 
@@ -73,25 +73,25 @@ namespace OpenBabel
       OBConversion::RegisterFormat("jin",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Jaguar input format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "http://www.schrodinger.com/"; }; //optional
+    const char* SpecificationURL() override
+    { return "http://www.schrodinger.com/"; } //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags() {return WRITEONEONLY;};
+    unsigned int Flags() override { return WRITEONEONLY; }
 
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

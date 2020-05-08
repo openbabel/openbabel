@@ -35,7 +35,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("wln", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Wiswesser Line Notation\n"
@@ -109,9 +109,9 @@ namespace OpenBabel
         "   (Unified Data Model) standard.\" BioIT World. Apr 2019.\n"
         "   https://www.nextmovesoftware.com/posters/Sayle_WisswesserLineNotation_BioIT_201904.pdf\n"
         ;
-    };
+    }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE;
     }
@@ -119,7 +119,7 @@ namespace OpenBabel
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

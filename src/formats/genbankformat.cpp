@@ -38,7 +38,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("b", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override //required
     {
       return
         "GenBank, DDBJ, EMBL Flat File format\n"
@@ -47,22 +47,22 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n";
     }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     { return "http://www.ncbi.nlm.nih.gov/Sitemap/samplerecord.html";} //optional
     // Genbank itself is here: http://www.ncbi.nlm.nih.gov/Genbank/
     // European EMBL-Bank is here: http://www.ebi.ac.uk/embl/
     // Japanese DDBJ is here: http://www.ddbj.nig.ac.jp/
     // EMBL format http://www.ebi.ac.uk/embl/Documentation/User_manual/usrman.html
 
-    virtual const char* GetMIMEType()
+    const char* GetMIMEType() override
     { return "chemical/x-genbank"; }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     { return NOTWRITABLE | READONEONLY; }
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     enum SequenceType
       {

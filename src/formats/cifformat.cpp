@@ -63,7 +63,7 @@ namespace OpenBabel
       RegisterFormat("cif", "chemical/x-cif");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Crystallographic Information File\n"
@@ -84,16 +84,16 @@ namespace OpenBabel
 
         "Write Options e.g. -xg:\n"
         "  g  Write bonds using _geom_bond_etc fields \n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.iucr.org/iucr-top/cif/spec/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.iucr.org/iucr-top/cif/spec/"; }  // optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //############################## Case-insensituve string####################################################
   // :@todo: This duplicates normal case-insensitive string comparison in OpenBabel

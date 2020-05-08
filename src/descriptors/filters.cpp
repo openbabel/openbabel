@@ -31,8 +31,8 @@ namespace OpenBabel {
 class MWFilter : public OBDescriptor {
 public:
   MWFilter(const char *ID) : OBDescriptor(ID){};
-  virtual const char *Description() { return "Molecular Weight filter"; };
-  virtual double Predict(OBBase *pOb, string *param = nullptr) {
+  const char *Description() override { return "Molecular Weight filter"; }
+  double Predict(OBBase *pOb, string *param = nullptr) override {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -45,8 +45,8 @@ MWFilter theMWFilter("MW");
 class RotatableBondsFilter : public OBDescriptor {
 public:
   RotatableBondsFilter(const char *ID) : OBDescriptor(ID){};
-  virtual const char *Description() { return "Rotatable bonds filter"; };
-  virtual double Predict(OBBase *pOb, string *param = nullptr) {
+  const char *Description() override { return "Rotatable bonds filter"; }
+  double Predict(OBBase *pOb, string *param = nullptr) override {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -62,9 +62,9 @@ RotatableBondsFilter theRBFilter("rotors");
 class SmartsFilter : public OBDescriptor {
 public:
   SmartsFilter(const char *ID) : OBDescriptor(ID){};
-  virtual const char *Description() { return "SMARTS filter"; };
-  virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
-                       std::string *param = nullptr);
+  const char *Description() override { return "SMARTS filter"; }
+  bool Compare(OBBase *pOb, istream &optionText, bool noEval,
+               std::string *param = nullptr) override;
 };
 
 /// For interpreting conditions like s!=c1ccccc1CN
@@ -105,13 +105,13 @@ SmartsFilter secondSmartsFilter("s");
 class TitleFilter : public OBDescriptor {
 public:
   TitleFilter(const char *ID) : OBDescriptor(ID){};
-  virtual const char *Description() {
+  const char *Description() override {
     return "For comparing a molecule's title";
   };
-  virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
-                       std::string *param = nullptr);
-  virtual double GetStringValue(OBBase *pOb, std::string &svalue,
-                                std::string *param = nullptr);
+  bool Compare(OBBase *pOb, istream &optionText, bool noEval,
+               std::string *param = nullptr) override;
+  double GetStringValue(OBBase *pOb, std::string &svalue,
+                        std::string *param = nullptr) override;
   virtual bool LessThan(OBBase *pOb1, OBBase *pOb2);
 };
 
@@ -149,18 +149,18 @@ TitleFilter theTitleFilter("title");
 class FormulaDescriptor : public OBDescriptor {
 public:
   FormulaDescriptor(const char *ID) : OBDescriptor(ID){};
-  virtual const char *Description() { return "Chemical formula"; };
+  const char *Description() override { return "Chemical formula"; }
 
-  virtual double GetStringValue(OBBase *pOb, std::string &svalue,
-                                std::string *param = nullptr) {
+  double GetStringValue(OBBase *pOb, std::string &svalue,
+                        std::string *param = nullptr) override {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (pmol)
       svalue = pmol->GetSpacedFormula(1, ""); // actually unspaced
     return std::numeric_limits<double>::quiet_NaN();
   }
 
-  virtual bool Compare(OBBase *pOb, istream &optionText, bool noEval,
-                       std::string *) {
+  bool Compare(OBBase *pOb, istream &optionText, bool noEval,
+               std::string *) override {
     string svalue;
     GetStringValue(pOb, svalue);
     return CompareStringWithFilter(optionText, svalue, noEval);

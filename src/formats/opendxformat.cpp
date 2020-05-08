@@ -47,7 +47,7 @@ namespace OpenBabel
     }
 
     // Return description.
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
         return
         "OpenDX cube format for APBS\n"
@@ -58,25 +58,25 @@ namespace OpenBabel
 
     // Return a specification url, not really a specification since
     // I couldn't find it but close enough.
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
         return "http://apbs.sourceforge.net/doc/user-guide/index.html#id504516";
     }
 
     // Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return nullptr; }
+    const char* GetMIMEType() override { return nullptr; }
 
     // Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+    int SkipObjects(int n, OpenBabel::OBConversion* pConv) override { return 0; }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | WRITEONEONLY | ZEROATOMSOK;
-    };
+    }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
-    virtual bool WriteMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );
+    bool ReadMolecule(OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv) override;
+    bool WriteMolecule(OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv) override;
 
 };
 

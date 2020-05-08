@@ -100,11 +100,11 @@ public:
   static bool WriteChemObjectImpl(OBConversion* pConv, OBFormat*);
 
   /// The "Convert" interface for reading a new molecule
-  virtual bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   { return ReadChemObjectImpl(pConv, this);}
 
   /// The "Convert" interface for writing a new molecule
-  virtual bool WriteChemObject(OBConversion* pConv)
+  bool WriteChemObject(OBConversion* pConv) override
   { return WriteChemObjectImpl(pConv, this);}
 
   ///Applies output options to molecule. Returns false to terminate output.
@@ -134,7 +134,7 @@ public:
                   OBFormat* pInFormat);
 
   //! \return the type of data converted by this format (here, OBMol)
-  const std::type_info& GetType()
+  const std::type_info& GetType() override
   {
     return typeid(OBMol*);
   }

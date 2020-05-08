@@ -49,9 +49,9 @@ public:
     //swig is requiring these, but I can't figure out how to make it not, so definte with abort
     const OBAtomTyper& operator=(const OBAtomTyper& rhs) {abort();}
 
-    void ParseLine(const char*);
+    void ParseLine(const char*) override;
     //! \return the number of internal hybridization rules
-    size_t GetSize()                 { return _vinthyb.size(); }
+    size_t GetSize() override { return _vinthyb.size(); }
 
     //! Assign atomic hybridization (1 = sp, 2 = sp2, 3 = sp3...)
     void AssignHyb(OBMol&);
@@ -92,9 +92,9 @@ public:
     OBRingTyper();
     ~OBRingTyper();
 
-    void ParseLine(const char*);
+    void ParseLine(const char*) override;
     //! \return the number of SMARTS patterns
-    size_t GetSize()                 { return _ringtyp.size();}
+    size_t GetSize() override { return _ringtyp.size(); }
 
     //! Assign external atomic types (ringtyp.txt)
     void AssignTypes(OBMol&);

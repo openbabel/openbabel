@@ -34,10 +34,11 @@ class OpGen3D : public OBOp
 {
 public:
   OpGen3D(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Generate 3D coordinates"; }
+  const char* Description() override { return "Generate 3D coordinates"; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

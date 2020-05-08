@@ -38,14 +38,15 @@ public:
   OpFillUC(const char* ID) : OBOp(ID, false){
     OBConversion::RegisterOptionParam("fillUC", nullptr, 1, OBConversion::GENOPTIONS);
   }
-  const char* Description(){ return "<param> Fill the unit cell (strict or keepconnect)\n"
+  const char* Description() override { return "<param> Fill the unit cell (strict or keepconnect)\n"
     "using unique positions, unit cell and spacegroup"
     "<param> can be:\n"
     "   strict (keep only atoms inside the UC) => use \"--fillUC strict\"\n"
     "   keepconnect (fill the unit cell but keep the original connectivity => use \"--fillUC keepconnect\""; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

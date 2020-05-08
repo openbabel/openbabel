@@ -45,9 +45,9 @@ namespace OpenBabel
 			FromFileCharges(const char* ID) : OBChargeModel(ID, false){
 			};
 
-			const char* Description(){ return "Assign charges from file containing {'atom-name', charge} pairs"; }
+			const char* Description() override { return "Assign charges from file containing {'atom-name', charge} pairs"; }
 
-			bool ComputeCharges(OBMol &mol, const char *arg );
+			bool ComputeCharges(OBMol &mol, const char *arg ) override;
 
 	};
 

@@ -39,7 +39,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("acesout",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ACES output format\n"
@@ -47,21 +47,21 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.qtp.ufl.edu/ACES/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.qtp.ufl.edu/ACES/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class
@@ -76,27 +76,27 @@ namespace OpenBabel
       OBConversion::RegisterFormat("acesin",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ACES input format\n"
         "ACES is a set of programs that performs ab initio quantum chemistry calculations.\n"
         ;
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.qtp.ufl.edu/ACES/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.qtp.ufl.edu/ACES/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

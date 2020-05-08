@@ -39,7 +39,7 @@ public:
       OBConversion::RegisterOptionParam("a", this, OBConversion::INOPTIONS);
     }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
       "TurboMole Coordinate format\n"
@@ -49,23 +49,23 @@ public:
       " s  Output single bonds only\n"
       " b  Disable bonding entirely\n"
       " a  Input in Angstroms\n\n" ;
-  };
+  }
 
-  virtual const char* SpecificationURL()
-  {return "http://www.cosmologic.de/QuantumChemistry/main_qChemistry.html";};
+  const char* SpecificationURL() override
+  { return "http://www.cosmologic.de/QuantumChemistry/main_qChemistry.html"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
         return READONEONLY | WRITEONEONLY;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
 //***
 

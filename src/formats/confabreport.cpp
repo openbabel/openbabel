@@ -55,7 +55,7 @@ public:
     rmsd_cutoff = 0.5;
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
     "Confab report format\n"
@@ -74,16 +74,16 @@ public:
     "     The number of structures with conformers within this RMSD cutoff\n"
     "     of the reference will be reported.\n"
     ;
-  };
+  }
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
     return NOTREADABLE;
-  };
+  }
 
   ////////////////////////////////////////////////////
   /// Declarations for the "API" interface functions. Definitions are below
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 private:
   void WriteOutput(ostream&);

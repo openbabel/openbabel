@@ -56,7 +56,7 @@ public:
     OBConversion::RegisterOptionParam("s", this, 0, OBConversion::INOPTIONS);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
         "Crystal 09 output format\n"
@@ -67,7 +67,7 @@ public:
   }
 
   //Optional URL where the file format is specified
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   {
     return "http://www.crystal.unito.it/";
   }
@@ -76,13 +76,13 @@ public:
      or be omitted if none apply
      NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
      READBINARY  WRITEBINARY  READXML  ZEROATOMSOK*/
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
     return READONEONLY | NOTWRITABLE;
   }
 
   /// Declarations for the "API" interface functions
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
 
 //Make an instance of the format class

@@ -37,26 +37,26 @@ namespace OpenBabel
       OBConversion::RegisterFormat("cht",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Chemtool format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html";}; //optional
+    const char* SpecificationURL() override
+    { return "http://ruby.chemie.uni-freiburg.de/~martin/chemtool/chemtool.html"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

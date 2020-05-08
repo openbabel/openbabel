@@ -182,7 +182,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     }
     //! \return Setup pointers to atom positions and forces (To be called
     //!  while setting up calculations). Sets optimized to true.
-    virtual void SetupPointers()
+    void SetupPointers() override
     {
       if (!a || !b || !c) return;
       pos_a = a->GetCoordinate();
@@ -584,7 +584,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     }
 
     //! \return Plugin type ("forcefields")
-    const char* TypeID()
+    const char* TypeID() override
     {
       return "forcefields";
     }

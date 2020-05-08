@@ -44,7 +44,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("nwo",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "NWChem output format\n"
@@ -55,21 +55,21 @@ namespace OpenBabel
         "    is present in the output file\n"
         "    (last calculation will be prefered)\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.emsl.pnl.gov/docs/nwchem/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     void ReadCoordinates(istream* ifs, OBMol* molecule);
@@ -137,26 +137,26 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
       OBConversion::RegisterFormat("nw",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "NWChem input format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.emsl.pnl.gov/docs/nwchem/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.emsl.pnl.gov/docs/nwchem/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

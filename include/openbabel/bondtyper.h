@@ -37,9 +37,9 @@ public:
 
     //! \name OBBondTyper Database Utilities
     //@{
-    void ParseLine(const char*);
+    void ParseLine(const char*) override;
     //! \return the size of the database (for error checking)
-    size_t GetSize()                 { return _fgbonds.size();}
+    size_t GetSize() override { return _fgbonds.size(); }
     //@}
 
     //! \name Bond Perception Routines
