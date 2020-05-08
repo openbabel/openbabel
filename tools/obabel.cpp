@@ -154,7 +154,7 @@ int main(int argc,char *argv[])
 
                 case 'O':
                   OutputFileName = argv[arg] + 2;
-                  if(OutputFileName.size()<3)
+                  if(OutputFileName.empty())
                     OutputFileName = argv[++arg]; //space left after -O: use next argument
                   break;
 
