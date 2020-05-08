@@ -45,7 +45,7 @@ namespace OpenBabel {
       }
 
       // Required
-      virtual const char* Description() {
+      const char* Description() override {
         return
           "GAMESS Output\n"
           "Read Options e.g. -as\n"
@@ -55,22 +55,22 @@ namespace OpenBabel {
       }
 
       // Optional
-      virtual const char* SpecificationURL() {
+      const char* SpecificationURL() override {
         return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
       }
 
-      virtual const char* GetMIMEType() {
+      const char* GetMIMEType() override {
         return "chemical/x-gamess-output";
       }
 
       // Flags() return can be any of the following combined by | or omitted
       // if none apply
       // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-      virtual unsigned int Flags() {
+      unsigned int Flags() override {
         return READONEONLY | NOTWRITABLE;
       }
 
-      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+      bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     private:
       //! \brief Parse GAMESS options section.
@@ -93,7 +93,7 @@ namespace OpenBabel {
       }
 
       // Required
-      virtual const char* Description() {
+      const char* Description() override {
         return
           "GAMESS Input\n"
           "Write Options e.g. -xk\n"
@@ -102,25 +102,25 @@ namespace OpenBabel {
       }
 
       // Optional
-      virtual const char* SpecificationURL() {
+      const char* SpecificationURL() override {
         return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
       }
 
-      virtual const char* GetMIMEType() {
+      const char* GetMIMEType() override {
         return "chemical/x-gamess-input";
       }
 
       // Flags() return can be any of the following combined by | or omitted
       // if none apply
       // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-      virtual unsigned int Flags() {
+      unsigned int Flags() override {
         return WRITEONEONLY; // | NOTREADABLE;
       }
 
       ////////////////////////////////////////////////////
       /// The "API" interface functions
-      virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+      bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+      bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   // Make an instance of the format class

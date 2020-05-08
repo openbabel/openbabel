@@ -28,7 +28,7 @@ class OpNeutralize : public OBOp
 {
 public:
   OpNeutralize(const char* ID) : OBOp(ID, false){};
-  const char* Description() {
+  const char* Description() override {
     return "Neutralize +1 and -1 charges\n\n"
 
       "Neutralize uses a simple procedure to generate the neutral form of a\n"
@@ -53,8 +53,9 @@ public:
       "by the operation and only retains those that are changed.";
   }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
   bool NoNegativelyChargedNbr(OBAtom *atm);
   bool NoPositivelyChargedNbr(OBAtom *atm);
 };

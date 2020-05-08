@@ -28,13 +28,13 @@ class OpAddFileName : public OBOp
 {
 public:
   OpAddFileName(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return 
+  const char* Description() override { return
     "Append input filename to title\n"
     "Any path is removed from the filename\n"
     ; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return true; } //all OBBase objects
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return true; }  // all OBBase objects
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

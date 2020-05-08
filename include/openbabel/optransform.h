@@ -37,15 +37,15 @@ public:
 
   ~OpTransform(){}
 
-  virtual const char* Description();
+  const char* Description() override;
 
   //!Checks that this op is being applied to the right kind of object(OBMol)
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=nullptr; }
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
 
   //! Carries out the transform
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr) override;
 
-  virtual OpTransform* MakeInstance(const std::vector<std::string>& textlines)
+  OpTransform* MakeInstance(const std::vector<std::string>& textlines) override
 {
   OpTransform* pTransform = new OpTransform(
     textlines[1].c_str(),textlines[2].c_str(),textlines[3].c_str());

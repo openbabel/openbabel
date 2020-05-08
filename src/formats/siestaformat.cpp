@@ -36,32 +36,32 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("siesta",this);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "SIESTA format\n"
         "The format used by SIESTA (Spanish Initiative for Electronic Simulations with Thousands of Atoms).\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL(){return "http://departments.icmab.es/leem/siesta/";};
+    const char* SpecificationURL() override { return "http://departments.icmab.es/leem/siesta/"; }
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply
        NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
        READBINARY  WRITEBINARY  READXML  ZEROATOMSOK */
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
-    virtual int SkipObjects(int n, OBConversion* pConv)
+    int SkipObjects(int n, OBConversion* pConv) override
     {
       return 0;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// Declarations for the "API" interface functions. Definitions are below
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
     //    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
   private:

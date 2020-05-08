@@ -77,29 +77,29 @@ namespace OpenBabel
       OBConversion::RegisterFormat("xtc",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "XTC format\n"
         "A portable format for trajectories (gromacs)\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
       return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#xtc";
     }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
     //virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
   };
   //***

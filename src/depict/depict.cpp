@@ -96,16 +96,16 @@ namespace OpenBabel
 
         bool m_symbolOnBall;
 
-        void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_bond=false);
-        void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom);
-        void DrawHash(OBAtom *beginAtom, OBAtom *endAtom);
-        void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom);
-        void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order);
-        void DrawAtom(OBAtom *atom);
-        void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos);
+        void DrawSimpleBond(OBAtom *beginAtom, OBAtom *endAtom, int order, bool crossed_bond=false) override;
+        void DrawWedge(OBAtom *beginAtom, OBAtom *endAtom) override;
+        void DrawHash(OBAtom *beginAtom, OBAtom *endAtom) override;
+        void DrawWobblyBond(OBAtom *beginAtom, OBAtom *endAtom) override;
+        void DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order) override;
+        void DrawAtom(OBAtom *atom) override;
+        void DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos) override;
 
-        void DrawRing(OBRing *ring, OBBitVec &drawnBonds);
-        void DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds);
+        void DrawRing(OBRing *ring, OBBitVec &drawnBonds) override;
+        void DrawAromaticRing(OBRing *ring, OBBitVec &drawnBonds) override;
 
   private:
         void DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist);

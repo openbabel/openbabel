@@ -51,7 +51,7 @@ public:
     Init();
   }
 
-  virtual const char* Description()
+  const char* Description() override
   {
       return
 "ChemKin format\n"
@@ -65,19 +65,19 @@ public:
 " t Do not include species thermo data\n"
 " 0 Omit reactions with zero rates\n"
 "\n";
-  };
+  }
 
-  virtual const char* TargetClassDescription()
+  const char* TargetClassDescription() override
   {
       return OBReaction::ClassDescription();
-  };
+  }
 
-  const type_info& GetType()
+  const type_info& GetType() override
   {
     return typeid(OBReaction*);
-  };
+  }
 private:
-  void              Init();
+  void              Init() override;
   ///\return -1 eof or error; +1 reactionline found; 0 otherwise
   int               ReadLine(istream& ifs);
   bool              ReadHeader(istream& ifs, OBConversion* pConv);
@@ -105,12 +105,12 @@ private:
 
   ////////////////////////////////////////////////////
   /// The "API" interface functions
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   ////////////////////////////////////////////////////
   /// The "Convert" interface functions
-  virtual bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   {
     std::string auditMsg = "OpenBabel::Read ChemKinFormat";
     std::string description(Description());
@@ -129,7 +129,7 @@ private:
     return false;
   }
 
-  virtual bool WriteChemObject(OBConversion* pConv)
+  bool WriteChemObject(OBConversion* pConv) override
   {
     OBBase* pOb=pConv->GetChemObject();
     OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);

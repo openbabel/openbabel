@@ -40,31 +40,31 @@ namespace OpenBabel
       OBConversion::RegisterFormat("dallog", this, "chemical/x-dalton-output");
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "DALTON output format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://daltonprogram.org/www/resources/dalton2016manual.pdf";}; //optional
+    const char* SpecificationURL() override
+    { return "http://daltonprogram.org/www/resources/dalton2016manual.pdf"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-dalton-output"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-dalton-output"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
   };
@@ -83,8 +83,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("k", nullptr, 1, OBConversion::OUTOPTIONS); // specify basis set in .mol file
     }
 
-
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "DALTON input format\n"
@@ -97,25 +96,25 @@ namespace OpenBabel
         "  b                write input using the ATOMBASIS format\n"
         "  k <basis>        specify basis set to use\n"
         "                     e.g. ``-xk STO-3G``\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://daltonprogram.org/www/resources/dalton2016manual.pdf";}; //optional
+    const char* SpecificationURL() override
+    { return "http://daltonprogram.org/www/resources/dalton2016manual.pdf"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-dalton-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-dalton-input"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return WRITEONEONLY; // | NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   private:
     enum BasisFormat_t {BASIS, ATOMBASIS, INTGRL};
     BasisFormat_t basisformat;

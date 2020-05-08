@@ -198,7 +198,7 @@ protected:\
     static PluginMapType m;\
     return m;\
   }\
-  virtual PluginMapType& GetMap() const {\
+  PluginMapType& GetMap() const override {\
     return Map();\
   }\
 public:\

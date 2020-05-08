@@ -45,30 +45,30 @@ namespace OpenBabel
       OBConversion::RegisterFormat("g16",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Gaussian Output\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "https://www.gaussian.com/"; };
+    const char* SpecificationURL() override
+    { return "https://www.gaussian.com/"; }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gaussian-log"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gaussian-log"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class
@@ -91,7 +91,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("f", nullptr, 1, OBConversion::OUTOPTIONS);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Gaussian Input\n"
@@ -100,24 +100,24 @@ namespace OpenBabel
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n"
         "  u               Write the crystallographic unit cell, if present.\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "https://www.gaussian.com/input/"; };
+    const char* SpecificationURL() override
+    { return "https://www.gaussian.com/input/"; }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gaussian-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gaussian-input"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

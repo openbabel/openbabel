@@ -48,7 +48,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("u", this, 0, OBConversion::OUTOPTIONS);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Sybyl Mol2 format\n"
@@ -58,23 +58,23 @@ namespace OpenBabel
         "  l               Output ignores residue information (only ligands)\n"
         "  c               Write UCSF Dock scores saved in comments preceding molecules\n"
         "  u               Do not write formal charge information in UNITY records\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
       return "http://www.tripos.com/data/support/mol2.pdf";
-    }; //optional
+    } //optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-mol2"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-mol2"; }
 
-    virtual int SkipObjects(int n, OBConversion* pConv);
+    int SkipObjects(int n, OBConversion* pConv) override;
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

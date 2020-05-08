@@ -40,7 +40,7 @@ public:
       OBConversion::RegisterFormat("tdd",this);
   }
 
-  virtual const char* Description()
+  const char* Description() override
   {
     return
       "Thermo format\n"
@@ -51,8 +51,8 @@ public:
 
   ////////////////////////////////////////////////////
   /// The "API" interface functions
-  virtual bool ReadMolecule(OBBase* pReact, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pReact, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pReact, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pReact, OBConversion* pConv) override;
 };
 
 ////////////////////////////////////////////

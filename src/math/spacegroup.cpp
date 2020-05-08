@@ -52,10 +52,10 @@ namespace OpenBabel
   {
   public:
     SpaceGroups();
-    virtual ~SpaceGroups();
+    ~SpaceGroups() override;
 
-		void ParseLine(const char*);
-    size_t GetSize() { return sgs.size();}
+    void ParseLine(const char*) override;
+    size_t GetSize() override { return sgs.size(); }
     bool Inited() { return _init;}
 
     map<string, const SpaceGroup*> sgbn;

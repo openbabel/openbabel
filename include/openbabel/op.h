@@ -38,7 +38,7 @@ public:
   typedef const std::map<std::string, std::string> OpMap ;
 
   ///Provides the name of this kind of plugin. Use -L "ops" to list from commandline.
-  virtual const char* TypeID(){ return "ops"; }
+  const char* TypeID() override { return "ops"; }
 
   ///Required function that does the work. Normally return true, unless object is not to be output.
   //NOTE: the parameters were changed in r3532

@@ -17,7 +17,7 @@ void testEnumerateTautomers(const std::string &smiles, int numTautomers)
       int numTautomers;
 
       Functor() : numTautomers(0) {}
-      void operator()(OBMol*, const std::string&)
+      void operator()(OBMol*, const std::string&) override
       {
         numTautomers++;
       }
@@ -44,7 +44,7 @@ void testCanonicalTautomers(const std::string &smiles)
     public:
       std::vector<std::string> tautomers;
 
-      void operator()(OBMol *mol)
+      void operator()(OBMol *mol) override
       {
         OBConversion conv;
         conv.SetOutFormat("can");

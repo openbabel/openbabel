@@ -52,7 +52,7 @@ namespace OpenBabel
       OpConfab(const char* ID) : OBOp(ID, false) {
       }
 
-      const char* Description()
+      const char* Description() override
       {
         return "Confab, the diverse conformer generator\n"
           "Typical usage: obabel infile.xxx -O outfile.yyy --confab --conf 1000000\n"
@@ -65,11 +65,11 @@ namespace OpenBabel
           ;
       }
 
-      virtual bool WorksWith(OBBase* pOb) const
+      bool WorksWith(OBBase* pOb) const override
       {
         return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
-      virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+      bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
       
       void DisplayConfig(OBConversion* pConv);
       void Run(OBConversion* pConv, OBMol* pmol);

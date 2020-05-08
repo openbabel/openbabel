@@ -34,7 +34,7 @@ class OBAPI OBChargeModel : public OBPlugin
   MAKE_PLUGIN(OBChargeModel)
 
   public:
-    const char* TypeID(){return "charges";};
+    const char* TypeID() override { return "charges"; }
 
     /// \return whether partial charges were successfully assigned to this molecule
     /// \note The method should fill m_partialCharges and m_formalCharges as well
