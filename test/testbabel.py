@@ -117,7 +117,13 @@ class TestOBabel(BaseTest):
         output, error = run_exec("obabel -i")
         self.assertTrue(len(output) > 1, "Did not generate output")
         self.assertTrue(len(error) > 1, "Did not generate error message")
-        
+
+    def testShortOutfileName(self):
+        # Test that -O can handle short file names
+        # if not the command will show warning on 2D coords
+        self.canFindExecutable("obabel")
+        _, errormsg = run_exec("CCC", "obabel -ismi -omol -Otf --gen2D")
+        self.assertFalse("No 2D or 3D coordinates" in errormsg)
 
     def testSMItoInChI(self):
         self.canFindExecutable("obabel")
