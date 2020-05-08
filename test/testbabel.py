@@ -122,7 +122,7 @@ class TestOBabel(BaseTest):
         # Test that -O can handle short file names
         # if not the command will show warning on 2D coords
         self.canFindExecutable("obabel")
-        output, errormsg = run_exec("CCC", "obabel -ismi -omol -Otf --gen2D")
+        _, errormsg = run_exec("CCC", "obabel -ismi -omol -Otf --gen2D")
         self.assertFalse("No 2D or 3D coordinates" in errormsg)
 
     def testSMItoInChI(self):
