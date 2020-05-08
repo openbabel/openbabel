@@ -1,4 +1,4 @@
-/********************************************************************** 
+/**********************************************************************
 mol.cpp - Handle molecules.
 
 Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
@@ -49,7 +49,7 @@ namespace OpenBabel
   extern THREAD_LOCAL OBAromaticTyper  aromtyper;
   extern THREAD_LOCAL OBAtomTyper      atomtyper;
   extern THREAD_LOCAL OBBondTyper      bondtyper;
-  
+
   /** \class OBMol mol.h <openbabel/mol.h>
       \brief Molecule Class
 
@@ -1446,12 +1446,12 @@ namespace OpenBabel
     for (i = _vatom.begin();i != _vatom.end();++i)
       {
         DestroyAtom(*i);
-        *i = NULL;
+        *i = nullptr;
       }
     for (j = _vbond.begin();j != _vbond.end();++j)
       {
         DestroyBond(*j);
-        *j = NULL;
+        *j = nullptr;
       }
 
     _atomIds.clear();
@@ -2241,7 +2241,7 @@ namespace OpenBabel
                 else
                   memset((char*)&_c[NumAtoms()*3],'\0',sizeof(double)*3);
               }
-            if(badh == 0 || badh < NumConformers()) 
+            if(badh == 0 || badh < NumConformers())
               {
                 // Add the new H atom to the appropriate residue list
                 //but avoid doing perception by checking for existence of residue
@@ -2253,13 +2253,13 @@ namespace OpenBabel
                 h->SetAtomicNum(1);
                 string aname = "H";
 
-                if(res) 
+                if(res)
                 {
                   res->AddAtom(h);
                   res->SetAtomID(h,aname);
-                  
+
                   //hydrogen should inherit hetatm status of heteroatom (default is false)
-                  if(res->IsHetAtom(atom)) 
+                  if(res->IsHetAtom(atom))
                   {
                       res->SetHetAtom(h, true);
                   }
@@ -2939,9 +2939,9 @@ namespace OpenBabel
   }
 
   //check that unreasonable bonds aren't being added
-  static bool validAdditionalBond(OBAtom *a, OBAtom *n) 
+  static bool validAdditionalBond(OBAtom *a, OBAtom *n)
   {
-    if(a->GetExplicitValence() == 5 && a->GetAtomicNum() == 15) 
+    if(a->GetExplicitValence() == 5 && a->GetAtomicNum() == 15)
     {
       //only allow octhedral bonding for F and Cl
       if(n->GetAtomicNum() == 9 || n->GetAtomicNum() == 17)
@@ -2994,9 +2994,9 @@ namespace OpenBabel
         //don't consider atoms with a full valance already
         //this is both for correctness (trust existing bonds) and performance
         if(atom->GetExplicitValence() >= OBElements::GetMaxBonds(atom->GetAtomicNum()))
-          continue;        
+          continue;
         if(atom->GetAtomicNum() == 7 && atom->GetFormalCharge() == 0 && atom->GetExplicitValence() >= 3)
-          continue; 
+          continue;
         (atom->GetVector()).Get(&c[j*3]);
         pair<OBAtom*,double> entry(atom, atom->GetVector().z());
         zsortedAtoms.push_back(entry);
@@ -3068,7 +3068,7 @@ namespace OpenBabel
 
             if (!validAdditionalBond(atom,nbr) || !validAdditionalBond(nbr, atom))
               continue;
-              
+
             AddBond(idx1+1,idx2+1,1);
           }
       }

@@ -239,8 +239,8 @@ namespace OpenBabel
         _pairfreq = 15;
         _cutoff = false;
         _linesearch = LineSearchType::Newton2Num;
-        _gradientPtr = NULL;
-        _grad1 = NULL;
+        _gradientPtr = nullptr;
+        _grad1 = nullptr;
 	if (!strncmp(ID, "MMFF94s", 7)) {
           mmff94s = true;
           _parFile = std::string("mmff94s.ff");

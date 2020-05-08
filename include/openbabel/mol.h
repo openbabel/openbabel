@@ -480,10 +480,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Iterative component of Separate to copy one fragment at a time
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
     // docs in mol.cpp
-    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)0,
+    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)nullptr,
       unsigned int correctvalence=1,
-      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)0,
-      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)0);
+      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)nullptr,
+      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)nullptr);
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
     //! Converts 5-valent N and P only. Return true if conversion occurred.
@@ -630,12 +630,12 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \return the array of coordinates for the first conformer
     double  *BeginConformer(std::vector<double*>::iterator&i)
     { i = _vconf.begin();
-      return((i == _vconf.end()) ? NULL:*i); }
+      return((i == _vconf.end()) ? nullptr:*i); }
     //! Advance the iterator to the next confomer, if possible
     //! \return The array of coordinates for the next conformer, or NULL if none exist
     double  *NextConformer(std::vector<double*>::iterator&i)
     { ++i;
-      return((i == _vconf.end()) ? NULL:*i); }
+      return((i == _vconf.end()) ? nullptr:*i); }
     //! \return the entire set of conformers for this molecule as a vector of floating point arrays
     std::vector<double*> &GetConformers() {   return(_vconf);     }
     //@}
@@ -672,14 +672,14 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBResidue *BeginResidue(OBResidueIterator &i)
     {
       i = _residue.begin();
-      return((i == _residue.end()) ? NULL:*i);
+      return((i == _residue.end()) ? nullptr:*i);
     }
     //! Advance the iterator @p i to the next residue in the molecule
     //! \return the next residue (if any, or NULL if not possible)
     OBResidue *NextResidue(OBResidueIterator &i)
     {
       ++i;
-      return((i == _residue.end()) ? NULL:*i);
+      return((i == _residue.end()) ? nullptr:*i);
     }
     //! Set the iterator to the beginning of the internal coordinate list
     //! \return the first internal coordinate record, or NULL if none exist
@@ -687,7 +687,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBInternalCoord *BeginInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       i = _internals.begin();
-      return((i == _internals.end()) ? NULL:*i);
+      return((i == _internals.end()) ? nullptr:*i);
     }
     //! Advance the iterator to the next internal coordinate record
     //! \return the next first internal coordinate record, or NULL if none exist
@@ -695,7 +695,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       ++i;
-      return((i == _internals.end()) ? NULL:*i);
+      return((i == _internals.end()) ? nullptr:*i);
     }
     //@}
 

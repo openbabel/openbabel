@@ -84,7 +84,7 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
       memcpy((char*)confCoord,(char*)pmol->GetCoordinates(),sizeof(double)*3*pmol->NumAtoms());
       stored_pmol->AddConformer(confCoord);
       delete pmol;
-      *iter = NULL;
+      *iter = nullptr;
     }
     else
     {
@@ -111,4 +111,3 @@ bool OpReadConformers::ProcessVec(std::vector<OBBase*>& vec)
       pOp->ProcessVec(vec);
     vec now contains one or more molecules with multiple conformers
 */
-

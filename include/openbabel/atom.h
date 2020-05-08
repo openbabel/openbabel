@@ -165,7 +165,7 @@ namespace OpenBabel
       //! Mark an atom as belonging to at least one ring
       void SetInRing(bool value=true)         { SET_OR_UNSET_FLAG(OB_RING_ATOM); }
       //! Clear the internal coordinate pointer
-      void ClearCoordPtr()     { _c = NULL; _cidx=0; }
+      void ClearCoordPtr()     { _c = nullptr; _cidx=0; }
       //@}
 
       //! \name Methods to retrieve atomic information
@@ -241,7 +241,7 @@ namespace OpenBabel
       //! (e.g., only vector3), NULL will be returned.
       double     *GetCoordinate(){
         if (_c)          return(&(*_c)[_cidx]);
-        else             return NULL;
+        else             return nullptr;
       }
       //! \return the coordinates as a vector3 object
       vector3   &GetVector();
@@ -310,7 +310,7 @@ namespace OpenBabel
       void DeleteResidue(){
         if (_residue) {
           delete _residue;
-          _residue = NULL; // Make sure to clear that a residue existed
+          _residue = nullptr; // Make sure to clear that a residue existed
         }
       }
       //! Add a bond to the internal list. Does not update the bond.
@@ -363,11 +363,11 @@ namespace OpenBabel
        */
       std::pair<int, int> LewisAcidBaseCounts() const;
       //! \return Is there any residue information?
-      bool HasResidue()    { return(_residue != NULL);    }
+      bool HasResidue()    { return(_residue != nullptr);    }
       //! \return Is this a HETATM in a residue (returns false if not in a residue)
       //! \since version 2.4
       bool IsHetAtom() {
-        if (_residue == NULL)
+        if (_residue == nullptr)
           return false;
         else
           return _residue->IsHetAtom(this);

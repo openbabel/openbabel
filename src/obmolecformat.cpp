@@ -105,7 +105,7 @@ namespace OpenBabel
     //Molecule is valid if it has some atoms
     //or it represents a reaction
     //or the format allows zero-atom molecules and it has a title or properties
-    if(ret && (pmol->NumAtoms() > 0 
+    if(ret && (pmol->NumAtoms() > 0
       || pmol->IsReaction()
       || (pFormat->Flags()&ZEROATOMSOK && (*pmol->GetTitle() || pmol->HasData(1)))))
     {
@@ -399,7 +399,7 @@ namespace OpenBabel
         ret = pConv->GetOutFormat()->WriteMolecule(itr->second, pConv);
 
         delete itr->second; //always delete OBMol object
-        itr->second = NULL; // so can be deleted in DeleteDeferredMols()
+        itr->second = nullptr; // so can be deleted in DeleteDeferredMols()
         if (!ret) break;
       }
     DeleteDeferredMols();//cleans up in case there have been errors

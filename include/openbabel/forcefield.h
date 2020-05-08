@@ -246,7 +246,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     //! Constructor
     OBFFConstraint()
       {
-        a = b = c = d = NULL;
+        a = b = c = d = nullptr;
         ia = ib = ic = id = 0;
         constraint_value = 0.0;
         factor = 0.0;
@@ -573,13 +573,13 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     //! Destructor
     virtual ~OBForceField()
     {
-      if (_grad1 != NULL) {
+      if (_grad1 != nullptr) {
         delete [] _grad1;
-        _grad1 = NULL;
+        _grad1 = nullptr;
       }
-      if (_gradientPtr != NULL) {
+      if (_gradientPtr != nullptr) {
         delete [] _gradientPtr;
-	_gradientPtr = NULL;
+	_gradientPtr = nullptr;
       }
     }
 

@@ -459,13 +459,13 @@ namespace OpenBabel
     bool ezpe_set=false,Hcorr_set=false,Gcorr_set=false,E0_set=false,CV_set=false;
     double temperature = 0; /* Kelvin */
     std::vector<double> Scomponents;
-    // Electrostatic potential. ESP is calculated 
-    // once unless the Opt and Pop jobs are combined. 
+    // Electrostatic potential. ESP is calculated
+    // once unless the Opt and Pop jobs are combined.
     // In this case, ESP is calculated once before
     // the geometry optmization and once after. If this
     // happens, the second ESP must be added to OBMol.
     OBFreeGrid *esp   = nullptr;
-    int NumEsp        = 1; 
+    int NumEsp        = 1;
     int NumEspCounter = 0;
     bool ESPisAdded   = false;
 
@@ -562,8 +562,8 @@ namespace OpenBabel
                 //the line describing the method
                 if (strstr(buffer, "Opt") != nullptr)
                 {
-                    // It is expected to have two sets of ESP in 
-                    // the log file if Opt is combined with Pop. 
+                    // It is expected to have two sets of ESP in
+                    // the log file if Opt is combined with Pop.
                     NumEsp = 2;
                 }
                 comment += buffer;
@@ -698,7 +698,7 @@ namespace OpenBabel
         else if (strstr(buffer, "Exact polarizability") != nullptr)
             {
               // actual components XX, YX, YY, XZ, YZ, ZZ
-              double xx, xy, yy, xz, yz, zz;              
+              double xx, xy, yy, xz, yz, zz;
               const char *ptr = buffer+strlen("Exact polarizability:   ");
               if (ptr &&
                   6 == sscanf(ptr, "%8lf%8lf%8lf%8lf%8lf%8lf",
@@ -714,7 +714,7 @@ namespace OpenBabel
                   Q[2][0] = Q[0][2] = xz;
                   Q[2][1] = Q[1][2] = yz;
                   matrix3x3 pol(Q);
-                  
+
                   if (mol.HasData("Exact polarizability"))
                     {
                       mol.DeleteData("Exact polarizability"); // Delete the old one to add the new one
@@ -733,10 +733,10 @@ namespace OpenBabel
             hasPartialCharges = true;
             chargeModel = "Mulliken";
             /*
-              Gaussian usually calculates the electronic 
-              properties more than once, before and after 
+              Gaussian usually calculates the electronic
+              properties more than once, before and after
               geometry optimization. The second one is what
-              we should be interested in. Thus, here, we 
+              we should be interested in. Thus, here, we
               delete the previously added Data to store the
               new one.
              */
@@ -746,7 +746,7 @@ namespace OpenBabel
               }
             OBPcharge *Mulliken = new OpenBabel::OBPcharge();
             std::vector<double> MPA_q;
-            
+
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
@@ -760,26 +760,26 @@ namespace OpenBabel
                 MPA_q.push_back(atof(vs[2].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
-                                    
-              } 
-            if (MPA_q.size() == mol.NumAtoms()) 
+
+              }
+            if (MPA_q.size() == mol.NumAtoms())
             {
                 Mulliken->AddPartialCharge(MPA_q);
                 Mulliken->SetAttribute("Mulliken charges");
                 Mulliken->SetOrigin(fileformatInput);
-                mol.SetData(Mulliken); 
+                mol.SetData(Mulliken);
             }
             else
             {
                 cout << "Read " << MPA_q.size() << " Mulliken charges for " << mol.NumAtoms() << " atoms\n";
-            }              
+            }
           }
         else if (strstr(buffer, "Hirshfeld charges") != nullptr &&
                  strstr(buffer, "CM5 charges") != nullptr)
           {
             /*
               Hirshfeld and CM5 charges are printed in the
-              same block in the Gaussian log file. 
+              same block in the Gaussian log file.
              */
             hasPartialCharges = true;
             chargeModel = "Hirshfeld";
@@ -804,29 +804,29 @@ namespace OpenBabel
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
                 if (!atom)
                   break;
-                atom->SetPartialCharge(atof(vs[2].c_str()));             
+                atom->SetPartialCharge(atof(vs[2].c_str()));
                 HPA_q.push_back(atof(vs[2].c_str()));
                 CM5_q.push_back(atof(vs[7].c_str()));
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
-                                    
+
               }
-            if (CM5_q.size() == mol.NumAtoms() and 
-                HPA_q.size() == mol.NumAtoms()) 
+            if (CM5_q.size() == mol.NumAtoms() and
+                HPA_q.size() == mol.NumAtoms())
             {
                 Hirshfeld->AddPartialCharge(HPA_q);
                 Hirshfeld->SetAttribute("Hirshfeld charges");
                 Hirshfeld->SetOrigin(fileformatInput);
                 CM5->AddPartialCharge(CM5_q);
                 CM5->SetAttribute("CM5 charges");
-                CM5->SetOrigin(fileformatInput);              
+                CM5->SetOrigin(fileformatInput);
                 mol.SetData(CM5);
                 mol.SetData(Hirshfeld);
             }
             else
             {
                 cout << "Read " << HPA_q.size() << " Hirshfeld charges for " << mol.NumAtoms() << " atoms\n";
-            } 
+            }
           }
         else if (strstr(buffer, "Electrostatic Properties Using The SCF Density") != nullptr)
           {
@@ -940,7 +940,7 @@ namespace OpenBabel
                 if (!ifs.getline(buffer,BUFF_SIZE)) break;
                 tokenize(vs,buffer);
               }
-            if (ESP_q.size() == mol.NumAtoms()) 
+            if (ESP_q.size() == mol.NumAtoms())
             {
                 ESP->AddPartialCharge(ESP_q);
                 ESP->SetAttribute("ESP charges");
@@ -950,7 +950,7 @@ namespace OpenBabel
             else
             {
                 cout << "Read " << ESP_q.size() << " ESP charges for " << mol.NumAtoms() << " atoms\n";
-            }           
+            }
           }
         else if (strstr(buffer, "Natural Population") != nullptr)
           {
@@ -1185,7 +1185,7 @@ namespace OpenBabel
         // MP2 energies also use a different syntax
 
         // PM3 energies use a different syntax
-        else if(strstr(buffer,"E (Thermal)") != NULL)
+        else if(strstr(buffer,"E (Thermal)") != nullptr)
           {
             ifs.getline(buffer,BUFF_SIZE); //Headers
             ifs.getline(buffer,BUFF_SIZE); //Total energy; what we want

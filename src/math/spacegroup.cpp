@@ -357,14 +357,14 @@ namespace OpenBabel
   transform3d const * SpaceGroup::BeginTransform(transform3dIterator &i) const
   {
     i = m_transforms.begin ();
-    return (i == m_transforms.end())? reinterpret_cast<transform3d*>(NULL): *i++;
+    return (i == m_transforms.end())? static_cast<transform3d*>(nullptr): *i++;
   }
 
   /*!
    */
   transform3d const * SpaceGroup::NextTransform(transform3dIterator &i) const
   {
-    return (i == m_transforms.end())? reinterpret_cast<transform3d*>(NULL): *i++;
+    return (i == m_transforms.end())? static_cast<transform3d*>(nullptr): *i++;
   }
 
   /*!

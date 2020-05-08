@@ -1203,7 +1203,7 @@ namespace OpenBabel
         // the first (most complex) fragment.
         // Stop if there are no unassigned ring atoms (ratoms).
         for (; i != _ring_fragments.end() && ratoms; ++i) {
-          if (i->first != NULL && i->first->Match(*f)) { // if match to fragment
+          if (i->first != nullptr && i->first->Match(*f)) { // if match to fragment
             i->first->Match(mol);                        // match over mol
             mlist = i->first->GetUMapList();
             for (j = mlist.begin();j != mlist.end();++j) { // for all matches
@@ -1337,13 +1337,13 @@ namespace OpenBabel
         if(_torsion.count(smiles) > 0) {
           OBAtom* b = bond->GetBeginAtom();
           OBAtom* c = bond->GetEndAtom();
-          OBAtom* a = NULL;
+          OBAtom* a = nullptr;
           FOR_NBORS_OF_ATOM(t, &*b) {
             a = &*t;
             if(a != c)
               break;
           }
-          OBAtom* d = NULL;
+          OBAtom* d = nullptr;
           FOR_NBORS_OF_ATOM(t, &*c) {
             d = &*t;
             if(d != b)

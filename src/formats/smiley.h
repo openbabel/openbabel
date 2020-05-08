@@ -603,7 +603,7 @@ namespace Smiley {
 
   struct SmartsAtom
   {
-    SmartsAtom() : expr(0), atomClass(0), chiral(0) {}
+    SmartsAtom() : expr(nullptr), atomClass(0), chiral(0) {}
     SmartsAtom(SmartsAtomExpr *expr_, int ac, bool chrl)
         : expr(expr_), atomClass(ac), chiral(chrl) {}
     SmartsAtomExpr *expr;

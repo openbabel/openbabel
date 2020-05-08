@@ -368,7 +368,7 @@ namespace OpenBabel
       if (*j)
         {
           delete *j;
-          *j = NULL;
+          *j = nullptr;
         }
 
     return(true);

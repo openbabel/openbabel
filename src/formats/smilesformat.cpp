@@ -715,7 +715,7 @@ namespace OpenBabel {
     //
     // Can be written as:
     // (a) C/C=C/1\NC1 -- preferred
-    // (b) C/C=C1\NC\1 
+    // (b) C/C=C1\NC\1
     // (c) C/C=C/1\NC\1
     //  or indeed by replacing the "\N" with "N".
 
@@ -727,7 +727,7 @@ namespace OpenBabel {
     // (b) C/C=C/1NC/1  -- ignore ring closure stereo => treated as C/C=C1NC1  => CC=C1NC1
     // (c) C/C=C/1\NC/1 -- ignore ring closure stereo => treated as C/C=C1\NC1 => C/C=C/1\NC1
 
-    // The ring closure bond is either up or down with respect 
+    // The ring closure bond is either up or down with respect
     // to the double bond. Our task here is to figure out which it is,
     // based on the contents of _stereorbond.
 
@@ -751,7 +751,7 @@ namespace OpenBabel {
         found = false;
       }
     }
-    
+
     if (!found)
       return 0;
     else
@@ -792,7 +792,7 @@ namespace OpenBabel {
       vector<bool> bond_stereo(2, true); // Store the stereo of the chosen bonds at each end of the dbl bond
       vector<OBBond*> stereo_bond(2, nullptr); // These are the chosen stereo bonds
       vector<OBBond*> other_bond(2, nullptr);  // These are the 'other' bonds at each end
-      
+
       for (int i = 0; i < 2; ++i) { // Loop over each end of the double bond in turn
 
         FOR_BONDS_OF_ATOM(bi, dbl_bond_atoms[i]) {
@@ -821,7 +821,7 @@ namespace OpenBabel {
             other_bond[i] = b; // Use this for the 'other' bond
             continue;
           }
-          
+
           if (stereo_bond[i] == nullptr) { // This is a first stereo bond
             stereo_bond[i] = b; // Use this for the 'stereo' bond
             bond_stereo[i] = stereo;
@@ -867,7 +867,7 @@ namespace OpenBabel {
   {
     map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
     ChiralSearch = _tetrahedralMap.find(mol.GetAtom(_prev));
-    if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL)
+    if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != nullptr)
     {
       int insertpos = NumConnections(ChiralSearch->first, id == OBStereo::ImplicitRef) - 2; // -1 indicates "from"
       if (insertpos > 2)
@@ -892,7 +892,7 @@ namespace OpenBabel {
   {
     map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator ChiralSearch;
     ChiralSearch = _squarePlanarMap.find(mol.GetAtom(_prev));
-    if (ChiralSearch != _squarePlanarMap.end() && ChiralSearch->second != NULL)
+    if (ChiralSearch != _squarePlanarMap.end() && ChiralSearch->second != nullptr)
     {
       int insertpos = NumConnections(ChiralSearch->first) - 1;
       switch(insertpos) {
@@ -1073,7 +1073,7 @@ namespace OpenBabel {
       case '*':
         element = 0;
         break;
-    
+
       case 'C':
         _ptr++;
         switch(*_ptr)
@@ -1826,7 +1826,7 @@ namespace OpenBabel {
             --_ptr;
             { // a block is needed here to scope the OBPairInteger assignment
               OBPairInteger *atomclass = new OBPairInteger();
-              atomclass->SetAttribute("Atom Class"); 
+              atomclass->SetAttribute("Atom Class");
               atomclass->SetValue(clval);
               atomclass->SetOrigin(fileformatInput);
               atom->SetData(atomclass);
@@ -1844,7 +1844,7 @@ namespace OpenBabel {
     if (charge) {
       atom->SetFormalCharge(charge);
       if (abs(charge) > 10 || (element && charge > element)) { // if the charge is +/- 10 or more than the number of electrons
-        errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge 
+        errorMsg << "Atom " << atom->GetIdx() << " had an unrealistic charge of " << charge
                  << "." << endl;
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       }
@@ -1900,7 +1900,7 @@ namespace OpenBabel {
     _prev = mol.NumAtoms();
     _order = 0;
     _updown = ' ';
-    
+
     if (hcount > 0) {
       if (chiralWatch)
         InsertTetrahedralRef(mol, OBStereo::ImplicitRef);
@@ -2057,7 +2057,7 @@ namespace OpenBabel {
     if (!prevatom) {
       obErrorLog.ThrowError(__FUNCTION__,"Number not parsed correctly as a ring bond", obWarning);
       return false;
-    } 
+    }
 
     // Parse the ring closure digit or digits
     int digit = 0;
@@ -2125,7 +2125,7 @@ namespace OpenBabel {
         sb.updown.push_back(bond->updown);
         sb.atoms.push_back(mol.GetAtom(bond->prev));
         _stereorbond[mol.GetBond(bond->prev, _prev)] = sb; // Store for later
-        
+
         // after adding a bond to atom "_prev"
         // search to see if atom is bonded to a chiral atom
         // need to check both _prev and bond->prev as closure is direction independent
@@ -2135,7 +2135,7 @@ namespace OpenBabel {
         // FIXME: needed for squreplanar too??
         map<OBAtom*, OBTetrahedralStereo::Config*>::iterator ChiralSearch;
         ChiralSearch = _tetrahedralMap.find(mol.GetAtom(bond->prev));
-        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != NULL) {
+        if (ChiralSearch != _tetrahedralMap.end() && ChiralSearch->second != nullptr) {
           int insertpos = bond->numConnections - 1;
           switch(insertpos) {
           case -1:
@@ -2993,7 +2993,7 @@ namespace OpenBabel {
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
       return nullptr;
-    
+
     OBAtom *atom = node->GetAtom();
 
     OBSquarePlanarStereo *sp = _stereoFacade->GetSquarePlanarStereo(atom->GetId());
@@ -3164,10 +3164,10 @@ namespace OpenBabel {
       //   - otherwise move it to the end
       // This section is skipped if sort_nbrs has only a single member, or if
       // we have already visited _endatom.
-      
+
       vector<OBAtom*> children;
       MyFindChildren(mol, children, _uatoms, _endatom);
-      
+
       vector<OBAtom*> front, end;
       for (vector<OBAtom *>::iterator it=sort_nbrs.begin(); it!=sort_nbrs.end(); ++it)
         if (std::find(children.begin(), children.end(), *it) == children.end() && *it != _endatom)
@@ -3669,14 +3669,6 @@ namespace OpenBabel {
   // Returns canonical label order
   bool OBMol2Cansmi::ParseInChI(OBMol &mol, vector<int> &atom_order)
   {
-    /*OBConversion MolConv(*_pconv); //new copy to use to write associated MOL
-    MolConv.SetAuxConv(NULL); //temporary until a proper OBConversion copy constructor written
-
-    OBFormat* pInChIFormat = _pconv->FindFormat("InChI");
-    if(pInChIFormat==NULL) {
-      obErrorLog.ThrowError(__FUNCTION__, "InChI format not available", obError);
-      return false;
-    }*/
     OBConversion MolConv;
     MolConv.SetOutFormat("InChI");
     MolConv.SetAuxConv(nullptr); //temporary until a proper OBConversion copy constructor written
@@ -3700,7 +3692,7 @@ namespace OpenBabel {
       tokenize(split, splitlines.at(0),"/");
       aux_part = splitlines.at(1); // Use the normal labels
     }
-    else { 
+    else {
       tmp = splitlines.at(0).substr(rm_start);
       tokenize(split, tmp, "/");
       split.insert(split.begin(), "");
@@ -3740,7 +3732,7 @@ namespace OpenBabel {
             mult = 1;
           else
             mult = atoi(it->substr(0, it->size()-1).c_str());
-          new_canonical_labels.insert(new_canonical_labels.end(), 
+          new_canonical_labels.insert(new_canonical_labels.end(),
             canonical_labels.begin()+total, canonical_labels.begin()+total+mult);
           total += mult;
         }
@@ -3758,7 +3750,7 @@ namespace OpenBabel {
 
     // Flatten the canonical_labels
     for(vector<vector<int> >::iterator it=canonical_labels.begin(); it!=canonical_labels.end(); ++it) {
-      atom_order.insert(atom_order.end(), it->begin(), it->end());      
+      atom_order.insert(atom_order.end(), it->begin(), it->end());
     }
 
     return true;
@@ -3943,8 +3935,8 @@ namespace OpenBabel {
 
       // If we specified a startatom_idx & it's in this fragment, use it to start the fragment
       if (_startatom)
-        if (!_uatoms[_startatom->GetIdx()] && 
-           frag_atoms.BitIsSet(_startatom->GetIdx()) && 
+        if (!_uatoms[_startatom->GetIdx()] &&
+           frag_atoms.BitIsSet(_startatom->GetIdx()) &&
            (!isrxn || rxn.GetRole(_startatom)==rxnrole))
           root_atom = _startatom;
 

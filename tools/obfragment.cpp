@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
     cerr << " Reading file " << argv[i] << endl;
 
     inFormat = conv.FormatFromExt(argv[i]);
-    if(inFormat==NULL || !conv.SetInFormat(inFormat))
+    if(inFormat==nullptr || !conv.SetInFormat(inFormat))
     {
       cerr << " Cannot read file format for " << argv[i] << endl;
       continue; // try next file

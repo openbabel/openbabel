@@ -1110,13 +1110,13 @@ namespace OpenBabel
   OBAtom *OBResidue::BeginAtom(vector<OBAtom*>::iterator &i)
   {
     i = _atoms.begin();
-    return ((i == _atoms.end()) ? NULL : *i);
+    return ((i == _atoms.end()) ? nullptr : *i);
   }
 
   OBAtom *OBResidue::NextAtom(vector<OBAtom*>::iterator &i)
   {
     ++i;
-    return ((i == _atoms.end()) ? NULL : *i);
+    return ((i == _atoms.end()) ? nullptr : *i);
   }
 
   ///////////////////////////////////////////////////////////////////////////////

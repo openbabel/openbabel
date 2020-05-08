@@ -150,10 +150,10 @@ namespace OpenBabel
       would allow the simple version of Clone() above. See
       OBRotameterData::Clone for an example of a more complicated version.
       For classes which are not intended to support copying, Clone() can
-      return NULL
+      return nullptr
       @code
       virtual OBGenericData* Clone(OBBase* parent) const
-         {return NULL;}
+         {return nullptr;}
       @endcode
       Clone() is a pure virtual function so that you need to decide what
       kind of function you need and include it explicitly.
