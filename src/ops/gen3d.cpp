@@ -45,7 +45,7 @@ public:
 OpGen3D theOpGen3D("gen3D"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* /*pOptions*/, OBConversion* /*pConv*/)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

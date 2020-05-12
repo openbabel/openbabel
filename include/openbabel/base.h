@@ -28,15 +28,6 @@ GNU General Public License for more details.
 #include <iostream>
 #include <openbabel/tokenst.h>
 
-#ifdef UNUSED
-#elif (__GNUC__ == 4)
-# define UNUSED(x) UNUSED_ ## x __attribute__((unused))
-#elif defined(__LCLINT__)
-# define UNUSED(x) /*@unused@*/ x
-#else
-# define UNUSED(x) x
-#endif
-
 namespace OpenBabel
 {
 
@@ -283,7 +274,7 @@ class OBConversion; //used only as pointer
       //! \brief  Base type does nothing
       //! Made virtual around r3535 to simplify code which passes around OBBase*.
       //Currently no title data member in base class.
-      virtual const char  *GetTitle(bool UNUSED(replaceNewlines) = true) const { return "";}
+      virtual const char  *GetTitle(bool /*replaceNewlines*/ = true) const { return ""; }
       virtual void  SetTitle(const char *) {}
 
       //! \name Generic data handling methods (via OBGenericData)

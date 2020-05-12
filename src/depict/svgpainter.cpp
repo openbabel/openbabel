@@ -170,7 +170,7 @@ namespace OpenBabel
     return metrics;
   }
 
-  void SVGPainter::WriteImage(const std::string &filename)
+  void SVGPainter::WriteImage(const std::string &/*filename*/)
   {
   }
 

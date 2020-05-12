@@ -71,7 +71,7 @@ public:
   }
 
 ///Returns the result of evaluating the conditional expressions in the macrotext
-  bool Compare(OBBase* pOb, istream&, bool noEval, string* param) override
+  bool Compare(OBBase* pOb, istream&, bool noEval, string* /*param*/) override
   {
     stringstream ss;
     ss.str(_macroText);

@@ -166,7 +166,7 @@ namespace OpenBabel
   //Make an instance of the format class
   PovrayFormat thePovrayFormat;
 
-  void PovrayFormat::OutputHeader(ostream &ofs, OBMol &mol, string prefix)
+  void PovrayFormat::OutputHeader(ostream &ofs, OBMol &mol, string /*prefix*/)
   {
     time_t akttime;                              /* Systemtime                        */
     char timestr[TIME_STR_SIZE + 1] = "";        /* Timestring                        */

@@ -75,7 +75,7 @@ private:
 OpUnique theOpUnique("unique"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* /*pmap*/, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

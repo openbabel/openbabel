@@ -55,7 +55,7 @@ namespace OpenBabel {
 
   OBConformerFilter::~OBConformerFilter() {}
 
-  bool OBStericConformerFilter::IsGood(const OBMol &mol, const RotorKey &key, double *conformer)
+  bool OBStericConformerFilter::IsGood(const OBMol &mol, const RotorKey & /*key*/, double *conformer)
   {
     unsigned int a1 = 0, a2 = 0;
     unsigned int numAtoms = mol.NumAtoms();
@@ -104,7 +104,7 @@ namespace OpenBabel {
   OBConformerScore::~OBConformerScore() {}
 
   double OBRMSDConformerScore::Score(OBMol &mol, unsigned int index,
-                                     const RotorKeys &keys, const std::vector<double*> &conformers)
+                                     const RotorKeys & /*keys*/, const std::vector<double*> &conformers)
   {
     unsigned int numAtoms = mol.NumAtoms();
 
@@ -228,7 +228,7 @@ namespace OpenBabel {
   }
 
   double OBMinimizingRMSDConformerScore::Score(OBMol &mol, unsigned int index,
-                                               const RotorKeys &keys, const std::vector<double*> &conformers)
+                                               const RotorKeys & /*keys*/, const std::vector<double*> &conformers)
   {
     unsigned int numAtoms = mol.NumAtoms();
     double *origCoords = mol.GetCoordinates();

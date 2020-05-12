@@ -32,7 +32,7 @@ void test_smiles_fragment(const std::string &orig_smiles, const std::string &fra
   OB_COMPARE(smiles, ref_smiles);
 }
 
-int canonfragmenttest(int argc, char *argv[])
+int canonfragmenttest(int /*argc*/, char * /*argv*/[])
 {
 
   // Define location of file formats for testing

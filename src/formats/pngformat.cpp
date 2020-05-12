@@ -210,7 +210,7 @@ PNGFormat thePNGFormat;
 
 /////////////////////////////////////////////////////////////////
 
-bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool PNGFormat::ReadMolecule(OBBase* /*pOb*/, OBConversion* pConv)
 {
   istream& ifs = *pConv->GetInStream();
   if(pConv->IsFirstInput())

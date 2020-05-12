@@ -47,7 +47,7 @@ public:
 OpGen2D theOpGen2D("gen2D"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpGen2D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpGen2D::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* /*pOptions*/, OBConversion* /*pConv*/)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

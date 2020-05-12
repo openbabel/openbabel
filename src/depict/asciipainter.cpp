@@ -51,24 +51,24 @@ namespace OpenBabel
     return true;
   }
 
-  void ASCIIPainter::SetFontSize(int pointSize)
+  void ASCIIPainter::SetFontSize(int /*pointSize*/)
   {
   }
 
-  void ASCIIPainter::SetFillColor(const OBColor &color)
+  void ASCIIPainter::SetFillColor(const OBColor &/*color*/)
   {
   }
 
-  void ASCIIPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  void ASCIIPainter::SetFillRadial(const OBColor &/*start*/, const OBColor &/*end*/)
   {
   }
 
 
-  void ASCIIPainter::SetPenColor(const OBColor &color)
+  void ASCIIPainter::SetPenColor(const OBColor &/*color*/)
   {
   }
 
-  void ASCIIPainter::SetPenWidth(double width)
+  void ASCIIPainter::SetPenWidth(double /*width*/)
   {
   }
 
@@ -77,7 +77,7 @@ namespace OpenBabel
     return 0.0;
   }
 
-  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes)
+  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & /*dashes*/)
   {
     vector<pair<int, int> > coords;
     vector<pair<int, int> >::iterator vp_it;
@@ -103,11 +103,11 @@ namespace OpenBabel
     DrawLine(vp_it->first, vp_it->second, points.begin()->first, points.begin()->second);
   }
 
-  void ASCIIPainter::DrawCircle(double x, double y, double r)
+  void ASCIIPainter::DrawCircle(double /*x*/, double /*y*/, double /*r*/)
   {
   }
 
-  void ASCIIPainter::DrawBall(double x, double y, double r, double opacity)
+  void ASCIIPainter::DrawBall(double /*x*/, double /*y*/, double /*r*/, double /*opacity*/)
   {
   }
 
@@ -121,7 +121,7 @@ namespace OpenBabel
     }
   }
 
-  OBFontMetrics ASCIIPainter::GetFontMetrics(const std::string &text)
+  OBFontMetrics ASCIIPainter::GetFontMetrics(const std::string & /*text*/)
   {
     OBFontMetrics metrics;
     // The following line tries to workaround the fact that fontSize is an int
