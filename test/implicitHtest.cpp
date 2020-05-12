@@ -33,7 +33,7 @@ void testLossOfHydrogen(string filename)
   
 }
 
-int implicitHtest(int argc, char* argv[])
+int implicitHtest(int /*argc*/, char* /*argv*/[])
 {
   // Define location of file formats for testing
   #ifdef FORMATDIR

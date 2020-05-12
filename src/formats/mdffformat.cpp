@@ -75,7 +75,7 @@ namespace OpenBabel {
       return READONEONLY;
     }
 
-    int SkipObjects(int n, OBConversion* pConv) override
+    int SkipObjects(int /*n*/, OBConversion* /*pConv*/) override
     {
       return 0;
     }

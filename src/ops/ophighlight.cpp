@@ -63,7 +63,7 @@ private:
 OpHighlight theOpHighlight("highlight"); //Global instance
 
 //////////////////////////////////////////////////////////////////
-bool OpHighlight::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpHighlight::Do(OBBase* pOb, const char* OptionText, OpMap* /*pmap*/, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

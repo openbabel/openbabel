@@ -83,7 +83,7 @@ namespace OpenBabel
     const char* GetMIMEType() override { return nullptr; }
 
     // Skip to object: used for multi-object file formats.
-    int SkipObjects(int n, OpenBabel::OBConversion* pConv) override { return 0; }
+    int SkipObjects(int /*n*/, OpenBabel::OBConversion* /*pConv*/) override { return 0; }
 
     unsigned int Flags() override
     {

@@ -2388,7 +2388,7 @@ namespace OpenBabel
 
 
 
-  bool OBMol::AssignSpinMultiplicity(bool NoImplicitH)
+  bool OBMol::AssignSpinMultiplicity(bool /*NoImplicitH*/)
   {
     // TODO: The following functions simply returns true, as it has been made
     // redundant by changes to the handling of implicit hydrogens, and spin.

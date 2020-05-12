@@ -68,7 +68,7 @@ public:
            "cannot be changed. So if you don't like .smiles, use a dummy filename.\n\n"
            ;
   }
-  bool WorksWith(OBBase* pOb) const override { return true; }  // all OBBase objects
+  bool WorksWith(OBBase* /*pOb*/) const override { return true; }  // all OBBase objects
   bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
       OBConversion* pConv=nullptr) override;
 private:
@@ -82,7 +82,7 @@ private:
 OpSplit theOpSplit("split"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpSplit::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpSplit::Do(OBBase* pOb, const char* OptionText, OpMap* /*pOptions*/, OBConversion* pConv)
 {
   if(!strcmp(OptionText, "inactive"))
   {

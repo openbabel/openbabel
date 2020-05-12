@@ -161,8 +161,8 @@ namespace OpenBabel
     public:
       ~XMLBaseFormat(){}
       virtual const char* NamespaceURI()const=0;
-      virtual bool DoElement(const std::string& ElName){return false;};
-      virtual bool EndElement(const std::string& ElName){return false;};
+      virtual bool DoElement(const std::string& /*ElName*/){return false;};
+      virtual bool EndElement(const std::string& /*ElName*/){return false;};
       /// The tag at the end of the chemical object e.g. "/molecule>"
       virtual const char* EndTag(){return ">";};
 

@@ -391,7 +391,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 //******************************************************
 //********** Event handlers ****************************
 
-void OBGUIFrame::OnClose(wxCloseEvent& event)
+void OBGUIFrame::OnClose(wxCloseEvent& /*event*/)
 {
   //Save the window size, in and out formats, and various options, for use next time.
   wxCommandEvent ev;
@@ -406,7 +406,7 @@ void OBGUIFrame::OnClose(wxCloseEvent& event)
   this->Destroy();
 }
 
-void OBGUIFrame::OnSaveConfig(wxCommandEvent& event)
+void OBGUIFrame::OnSaveConfig(wxCommandEvent& /*event*/)
 {
     //Save the window size, in and out formats, and various options, for use next time.
   wxConfig config(_T("OpenBabelGUI"));
@@ -522,7 +522,7 @@ void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
   wxMessageBox(msg, _T("About OpenBabelGUI"), wxOK | wxICON_INFORMATION | wxCENTER, this);
 }
 
-void OBGUIFrame::OnShowDataDir(wxCommandEvent& (event))
+void OBGUIFrame::OnShowDataDir(wxCommandEvent& /*event*/)
 {
   wxString dir = wxGetenv(_T("BABEL_DATADIR"));
   wxDirDialog dia(this, _T("BABEL_DATADIR = ")+ dir, dir,
@@ -533,7 +533,7 @@ void OBGUIFrame::OnShowDataDir(wxCommandEvent& (event))
 
 ///////////////////////////////////////////
 
-void OBGUIFrame::OnSelectFormats(wxCommandEvent& event)
+void OBGUIFrame::OnSelectFormats(wxCommandEvent& /*event*/)
 {
   if(m_ActiveFormats.SelectFormats())
   {
@@ -542,11 +542,11 @@ void OBGUIFrame::OnSelectFormats(wxCommandEvent& event)
     GetAvailableFormats();
   }
 }
-void OBGUIFrame::OnRestrictFormats(wxCommandEvent& event)
+void OBGUIFrame::OnRestrictFormats(wxCommandEvent& /*event*/)
 {
   GetAvailableFormats();
 }
-void OBGUIFrame::OnSetDisplayFile(wxCommandEvent& event)
+void OBGUIFrame::OnSetDisplayFile(wxCommandEvent& /*event*/)
 {
   wxTextEntryDialog dialog(this, _T("Enter display command and temporary display file on separate lines"),
     _T("Parameters for structure display"), m_DisplayCmd + _T('\n') + m_DisplayFile,
@@ -559,7 +559,7 @@ void OBGUIFrame::OnSetDisplayFile(wxCommandEvent& event)
   }
 }
 
-void OBGUIFrame::OnSetMinSize(wxCommandEvent& event)
+void OBGUIFrame::OnSetMinSize(wxCommandEvent& /*event*/)
 {
   SetSize(872, 249);
 }
@@ -1057,7 +1057,7 @@ BEGIN_EVENT_TABLE(CFilenames,wxTextCtrl)
   EVT_CHAR(CFilenames::OnKeyPress)
 END_EVENT_TABLE()
 
-void CFilenames::OnDblClick(wxMouseEvent& event)
+void CFilenames::OnDblClick(wxMouseEvent& /*event*/)
 {
   //extract double-clicked filename
   OBGUIFrame* frame = static_cast<OBGUIFrame*>(GetParent()->GetParent());

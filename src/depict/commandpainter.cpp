@@ -112,7 +112,7 @@ namespace OpenBabel
     m_ofs << "DrawCircle " << x << " " << y << " radius " << r << endl;
   }
 
-  void CommandPainter::DrawBall(double x, double y, double r, double opacity)
+  void CommandPainter::DrawBall(double x, double y, double r, double /*opacity*/)
   {
     m_ofs << "DrawBall " << x << " " << y << " radius " << r << endl;
   }
@@ -122,7 +122,7 @@ namespace OpenBabel
     m_ofs << "DrawText " << x << " " << y << " \"" << text << "\"" << endl;
   }
 
-  OBFontMetrics CommandPainter::GetFontMetrics(const std::string &text)
+  OBFontMetrics CommandPainter::GetFontMetrics(const std::string& /*text*/)
   {
     OBFontMetrics metrics;
     metrics.fontSize = 0;

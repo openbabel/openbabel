@@ -105,7 +105,7 @@ void OpTransform::ParseLine(const char *buffer)
     }
   }
 }
-bool OpTransform::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpTransform::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* /*pOptions*/, OBConversion* /*pConv*/)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

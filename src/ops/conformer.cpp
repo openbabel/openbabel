@@ -102,7 +102,7 @@ namespace OpenBabel
   }
 
   //////////////////////////////////////////////////////////
-  bool OpConformer::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
+  bool OpConformer::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* pmap, OBConversion*)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)

@@ -32,7 +32,7 @@ public:
     "Append input index to title\n"
     "These are objects before filtering. Use AddOutIndex for objects after filtering\n"; }
 
-  bool WorksWith(OBBase* pOb) const override { return true; }  // all objects
+  bool WorksWith(OBBase* /*pOb*/) const override { return true; }  // all objects
   bool Do(OBBase* pOb, const char*, OpMap*, OBConversion* pConv=nullptr) override;
 };
 
@@ -40,7 +40,7 @@ public:
 OpAddInIndex theOpAddInIndex("AddInIndex"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpAddInIndex::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpAddInIndex::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* /*pOptions*/, OBConversion* pConv)
 {
   int count = pConv->GetCount();
   if(count>=0) // add nothing unless Convert interface of OBConversion is being used

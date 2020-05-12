@@ -13,7 +13,7 @@ using std::endl;
 using namespace OpenBabel;
 
 
-int canonstabletest(int argc, char *argv[])
+int canonstabletest(int /*argc*/, char * /*argv*/[])
 {
 
   // Define location of file formats for testing

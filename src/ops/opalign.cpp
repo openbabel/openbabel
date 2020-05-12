@@ -88,7 +88,7 @@ private:
 OpAlign theSecondOpAlign("align");
 
 /////////////////////////////////////////////////////////////////
-bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpAlign::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* pmap, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

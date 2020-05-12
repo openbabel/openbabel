@@ -1194,7 +1194,7 @@ namespace OpenBabel
     return true;
   }
 
-  bool CMLFormat::TransferElement(cmlArray& arr)
+  bool CMLFormat::TransferElement(cmlArray& /*arr*/)
   {
     //Reads the attributes of the current node, e.g. <atom id="a1" elementType="C"/>
     //pushes each of them as a pairs into each of the members of the array
@@ -2401,7 +2401,7 @@ namespace OpenBabel
   }
 
 
-  bool CMLFormat::WriteScalarProperty(OBMol& mol,
+  bool CMLFormat::WriteScalarProperty(OBMol& /*mol*/,
     const char* title, double value, const char* dictref, const char* units, const char* convention)
   {
     static const xmlChar C_PROPERTY[]     = "property";

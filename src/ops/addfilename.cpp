@@ -33,7 +33,7 @@ public:
     "Any path is removed from the filename\n"
     ; }
 
-  bool WorksWith(OBBase* pOb) const override { return true; }  // all OBBase objects
+  bool WorksWith(OBBase* /*pOb*/) const override { return true; }  // all OBBase objects
   bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr) override;
 };
 
@@ -41,7 +41,7 @@ public:
 OpAddFileName theOpAddFileName("addfilename"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpAddFileName::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpAddFileName::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* /*pOptions*/, OBConversion* pConv)
 {
   if(!pConv)
     return true; //do not stop any conversion but do nothing
