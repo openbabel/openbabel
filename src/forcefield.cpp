@@ -2739,7 +2739,7 @@ namespace OpenBabel
     delete atom;
   }
 
-  void OBForceField::SteepestDescentInitialize(int steps, double econv, int method)
+  void OBForceField::SteepestDescentInitialize(int steps, double econv, int /*method*/)
   {
     if (!_validSetup)
       return;
@@ -2865,7 +2865,7 @@ namespace OpenBabel
   }
 
   void OBForceField::ConjugateGradientsInitialize(int steps, double econv,
-                                                  int method)
+                                                  int /*method*/)
   {
     if (!_validSetup || steps==0)
       return;
@@ -3514,7 +3514,7 @@ namespace OpenBabel
     //cout << "E_{kin_corr} = sum( m_i * v_i^2 ) = " << E_kin2 << endl;
   }
 
-  void OBForceField::MolecularDynamicsTakeNSteps(int n, double T, double timestep, int method)
+  void OBForceField::MolecularDynamicsTakeNSteps(int n, double T, double timestep, int /*method*/)
   {
     if (!_validSetup)
       return;

@@ -207,7 +207,7 @@ At the end, any OBMol in the map not marked as Used is output as an OBMol.
 */
 
 
-bool ChemDrawBinaryXFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+bool ChemDrawBinaryXFormat::ReadMolecule(OBBase* /*pOb*/, OBConversion* pConv)
 {
   _molmap.clear();
   _graphicmap.clear();
@@ -465,7 +465,7 @@ bool ChemDrawBinaryXFormat::DoFragment(CDXReader& cdxr, OBMol* pmol)
 }
 
 bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol, 
-       map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& updown)
+       map<CDXObjectID, unsigned>& atommap, map<OBBond*, OBStereo::BondDirection>& /*updown*/)
 {
   CDXTag tag;
   std::vector<OBAtom*> handleImplicitCarbons;

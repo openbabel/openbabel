@@ -88,7 +88,7 @@ public:
     };
 
     /// Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+    virtual int SkipObjects(int /*n*/, OpenBabel::OBConversion* /*pConv*/ ) { return 0; }
 
     /// Read.
     virtual bool ReadMolecule( OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv );

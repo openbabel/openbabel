@@ -71,7 +71,7 @@ public:
   }
 
 ///Returns the result of evaluating the conditional expressions in the macrotext
-  virtual bool Compare(OBBase* pOb, istream&, bool noEval, string* param)
+  virtual bool Compare(OBBase* pOb, istream&, bool noEval, string* /*param*/)
   {
     stringstream ss;
     ss.str(_macroText);

@@ -61,7 +61,7 @@ namespace OpenBabel
       // prepare for new SMILES
     }
 
-    void addAtom(int element, bool aromatic, int isotope, int hCount, int charge, int atomClass)
+    void addAtom(int element, bool aromatic, int isotope, int hCount, int charge, int /*atomClass*/)
     {
       // invoked when an atom is completely parsed
 

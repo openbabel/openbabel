@@ -280,7 +280,7 @@ namespace OpenBabel {
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+    virtual bool ReadMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
       { return false; }
     virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
@@ -685,7 +685,7 @@ public:
     };
 
     /// Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OBConversion* pConv ) { return 0; }
+    virtual int SkipObjects(int /*n*/, OBConversion* /*pConv*/) { return 0; }
 
     /// Read.
     virtual bool ReadMolecule( OBBase* pOb, OBConversion* pConv );
@@ -811,7 +811,7 @@ bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     return ReadASCII(pOb, pConv);
 }
 
-bool OBT41Format::ReadBinary( OBBase* pOb, OBConversion* pConv )
+bool OBT41Format::ReadBinary(OBBase* /*pOb*/, OBConversion* /*pConv*/)
 {
   obErrorLog.ThrowError( __FUNCTION__, "OpenBabel does not currently support the TAPE41 binary format. Please use dmpkf to convert to ASCII.", obError );
   return false;

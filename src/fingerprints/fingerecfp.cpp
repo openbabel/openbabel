@@ -50,7 +50,7 @@ public:
 	virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0);
 
   /// \returns fragment info unless SetFlags(OBFingerprint::FPT_NOINFO) has been called before GetFingerprint() called.
-  virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+  virtual std::string DescribeBits(const std::vector<unsigned int> /*fp*/, bool /*bSet*/ = true)
   { return _ss.str(); }
 
   virtual unsigned int Flags() { return _flags;};
