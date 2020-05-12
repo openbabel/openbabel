@@ -43,11 +43,11 @@ class OBAPI OBAtomTyper : public OBGlobalDataBase
 
 public:
     OBAtomTyper();
-    OBAtomTyper(const OBAtomTyper& rhs) {abort();}
+    OBAtomTyper(const OBAtomTyper& /*rhs*/) {abort();}
     ~OBAtomTyper();
 
     //swig is requiring these, but I can't figure out how to make it not, so definte with abort
-    const OBAtomTyper& operator=(const OBAtomTyper& rhs) {abort();}
+    const OBAtomTyper& operator=(const OBAtomTyper& /*rhs*/) {abort();}
 
     void ParseLine(const char*) override;
     //! \return the number of internal hybridization rules

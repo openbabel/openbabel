@@ -82,7 +82,7 @@ namespace OpenBabel
   ReactionInChIFormat theReactionInChIFormat;
 
   /////////////////////////////////////////////////////////////////
-  bool ReactionInChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  bool ReactionInChIFormat::ReadMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
   {
     return true;
   }
