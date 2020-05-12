@@ -646,17 +646,17 @@ namespace Smiley {
      * Set the chirality for an atom. This method is invoked when the entire
      * SMILES/SMARTS is parsed.
      */
-    void setChiral(int index, Chirality chirality, const std::vector<int> &chiralNbrs) {}
+    void setChiral(int /*index*/, Chirality /*chirality*/, const std::vector<int> &/*chiralNbrs*/) {}
     //@}
     //@name SMILES
     /**
      * Invoked when an atom is completly parsed.
      */
-    void addAtom(int element, bool aromatic, int isotope, int hCount, int charge, int atomClass) {}
+    void addAtom(int /*element*/, bool /*aromatic*/, int /*isotope*/, int /*hCount*/, int /*charge*/, int /*atomClass*/) {}
     /**
      * Invoked once both bon atom are added using addAtom().
      */
-    void addBond(int source, int target, int order, bool isUp, bool isDown) {}
+    void addBond(int /*source*/, int /*target*/, int /*order*/, bool /*isUp*/, bool /*isDown*/) {}
     //@}
     //@name SMARTS
     //@{
@@ -664,33 +664,33 @@ namespace Smiley {
      * Invoked when a unary or binary logical operator is parsed
      * (i.e. '&', ';' or ','). This method is also invoked for implicit AND.
      */
-    void operation(int type) {}
+    void operation(int /*type*/) {}
     /**
      * Invoked when an unbracketed atom (i.e. organic subset) is parsed.
      */
-    void addOrganicSubsetAtom(int element, bool aromatic) {}
+    void addOrganicSubsetAtom(int /*element*/, bool /*aromatic*/) {}
     /**
      * Invoked when an atom primitive is parsed.
      */
-    void atomPrimitive(int type, int value) {}
+    void atomPrimitive(int /*type*/, int /*value*/) {}
     /**
      * Invoked when a bond primitive is parsed. This method is also invoked for
      * implicit bonds.
      */
-    void bondPrimitive(int type) {}
+    void bondPrimitive(int /*type*/) {}
     /**
      * Invoked when a branch ends and the next bond should start from a
      * previously parsed atom expression with specified @p index.
      */
-    void setPrevious(int index) {}
+    void setPrevious(int /*index*/) {}
     /**
      * Invoked when a new ring bond number is parsed.
      */
-    void startRingBond(int number) {}
+    void startRingBond(int /*number*/) {}
     /**
      * Invoked when a prviously found ring bond number is parsed to add the bond.
      */
-    void endRingBond(int number, int index) {}
+    void endRingBond(int /*number*/, int /*index*/) {}
     //@}
   };
 
@@ -1771,7 +1771,7 @@ namespace Smiley {
       }
 
       bool parseCharNumber(char chr, int type, int &parsedOp,
-          bool firstPrimitive, bool noDefault = false)
+          bool firstPrimitive, bool /*noDefault*/ = false)
       {
         if (DEBUG)
           std::cout << "parseCharNumber(" << m_str.substr(m_pos) << ")" << std::endl;

@@ -117,7 +117,7 @@ namespace OpenBabel
 
   ////////////////////////////////////////////////////
   /// Utility functions
-  static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
+  static bool parseAtomRecord(char *buffer, OBMol & mol, int /*chainNum*/);
   static bool IsRotBond_PDBQT(OBBond * the_bond);
   static bool IsIn(const vector<int>& vec, const int num);
   static void OutputAtom(OBAtom* atom, ostream& ofs, unsigned int index);
@@ -126,7 +126,7 @@ namespace OpenBabel
   static bool FindBondedPiece(const vector<int>& root, const vector<int>& branch, unsigned int& root_atom, unsigned int& branch_atom,
                 unsigned int& root_atom_rank, unsigned int& branch_atom_rank, const OBMol& mol, unsigned int & atoms_moved);
   static bool OutputTree(OBConversion *pConv, OBMol& mol, ostream& ofs, map <unsigned int, branch >& tree, unsigned int depth, bool moves_many, bool preserve_original_index);
-  static void ConstructTree (map <unsigned int, branch >& tree, vector <vector <int> > rigid_fragments, unsigned int root_piece, const OBMol& mol, bool flexible);
+  static void ConstructTree(map <unsigned int, branch>& tree, vector<vector<int>> rigid_fragments, unsigned int root_piece, const OBMol& mol, bool /*flexible*/);
   static bool DeleteHydrogens(OBMol & mol);
   static bool Separate_preserve_charges(OBMol & mol, vector<OBMol> & result);
   static unsigned int FindFragments(OBMol mol, vector <vector <int> >& rigid_fragments);
@@ -612,7 +612,7 @@ namespace OpenBabel
     return true;
   }
 
-  void ConstructTree (map <unsigned int, branch>& tree, vector <vector <int> > rigid_fragments, unsigned int root_piece, const OBMol& mol, bool flexible)
+  void ConstructTree(map <unsigned int, branch>& tree, vector<vector<int>> rigid_fragments, unsigned int root_piece, const OBMol& mol, bool /*flexible*/)
   {
     unsigned int first_atom = 0;
     unsigned int second_atom = 0;
@@ -1056,7 +1056,7 @@ namespace OpenBabel
 
   /////////////////////////////////////////////////////////////////////////
 
-  static bool parseAtomRecord(char *buffer, OBMol &mol,int chainNum)
+  static bool parseAtomRecord(char *buffer, OBMol &mol, int /*chainNum*/)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
   {
     string sbuf = &buffer[6];

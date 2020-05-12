@@ -65,7 +65,7 @@ public:
    For the rest, even when stopped by encountering atoms already visited
          0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
   **/
-  std::string DescribeBits(const std::vector<unsigned int> fp, bool bSet=true) override
+  std::string DescribeBits(const std::vector<unsigned int> /*fp*/, bool /*bSet*/ = true) override
   { return _ss.str(); }
 
   unsigned int Flags() override { return _flags; }
