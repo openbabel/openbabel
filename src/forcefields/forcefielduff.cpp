@@ -1647,7 +1647,7 @@ namespace OpenBabel {
         parameter.b = 0; // used for tracking number of angles in 5-coordinate
         parameter.c = 0;
 
-        char coord = vs[1][2]; // 3rd character of atom type
+        char coord = vs[1][1] ? vs[1][2] : '\0'; // 3rd character of atom type, if any
         switch (coord) {
         case '1': // linear
           parameter._ipar.push_back(1);
