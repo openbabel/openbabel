@@ -5112,7 +5112,7 @@ namespace OpenBabel {
 
     try {
       OpenDatafile(ifs, filename);
-    } catch (exception ex) {
+    } catch (exception &ex) {
       return result;
     };
 
@@ -7068,7 +7068,7 @@ namespace OpenBabel {
                   n1=-1;
                   sa1="00";//"zz";
                 };
-              } catch (exception ex) {
+              } catch (exception &ex) {
                 n1=-1;
               };
             };
@@ -7082,7 +7082,7 @@ namespace OpenBabel {
                   n2=-1;
                   sa2="00";//"zz";
                 };
-              } catch (exception ex) {
+              } catch (exception &ex) {
                 n2=-1;
               };
             };
