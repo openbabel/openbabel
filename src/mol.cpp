@@ -3164,7 +3164,13 @@ namespace OpenBabel
     EndModify();
     if (unset)
       {
-        _c = nullptr;
+        if (_c != nullptr){
+          delete [] _c;
+
+          // Note that the above delete doesn't set _c value to nullptr
+          _c = nullptr;
+        }
+
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))
           atom->ClearCoordPtr();
 	if (_vconf.size() > 0)
