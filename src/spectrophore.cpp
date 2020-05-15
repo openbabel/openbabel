@@ -329,10 +329,22 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
       _coor[i] = nullptr;
    }
    delete[] REF1;
+   REF1 = nullptr;
+
    delete[] REF2;
+   REF2 = nullptr;
+
    delete[] _radii;
    _radii = nullptr;
 
+   delete[] _property;
+   _property = nullptr;
+
+   delete[] _oricoor;
+   _oricoor = nullptr;
+
+   delete[] _coor;
+   _coor = nullptr;
 
    // Modify the actual sphore data
    _spectro.resize(sphoreSize);
