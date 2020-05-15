@@ -255,7 +255,8 @@ public:
       int num =  ppat->numbits, div = ppat->numoccurrences+1, ngrp;
       while(num) //for each group of bits
       {
-        ngrp = (num + div -1)/div--; //rounds up
+        ngrp = (num + div - 1) / div; //rounds up
+        div -= 1;
         num -= ngrp;
         if(GetBit(fp, n) == bSet)
         {

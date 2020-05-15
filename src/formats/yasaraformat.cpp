@@ -224,8 +224,7 @@ int mob_atomsize(struct mobatom *atom)
 /* MOVE POINTER TO NEXT ATOM OF YASARA OBJECT STRUCTURE
    ==================================================== */
 struct mobatom *mob_next(struct mobatom *atom)
-{ mem_inc(atom,mob_atomsize(atom));
-  return(atom); }
+{ return((struct mobatom *) ((char *) atom + mob_atomsize(atom))); }
 
 void mob_setnext(struct mobatom **atomadd)
 { *atomadd=mob_next(*atomadd); }
@@ -437,7 +436,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     *((int32*)atomname)=id.atom;
     atomname[4]=0;
     /* SHIFT ATOM NAME BY ONE CHARACTER TO REMOVE LEADING SPACE */
-    if (atomname[0]==' '&&(!pConv->IsOption("f",OBConversion::INOPTIONS))) memcpy(atomname,atomname+1,4);
+    if (atomname[0]==' '&&(!pConv->IsOption("f",OBConversion::INOPTIONS))) memmove(atomname,atomname+1,4);
     /* RENAME TERMINAL OXYGENS */
     str=atomname;
     if (str=="OT1") str="O";
