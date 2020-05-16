@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #endif
 
 #include <algorithm>
+#include <iterator> // Required for MSVC2015 use of std::back_inserter
 
 using namespace std;
 namespace OpenBabel
