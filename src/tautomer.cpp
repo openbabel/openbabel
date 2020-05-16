@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <cassert>
 #include <algorithm>
+#include <iterator> // Required for MSVC2015 use of std::back_inserter
 
 namespace OpenBabel {
 
