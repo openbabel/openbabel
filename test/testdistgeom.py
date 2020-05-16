@@ -42,13 +42,13 @@ class TestDistanceGeomStereo(BaseTest):
             'C1CC[C@H]2[C@@H](C1)CCCC2',  # cis-decalin
             'C1CC[C@@H]2[C@@H](C1)CCCC2',  # trans-decalin
             '[C@H]1(NC[C@H]2[C@H]1N2)OC',
-            'Clc1cccc(Cl)c1\C=N\NC(=O)c1cccs1',
-            'O=C1NC(=S)S\C1=C/c1ccco1',
+            'Clc1cccc(Cl)c1\\C=N\\NC(=O)c1cccs1',
+            'O=C1NC(=S)S\\C1=C/c1ccco1',
             'S=C1NC(=O)/C(=C/c2ccco2)/S1',
-            'O=C1NC(=S)N\C1=C\c1ccncc1',
+            'O=C1NC(=S)N\\C1=C\\c1ccncc1',
             'S=C1NC(=O)C(=C)N1',
-            'CC(=O)N\N=C\c1ccncc1',
-            'N/N=c/1\sc2c(n1C)cccc2',
+            'CC(=O)N\\N=C\\c1ccncc1',
+            'N/N=c/1\\sc2c(n1C)cccc2',
             'OCCN/C=C\\1/C(=NN(C1=O)c1ccccc1)C',
             'Cc1ccc(o1)/C=C/C=O',
             # disabled to make test run faster:
