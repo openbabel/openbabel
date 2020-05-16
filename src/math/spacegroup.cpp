@@ -309,8 +309,11 @@ namespace OpenBabel
       }
     }
 
-    if (!transform_exists)
+    if (transform_exists){
+      delete candidate;
+    }else{
       m_transforms.push_back (candidate);
+    }
   }
 
   /*!
