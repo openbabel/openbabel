@@ -39,6 +39,24 @@ using namespace std;
 namespace OpenBabel
 {
 
+  OBGroupContrib::~OBGroupContrib()
+  {
+    vector<pair<OBSmartsPattern*, double> >::iterator i;
+
+    for (i = _contribsHeavy.begin();i != _contribsHeavy.end();++i) {
+      if (i->first != nullptr){
+        delete i->first;
+      }
+    }
+
+    for (i = _contribsHydrogen.begin();i != _contribsHydrogen.end();++i) {
+      if (i->first != nullptr){
+        delete i->first;
+      }
+    }
+
+  }
+
   const char* OBGroupContrib::Description()
   {
    //Adds name of datafile containing SMARTS strings to the description
@@ -80,8 +98,7 @@ namespace OpenBabel
       if (vs.size() < 2)
         continue;
 
-      sp = new OBSmartsPattern;//causes non-serious memory leak.
-      // Could be cured by copying OBSmartsPattern rather than a pointer in vectors
+      sp = new OBSmartsPattern;
       if (sp->Init(vs[0]))
       {
         if (heavy)
