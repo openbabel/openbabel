@@ -75,7 +75,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
   bool ChemDoodleJSONFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol *pmol = pOb->CastAndClear<OBMol>();
-    if (pmol == NULL) return false;
+    if (pmol == nullptr) return false;
     istream &ifs = *pConv->GetInStream();
 
     if (!ifs.good())
@@ -366,7 +366,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
   bool ChemDoodleJSONFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
-    if (pmol == NULL)
+    if (pmol == nullptr)
       return false;
     ostream &ofs = *pConv->GetOutStream();
 
@@ -387,7 +387,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       TetStereoToWedgeHash(*pmol, updown, from);
 
     // Whether to include default values
-    bool verbose = pConv->IsOption("v", pConv->OUTOPTIONS) != NULL;
+    bool verbose = pConv->IsOption("v", pConv->OUTOPTIONS) != nullptr;
 
     // Must always pass an allocator when memory may need to be allocated
     rapidjson::Document::AllocatorType &al = outRoot.GetAllocator();

@@ -628,7 +628,7 @@ namespace OpenBabel {
     parameterA = GetParameterUFF(a->GetType(), _ffparams);
     parameterB = GetParameterUFF(b->GetType(), _ffparams);
 
-    if (parameterA == NULL || parameterB == NULL) {
+    if (parameterA == nullptr || parameterB == nullptr) {
       IF_OBFF_LOGLVL_LOW {
         snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR VDW INTERACTION %d-%d (IDX)...\n",
                  a->GetIdx(), b->GetIdx());
@@ -771,7 +771,7 @@ namespace OpenBabel {
       parameterB = GetParameterUFF(atom->GetType(), _ffparams);
 
       // GitHub issue #1794
-      if (parameterB == NULL) {
+      if (parameterB == nullptr) {
         snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
                  atom->GetIdx());
         obErrorLog.ThrowError(__FUNCTION__, _logbuf, obWarning);
@@ -782,14 +782,14 @@ namespace OpenBabel {
 
       if (GetCoordination(&*atom, parameterB->_ipar[0]) == 5) { // we need to do work for trigonal-bipy!
         // First, find the two largest neighbors
-        OBAtom *largestNbr, *current, *secondLargestNbr = 0;
+        OBAtom *largestNbr, *current, *secondLargestNbr = nullptr;
         double largestRadius;
         OBBondIterator i;
         largestNbr = atom->BeginNbrAtom(i);
         // work out the radius
         parameterA = GetParameterUFF(largestNbr->GetType(), _ffparams);
 
-        if (parameterA == NULL) {
+        if (parameterA == nullptr) {
           IF_OBFF_LOGLVL_LOW {
             snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
                 largestNbr->GetIdx());
@@ -803,7 +803,7 @@ namespace OpenBabel {
         for (current = atom->NextNbrAtom(i); current; current = atom->NextNbrAtom(i)) {
           parameterA = GetParameterUFF(current->GetType(), _ffparams);
 
-          if (parameterA == NULL) {
+          if (parameterA == nullptr) {
             IF_OBFF_LOGLVL_LOW {
               snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
                   current->GetIdx());
@@ -818,7 +818,7 @@ namespace OpenBabel {
             largestRadius = parameterA->_dpar[0];
             largestNbr = current;
           }
-          if (secondLargestNbr == NULL) {
+          if (secondLargestNbr == nullptr) {
             // save this atom
             secondLargestNbr = current;
           }
@@ -835,7 +835,7 @@ namespace OpenBabel {
         label->SetValue("True");
         largestNbr->SetData(label);
 
-        if (secondLargestNbr != NULL) { // check for NULL, no guarantee
+        if (secondLargestNbr != nullptr) { // check for NULL, no guarantee
           label = new OBPairData;
           label->SetAttribute("UFF_AXIAL_ATOM");
           label->SetValue("True");
@@ -845,14 +845,14 @@ namespace OpenBabel {
       } // end work for 5-coordinate angles
       if (GetCoordination(&*atom, parameterB->_ipar[0]) == 7) { // pentagonal bipyramidal
         // First, find the two largest neighbors
-        OBAtom *largestNbr, *current, *secondLargestNbr = 0;
+        OBAtom *largestNbr, *current, *secondLargestNbr = nullptr;
         double largestRadius;
         OBBondIterator i;
         largestNbr = atom->BeginNbrAtom(i);
         // work out the radius
         parameterA = GetParameterUFF(largestNbr->GetType(), _ffparams);
 
-        if (parameterA == NULL) {
+        if (parameterA == nullptr) {
           IF_OBFF_LOGLVL_LOW {
             snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
                 largestNbr->GetIdx());
@@ -866,7 +866,7 @@ namespace OpenBabel {
         for (current = atom->NextNbrAtom(i); current; current = atom->NextNbrAtom(i)) {
           parameterA = GetParameterUFF(current->GetType(), _ffparams);
 
-          if (parameterA == NULL) {
+          if (parameterA == nullptr) {
             IF_OBFF_LOGLVL_LOW {
               snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ATOM %d (IDX)...\n",
                   current->GetIdx());
@@ -881,7 +881,7 @@ namespace OpenBabel {
             largestRadius = parameterA->_dpar[0];
             largestNbr = current;
           }
-          if (secondLargestNbr == NULL) {
+          if (secondLargestNbr == nullptr) {
             // save this atom
             secondLargestNbr = current;
           }
@@ -897,7 +897,7 @@ namespace OpenBabel {
         label->SetAttribute("UFF_AXIAL_ATOM");
         label->SetValue("True");
         largestNbr->SetData(label);
-        if (secondLargestNbr != NULL) { // check for NULL, no guarantee
+        if (secondLargestNbr != nullptr) { // check for NULL, no guarantee
           label = new OBPairData;
           label->SetAttribute("UFF_AXIAL_ATOM");
           label->SetValue("True");
@@ -948,7 +948,7 @@ namespace OpenBabel {
       parameterA = GetParameterUFF(a->GetType(), _ffparams);
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
 
-      if (parameterA == NULL || parameterB == NULL) {
+      if (parameterA == nullptr || parameterB == nullptr) {
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n",
                    a->GetIdx(), b->GetIdx());
@@ -1010,7 +1010,7 @@ namespace OpenBabel {
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
       parameterC = GetParameterUFF(c->GetType(), _ffparams);
 
-      if (parameterA == NULL || parameterB == NULL || parameterC == NULL) {
+      if (parameterA == nullptr || parameterB == nullptr || parameterC == nullptr) {
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR ANGLE %d-%d-%d (IDX)...\n",
                    a->GetIdx(), b->GetIdx(), c->GetIdx());
@@ -1235,7 +1235,7 @@ namespace OpenBabel {
       parameterB = GetParameterUFF(b->GetType(), _ffparams);
       parameterC = GetParameterUFF(c->GetType(), _ffparams);
 
-      if (parameterB == NULL || parameterC == NULL) {
+      if (parameterB == nullptr || parameterC == nullptr) {
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR TORSION X-%d-%d-X (IDX)...\n",
                    b->GetIdx(), c->GetIdx());
@@ -1360,9 +1360,9 @@ namespace OpenBabel {
       if (b->GetExplicitDegree() > 3) // no OOP for hypervalent atoms
         continue;
 
-      a = NULL;
-      c = NULL;
-      d = NULL;
+      a = nullptr;
+      c = nullptr;
+      d = nullptr;
 
       if (EQn(b->GetType(), "N_3", 3) ||
           EQn(b->GetType(), "N_2", 3) ||
@@ -1397,15 +1397,15 @@ namespace OpenBabel {
         continue; // inversion not defined for this atom type
 
       FOR_NBORS_OF_ATOM(nbr, b) {
-        if (a == NULL)
+        if (a == nullptr)
           a = (OBAtom*) &*nbr;
-        else if (c == NULL)
+        else if (c == nullptr)
           c = (OBAtom*) &*nbr;
         else
           d = (OBAtom*) &*nbr;
       }
 
-      if ((a == NULL) || (c == NULL) || (d == NULL))
+      if (a == nullptr || c == nullptr || d == nullptr)
         continue;
 
       // skip this oop if the atoms are ignored
@@ -1647,7 +1647,7 @@ namespace OpenBabel {
         parameter.b = 0; // used for tracking number of angles in 5-coordinate
         parameter.c = 0;
 
-        char coord = vs[1][2]; // 3rd character of atom type
+        char coord = vs[1][1] ? vs[1][2] : '\0'; // 3rd character of atom type, if any
         switch (coord) {
         case '1': // linear
           parameter._ipar.push_back(1);
@@ -1718,7 +1718,7 @@ namespace OpenBabel {
         }
         else {
           delete sp;
-          sp = NULL;
+          sp = nullptr;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from UFF.prm", obInfo);
           return false;
         }
@@ -1824,7 +1824,7 @@ namespace OpenBabel {
         return &parameter[idx];
       }
     }
-    return NULL;
+    return nullptr;
   }
 
   bool OBForceFieldUFF::ValidateGradients ()

@@ -332,7 +332,6 @@ namespace OpenBabel {
        */
       void SetScore(OBConformerScore *score)
       {
-        delete m_score;
         m_score = score;
       }
 

@@ -87,7 +87,7 @@ namespace OpenBabel
         else
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse INTHYB line in atom type table from atomtyp.txt", obInfo);
             return;
           }
@@ -106,7 +106,7 @@ namespace OpenBabel
         else
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse EXTTYP line in atom type table from atomtyp.txt", obInfo);
             return;
           }
@@ -119,14 +119,14 @@ namespace OpenBabel
     for (i = _vinthyb.begin();i != _vinthyb.end();++i)
       {
         delete i->first;
-        i->first = NULL;
+        i->first = nullptr;
       }
 
     vector<pair<OBSmartsPattern*,string> >::iterator j;
     for (j = _vexttyp.begin();j != _vexttyp.end();++j)
       {
         delete j->first;
-        j->first = NULL;
+        j->first = nullptr;
       }
 
   }
@@ -266,7 +266,7 @@ namespace OpenBabel
         _ringtyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[1]));
       else {
         delete sp;
-        sp = NULL;
+        sp = nullptr;
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse RING line in ring type table from ringtyp.txt", obInfo);
         return;
       }
@@ -278,7 +278,7 @@ namespace OpenBabel
     vector<pair<OBSmartsPattern*,string> >::iterator i;
     for (i = _ringtyp.begin();i != _ringtyp.end();++i) {
       delete i->first;
-      i->first = NULL;
+      i->first = nullptr;
     }
   }
 

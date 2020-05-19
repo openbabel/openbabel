@@ -67,7 +67,7 @@ ViewMolFormat theViewMolFormat;
 bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
         return false;
 
     //Define some references so we can use the old parameter names
@@ -90,7 +90,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     ifs.getline(buffer,BUFF_SIZE);
     while (ifs.peek() != EOF && ifs.good())
     {
-        if (strstr(buffer,"$title") != NULL)
+        if (strstr(buffer, "$title") != nullptr)
         {
             if (!ifs.getline(buffer,BUFF_SIZE))
                 return (false);
@@ -98,7 +98,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
             foundTitle = true;
 	    ifs.getline(buffer,BUFF_SIZE);
         }
-        else if (strstr(buffer,"$coord") != NULL)
+        else if (strstr(buffer, "$coord") != nullptr)
         {
             tokenize(vs,buffer);
             if (vs.size() == 2)
@@ -119,7 +119,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 atom->SetAtomicNum(OBElements::GetAtomicNum(vs[3].c_str()));
             }
         }
-        else if (strstr(buffer,"$bonds") != NULL)
+        else if (strstr(buffer, "$bonds") != nullptr)
         {
             foundBonds = true;
             while (ifs.getline(buffer,BUFF_SIZE))
@@ -134,7 +134,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
                 mol.AddBond(bgn+1,end+1,order);
             }
         }
-        else if (strstr(buffer,"$end") != NULL)
+        else if (strstr(buffer, "$end") != nullptr)
 	  break;
 	else // something else (i.e., garbage, blank lines, etc.)
 	  ifs.getline(buffer,BUFF_SIZE);
@@ -160,7 +160,7 @@ bool ViewMolFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool ViewMolFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
         return false;
 
     //Define some references so we can use the old parameter names

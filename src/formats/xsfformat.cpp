@@ -72,7 +72,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -97,7 +97,7 @@ namespace OpenBabel
       {
         if (buffer[0] == '#')
           continue; // comment
-        if (strstr(buffer, "ATOMS") != NULL) {
+        if (strstr(buffer, "ATOMS") != nullptr) {
           // Minimum of 4 columns -- AtNum, x, y, z (forces)
           // where AtNum stands for atomic number (or symbol), while X Y Z are
           ifs.getline(buffer, BUFF_SIZE);
@@ -135,7 +135,7 @@ namespace OpenBabel
             translationVectors[numTranslationVectors++].Set(x, y, z);
           }
         }
-        else if (strstr(buffer, "PRIMCOORD") != NULL) {
+        else if (strstr(buffer, "PRIMCOORD") != nullptr) {
           // read the coordinates
           ifs.getline(buffer, BUFF_SIZE);
           tokenize(vs, buffer);

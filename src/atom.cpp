@@ -115,13 +115,13 @@ namespace OpenBabel
 
   OBAtom::OBAtom()
   {
-    _parent = (OBMol*)NULL;
+    _parent = nullptr;
     Clear();
   }
 
   OBAtom::~OBAtom()
   {
-    if (_residue != NULL)
+    if (_residue != nullptr)
       {
         _residue->RemoveAtom(this);
       }
@@ -138,7 +138,7 @@ namespace OpenBabel
 
   bool OBAtom::Clear()
   {
-    _c = (double**)NULL;
+    _c = nullptr;
     _cidx = 0;
     _flags=0;
     _idx = 0;
@@ -152,7 +152,7 @@ namespace OpenBabel
     _pcharge = 0.0;
     _vbond.clear();
     _vbond.reserve(4);
-    _residue = (OBResidue*)NULL;
+    _residue = nullptr;
     _id = NoId;
 
     return(OBBase::Clear());
@@ -185,7 +185,7 @@ namespace OpenBabel
     _pcharge = src->_pcharge;
     _v = src->GetVector();
     _flags = src->_flags;
-    _residue = (OBResidue*)NULL;
+    _residue = nullptr;
     _id = src->_id;
 
     _vdata.clear();
@@ -602,7 +602,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
 
-    atom = NULL;
+    atom = nullptr;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Carbon)
         {
@@ -630,7 +630,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
 
-    atom = NULL;
+    atom = nullptr;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Phosphorus)
         {
@@ -658,7 +658,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
 
-    atom = NULL;
+    atom = nullptr;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Sulfur)
         {
@@ -690,7 +690,7 @@ namespace OpenBabel
       return(false);
       }
 
-    OBAtom *nbr = NULL;
+    OBAtom *nbr = nullptr;
     OBBond *bond1,*bond2;
     OBBondIterator i,j;
 
@@ -735,7 +735,7 @@ namespace OpenBabel
     OBBond *bond;
     OBBondIterator i;
 
-    atom = NULL;
+    atom = nullptr;
     for (bond = BeginBond(i);bond;bond = NextBond(i))
       if ((bond->GetNbrAtom(this))->GetAtomicNum() == OBElements::Nitrogen)
         {
@@ -1082,25 +1082,25 @@ namespace OpenBabel
   OBBond *OBAtom::BeginBond(OBBondIterator &i)
   {
     i = _vbond.begin();
-    return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
+    return i == _vbond.end() ? nullptr : (OBBond*)*i;
   }
 
   OBBond *OBAtom::NextBond(OBBondIterator &i)
   {
     i++;
-    return((i == _vbond.end()) ? (OBBond*)NULL : (OBBond*)*i);
+    return i == _vbond.end() ? nullptr : (OBBond*)*i;
   }
 
   OBAtom *OBAtom::BeginNbrAtom(OBBondIterator &i)
   {
     i = _vbond.begin();
-    return((i != _vbond.end()) ? ((OBBond*) *i)->GetNbrAtom(this):NULL);
+    return i != _vbond.end() ? ((OBBond*) *i)->GetNbrAtom(this) : nullptr;
   }
 
   OBAtom *OBAtom::NextNbrAtom(OBBondIterator &i)
   {
     i++;
-    return((i != _vbond.end()) ?  ((OBBond*) *i)->GetNbrAtom(this):NULL);
+    return i != _vbond.end() ? ((OBBond*) *i)->GetNbrAtom(this) : nullptr;
   }
 
   double OBAtom::GetDistance(OBAtom *b)
@@ -1317,7 +1317,7 @@ namespace OpenBabel
         matrix3x3 m;
         vector3 v1,v2,v3,v4,n,s;
         OBAtom *r1,*r2,*r3,*a1,*a2,*a3,*a4;
-        r1 = r2 = r3 = a1 = a2 = a3 = a4 = NULL;
+        r1 = r2 = r3 = a1 = a2 = a3 = a4 = nullptr;
 
         //find ring atoms first
         for (nbr = BeginNbrAtom(i);nbr;nbr = NextNbrAtom(i))
@@ -1596,7 +1596,7 @@ namespace OpenBabel
     for (bond = BeginBond(i) ; bond ; bond = NextBond(i))
       if (bond->GetNbrAtom(this) == nbr)
         return bond;
-    return NULL;
+    return nullptr;
   }
 
   /*Now in OBBase

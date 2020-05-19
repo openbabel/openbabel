@@ -180,10 +180,10 @@ namespace OpenBabel
                            int prev, int part );
 
   public:
-  OBSmartsPattern() : _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL) { }
+  OBSmartsPattern() : _pat(nullptr), _buffer(nullptr), LexPtr(nullptr), MainPtr(nullptr) { }
     virtual ~OBSmartsPattern();
 
-  OBSmartsPattern(const OBSmartsPattern& cp): _pat(NULL), _buffer(NULL), LexPtr(NULL), MainPtr(NULL)
+  OBSmartsPattern(const OBSmartsPattern& cp): _pat(nullptr), _buffer(nullptr), LexPtr(nullptr), MainPtr(nullptr)
       {
         *this = cp;
       }
@@ -197,8 +197,8 @@ namespace OpenBabel
           delete[] _pat;
         if (_buffer)
           delete[] _buffer;
-        _buffer = NULL;
-        _pat = NULL;
+        _buffer = nullptr;
+        _pat = nullptr;
         std::string s = cp._str;
         Init(s);
         return (*this);
@@ -224,9 +224,9 @@ namespace OpenBabel
     std::string  &GetSMARTS()               {      return _str;    }
 #endif
     //! \return If the SMARTS pattern is an empty expression (e.g., invalid)
-    bool         Empty() const     {      return(_pat == NULL);    }
+    bool         Empty() const     {      return(_pat == nullptr);    }
     //! \return If the SMARTS pattern is a valid expression
-    bool         IsValid() const   {      return(_pat != NULL);    }
+    bool         IsValid() const   {      return(_pat != nullptr);    }
 
     //! \return the number of atoms in the SMARTS pattern
     unsigned int NumAtoms()   const

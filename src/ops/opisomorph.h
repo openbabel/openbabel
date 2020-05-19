@@ -47,7 +47,7 @@ class OpNewS : public OBOp
 public:
   OpNewS(const char* ID) : OBOp(ID, false){}
   const char* Description();
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=nullptr; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   std::vector<int> GetMatchAtoms(){ return firstmatch; }
   virtual bool ProcessVec(std::vector<OBBase*>& vec);//Extra target mols

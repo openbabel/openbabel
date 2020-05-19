@@ -57,7 +57,7 @@ namespace OpenBabel
 
     public:
       //! Constructor
-      OBGlobalDataBase(): _init(false), _dataptr(NULL) { }
+      OBGlobalDataBase(): _init(false), _dataptr(nullptr) { }
       //! Destructor
       virtual ~OBGlobalDataBase()                  {}
       //! Read in the data file, falling back as needed

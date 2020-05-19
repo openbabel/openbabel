@@ -53,7 +53,7 @@ namespace OpenBabel
   class OBDepictPrivate
   {
     public:
-      OBDepictPrivate() : mol(0), painter(0), bondLength(40.0), penWidth(2.0),
+      OBDepictPrivate() : mol(nullptr), painter(nullptr), bondLength(40.0), penWidth(2.0),
           bondSpacing(6.0), bondWidth(8.0), fontSize(16), subscriptSize(13),
           aliasMode(false), bondColor("black"), options(0){}
       virtual ~OBDepictPrivate(){};
@@ -130,7 +130,7 @@ namespace OpenBabel
   OBDepict::~OBDepict()
   {
     delete d->mol;
-    d->mol = NULL;
+    d->mol = nullptr;
     delete d;
   }
 
@@ -381,7 +381,7 @@ namespace OpenBabel
     if (!d->painter)
       return false;
 
-    if (d->mol != NULL)
+    if (d->mol != nullptr)
       delete d->mol;
     d->mol = new OBMol(*mol); // Copy it
 
@@ -436,7 +436,7 @@ namespace OpenBabel
       double min_y, max_y;
       double min_z, max_z;
       atom = d->mol->BeginAtom(i);
-      if (atom != NULL) {
+      if (atom != nullptr) {
         min_x = max_x = atom->GetX();
         min_y = max_y = atom->GetY();
         min_z = max_z = atom->GetZ();
@@ -633,7 +633,7 @@ namespace OpenBabel
       stringstream ss;
 
       //For unexpanded aliases use appropriate form of alias instead of element symbol, Hs, etc
-      AliasData* ad = NULL;
+      AliasData* ad = nullptr;
       if (d->aliasMode && atom->HasData(AliasDataType))
         ad = static_cast<AliasData*>(atom->GetData(AliasDataType));
       if(ad && !ad->IsExpanded())

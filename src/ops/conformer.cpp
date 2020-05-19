@@ -27,6 +27,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 
 #include <openbabel/babelconfig.h>
 #include <iostream>
+#include <memory>
 #include <vector>
 #include <stdio.h>
 #include <openbabel/op.h>
@@ -84,7 +85,7 @@ namespace OpenBabel
 
       virtual bool WorksWith(OBBase* pOb) const
       {
-        return dynamic_cast<OBMol*>(pOb) != NULL;
+        return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
       virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
   };
@@ -216,12 +217,15 @@ namespace OpenBabel
         score = iter->second;
 
       OBConformerSearch cs;
+      std::unique_ptr<OBConformerScore> s;
       if (score == "energy")
-        cs.SetScore(new OBEnergyConformerScore);
+        s.reset(new OBEnergyConformerScore{});
       else if (score == "mine" || score == "minenergy")
-        cs.SetScore(new OBMinimizingEnergyConformerScore);
+        s.reset(new OBMinimizingEnergyConformerScore{});
       else if (score == "minr" || score == "minrmsd")
-        cs.SetScore(new OBMinimizingRMSDConformerScore);
+        s.reset(new OBMinimizingRMSDConformerScore{});
+      if (s)
+        cs.SetScore(s.get());
 
       iter = pmap->find("csfilter");
       if(iter!=pmap->end())

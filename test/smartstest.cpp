@@ -208,6 +208,11 @@ int smartstest(int argc, char* argv[])
   // output the number of tests run
   cout << "1.." << currentMol << endl;
 
+  // clean up
+  for (i = vsp.begin();i != vsp.end();++i){
+    delete (*i);
+  }
+
   // Passed Test
   return 0;
 }
@@ -275,6 +280,10 @@ void GenerateSmartsReference()
         }
     }
 
+  for (i = vsp.begin();i != vsp.end();++i)
+  {
+    delete (*i);
+  }
 
   cerr << " SMARTS test results written successfully" << endl;
   return;

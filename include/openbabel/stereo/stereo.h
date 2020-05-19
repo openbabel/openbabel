@@ -335,7 +335,7 @@ namespace OpenBabel {
       /**
        * Destructor.
        */
-      virtual ~OBStereoBase() { m_mol = 0; }
+      virtual ~OBStereoBase() { m_mol = nullptr; }
 
       ///@name Geniric (for all OBStereo::Type) stereochemistry
       //@{
@@ -536,7 +536,7 @@ namespace OpenBabel {
    * @since version 2.3
    */
   OBAPI void StereoFrom2D(OBMol *mol,
-    std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool force = false);
+    std::map<OBBond*, enum OBStereo::BondDirection> *updown = nullptr, bool force = false);
   /**
    * Convert the 3D coordinates of molecule @p mol to OBStereo objects. This
    * function makes use of the lower level functions TetrahedralFrom3D(),
@@ -752,7 +752,7 @@ namespace OpenBabel {
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol,
       const OBStereoUnitSet &stereoUnits,
-      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
+      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = nullptr, bool addToMol = true);
   /**
    * Convert a molecule's OBTetrahedralStereo objects to a series of hash or
    * wedge bonds. Note that the molecule itself is not modified; the result

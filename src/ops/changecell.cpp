@@ -45,8 +45,8 @@ public:
                                     "     [keepfract];[*]a;[*]b;[*]c\n"
                                     "     Original cell dimensions can be changed to value a, b or c or multiplied with key '*' " ; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -105,11 +105,11 @@ bool OpChangeCell::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCo
   
   OBUnitCell * old_cell;
   if ( ! pmol->HasData(OBGenericDataType::UnitCell) )
-    old_cell = NULL;
+    old_cell = nullptr;
   else         
     old_cell = (OBUnitCell*)pmol->GetData(OBGenericDataType::UnitCell);
   
-  if( old_cell == NULL )
+  if (old_cell == nullptr)
   {
     if(  keep_fract )
     {  
@@ -126,7 +126,7 @@ bool OpChangeCell::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCo
     }
   }  
   double a, b, c, alpha, beta, gamma;
-  if( old_cell != NULL )
+  if (old_cell != nullptr)
   {
     a = old_cell->GetA(); b = old_cell->GetB(); c = old_cell->GetC(); 
     alpha = old_cell->GetAlpha(); beta = old_cell->GetBeta(); gamma = old_cell->GetGamma();     
@@ -142,7 +142,7 @@ bool OpChangeCell::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCo
                      (vcvs[1].mult ? b : 1.0) * vcvs[1].value, 
                      (vcvs[2].mult ? c : 1.0) * vcvs[2].value,
                      alpha, beta, gamma );
-  if(old_cell == NULL)
+  if (old_cell == nullptr)
     new_cell->SetSpaceGroup(1);
   else
     new_cell->SetSpaceGroup(old_cell->GetSpaceGroupNumber());
@@ -161,7 +161,7 @@ bool OpChangeCell::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCo
     pmol->EndModify();
   }  
   
-  if (old_cell != NULL)
+  if (old_cell != nullptr)
     pmol->DeleteData(old_cell);
   
   pmol->SetData(new_cell);

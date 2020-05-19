@@ -73,8 +73,8 @@ public:
     ;
 
 }
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 private:
   OBAlign _align;
   OBMol _refMol;
@@ -98,7 +98,7 @@ bool OpAlign::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*
   // Is there an -s option?
   if(pConv->IsFirstInput())
   {
-    _pOpIsoM = NULL; //assume no -s option
+    _pOpIsoM = nullptr; //assume no -s option
     itr = pmap->find("s");
     if(itr!=pmap->end())
     {

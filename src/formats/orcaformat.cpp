@@ -118,7 +118,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -243,11 +243,11 @@ namespace OpenBabel
             occ.resize(0);
             ifs.getline(buffer,BUFF_SIZE); // skip ---------------------
             ifs.getline(buffer,BUFF_SIZE); // skip empty line or look for spin informations
-            if (strstr(buffer,"SPIN UP ORBITALS") != NULL) m_openShell = true;
+            if (strstr(buffer, "SPIN UP ORBITALS") != nullptr) m_openShell = true;
             ifs.getline(buffer,BUFF_SIZE); // skip headline
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
-            while (strstr(buffer,"---------") == NULL && vs.size() !=0) {
+            while (strstr(buffer, "---------") == nullptr && vs.size() !=0) {
                 if (vs.size() != 4) break;
                 occ.push_back(atof(vs[1].c_str()));
                 energyEh.push_back(atof(vs[2].c_str()));
@@ -264,7 +264,7 @@ namespace OpenBabel
                 ifs.getline(buffer,BUFF_SIZE); // skip headline
                 ifs.getline(buffer,BUFF_SIZE);
                 tokenize(vs,buffer);
-                while (strstr(buffer,"---------") == NULL && vs.size() >0) {
+                while (strstr(buffer, "---------") == nullptr && vs.size() >0) {
                     if (vs.size() != 4) break;
                     occB.push_back(atof(vs[1].c_str()));
                     energyBEh.push_back(atof(vs[2].c_str()));
@@ -646,7 +646,7 @@ namespace OpenBabel
   bool OrcaInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

@@ -112,21 +112,21 @@ namespace OpenBabel {
   OBTetrahedralStereo* OBStereoFacade::GetTetrahedralStereo(unsigned long atomId)
   {
     if (!HasTetrahedralStereo(atomId))
-      return 0;
+      return nullptr;
     return m_tetrahedralMap[atomId];
   }
 
   OBCisTransStereo* OBStereoFacade::GetCisTransStereo(unsigned long bondId)
   {
     if (!HasCisTransStereo(bondId))
-      return 0;
+      return nullptr;
     return m_cistransMap[bondId];
   }
 
   OBSquarePlanarStereo* OBStereoFacade::GetSquarePlanarStereo(unsigned long atomId)
   {
     if (!HasSquarePlanarStereo(atomId))
-      return 0;
+      return nullptr;
     return m_squarePlanarMap[atomId];
   }
 

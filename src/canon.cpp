@@ -145,7 +145,7 @@ namespace OpenBabel {
     if (bond->GetBondOrder() != 1)
       return false;
 
-    OBAtom *Fe = 0, *C = 0;
+    OBAtom *Fe = nullptr, *C = nullptr;
 
     OBAtom *begin = bond->GetBeginAtom();
     if (begin->GetAtomicNum() == 26)
@@ -739,7 +739,7 @@ namespace OpenBabel {
     {
       Timeout(time_t _maxTime) : maxTime(_maxTime)
       {
-        startTime = time(NULL);
+        startTime = time(nullptr);
       }
       time_t startTime, maxTime;
     };
@@ -968,7 +968,7 @@ namespace OpenBabel {
             if (lbl >= ligandSizes[lcodes[l].first])
               continue;
 
-            OBAtom *atom = 0;
+            OBAtom *atom = nullptr;
             for (std::size_t i = 0; i < mol->NumAtoms(); ++i)
               if (lcodes[l].second.labels[i] == lbl) {
                 atom = mol->GetAtom(i+1);
@@ -1245,7 +1245,7 @@ namespace OpenBabel {
       }
 
       // Avoid endless loops.
-      if (time(NULL) - timeout.startTime > timeout.maxTime) {
+      if (time(nullptr) - timeout.startTime > timeout.maxTime) {
         return;
       }
 
@@ -1590,7 +1590,7 @@ namespace OpenBabel {
         }
 
         // Throw an error if the timeout is exceeded.
-        if (time(NULL) - timeout.startTime > timeout.maxTime) {
+        if (time(nullptr) - timeout.startTime > timeout.maxTime) {
           obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
         }
 
@@ -1642,7 +1642,7 @@ namespace OpenBabel {
     if (onlyOne) {
       // Only one labeling requested. This results in canonical labels that do not
       // consider stereochemistry. Used for finding stereo centers with automorphisms.
-      CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, maxSeconds, true);
+      CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, nullptr, maxSeconds, true);
     } else {
       std::vector<OBBond*> metalloceneBonds;
       findMetalloceneBonds(metalloceneBonds, mol, symmetry_classes);
@@ -1671,7 +1671,7 @@ namespace OpenBabel {
       }
       if (!hasAtLeastOneDefined) {
         // If there are no specified stereo centers, we don't need to find stereogenic units.
-        CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, 0, maxSeconds);
+        CanonicalLabelsImpl::CalcCanonicalLabels(mol, symmetry_classes, canonical_labels, OBStereoUnitSet(), maskCopy, nullptr, maxSeconds);
         return;
       }
 

@@ -2,14 +2,14 @@
 obseq.cpp - Output residue sequence information for biomolecules
 
 Copyright (C) 2005-2006 Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -50,27 +50,27 @@ int main(int argc,char *argv[])
     }
 
   cout << endl << "# Testing aromaticity perception...  " << endl;
-  
+
   ifstream ifs(argv[1]);
   if (!ifs)
     {
       cout << "Bail out! Cannot read input file!" << endl;
       return(-1);
     }
-  
+
   OBConversion conv(&ifs, &cout);
   OBFormat* pFormat;
-  
+
   pFormat = conv.FormatFromExt(argv[1]);
-  if ( pFormat == NULL )
+  if ( pFormat == nullptr )
     {
       cout << "Bail out! Cannot read file format!" << endl;
       return(-1);
     }
-  
+
   // Finally, we can do some work!
   OBMol mol;
-  
+
   unsigned int testCount = 1;
 
   if (! conv.SetInAndOutFormats(pFormat, pFormat))
@@ -78,14 +78,14 @@ int main(int argc,char *argv[])
       cout << "Bail out! File format isn't loaded" << endl;
       return (-1);
     }
-  
+
   int molCount = 0;
   while(ifs.peek() != EOF && ifs.good())
     {
       mol.Clear();
       conv.Read(&mol);
       molCount++;
-      
+
       vector<string> chains;
       unsigned int currentChain = 0;
       string residueList;
@@ -109,7 +109,7 @@ int main(int argc,char *argv[])
       cout << residueList << endl;
 
     } // while reading molecules
-    
+
   // output the number of tests run
   cout << "1.." << testCount-1 << endl;
 

@@ -125,7 +125,7 @@ private:
     if(ret) //Do transformation and return molecule
       return pConv->AddChemObject(pReact->DoTransformations(pConv->GetOptions(OBConversion::GENOPTIONS),pConv))!=0;
     else
-        pConv->AddChemObject(NULL);
+        pConv->AddChemObject(nullptr);
     return false;
   }
 
@@ -134,7 +134,7 @@ private:
     OBBase* pOb=pConv->GetChemObject();
     OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
     bool ret=false;
-    if(pReact!=NULL)
+    if (pReact != nullptr)
     {
       ret=WriteMolecule(pReact,pConv);
 
@@ -782,7 +782,7 @@ bool ChemKinFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //It's really a reaction, not a molecule. Called separately for each reaction.
   //Cast output object to the class type need, i.e. OBReaction
   OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-  if(pReact==NULL)
+  if (pReact == nullptr)
       return false;
 
   //Read in reaction, store mols in OMols, write reaction to stringstream ss.
@@ -1028,7 +1028,7 @@ OBFormat* ChemKinFormat::GetThermoFormat()
   {
     obErrorLog.ThrowError(__FUNCTION__,
     "Thermo format needed but not available", obError);
-    return NULL;
+    return nullptr;
   }
   return pThermFormat;
 }

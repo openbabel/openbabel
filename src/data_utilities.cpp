@@ -59,7 +59,7 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
     OpenBabel::OBRotationData* rd;
     
     rd = (OpenBabel::OBRotationData*)mol.GetData("RotationData");
-    if (NULL != rd)
+    if (nullptr != rd)
     {
         RotSymNum = rd->GetSymmetryNumber();
         if (bVerbose)
@@ -128,7 +128,7 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
         }
         for(unsigned int i = 0; (i<NEU); i++)
         {
-            if (strstr(term.c_str(), eu[i].term.c_str()) != 0)
+            if (strstr(term.c_str(), eu[i].term.c_str()) != nullptr)
             {
                 switch (eu[i].kk)
                 {

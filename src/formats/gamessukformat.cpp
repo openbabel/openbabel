@@ -139,7 +139,7 @@ namespace OpenBabel
         //cout << "tokens.size()" << tokens.size() << endl;
         if (tokens.size()>1) if (IsUnits(tokens[1])) factor=Rescale(tokens[1]);
         ContainsZmatrix=true;
-        vic.push_back((OBInternalCoord*)NULL); // OBMol indexed from 1 -- potential atom index problem
+        vic.push_back(nullptr); // OBMol indexed from 1 -- potential atom index problem
       } else if (line.compare(0, 4, "coor")==0 || line.compare(0, 4, "cart")==0 ||line.compare(0, 4, "geom")==0) {
         ReadMode=CARTESIAN;
         //cout << "CARTESIAN mode " << ReadMode << endl;
@@ -554,7 +554,7 @@ namespace OpenBabel
      */
 
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if (pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -652,7 +652,7 @@ namespace OpenBabel
   bool GAMESSUKInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -770,7 +770,7 @@ namespace OpenBabel
     ifs.getline(buffer, BUFF_SIZE);
       
     // Check if line is variables line
-    if (strstr(buffer,"name            input  type     hessian         minima") != NULL)
+    if (strstr(buffer,"name            input  type     hessian         minima") != nullptr)
       {
         // Skip additional line to be where variables are printed
         ifs.getline(buffer, BUFF_SIZE);
@@ -819,11 +819,11 @@ namespace OpenBabel
     while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
 
       // End of geometry block
-      if (strstr(buffer,"*************************")!=NULL)break;
+      if (strstr(buffer, "*************************") != nullptr) break;
 #ifdef _MSC_VER
       if (std::tr1::regex_search(buffer, myregex)) {
 #else
-        if (regexec(myregex, buffer, 0, 0, 0)==0) {
+        if (regexec(myregex, buffer, 0, nullptr, 0) == 0) {
 #endif
           //cerr << "Got Coord line: " << buffer << endl;
           OBAtom *atom = mol.NewAtom();
@@ -861,7 +861,7 @@ namespace OpenBabel
       // FF to start of coordinate specification
       while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
         if (strstr(buffer,
-                   "atom     znuc       x             y             z") != NULL) break;
+                   "atom     znuc       x             y             z") != nullptr) break;
       }
 
       // Skip 2 lines - should then be at the coordinates
@@ -873,7 +873,7 @@ namespace OpenBabel
       while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
 
         // End of geometry block
-        if (strstr(buffer,"*************************")!=NULL)break;
+        if (strstr(buffer, "*************************") != nullptr) break;
 
         //cerr << "Got Coord line: " << buffer << endl;
         OBAtom *atom = mol.NewAtom();
@@ -907,7 +907,7 @@ namespace OpenBabel
 
       while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)) {
         if (strstr(buffer,
-                   "       x              y              z            chg  tag") != NULL) break;
+                   "       x              y              z            chg  tag") != nullptr) break;
       }
 
       // Skip 1 line - should then be at the coordinates
@@ -918,7 +918,7 @@ namespace OpenBabel
       while (ifs.good() && ifs.getline(buffer, BUFF_SIZE)){
 
         // End of geometry block
-        if (strstr(buffer,"============================================================")!=NULL)break;
+        if (strstr(buffer, "============================================================") != nullptr) break;
 
         //cerr << "Got Coord line: " << buffer << endl;
         OBAtom *atom = mol.NewAtom();
@@ -1030,7 +1030,7 @@ namespace OpenBabel
         {
           ifs.getline(buffer, BUFF_SIZE);
           // End of info
-          if (strstr(buffer,"============")!=NULL)break;
+          if (strstr(buffer, "============") != nullptr) break;
           tokenize(tokens,buffer," \t\n");
           
           ok = from_string<double>(dtmp, tokens.at(1), std::dec);
@@ -1198,7 +1198,7 @@ namespace OpenBabel
       */
 
       OBMol *pmol = dynamic_cast<OBMol*>(pOb);
-      if (pmol==NULL)
+      if (pmol == nullptr)
         return false;
 
       //Define some references so we can use the old parameter names
@@ -1218,7 +1218,7 @@ namespace OpenBabel
       while (ifs.good() && ifs.getline(buffer, BUFF_SIZE))
         {
 
-          if (strstr(buffer,"                              input z-matrix") != NULL)
+          if (strstr(buffer, "                              input z-matrix") != nullptr)
             {
               /* OpenBabel's handling of zmatricies is currently too buggy and the zmatrix
                * read in isn't currently used - it's just converted to cartesians, so we
@@ -1233,12 +1233,12 @@ namespace OpenBabel
             } // End Reading user z-matrix
           
           // Read the cartesian coordinates if we've not read in the ZMATRIX
-          if (strstr(buffer,"*            charge       x             y              z       shells") != NULL &&
+          if (strstr(buffer, "*            charge       x             y              z       shells") != nullptr &&
               RunType==UNKNOWN)
             ok = ReadInitialCartesian( mol, ifs );
           
           // Determine the RunType - affects how we move on from here.
-          if (strstr(buffer," * RUN TYPE") != NULL)
+          if (strstr(buffer, " * RUN TYPE") != nullptr)
             {
               tokenize(tokens,buffer," \t\n");
               runt=tokens[3].substr(0,5);
@@ -1249,7 +1249,7 @@ namespace OpenBabel
             } // End RUNTYPE
           
           // Read the optimised geometry
-          if (strstr(buffer,"optimization converged") != NULL)
+          if (strstr(buffer, "optimization converged") != nullptr)
             {
               if (RunType==OPTXYZ)
                 ok = ReadOptGeomXyz1( mol, ifs );
@@ -1258,11 +1258,11 @@ namespace OpenBabel
             } // End read optimised geometry
 
           // Frequencies for runtype hessian
-          if (strstr(buffer,"cartesians to normal") != NULL)
+          if (strstr(buffer, "cartesians to normal") != nullptr)
             ok = ReadNormalModesHessian( mol, ifs);
 
           // Frequencies for runtype force
-          if (strstr(buffer,"eigenvectors of cartesian") != NULL)
+          if (strstr(buffer, "eigenvectors of cartesian") != nullptr)
             ok = ReadNormalModesForce( mol, ifs);
           
         } // End Reading loop

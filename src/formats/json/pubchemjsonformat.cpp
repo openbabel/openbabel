@@ -80,7 +80,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
   bool PubChemJSONFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol *pmol = pOb->CastAndClear<OBMol>();
-    if (pmol == NULL) return false;
+    if (pmol == nullptr) return false;
     istream &ifs = *pConv->GetInStream();
 
     if (!ifs.good())
@@ -669,7 +669,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
   bool PubChemJSONFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
-    if (pmol == NULL)
+    if (pmol == nullptr)
       return false;
     ostream &ofs = *pConv->GetOutStream();
 

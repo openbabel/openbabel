@@ -63,7 +63,7 @@ public:
   virtual ~OBPlugin(){};
 
   ///Required description of a sub-type
-  virtual const char* Description() { return NULL;} ;
+  virtual const char* Description() { return nullptr;} ;
 
   ///Redefined by each plugin type: "formats", "fingerprints", etc.
   virtual const char* TypeID(){ return "plugins"; }
@@ -73,13 +73,13 @@ public:
   ///The default implementation outputs:
   /// the ID, a tab character, and the first line of the Description.
   ///The param string can be used in derived types to provide different outputs.
-  virtual bool Display(std::string&txt, const char* param, const char* ID=NULL);
+  virtual bool Display(std::string&txt, const char* param, const char* ID=nullptr);
 
   ///Make a new instance of the class.
   ///See OpTransform, OBGroupContrib, SmartsDescriptor classes for derived versions.
   ///Usually, the first parameter is the classname, the next three are
   ///parameters(ID, filename, description) for a constructor, and the rest data.
-  virtual OBPlugin* MakeInstance(const std::vector<std::string>&){return NULL;}
+  virtual OBPlugin* MakeInstance(const std::vector<std::string>&){return nullptr;}
 
   ///Initialize the plugin.
   ///The default version does nothing.
@@ -98,10 +98,10 @@ public:
   static bool ListAsVector(const char* PluginID, const char* param, std::vector<std::string>& vlist);
 
   ///As ListAsVector but sent to an ostream with a default of cout if not specified
-  static void List(const char* PluginID, const char* param=NULL, std::ostream* os=&std::cout);
+  static void List(const char* PluginID, const char* param=nullptr, std::ostream* os=&std::cout);
 
   ///As ListAsVector but returns a string containing the list
-  static std::string ListAsString(const char* PluginID, const char* param=NULL);
+  static std::string ListAsString(const char* PluginID, const char* param=nullptr);
 
   ///Utility function to return only the first line of a string
   static std::string FirstLine(const char* txt);

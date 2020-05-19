@@ -133,18 +133,18 @@ std::cerr << "Not a valid input format"; return false;}
     /// in the program.
     virtual OBFormat* MakeNewInstance()
       {
-        return NULL; //shows not implemented in the format class
+        return nullptr; //shows not implemented in the format class
       }
 
     //New functions since OBFormat is derived from OBPlugin
     //\brief Called from, and an alternative to, OBConversion::RegisterFormat();
-    int RegisterFormat(const char* ID, const char* MIME = NULL);
+    int RegisterFormat(const char* ID, const char* MIME = nullptr);
 
     ///\brief Provides a description in txt of the format specified by itr.
     ///If param starts with "in", "read", "out" or "write" only the
     ///appropriate formats are output. The others return false.
     ///If param contains "verbose", the whole description is output.
-    virtual bool Display(std::string& txt, const char* param, const char* ID=NULL);
+    virtual bool Display(std::string& txt, const char* param, const char* ID=nullptr);
 
     static OBFormat* FormatFromMIME(const char* MIME);
 

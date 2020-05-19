@@ -44,16 +44,10 @@ void testSpaceGroupUniqueTransformations()
   conv.SetInFormat("cif");
   conv.ReadFile(&mol, GetFilename("test01.cif"));
   OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
+
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
-  SpaceGroup* sg = new SpaceGroup(*pSG);
-  pSG = SpaceGroup::Find(sg);
-  OB_ASSERT( pSG != NULL );
 
-  // Check also for errors and warnings
-  string summary = obErrorLog.GetMessageSummary();
-//  OB_ASSERT( summary.find("error") == string::npos);
-//  OB_ASSERT( summary.find("warning") == string::npos);
-
+  OB_ASSERT(pSG != nullptr && pSG->IsValid());
   OB_ASSERT( pSG->GetId() == 64 );
 }
 
@@ -67,19 +61,11 @@ void testSpaceGroupClean()
   conv.ReadFile(&mol, GetFilename("test02.cif"));
   OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
-  SpaceGroup* sg = new SpaceGroup(*pSG);
-  pSG = SpaceGroup::Find(sg);
-  OB_ASSERT( pSG != NULL );
-
-  // Check also for errors and warnings
-  string summary = obErrorLog.GetMessageSummary();
-//  OB_ASSERT( summary.find("error") == string::npos);
-//  OB_ASSERT( summary.find("warning") == string::npos);
+  OB_ASSERT(pSG != nullptr && pSG->IsValid());
 
   OB_ASSERT( pSG->GetId() == 166 );
 
   string pdb = conv.WriteString(&mol);
-  pdb = conv.WriteString(&mol);
 
   OB_ASSERT(pdb.find("H -3 m") != string::npos);
 }
@@ -157,9 +143,7 @@ void testDecayToP1()
   conv.ReadFile(&mol, GetFilename("test03.cif"));
   OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
-  SpaceGroup* sg = new SpaceGroup(*pSG);
-  pSG = SpaceGroup::Find(sg);
-  OB_ASSERT( pSG != NULL );
+  OB_ASSERT(pSG != nullptr && pSG->IsValid());
 
   // Check also for errors and warnings
   string summary = obErrorLog.GetMessageSummary();
@@ -177,12 +161,10 @@ void testAlternativeOrigin()
   conv.ReadFile(&mol, GetFilename("test04.cif"));
   OBUnitCell* pUC = (OBUnitCell*)mol.GetData(OBGenericDataType::UnitCell);
   const SpaceGroup* pSG = pUC->GetSpaceGroup();
-  SpaceGroup* sg = new SpaceGroup(*pSG);
-  pSG = SpaceGroup::Find(sg);
 
   string summary = obErrorLog.GetMessageSummary();
   OB_ASSERT( summary.find("warning") == string::npos);
-  OB_ASSERT( pSG != NULL );
+  OB_ASSERT(pSG != nullptr && pSG->IsValid());
   OB_ASSERT( pSG->GetOriginAlternative() == 1);
 }
 

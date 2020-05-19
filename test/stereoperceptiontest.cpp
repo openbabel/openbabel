@@ -108,7 +108,7 @@ std::string readMol(OBMol *pmol, const std::string &file)
   ifstream ifs(filename.c_str());
   if (!ifs) {
     cerr << "Could not open " << filename << endl;
-    return NULL;
+    return nullptr;
   }
 
   conv.Read(pmol, &ifs);

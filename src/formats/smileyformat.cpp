@@ -397,9 +397,9 @@ namespace OpenBabel
   bool SmileyFormat::AssignNbrAtoms(const std::vector<OpenBabelCallback::UpDown> &upDown,
       OBAtom *atom, unsigned long &aboveId, unsigned long &belowId)
   {
-    OBAtom *above = 0;
-    OBAtom *below = 0;
-    OBAtom *unspecified = 0;
+    OBAtom *above = nullptr;
+    OBAtom *below = nullptr;
+    OBAtom *unspecified = nullptr;
 
     FOR_BONDS_OF_ATOM (bond, atom) {
       if (!bond->IsAromatic() && bond->GetBondOrder() == 2)

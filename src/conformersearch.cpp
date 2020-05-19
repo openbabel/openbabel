@@ -59,7 +59,7 @@ namespace OpenBabel {
   {
     unsigned int a1 = 0, a2 = 0;
     unsigned int numAtoms = mol.NumAtoms();
-    OBAtom *atom1 = NULL, *atom2 = NULL;
+    OBAtom *atom1 = nullptr, *atom2 = nullptr;
     double dx = 0.0, dy = 0.0, dz = 0.0;
     double distanceSquared = 0.0, vdwCutoff = 0.0;
 
@@ -324,7 +324,6 @@ namespace OpenBabel {
   OBConformerSearch::~OBConformerSearch()
   {
     delete m_filter;
-    delete m_score;
     delete (OBRandom*)d;
   }
 
@@ -339,7 +338,7 @@ namespace OpenBabel {
     m_mutability = mutability;
     m_convergence = convergence;
 
-    if (m_mol.GetCoordinates() == NULL)
+    if (m_mol.GetCoordinates() == nullptr)
       return false;
 
     // Initialize the OBRotorList
@@ -398,7 +397,7 @@ namespace OpenBabel {
     if (IsGood(rotorKey))
       m_rotorKeys.push_back(rotorKey);
     else {
-      if (m_logstream != NULL)
+      if (m_logstream != nullptr)
         (*m_logstream) << "Initial conformer does not pass filter!" << std::endl;
     }
 
@@ -429,7 +428,7 @@ namespace OpenBabel {
     }
 
     // print out initial conformers
-    if (m_logstream != NULL)
+    if (m_logstream != nullptr)
       {
         (*m_logstream) << "Initial conformer count: " << m_rotorKeys.size() << std::endl;
         (*m_logstream) << tries << " attempts,  " << ndup << " duplicates, " << nbad << " failed filter." << std::endl;
@@ -589,7 +588,7 @@ namespace OpenBabel {
     int identicalGenerations = 0;
     double last_score = 0.0, score = 0.0;
 
-    if (m_logstream != NULL)
+    if (m_logstream != nullptr)
       {
         (*m_logstream) << std::endl << "=====> Starting conformers search with a Genetic Algorithm <=====" << std::endl;
         if (use_sharing)
@@ -671,7 +670,7 @@ namespace OpenBabel {
             }
           }
       }
-      if (m_logstream != NULL)
+      if (m_logstream != nullptr)
         {
           if (vscores.size ())
             (*m_logstream) << "Generation #" << i + 1 << "  " << last_score << "\t best " << vscores[0] << std::endl;
@@ -682,7 +681,7 @@ namespace OpenBabel {
         break;
     }
 
-    if (m_logstream != NULL)
+    if (m_logstream != nullptr)
       {
         for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
           for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
@@ -782,7 +781,7 @@ namespace OpenBabel {
     double opt_score = 0.0;
     int i = 0, new_val = 0;
     OBRotorIterator ri;
-    OBRotor *rotor = NULL;
+    OBRotor *rotor = nullptr;
 
     // Change 1 and only value, looping on all positions
     m_rotorKeys.clear ();
@@ -803,7 +802,7 @@ namespace OpenBabel {
       {				// Found a better conformer
         opt_key = m_rotorKeys[0];
         flag_improved = true;
-        if (m_logstream != NULL)
+        if (m_logstream != nullptr)
           {
             (*m_logstream) << "    => Best individual improved with local search: ";
             (*m_logstream) << backup_scores[0] << "  --> " << opt_score << std::endl;
@@ -838,7 +837,7 @@ namespace OpenBabel {
     int ret_code = 0;
     bool flag_crossover = false;
     OBRotorIterator ri;
-    OBRotor *rotor = NULL;
+    OBRotor *rotor = nullptr;
 
     if (pop_size < 2)
       return 0;
@@ -1125,7 +1124,7 @@ namespace OpenBabel {
       if (niche_map[i] == -1)
         out_niches.push_back (i);
 
-    if (m_logstream != NULL)
+    if (m_logstream != nullptr)
       {
         (*m_logstream) << "  ==> Number of niches: " << dynamic_niches.size ();
         (*m_logstream) << "   # out of niches :" << out_niches.size () << "\t Best :" << vscores[0] << std::endl;

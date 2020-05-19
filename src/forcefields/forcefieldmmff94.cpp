@@ -2733,9 +2733,9 @@ namespace OpenBabel
       bondtype = GetBondType(a, b);
 
       parameter = GetTypedParameter2Atom(bondtype, atoi(a->GetType()), atoi(b->GetType()), _ffbondparams); // from mmffbond.par
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         parameter = GetParameter2Atom(a->GetAtomicNum(), b->GetAtomicNum(), _ffbndkparams); // from mmffbndk.par - emperical rules
-        if (parameter == NULL) {
+        if (parameter == nullptr) {
           IF_OBFF_LOGLVL_LOW {
             // This should never happen
             snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR BOND %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
@@ -2840,11 +2840,11 @@ namespace OpenBabel
 
       // try exact match
       parameter = GetTypedParameter3Atom(angletype, type_a, type_b, type_c, _ffangleparams);
-      if (parameter == NULL) // try 3-2-3
+      if (parameter == nullptr) // try 3-2-3
         parameter = GetTypedParameter3Atom(angletype, EqLvl3(type_a), type_b, EqLvl3(type_c), _ffangleparams);
-      if (parameter == NULL) // try 4-2-4
+      if (parameter == nullptr) // try 4-2-4
         parameter = GetTypedParameter3Atom(angletype, EqLvl4(type_a), type_b, EqLvl4(type_c), _ffangleparams);
-      if (parameter == NULL) // try 5-2-5
+      if (parameter == nullptr) // try 5-2-5
         parameter = GetTypedParameter3Atom(angletype, EqLvl5(type_a), type_b, EqLvl5(type_c), _ffangleparams);
 
       if (parameter) {
@@ -2934,7 +2934,7 @@ namespace OpenBabel
         continue;
 
       parameter = GetTypedParameter3Atom(strbndtype, type_a, type_b, type_c, _ffstrbndparams);
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         int rowa, rowb, rowc;
 
         // This is not a real empirical rule...
@@ -2949,7 +2949,7 @@ namespace OpenBabel
 
         parameter = GetParameter3Atom(rowa, rowb, rowc, _ffdfsbparams);
 
-        if (parameter == NULL) {
+        if (parameter == nullptr) {
           // This should never happen
           IF_OBFF_LOGLVL_LOW {
             snprintf(_logbuf, BUFF_SIZE, "    COULD NOT FIND PARAMETERS FOR STRETCH-BEND %d-%d-%d (IDX)...\n", a->GetIdx(), b->GetIdx(), c->GetIdx());
@@ -3133,20 +3133,20 @@ namespace OpenBabel
       if (order >= 0) {
         // try exact match
         parameter = GetTypedParameter4Atom(torsiontype, type_a, type_b, type_c, type_d, _fftorsionparams);
-        if (parameter == NULL) // try 3-2-2-5
+        if (parameter == nullptr) // try 3-2-2-5
           parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(type_a), type_b, type_c, EqLvl5(type_d), _fftorsionparams);
-        if (parameter == NULL) // try 5-2-2-3
+        if (parameter == nullptr) // try 5-2-2-3
           parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_a), type_b, type_c, EqLvl3(type_d), _fftorsionparams);
-        if (parameter == NULL) // try 5-2-2-5
+        if (parameter == nullptr) // try 5-2-2-5
           parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_a), type_b, type_c, EqLvl5(type_d), _fftorsionparams);
       } else {
         // try exact match
         parameter = GetTypedParameter4Atom(torsiontype, type_d, type_c, type_b, type_a, _fftorsionparams);
-        if (parameter == NULL) // try 3-2-2-5
+        if (parameter == nullptr) // try 3-2-2-5
           parameter = GetTypedParameter4Atom(torsiontype, EqLvl3(type_d), type_c, type_b, EqLvl5(type_a), _fftorsionparams);
-        if (parameter == NULL) // try 5-2-2-3
+        if (parameter == nullptr) // try 5-2-2-3
           parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_d), type_c, type_b, EqLvl3(type_a), _fftorsionparams);
-        if (parameter == NULL) // try 5-2-2-5
+        if (parameter == nullptr) // try 5-2-2-5
           parameter = GetTypedParameter4Atom(torsiontype, EqLvl5(type_d), type_c, type_b, EqLvl5(type_a), _fftorsionparams);
       }
 
@@ -3369,20 +3369,20 @@ namespace OpenBabel
 
       for (unsigned int idx=0; idx < _ffoopparams.size(); idx++) {
         if (type_b == _ffoopparams[idx].b) {
-          a = NULL;
-          c = NULL;
-          d = NULL;
+          a = nullptr;
+          c = nullptr;
+          d = nullptr;
 
           FOR_NBORS_OF_ATOM(nbr, b) {
-            if (a ==NULL)
+            if (a ==nullptr)
               a = (OBAtom*) &*nbr;
-            else if (c == NULL)
+            else if (c == nullptr)
               c = (OBAtom*) &*nbr;
             else
               d = (OBAtom*) &*nbr;
           }
 
-          if ((a == NULL) || (c == NULL) || (d == NULL))
+          if (a == nullptr || c == nullptr || d == nullptr)
             break;
 
           type_a = atoi(a->GetType());
@@ -3526,7 +3526,7 @@ namespace OpenBabel
       OBFFParameter *parameter_a, *parameter_b;
       parameter_a = GetParameter1Atom(atoi(a->GetType()), _ffvdwparams);
       parameter_b = GetParameter1Atom(atoi(b->GetType()), _ffvdwparams);
-      if ((parameter_a == NULL) || (parameter_b == NULL)) {
+      if (parameter_a == nullptr || parameter_b == nullptr) {
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, "   COULD NOT FIND VAN DER WAALS PARAMETERS FOR %d-%d (IDX)...\n", a->GetIdx(), b->GetIdx());
           OBFFLog(_logbuf);
@@ -4995,7 +4995,7 @@ namespace OpenBabel
     double rab;
 
     parameter = GetTypedParameter2Atom(GetBondType(a, b), atoi(a->GetType()), atoi(b->GetType()), _ffbondparams);
-    if (parameter == NULL)
+    if (parameter == nullptr)
       rab = GetRuleBondLength(a, b);
     else
       rab = parameter->_dpar[1];
@@ -5103,7 +5103,7 @@ namespace OpenBabel
         return par;
       }
 
-    return NULL;
+    return nullptr;
   }
 
   OBFFParameter* OBForceFieldMMFF94::GetParameter2Atom(int a, int b, std::vector<OBFFParameter> &parameter)
@@ -5118,7 +5118,7 @@ namespace OpenBabel
           return par;
         }
 
-    return NULL;
+    return nullptr;
   }
 
   OBFFParameter* OBForceFieldMMFF94::GetParameter3Atom(int a, int b, int c, std::vector<OBFFParameter> &parameter)
@@ -5133,7 +5133,7 @@ namespace OpenBabel
           return par;
         }
 
-    return NULL;
+    return nullptr;
   }
 
   OBFFParameter* OBForceFieldMMFF94::GetTypedParameter2Atom(int ffclass, int a, int b, std::vector<OBFFParameter> &parameter)
@@ -5148,7 +5148,7 @@ namespace OpenBabel
           return par;
         }
 
-    return NULL;
+    return nullptr;
   }
 
   OBFFParameter* OBForceFieldMMFF94::GetTypedParameter3Atom(int ffclass, int a, int b, int c, std::vector<OBFFParameter> &parameter)
@@ -5163,7 +5163,7 @@ namespace OpenBabel
           return par;
         }
 
-    return NULL;
+    return nullptr;
   }
 
   OBFFParameter* OBForceFieldMMFF94::GetTypedParameter4Atom(int ffclass, int a, int b, int c, int d, std::vector<OBFFParameter> &parameter)
@@ -5180,7 +5180,7 @@ namespace OpenBabel
           return par;
         }
 
-    return NULL;
+    return nullptr;
   }
 
 } // end namespace OpenBabel

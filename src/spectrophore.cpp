@@ -33,10 +33,10 @@ namespace OpenBabel
 
 OBSpectrophore::OBSpectrophore(void)
 :  _resolution(3.0)
-,  _property(NULL)
-,  _radii(NULL)
-,  _oricoor(NULL)
-,  _coor(NULL)
+,  _property(nullptr)
+,  _radii(nullptr)
+,  _oricoor(nullptr)
+,  _coor(nullptr)
 ,  _beginProbe(0)
 ,  _endProbe(0)
 ,  _numberOfProbes(0)
@@ -50,10 +50,10 @@ OBSpectrophore::OBSpectrophore(void)
 
 OBSpectrophore::OBSpectrophore(const OBSpectrophore& s)
 :  _resolution(s._resolution)
-,  _property(NULL)
-,  _radii(NULL)
-,  _oricoor(NULL)
-,  _coor(NULL)
+,  _property(nullptr)
+,  _radii(nullptr)
+,  _oricoor(nullptr)
+,  _coor(nullptr)
 ,  _beginProbe(s._beginProbe)
 ,  _endProbe(s._endProbe)
 ,  _numberOfProbes(s._numberOfProbes)
@@ -88,10 +88,10 @@ OBSpectrophore::operator=(const OBSpectrophore& s)
 
 OBSpectrophore::~OBSpectrophore(void)
 {
-   _property = NULL;
-   _radii = NULL;
-   _oricoor = NULL;
-   _coor = NULL;
+   _property = nullptr;
+   _radii = nullptr;
+   _oricoor = nullptr;
+   _coor = nullptr;
 }
 
 
@@ -322,17 +322,29 @@ OBSpectrophore::GetSpectrophore(OpenBabel::OBMol* mol)
       delete[] REF1[i];
       delete[] REF2[i];
       delete[] _coor[i];
-      _property[i] = NULL;
-      _oricoor[i] = NULL;
-      REF1[i] = NULL;
-      REF2[i] = NULL;
-      _coor[i] = NULL;
+      _property[i] = nullptr;
+      _oricoor[i] = nullptr;
+      REF1[i] = nullptr;
+      REF2[i] = nullptr;
+      _coor[i] = nullptr;
    }
    delete[] REF1;
-   delete[] REF2;
-   delete[] _radii;
-   _radii = NULL;
+   REF1 = nullptr;
 
+   delete[] REF2;
+   REF2 = nullptr;
+
+   delete[] _radii;
+   _radii = nullptr;
+
+   delete[] _property;
+   _property = nullptr;
+
+   delete[] _oricoor;
+   _oricoor = nullptr;
+
+   delete[] _coor;
+   _coor = nullptr;
 
    // Modify the actual sphore data
    _spectro.resize(sphoreSize);
@@ -1628,10 +1640,10 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    for (unsigned int i = 0; i < dim; ++i)
    {
       delete[] ETA[i];
-      ETA[i] = NULL;
+      ETA[i] = nullptr;
    }
    delete[] ETA;
-   ETA = NULL;
+   ETA = nullptr;
 
 
 
@@ -1781,10 +1793,10 @@ OBSpectrophore::_calculateProperties(OpenBabel::OBMol* mol)
    for (unsigned int i = 0; i < dim; ++i)
    {
       delete[] ETA2[i];
-      ETA2[i] = NULL;
+      ETA2[i] = nullptr;
    }
    delete[] ETA2;
-   ETA2 = NULL;
+   ETA2 = nullptr;
 
    //
    // Return
@@ -1810,7 +1822,7 @@ OBSpectrophore::_luDecompose(double** A, std::vector<int>& I, unsigned int dim)
    unsigned int i, j, k, kMax, iMax;
    std::vector<double> vScales(dim, 0);
    double maxVal = 0, dummy = 0;
-   double * pRowi = NULL;
+   double * pRowi = nullptr;
 
    // first find the highest pivot element in each row and store it for implicit scaling
    for (i = 0; i < dim; ++i)

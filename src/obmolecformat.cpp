@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #endif
 
 #include <algorithm>
+#include <iterator> // Required for MSVC2015 use of std::back_inserter
 
 using namespace std;
 namespace OpenBabel
@@ -101,11 +102,11 @@ namespace OpenBabel
 
     ret=pFormat->ReadMolecule(pmol,pConv);
 
-    OBMol* ptmol = NULL;
+    OBMol* ptmol = nullptr;
     //Molecule is valid if it has some atoms
     //or it represents a reaction
     //or the format allows zero-atom molecules and it has a title or properties
-    if(ret && (pmol->NumAtoms() > 0 
+    if(ret && (pmol->NumAtoms() > 0
       || pmol->IsReaction()
       || (pFormat->Flags()&ZEROATOMSOK && (*pmol->GetTitle() || pmol->HasData(1)))))
     {
@@ -335,7 +336,7 @@ namespace OpenBabel
           {
             obErrorLog.ThrowError(__FUNCTION__,
                                   "Molecules with name = " + title + " have different formula",obError);
-            return NULL;
+            return nullptr;
           }
         else
           {
@@ -371,7 +372,7 @@ namespace OpenBabel
             if(pData->GetAttribute() == (*igd)->GetAttribute())
               continue;
           }
-        else if(pNewMol->GetData(datatype)!=NULL)
+        else if (pNewMol->GetData(datatype) != nullptr)
           continue;
 
         OBGenericData* pCopiedData = (*igd)->Clone(pNewMol);
@@ -399,7 +400,7 @@ namespace OpenBabel
         ret = pConv->GetOutFormat()->WriteMolecule(itr->second, pConv);
 
         delete itr->second; //always delete OBMol object
-        itr->second = NULL; // so can be deleted in DeleteDeferredMols()
+        itr->second = nullptr; // so can be deleted in DeleteDeferredMols()
         if (!ret) break;
       }
     DeleteDeferredMols();//cleans up in case there have been errors
@@ -514,7 +515,7 @@ namespace OpenBabel
             return false;
           }
 
-        OBConversion Conv(&datastream,NULL);
+        OBConversion Conv(&datastream, nullptr);
         Conv.SetInFormat(pInFormat);
         OBMol mol;
         streampos pos;

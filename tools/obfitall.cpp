@@ -57,7 +57,7 @@ int main(int argc,char **argv)
 {
 
   int errflg=0;
-  char *FileRef=NULL, *FileMove=NULL, *Pattern=NULL;
+  char *FileRef=nullptr, *FileMove=nullptr, *Pattern=nullptr;
   string err;
   char *program_name=argv[0];
 

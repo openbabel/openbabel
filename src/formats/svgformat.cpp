@@ -256,7 +256,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
     delete _ptext;//delete text, NULL or not
 
     _objects.clear();
-    _ptext = NULL;
+    _ptext = nullptr;
     _nmax = _ncols = _nrows = 0;
   }
   return ret && !nomore;

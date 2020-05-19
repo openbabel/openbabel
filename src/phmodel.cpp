@@ -85,7 +85,7 @@ namespace OpenBabel
         if (!tsfm->Init(vs[1],vs[3]))
           {
             delete tsfm;
-            tsfm = NULL;
+            tsfm = nullptr;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
           }
@@ -106,7 +106,7 @@ namespace OpenBabel
         if (!sp->Init(vs[1]) || (vs.size()-2) != sp->NumAtoms())
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
             obErrorLog.ThrowError(__FUNCTION__, " Could not parse line in phmodel table from phmodel.txt", obInfo);
             return;
           }

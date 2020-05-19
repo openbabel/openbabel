@@ -95,11 +95,11 @@ static bool ParseComponent(const char* t, unsigned int *ans)
 bool RXNFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if (pmol == NULL)
+    if (pmol == nullptr)
       return false;
 
     OBFormat* pMolFormat = pConv->FindFormat("MOL");
-    if (pMolFormat==NULL)
+    if (pMolFormat == nullptr)
       return false;
 
     istream &ifs = *pConv->GetInStream();
@@ -279,13 +279,13 @@ static void WriteAgents(OBMol& mol, OBReactionFacade& rxnfacade, OBConversion* p
 bool RXNFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if (pmol == NULL || !pmol->IsReaction())
+    if (pmol == nullptr || !pmol->IsReaction())
       return false;
 
     pConv->AddOption("no$$$$",OBConversion::OUTOPTIONS);
 
     OBFormat* pMolFormat = pConv->FindFormat("MOL");
-    if(pMolFormat==NULL)
+    if (pMolFormat == nullptr)
     {
       obErrorLog.ThrowError(__FUNCTION__, "MDL MOL format not available", obError);
         return false;

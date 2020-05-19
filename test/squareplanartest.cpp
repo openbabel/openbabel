@@ -213,7 +213,7 @@ void testSquarePlanar()
 
 void test_equalsThisOperator()
 {
-  OBSquarePlanarStereo sq1(0), sq2(0);
+  OBSquarePlanarStereo sq1(nullptr), sq2(nullptr);
   OBSquarePlanarStereo::Config cfg;
   cfg.center = 0;
   cfg.refs = OBStereo::MakeRefs(1, 2, 3, 4);

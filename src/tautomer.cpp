@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <cassert>
 #include <algorithm>
+#include <iterator> // Required for MSVC2015 use of std::back_inserter
 
 namespace OpenBabel {
 
@@ -140,7 +141,7 @@ namespace OpenBabel {
           m_atomTypes[m_atom->GetIndex()] = Unassigned;
           m_atom->SetImplicitHCount(m_atom->GetImplicitHCount() - 1);
           ++m_hydrogenCounter;
-          m_atom = 0;
+          m_atom = nullptr;
         }
 
         /**
@@ -151,7 +152,7 @@ namespace OpenBabel {
          */
         void release()
         {
-          m_atom = 0;
+          m_atom = nullptr;
         }
 
       private:
@@ -193,7 +194,7 @@ namespace OpenBabel {
           std::cout << "AssignAcceptorRAII::undo(" << m_atom->GetIndex() << ")" << std::endl;
 #endif
           m_atomTypes[m_atom->GetIndex()] = Unassigned;
-          m_atom = 0;
+          m_atom = nullptr;
         }
 
       private:
@@ -646,7 +647,7 @@ namespace OpenBabel {
       for (std::size_t i = 0; i < m_canonAtoms.size(); ++i)
         if (atomTypes[m_canonAtoms[i]->GetIndex()] == Unassigned)
           return m_canonAtoms[i];
-      return 0;
+      return nullptr;
     }
 
     bool HasTooManyHydrogensLeft(const std::vector<Type> &atomTypes, int numHydrogens) const

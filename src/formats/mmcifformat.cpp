@@ -243,9 +243,9 @@ namespace OpenBabel
      TokenType type;
      string as_text;
      double  as_number() const
-       { return strtod(as_text.c_str(), 0); }
+       { return strtod(as_text.c_str(), nullptr); }
      unsigned long  as_unsigned() const
-       { return strtoul(as_text.c_str(), 0, 10); }
+       { return strtoul(as_text.c_str(), nullptr, 10); }
      };
    CIFLexer(std::istream * in)
    :input(in)
@@ -493,7 +493,7 @@ namespace OpenBabel
  bool mmCIFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  {
    OBMol* pmol = pOb->CastAndClear<OBMol>();
-   if(pmol==NULL)
+   if (pmol == nullptr)
      return false;
 
    CIFLexer lexer(pConv->GetInStream());
@@ -618,7 +618,7 @@ namespace OpenBabel
              use_fract = 0;
              }
            size_t column_idx = 0;
-           OBAtom * atom = 0;
+           OBAtom * atom = nullptr;
            double x = 0.0, y = 0.0, z = 0.0;
            CIFResidueMap ResidueMap;
            unsigned long chain_num = 1, residue_num = 1;
@@ -819,7 +819,7 @@ namespace OpenBabel
                  res->AddAtom(atom);
                  if (!atom_label.empty())
                    res->SetAtomID(atom, atom_label);
-                 unsigned long serial_no = strtoul(atom_mol_label.c_str(), 0, 10);
+                 unsigned long serial_no = strtoul(atom_mol_label.c_str(), nullptr, 10);
                  if (serial_no > 0)
                    res->SetSerialNum(atom, serial_no);
                  }
@@ -993,7 +993,7 @@ namespace OpenBabel
        {
          OBAtom * atom = (* atom_x);
          OBPairData * pd = dynamic_cast<OBPairData *>( atom->GetData( "_atom_site_label" ) );
-         if ( pd != NULL )
+         if (pd != nullptr)
          {
            if( atomic_charges.count( pd->GetValue() ) > 0 )
            {
@@ -1045,7 +1045,7 @@ namespace OpenBabel
  bool mmCIFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
  {
    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-   if(pmol==NULL)
+   if (pmol == nullptr)
      return false;
 
    //Define some references so we can use the old parameter names
@@ -1059,7 +1059,7 @@ namespace OpenBabel
        id.append(1, (char)toupper(* p));
    if (id.empty())
      {
-     snprintf(buffer, BUFF_SIZE, "T%lu", (unsigned long)time(0));
+     snprintf(buffer, BUFF_SIZE, "T%lu", (unsigned long)time(nullptr));
      id.assign(buffer);
      }
    ofs << "# --------------------------------------------------------------------------" << endl;

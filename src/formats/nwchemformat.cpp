@@ -170,7 +170,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   static void GotoCalculationEnd(istream* ifs)
   {
   char buffer[BUFF_SIZE];
-    while ( (strstr(buffer,END_OF_CALCULATION_PATTERN) == NULL))
+    while (strstr(buffer, END_OF_CALCULATION_PATTERN) == nullptr)
         if (!ifs->getline(buffer,BUFF_SIZE))
             break;
   }
@@ -192,7 +192,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadCoordinates(istream* ifs, OBMol* molecule)
   {
-    if ((molecule == NULL) || (ifs == NULL))
+    if (molecule == nullptr || ifs == nullptr)
         return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -260,7 +260,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadMultipoleMoment(istream* ifs, OBMol* molecule)
   {
-    if ((ifs == NULL) || (molecule == NULL))
+    if (ifs == nullptr || molecule == nullptr)
         return;
 
     char buffer[BUFF_SIZE];
@@ -336,7 +336,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadTDDFTCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((ifs == NULL) || (molecule == NULL))
+    if (ifs == nullptr || molecule == nullptr)
         return;
 
     char buffer[BUFF_SIZE];
@@ -346,7 +346,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
-        if (strstr(buffer, ROOT_PATTERN) != NULL)
+        if (strstr(buffer, ROOT_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
             //  Root   1 singlet b2             0.294221372 a.u.                8.0062 eV
@@ -355,9 +355,9 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 break;
             wavelengths.push_back(EV_TO_NM(atof(vs[6].c_str())));
         }
-        else if (strstr(buffer, OSCILATOR_STRENGTH_PATTERN) != NULL)
+        else if (strstr(buffer, OSCILATOR_STRENGTH_PATTERN) != nullptr)
         {
-            if (strstr(buffer, SPIN_FORBIDDEN_PATTERN) != NULL)
+            if (strstr(buffer, SPIN_FORBIDDEN_PATTERN) != nullptr)
                 oscilator_strengths.push_back(0);
             else
             {
@@ -369,7 +369,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 oscilator_strengths.push_back(atof(vs[3].c_str()));
             }
         }
-        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr)
             break;
     }
     if (wavelengths.size() != oscilator_strengths.size())
@@ -392,7 +392,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadPartialCharges(istream* ifs, OBMol* molecule)
   {
-    if ((molecule == NULL) || (ifs == NULL))
+    if (molecule == nullptr || ifs == nullptr)
         return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -461,7 +461,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadOrbitals(istream* ifs, OBMol* molecule)
   {
-    if ((ifs == NULL) || (molecule == NULL))
+    if (ifs == nullptr || molecule == nullptr)
         return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -498,7 +498,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 if (strlen(buffer) < 2) // If blank line detected
                     break;
         }// if Vector ...
-        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
+        else if (strstr(buffer, ORBITAL_SECTION_PATTERN_2) != nullptr && strstr(buffer, ORBITAL_SECTION_PATTERN_1) != nullptr)
         {
             orbital_data->SetAlphaOrbitals(orbitals);
             orbital_data->SetOpenShell(true);
@@ -533,7 +533,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadMEPCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((molecule == NULL) || (ifs == NULL))
+    if (molecule == nullptr || ifs == nullptr)
         return;
     if (molecule->NumConformers() > 0)
         return;
@@ -544,7 +544,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
-        if(strstr(buffer, OPTIMIZATION_END_PATTERN) != NULL)
+        if (strstr(buffer, OPTIMIZATION_END_PATTERN) != nullptr)
         {
             while(ifs->getline(buffer, BUFF_SIZE))
             {
@@ -559,13 +559,13 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                     if (vs.size() > 2) // @ NStep   Energy...
                         energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
                 }
-                else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+                else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != nullptr)
                     ReadMultipoleMoment(ifs, molecule);
-                else if (strstr(buffer, MEP_STEP_END_PATTERN) != NULL)
+                else if (strstr(buffer, MEP_STEP_END_PATTERN) != nullptr)
                     break;
             }
         }
-        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr)
             break;
     }
     if (energies.size() != molecule->NumConformers())
@@ -590,7 +590,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadGeometryOptimizationCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((molecule == NULL) || (ifs == NULL))
+    if (molecule == nullptr || ifs == nullptr)
         return;
     vector<string> vs;
     char buffer[BUFF_SIZE];
@@ -598,14 +598,14 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
-        if(strstr(buffer,COORDINATES_PATTERN) != NULL)
+        if (strstr(buffer, COORDINATES_PATTERN) != nullptr)
         {
             ReadCoordinates(ifs, molecule);
             molecule->SetConformer(molecule->NumConformers() - 1);
         }
-        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
+        else if (strstr(buffer, ORBITAL_SECTION_PATTERN_2) != nullptr && strstr(buffer, ORBITAL_SECTION_PATTERN_1) != nullptr)
             ReadOrbitals(ifs, molecule);
-        else if(strstr(buffer, OPTIMIZATION_STEP_PATTERN) != NULL)
+        else if (strstr(buffer, OPTIMIZATION_STEP_PATTERN) != nullptr)
         {
             // Extract energy
             ifs->getline(buffer, BUFF_SIZE); // ------
@@ -615,11 +615,11 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             if (vs.size() > 2) // @ NStep   Energy...
                 energies.push_back(atof(vs[2].c_str()) * HARTREE_TO_KCAL);
         }
-        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+        else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != nullptr)
             ReadMultipoleMoment(ifs, molecule);
-        else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+        else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != nullptr)
             ReadPartialCharges(ifs, molecule);
-        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr)
             break;
     }
     vector<double> old_energies = molecule->GetEnergies();
@@ -645,11 +645,11 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadFrequencyCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((ifs == NULL) || (molecule == NULL))
+    if (ifs == nullptr || molecule == nullptr)
         return;
     if (molecule->NumAtoms() == 0)
         return;
-    OBVibrationData* vibration_data = NULL;
+    OBVibrationData* vibration_data = nullptr;
     vector<double>  Frequencies, Intensities;
     vector<vector<vector3> > Lx;
     vector<string> vs;
@@ -657,7 +657,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
-        if (strstr(buffer, VIBRATIONS_TABLE_PATTERN) != NULL)
+        if (strstr(buffer, VIBRATIONS_TABLE_PATTERN) != nullptr)
         {
             vector<double> freq;
             vector<vector<vector3> > vib;
@@ -704,7 +704,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
               }
             }// for (unsigned int i = 0; i < freq.size(); i++)
         }// if P.Frequency
-        else if(strstr(buffer, INTENSITIES_TABLE_PATTERN) != NULL)
+        else if (strstr(buffer, INTENSITIES_TABLE_PATTERN) != nullptr)
         {
             ifs->getline(buffer, BUFF_SIZE); // table header
             ifs->getline(buffer, BUFF_SIZE); // table delimiter
@@ -718,13 +718,13 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 tokenize(vs,buffer);
             }
         } // if "Projected Infra Red Intensities"
-        else if(strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+        else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != nullptr)
             ReadPartialCharges(ifs, molecule);
-        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+        else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != nullptr)
             ReadMultipoleMoment(ifs, molecule);
-        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
+        else if (strstr(buffer, ORBITAL_SECTION_PATTERN_2) != nullptr && strstr(buffer, ORBITAL_SECTION_PATTERN_1) != nullptr)
             ReadOrbitals(ifs, molecule);
-        else if(strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL) // End of task
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr) // End of task
             break;
     }
     if (Frequencies.size() == 0)
@@ -745,7 +745,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadSinglePointCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((molecule == NULL) || (ifs == NULL))
+    if (molecule == nullptr || ifs == nullptr)
         return;
     double energy;
     vector<string> vs;
@@ -753,20 +753,20 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
     while (ifs->getline(buffer, BUFF_SIZE))
     {
-        if ((strstr(buffer, DFT_ENERGY_PATTERN) != NULL) || (strstr(buffer, SCF_ENERGY_PATTERN) != NULL))
+        if (strstr(buffer, DFT_ENERGY_PATTERN) != nullptr || strstr(buffer, SCF_ENERGY_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
             energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
         }
-        else if ((strstr(buffer, ORBITAL_SECTION_PATTERN_2) != NULL)&&(strstr(buffer, ORBITAL_SECTION_PATTERN_1) != NULL))
+        else if (strstr(buffer, ORBITAL_SECTION_PATTERN_2) != nullptr && strstr(buffer, ORBITAL_SECTION_PATTERN_1) != nullptr)
             ReadOrbitals(ifs, molecule);
-        else if(strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != NULL)
+        else if (strstr(buffer, MULTIPOLE_MOMENT_PATTERN) != nullptr)
             ReadMultipoleMoment(ifs, molecule);
-        else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != NULL)
+        else if (strstr(buffer, MULLIKEN_CHARGES_PATTERN) != nullptr)
             ReadPartialCharges(ifs, molecule);
-        else if (strstr(buffer, TDDFT_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, TDDFT_CALCULATION_PATTERN) != nullptr)
             ReadTDDFTCalculation(ifs, molecule);
-        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr)
             break;
     }
     if (energy == 0)
@@ -783,7 +783,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadNEBCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((ifs == NULL) || (molecule == NULL))
+    if (ifs == nullptr || molecule == nullptr)
         return;
     unsigned int natoms = molecule->NumAtoms();
     // Inital geometry must be supplied
@@ -798,7 +798,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
 
     while(ifs->getline(buffer, BUFF_SIZE))
     {
-        if (strstr(buffer, NEB_BEAD_START_PATTERN) != NULL)
+        if (strstr(buffer, NEB_BEAD_START_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
             // neb: running bead                    N
@@ -809,7 +809,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             // Bead index in array starts from 0
             // but in log it starts from 1
         }
-        else if (strstr(buffer, NEB_BEAD_ENERGY_PATTERN) != NULL)
+        else if (strstr(buffer, NEB_BEAD_ENERGY_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
             // neb: final energy  N
@@ -823,7 +823,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             }
             energies[current_bead] = atof(vs[3].c_str());
         }
-        else if (strstr(buffer, GRADIENT_PATTERN) != NULL)
+        else if (strstr(buffer, GRADIENT_PATTERN) != nullptr)
         {
             ifs->getline(buffer, BUFF_SIZE); // blank line
             ifs->getline(buffer, BUFF_SIZE); // 1st level header
@@ -849,7 +849,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 beads[current_bead][2+i*3] = atof(vs[4].c_str())*AU_TO_ANGSTROM;
             }
         }
-        else if (strstr(buffer, NEB_NBEADS_PATTERN) != NULL)
+        else if (strstr(buffer, NEB_NBEADS_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
             // number of images in path         (nbeads) =   N
@@ -865,7 +865,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 energies.push_back(0.0);
             }
         }
-        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr)
         {
             molecule->SetConformers(beads);
             molecule->SetEnergies(energies);
@@ -887,7 +887,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   */
   void NWChemOutputFormat::ReadZTSCalculation(istream* ifs, OBMol* molecule)
   {
-    if ((ifs == NULL) || (molecule == NULL))
+    if (ifs == nullptr || molecule == nullptr)
         return;
     unsigned int natoms = molecule->NumAtoms();
     // Inital geometry must be supplied
@@ -900,7 +900,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
     unsigned int nbeads;
     while(ifs->getline(buffer, BUFF_SIZE))
     {
-        if (strstr(buffer, NBEADS_PATTERN) != NULL)
+        if (strstr(buffer, NBEADS_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
             // @ Number of replicas   =        24
@@ -910,7 +910,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             nbeads = atoi(vs[5].c_str());
             beads.reserve(nbeads);
         }// @ Number of replicas
-        else if (strstr(buffer, ZTS_CONVERGED_PATTERN) != NULL)
+        else if (strstr(buffer, ZTS_CONVERGED_PATTERN) != nullptr)
         {
             // NWChem does not mark end in this type of calculation,
             // so end will be there, where all nessesary data have
@@ -965,7 +965,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
             }
             break;// It is the end of calculation anyway
         }//@ Bead number
-        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, END_OF_CALCULATION_PATTERN) != nullptr)
         {
             // End of all calculations still required to handle
             molecule->SetEnergies(energies);
@@ -985,7 +985,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -1002,10 +1002,10 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
     // recognition futher output
     while	(ifs.getline(buffer,BUFF_SIZE))
     {
-        if(strstr(buffer,GEOMETRY_PATTERN) != NULL)
+        if (strstr(buffer, GEOMETRY_PATTERN) != nullptr)
         {
             // Input coordinates for calculation
-            if ((mol.NumAtoms() == 0) || (pConv->IsOption("f",OBConversion::INOPTIONS) != NULL))
+            if (mol.NumAtoms() == 0 || pConv->IsOption("f", OBConversion::INOPTIONS) != nullptr)
             {
                 // If coordinates had redefined while calculation
                 // in input file and "f" option had supplied then overwrite
@@ -1026,25 +1026,25 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 break;
             }
         }
-        else if(strstr(buffer, GEOMETRY_OPTIMIZATION_PATTERN) != NULL)
+        else if (strstr(buffer, GEOMETRY_OPTIMIZATION_PATTERN) != nullptr)
             ReadGeometryOptimizationCalculation(&ifs, &mol);
-        else if(strstr(buffer, FREQUENCY_PATTERN) != NULL)
+        else if (strstr(buffer, FREQUENCY_PATTERN) != nullptr)
             ReadFrequencyCalculation(&ifs, &mol);
         else if(strstr(buffer, SCF_CALCULATION_PATTERN) != strstr(buffer, DFT_CALCULATION_PATTERN))
             ReadSinglePointCalculation(&ifs, &mol);
-        else if(strstr(buffer, ZTS_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, ZTS_CALCULATION_PATTERN) != nullptr)
             ReadZTSCalculation(&ifs, &mol);
-        else if(strstr(buffer, MEP_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, MEP_CALCULATION_PATTERN) != nullptr)
             ReadMEPCalculation(&ifs, &mol);
-        else if(strstr(buffer, NEB_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, NEB_CALCULATION_PATTERN) != nullptr)
             ReadNEBCalculation(&ifs, &mol);
         // These calculation handlers still not implemented
         // so we just skip them
-        else if(strstr(buffer, PROPERTY_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, PROPERTY_CALCULATION_PATTERN) != nullptr)
             GotoCalculationEnd(&ifs);
-        else if (strstr(buffer, ESP_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, ESP_CALCULATION_PATTERN) != nullptr)
             GotoCalculationEnd(&ifs);
-        else if (strstr(buffer, PYTHON_CALCULATION_PATTERN) != NULL)
+        else if (strstr(buffer, PYTHON_CALCULATION_PATTERN) != nullptr)
             GotoCalculationEnd(&ifs);
     }//while
 
@@ -1074,7 +1074,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
   bool NWChemInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

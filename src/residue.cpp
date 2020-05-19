@@ -150,7 +150,7 @@ namespace OpenBabel
 
   static unsigned int GetAtomIDNumber(const char *atomid)
   {
-    if (atomid != NULL)
+    if (atomid != nullptr)
       {
         int ch1 = toupper(atomid[0]);
         int ch2 = toupper(atomid[1]);
@@ -338,7 +338,7 @@ namespace OpenBabel
 
   static unsigned int GetResidueNumber(const char *res)
   {
-    if (res != NULL && strlen(res) > 2)
+    if (res != nullptr && strlen(res) > 2)
       {
         int ch1 = toupper(res[0]);
         int ch2 = toupper(res[1]);
@@ -849,7 +849,7 @@ namespace OpenBabel
   {
     vector<OBAtom*>::iterator a;
     for ( a = _atoms.begin() ; a != _atoms.end() ; ++a )
-      (*a)->SetResidue(NULL);
+      (*a)->SetResidue(nullptr);
     _atoms.clear();
 
   }
@@ -884,7 +884,7 @@ namespace OpenBabel
 
   void OBResidue::AddAtom(OBAtom *atom)
   {
-    if (atom != NULL)
+    if (atom != nullptr)
       {
         atom->SetResidue(this);
 
@@ -902,13 +902,13 @@ namespace OpenBabel
 
   void OBResidue::RemoveAtom(OBAtom *atom)
   {
-    if (atom != NULL && _atoms.size())
+    if (atom != nullptr && _atoms.size())
       {
         for ( unsigned int i = 0 ; i < _atoms.size() ; ++i)
           {
-            if (_atoms[i] != NULL && _atoms[i] == atom)
+            if (_atoms[i] != nullptr && _atoms[i] == atom)
               {
-                atom->SetResidue(NULL);
+                atom->SetResidue(nullptr);
                 _atoms.erase(_atoms.begin() + i);
                 _atomid.erase(_atomid.begin() + i);
                 _hetatm.erase(_hetatm.begin() + i);
@@ -921,7 +921,7 @@ namespace OpenBabel
   bool OBResidue::Clear(void)
   {
     for (unsigned int i = 0 ; i < _atoms.size() ; ++i)
-      _atoms[i]->SetResidue(NULL);
+      _atoms[i]->SetResidue(nullptr);
 
     _chain   = 'A';
     _idx     = 0;
@@ -1110,13 +1110,13 @@ namespace OpenBabel
   OBAtom *OBResidue::BeginAtom(vector<OBAtom*>::iterator &i)
   {
     i = _atoms.begin();
-    return ((i == _atoms.end()) ? NULL : *i);
+    return ((i == _atoms.end()) ? nullptr : *i);
   }
 
   OBAtom *OBResidue::NextAtom(vector<OBAtom*>::iterator &i)
   {
     ++i;
-    return ((i == _atoms.end()) ? NULL : *i);
+    return ((i == _atoms.end()) ? nullptr : *i);
   }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -1168,7 +1168,7 @@ namespace OpenBabel
 
   bool OBResidue::GetAtomProperty(OBAtom *atom, int property) const
   {
-    if (atom != NULL)
+    if (atom != nullptr)
       {
         unsigned int atomid = GetAtomIDNumber(GetAtomID(atom).c_str());
 

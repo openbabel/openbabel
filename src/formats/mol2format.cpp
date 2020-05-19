@@ -90,7 +90,7 @@ namespace OpenBabel
     if (queryatom->GetHvyDegree() != 1)
       return(false);
 
-    OBAtom *atom = NULL;
+    OBAtom *atom = nullptr;
     OBBond *bond;
     OBBondIterator i;
 
@@ -156,7 +156,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -166,7 +166,7 @@ namespace OpenBabel
     //Old code follows...
     bool foundAtomLine = false;
     char buffer[BUFF_SIZE];
-    char *comment = NULL;
+    char *comment = nullptr;
     string str,str1;
     vector<string> vstr;
     int len;
@@ -180,7 +180,7 @@ namespace OpenBabel
       {
         if (!ifs.getline(buffer,BUFF_SIZE))
           return(false);
-        if (pConv->IsOption("c", OBConversion::INOPTIONS)!=NULL && EQn(buffer,"###########",10))
+        if (pConv->IsOption("c", OBConversion::INOPTIONS) != nullptr && EQn(buffer, "###########", 10))
           {
             char attr[32], val[32];
             sscanf(buffer, "########## %[^:]:%s", attr, val);
@@ -243,7 +243,7 @@ namespace OpenBabel
                 //! @todo allow better multi-line comments
                 // which don't allow ill-formed data to consume memory
                 // Thanks to Andrew Dalke for the pointer
-                if (comment != NULL)
+                if (comment != nullptr)
                   delete [] comment;
                 comment = new char [len];
                 memcpy(comment,buffer,len);
@@ -378,8 +378,8 @@ namespace OpenBabel
           {
             has_residue_information = true;
             OBResidue *res  = (mol.NumResidues() > 0) ?
-              mol.GetResidue(mol.NumResidues()-1) : NULL;
-            if (res == NULL || res->GetName() != resname ||
+              mol.GetResidue(mol.NumResidues()-1) : nullptr;
+            if (res == nullptr || res->GetName() != resname ||
                 res->GetNum() != resnum)
               {
                 vector<OBResidue*>::iterator ri;
@@ -388,7 +388,7 @@ namespace OpenBabel
                       res->GetNum() == resnum)
                     break;
 
-                if (res == NULL)
+                if (res == nullptr)
                   {
                     res = mol.NewResidue();
                     res->SetName(resname);
@@ -507,8 +507,8 @@ namespace OpenBabel
         OBAtom *carbon = bondA->GetNbrAtom(oxygenOrSulfur);
         if (carbon->GetAtomicNum() != 6) continue;
         // Look for the other oxygen or sulfur
-        OBAtom* otherOxygenOrSulfur = (OBAtom*)0;
-        OBBond* bondB = (OBBond*)0;
+        OBAtom* otherOxygenOrSulfur = nullptr;
+        OBBond* bondB = nullptr;
         FOR_BONDS_OF_ATOM(bitB, carbon) {
           if (&*bitB == bondA || !bitB->IsAromatic()) continue;
           OBAtom* nbr = bitB->GetNbrAtom(carbon);
@@ -575,7 +575,7 @@ namespace OpenBabel
         cd->SetOrigin(fileformatInput);
         mol.SetData(cd);
         delete [] comment;
-        comment = NULL;
+        comment = nullptr;
       }
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
@@ -603,14 +603,14 @@ namespace OpenBabel
   bool MOL2Format::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS)!=NULL;
-    bool skipFormalCharge = pConv->IsOption("u", OBConversion::OUTOPTIONS)!=NULL;
+    bool ligandsOnly = pConv->IsOption("l", OBConversion::OUTOPTIONS) != nullptr;
+    bool skipFormalCharge = pConv->IsOption("u", OBConversion::OUTOPTIONS) != nullptr;
 
     //The old code follows....
     string str,str1;
@@ -618,7 +618,7 @@ namespace OpenBabel
     char rnum[BUFF_SIZE],rlabel[BUFF_SIZE];
 
     //Check if UCSF Dock style coments are on
-    if(pConv->IsOption("c", OBConversion::OUTOPTIONS)!=NULL) {
+    if (pConv->IsOption("c", OBConversion::OUTOPTIONS) != nullptr) {
         vector<OBGenericData*>::iterator k;
         vector<OBGenericData*> vdata = mol.GetData();
         ofs << endl;
@@ -645,7 +645,7 @@ namespace OpenBabel
     ofs << "SMALL" << endl; // TODO: detect if we have protein, biopolymer, etc.
 
     OBPairData *dp = (OBPairData*)mol.GetData("PartialCharges");
-    if (dp != NULL) {
+    if (dp != nullptr) {
         // Tripos spec says:
         // NO_CHARGES, DEL_RE, GASTEIGER, GAST_HUCK, HUCKEL, PULLMAN,
         // GAUSS80_CHARGES, AMPAC_CHARGES, MULLIKEN_CHARGES, DICT_ CHARGES,

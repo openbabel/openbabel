@@ -67,7 +67,7 @@ namespace OpenBabel
   bool COFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     stringstream errorMsg;
@@ -282,7 +282,7 @@ namespace OpenBabel
   bool COFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
     stringstream errorMsg;
 

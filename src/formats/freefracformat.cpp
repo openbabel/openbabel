@@ -120,7 +120,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -236,7 +236,7 @@ namespace OpenBabel
   bool FreeFormFractionalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -244,7 +244,7 @@ namespace OpenBabel
     OBMol &mol = *pmol;
 
     char buffer[BUFF_SIZE];
-    OBUnitCell *uc = NULL;
+    OBUnitCell *uc = nullptr;
 
     ofs << mol.GetTitle() << endl;
 
@@ -264,7 +264,7 @@ namespace OpenBabel
     FOR_ATOMS_OF_MOL(atom, mol)
       {
         v = atom->GetVector();
-        if (uc != NULL)
+        if (uc != nullptr)
           v = uc->CartesianToFractional(v);
 
         snprintf(buffer, BUFF_SIZE, "%s %10.5f%10.5f%10.5f",

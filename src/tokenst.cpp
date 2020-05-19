@@ -64,7 +64,7 @@ namespace OpenBabel
   char *trim_spaces(char *string)
   {
     if (!string)
-      return(NULL);
+      return nullptr;
 
     size_t length;
 

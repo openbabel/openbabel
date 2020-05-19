@@ -47,14 +47,14 @@ class OpSort : public OBOp
 public:
   OpSort(const char* ID) : OBOp(ID, false)
   {
-    OBConversion::RegisterOptionParam(ID, NULL, 1, OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam(ID, nullptr, 1, OBConversion::GENOPTIONS);
   }
 
   const char* Description(){ return "<desc> Sort by descriptor(~desc for reverse)"
     "\n Follow descriptor with + to also add it to the title, e.g. MW+ "
     "\n Custom ordering is possible; see inchi descriptor"; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
   virtual bool ProcessVec(std::vector<OBBase*>& vec);
 private:

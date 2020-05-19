@@ -58,8 +58,8 @@ int main(int argc,char *argv[])
 {
   OBConversion Conv(&cin, &cout); //default input and output are console 
 
-  OBFormat* pInFormat = NULL;
-  OBFormat* pOutFormat = NULL;
+  OBFormat* pInFormat = nullptr;
+  OBFormat* pOutFormat = nullptr;
   bool outGzip = false;
   vector<string> FileList, OutputFileList;
   string OutputFileName;
@@ -68,8 +68,8 @@ int main(int argc,char *argv[])
   bool gotInType = false, gotOutType = false;
   bool SplitOrBatch=false;
 
-  char *oext = NULL;
-  char *iext = NULL;
+  char *oext = nullptr;
+  char *iext = nullptr;
 
   //Save name of program without its path (and .exe)
   string pn(argv[0]);
@@ -120,7 +120,7 @@ int main(int argc,char *argv[])
                     }
                   else
                       pInFormat = Conv.FindFormat(iext);
-                  if(pInFormat==NULL)
+                  if (pInFormat == nullptr)
                     {
                       cerr << program_name << ": cannot read input format!" << endl;
                       usage();
@@ -144,7 +144,7 @@ int main(int argc,char *argv[])
                   else
                     pOutFormat = Conv.FindFormat(oext);
 
-                  if(pOutFormat==NULL)
+                  if (pOutFormat == nullptr)
                     {
                       cerr << program_name << ": cannot write output format!" << endl;
                       usage();
@@ -154,13 +154,13 @@ int main(int argc,char *argv[])
 
                 case 'O':
                   OutputFileName = argv[arg] + 2;
-                  if(OutputFileName.size()<3)
+                  if(OutputFileName.empty())
                     OutputFileName = argv[++arg]; //space left after -O: use next argument
                   break;
 
                 case 'L': //display a list of plugin type or classes
                   {
-                    const char* param=NULL;
+                    const char* param = nullptr;
                     if(argc>arg+1)
                       param = argv[arg+2];
 
@@ -170,7 +170,7 @@ int main(int argc,char *argv[])
                     OBPlugin* plugin;
                     if ((OBPlugin::GetPlugin("plugins", argv[arg+1]) &&
                          (plugin = OBPlugin::GetPlugin(argv[arg+1], param))) ||
-                        (plugin = OBPlugin::GetPlugin(NULL, argv[arg+1])))
+                        (plugin = OBPlugin::GetPlugin(nullptr, argv[arg+1])))
                     {
                       //Output details of subtype
                       string txt;
@@ -244,7 +244,7 @@ int main(int argc,char *argv[])
                               {
                                 apiConv.SetOutFormat(pAPI);
                                 apiConv.AddOption(nam+1, OBConversion::GENOPTIONS, txt.c_str());
-                                apiConv.Write(NULL, &std::cout);
+                                apiConv.Write(nullptr, &std::cout);
                               }
                           }
                         else
@@ -323,7 +323,7 @@ int main(int argc,char *argv[])
     {
       //check there is a valid output format, but the extension will be re-interpreted in OBConversion
       pOutFormat = Conv.FormatFromExt(OutputFileName.c_str(), outGzip);
-      if(OutputFileName.empty() || pOutFormat==NULL)
+      if (OutputFileName.empty() || pOutFormat==nullptr)
         {
           cerr << "Missing or unknown output file or format spec or possibly a misplaced option.\n"
             "Options, other than -i -o -O -m, must come after the input files.\n" <<endl;

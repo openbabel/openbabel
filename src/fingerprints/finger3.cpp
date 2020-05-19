@@ -50,10 +50,10 @@ protected:
   string _patternsfile;
 
 public:
-  PatternFP(const char* ID, const char* filename=NULL,
+  PatternFP(const char* ID, const char* filename=nullptr,
       bool IsDefault=false) : OBFingerprint(ID, IsDefault)
   {
-    if(filename==NULL)
+    if (filename == nullptr)
       _patternsfile="patterns.txt";
     else
       _patternsfile = filename;
@@ -255,7 +255,8 @@ public:
       int num =  ppat->numbits, div = ppat->numoccurrences+1, ngrp;
       while(num) //for each group of bits
       {
-        ngrp = (num + div -1)/div--; //rounds up
+        ngrp = (num + div - 1) / div; //rounds up
+        div -= 1;
         num -= ngrp;
         if(GetBit(fp, n) == bSet)
         {

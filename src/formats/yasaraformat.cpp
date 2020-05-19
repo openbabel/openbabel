@@ -224,8 +224,7 @@ int mob_atomsize(struct mobatom *atom)
 /* MOVE POINTER TO NEXT ATOM OF YASARA OBJECT STRUCTURE
    ==================================================== */
 struct mobatom *mob_next(struct mobatom *atom)
-{ mem_inc(atom,mob_atomsize(atom));
-  return(atom); }
+{ return((struct mobatom *) ((char *) atom + mob_atomsize(atom))); }
 
 void mob_setnext(struct mobatom **atomadd)
 { *atomadd=mob_next(*atomadd); }
@@ -358,7 +357,7 @@ YOBFormat theYOBFormat;
 bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = pOb->CastAndClear<OBMol>();
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   //Define some references so we can use the old parameter names
@@ -398,7 +397,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   mob_invid(&id);
   atoms=uint32le(mob[MOB_ATOMS]);
   srcatom=mob_start(mob);
-  res=NULL;
+  res=nullptr;
   charged=0;
   for (i=0;i<atoms;i++)
   { /* GET ELEMENT, TYPE AND POSITION */
@@ -437,7 +436,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     *((int32*)atomname)=id.atom;
     atomname[4]=0;
     /* SHIFT ATOM NAME BY ONE CHARACTER TO REMOVE LEADING SPACE */
-    if (atomname[0]==' '&&(!pConv->IsOption("f",OBConversion::INOPTIONS))) memcpy(atomname,atomname+1,4);
+    if (atomname[0]==' '&&(!pConv->IsOption("f",OBConversion::INOPTIONS))) memmove(atomname,atomname+1,4);
     /* RENAME TERMINAL OXYGENS */
     str=atomname;
     if (str=="OT1") str="O";
@@ -473,7 +472,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   //Define some references so we can use the old parameter names
