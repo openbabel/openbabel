@@ -1362,6 +1362,7 @@ namespace OpenBabel
     BondExpr *bexpr;
     int index;
 
+    aexpr = nullptr;
     bexpr = nullptr;
 
     while( *LexPtr )
@@ -1502,8 +1503,14 @@ namespace OpenBabel
             else
               aexpr = ParseAtomExpr(0);
             vb = (*LexPtr == ':') ? GetVectorBinding():0;
-            if( !aexpr || (*LexPtr!=']') )
+            if( aexpr == nullptr || (*LexPtr!=']') ){
+              if (aexpr != nullptr){
+                FreeAtomExpr(aexpr);
+                aexpr = nullptr;
+              }
+
               return ParseSMARTSError(pat,bexpr);
+            }
             index = CreateAtom(pat,aexpr,part,vb);
             if( prev != -1 )
               {
