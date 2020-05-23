@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+from __future__ import print_function
 import os
 import re
 import subprocess
@@ -105,7 +106,7 @@ class CustomBuildExt(build_ext):
                   'For example:',
                   '  python setup.py build_ext -I{} -L{}'.format(self.ob_include_dir, self.ob_library_dir),
                   '  python setup.py install',
-                  sep='\n')
+                  sep=r'\n')
             sys.exit(1)
 
 
