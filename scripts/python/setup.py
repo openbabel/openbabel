@@ -106,7 +106,7 @@ class CustomBuildExt(build_ext):
                   'For example:',
                   '  python setup.py build_ext -I{} -L{}'.format(self.ob_include_dir, self.ob_library_dir),
                   '  python setup.py install',
-                  sep=r'\n')
+                  sep='\n')
             sys.exit(1)
 
 
