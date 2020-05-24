@@ -274,8 +274,8 @@ namespace OpenBabel {
     }
 
     OBStereo::Type type; //!< the type for this stereogenic unit
-    unsigned long id; //! the atom/bond (depends on type) unique id
-    bool para; //! para- (=ressemble) or true-stereocenter
+    unsigned long id; //!< the atom/bond (depends on type) unique id
+    bool para; //!< para- (=ressemble) or true-stereocenter
   };
   /**
    * @brief A single set of OBStereoUnit objects.
