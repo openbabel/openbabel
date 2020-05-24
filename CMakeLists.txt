@@ -21,7 +21,7 @@ include (CheckCXXCompilerFlag)
 
 # Version numbering - should be bumped for each release
 # Note that for "beta" releases, we should start at x.90.0 -- we've
-# had too many 1.100.1 releases. :-)
+# had too many 1.100.1 releases.  :-)
 set(BABEL_MAJ_VER   3)
 set(BABEL_MIN_VER   1)
 set(BABEL_PATCH_VER 1)
