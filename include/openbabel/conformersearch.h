@@ -24,8 +24,10 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
+#include <memory>
 
 namespace OpenBabel {
+  class OBRandom;
 
   typedef std::vector<int> RotorKey;
   typedef std::vector<RotorKey> RotorKeys;
@@ -443,7 +445,7 @@ namespace OpenBabel {
       std::vector<std::vector <int> > dynamic_niches; //!< The dynamically found niches
       std::vector<int> niche_map;                     //!< Procide the sharing niche index, given the key inddex
       
-      void *d; // Opaque pointer - currently for storing OBRandom* which may be removed in future
+      std::unique_ptr<OBRandom> d;
       bool use_sharing;		//!< Whether to use sharing or not.
       double alpha_share;	//!< The alpha parameter in sharing function
       double sigma_share;		//!< The sigma parameter in sharing function
