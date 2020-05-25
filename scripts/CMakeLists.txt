@@ -14,6 +14,10 @@ if (RUN_SWIG)
   if (NOT SWIG_FOUND)
     message(STATUS "SWIG 2.0 NOT found")
     return()
+  else ()
+    if(SWIG_VERSION VERSION_GREATER_EQUAL 4.0)
+      set(doxygen_switch "-doxygen")
+    endif()
   endif (NOT SWIG_FOUND)
 endif (RUN_SWIG)
 
@@ -71,7 +75,7 @@ if (DO_PYTHON_BINDINGS)
 
     if(RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
-      COMMAND ${SWIG_EXECUTABLE} -python -doxygen -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+      COMMAND ${SWIG_EXECUTABLE} -python -c++ ${doxygen_switch} -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
