@@ -75,8 +75,12 @@ int main(int argc,char *argv[])
   
   OBRotorList rl;
   OBRotamerList rotamers;
+#if !OB_USE_OBRANDOMMT
   OBRandom rand;
   rand.Reset();
+#else
+  OBRandomMT rand{};
+#endif
 
   while(ifs.peek() != EOF && ifs.good())
     {
@@ -96,7 +100,11 @@ int main(int argc,char *argv[])
       OBRotorIterator ri;
       OBRotor *rotor = rl.BeginRotor(ri);
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+#if !OB_USE_OBRANDOMMT
         rotorKey[i] = rand.UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+        rotorKey[i] = rand.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
       }
 
       rotamers.SetBaseCoordinateSets(mol);

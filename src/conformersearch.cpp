@@ -310,8 +310,12 @@ namespace OpenBabel {
     p_crossover = 0.7;
     niche_mating = 0.7;
     local_opt_rate = 3;
+#if !OB_USE_OBRANDOMMT
     d.reset(new OBRandom());
     d->Reset();
+#else
+    d.reset(new OBRandomMT());
+#endif
     m_logstream = &std::cout; 	// Default logging send to standard output
     // m_logstream = NULL;
     m_printrotors = false;  // By default, do not print rotors but perform the conformer search
@@ -385,8 +389,12 @@ namespace OpenBabel {
     }
 
     // create initial population
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
     generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
 
     RotorKey rotorKey(m_rotorList.Size() + 1, 0); // indexed from 1
     if (IsGood(rotorKey))
@@ -404,7 +412,11 @@ namespace OpenBabel {
       OBRotor *rotor = m_rotorList.BeginRotor(ri);
       for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
         if (generator.UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
           rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
         }
       }
       // duplicates are always rejected
@@ -452,8 +464,12 @@ namespace OpenBabel {
   void OBConformerSearch::NextGeneration()
   {
     // create next generation population
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
     generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
 
     // generate the children
     int numConformers = m_rotorKeys.size();
@@ -471,7 +487,11 @@ namespace OpenBabel {
           OBRotor *rotor = m_rotorList.BeginRotor(ri);
           for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
             if (generator.UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
               rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u); // permutate gene
+#else
+              rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u); // permutate gene
+#endif
             }
           }
           // duplicates are always rejected
@@ -791,7 +811,11 @@ namespace OpenBabel {
       {
         neighbor = best;
         do {
+#if !OB_USE_OBRANDOMMT
           new_val = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          new_val = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
         } while (new_val == best[i]);
         neighbor[i] = new_val;
         if (IsUniqueKey(backup_population, neighbor) && IsGood(neighbor))
@@ -899,10 +923,18 @@ namespace OpenBabel {
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
         if (d->UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
           key1[i] = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          key1[i] = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
         }
         if (d->UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
           key2[i] = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          key2[i] = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
         }
       }
     if (IsUniqueKey(m_rotorKeys, key1) && IsGood(key1))
