@@ -46,24 +46,22 @@ namespace OpenBabel
   class OBRandom
   {
   public:
-    OBRandom() { TimeSeed(); }
+    OBRandom() { Reset(); }
     explicit OBRandom(uint_fast64_t seed) { Seed(seed); }
-    //! \deprecated
-    explicit OBRandom(bool OBRandomUseSysRand) { TimeSeed(); }
     //! Use @p seed for the random number generator seed
     void Seed(uint_fast64_t seed) { prng.reset(new std::mt19937_64{seed}); }
-    //! Use the current time for the random number generator seed
-    //! If sranddev is available (e.g., Mac OS X, BSD...) use this instead
-    //! for more random seeds
-    void TimeSeed();
-    //! \return a random integer in [0, 2^31 - 1] \deprecated
-    int NextInt();
+    //! Reset underlying pseudo random number generator by a random seed.
+    //! Use a non-deterministic random device if available (e.g., Mac OS X, BSD...),
+    //! otherwise the current time.
+    void Reset();
     //! \return a random integer in [a, b]
     int UniformInt(int a, int b);
-    //! \return a random floating-point number in [0, 1) \deprecated
-    double NextFloat();
+    //! \return a random floating-point number in [0, 1)
+    double UniformReal() { return UniformReal(0.0, 1.0); }
     //! \return a random floating-point number in [a, b)
     double UniformReal(double a, double b);
+    //! \return true with probability of p
+    bool Bernoulli(double p = 0.5);
 
   private:
     std::unique_ptr<std::mt19937_64> prng;

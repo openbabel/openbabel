@@ -17,7 +17,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include <limits>
 #include "rand.h"
 
 #if TIME_WITH_SYS_TIME
@@ -35,7 +34,7 @@ GNU General Public License for more details.
 namespace OpenBabel
 {
 
-  void OBRandom::TimeSeed()
+  void OBRandom::Reset()
   {
 #if defined(WIN32) || defined(__MINGW32__)
     // for VC++ do it this way
@@ -49,26 +48,22 @@ namespace OpenBabel
 #endif
   }
 
-  int OBRandom::NextInt()
-  {
-    return UniformInt(0, std::numeric_limits<int>::max());
-  }
-
   int OBRandom::UniformInt(int a, int b)
   {
     std::uniform_int_distribution<int> u{a, b};
     return u(*prng);
   }
 
-  double OBRandom::NextFloat()
-  {
-    return UniformReal(0.0, 1.0);
-  }
-
   double OBRandom::UniformReal(double a, double b)
   {
     std::uniform_real_distribution<double> u{a, b};
     return u(*prng);
+  }
+
+  bool OBRandom::Bernoulli(double p)
+  {
+    std::bernoulli_distribution b{p};
+    return b(*prng);
   }
 
 } //end namespace OpenBabel
