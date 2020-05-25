@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <cstdlib>
 #include <cstdio>
 #include <cmath>
+#include <limits>
 
 #include "rand.h"
 
@@ -531,6 +532,39 @@ namespace OpenBabel
 
   bool OBRandom::Bernoulli(double p) {
     return UniformReal(0.0, 1.0) <= p;
+  }
+
+  uint_fast64_t OBRandomMT::randomSeed() const {
+    auto ob_random_seed = std::getenv("OB_RANDOM_SEED");
+    if (ob_random_seed && ob_random_seed[0] != '\0') {
+      return std::atol(ob_random_seed);
+    }
+#if defined(WIN32) || defined(__MINGW32__)
+    // for VC++ do it this way
+    time_t ltime;
+    time(&ltime);
+    return ltime;
+#else
+    return std::random_device{}();
+#endif
+  }
+
+  int OBRandomMT::NextInt() const {
+    return UniformInt(0, std::numeric_limits<int>::max());
+  }
+
+  double OBRandomMT::NextFloat() const {
+    return UniformReal(0.0, 1.0);
+  }
+
+  double OBRandomMT::Normal(double mu, double sigma) const {
+    std::normal_distribution<double> n{mu, sigma};
+    return n(*prng);
+  }
+
+  bool OBRandomMT::Bernoulli(double p) const {
+    std::bernoulli_distribution b{p};
+    return b(*prng);
   }
 
 } //end namespace OpenBabel
