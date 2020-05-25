@@ -51,7 +51,11 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
+#if !OB_USE_OBRANDOMMT
 OBRandom randomizer;
+#else
+OBRandomMT randomizer{};
+#endif
 int testCount = 0;
 int failedCount = 0;
 char currentFunc [256];

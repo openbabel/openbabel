@@ -92,7 +92,11 @@ namespace OpenBabel
   */
   void vector3::randomUnitVector()
   {
+#if !OB_USE_OBRANDOMMT
     static OBRandom singleRand(true);
+#else
+    static OBRandomMT singleRand{};
+#endif
 
 #if !OB_USE_IMPROVED_RANDOM_UNIT_VECTOR
     // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
