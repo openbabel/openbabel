@@ -310,11 +310,8 @@ namespace OpenBabel {
     p_crossover = 0.7;
     niche_mating = 0.7;
     local_opt_rate = 3;
-    // For the moment 'd' is an opaque pointer to an instance of OBRandom*.
-    // In future, it could be a pointer to a structure storing all of the
-    // private variables.
-    d = (void*)new OBRandom();
-    ((OBRandom*)d)->TimeSeed();
+    d.reset(new OBRandom());
+    d->TimeSeed();
     m_logstream = &std::cout; 	// Default logging send to standard output
     // m_logstream = NULL;
     m_printrotors = false;  // By default, do not print rotors but perform the conformer search
@@ -323,7 +320,6 @@ namespace OpenBabel {
 
   OBConformerSearch::~OBConformerSearch()
   {
-    delete (OBRandom*)d;
   }
 
 
@@ -792,9 +788,9 @@ namespace OpenBabel {
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
         neighbor = best;
-        new_val = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
+        new_val = d->NextInt() % rotor->GetResolution().size();
         while (new_val == best[i])
-          new_val = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
+          new_val = d->NextInt() % rotor->GetResolution().size();
         neighbor[i] = new_val;
         if (IsUniqueKey(backup_population, neighbor) && IsGood(neighbor))
           m_rotorKeys.push_back (neighbor);
@@ -846,30 +842,30 @@ namespace OpenBabel {
       return 0;
 
     // Make a 2-tournament selection to choose first parent
-    i = ((OBRandom*)d)->NextInt() % pop_size;
-    j = ((OBRandom*)d)->NextInt() % pop_size;
+    i = d->NextInt() % pop_size;
+    j = d->NextInt() % pop_size;
     parent1 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
     iniche = niche_map[parent1];
     if (iniche > -1)
       nsize = dynamic_niches[iniche].size (); // Belongs to a specific niche
 
     // Do we apply crossover here?
-    flag_crossover = (((OBRandom*)d)->NextFloat () <= p_crossover);
-    if (flag_crossover && (((OBRandom*)d)->NextFloat () <= niche_mating)  &&  nsize > 1)
+    flag_crossover = (d->NextFloat () <= p_crossover);
+    if (flag_crossover && (d->NextFloat () <= niche_mating)  &&  nsize > 1)
       {
         // Apply niche mating: draw second parent in the same niche, if its has
         // at least 2 members. Make a 2-tournament selection whithin this niche
-        rnd1 = ((OBRandom*)d)->NextInt() % nsize;
+        rnd1 = d->NextInt() % nsize;
         i =  dynamic_niches[iniche][rnd1];
-        rnd2 = ((OBRandom*)d)->NextInt() % nsize;
+        rnd2 = d->NextInt() % nsize;
         j = dynamic_niches[iniche][rnd2];
         parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
       }
     else
       {
         // Draw second in the whole population
-        i = ((OBRandom*)d)->NextInt() % pop_size;
-        j = ((OBRandom*)d)->NextInt() % pop_size;
+        i = d->NextInt() % pop_size;
+        j = d->NextInt() % pop_size;
         parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
       }
 
@@ -878,7 +874,7 @@ namespace OpenBabel {
         // Cross the 2 vectors: toss a coin for each position (i.e. uniform crossover)
         for (i = 1; i < key1.size(); i++)
           {
-            if (((OBRandom*)d)->NextInt() % 2)
+            if (d->NextInt() % 2)
               { // Copy parent1 to offspring 1
                 key1[i] = m_rotorKeys[parent1][i];
                 key2[i] = m_rotorKeys[parent2][i];
@@ -900,10 +896,10 @@ namespace OpenBabel {
     rotor = m_rotorList.BeginRotor(ri);
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
-        if (((OBRandom*)d)->NextInt() % m_mutability == 0)
-          key1[i] = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
-        if (((OBRandom*)d)->NextInt() % m_mutability == 0)
-          key2[i] = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
+        if (d->NextInt() % m_mutability == 0)
+          key1[i] = d->NextInt() % rotor->GetResolution().size();
+        if (d->NextInt() % m_mutability == 0)
+          key2[i] = d->NextInt() % rotor->GetResolution().size();
       }
     if (IsUniqueKey(m_rotorKeys, key1) && IsGood(key1))
       ret_code += 1;
