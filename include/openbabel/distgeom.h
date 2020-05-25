@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 
 #include <iostream>
+#include <memory>
 
 #ifndef OBAPI
   #define OBAPI
@@ -38,6 +39,7 @@ namespace OpenBabel {
 
   class DistanceGeometryPrivate;
   class OBCisTransStereo;
+  class OBRandom;
 
   class TetrahedralInfo {
     int c;
@@ -80,6 +82,9 @@ namespace OpenBabel {
      */
     bool Setup(const OBMol &mol, bool useCurrentGeom = false);
 
+    //! reset prng by the specified seed
+    void Seed(uint_fast64_t seed);
+
     void Generate();
     void AddConformer();
     void GetConformers(OBMol &mol);
@@ -115,6 +120,7 @@ namespace OpenBabel {
     DistanceGeometryPrivate  *_d;    //!< Internal private data, including bounds matrix
     Eigen::VectorXd _coord;          // one-dimensional vector containing coordinates of atoms
     std::string input_smiles;
+    std::unique_ptr<OBRandom> prng;
 
     unsigned int dim;
 

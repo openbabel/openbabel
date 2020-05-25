@@ -83,27 +83,23 @@ namespace OpenBabel
     else return _vz;
   }
 
-  /*! Replaces *this with a random unit vector, which is (supposed
-    to be) uniformly distributed over the unit sphere. Uses the
-    system number generator with a time seed.
+  void vector3::seed(uint_fast64_t seed)
+  {
+    prng.reset(new OBRandom{seed});
+  }
 
+  /*! Replaces *this with a random unit vector, which is (supposed
+    to be) uniformly distributed over the unit sphere.
   */
   void vector3::randomUnitVector()
   {
-    OBRandom *ptr;
-    static OBRandom singleRand(true);
-    ptr = &singleRand;
+    if (!prng)
+      prng.reset(new OBRandom{});
 
-    // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
-    // the vector to obtain a random vector of length 1.0.
-    double l;
-    do
-      {
-        this->Set(ptr->NextFloat()-0.5, ptr->NextFloat()-0.5, ptr->NextFloat()-0.5);
-        l = length_2();
-      }
-    while ( (l > 1.0) || (l < 1e-4) );
-    this->normalize();
+    double z = prng->UniformReal(-1.0, 1.0);
+    double phi = prng->UniformReal(0.0, 2 * M_PI);
+    double rho = sqrt(1.0 - z * z);
+    this->Set(rho * cos(phi), rho * sin(phi), z);
   }
 
   OBAPI ostream& operator<< ( ostream& co, const vector3& v )
