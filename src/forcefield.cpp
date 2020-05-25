@@ -1433,8 +1433,12 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
     generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     _origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1479,7 +1483,11 @@ namespace OpenBabel
       rotor = rl.BeginRotor(ri);
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
+#if !OB_USE_OBRANDOMMT
         rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+        rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
       }
       rotamers.AddRotamer(rotorKey);
     }
@@ -1603,8 +1611,12 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
     generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     int origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -3415,8 +3427,12 @@ namespace OpenBabel
   void OBForceField::GenerateVelocities()
   {
     cout << "OBForceField::GenerateVelocities()" << endl;
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
     generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
 
