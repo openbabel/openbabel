@@ -19,6 +19,8 @@ GNU General Public License for more details.
 
 #include "rand.h"
 
+#include <cstdlib>
+
 #if TIME_WITH_SYS_TIME
 #include <sys/time.h>
 #include <ctime>
@@ -36,6 +38,11 @@ namespace OpenBabel
 
   void OBRandom::Reset()
   {
+    auto ob_random_seed = std::getenv("OB_RANDOM_SEED");
+    if (ob_random_seed) {
+      this->Seed(std::atoll(ob_random_seed));
+      return;
+    }
 #if defined(WIN32) || defined(__MINGW32__)
     // for VC++ do it this way
     time_t ltime;
