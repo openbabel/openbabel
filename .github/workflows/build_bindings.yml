@@ -15,7 +15,7 @@ jobs:
         config:
         - {
             name: "Linux SWIG All Bindings",
-            os: ubuntu-latest,
+            os: ubuntu-20.04,
             cc: "gcc", cxx: "g++",
             cmake_flags: "-DPYTHON_BINDINGS=ON -DPERL_BINDINGS=ON -DRUBY_BINDINGS=ON -DJAVA_BINDINGS=ON -DCSHARP_BINDINGS=ON -DRUN_SWIG=ON"
           }
@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@v2-preview
       with:
         path: ${{ runner.workspace }}/openbabel-latest.tar.bz2
-        name: openbabel.tar.bz2
+        name: openbabel-bindings.tar.bz2
