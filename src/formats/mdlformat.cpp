@@ -518,7 +518,6 @@ namespace OpenBabel
       //
       // Bond Block
       //
-      stereo = 0;
       bool needs_kekulization = false; // Have we have found an aromatic bond?
       unsigned int begin, end, order, flag;
       for (i = 0;i < nbonds; ++i) {

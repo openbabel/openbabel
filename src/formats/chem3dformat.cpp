@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <cstdlib>
 
 
@@ -222,10 +223,8 @@ namespace OpenBabel
     divisor = pow(10.0,exponent);
     mol.ReserveAtoms(natoms);
 
-    ttab.SetToType("INT");
-    ttab.SetFromType(type_key);
-
     OBAtom *atom;
+    OBTranslator trans(type_key, "INT");
     double x,y,z;
     vector3 v;
 
@@ -250,7 +249,7 @@ namespace OpenBabel
           return(false);
 
         atom = mol.NewAtom();
-        ttab.Translate(tmp1,tmp);
+        trans.Translate(tmp1,tmp);
         atom->SetType(tmp1);
         atom->SetVector(v);
         atom->SetAtomicNum(OBElements::GetAtomicNum(atomic_type));
@@ -279,18 +278,19 @@ namespace OpenBabel
     int atnum;
     int type_num;
     char buffer[BUFF_SIZE],type_name[16],ele_type[16];
+    OBTranslator trans;
 
     ofs << mol.NumAtoms();
     if (EQ(mol_typ,"MMADS"))
       {
         ofs << " " << mol.GetTitle();
-        ttab.SetToType("MM2");
+        trans.SetToType("MM2");
       }
     else
-      ttab.SetToType(mol_typ);
+      trans.SetToType(mol_typ);
     ofs << endl;
 
-    ttab.SetFromType("INT");
+    trans.SetFromType("INT");
 
     OBAtom *atom,*nbr;
     vector<OBAtom*>::iterator i;
@@ -298,7 +298,7 @@ namespace OpenBabel
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
-        if (!ttab.Translate(type_name,atom->GetType()))
+        if (!trans.Translate(type_name,atom->GetType()))
           {
             snprintf(buffer, BUFF_SIZE,
                      "Unable to assign %s type to atom %d type = %s\n",

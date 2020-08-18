@@ -432,8 +432,6 @@ namespace OpenBabel {
         continue;
 
       // Aromatic rings must be planar, so atoms in the ring = regular polygon
-      double angle = 180.0 - (360.0 / size);
-      angle *= DEG_TO_RAD;
       float bondDist, radius;
 
       // We should have 1-2 and 1-3 distances set exactly.
@@ -1084,13 +1082,13 @@ namespace OpenBabel {
       }
     }
 
-    for(size_t i=0; i<N; i++) {
-      for (size_t j=0; j<N; j++) {
-        double lb = _d->GetLowerBounds(i, j);
-        double ub = _d->GetUpperBounds(i, j);
-        //cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " (" << distMat(i, j) << ")" << " < " << ub << endl;
-      }
-    }
+//    for(size_t i=0; i<N; i++) {
+//      for (size_t j=0; j<N; j++) {
+//        double lb = _d->GetLowerBounds(i, j);
+//        double ub = _d->GetUpperBounds(i, j);
+//        cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " (" << distMat(i, j) << ")" << " < " << ub << endl;
+//      }
+//    }
     return true;
   }
 
@@ -1111,10 +1109,10 @@ namespace OpenBabel {
     LBFGSpp::LBFGSSolver<double> solver(param);
     DistGeomFunc fun(this);
 
-    double fx;
-    int niter = solver.minimize(fun, _coord, fx);
-    //std::cout << niter << " iterations" << std::endl;
-    //std::cout << "f(x) = " << fx << std::endl;
+//    double fx;
+//    int niter = solver.minimize(fun, _coord, fx);
+//    std::cout << niter << " iterations" << std::endl;
+//    std::cout << "f(x) = " << fx << std::endl;
 
     for(size_t i=0; i<N; ++i) {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
@@ -1131,13 +1129,13 @@ namespace OpenBabel {
       }
     }
 
-    for(size_t i=0; i<N; i++) {
-      for (size_t j=0; j<N; j++) {
-        double lb = _d->GetLowerBounds(i, j);
-        double ub = _d->GetUpperBounds(i, j);
-        //cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " < " << ub << endl;
-      }
-    }
+//    for(size_t i=0; i<N; i++) {
+//      for (size_t j=0; j<N; j++) {
+//        double lb = _d->GetLowerBounds(i, j);
+//        double ub = _d->GetUpperBounds(i, j);
+//        cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " < " << ub << endl;
+//      }
+//    }
     return true;
   }
 
@@ -1156,10 +1154,10 @@ namespace OpenBabel {
     LBFGSpp::LBFGSSolver<double> solver(param);
     DistGeomFunc4D fun(this);
 
-    double fx;
-    int niter = solver.minimize(fun, _coord, fx);
-    //std::cout << niter << " iterations" << std::endl;
-    //std::cout << "f(x) = " << fx << std::endl;
+//    double fx;
+//    int niter = solver.minimize(fun, _coord, fx);
+//    std::cout << niter << " iterations" << std::endl;
+//    std::cout << "f(x) = " << fx << std::endl;
 
     for(size_t i=0; i<N; ++i) {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));

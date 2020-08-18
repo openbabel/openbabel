@@ -111,11 +111,12 @@ namespace OpenBabel
 			// First try atom type name
 			if ((res = a->GetResidue()) != nullptr)
 			{
-				char *f = name  = (char*)res->GetAtomID( a ).c_str();
+				string ff = res->GetAtomID(a);
+				char* f = name = (char*)ff.c_str();
 				for( int j = strlen(f)-1; j>=0; j-- ) { if( f[j]==' ' ){ f[j]='\0'; } } // trim trailing whitespace
-				std::string ff = string(f);
+				ff = string(f);
 				if( q_by_name.count( ff ) ) {
-					q = q_by_name[ string(ff) ];
+					q = q_by_name[ ff ];
 					found = true;
 				}
 			}

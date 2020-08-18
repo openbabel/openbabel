@@ -652,10 +652,10 @@ namespace OpenBabel {
     // Add the data stored inside the _squarePlanarMap to the atoms now after end
     // modify so they don't get lost.
     if(!_squarePlanarMap.empty()) {
-      OBAtom* atom;
+//      OBAtom* atom;
       map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator ChiralSearch;
       for(ChiralSearch = _squarePlanarMap.begin(); ChiralSearch != _squarePlanarMap.end(); ++ChiralSearch) {
-        atom = ChiralSearch->first;
+//        atom = ChiralSearch->first;
         OBSquarePlanarStereo::Config *sp = ChiralSearch->second;
         if (!sp)
           continue;

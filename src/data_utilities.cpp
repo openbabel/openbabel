@@ -25,10 +25,14 @@ GNU General Public License for more details.
 #include <fstream>
 #include <iostream>
 #include <openbabel/babelconfig.h>
+#include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
 #include <openbabel/generic.h>
 #include <openbabel/locale.h>
+
+using std::string;
 
 namespace OpenBabel {
 
@@ -201,6 +205,132 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
                -(*temperature*Sconf)/1000);
     }
     return (found == 9);
+}
+
+OBTranslator::OBTranslator() {
+	if (!ttab._init)
+		ttab.Init();
+	_from = _to = -1;
+}
+
+OBTranslator::OBTranslator(const char* from, const char* to) {
+	OBTranslator();
+	SetFromType(from);
+	SetToType(to);
+}
+
+bool OBTranslator::SetFromType(const char* from)
+{
+	string tmp = from;
+
+	unsigned int i;
+	for (i = 0;i < ttab._colnames.size();++i)
+		if (tmp == ttab._colnames[i])
+		{
+			_from = i;
+			return(true);
+		}
+
+	obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
+
+	return(false);
+}
+
+bool OBTranslator::SetToType(const char* to)
+{
+	string tmp = to;
+
+	unsigned int i;
+	for (i = 0;i < ttab._colnames.size();++i)
+		if (tmp == ttab._colnames[i])
+		{
+			_to = i;
+			return(true);
+		}
+
+	obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
+
+	return(false);
+}
+
+//! Translates atom types (to, from), checking for size of destination
+//!  string and null-terminating as needed
+//! \deprecated Because there is no guarantee on the length of an atom type
+//!  you should consider using std::string instead
+bool OBTranslator::Translate(char *to, const char *from) const
+{
+	bool rval;
+	string sto,sfrom;
+	sfrom = from;
+	rval = Translate(sto,sfrom);
+	strncpy(to,(char*)sto.c_str(), OBATOM_TYPE_LEN - 1);
+	to[OBATOM_TYPE_LEN - 1] = '\0';
+
+	return(rval);
+}
+
+bool OBTranslator::Translate(string &to, const string &from) const
+{
+	using std::vector;
+
+	if (from == "")
+		return(false);
+
+	if (_from >= 0 && _to >= 0 &&
+		_from < (signed)ttab._table.size() && _to < (signed)ttab._table.size())
+	{
+		vector<vector<string> >::iterator i;
+		for (i = ttab._table.begin();i != ttab._table.end();++i)
+			if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
+			{
+				to = (*i)[_to];
+				return(true);
+			}
+	}
+
+	// Throw an error, copy the string and return false
+	obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
+	to = from;
+	return(false);
+}
+
+std::string OBTranslator::Translate(const string &from) const
+{
+	using std::vector;
+
+	if (from.empty())
+		return("");
+
+	if (_from >= 0 && _to >= 0 &&
+		_from < (signed)ttab._table.size() && _to < (signed)ttab._table.size())
+	{
+		vector<vector<string> >::iterator i;
+		for (i = ttab._table.begin();i != ttab._table.end();++i)
+			if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
+			{
+				return (*i)[_to];
+			}
+	}
+
+	// Throw an error, copy the string and return false
+	obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
+	return("");
+}
+
+std::string OBTranslator::GetFromType() const
+{
+	if (_from > 0 && _from < (signed)ttab._table.size())
+		return( ttab._colnames[_from] );
+	else
+		return( ttab._colnames[0] );
+}
+
+std::string OBTranslator::GetToType() const
+{
+	if (_to > 0 && _to < (signed)ttab._table.size())
+		return( ttab._colnames[_to] );
+	else
+		return( ttab._colnames[0] );
 }
 
 }

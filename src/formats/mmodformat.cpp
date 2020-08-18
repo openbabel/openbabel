@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <openbabel/generic.h>
 #include <cstdlib>
 
@@ -123,8 +124,9 @@ namespace OpenBabel
     int i,j;
     double charge;
     OBAtom atom;
+    OBTranslator trans;
 
-    ttab.SetFromType("MMD");
+    trans.SetFromType("MMD");
     for (i = 1; i <= natoms; i++)
       {
         if (!ifs.getline(buffer,BUFF_SIZE))
@@ -154,11 +156,11 @@ namespace OpenBabel
         atom.SetVector(v);
 
         string str = temp_type,str1;
-        ttab.SetToType("ATN");
-        ttab.Translate(str1,str);
+        trans.SetToType("ATN");
+        trans.Translate(str1,str);
         atom.SetAtomicNum(atoi(str1.c_str()));
-        ttab.SetToType("INT");
-        ttab.Translate(str1,str);
+        trans.SetToType("INT");
+        trans.Translate(str1,str);
         atom.SetType(str1);
 
         // stuff for optional fields
@@ -215,6 +217,7 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
+    OBTranslator trans;
 
     char buffer[BUFF_SIZE];
     snprintf(buffer, BUFF_SIZE, " %5d %6s      E = %7.3f KJ/mol",
@@ -226,8 +229,8 @@ namespace OpenBabel
     string from,to;
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
-    ttab.SetFromType("INT");
-    ttab.SetToType("MMD");
+    trans.SetFromType("INT");
+    trans.SetToType("MMD");
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i)) {
         if (atom->GetAtomicNum() == OBElements::Hydrogen) {
@@ -242,7 +245,7 @@ namespace OpenBabel
           }
         } else {
             from = atom->GetType();
-            ttab.Translate(to,from);
+            trans.Translate(to,from);
             type = atoi((char*)to.c_str());
         }
         snprintf(buffer, BUFF_SIZE, "%4d",type);

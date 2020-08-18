@@ -281,7 +281,6 @@ namespace OpenBabel
       vector<unsigned int> copy_sym = symmetry_classes;
       sort(copy_sym.begin(), copy_sym.end());
       vector<unsigned int>::iterator end_pos = unique(copy_sym.begin(), copy_sym.end()); // Requires sorted elements
-      int nclasses = end_pos - copy_sym.begin();
 
       cout << "sym_class[" << atom->GetIndex() << "] = " << symmetry_classes.at(atom->GetIndex()) << endl;
       return symmetry_classes.at(atom->GetIndex());

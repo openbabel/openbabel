@@ -52,16 +52,14 @@ class CompoundFilter : public OBDescriptor
 public:
 ///Constructor defining ID, the filter string that the descriptor is short for, and a description.
   CompoundFilter(const char* ID, const char* macrotext, const char* descr)
-    : OBDescriptor(ID), _descr(descr), _macroText(macrotext){}
+    : OBDescriptor(ID), _descr(descr), _macroText(macrotext) {
+      _alldescr = _descr;
+      _alldescr += '\n' + _macroText + "\nCompoundFilter is definable"; //Entries in plugindefines.txt can start "CompoundFilter";
+    }
 
   virtual const char* Description()
   {
-    static string txt;
-    txt = _descr;
-    txt += '\n';
-    txt += _macroText;
-    txt += "\nCompoundFilter is definable";//Entries in plugindefines.txt can start "CompoundFilter"
-    return txt.c_str();
+    return _alldescr.c_str();
   }
 
 ///
@@ -81,6 +79,7 @@ public:
 private:
   const char* _descr;
   const string _macroText;
+  string _alldescr;
 };
 
 //*********************************************************************

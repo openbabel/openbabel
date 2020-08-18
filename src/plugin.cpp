@@ -43,8 +43,12 @@ OBPlugin::PluginMapType& OBPlugin::GetTypeMap(const char* PluginID)
 
 int OBPlugin::AllPluginsLoaded = 0;
 
+mutex OBPlugin::PluginMutex;
+
 void OBPlugin::LoadAllPlugins()
 {
+  lock_guard<mutex> lock(PluginMutex);
+
   int count = 0;
 #if  defined(USING_DYNAMIC_LIBS)
   // Depending on availability, look successively in

@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 #include <cstdlib>
+#include <mutex>
 #include <openbabel/babelconfig.h>
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
@@ -47,6 +48,8 @@ namespace OpenBabel
   // Initialize the globals (declared in data.h)
   OBTypeTable ttab;
   OBResidueData resdat;
+
+  mutex table_mutex;  // Private mutex for concurrency
 
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {
@@ -252,7 +255,6 @@ namespace OpenBabel
     _subdir = "data";
     _dataptr = TypesData;
     _linecount = 0;
-    _from = _to = -1;
   }
 
   void OBTypeTable::ParseLine(const char *buffer)
@@ -279,137 +281,6 @@ namespace OpenBabel
           }
       }
     _linecount++;
-  }
-
-  bool OBTypeTable::SetFromType(const char* from)
-  {
-    if (!_init)
-      Init();
-
-    string tmp = from;
-
-    unsigned int i;
-    for (i = 0;i < _colnames.size();++i)
-      if (tmp == _colnames[i])
-        {
-          _from = i;
-          return(true);
-        }
-
-    obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
-
-    return(false);
-  }
-
-  bool OBTypeTable::SetToType(const char* to)
-  {
-    if (!_init)
-      Init();
-
-    string tmp = to;
-
-    unsigned int i;
-    for (i = 0;i < _colnames.size();++i)
-      if (tmp == _colnames[i])
-        {
-          _to = i;
-          return(true);
-        }
-
-    obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
-
-    return(false);
-  }
-
-  //! Translates atom types (to, from), checking for size of destination
-  //!  string and null-terminating as needed
-  //! \deprecated Because there is no guarantee on the length of an atom type
-  //!  you should consider using std::string instead
-  bool OBTypeTable::Translate(char *to, const char *from)
-  {
-    if (!_init)
-      Init();
-
-    bool rval;
-    string sto,sfrom;
-    sfrom = from;
-    rval = Translate(sto,sfrom);
-    strncpy(to,(char*)sto.c_str(), OBATOM_TYPE_LEN - 1);
-    to[OBATOM_TYPE_LEN - 1] = '\0';
-
-    return(rval);
-  }
-
-  bool OBTypeTable::Translate(string &to, const string &from)
-  {
-    if (!_init)
-      Init();
-
-    if (from == "")
-      return(false);
-
-    if (_from >= 0 && _to >= 0 &&
-        _from < (signed)_table.size() && _to < (signed)_table.size())
-      {
-        vector<vector<string> >::iterator i;
-        for (i = _table.begin();i != _table.end();++i)
-          if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
-            {
-              to = (*i)[_to];
-              return(true);
-            }
-      }
-
-    // Throw an error, copy the string and return false
-    obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
-    to = from;
-    return(false);
-  }
-
-  std::string OBTypeTable::Translate(const string &from)
-  {
-    if (!_init)
-      Init();
-
-    if (from.empty())
-      return("");
-
-    if (_from >= 0 && _to >= 0 &&
-        _from < (signed)_table.size() && _to < (signed)_table.size())
-      {
-        vector<vector<string> >::iterator i;
-        for (i = _table.begin();i != _table.end();++i)
-          if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
-            {
-              return (*i)[_to];
-            }
-      }
-
-    // Throw an error, copy the string and return false
-    obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
-    return("");
-  }
-
-  std::string OBTypeTable::GetFromType()
-  {
-    if (!_init)
-      Init();
-
-    if (_from > 0 && _from < (signed)_table.size())
-      return( _colnames[_from] );
-    else
-      return( _colnames[0] );
-  }
-
-  std::string OBTypeTable::GetToType()
-  {
-    if (!_init)
-      Init();
-
-    if (_to > 0 && _to < (signed)_table.size())
-      return( _colnames[_to] );
-    else
-      return( _colnames[0] );
   }
 
   void Toupper(string &s)
@@ -665,6 +536,8 @@ namespace OpenBabel
 
   void OBGlobalDataBase::Init()
   {
+    lock_guard<mutex> lock(table_mutex); // Lock for concurrency
+
     if (_init)
       return;
     _init = true;

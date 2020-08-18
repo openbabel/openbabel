@@ -2533,6 +2533,7 @@ namespace OpenBabel
         end = GetAtom(second);
         if (!bgn || !end)
           {
+            delete bond;
             obErrorLog.ThrowError(__FUNCTION__, "Unable to add bond - invalid atom index", obDebug);
             return(false);
           }

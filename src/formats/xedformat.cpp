@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 
 #include <cstdlib>
 
@@ -79,10 +80,9 @@ bool XEDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     int type_name, mass;
     OBAtom *atom;
     OBBond *bond;
+    OBTranslator trans("INT", "XED");
     string str,str1;
 
-    ttab.SetFromType("INT");
-    ttab.SetToType("XED");
     snprintf(buffer, BUFF_SIZE, "%10.3f%10i%10i",
             mol.GetEnergy(),mol.NumAtoms(),mol.NumBonds());
     ofs << buffer << endl;
@@ -105,7 +105,7 @@ bool XEDFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     {
         atom = mol.GetAtom(i);
         str = atom->GetType();
-        ttab.Translate(str1,str);
+        trans.Translate(str1,str);
 
         type_name = atoi((char*) str1.c_str());
         switch (type_name)

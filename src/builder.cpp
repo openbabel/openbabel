@@ -1408,7 +1408,6 @@ namespace OpenBabel
         posp_new = coords[counter];
         break;
       }
-    counter = 0;
     for (match_it=match.begin(), counter=0; match_it!=match.end(); ++match_it, ++counter)
       workMol.GetAtom(*match_it)->SetVector( coords[counter] - posp_new );
 

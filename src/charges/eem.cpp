@@ -79,13 +79,13 @@ namespace OpenBabel
   {
     _parameters_file = parameters;
     _type = type;
+    _description = "Assign Electronegativity Equilization Method (EEM) atomic partial charges. ";
+    _description.append(_type);
   }
 
 
   const char *EEMCharges::Description(void)
   {
-    _description = "Assign Electronegativity Equilization Method (EEM) atomic partial charges. ";
-    _description.append(_type);
     return _description.c_str();
   }
 
@@ -156,6 +156,11 @@ namespace OpenBabel
       }
 
       if(!found) {
+        // Cleanup
+        for(unsigned int i = 0; i < dim; i++)
+          delete [] ETA[i];
+        delete [] ETA;
+
         std::stringstream ss;
         ss << "No parameters found for: " << OBElements::GetSymbol(n) << " " << b
            << ". EEM charges were not calculated for the molecule." << std::endl;

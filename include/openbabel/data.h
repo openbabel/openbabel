@@ -34,6 +34,7 @@ namespace OpenBabel
 
   class OBAtom;
   class OBMol;
+  class OBTranslator;
 
   /** \class OBGlobalDataBase data.h <openbabel/data.h>
       \brief Base data table class, handles reading data files
@@ -187,12 +188,12 @@ namespace OpenBabel
     {
       int             _linecount;
       unsigned int    _ncols,_nrows;
-      int             _from,_to;
       std::vector<std::string> _colnames;
       std::vector<std::vector<std::string> > _table;
 
-    public:
+      friend class OBTranslator;
 
+    public:
       OBTypeTable(void);
       ~OBTypeTable() {}
 
@@ -200,24 +201,6 @@ namespace OpenBabel
 
       //! \return the number of atom types in the translation table
       size_t GetSize() { return _table.size(); }
-
-      //! Set the initial atom type to be translated
-      bool SetFromType(const char*);
-      //! Set the destination atom type for translation
-      bool SetToType(const char*);
-      //! Translate atom types
-      bool Translate(char *to, const char *from); // to, from
-      //! Translate atom types
-      //! \return whether the translation was successful
-      bool Translate(std::string &to, const std::string &from); // to, from
-      //! Translate atom types
-      //! \return the translated atom type, or an empty string if not possible
-      std::string Translate(const std::string &from);
-
-      //! \return the initial atom type to be translated
-      std::string GetFromType();
-      //! \return the destination atom type for translation
-      std::string GetToType();
     };
 
   //! Global OBTypeTable for translating between different atom types

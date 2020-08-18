@@ -28,12 +28,7 @@ namespace OpenBabel
   const char* OpTransform::Description()
   {
     //Adds name of datafile containing SMARTS strings to the description
-    static std::string txt;
-    txt =  _descr;
-    txt += "\n Datafile: ";
-    txt += _filename;
-    txt += "\nOpTransform is definable";
-    return txt.c_str();
+    return _alldescr.c_str();
   }
 
 bool OpTransform::Initialize()

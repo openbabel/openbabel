@@ -448,7 +448,6 @@ namespace OpenBabel {
           while (!strstr(buffer, "Eigenvectors")) {
             vector<vector3> vib;
             tokenize(vs, buffer);
-            int freqnum = atoi(vs[0].c_str());
             if (vs[1].size() == 1 and vs[1].compare("f") == 0) {
               // Real frequency
               Frequencies.push_back(atof(vs[7].c_str()));

@@ -578,7 +578,6 @@ namespace OpenBabel
           OutputGroup(mol, ofs, (*tree.find(*it)).second.atoms, new_order, !preserve_original_index);
         }
       }
-      unsigned int child=i;
       for (vector <unsigned int>::iterator it=(*tree.find(i)).second.parents.end(); it != (*tree.find(i)).second.parents.begin(); )
       {
         --it;

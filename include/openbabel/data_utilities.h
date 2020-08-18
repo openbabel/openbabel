@@ -68,6 +68,35 @@ namespace OpenBabel {
 				    std::vector<double> &Scomponents,
 				    double            *ZPVE);
 
+class OBAPI OBTranslator
+{
+	int _from, _to;
+
+public:
+	//! Constructor
+	OBTranslator();
+	OBTranslator(const char*, const char*);
+	//! Destructor
+	~OBTranslator() {};
+
+	//! Set the initial atom type to be translated
+	bool SetFromType(const char*);
+	//! Set the destination atom type for translation
+	bool SetToType(const char*);
+	//! Translate atom types
+	bool Translate(char *to, const char *from) const; // to, from
+												//! Translate atom types
+												//! \return whether the translation was successful
+	bool Translate(std::string &to, const std::string &from) const; // to, from
+															  //! Translate atom types
+															  //! \return the translated atom type, or an empty string if not possible
+	std::string Translate(const std::string &from) const;
+
+	//! \return the initial atom type to be translated
+	std::string GetFromType() const;
+	//! \return the destination atom type for translation
+	std::string GetToType() const;
+};
 }
 
 #endif //DATA_UTILITIES_H

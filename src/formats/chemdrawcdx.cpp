@@ -474,7 +474,7 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
     if(tag==kCDXObj_Node)
     {
       unsigned nodeID = cdxr.CurrentID();
-      bool isAlias=false, hasElement=false;
+      bool isAlias=false;
       bool hasNumHs = false;
       UINT16 atnum=-1, spin=0, numHs=0;
       int x, y, charge=0, iso=0;
@@ -493,7 +493,6 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
           break;
         case kCDXProp_Node_Element:
           READ_INT16(cdxr.data(), atnum);
-          hasElement = true;
           break;
         case kCDXProp_2DPosition:
           {

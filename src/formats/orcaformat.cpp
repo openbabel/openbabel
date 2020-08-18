@@ -135,7 +135,6 @@ namespace OpenBabel
     std::vector<double> CDWavelength, CDVelosity, CDStrengthsLength;
     // frequencies and normal modes
     std::vector<double> FrequenciesAll;
-    int nModeAll = 0;
 
     //MO data
     bool m_openShell = false;
@@ -325,7 +324,6 @@ namespace OpenBabel
                 ifs.getline(buffer,BUFF_SIZE);
                 tokenize(vs,buffer);
             }
-            nModeAll = FrequenciesAll.size();
 
         } // if "VIBRATIONAL FREQUENCIES"
 

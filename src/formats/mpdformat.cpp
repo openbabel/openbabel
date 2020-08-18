@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <cstdlib>
 
 
@@ -204,12 +205,11 @@ namespace OpenBabel
     OBMol &mol = *pmol;
 
     OBAtom *atom,*nbr,*nbr2; // define atom and neghbour atom pointers
+    OBTranslator trans("INT", "SBN");
     string str,src,name;     // str used for output, src for handling
     unsigned int orig,otyp;  // orig holds first index for removal from layer 2, otype for output
     //    char buffer[BUFF_SIZE];
     bool xml_true=false, pre_true=false, idx_true=false;
-    ttab.SetFromType("INT");
-    ttab.SetToType("SBN");
     int layer[LAYER_DEPTH][LAYER_SIZE]; // layer stores the frequencies of each atom type
     ClearLayer(layer);
 
@@ -227,7 +227,7 @@ namespace OpenBabel
 		if(pConv->IsOption("i")) // using IDX not SBN
       {
         idx_true=true;
-        ttab.SetToType("IDX");
+        trans.SetToType("IDX");
       }
 
     str = mol.GetTitle();
@@ -256,7 +256,7 @@ namespace OpenBabel
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         src = atom->GetType();
-        ttab.Translate(str,src);
+        trans.Translate(str,src);
         // if (idx_true==true){
         otyp = atoi(str.c_str());
         //}
@@ -269,7 +269,7 @@ namespace OpenBabel
         for (nbr = atom->BeginNbrAtom(j);nbr;nbr = atom->NextNbrAtom(j))
           {
             src = nbr->GetType();
-            ttab.Translate(str,src);
+            trans.Translate(str,src);
             // if (idx_true==true){
             otyp = atoi(str.c_str());
             //}
@@ -281,7 +281,7 @@ namespace OpenBabel
               {
                 if (nbr2->GetIdx()==orig) continue;
                 src = nbr2->GetType();
-                ttab.Translate(str,src);
+                trans.Translate(str,src);
                 // if (idx_true==true){
                 otyp = atoi(str.c_str());
                 //}

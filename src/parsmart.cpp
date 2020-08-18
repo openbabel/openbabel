@@ -443,7 +443,7 @@ namespace OpenBabel
 
   static int CreateAtom( Pattern *pat, AtomExpr *expr, int part,int vb)
   {
-    int index,size;
+    int index;
 
     if (!pat)
       return -1; // should never happen
@@ -451,7 +451,6 @@ namespace OpenBabel
     if( pat->acount == pat->aalloc )
       {
         pat->aalloc += ATOMPOOL;
-        size = (int)(pat->aalloc*sizeof(AtomSpec));
         if( pat->atom )
           {
             AtomSpec *tmp = new AtomSpec[pat->aalloc];
@@ -475,7 +474,7 @@ namespace OpenBabel
 
   static int CreateBond( Pattern *pat, BondExpr *expr, int src, int dst )
   {
-    int index,size;
+    int index;
 
     if (!pat)
       return -1; // should never happen
@@ -483,7 +482,6 @@ namespace OpenBabel
     if( pat->bcount == pat->balloc )
       {
         pat->balloc += BONDPOOL;
-        size = (int)(pat->balloc*sizeof(BondSpec));
         if( pat->bond )
           {
             BondSpec *tmp = new BondSpec[pat->balloc];

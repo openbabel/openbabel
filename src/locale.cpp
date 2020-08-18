@@ -76,6 +76,8 @@ namespace OpenBabel
    * to SetLocale() and the last call to RestoreLocale() will do any work.
    **/
 
+  std::mutex OBLocale::LocaleMutex;
+
   OBLocale::OBLocale()
   {
     d = new OBLocalePrivate;
@@ -91,6 +93,8 @@ namespace OpenBabel
 
   void OBLocale::SetLocale()
   {
+    std::lock_guard<std::mutex> lock(LocaleMutex);
+
     if (d->counter == 0) {
       // Set the locale for number parsing to avoid locale issues: PR#1785463
 #if HAVE_USELOCALE
@@ -114,6 +118,8 @@ namespace OpenBabel
 
   void OBLocale::RestoreLocale()
   {
+    std::lock_guard<std::mutex> lock(LocaleMutex);
+
     --d->counter;
     if(d->counter == 0) {
       // return the locale to the original one

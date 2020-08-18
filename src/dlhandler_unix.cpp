@@ -50,10 +50,10 @@ namespace OpenBabel {
 
 int matchFiles (SCANDIR_CONST struct dirent *entry_p)
 {
-	string filename(entry_p->d_name);
-	string::size_type extPos = filename.rfind(DLHandler::getFormatFilePattern());
+	string filename(entry_p->d_name), pattern = DLHandler::getFormatFilePattern();
+	string::size_type extPos = filename.rfind(pattern);
 
-	if(extPos!=string::npos && filename.substr(extPos) == DLHandler::getFormatFilePattern())
+	if(extPos!=string::npos && filename.substr(extPos) == pattern)
 		return true;
 
 	return false;

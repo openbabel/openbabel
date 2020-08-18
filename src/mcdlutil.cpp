@@ -1836,7 +1836,6 @@ namespace OpenBabel {
       return result;
     };
     test=false;
-    i=0;
     j=getAtom(atomDetected[n])->na;
     for (i=0; i<NAROMMAX; i++) if (j == possibleAromatic[i]) {
         test=true;
@@ -2196,7 +2195,7 @@ namespace OpenBabel {
     int atomSecond;
 
     double r,cf,fi,ux,uy,ux1,uy1,ux2,uy2,uvX,uvY,c,s;
-    double xCenterOld,yCenterOld,xCenterNew,yCenterNew,bondLengthOld,bondLengthNew;
+    double xCenterOld,yCenterOld,xCenterNew,yCenterNew,bondLengthOld;
     neighbourlist *bk;
     int n,n1,n2;
     double r1;
@@ -2216,7 +2215,6 @@ namespace OpenBabel {
     defineAtomConn();
     allAboutCycles();
 
-    test=true;
     bk = (neighbourlist *)malloc(nAtoms() * sizeof(adjustedlist));
     defineBondConn(bk);
     //{Start clean for LISTATOMCLEAN and LISTBONDCLEAN atoms and bonds}
@@ -2418,7 +2416,6 @@ namespace OpenBabel {
               if ((ux==0) && (uy==0)) ux=1;
               fi=(k-nb-1)*PI/(double)k;
               //Addition for fluorine chain fragments...
-              isChainFour=false;
               n=0; mm1=-1; mm2=-1; mAny=-1;
               if ((k == 4) && (getAtom(k1)->na == 6))  for (j=0; j<getAtom(k1)->nb; j++) {
                   n1=getAtom(k1)->ac[j];
@@ -2449,7 +2446,6 @@ namespace OpenBabel {
                 isCycle=(n == 2);
               };
               if (isChainFour) {
-                n=0;
                 fi=PI/3;
                 ux1= ux*cos(fi)+uy*sin(fi);
                 uy1=-ux*sin(fi)+uy*cos(fi);
@@ -2625,18 +2621,14 @@ namespace OpenBabel {
         }
         i++;
       }
-    bondLengthNew=0;
 
     //Rescaling and shift of structure
-    for (i=0; i<bondClean; i++)  bondLengthNew=bondLengthNew+bondLength(listBondClean[i]);
-    bondLengthNew=bondLengthNew/(double)bondClean;
     xCenterNew=0; yCenterNew=0;
     for (i=0; i<atomClean; i++) {
       xCenterNew=xCenterNew+getAtom(listAtomClean[i])->rx;
       yCenterNew=yCenterNew+getAtom(listAtomClean[i])->ry;
     };
     xCenterNew=xCenterNew/(double)atomClean; yCenterNew=yCenterNew/(double)atomClean;
-    bondLengthNew=0.15*bondLengthOld;
     //IOPT[7]-controlles, whether or not the atom's shifts should be created, if coordinates of pair of atoms are identical
     if (spn==3) {                     //Rescaling and shift coordinates for group (CODE=3)
       xCenterNew=getAtom(sCHA1)->rx;
@@ -2962,14 +2954,12 @@ namespace OpenBabel {
     //part flip is executed. Case CHB-ring bond-no effects}
 
     int cHA1, cHA2, n;
-    bool test;
     std::vector<int>list1(listarSize());
     double r, xc, yc, xo, yo, xn, yn;
     int i;
 
     if (cHB < 0) return;
 
-    test=makeFragment(list1,getBond(cHB)->at[1],getBond(cHB)->at[0]);
     if (list1.size() > 1) {
       //One of the atoms haven't neighbours-flip unavalable
       cHA1=getBond(cHB)->at[0];
@@ -3170,7 +3160,6 @@ namespace OpenBabel {
     aDist[att]=0;
     k=0;
     atomoBond[att]=a[att];
-    testOK=false;
     test=true;
 
     while (test) {
@@ -3186,7 +3175,6 @@ namespace OpenBabel {
               if ((aDist[i2] >= k) && (aDist[i2] <= 65700)) {
                 //if the neighbour has not been added yet to list}
                 aDist[i2]=k;          //Mark neighbour's sphere number
-                jj=0;
                 test=true;
                 for (jj=1; jj<=3; jj++) {
                   if (((*aPrev[jj-1])[i2] == -1) || (jj == 3)) {
@@ -3351,7 +3339,6 @@ namespace OpenBabel {
 
     r=averageBondLength()/blDenominator;
     k=hasOverlapped(r,false);
-    result=k;
     smCopy->moleculeCopy(*this);
     test=true;
     while (test) {
@@ -4366,7 +4353,6 @@ namespace OpenBabel {
       xu2=-xu2; yu2=-yu2;
       r1=xu1*xu2+yu1*yu2;
       r2=yu1*xu2-xu1*yu2;
-      nBondsOld=this->nBonds();
       nAtomsOld=this->nAtoms();
       if (isAddition) mouseButton=1; else mouseButton=2;
 
@@ -4376,15 +4362,13 @@ namespace OpenBabel {
 
       if (isAddition) {
         this->addBond(1,nAtomsOld,thisAN);
-      } else nAtomsOld=nAtomsOld-1;
+      }
     } else if ((smBN >= 0) && (thisBN >= 0)) {       //connection through bonds
       this->bondUnitVector(thisBN,xu1,yu1);
       fragmentMol.bondUnitVector(smBN,xu2,yu2);
       xu2=-xu2; yu2=-yu2;
       r1=xu1*xu2+yu1*yu2;
       r2=yu1*xu2-xu1*yu2;
-      nBondsOld=this->nBonds();
-      nAtomsOld=this->nAtoms();
       addFragment(fragmentMol,list.size(),thisAN,thisBN,smBN,list,
                   xOld,yOld,xNew,yNew,scale,r1,r2,1,false);
     }
@@ -7149,7 +7133,6 @@ namespace OpenBabel {
     };
     std::vector<int> allAtomList(sm.nAtoms(), 0);
     std::vector<int>    atomList(sm.nAtoms(), 0);
-    n=0;
     if (sm.getBond(bondN)->at[0] == atomN) {
       at=sm.getBond(bondN)->at[0];
       atEx=sm.getBond(bondN)->at[1];

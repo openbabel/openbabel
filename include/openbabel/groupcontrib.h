@@ -52,7 +52,12 @@ public:
 
   //! constructor. Each instance provides an ID and a datafile.
   OBGroupContrib(const char* ID, const char* filename, const char* descr)
-    : OBDescriptor(ID, false), _filename(filename), _descr(descr), _debug(false){}
+    : OBDescriptor(ID, false), _filename(filename), _descr(descr), _debug(false) {
+      _alldescr = _descr;
+      _alldescr += "\n Datafile: ";
+      _alldescr += _filename;
+      _alldescr += "\nOBGroupContrib is definable";
+	}
 
   virtual const char* Description();
 
@@ -69,6 +74,7 @@ public:
 
   const char* _filename;
   const char* _descr;
+  std::string _alldescr;
   std::vector<std::pair<OBSmartsPattern*, double> > _contribsHeavy; //! heavy atom contributions
   std::vector<std::pair<OBSmartsPattern*, double> > _contribsHydrogen; //!  hydrogen contributions
   bool _debug;
