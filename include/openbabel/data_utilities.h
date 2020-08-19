@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <vector>
+#include <mutex>
 
 namespace OpenBabel {
  class OBMol;
@@ -130,7 +131,7 @@ public:
 
 	~OBGlobalDBMutex() = default;
 
-	OBGlobalDBMutex& operator=(const OBGlobalDBMutex &) {} // Copy assignment operator
+	OBGlobalDBMutex& operator=(const OBGlobalDBMutex &) { return *this; } // Copy assignment operator
 };
 }
 
