@@ -47,7 +47,7 @@ private:
   int _bitcount;
   string _version;
   string _alldescr;
-  mutex _fpmutex;
+  mutable mutex _fpmutex;
 
 protected:
   string _patternsfile;

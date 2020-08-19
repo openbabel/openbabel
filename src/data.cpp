@@ -21,7 +21,6 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 #include <cstdlib>
-#include <mutex>
 #include <openbabel/babelconfig.h>
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
@@ -48,8 +47,6 @@ namespace OpenBabel
   // Initialize the globals (declared in data.h)
   OBTypeTable ttab;
   OBResidueData resdat;
-
-  mutex table_mutex;  // Private mutex for concurrency
 
   OBAtomicHeatOfFormationTable::OBAtomicHeatOfFormationTable(void)
   {
@@ -315,6 +312,7 @@ namespace OpenBabel
 
     OBAtom *a1,*a2;
     OBResidue *r1,*r2;
+    OBResidueObserver obs;
     vector<OBAtom*>::iterator i,j;
     vector3 v;
 
@@ -333,7 +331,7 @@ namespace OpenBabel
 
         if (r1->GetName() != rname)
           {
-            skipres = SetResName(r1->GetName()) ? "" : r1->GetNumString();
+            skipres = obs.SetResName(r1->GetName()) ? "" : r1->GetNumString();
             rname = r1->GetName();
           }
         //assign bonds for each atom
@@ -350,7 +348,7 @@ namespace OpenBabel
             if (r1->GetChain() != r2->GetChain())
               break; // Fixes PR#2889763 - Fabian
 
-            if ((bo = LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
+            if ((bo = obs.LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
               {
                 // Suggested by Liu Zhiguo 2007-08-13
                 // for predefined residues, don't perceive connection
@@ -410,11 +408,11 @@ namespace OpenBabel
         if (r1->GetName() != rname)
           {
             // if SetResName fails, skip this residue
-            skipres = SetResName(r1->GetName()) ? "" : r1->GetNumString();
+            skipres = obs.SetResName(r1->GetName()) ? "" : r1->GetNumString();
             rname = r1->GetName();
           }
 
-        if (LookupType(r1->GetAtomID(a1),type,hyb))
+        if (obs.LookupType(r1->GetAtomID(a1),type,hyb))
           {
             a1->SetType(type);
             a1->SetHyb(hyb);
@@ -458,85 +456,17 @@ namespace OpenBabel
 
         if (vs[0]== "END")
           {
-            _resatoms.push_back(_vatmtmp);
-            _resbonds.push_back(_vtmp);
-            _vtmp.clear();
+            _resatoms.push_back(std::move(_vatmtmp));
+            _resbonds.push_back(std::move(_vtmp));
             _vatmtmp.clear();
+            _vtmp.clear();
           }
       }
   }
 
-  bool OBResidueData::SetResName(const string &s)
-  {
-    if (!_init)
-      Init();
-
-    unsigned int i;
-
-    for (i = 0;i < _resname.size();++i)
-      if (_resname[i] == s)
-        {
-          _resnum = i;
-          return(true);
-        }
-
-    _resnum = -1;
-    return(false);
-  }
-
-  int OBResidueData::LookupBO(const string &s)
-  {
-    if (_resnum == -1)
-      return(0);
-
-    unsigned int i;
-    for (i = 0;i < _resbonds[_resnum].size();++i)
-      if (_resbonds[_resnum][i].first == s)
-        return(_resbonds[_resnum][i].second);
-
-    return(0);
-  }
-
-  int OBResidueData::LookupBO(const string &s1, const string &s2)
-  {
-    if (_resnum == -1)
-      return(0);
-    string s;
-
-    s = (s1 < s2) ? s1 + " " + s2 : s2 + " " + s1;
-
-    unsigned int i;
-    for (i = 0;i < _resbonds[_resnum].size();++i)
-      if (_resbonds[_resnum][i].first == s)
-        return(_resbonds[_resnum][i].second);
-
-    return(0);
-  }
-
-  bool OBResidueData::LookupType(const string &atmid,string &type,int &hyb)
-  {
-    if (_resnum == -1)
-      return(false);
-
-    string s;
-    vector<string>::iterator i;
-
-    for (i = _resatoms[_resnum].begin();i != _resatoms[_resnum].end();i+=3)
-      if (atmid == *i)
-        {
-          ++i;
-          type = *i;
-          ++i;
-          hyb = atoi((*i).c_str());
-          return(true);
-        }
-
-    return(false);
-  }
-
   void OBGlobalDataBase::Init()
   {
-    lock_guard<mutex> lock(table_mutex); // Lock for concurrency
+    lock_guard<OBGlobalDBMutex> lock(_db_mutex); // Lock for concurrency
 
     if (_init)
       return;

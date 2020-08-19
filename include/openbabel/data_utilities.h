@@ -97,6 +97,41 @@ public:
 	//! \return the destination atom type for translation
 	std::string GetToType() const;
 };
+
+class OBAPI OBResidueObserver
+{
+	int _resnum;
+
+public:
+	//! Sets the table to access the residue information for a specified
+	//!  residue name
+	//! \return whether this residue name is in the table
+	bool SetResName(const std::string &);
+	//! \return the bond order for the bond specified in the current residue
+	//! \deprecated Easier to use the two-argument form
+	int  LookupBO(const std::string &);
+	//! \return the bond order for the bond specified between the two specified
+	//! atom labels
+	int  LookupBO(const std::string &, const std::string&);
+	//! Look up the atom type and hybridization for the atom label specified
+	//! in the first argument for the current residue
+	//! \return whether the atom label specified is found in the current residue
+	bool LookupType(const std::string &,std::string&,int&);
+	//! Assign bond orders, atom types and residues for the supplied OBMol
+	//! based on the residue information assigned to atoms
+};
+
+class OBGlobalDBMutex: public std::mutex
+{
+public:
+
+	constexpr OBGlobalDBMutex() noexcept = default;
+	OBGlobalDBMutex(const OBGlobalDBMutex &) { OBGlobalDBMutex(); } // Copy constructor
+
+	~OBGlobalDBMutex() = default;
+
+	OBGlobalDBMutex& operator=(const OBGlobalDBMutex &) {} // Copy assignment operator
+};
 }
 
 #endif //DATA_UTILITIES_H

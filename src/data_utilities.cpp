@@ -33,6 +33,7 @@ GNU General Public License for more details.
 #include <openbabel/locale.h>
 
 using std::string;
+using std::vector;
 
 namespace OpenBabel {
 
@@ -207,6 +208,7 @@ bool extract_thermochemistry(OpenBabel::OBMol  &mol,
     return (found == 9);
 }
 
+// class OBTranslator
 OBTranslator::OBTranslator() {
 	if (!ttab._init)
 		ttab.Init();
@@ -332,7 +334,76 @@ std::string OBTranslator::GetToType() const
 	else
 		return( ttab._colnames[0] );
 }
+// End class OBTranslator
 
+// class OBResidueObserver
+bool OBResidueObserver::SetResName(const string &s)
+{
+	if (!resdat._init)
+		resdat.Init();
+
+	unsigned int i;
+
+	for (i = 0;i < resdat._resname.size();++i)
+		if (resdat._resname[i] == s)
+		{
+			_resnum = i;
+			return(true);
+		}
+
+	_resnum = -1;
+	return(false);
+}
+
+int OBResidueObserver::LookupBO(const string &s)
+{
+	if (_resnum == -1)
+		return(0);
+
+	unsigned int i;
+	for (i = 0;i < resdat._resbonds[_resnum].size();++i)
+		if (resdat._resbonds[_resnum][i].first == s)
+			return(resdat._resbonds[_resnum][i].second);
+
+	return(0);
+}
+
+int OBResidueObserver::LookupBO(const string &s1, const string &s2)
+{
+	if (_resnum == -1)
+		return(0);
+	string s;
+
+	s = (s1 < s2) ? s1 + " " + s2 : s2 + " " + s1;
+
+	unsigned int i;
+	for (i = 0;i < resdat._resbonds[_resnum].size();++i)
+		if (resdat._resbonds[_resnum][i].first == s)
+			return(resdat._resbonds[_resnum][i].second);
+
+	return(0);
+}
+
+bool OBResidueObserver::LookupType(const string &atmid,string &type,int &hyb)
+{
+	if (_resnum == -1)
+		return(false);
+
+	string s;
+	vector<string>::iterator i;
+
+	for (i = resdat._resatoms[_resnum].begin();i != resdat._resatoms[_resnum].end();i+=3)
+		if (atmid == *i)
+		{
+			++i;
+			type = *i;
+			++i;
+			hyb = atoi((*i).c_str());
+			return(true);
+		}
+
+	return(false);
+} // End class OBResidueObserver
 }
 
 //! \file data_utilities.cpp
