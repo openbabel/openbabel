@@ -4593,7 +4593,6 @@ namespace OpenBabel {
       //Store NO OTHER atom attribute
       for (i=0; i<nAtoms(); i++) getAtom(queryAQTested[i])->special=aSTested[i];
       defineBondConn(queryBK);
-      j=0;
       //Search for last non-special atom in query}
       queryStereoQ=stereoBondChange(); //Stereo bond conversion
     };
@@ -4856,8 +4855,6 @@ namespace OpenBabel {
       for (int j=0; j<nBonds(); ++j)
         bEQ[i][j] = false;
     }
-
-    cycleNumber=0;
 
     molecule1->fIOPT11=fIOPT11;
     molecule1->fIOPT12=fIOPT13;
