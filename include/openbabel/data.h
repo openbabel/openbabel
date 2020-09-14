@@ -55,7 +55,7 @@ namespace OpenBabel
       std::string  _dir;		//!< Data directory for file if _envvar fails
       std::string  _subdir;	//!< Subdirectory (if using environment variable)
       std::string  _envvar;	//!< Environment variable to check first
-      mutable OBGlobalDBMutex  _db_mutex;	//!< Mutex for concurrency
+      mutable OBGlobalMutex  _db_mutex;	//!< Mutex for concurrency
 
     public:
       //! Constructor

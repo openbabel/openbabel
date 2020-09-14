@@ -29,6 +29,8 @@ General Public License for more details.
 #include <deque>
 #include <mutex>
 
+#include <openbabel/data_utilities.h>
+
 #ifndef OBERROR
 #define OBERROR
 #endif
@@ -202,7 +204,7 @@ namespace OpenBabel
       std::streambuf        *_filterStreamBuf;
 
       //! For concurrency
-      std::mutex            _handlerMutex;
+      mutable OBGlobalMutex  _handlerMutex;
     };
 
   //! Global OBMessageHandler error handler

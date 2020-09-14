@@ -122,16 +122,16 @@ public:
 	//! based on the residue information assigned to atoms
 };
 
-class OBGlobalDBMutex: public std::mutex
+class OBGlobalMutex: public std::mutex
 {
 public:
 
-	constexpr OBGlobalDBMutex() noexcept = default;
-	OBGlobalDBMutex(const OBGlobalDBMutex &) { OBGlobalDBMutex(); } // Copy constructor
+	constexpr OBGlobalMutex() noexcept = default;
+	OBGlobalMutex(const OBGlobalMutex &) { OBGlobalMutex(); } // Copy constructor
 
-	~OBGlobalDBMutex() = default;
+	~OBGlobalMutex() = default;
 
-	OBGlobalDBMutex& operator=(const OBGlobalDBMutex &) { return *this; } // Copy assignment operator
+	OBGlobalMutex& operator=(const OBGlobalMutex &) { return *this; } // Copy assignment operator
 };
 }
 

@@ -165,7 +165,7 @@ namespace OpenBabel
     if (!_logging)
       return;
 
-    lock_guard<mutex> lock(_handlerMutex);
+    lock_guard<OBGlobalMutex> lock(_handlerMutex);
 
     //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before
     if (err.GetLevel() <= _outputLevel &&
@@ -209,7 +209,7 @@ namespace OpenBabel
 
   bool OBMessageHandler::StartErrorWrap()
   {
-    lock_guard<mutex> lock(_handlerMutex);
+    lock_guard<OBGlobalMutex> lock(_handlerMutex);
 
     if (_inWrapStreamBuf != nullptr)
       return true; // already wrapped cerr  -- don't go into loops!
@@ -227,7 +227,7 @@ namespace OpenBabel
 
   bool OBMessageHandler::StopErrorWrap()
   {
-    lock_guard<mutex> lock(_handlerMutex);
+    lock_guard<OBGlobalMutex> lock(_handlerMutex);
 
     if (_inWrapStreamBuf == nullptr)
       return true; // never wrapped cerr

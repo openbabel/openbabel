@@ -466,7 +466,7 @@ namespace OpenBabel
 
   void OBGlobalDataBase::Init()
   {
-    lock_guard<OBGlobalDBMutex> lock(_db_mutex); // Lock for concurrency
+    lock_guard<OBGlobalMutex> lock(_db_mutex); // Lock for concurrency
 
     if (_init)
       return;
