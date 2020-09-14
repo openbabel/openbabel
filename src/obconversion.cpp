@@ -1658,7 +1658,7 @@ Additional options :
 
   OBConversion::OPAMapType& OBConversion::OptionParamArray(Option_type typ)
   {
-    static OPAMapType opa[3];
+	thread_local static OPAMapType opa[3];
     return opa[typ];
   }
 

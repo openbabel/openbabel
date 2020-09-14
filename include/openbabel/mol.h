@@ -44,6 +44,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 #include <map>
+#include <mutex>
 
 #include <openbabel/base.h>
 
@@ -124,6 +125,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool                          _autoPartialCharge;//!< Assign partial charges automatically
     bool                          _autoFormalCharge;//!< Assign formal charges automatically
     std::string                   _title;     	//!< Molecule title
+    std::string                   _sttl;     	//!< Molecule title (Single line)
     std::vector<OBAtom*>          _vatom;      	//!< vector of atoms
     std::vector<OBAtom*>          _atomIds;    	//!< vector of atoms indexed by id
     std::vector<OBBond*>          _vbond;      	//!< vector of bonds
@@ -139,6 +141,8 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     std::vector<OBResidue*>       _residue;     //!< Residue information (if applicable)
     std::vector<OBInternalCoord*> _internals;   //!< Internal Coordinates (if applicable)
     unsigned short int            _mod;	        //!< Number of nested calls to BeginModify()
+
+    std::mutex                    _molMutex;	//!< Mutex for concurrency
 
   public:
 

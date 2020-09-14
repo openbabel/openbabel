@@ -170,30 +170,37 @@ namespace OpenBabel
   //
   void  OBMol::SetTitle(const char *title)
   {
+    lock_guard<mutex> lock(_molMutex);
+
     _title = title;
     Trim(_title);
+
+    _sttl = _title;
+    string::size_type j;
+    for ( ; (j = _sttl.find_first_of( "\n\r" )) != string::npos ; ) {
+      _sttl.replace( j, 1, " ");
+    }
   }
 
   void  OBMol::SetTitle(std::string &title)
   {
+    lock_guard<mutex> lock(_molMutex);
+
     _title = title;
     Trim(_title);
+
+    _sttl = _title;
+    string::size_type j;
+    for ( ; (j = _sttl.find_first_of( "\n\r" )) != string::npos ; ) {
+      _sttl.replace( j, 1, " ");
+    }
   }
 
   const char *OBMol::GetTitle(bool replaceNewlines) const
   {
     if (!replaceNewlines || _title.find('\n')== string::npos )
       return(_title.c_str());
-
-    //Only multiline titles use the following to replace newlines by spaces
-    static string title;
-    title=_title;
-    string::size_type j;
-    for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
-      title.replace( j, 1, " ");
-    }
-
-    return(title.c_str());
+    return(_sttl.c_str());
   }
 
   bool SortVVInt(const vector<int> &a,const vector<int> &b)
