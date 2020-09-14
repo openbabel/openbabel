@@ -126,7 +126,27 @@ class OBGlobalMutex: public std::mutex
 {
 public:
 
-	constexpr OBGlobalMutex() noexcept = default;
+#ifndef HAS_NOEXCEPT
+ #if defined(__clang__)
+  #if __has_feature(cxx_noexcept)
+   #define HAS_NOEXCEPT
+  #endif
+ #else
+  #if defined(__GXX_EXPERIMENTAL_CXX0X__) && __GNUC__ * 10 + __GNUC_MINOR__ >= 46 || \
+  defined(_MSC_FULL_VER) && _MSC_FULL_VER >= 190023026
+   #define HAS_NOEXCEPT
+  #endif
+ #endif
+#endif
+
+#ifdef HAS_NOEXCEPT
+ #define NOEXCEPT noexcept
+#else
+ #define NOEXCEPT
+#endif
+
+	constexpr OBGlobalMutex() NOEXCEPT = default;
+
 	OBGlobalMutex(const OBGlobalMutex &) { OBGlobalMutex(); } // Copy constructor
 
 	~OBGlobalMutex() = default;
