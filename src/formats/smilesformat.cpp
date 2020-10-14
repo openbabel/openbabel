@@ -2847,7 +2847,7 @@ namespace OpenBabel {
 
     // Add extra hydrogens.
     int hcount = numImplicitHs;
-    if (hcount > 0 && (atom == _endatom || atom == _startatom)) // Leave a free valence for attachment
+    if (hcount > 0 && (atom == _endatom || (atom == _startatom && !options.ordering))) // Leave a free valence for attachment
       hcount--;
     if (hcount > 0) {
       if (options.smarts && stereo == nullptr) {
