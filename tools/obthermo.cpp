@@ -26,7 +26,6 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/data_utilities.h>
-#include <openbabel/pointgroup.h>
 #include <cstdlib>
 #ifndef _MSC_VER
   #include <unistd.h>
@@ -126,19 +125,15 @@ int main(int argc,char **argv)
   OBMol mol;
   if ((conv.Read(&mol, &ifs)) && ! mol.Empty())
   {
-      OBPointGroup obPG;
       double temperature, DeltaHf0, DeltaHfT, DeltaGfT, DeltaSfT, S0T, CVT, CPT, ZPVE;
       std::vector<double> Scomponents;
       
-      obPG.Setup(&mol);
       printf("obthermo - extract thermochemistry data from quantum chemistry logfiles\n");
       printf("Number of rotatable bonds: %d\n", Nrot);
       if (dBdT == 0)
       {
           printf("Please supply --dbdt option to get reliable heat capacity at constant pressure.\n");
       }
-      printf("Point group according to OpenBabel: %s\n", 
-             obPG.IdentifyPointGroup());
       bool bVerbose = true;
       if (extract_thermochemistry(mol, 
                                   bVerbose,

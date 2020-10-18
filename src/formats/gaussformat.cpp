@@ -24,7 +24,6 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 
-#include <openbabel/pointgroup.h>
 #include <cstdlib>
 
 using namespace std;
@@ -332,18 +331,9 @@ namespace OpenBabel
         S0MT += 1000*eFactor*(Hcorr-Gcorr)/temperature;
     }
 
-    // Check for symmetry
-    OBPointGroup obPG;
-
-    obPG.Setup(mol);
-    const char *pg = obPG.IdentifyPointGroup();
-
     double Rgas = 1.9872041; // cal/mol K http://en.wikipedia.org/wiki/Gas_constant
     double Srot = -Rgas * log(double(RotSymNum));
 
-
-    //printf("DHf(M,0) = %g, DHf(M,T) = %g, S0(M,T) = %g\nPoint group = %s RotSymNum = %d Srot = %g\n",
-    //       dhofM0, dhofMT, S0MT, pg, RotSymNum, Srot);
     if (RotSymNum > 1)
     {
         // We assume Gaussian has done this correctly!
