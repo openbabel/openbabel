@@ -108,6 +108,7 @@ if (DO_PYTHON_BINDINGS)
             PREFIX ""
             LIBRARY_OUTPUT_DIRECTORY "${openbabel_SOURCE_DIR}/scripts/python/openbabel/"
             SUFFIX .so )
+      if( "${PYTHON_INSTDIR}" STREQUAL "" )
         execute_process(
           COMMAND
           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
@@ -124,6 +125,7 @@ if (DO_PYTHON_BINDINGS)
           )
           set(PYTHON_INSTDIR "${PYTHON_INSTDIR}/dist-packages")
 	endif()
+      endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
