@@ -235,11 +235,14 @@ include_directories(
       add_dependencies(bindings_java openbabel)
     endif()
 
+    if( "${JAVA_INSTDIR}" STREQUAL "" )
+      set( JAVA_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(TARGETS bindings_java
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION "${JAVA_INSTDIR}"
             COMPONENT bindings_java)
     install(FILES ${openbabel_SOURCE_DIR}/scripts/java/openbabel.jar
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION "${JAVA_INSTDIR}"
             COMPONENT bindings_java)
 
 endif (DO_JAVA_BINDINGS)
