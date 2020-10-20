@@ -582,11 +582,15 @@ if (DO_PHP_BINDINGS)
     install(TARGETS bindings_php
             LIBRARY DESTINATION ${PHP_EXTENSION_DIR}
 	    COMPONENT bindings_php)
+
+    if( "${PHP_INSTDIR}" STREQUAL "" )
+      set( PHP_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION "${PHP_INSTDIR}"
 	    COMPONENT bindings_php)
-	install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
-	        DESTINATION ${LIB_INSTALL_DIR}
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
+            DESTINATION "${PHP_INSTDIR}"
 	    COMPONENT bindings_php)
 
 endif (DO_PHP_BINDINGS)
