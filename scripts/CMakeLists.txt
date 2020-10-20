@@ -293,11 +293,14 @@ if (DO_R_BINDINGS)
 		 add_dependencies(bindings_R openbabel)
     endif()
 
+    if( "${R_INSTDIR}" STREQUAL "" )
+      set( R_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
 	 install(TARGETS bindings_R
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION "${R_INSTDIR}"
 				COMPONENT bindings_R)
 	 install(FILES ${openbabel_BINARY_DIR}/scripts/R/openbabel_R.R
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION "${R_INSTDIR}"
 				COMPONENT bindings_R)
 
 endif (DO_R_BINDINGS)
