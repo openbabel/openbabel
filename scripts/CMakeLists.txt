@@ -441,8 +441,11 @@ if (DO_RUBY_BINDINGS)
       add_dependencies(bindings_ruby openbabel)
     endif()
 
+    if( "${RUBY_INSTDIR}" STREQUAL "" )
+      set( RUBY_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(TARGETS bindings_ruby
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION ${RUBY_INSTDIR}
             COMPONENT bindings_ruby)
 
 endif (DO_RUBY_BINDINGS)
