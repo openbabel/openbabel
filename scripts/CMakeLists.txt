@@ -497,8 +497,11 @@ if (DO_CSHARP_BINDINGS)
     target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
     set_target_properties(bindings_csharp PROPERTIES
         OUTPUT_NAME openbabel_csharp )
-    install(TARGETS bindings_csharp LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll DESTINATION ${LIB_INSTALL_DIR})
+    if( "${CSHARP_INSTDIR}" STREQUAL "" )
+      set( CSHARP_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
+    install(TARGETS bindings_csharp LIBRARY DESTINATION "${CSHARP_INSTDIR}")
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll DESTINATION "${CSHARP_INSTDIR}")
 
 endif (DO_CSHARP_BINDINGS)
 
