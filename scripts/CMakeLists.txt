@@ -376,11 +376,14 @@ if (DO_PERL_BINDINGS)
       add_dependencies(bindings_perl openbabel)
     endif()
 
+    if( "${PERL_INSTDIR}" STREQUAL "" )
+      set( PERL_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(TARGETS bindings_perl
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/auto/Chemistry/OpenBabel/
+            LIBRARY DESTINATION ${PERL_INSTDIR}/auto/Chemistry/OpenBabel/
             COMPONENT bindings_perl)
     install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
-            DESTINATION ${LIB_INSTALL_DIR}/Chemistry/
+            DESTINATION ${PERL_INSTDIR}/Chemistry/
             COMPONENT bindings_perl)
 
 endif (DO_PERL_BINDINGS)
