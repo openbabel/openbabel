@@ -717,7 +717,7 @@ class Atom(object):
     Attributes:
        atomicmass, atomicnum, cidx, coords, coordidx, degree, exactmass,
        formalcharge, heavydegree, heterodegree, hyb, idx,
-       implicitvalence, isotope, partialcharge, residue, spin, type,
+       explicitvalence, totalvalence, isotope, partialcharge, residue, spin, type,
        vector.
 
     (refer to the Open Babel library documentation for more info).
@@ -743,7 +743,7 @@ class Atom(object):
 
     @property
     def cidx(self):
-        return self.OBAtom.GetCIdx()
+        raise AttributeError("This property is no longer available.")
 
     @property
     def coordidx(self):
@@ -786,8 +786,16 @@ class Atom(object):
         return self.OBAtom.GetIdx()
 
     @property
-    def implicitvalence(self):
-        return self.OBAtom.GetImplicitValence()
+    def index(self):
+        return self.OBAtom.GetIndex()
+    
+    @property
+    def explicitvalence(self):
+        return self.OBAtom.GetExplicitValence()
+        
+    @property
+    def totalvalence(self):
+        return self.OBAtom.GetTotalValence()
 
     @property
     def isotope(self):
