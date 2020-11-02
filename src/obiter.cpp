@@ -1019,7 +1019,7 @@ namespace OpenBabel
       \endcode
   **/
 
-  OBMolRingIter::OBMolRingIter(OBMol *mol): _parent(mol)
+  OBMolRingIter::OBMolRingIter(OBMol *mol): _parent(mol), _ptr(nullptr)
   {
     if (!_parent->HasSSSRPerceived())
       _parent->FindSSSR();
@@ -1029,7 +1029,7 @@ namespace OpenBabel
       _ptr = _rings->BeginRing(_i);
   }
 
-  OBMolRingIter::OBMolRingIter(OBMol &mol): _parent(&mol)
+  OBMolRingIter::OBMolRingIter(OBMol &mol): _parent(&mol), _ptr(nullptr)
   {
     if (!_parent->HasSSSRPerceived())
       _parent->FindSSSR();
