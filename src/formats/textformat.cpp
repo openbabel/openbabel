@@ -30,7 +30,7 @@ public:
   {
     return
      "Read and write raw text\n"
-     "Facilitates the input of boilerplate text with babel commandline" ;
+     "Facilitates the input of boilerplate text with obabel commandline" ;
   }
 
 /////////////////////////////////////////////////////////////////
