@@ -166,22 +166,24 @@ int residue(int argc, char* argv[])
   H.SetAtomicNum(1);
   C.SetAtomicNum(6);
   testRes2.AddAtom(&H);
+  testRes2.AddAtom(&H);
+  testRes2.AddAtom(&C);
   testRes2.AddAtom(&C);
 
-  if(testRes2.GetNumAtoms() == 2){
+  if(testRes2.GetNumAtoms() == 4){
     cout << "ok " << ++testCount << " # " << testRes2.GetNumAtoms() << endl;
   }else{
-    cout << "not ok " << ++testCount << " # expected 2 atoms, but found "
+    cout << "not ok " << ++testCount << " # expected 4 atoms, but found "
          << testRes2.GetNumAtoms() << '\n';
   }
 
-  if (testRes2.GetNumHvyAtoms() == 1)
+  if (testRes2.GetNumHvyAtoms() == 2)
   {
     cout << "ok " << ++testCount << " # " << testRes2.GetNumHvyAtoms() << endl;
   }
   else
   {
-    cout << "not ok " << ++testCount << " # expected 1 atom, but found "
+    cout << "not ok " << ++testCount << " # expected 2 atom, but found "
          << testRes2.GetNumHvyAtoms() << '\n';
   }
 
