@@ -22,6 +22,7 @@ import os
 import sys
 import unittest
 import itertools
+import collections
 
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
@@ -78,6 +79,34 @@ $end"""
         # The following used to raise an OSError (SMARTS parse failure)
         matches = pybel.Smarts("[#0]O").findall(mol)
         self.assertEqual(matches, [(1, 2)])
+
+    def testSpecifySMILESOutputOrder(self):
+        """H valence was being reduced on the startatom"""
+        # Test same input, different output
+        smis = [
+          "[nH]1cccc1",
+          "c1[nH]ccc1",
+          "c1c[nH]cc1",
+          "c1cc[nH]c1",
+          "c1ccc[nH]1"
+          ]
+        refsmi = smis[0]
+        mol = pybel.readstring("smi", refsmi)
+        ref = collections.deque([1, 2, 3, 4, 5])
+        for i, smi in enumerate(smis):
+            order = "-".join(str(x) for x in ref)
+            out = mol.write("smi", opt={"nonewline": True, "n": True,
+                                        "o": order})
+            self.assertEqual(smi, out)
+            ref.rotate(1)
+        # Test different input, same output
+        for i, smi in enumerate(smis):
+            mol = pybel.readstring("smi", smi)
+            order = "-".join(str(x) for x in ref)
+            out = mol.write("smi", opt={"nonewline": True, "n": True,
+                                        "o": order})
+            self.assertEqual(refsmi, out)
+            ref.rotate(-1)
 
     def testInChIIsotopes(self):
         """Ensure that we correctly set and read isotopes in InChIs"""
