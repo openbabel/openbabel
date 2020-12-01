@@ -470,8 +470,8 @@ void help()
   if(pAPI)
     cout << pAPI->Description();
 
-  cout << "To see a list of recognized file formats use\n  babel -L formats [read] [write]\n"
-       << "To see details and specific options for a particular format, e.g CML, use\n  babel -L cml\n"
+  cout << "To see a list of recognized file formats use\n  obabel -L formats [read] [write]\n"
+       << "To see details and specific options for a particular format, e.g CML, use\n  obabel -L cml\n"
        << endl;
   //cout << "The following file formats are recognized:" << endl;
   //OBPlugin::List("formats");
