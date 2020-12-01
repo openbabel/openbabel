@@ -32,7 +32,7 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 #if HAVE_CONIO_H
-	#include <conio.h>
+    #include <conio.h>
 #endif
 #include <cstdlib> // for exit() on Linux
 
@@ -47,7 +47,7 @@ using namespace std;
 using namespace OpenBabel;
 
 void DoOption(const char* p, OBConversion& Conv, OBConversion::Option_type typ,
-	      int& arg, int argc, char *argv[]);
+          int& arg, int argc, char *argv[]);
 void usage();
 void help();
 
@@ -392,7 +392,7 @@ int main(int argc,char *argv[])
 }
 
 void DoOption(const char* p, OBConversion& Conv,
-	      OBConversion::Option_type typ, int& arg, int argc, char *argv[])
+          OBConversion::Option_type typ, int& arg, int argc, char *argv[])
 {
   //Unlike babel, cannot have multiple concatenated single char options
   //accepts: -sCCC -s CCC -s"CCC" -s CCC red -sCCC red
