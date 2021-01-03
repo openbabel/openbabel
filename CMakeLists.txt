@@ -744,15 +744,14 @@ option(MINIMAL_BUILD "Disable full build" OFF)
 include(CMakePackageConfigHelpers)
 set(OB_CONFIG_DIR "${LIB_INSTALL_DIR}/cmake/openbabel3")
 set(OpenBabel3_INCLUDE_DIRS "${OB_INCLUDE_DIRS}")
-set(OpenBabel3_LIBRARIES "$<TARGET_FILE:openbabel>")
+set(OpenBabel3_LIBRARIES "openbabel")
 set(OB_EXPORTS_FILE "OpenBabel3_EXPORTS.cmake")
 write_basic_package_version_file("${openbabel_BINARY_DIR}/OpenBabel3ConfigVersion.cmake"
   VERSION ${BABEL_VERSION}
   COMPATIBILITY AnyNewerVersion)
 configure_package_config_file("${openbabel_SOURCE_DIR}/OpenBabel3Config.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel3Config.cmake"
-  INSTALL_DESTINATION "${OB_CONFIG_DIR}"
-  PATH_VARS OpenBabel3_INCLUDE_DIRS)
+  INSTALL_DESTINATION "${OB_CONFIG_DIR}")
 
 install(EXPORT openbabel-targets
   DESTINATION "${OB_CONFIG_DIR}"
