@@ -249,7 +249,7 @@ add_library(openbabel ${BUILD_TYPE}
   ${openbabel_library_srcs}
   )
 
-target_link_libraries(openbabel ${libs})
+target_link_libraries(openbabel PRIVATE ${libs})
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
@@ -257,7 +257,7 @@ endif()
 if(BUILD_SHARED OR BUILD_MIXED)
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
-    target_link_libraries(openbabel Threads::Threads)
+    target_link_libraries(openbabel PRIVATE Threads::Threads)
 endif()
 
 set_target_properties(openbabel PROPERTIES
