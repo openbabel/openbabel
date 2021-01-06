@@ -10,14 +10,10 @@ namespace OpenBabel {
  * @page cmake_project Creating your own projects using CMake
  *
  * CMake provides modules to find a large number of modules to find
- * common dependencies. A module to find openbabel is included in the
- * release or can be copied below. The filename of modules to find
- * packages must start with Find. For example, the default filename for
- * the openbabel module is FindOpenBabel3.cmake. This file is usually
- * placed in the cmake/modules directory of your project. This path must
- * be specified by setting the CMAKE_MODULE_PATH variable. Next,  calling
- * find_package will execute the module to find openbabel and set 3
- * variables.
+ * common dependencies. OpenBabel provides configuration files for CMake
+ * so it can automatically found using the find_package command. Calling
+ * find_package will try to locate the configuration files of OpenBabel,
+ * setting 3 variables:
  *
  * @li OpenBabel3_FOUND
  * @li OpenBabel3_INCLUDE_DIRS
@@ -40,13 +36,10 @@ namespace OpenBabel {
  * @b CMakeLists.txt
  * @code
 # this line is required for cmake backwards compatibility
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.1)
 
 # name of your project
 project(myproject)
-
-# set the module path
-set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake/modules)
 
 # find and setup openbabel
 find_package(OpenBabel3 REQUIRED)
@@ -74,107 +67,6 @@ int main()
 
  return 0;
 }
-   @endcode
-
-   @b cmake/modules/FindOpenBabel3.cmake
-   @code
-# - Try to find OpenBabel3
-# Once done this will define
-#
-#  OpenBabel3_FOUND - system has OpenBabel3
-#  OpenBabel3_INCLUDE_DIRS - the OpenBabel3 include directory
-#  OpenBabel3_LIBRARIES - Link these to use OpenBabel3
-#
-# Copyright (c) 2006, 2007 Carsten Niehaus, <cniehaus@gmx.de>
-# Copyright (C) 2008 Marcus D. Hanwell <marcus@cryos.org>
-# Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
-
-if (OpenBabel3_INCLUDE_DIRS AND OpenBabel3_LIBRARIES AND OpenBabel3_VERSION_MET)
-  # in cache already
-  set(OpenBabel3_FOUND TRUE)
-
-else (OpenBabel3_INCLUDE_DIRS AND OpenBabel3_LIBRARIES AND OpenBabel3_VERSION_MET)
-  if(NOT WIN32)
-
-    # Use the newer PkgConfig stuff
-    find_package(PkgConfig REQUIRED)
-    pkg_check_modules(OpenBabel3 openbabel-3>=3.0.0)
-
-    # Maintain backwards compatibility with previous version of module
-    if(OpenBabel3_FOUND STREQUAL "1")
-      set(OpenBabel3_VERSION_MET TRUE)
-      set(OpenBabel3_INCLUDE_DIR ${OpenBabel3_INCLUDE_DIRS})
-    endif(OpenBabel3_FOUND STREQUAL "1")
-
-  else(NOT WIN32)
-    set(OpenBabel3_VERSION_MET TRUE)
-  endif(NOT WIN32)
-
-  if(OpenBabel3_VERSION_MET)
-
-    if(WIN32)
-      if(NOT OpenBabel3_INCLUDE_DIR)
-        find_path(OpenBabel3_INCLUDE_DIR openbabel-3/openbabel/obconversion.h
-          PATHS
-          ${_obIncDir}
-          ${GNUWIN32_DIR}/include
-          $ENV{OpenBabel3_INCLUDE_DIR}
-        )
-        if(OpenBabel3_INCLUDE_DIR)
-          set(OpenBabel3_INCLUDE_DIR ${OpenBabel3_INCLUDE_DIR}/openbabel-3)
-        endif(OpenBabel3_INCLUDE_DIR)
-      endif(NOT OpenBabel3_INCLUDE_DIR)
-    endif(WIN32)
-
-    find_library(OpenBabel3_LIBRARIES NAMES openbabel openbabel-3
-      PATHS
-      ${_obLinkDir}
-      ${GNUWIN32_DIR}/lib
-      $ENV{OpenBabel3_LIBRARIES}
-    )
-  endif(OpenBabel3_VERSION_MET)
-
-  if(OpenBabel3_INCLUDE_DIR AND OpenBabel3_LIBRARIES AND OpenBabel3_VERSION_MET)
-    set(OpenBabel3_FOUND TRUE)
-  endif(OpenBabel3_INCLUDE_DIR AND OpenBabel3_LIBRARIES AND OpenBabel3_VERSION_MET)
-
-  if (OpenBabel3_FOUND)
-    if (NOT OpenBabel3_FIND_QUIETLY)
-      message(STATUS "Found OpenBabel 3.0 or later: ${OpenBabel3_LIBRARIES}")
-    endif (NOT OpenBabel3_FIND_QUIETLY)
-  else (OpenBabel3_FOUND)
-    if (OpenBabel3_FIND_REQUIRED)
-      message(FATAL_ERROR "Could NOT find OpenBabel 3.0 or later ")
-    endif (OpenBabel3_FIND_REQUIRED)
-  endif (OpenBabel3_FOUND)
-
-  mark_as_advanced(OpenBabel3_INCLUDE_DIR OpenBabel3_LIBRARIES)
-
-endif (OpenBabel3_INCLUDE_DIRS AND OpenBabel3_LIBRARIES AND OpenBabel3_VERSION_MET)
-
-# Search for Open Babel3 executable
-if(OpenBabel3_EXECUTABLE)
-
-  # in cache already
-  set(OpenBabel3_EXECUTABLE_FOUND TRUE)
-
-else(OpenBabel3_EXECUTABLE)
-  find_program(OpenBabel3_EXECUTABLE NAMES babel
-    PATHS
-    [HKEY_CURRENT_USER\\SOFTWARE\\OpenBabel\ 3]
-    $ENV{OpenBabel3_EXECUTABLE}
-  )
-
-  if(OpenBabel3_EXECUTABLE)
-    set(OpenBabel3_EXECUTABLE_FOUND TRUE)
-  endif(OpenBabel3_EXECUTABLE)
-
-  if(OpenBabel3_EXECUTABLE_FOUND)
-    message(STATUS "Found OpenBabel3 executable: ${OpenBabel3_EXECUTABLE}")
-  endif(OpenBabel3_EXECUTABLE_FOUND)
-
-endif(OpenBabel3_EXECUTABLE)
    @endcode
  *
  */
