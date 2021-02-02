@@ -52,6 +52,7 @@ jobs:
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
       run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev
+
     - name: Install Dependencies (Windows)
       if: runner.os == 'Windows'
       run: |
