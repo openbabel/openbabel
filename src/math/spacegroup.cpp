@@ -30,6 +30,8 @@ GNU General Public License for more details.
 #include <cstdarg>
 #include <cstdlib>
 
+#include "spacegroups.h"
+
 using namespace std;
 
 namespace OpenBabel
@@ -70,6 +72,7 @@ namespace OpenBabel
     _envvar = "BABEL_DATADIR";
     _filename = "space-groups.txt";
     _subdir = "data";
+    _dataptr = SpaceGroupsData;
   }
 
   SpaceGroups::~SpaceGroups()

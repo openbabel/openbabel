@@ -452,6 +452,7 @@ endif()
 
 include_directories(${openbabel_BINARY_DIR}/include
   ${openbabel_SOURCE_DIR}/data
+  ${openbabel_BINARY_DIR}/data
   ${openbabel_SOURCE_DIR}/include
 )
 
