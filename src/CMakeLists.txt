@@ -214,6 +214,7 @@ set(openbabel_library_srcs
   ${math_srcs}
   ${stereo_srcs}
   ${headers}
+  ${data_headers}
   "${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h"
   )
 
@@ -248,6 +249,7 @@ endif(WIN32)
 add_library(openbabel ${BUILD_TYPE}
   ${openbabel_library_srcs}
   )
+add_dependencies(openbabel data_headers)
 
 target_link_libraries(openbabel ${libs})
 if(Boost_FOUND)
