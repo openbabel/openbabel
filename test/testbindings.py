@@ -717,6 +717,10 @@ M  END
             mol.draw(show=False, update=True)
         assert(True) # Segfaults before...
 
+    def testKekulize(self):
+        '''smoketest for OBKekulize binding'''
+        m = pybel.readstring('smi','c1ccccc1')
+        self.assertTrue(ob.OBKekulize(m.OBMol),"OBKekulize failed")
 
 class NewReactionHandling(PythonBindings):
 
@@ -1156,6 +1160,7 @@ class AtomClass(PythonBindings):
         mol.OBMol.DeleteHydrogens()
         nsmi = mol.write("smi", opt={"a": True, "h": True})
         self.assertEqual("C[H:1]", nsmi.rstrip())
+
 
 if __name__ == "__main__":
     unittest.main()

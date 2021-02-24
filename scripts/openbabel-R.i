@@ -15,6 +15,7 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/kekulize.h>
 
 #include <openbabel/elements.h>
 #include <openbabel/base.h>
@@ -287,6 +288,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %warnfilter(516) OpenBabel::OBUnitCell; // Ignoring const methods in favour of non-const ones
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
+%include <openbabel/kekulize.h>
+
 
 %include <openbabel/chains.h>
 %include <openbabel/typer.h>

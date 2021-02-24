@@ -18,6 +18,7 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/kekulize.h>
 #include <openbabel/elements.h>
 
 #include <openbabel/base.h>
@@ -263,7 +264,7 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %template(OBPairInteger) OpenBabel::OBPairTemplate<int>;
 %template(OBPairFloatingPoint) OpenBabel::OBPairTemplate<float>;
 %include <openbabel/griddata.h>
-
+%include <openbabel/kekulize.h>
 %include <openbabel/chains.h>
 %include <openbabel/typer.h>
 
