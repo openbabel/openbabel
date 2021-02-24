@@ -251,7 +251,7 @@ add_library(openbabel ${BUILD_TYPE}
   )
 add_dependencies(openbabel data_headers)
 
-target_link_libraries(openbabel ${libs})
+target_link_libraries(openbabel PRIVATE ${libs})
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
@@ -259,7 +259,7 @@ endif()
 if(BUILD_SHARED OR BUILD_MIXED)
     set(THREADS_PREFER_PTHREAD_FLAG ON)
     find_package(Threads REQUIRED)
-    target_link_libraries(openbabel Threads::Threads)
+    target_link_libraries(openbabel PRIVATE Threads::Threads)
 endif()
 
 set_target_properties(openbabel PROPERTIES
@@ -282,6 +282,7 @@ install(TARGETS openbabel
   RUNTIME DESTINATION ${BIN_INSTALL_DIR}
   LIBRARY DESTINATION ${LIB_INSTALL_DIR}
   ARCHIVE DESTINATION ${LIB_INSTALL_DIR}
+  INCLUDES DESTINATION "${OB_INCLUDE_DIRS}"
 )
 
 if(BUILD_SHARED)
