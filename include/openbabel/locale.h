@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #define OB_LOCALE_H
 
 #include <locale>
+#include <mutex>
 #include <openbabel/babelconfig.h>
 
 #ifndef OBERROR
@@ -43,6 +44,7 @@ namespace OpenBabel
 
   protected:
     OBLocalePrivate* d;
+    static std::mutex LocaleMutex;
   };
 
   //global definitions

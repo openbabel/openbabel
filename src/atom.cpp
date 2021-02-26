@@ -33,6 +33,7 @@ GNU General Public License for more details.
 #include <openbabel/obutil.h>
 #include <openbabel/residue.h>
 #include <openbabel/chains.h>
+#include <openbabel/data_utilities.h>
 
 #include <openbabel/math/matrix3x3.h>
 
@@ -107,7 +108,6 @@ namespace OpenBabel
   extern THREAD_LOCAL OBAromaticTyper  aromtyper;
   extern THREAD_LOCAL OBAtomTyper      atomtyper;
   extern THREAD_LOCAL OBPhModel        phmodel;
-  OB_EXTERN OBTypeTable      ttab;
 
   //
   // OBAtom member functions
@@ -475,16 +475,9 @@ namespace OpenBabel
     if (strlen(_type) == 0) // Somehow we still don't have a type!
       {
         char num[6];
-        string fromType = ttab.GetFromType(); // save previous types
-        string toType = ttab.GetToType();
-
-        ttab.SetFromType("ATN");
-        ttab.SetToType("INT");
+        OBTranslator trans("ATN", "INT");
         snprintf(num, 6, "%d", GetAtomicNum());
-        ttab.Translate(_type, num);
-
-        ttab.SetFromType(fromType.c_str());
-        ttab.SetToType(toType.c_str());
+        trans.Translate(_type, num);
       }
     if (_ele == 1 && _isotope == 2)
       snprintf(_type, 6, "%s", "D");

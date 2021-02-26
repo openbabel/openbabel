@@ -27,6 +27,9 @@ General Public License for more details.
 #include <string>
 #include <vector>
 #include <deque>
+#include <mutex>
+
+#include <openbabel/data_utilities.h>
 
 #ifndef OBERROR
 #define OBERROR
@@ -120,28 +123,46 @@ namespace OpenBabel
                       obMessageLevel level = obDebug, errorQualifier qualifier = always);
 
       //! \return all messages matching a specified level
-      std::vector<std::string> GetMessagesOfLevel(const obMessageLevel);
+      std::vector<std::string> GetMessagesOfLevel(const obMessageLevel) const;
 
       //! Start logging messages (default)
-      void StartLogging() { _logging = true; }
+      void StartLogging() {
+        std::lock_guard<std::mutex> lock(_handlerMutex);
+        _logging = true;
+	  }
       //! Stop logging messages completely
-      void StopLogging()  { _logging = false; }
+      void StopLogging()  {
+        std::lock_guard<std::mutex> lock(_handlerMutex);
+        _logging = false;
+      }
 
       //! Set the maximum number of entries (or 0 for no limit)
-      void SetMaxLogEntries(unsigned int max) { _maxEntries = max; }
+      void SetMaxLogEntries(unsigned int max) {
+        std::lock_guard<std::mutex> lock(_handlerMutex);
+        _maxEntries = max;
+      }
       //! \return the current maximum number of entries (default = 0 for no limit)
-      unsigned int GetMaxLogEntries() { return _maxEntries; }
+      unsigned int GetMaxLogEntries() const { return _maxEntries; }
 
       //! Clear the current message log entirely
-      void ClearLog() { _messageList.clear(); }
+      void ClearLog() {
+        std::lock_guard<std::mutex> lock(_handlerMutex);
+        _messageList.clear();
+      }
 
       //! \brief Set the level of messages to output
       //! (i.e., messages with at least this priority will be output)
-      void SetOutputLevel(const obMessageLevel level) { _outputLevel = level; }
+      void SetOutputLevel(const obMessageLevel level) {
+        std::lock_guard<std::mutex> lock(_handlerMutex);
+        _outputLevel = level;
+      }
       //! \return the current output level
-      obMessageLevel GetOutputLevel() { return _outputLevel; }
+      obMessageLevel GetOutputLevel() const { return _outputLevel; }
 
-      void SetOutputStream(std::ostream *os) { _outputStream = os; }
+      void SetOutputStream(std::ostream *os) {
+        std::lock_guard<std::mutex> lock(_handlerMutex);
+        _outputStream = os;
+      }
       std::ostream* GetOutputStream() { return _outputStream; }
 
       //! Start "wrapping" messages to cerr into ThrowError calls
@@ -150,15 +171,15 @@ namespace OpenBabel
       bool StopErrorWrap();
 
       //! \return Count of messages received at the obError level
-      unsigned int GetErrorMessageCount() { return _messageCount[obError];}
+      unsigned int GetErrorMessageCount() const { return _messageCount[obError];}
       //! \return Count of messages received at the obWarning level
-      unsigned int GetWarningMessageCount() { return _messageCount[obWarning];}
+      unsigned int GetWarningMessageCount() const { return _messageCount[obWarning];}
       //! \return Count of messages received at the obInfo level
-      unsigned int GetInfoMessageCount() { return _messageCount[obInfo];}
+      unsigned int GetInfoMessageCount() const { return _messageCount[obInfo];}
       //! \return Count of messages received at the obAuditMsg level
-      unsigned int GetAuditMessageCount() { return _messageCount[obAuditMsg];}
+      unsigned int GetAuditMessageCount() const { return _messageCount[obAuditMsg];}
       //! \return Count of messages received at the obDebug level
-      unsigned int GetDebugMessageCount() { return _messageCount[obDebug];}
+      unsigned int GetDebugMessageCount() const { return _messageCount[obDebug];}
       //! \return Summary of messages received at all levels
       std::string GetMessageSummary();
 
@@ -181,6 +202,9 @@ namespace OpenBabel
       std::streambuf        *_inWrapStreamBuf;
       //! The filtered obLogBuf stream buffer to wrap error messages
       std::streambuf        *_filterStreamBuf;
+
+      //! For concurrency
+      mutable OBGlobalMutex  _handlerMutex;
     };
 
   //! Global OBMessageHandler error handler

@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <cstdlib>
 
 
@@ -96,12 +97,14 @@ namespace OpenBabel
 
     mol.ReserveAtoms(natoms);
     mol.BeginModify();
-    ttab.SetFromType("ALC");
 
     string str;
     double x,y,z;
     OBAtom *atom;
+    OBTranslator trans;
     vector<string> vs;
+
+    trans.SetFromType("ALC");
 
     for (i = 1; i <= natoms; i ++)
       {
@@ -117,12 +120,12 @@ namespace OpenBabel
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
-        ttab.SetToType("ATN");
-        ttab.Translate(str,vs[1]);
+        trans.SetToType("ATN");
+        trans.Translate(str,vs[1]);
         atom->SetAtomicNum(atoi(str.c_str()));
         //set type
-        ttab.SetToType("INT");
-        ttab.Translate(str,vs[1]);
+        trans.SetToType("INT");
+        trans.Translate(str,vs[1]);
         atom->SetType(str);
       }
 
@@ -185,13 +188,13 @@ namespace OpenBabel
 
     OBAtom *atom;
     string str,str1;
+    OBTranslator trans("INT", "ALC");
+
     for(i = 1;i <= mol.NumAtoms(); i++)
       {
         atom = mol.GetAtom(i);
         str = atom->GetType();
-        ttab.SetFromType("INT");
-        ttab.SetToType("ALC");
-        ttab.Translate(str1,str);
+        trans.Translate(str1,str);
         snprintf(buffer, BUFF_SIZE, "%5d %-6s%8.4f %8.4f %8.4f     0.0000",
                  i,
                  (char*)str1.c_str(),

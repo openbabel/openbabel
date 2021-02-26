@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <openbabel/generic.h>
 #include <cstdlib>
 
@@ -105,9 +106,8 @@ namespace OpenBabel
         break;
     }
 
-    ttab.SetFromType("DRE");
-    ttab.SetToType("INT");
     OBAtom *atom;
+    OBTranslator trans("DRE", "INT");
     double x,y,z,chrg;
     for (;;)
       {
@@ -122,7 +122,7 @@ namespace OpenBabel
                &chrg);
         atom = mol.NewAtom();
 
-        ttab.Translate(tmp,tmptyp);
+        trans.Translate(tmp,tmptyp);
         atom->SetType(tmp);
 
         CleanAtomType(tmptyp);
@@ -205,6 +205,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     int max_val;
     OBAtom *atom;
+    OBTranslator trans;
     char buffer[BUFF_SIZE];
     char elmnt_typ[8], dreid_typ[8], atm_sym[16], max_val_str[8];
 
@@ -228,7 +229,7 @@ namespace OpenBabel
 
     ofs << "FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5)\n";
 
-    ttab.SetFromType("INT");
+    trans.SetFromType("INT");
 
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
@@ -236,10 +237,10 @@ namespace OpenBabel
         elmnt_typ[sizeof(elmnt_typ) - 1] = '0';
         ToUpper(elmnt_typ);
 
-        ttab.SetToType("DRE");
-        ttab.Translate(dreid_typ,atom->GetType());
-        ttab.SetToType("HAD");
-        ttab.Translate(max_val_str,atom->GetType());
+        trans.SetToType("DRE");
+        trans.Translate(dreid_typ,atom->GetType());
+        trans.SetToType("HAD");
+        trans.Translate(max_val_str,atom->GetType());
         max_val = atoi(max_val_str);
         if (max_val == 0)
           max_val = 1;

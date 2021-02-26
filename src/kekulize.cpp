@@ -91,7 +91,6 @@ namespace OpenBabel
     // Does it already have an explicit double bond?
     FOR_BONDS_OF_ATOM(bond, atom) {
       if (bond->IsAromatic()) continue;
-      OBAtom *nbr = bond->GetNbrAtom(atom);
       switch (bond->GetBondOrder()) {
       case 0: case 1:
         continue;

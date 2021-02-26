@@ -33,7 +33,12 @@ class OpTransform : public OBOp
 public:
   //! constructor. Each instance provides an ID, a datafile and a description.
   OpTransform(const char* ID, const char* filename, const char* descr)
-    : OBOp(ID, false), _filename(filename), _descr(descr), _dataLoaded(false){}
+    : OBOp(ID, false), _filename(filename), _descr(descr), _dataLoaded(false) {
+      _alldescr = _descr;
+      _alldescr += "\n Datafile: ";
+      _alldescr += _filename;
+      _alldescr += "\nOpTransform is definable";
+	}
 
   ~OpTransform(){}
 
@@ -61,6 +66,7 @@ private:
   const char* _filename;
   const char* _descr;
   std::vector<std::string> _textlines;
+  std::string _alldescr;
 
   bool _dataLoaded;
   std::vector<OBChemTsfm> _transforms;

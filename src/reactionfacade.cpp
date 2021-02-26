@@ -119,7 +119,6 @@ namespace OpenBabel
     std::set<unsigned int> unassigned_components;
 
     FOR_ATOMS_OF_MOL(atom, _mol) {
-      OBAtom* atm = &*atom;
       unsigned int component = GetComponentId(&*atom);
       switch (GetRole(&*atom)) {
       case REACTANT:

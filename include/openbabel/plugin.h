@@ -27,6 +27,7 @@ General Public License for more details.
 #include <map>
 #include <sstream>
 #include <cstring>
+#include <mutex>
 
 #ifndef OBERROR
  #define OBERROR
@@ -145,6 +146,8 @@ protected:
   ///\brief Returns the type with the specified ID, or NULL if not found.
   ///Needs to be cast to the appropriate class in the calling routine.
   static OBPlugin* BaseFindType(PluginMapType& Map, const char* ID);
+
+  static std::mutex PluginMutex;
 
 protected:
   const char* _id;

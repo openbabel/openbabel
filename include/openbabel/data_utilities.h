@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <vector>
+#include <mutex>
 
 namespace OpenBabel {
  class OBMol;
@@ -68,6 +69,90 @@ namespace OpenBabel {
 				    std::vector<double> &Scomponents,
 				    double            *ZPVE);
 
+class OBAPI OBTranslator
+{
+	int _from, _to;
+
+public:
+	//! Constructor
+	OBTranslator();
+	OBTranslator(const char*, const char*);
+	//! Destructor
+	~OBTranslator() {};
+
+	//! Set the initial atom type to be translated
+	bool SetFromType(const char*);
+	//! Set the destination atom type for translation
+	bool SetToType(const char*);
+	//! Translate atom types
+	bool Translate(char *to, const char *from) const; // to, from
+												//! Translate atom types
+												//! \return whether the translation was successful
+	bool Translate(std::string &to, const std::string &from) const; // to, from
+															  //! Translate atom types
+															  //! \return the translated atom type, or an empty string if not possible
+	std::string Translate(const std::string &from) const;
+
+	//! \return the initial atom type to be translated
+	std::string GetFromType() const;
+	//! \return the destination atom type for translation
+	std::string GetToType() const;
+};
+
+class OBAPI OBResidueObserver
+{
+	int _resnum;
+
+public:
+	//! Sets the table to access the residue information for a specified
+	//!  residue name
+	//! \return whether this residue name is in the table
+	bool SetResName(const std::string &);
+	//! \return the bond order for the bond specified in the current residue
+	//! \deprecated Easier to use the two-argument form
+	int  LookupBO(const std::string &);
+	//! \return the bond order for the bond specified between the two specified
+	//! atom labels
+	int  LookupBO(const std::string &, const std::string&);
+	//! Look up the atom type and hybridization for the atom label specified
+	//! in the first argument for the current residue
+	//! \return whether the atom label specified is found in the current residue
+	bool LookupType(const std::string &,std::string&,int&);
+	//! Assign bond orders, atom types and residues for the supplied OBMol
+	//! based on the residue information assigned to atoms
+};
+
+class OBGlobalMutex: public std::mutex
+{
+public:
+
+#ifndef HAS_NOEXCEPT
+ #if defined(__clang__)
+  #if __has_feature(cxx_noexcept)
+   #define HAS_NOEXCEPT
+  #endif
+ #else
+  #if defined(__GXX_EXPERIMENTAL_CXX0X__) && __GNUC__ * 10 + __GNUC_MINOR__ >= 46 || \
+  defined(_MSC_FULL_VER) && _MSC_FULL_VER >= 190023026
+   #define HAS_NOEXCEPT
+  #endif
+ #endif
+#endif
+
+#ifdef HAS_NOEXCEPT
+ #define NOEXCEPT noexcept
+#else
+ #define NOEXCEPT
+#endif
+
+	constexpr OBGlobalMutex() NOEXCEPT = default;
+
+	OBGlobalMutex(const OBGlobalMutex &) { OBGlobalMutex(); } // Copy constructor
+
+	~OBGlobalMutex() = default;
+
+	OBGlobalMutex& operator=(const OBGlobalMutex &) { return *this; } // Copy assignment operator
+};
 }
 
 #endif //DATA_UTILITIES_H

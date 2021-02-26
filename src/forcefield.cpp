@@ -1288,8 +1288,6 @@ namespace OpenBabel
     if (_mol.NumRotors() == 0)
       return 0;
 
-    int origLogLevel = _loglvl;
-
     // Remove all conformers (e.g. from previous conformer generators) except for current conformer
     double *initialCoord = new double [_mol.NumAtoms() * 3]; // initial state
     double *store_initial = new double [_mol.NumAtoms() * 3]; // store the initial state
@@ -1676,8 +1674,7 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("  INITIAL WEIGHTING OF ROTAMERS...\n\n");
 
-    rotor = rl.BeginRotor(ri);
-    for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
+    for (unsigned int i = 1; i < rl.Size() + 1; ++i) {
       rotorKey[i] = -1; // no rotation (new in 2.2)
     }
 
@@ -2476,7 +2473,6 @@ namespace OpenBabel
 
       if (e_n1 < opt_e) {
         opt_step = step;
-        opt_e = e_n1;
       }
 
     }
@@ -2959,7 +2955,6 @@ namespace OpenBabel
     if (!_validSetup)
       return 0;
 
-    double e_n2;
     double g2g2, g1g1, beta;
     vector3 grad2, dir2;
     vector3 grad1, dir1; // temporaries to perform dot product, etc.
@@ -2967,8 +2962,6 @@ namespace OpenBabel
 
     if (_ncoords != _mol.NumAtoms() * 3)
       return false;
-
-    e_n2 = 0.0;
 
     for (int i = 1; i <= n; i++) {
       _cstep++;
@@ -3036,7 +3029,7 @@ namespace OpenBabel
       // save the direction
       memcpy(_gradientPtr, _grad1, sizeof(double)*_ncoords);
 
-      e_n2 = Energy() + _constraints.GetConstraintEnergy();
+      double e_n2 = Energy() + _constraints.GetConstraintEnergy();
 
       if ((_cstep % _pairfreq == 0) && _cutoff)
         UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)

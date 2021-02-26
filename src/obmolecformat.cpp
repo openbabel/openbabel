@@ -167,7 +167,6 @@ namespace OpenBabel
                                   auditMsg,
                                   obInfo);
           }
-        ret=true;
 
         ret = DoOutputOptions(pOb, pConv);
 

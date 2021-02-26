@@ -32,17 +32,17 @@ namespace OpenBabel
   public:
     //! constructor. Each instance provides an ID, a SMARTS pattern and a description.
     SmartsDescriptor(const char* ID, const char* smarts, const char* descr)
-      : OBDescriptor(ID, false), _smarts(smarts), _descr(descr){}
+      : OBDescriptor(ID, false), _smarts(smarts), _descr(descr) {
+        //Adds the SMARTS string to the description
+        _alldescr = _descr;
+        _alldescr += "\n\t SMARTS: ";
+        _alldescr += _smarts;
+        _alldescr += "\nSmartsDescriptor is definable";
+      }
 
     virtual const char* Description()
     {
-      //Adds the SMARTS string to the description
-      static string txt;
-      txt =  _descr;
-      txt += "\n\t SMARTS: ";
-      txt += _smarts;
-      txt += "\nSmartsDescriptor is definable";
-      return txt.c_str();
+      return _alldescr.c_str();
     }
 
     double Predict(OBBase* pOb, string* param=nullptr)
@@ -66,6 +66,7 @@ namespace OpenBabel
   private:
     const char* _smarts;
     const char* _descr;
+    string _alldescr;
   };
 
   //Make global instances

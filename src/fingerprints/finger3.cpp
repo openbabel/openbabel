@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <fstream>
 #include <map>
 #include <string>
+#include <mutex>
 
 #include <openbabel/fingerprint.h>
 
@@ -45,6 +46,8 @@ private:
   vector<pattern> _pats;
   int _bitcount;
   string _version;
+  string _alldescr;
+  mutable mutex _fpmutex;
 
 protected:
   string _patternsfile;
@@ -57,26 +60,14 @@ public:
       _patternsfile="patterns.txt";
     else
       _patternsfile = filename;
+
+    _alldescr = "SMARTS patterns specified in the file " + _patternsfile + "\nPatternFP is definable";
   }
 
 /////////////////////////////////////////////////////////////////////////////
   virtual const char* Description()
   {
-    static string desc;
-    //Read patterns file if it has not been done already,
-    //because we need _bitcount and _version updated
-
-    // _bitcount and _version are available only after the datafile has been parsed.
-    // This is a burden on normal operation (Description() gets called on startup from OBDefine),
-    // so the secondline is present only after the fingerprint has been used.
-    // the
-    string secondline;
-    if(!_pats.empty())
-      secondline = "\n" + toString(_bitcount) + " bits. Datafile version = " +  _version;
-    desc = "SMARTS patterns specified in the file " + _patternsfile
-      + secondline
-      + "\nPatternFP is definable";
-    return (desc.c_str());
+    return _alldescr.c_str();
   }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -158,9 +149,13 @@ public:
   /////////////////////////////////////////////////////////////////////
   bool ReadPatternFile(string& ver)
   {
+    lock_guard<mutex> lock(_fpmutex);
+    if (!_pats.empty())
+      return true;
+
     //Reads three types of file. See below
     ifstream ifs;
-	  stringstream errorMsg;
+    stringstream errorMsg;
 
     if (OpenDatafile(ifs, _patternsfile).length() == 0)
     {

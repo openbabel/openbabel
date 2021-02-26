@@ -32,25 +32,26 @@ namespace OpenBabel
 class OpLargest : public OBOp
 {
 public:
-  OpLargest(const char* ID) : OBOp(ID, false){};
+  OpLargest(const char* ID) : OBOp(ID, false) {
+    description = (strcmp(ID,"largest")!=0) ?
+    "# <descr> Output # mols with smallest values of descriptor(not displayed in GUI)\n"
+    "    obabel infile.xxx -Ooutfile.yyy --smallest 5 MW\n"
+    "will convert only the molecules with the 5 smallest molecular weights.\n" :
+    "# <descr> Output # mols with largest values\n"
+    "of a descriptor <descr>. For example:\n"
+    "    obabel infile.xxx -Ooutfile.yyy --largest 5 MW\n"
+    "will convert only the molecules with the 5 largest molecular weights.\n";
+    description +=
+    "A property (OBPairData) can be used instead of a descriptor, but\n"
+    "must be present in the first molecule. If the number is omitted,\n"
+    "1 is assumed.\n"
+    "The parameters can be in either order.\n"
+    "Preceding the descriptor by ~ inverts the comparison. (Use this form in the GUI.)\n"
+    "If a + follows the descriptor, e.g. MW+ , the value will be added to the title.\n";
+  };
   const char* Description()
   {
     //Need to use a member variable so that const char* is valid when it is returned
-    description = (strcmp(GetID(),"largest")!=0) ?
-     "# <descr> Output # mols with smallest values of descriptor(not displayed in GUI)\n"
-     "    obabel infile.xxx -Ooutfile.yyy --smallest 5 MW\n"
-     "will convert only the molecules with the 5 smallest molecular weights.\n" :
-     "# <descr> Output # mols with largest values\n"
-     "of a descriptor <descr>. For example:\n"
-     "    obabel infile.xxx -Ooutfile.yyy --largest 5 MW\n"
-     "will convert only the molecules with the 5 largest molecular weights.\n";
-    description +=
-     "A property (OBPairData) can be used instead of a descriptor, but\n"
-     "must be present in the first molecule. If the number is omitted,\n"
-     "1 is assumed.\n"
-     "The parameters can be in either order.\n"
-     "Preceding the descriptor by ~ inverts the comparison. (Use this form in the GUI.)\n"
-     "If a + follows the descriptor, e.g. MW+ , the value will be added to the title.\n";
     return description.c_str();
   }
 

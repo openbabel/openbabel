@@ -253,7 +253,6 @@ namespace OpenBabel
     _subdir = "data";
     _dataptr = TypesData;
     _linecount = 0;
-    _from = _to = -1;
   }
 
   void OBTypeTable::ParseLine(const char *buffer)
@@ -280,137 +279,6 @@ namespace OpenBabel
           }
       }
     _linecount++;
-  }
-
-  bool OBTypeTable::SetFromType(const char* from)
-  {
-    if (!_init)
-      Init();
-
-    string tmp = from;
-
-    unsigned int i;
-    for (i = 0;i < _colnames.size();++i)
-      if (tmp == _colnames[i])
-        {
-          _from = i;
-          return(true);
-        }
-
-    obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
-
-    return(false);
-  }
-
-  bool OBTypeTable::SetToType(const char* to)
-  {
-    if (!_init)
-      Init();
-
-    string tmp = to;
-
-    unsigned int i;
-    for (i = 0;i < _colnames.size();++i)
-      if (tmp == _colnames[i])
-        {
-          _to = i;
-          return(true);
-        }
-
-    obErrorLog.ThrowError(__FUNCTION__, "Requested type column not found", obInfo);
-
-    return(false);
-  }
-
-  //! Translates atom types (to, from), checking for size of destination
-  //!  string and null-terminating as needed
-  //! \deprecated Because there is no guarantee on the length of an atom type
-  //!  you should consider using std::string instead
-  bool OBTypeTable::Translate(char *to, const char *from)
-  {
-    if (!_init)
-      Init();
-
-    bool rval;
-    string sto,sfrom;
-    sfrom = from;
-    rval = Translate(sto,sfrom);
-    strncpy(to,(char*)sto.c_str(), OBATOM_TYPE_LEN - 1);
-    to[OBATOM_TYPE_LEN - 1] = '\0';
-
-    return(rval);
-  }
-
-  bool OBTypeTable::Translate(string &to, const string &from)
-  {
-    if (!_init)
-      Init();
-
-    if (from == "")
-      return(false);
-
-    if (_from >= 0 && _to >= 0 &&
-        _from < (signed)_table.size() && _to < (signed)_table.size())
-      {
-        vector<vector<string> >::iterator i;
-        for (i = _table.begin();i != _table.end();++i)
-          if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
-            {
-              to = (*i)[_to];
-              return(true);
-            }
-      }
-
-    // Throw an error, copy the string and return false
-    obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
-    to = from;
-    return(false);
-  }
-
-  std::string OBTypeTable::Translate(const string &from)
-  {
-    if (!_init)
-      Init();
-
-    if (from.empty())
-      return("");
-
-    if (_from >= 0 && _to >= 0 &&
-        _from < (signed)_table.size() && _to < (signed)_table.size())
-      {
-        vector<vector<string> >::iterator i;
-        for (i = _table.begin();i != _table.end();++i)
-          if ((signed)(*i).size() > _from &&  (*i)[_from] == from)
-            {
-              return (*i)[_to];
-            }
-      }
-
-    // Throw an error, copy the string and return false
-    obErrorLog.ThrowError(__FUNCTION__, "Cannot perform atom type translation: table cannot find requested types.", obWarning);
-    return("");
-  }
-
-  std::string OBTypeTable::GetFromType()
-  {
-    if (!_init)
-      Init();
-
-    if (_from > 0 && _from < (signed)_table.size())
-      return( _colnames[_from] );
-    else
-      return( _colnames[0] );
-  }
-
-  std::string OBTypeTable::GetToType()
-  {
-    if (!_init)
-      Init();
-
-    if (_to > 0 && _to < (signed)_table.size())
-      return( _colnames[_to] );
-    else
-      return( _colnames[0] );
   }
 
   void Toupper(string &s)
@@ -445,6 +313,7 @@ namespace OpenBabel
 
     OBAtom *a1,*a2;
     OBResidue *r1,*r2;
+    OBResidueObserver obs;
     vector<OBAtom*>::iterator i,j;
     vector3 v;
 
@@ -463,7 +332,7 @@ namespace OpenBabel
 
         if (r1->GetName() != rname)
           {
-            skipres = SetResName(r1->GetName()) ? "" : r1->GetNumString();
+            skipres = obs.SetResName(r1->GetName()) ? "" : r1->GetNumString();
             rname = r1->GetName();
           }
         //assign bonds for each atom
@@ -480,7 +349,7 @@ namespace OpenBabel
             if (r1->GetChain() != r2->GetChain())
               break; // Fixes PR#2889763 - Fabian
 
-            if ((bo = LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
+            if ((bo = obs.LookupBO(r1->GetAtomID(a1),r2->GetAtomID(a2))))
               {
                 // Suggested by Liu Zhiguo 2007-08-13
                 // for predefined residues, don't perceive connection
@@ -540,11 +409,11 @@ namespace OpenBabel
         if (r1->GetName() != rname)
           {
             // if SetResName fails, skip this residue
-            skipres = SetResName(r1->GetName()) ? "" : r1->GetNumString();
+            skipres = obs.SetResName(r1->GetName()) ? "" : r1->GetNumString();
             rname = r1->GetName();
           }
 
-        if (LookupType(r1->GetAtomID(a1),type,hyb))
+        if (obs.LookupType(r1->GetAtomID(a1),type,hyb))
           {
             a1->SetType(type);
             a1->SetHyb(hyb);
@@ -588,84 +457,18 @@ namespace OpenBabel
 
         if (vs[0]== "END")
           {
-            _resatoms.push_back(_vatmtmp);
-            _resbonds.push_back(_vtmp);
-            _vtmp.clear();
+            _resatoms.push_back(std::move(_vatmtmp));
+            _resbonds.push_back(std::move(_vtmp));
             _vatmtmp.clear();
+            _vtmp.clear();
           }
       }
   }
 
-  bool OBResidueData::SetResName(const string &s)
-  {
-    if (!_init)
-      Init();
-
-    unsigned int i;
-
-    for (i = 0;i < _resname.size();++i)
-      if (_resname[i] == s)
-        {
-          _resnum = i;
-          return(true);
-        }
-
-    _resnum = -1;
-    return(false);
-  }
-
-  int OBResidueData::LookupBO(const string &s)
-  {
-    if (_resnum == -1)
-      return(0);
-
-    unsigned int i;
-    for (i = 0;i < _resbonds[_resnum].size();++i)
-      if (_resbonds[_resnum][i].first == s)
-        return(_resbonds[_resnum][i].second);
-
-    return(0);
-  }
-
-  int OBResidueData::LookupBO(const string &s1, const string &s2)
-  {
-    if (_resnum == -1)
-      return(0);
-    string s;
-
-    s = (s1 < s2) ? s1 + " " + s2 : s2 + " " + s1;
-
-    unsigned int i;
-    for (i = 0;i < _resbonds[_resnum].size();++i)
-      if (_resbonds[_resnum][i].first == s)
-        return(_resbonds[_resnum][i].second);
-
-    return(0);
-  }
-
-  bool OBResidueData::LookupType(const string &atmid,string &type,int &hyb)
-  {
-    if (_resnum == -1)
-      return(false);
-
-    string s;
-    vector<string>::iterator i;
-
-    for (i = _resatoms[_resnum].begin();i != _resatoms[_resnum].end();i+=3)
-      if (atmid == *i)
-        {
-          ++i;
-          type = *i;
-          ++i;
-          hyb = atoi((*i).c_str());
-          return(true);
-        }
-
-    return(false);
-  }
-
   void OBGlobalDataBase::Init()
   {
+    lock_guard<OBGlobalMutex> lock(_db_mutex); // Lock for concurrency
+
     if (_init)
       return;
     _init = true;

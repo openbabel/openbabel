@@ -20,6 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/bond.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <openbabel/generic.h>
 
 #include <openbabel/forcefield.h>
@@ -170,6 +171,7 @@ namespace OpenBabel
     unsigned int i;
     char buffer[BUFF_SIZE];
     OBBond *bond;
+    OBTranslator trans;
     vector<OBBond*>::iterator j;
 
     // Before we try output of MMFF94 atom types, check if it works
@@ -191,7 +193,7 @@ namespace OpenBabel
       snprintf(buffer, BUFF_SIZE, "%6d %-20s   MMFF94 parameters\n",mol.NumAtoms(),mol.GetTitle());
     ofs << buffer;
 
-    ttab.SetFromType("INT");
+    trans.SetFromType("INT");
 
     OBAtom *atom;
     string str,str1;
@@ -203,8 +205,8 @@ namespace OpenBabel
         atomType = 0; // Something is very wrong if this doesn't get set below
 
         if (mm2Types) {
-          ttab.SetToType("MM2");
-          ttab.Translate(str1,str);
+          trans.SetToType("MM2");
+          trans.Translate(str1,str);
           atomType = atoi((char*)str1.c_str());
         }
         if (mmffTypes) {

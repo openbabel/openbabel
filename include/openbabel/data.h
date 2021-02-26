@@ -28,6 +28,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <string>
 #include <cstring>
+#include <openbabel/data_utilities.h>
 
 namespace OpenBabel
 {
@@ -54,6 +55,7 @@ namespace OpenBabel
       std::string  _dir;		//!< Data directory for file if _envvar fails
       std::string  _subdir;	//!< Subdirectory (if using environment variable)
       std::string  _envvar;	//!< Environment variable to check first
+      mutable OBGlobalMutex  _db_mutex;	//!< Mutex for concurrency
 
     public:
       //! Constructor
@@ -187,12 +189,12 @@ namespace OpenBabel
     {
       int             _linecount;
       unsigned int    _ncols,_nrows;
-      int             _from,_to;
       std::vector<std::string> _colnames;
       std::vector<std::vector<std::string> > _table;
 
-    public:
+      friend class OBTranslator;
 
+    public:
       OBTypeTable(void);
       ~OBTypeTable() {}
 
@@ -200,24 +202,6 @@ namespace OpenBabel
 
       //! \return the number of atom types in the translation table
       size_t GetSize() { return _table.size(); }
-
-      //! Set the initial atom type to be translated
-      bool SetFromType(const char*);
-      //! Set the destination atom type for translation
-      bool SetToType(const char*);
-      //! Translate atom types
-      bool Translate(char *to, const char *from); // to, from
-      //! Translate atom types
-      //! \return whether the translation was successful
-      bool Translate(std::string &to, const std::string &from); // to, from
-      //! Translate atom types
-      //! \return the translated atom type, or an empty string if not possible
-      std::string Translate(const std::string &from);
-
-      //! \return the initial atom type to be translated
-      std::string GetFromType();
-      //! \return the destination atom type for translation
-      std::string GetToType();
     };
 
   //! Global OBTypeTable for translating between different atom types
@@ -231,7 +215,6 @@ namespace OpenBabel
   **/
   class OBAPI OBResidueData : public OBGlobalDataBase
     {
-      int                                               _resnum;
       std::vector<std::string>                          _resname;
       std::vector<std::vector<std::string> >            _resatoms;
       std::vector<std::vector<std::pair<std::string,int> > > _resbonds;
@@ -239,6 +222,9 @@ namespace OpenBabel
       //variables used only temporarily for parsing resdata.txt
       std::vector<std::string>                          _vatmtmp;
       std::vector<std::pair<std::string,int> >          _vtmp;
+
+      friend class OBResidueObserver;
+
     public:
 
       OBResidueData();
@@ -247,22 +233,6 @@ namespace OpenBabel
       //! \return the number of residues in the table
       size_t GetSize() { return _resname.size(); }
 
-      //! Sets the table to access the residue information for a specified
-      //!  residue name
-      //! \return whether this residue name is in the table
-      bool SetResName(const std::string &);
-      //! \return the bond order for the bond specified in the current residue
-      //! \deprecated Easier to use the two-argument form
-      int  LookupBO(const std::string &);
-      //! \return the bond order for the bond specified between the two specified
-      //! atom labels
-      int  LookupBO(const std::string &, const std::string&);
-      //! Look up the atom type and hybridization for the atom label specified
-      //! in the first argument for the current residue
-      //! \return whether the atom label specified is found in the current residue
-      bool LookupType(const std::string &,std::string&,int&);
-      //! Assign bond orders, atom types and residues for the supplied OBMol
-      //! based on the residue information assigned to atoms
       bool AssignBonds(OBMol &);
     };
 

@@ -645,7 +645,6 @@ namespace OpenBabel
 
     // Now sort the eigenvalues (and the eigenvectors) so that the
     // smallest eigenvalues come first.
-    nrot = l;
 
     for (j = 0; j < static_cast<int>(n)-1; j++)
       {

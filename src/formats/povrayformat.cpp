@@ -804,7 +804,6 @@ namespace OpenBabel
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
-    const char* title = pmol->GetTitle();
 
     static long num = 0;
     double min_x, max_x, min_y, max_y, min_z, max_z; /* Edges of bounding box */

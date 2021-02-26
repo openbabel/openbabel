@@ -421,7 +421,6 @@ namespace OpenBabel
     int k,l,m;
     double x,y,z,dx_2,dy_2;
     double *c = mol.GetCoordinates();
-    size = mol.NumAtoms()*3;
 
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
@@ -457,7 +456,6 @@ namespace OpenBabel
     int k,l,m;
     double x,y,z,dx_2,dy_2;
     double *c = mol.GetCoordinates();
-    size = mol.NumAtoms()*3;
 
     OBAtom *atom;
     vector<OBAtom*>::iterator i;

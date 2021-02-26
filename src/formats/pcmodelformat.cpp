@@ -18,6 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
 #include <openbabel/data.h>
+#include <openbabel/data_utilities.h>
 #include <openbabel/obiter.h>
 #include <openbabel/bond.h>
 #include <cstdlib>
@@ -80,6 +81,7 @@ namespace OpenBabel
     string temp, temp2;
 
     OBAtom *atom;
+    OBTranslator trans;
     vector<string> vs;
     double x, y, z;
     unsigned int token;
@@ -87,7 +89,7 @@ namespace OpenBabel
     bool parsingBonds, readingMol = false;
     bool hasPartialCharges = false;
 
-    ttab.SetFromType("PCM");
+    trans.SetFromType("PCM");
 
     mol.BeginModify();
 
@@ -102,7 +104,6 @@ namespace OpenBabel
           }
         else if (readingMol && strncmp(buffer,"}", 1) == 0)
           {
-            readingMol = false;
             break;
           }
         else if (readingMol && strncmp(buffer,"AT ",3) == 0)
@@ -113,12 +114,12 @@ namespace OpenBabel
 
             atom = mol.NewAtom();
             temp = vs[2].c_str();
-            ttab.SetToType("INT");
-            ttab.Translate(temp2, temp);
+            trans.SetToType("INT");
+            trans.Translate(temp2, temp);
             atom->SetType(temp2);
 
-            ttab.SetToType("ATN");
-            ttab.Translate(temp2, temp);
+            trans.SetToType("ATN");
+            trans.Translate(temp2, temp);
             atom->SetAtomicNum(atoi(temp2.c_str()));
             x = atof(vs[3].c_str());
             y = atof(vs[4].c_str());
@@ -191,6 +192,7 @@ namespace OpenBabel
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
     OBAtom *nbr;
+    OBTranslator trans;
     vector<OBBond*>::iterator j;
     string type, temp;
     int nbrIdx, atomIdx;
@@ -200,13 +202,13 @@ namespace OpenBabel
     ofs << "NA " << mol.NumAtoms() << endl;
     ofs << "ATOMTYPES 1" << endl; // MMX atom types
 
-    ttab.SetFromType("INT");
-    ttab.SetToType("PCM");
+    trans.SetFromType("INT");
+    trans.SetToType("PCM");
 
     string str,str1;
     FOR_ATOMS_OF_MOL(atom, mol)
       {
-        ttab.Translate(type,atom->GetType());
+        trans.Translate(type,atom->GetType());
         atomIdx = atom->GetIdx();
 
         ofs << "AT " << atom->GetIdx() << "," << type << ":";

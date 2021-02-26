@@ -165,6 +165,8 @@ namespace OpenBabel
     if (!_logging)
       return;
 
+    lock_guard<OBGlobalMutex> lock(_handlerMutex);
+
     //Output error message if level sufficiently high and, if onceOnly set, it has not been logged before
     if (err.GetLevel() <= _outputLevel &&
       (qualifier!=onceOnly || find(_messageList.begin(), _messageList.end(), err)==_messageList.end()))
@@ -189,13 +191,13 @@ namespace OpenBabel
       }
   }
 
-  std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLevel level)
+  std::vector<std::string> OBMessageHandler::GetMessagesOfLevel(const obMessageLevel level) const
   {
     vector<string> results;
-    deque<OBError>::iterator i;
+    deque<OBError>::const_iterator i;
     OBError error;
 
-    for (i = _messageList.begin(); i != _messageList.end(); ++i)
+    for (i = _messageList.cbegin(); i != _messageList.cend(); ++i)
       {
         error = (*i);
         if (error.GetLevel() == level)
@@ -207,6 +209,8 @@ namespace OpenBabel
 
   bool OBMessageHandler::StartErrorWrap()
   {
+    lock_guard<OBGlobalMutex> lock(_handlerMutex);
+
     if (_inWrapStreamBuf != nullptr)
       return true; // already wrapped cerr  -- don't go into loops!
 
@@ -223,6 +227,8 @@ namespace OpenBabel
 
   bool OBMessageHandler::StopErrorWrap()
   {
+    lock_guard<OBGlobalMutex> lock(_handlerMutex);
+
     if (_inWrapStreamBuf == nullptr)
       return true; // never wrapped cerr
 

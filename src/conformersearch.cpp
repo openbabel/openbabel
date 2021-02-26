@@ -247,7 +247,6 @@ namespace OpenBabel {
         return 10e10;
     }
     ff->ConjugateGradients(50);
-    double score = ff->Energy(false); // no gradients
 
     // copy original coordinates back
     for (unsigned int i = 0; i < mol.NumAtoms() * 3; ++i)
