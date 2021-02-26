@@ -23,6 +23,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obiter.h>
 #include <openbabel/chains.h>
@@ -158,6 +159,33 @@ int residue(int argc, char* argv[])
   CheckValidDipeptide(conv, ala_val, ++testCount);
   static const string cys_leu("NC(CS)C(=O)NC(CC(C)C)C(=O)O");
   CheckValidDipeptide(conv, cys_leu, ++testCount);
+
+  // Check GetNumAtoms and GetNumHvyAtoms
+  OBResidue testRes2;
+  OBAtom H, C;
+  H.SetAtomicNum(1);
+  C.SetAtomicNum(6);
+  testRes2.AddAtom(&H);
+  testRes2.AddAtom(&H);
+  testRes2.AddAtom(&C);
+  testRes2.AddAtom(&C);
+
+  if(testRes2.GetNumAtoms() == 4){
+    cout << "ok " << ++testCount << " # " << testRes2.GetNumAtoms() << endl;
+  }else{
+    cout << "not ok " << ++testCount << " # expected 4 atoms, but found "
+         << testRes2.GetNumAtoms() << '\n';
+  }
+
+  if (testRes2.GetNumHvyAtoms() == 2)
+  {
+    cout << "ok " << ++testCount << " # " << testRes2.GetNumHvyAtoms() << endl;
+  }
+  else
+  {
+    cout << "not ok " << ++testCount << " # expected 2 atom, but found "
+         << testRes2.GetNumHvyAtoms() << '\n';
+  }
 
   // the number of tests for "prove"
   cout << "1.." << testCount << "\n";
