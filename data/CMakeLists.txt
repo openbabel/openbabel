@@ -1,6 +1,8 @@
 # Open Babel data files
 
 set(to_install
+    alexandria.prm
+    alexandria.dat
     atomization-energies.txt
     atomtyp.txt
     babel_povray3.inc

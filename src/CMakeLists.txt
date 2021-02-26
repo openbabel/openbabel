@@ -45,6 +45,7 @@ set(fingerprints
 )
 
 set(forcefields
+  forcefields/forcefieldalexandria.cpp
   forcefields/forcefieldgaff.cpp
   forcefields/forcefieldghemical.cpp
   forcefields/forcefieldmmff94.cpp

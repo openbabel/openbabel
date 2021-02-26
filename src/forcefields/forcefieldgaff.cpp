@@ -1229,10 +1229,12 @@ namespace OpenBabel
     SetPartialChargesBeforeAtomTyping();
     _mol.SetAtomTypesPerceived();
 
-    // open data/gaff.prm
+    // open prmfile
     ifstream ifs;
-    if (OpenDatafile(ifs, "gaff.prm").length() == 0) {
-      obErrorLog.ThrowError(__FUNCTION__, "Cannot open gaff.prm", obError);
+    if (OpenDatafile(ifs, prmfile.c_str()).length() == 0) {
+      std::string msg("Cannot open ");
+      msg += prmfile;
+      obErrorLog.ThrowError(__FUNCTION__, msg.c_str(), obError);
       return false;
     }
 
@@ -1249,7 +1251,9 @@ namespace OpenBabel
         else {
           delete sp;
           sp = nullptr;
-          obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from gaff.prm", obInfo);
+          std::string msg(" Could not parse atom type table from ");
+          msg += prmfile;
+          obErrorLog.ThrowError(__FUNCTION__, msg.c_str(), obInfo);
           return false;
         }
       }
