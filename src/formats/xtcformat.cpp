@@ -303,7 +303,7 @@ namespace OpenBabel
      * XDR staructure)
      */
     if (xdrs == nullptr) {
-      xdridptr[xdrid] = (XDR *) malloc(sizeof(XDR));
+      xdridptr[xdrid] = (XDR *) calloc(1,sizeof(XDR));
       xdrstdio_create(xdridptr[xdrid], xdrfiles[xdrid], lmode);
     } else {
       xdridptr[xdrid] = xdrs;
@@ -659,13 +659,13 @@ namespace OpenBabel
 
       xdr_float(xdrs, precision);
       if (ip == nullptr) {
-        ip = (int *)malloc(size3 * sizeof(*ip));
-        if (ip == nullptr) {
+        ip = (int *)calloc(size3, sizeof(*ip));
+        if (ip == NULL) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         bufsize = static_cast<int> (size3 * 1.2);
-        buf = (int *)malloc(bufsize * sizeof(*buf));
+        buf = (int *)calloc(bufsize, sizeof(*buf));
         if (buf == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
@@ -903,13 +903,13 @@ namespace OpenBabel
       }
       xdr_float(xdrs, precision);
       if (ip == nullptr) {
-        ip = (int *)malloc(size3 * sizeof(*ip));
+        ip = (int *)calloc(size3, sizeof(*ip));
         if (ip == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         bufsize = static_cast<int> (size3 * 1.2);
-        buf = (int *)malloc(bufsize * sizeof(*buf));
+        buf = (int *)calloc(bufsize, sizeof(*buf));
         if (buf == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
