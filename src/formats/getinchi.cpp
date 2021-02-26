@@ -47,7 +47,7 @@ extraneous characters inserted, for example because of word wrapping,
 provided it follows certain rules.
 
 When this file (getinchi.cpp) is read, 15 InChIs will be extracted, e.g.
- babel -iinchi getinchi.cpp -osmi
+ obabel -iinchi getinchi.cpp -osmi
 
 Inside an InChI string ignore anything between < and >
 This means that an InChI string can be split up by inserting any number of <br /> elements:
