@@ -543,6 +543,7 @@ public:
   OB_STATIC_PLUGIN(fingerprintECFP, theECFP10)
 
   // forcefields
+  OB_STATIC_PLUGIN(OBForceFieldAlexandria, theForceFieldAlexandria)
   OB_STATIC_PLUGIN(OBForceFieldGaff, theForceFieldGaff)
   OB_STATIC_PLUGIN(OBForceFieldGhemical, theForceFieldGhemical)
   OB_STATIC_PLUGIN(OBForceFieldMMFF94, theForceFieldMMFF94)
