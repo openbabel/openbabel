@@ -174,7 +174,7 @@ namespace OpenBabel
     unsigned int GetAtomicNum(const char* ptr)
     {
       switch (ptr[0]) {
-      case 'A':
+      case 'A':                       //ptr[0] is in uppercase and ptr[1] is in lowercase
         switch (ptr[1]) {
         case 'c':
           if (ptr[2] == '\0') { // Ac
@@ -815,7 +815,7 @@ namespace OpenBabel
           break;
         }
         break;
-      case 'a':
+      case 'a':       //ptr[0] and ptr[1] both are lowercase
         switch (ptr[1]) {
         case 'c':
           if (ptr[2] == '\0') { // ac
@@ -1452,6 +1452,643 @@ namespace OpenBabel
           break;
         }
         break;
+      case 'A':         //for the uppercase elements,where ptr[0] and ptr[1] both are uppercase 
+        switch (ptr[1]) {
+        case 'C':
+          if (ptr[2] == '\0') { // AC
+            return 89; // Actinium
+          }
+          break;
+        case 'G':
+          if (ptr[2] == '\0') { // AG
+            return 47; // Silver
+          }
+          break;
+        case 'L':
+          if (ptr[2] == '\0') { // AL
+            return 13; // Aluminium
+          }
+          break;
+        case 'M':
+          if (ptr[2] == '\0') { // AM
+            return 95; // Americium
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // AR
+            return 18; // Argon
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // AS
+            return 33; // Arsenic
+          }
+          break;
+        case 'T':
+          if (ptr[2] == '\0') { // AT
+            return 85; // Astatine
+          }
+          break;
+        case 'U':
+          if (ptr[2] == '\0') { // AU
+            return 79; // Gold
+          }
+          break;
+        }
+        break;
+      case 'B':
+        switch (ptr[1]) {
+        case '\0': // B
+          return 5; // Boron
+        case 'A':
+          if (ptr[2] == '\0') { // BA
+            return 56; // Barium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // BE
+            return 4; // Beryllium
+          }
+          break;
+        case 'H':
+          if (ptr[2] == '\0') { // BH
+            return 107; // Bohrium
+          }
+          break;
+        case 'I':
+          if (ptr[2] == '\0') { // BI
+            return 83; // Bismuth
+          }
+          break;
+        case 'K':
+          if (ptr[2] == '\0') { // BK
+            return 97; // Berkelium
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // BR
+            return 35; // Bromine
+          }
+          break;
+        }
+        break;
+      case 'C':
+        switch (ptr[1]) {
+        case '\0': // C
+          return 6; // Carbon
+        case 'A':
+          if (ptr[2] == '\0') { // CA
+            return 20; // Calcium
+          }
+          break;
+        case 'D':
+          if (ptr[2] == '\0') { // CD
+            return 48; // Cadmium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // CE
+            return 58; // Cerium
+          }
+          break;
+        case 'F':
+          if (ptr[2] == '\0') { // CF
+            return 98; // Californium
+          }
+          break;
+        case 'L':
+          if (ptr[2] == '\0') { // CL
+            return 17; // Chlorine
+          }
+          break;
+        case 'M':
+          if (ptr[2] == '\0') { // CM
+            return 96; // Curium
+          }
+          break;
+        case 'N':
+          if (ptr[2] == '\0') { // CN
+            return 112; // Copernicium
+          }
+          break;
+        case 'O':
+          if (ptr[2] == '\0') { // CO
+            return 27; // Cobalt
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // CR
+            return 24; // Chromium
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // CS
+            return 55; // Caesium
+          }
+          break;
+        case 'U':
+          if (ptr[2] == '\0') { // CU
+            return 29; // Copper
+          }
+          break;
+        }
+        break;
+      case 'D':
+        switch (ptr[1]) {
+        case 'B':
+          if (ptr[2] == '\0') { // DB
+            return 105; // Dubnium
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // DS
+            return 110; // Darmstadtium
+          }
+          break;
+        case 'Y':
+          if (ptr[2] == '\0') { // DY
+            return 66; // Dysprosium
+          }
+          break;
+        }
+        break;
+      case 'E':
+        switch (ptr[1]) {
+        case 'R':
+          if (ptr[2] == '\0') { // ER
+            return 68; // Erbium
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // ES
+            return 99; // Einsteinium
+          }
+          break;
+        case 'U':
+          if (ptr[2] == '\0') { // EU
+            return 63; // Europium
+          }
+          break;
+        }
+        break;
+      case 'F':
+        switch (ptr[1]) {
+        case '\0': // F
+          return 9; // Fluorine
+        case 'E':
+          if (ptr[2] == '\0') { // FE
+            return 26; // Iron
+          }
+          break;
+        case 'L':
+          if (ptr[2] == '\0') { // FL
+            return 114; // Flerovium
+          }
+          break;
+        case 'M':
+          if (ptr[2] == '\0') { // FM
+            return 100; // Fermium
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // FR
+            return 87; // Francium
+          }
+          break;
+        }
+        break;
+      case 'G':
+        switch (ptr[1]) {
+        case 'A':
+          if (ptr[2] == '\0') { // GA
+            return 31; // Gallium
+          }
+          break;
+        case 'D':
+          if (ptr[2] == '\0') { // GD
+            return 64; // Gadolinium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // GE
+            return 32; // Germanium
+          }
+          break;
+        }
+        break;
+      case 'H':
+        switch (ptr[1]) {
+        case '\0': // H
+          return 1; // Hydrogen
+        case 'E':
+          if (ptr[2] == '\0') { // HE
+            return 2; // Helium
+          }
+          break;
+        case 'F':
+          if (ptr[2] == '\0') { // HF
+            return 72; // Hafnium
+          }
+          break;
+        case 'G':
+          if (ptr[2] == '\0') { // HG
+            return 80; // Mercury
+          }
+          break;
+        case 'O':
+          if (ptr[2] == '\0') { // HO
+            return 67; // Holmium
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // HS
+            return 108; // Hassium
+          }
+          break;
+        }
+        break;
+      case 'I':
+        switch (ptr[1]) {
+        case '\0': // I
+          return 53; // Iodine
+        case 'N':
+          if (ptr[2] == '\0') { // IN
+            return 49; // Indium
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // IR
+            return 77; // Iridium
+          }
+          break;
+        }
+        break;
+      case 'K':
+        switch (ptr[1]) {
+        case '\0': // K
+          return 19; // Potassium
+        case 'R':
+          if (ptr[2] == '\0') { // KR
+            return 36; // Krypton
+          }
+          break;
+        }
+        break;
+      case 'L':
+        switch (ptr[1]) {
+        case 'A':
+          if (ptr[2] == '\0') { // LA
+            return 57; // Lanthanum
+          }
+          break;
+        case 'I':
+          if (ptr[2] == '\0') { // LI
+            return 3; // Lithium
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // LR
+            return 103; // Lawrencium
+          }
+          break;
+        case 'U':
+          if (ptr[2] == '\0') { // LU
+            return 71; // Lutetium
+          }
+          break;
+        case 'V':
+          if (ptr[2] == '\0') { // LV
+            return 116; // Livermorium
+          }
+          break;
+        }
+        break;
+      case 'M':
+        switch (ptr[1]) {
+        case 'C':
+          if (ptr[2] == '\0') { // MC
+            return 115; // Moscovium
+          }
+          break;
+        case 'D':
+          if (ptr[2] == '\0') { // MD
+            return 101; // Mendelevium
+          }
+          break;
+        case 'G':
+          if (ptr[2] == '\0') { // MG
+            return 12; // Magnesium
+          }
+          break;
+        case 'N':
+          if (ptr[2] == '\0') { // MN
+            return 25; // Manganese
+          }
+          break;
+        case 'O':
+          if (ptr[2] == '\0') { // MO
+            return 42; // Molybdenum
+          }
+          break;
+        case 'T':
+          if (ptr[2] == '\0') { // MT
+            return 109; // Meitnerium
+          }
+          break;
+        }
+        break;
+      case 'N':
+        switch (ptr[1]) {
+        case '\0': // n
+          return 7; // Nitrogen
+        case 'A':
+          if (ptr[2] == '\0') { // NA
+            return 11; // Sodium
+          }
+          break;
+        case 'B':
+          if (ptr[2] == '\0') { // NB
+            return 41; // Niobium
+          }
+          break;
+        case 'D':
+          if (ptr[2] == '\0') { // ND
+            return 60; // Neodymium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // NE
+            return 10; // Neon
+          }
+          break;
+        case 'H':
+          if (ptr[2] == '\0') { // NH
+            return 113; // Nihonium
+          }
+          break;
+        case 'I':
+          if (ptr[2] == '\0') { // NI
+            return 28; // Nickel
+          }
+          break;
+        case 'O':
+          if (ptr[2] == '\0') { // NO
+            return 102; // Nobelium
+          }
+          break;
+        case 'P':
+          if (ptr[2] == '\0') { // NP
+            return 93; // Neptunium
+          }
+          break;
+        }
+        break;
+      case 'O':
+        switch (ptr[1]) {
+        case '\0': // O
+          return 8; // Oxygen
+        case 'G':
+          if (ptr[2] == '\0') { // OG
+            return 118; // Oganesson
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // OS
+            return 76; // Osmium
+          }
+          break;
+        }
+        break;
+      case 'P':
+        switch (ptr[1]) {
+        case '\0': // P
+          return 15; // Phosphorus
+        case 'A':
+          if (ptr[2] == '\0') { // PA
+            return 91; // Protactinium
+          }
+          break;
+        case 'B':
+          if (ptr[2] == '\0') { // PB
+            return 82; // Lead
+          }
+          break;
+        case 'D':
+          if (ptr[2] == '\0') { // PD
+            return 46; // Palladium
+          }
+          break;
+        case 'M':
+          if (ptr[2] == '\0') { // PM
+            return 61; // Promethium
+          }
+          break;
+        case 'O':
+          if (ptr[2] == '\0') { // PO
+            return 84; // Polonium
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // PR
+            return 59; // Praseodymium
+          }
+          break;
+        case 'T':
+          if (ptr[2] == '\0') { // PT
+            return 78; // Platinum
+          }
+          break;
+        case 'U':
+          if (ptr[2] == '\0') { // PU
+            return 94; // Plutonium
+          }
+          break;
+        }
+        break;
+      case 'R':
+        switch (ptr[1]) {
+        case 'A':
+          if (ptr[2] == '\0') { // RA
+            return 88; // Radium
+          }
+          break;
+        case 'B':
+          if (ptr[2] == '\0') { // RB
+            return 37; // Rubidium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // RE
+            return 75; // Rhenium
+          }
+          break;
+        case 'F':
+          if (ptr[2] == '\0') { // RF
+            return 104; // Rutherfordium
+          }
+          break;
+        case 'G':
+          if (ptr[2] == '\0') { // RG
+            return 111; // Roentgenium
+          }
+          break;
+        case 'H':
+          if (ptr[2] == '\0') { // RH
+            return 45; // Rhodium
+          }
+          break;
+        case 'N':
+          if (ptr[2] == '\0') { // RN
+            return 86; // Radon
+          }
+          break;
+        case 'U':
+          if (ptr[2] == '\0') { // RU
+            return 44; // Ruthenium
+          }
+          break;
+        }
+        break;
+      case 'S':
+        switch (ptr[1]) {
+        case '\0': // s
+          return 16; // Sulfur
+        case 'B':
+          if (ptr[2] == '\0') { // SB
+            return 51; // Antimony
+          }
+          break;
+        case 'C':
+          if (ptr[2] == '\0') { // SC
+            return 21; // Scandium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // SE
+            return 34; // Selenium
+          }
+          break;
+        case 'G':
+          if (ptr[2] == '\0') { // SG
+            return 106; // Seaborgium
+          }
+          break;
+        case 'I':
+          if (ptr[2] == '\0') { // SI
+            return 14; // Silicon
+          }
+          break;
+        case 'M':
+          if (ptr[2] == '\0') { // SM
+            return 62; // Samarium
+          }
+          break;
+        case 'N':
+          if (ptr[2] == '\0') { // SN
+            return 50; // Tin
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // SR
+            return 38; // Strontium
+          }
+          break;
+        }
+        break;
+      case 'T':
+        switch (ptr[1]) {
+        case 'A':
+          if (ptr[2] == '\0') { // TA
+            return 73; // Tantalum
+          }
+          break;
+        case 'B':
+          if (ptr[2] == '\0') { // TB
+            return 65; // Terbium
+          }
+          break;
+        case 'C':
+          if (ptr[2] == '\0') { // TC
+            return 43; // Technetium
+          }
+          break;
+        case 'E':
+          if (ptr[2] == '\0') { // TE
+            return 52; // Tellurium
+          }
+          break;
+        case 'H':
+          if (ptr[2] == '\0') { // TH
+            return 90; // Thorium
+          }
+          break;
+        case 'I':
+          if (ptr[2] == '\0') { // TI
+            return 22; // Titanium
+          }
+          break;
+        case 'L':
+          if (ptr[2] == '\0') { // TL
+            return 81; // Thallium
+          }
+          break;
+        case 'M':
+          if (ptr[2] == '\0') { // TM
+            return 69; // Thulium
+          }
+          break;
+        case 'S':
+          if (ptr[2] == '\0') { // TS
+            return 117; // Tennessine
+          }
+          break;
+        }
+        break;
+      case 'U':
+        if (ptr[1] == '\0') { // U
+          return 92; // Uranium
+        }
+        break;
+      case 'V':
+        if (ptr[1] == '\0') { // V
+          return 23; // Vanadium
+        }
+        break;
+      case 'W':
+        if (ptr[1] == '\0') { // W
+          return 74; // Tungsten
+        }
+        break;
+      case 'X':
+        if (ptr[1] == 'E' && ptr[2] == '\0') { // XE
+          return 54; // Xenon
+        }
+        break;
+      case 'Y':
+        switch (ptr[1]) {
+        case '\0': // Y
+          return 39; // Yttrium
+        case 'B':
+          if (ptr[2] == '\0') { // YB
+            return 70; // Ytterbium
+          }
+          break;
+        }
+        break;
+      case 'Z':
+        switch (ptr[1]) {
+        case 'N':
+          if (ptr[2] == '\0') { // ZN
+            return 30; // Zinc
+          }
+          break;
+        case 'R':
+          if (ptr[2] == '\0') { // ZR
+            return 40; // Zirconium
+          }
+          break;
+        }
+        break;  
       }
       return 0;
     }
