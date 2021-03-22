@@ -174,8 +174,8 @@ namespace OpenBabel
     unsigned int GetAtomicNum(const char* ptr)
     {
       switch (ptr[0]) {
-      case 'A':
-        switch (ptr[1]) {
+      case 'A':                       
+        switch ((char)tolower(ptr[1])) {
         case 'c':
           if (ptr[2] == '\0') { // Ac
             return 89; // Actinium
@@ -219,7 +219,7 @@ namespace OpenBabel
         }
         break;
       case 'B':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // B
           return 5; // Boron
         case 'a':
@@ -255,7 +255,7 @@ namespace OpenBabel
         }
         break;
       case 'C':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // C
           return 6; // Carbon
         case 'a':
@@ -316,7 +316,7 @@ namespace OpenBabel
         }
         break;
       case 'D':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // D
           return 1; // Deuterium
         case 'b':
@@ -337,7 +337,7 @@ namespace OpenBabel
         }
         break;
       case 'E':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'r':
           if (ptr[2] == '\0') { // Er
             return 68; // Erbium
@@ -356,7 +356,7 @@ namespace OpenBabel
         }
         break;
       case 'F':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // F
           return 9; // Fluorine
         case 'e':
@@ -382,7 +382,7 @@ namespace OpenBabel
         }
         break;
       case 'G':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // Ga
             return 31; // Gallium
@@ -401,7 +401,7 @@ namespace OpenBabel
         }
         break;
       case 'H':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // H
           return 1; // Hydrogen
         case 'e':
@@ -432,7 +432,7 @@ namespace OpenBabel
         }
         break;
       case 'I':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // I
           return 53; // Iodine
         case 'n':
@@ -448,7 +448,7 @@ namespace OpenBabel
         }
         break;
       case 'K':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // K
           return 19; // Potassium
         case 'r':
@@ -459,7 +459,7 @@ namespace OpenBabel
         }
         break;
       case 'L':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // La
             return 57; // Lanthanum
@@ -488,7 +488,7 @@ namespace OpenBabel
         }
         break;
       case 'M':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'c':
           if (ptr[2] == '\0') { // Mc
             return 115; // Moscovium
@@ -522,7 +522,7 @@ namespace OpenBabel
         }
         break;
       case 'N':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // N
           return 7; // Nitrogen
         case 'a':
@@ -568,7 +568,7 @@ namespace OpenBabel
         }
         break;
       case 'O':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // O
           return 8; // Oxygen
         case 'g':
@@ -584,7 +584,7 @@ namespace OpenBabel
         }
         break;
       case 'P':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // P
           return 15; // Phosphorus
         case 'a':
@@ -630,7 +630,7 @@ namespace OpenBabel
         }
         break;
       case 'R':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // Ra
             return 88; // Radium
@@ -674,7 +674,7 @@ namespace OpenBabel
         }
         break;
       case 'S':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // S
           return 16; // Sulfur
         case 'b':
@@ -720,7 +720,7 @@ namespace OpenBabel
         }
         break;
       case 'T':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // T
           return 1; // Tritium
         case 'a':
@@ -789,9 +789,12 @@ namespace OpenBabel
         if (ptr[1] == 'e' && ptr[2] == '\0') { // Xe
           return 54; // Xenon
         }
+        else if (ptr[1] == 'E' && ptr[2] == '\0'){ //XE
+          return 54; //Xenon
+        }
         break;
       case 'Y':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // Y
           return 39; // Yttrium
         case 'b':
@@ -802,7 +805,7 @@ namespace OpenBabel
         }
         break;
       case 'Z':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'n':
           if (ptr[2] == '\0') { // Zn
             return 30; // Zinc
@@ -815,8 +818,8 @@ namespace OpenBabel
           break;
         }
         break;
-      case 'a':
-        switch (ptr[1]) {
+      case 'a':       
+        switch ((char)tolower(ptr[1])) {
         case 'c':
           if (ptr[2] == '\0') { // ac
             return 89; // Actinium
@@ -860,7 +863,7 @@ namespace OpenBabel
         }
         break;
       case 'b':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // b
           return 5; // Boron
         case 'a':
@@ -896,7 +899,7 @@ namespace OpenBabel
         }
         break;
       case 'c':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // c
           return 6; // Carbon
         case 'a':
@@ -957,7 +960,7 @@ namespace OpenBabel
         }
         break;
       case 'd':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'b':
           if (ptr[2] == '\0') { // db
             return 105; // Dubnium
@@ -976,7 +979,7 @@ namespace OpenBabel
         }
         break;
       case 'e':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'r':
           if (ptr[2] == '\0') { // er
             return 68; // Erbium
@@ -995,7 +998,7 @@ namespace OpenBabel
         }
         break;
       case 'f':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // f
           return 9; // Fluorine
         case 'e':
@@ -1021,7 +1024,7 @@ namespace OpenBabel
         }
         break;
       case 'g':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // ga
             return 31; // Gallium
@@ -1040,7 +1043,7 @@ namespace OpenBabel
         }
         break;
       case 'h':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // h
           return 1; // Hydrogen
         case 'e':
@@ -1071,7 +1074,7 @@ namespace OpenBabel
         }
         break;
       case 'i':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // i
           return 53; // Iodine
         case 'n':
@@ -1087,7 +1090,7 @@ namespace OpenBabel
         }
         break;
       case 'k':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // k
           return 19; // Potassium
         case 'r':
@@ -1098,7 +1101,7 @@ namespace OpenBabel
         }
         break;
       case 'l':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // la
             return 57; // Lanthanum
@@ -1127,7 +1130,7 @@ namespace OpenBabel
         }
         break;
       case 'm':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'c':
           if (ptr[2] == '\0') { // mc
             return 115; // Moscovium
@@ -1161,7 +1164,7 @@ namespace OpenBabel
         }
         break;
       case 'n':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // n
           return 7; // Nitrogen
         case 'a':
@@ -1207,7 +1210,7 @@ namespace OpenBabel
         }
         break;
       case 'o':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // o
           return 8; // Oxygen
         case 'g':
@@ -1223,7 +1226,7 @@ namespace OpenBabel
         }
         break;
       case 'p':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // p
           return 15; // Phosphorus
         case 'a':
@@ -1269,7 +1272,7 @@ namespace OpenBabel
         }
         break;
       case 'r':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // ra
             return 88; // Radium
@@ -1313,7 +1316,7 @@ namespace OpenBabel
         }
         break;
       case 's':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // s
           return 16; // Sulfur
         case 'b':
@@ -1359,7 +1362,7 @@ namespace OpenBabel
         }
         break;
       case 't':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'a':
           if (ptr[2] == '\0') { // ta
             return 73; // Tantalum
@@ -1426,9 +1429,12 @@ namespace OpenBabel
         if (ptr[1] == 'e' && ptr[2] == '\0') { // xe
           return 54; // Xenon
         }
+        else if (ptr[1] == 'E' && ptr[2] == '\0'){ //xE
+          return 54; //Xenon
+        }
         break;
       case 'y':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case '\0': // y
           return 39; // Yttrium
         case 'b':
@@ -1439,7 +1445,7 @@ namespace OpenBabel
         }
         break;
       case 'z':
-        switch (ptr[1]) {
+        switch ((char)tolower(ptr[1])) {
         case 'n':
           if (ptr[2] == '\0') { // zn
             return 30; // Zinc
@@ -1452,7 +1458,6 @@ namespace OpenBabel
           break;
         }
         break;
-      }
       return 0;
     }
 
