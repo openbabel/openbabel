@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <openbabel/elements.h>
 #include <vector>
+#include <ctype.h>
 
 #define NUMELEMENTS 118
 
