@@ -1459,6 +1459,7 @@ namespace OpenBabel
           break;
         }
         break;
+      }
       return 0;
     }
 
