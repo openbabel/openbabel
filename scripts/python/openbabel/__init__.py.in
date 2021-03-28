@@ -4,6 +4,12 @@ from . import openbabel
 
 __version__ = "${BABEL_VERSION}"
 
+if "${BUILD_BY_PIP}" == "ON":
+    import os
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    os.environ["BABEL_LIBDIR"] = os.path.join(base_dir, "lib")
+    os.environ["BABEL_DATADIR"] = os.path.join(base_dir, "share", "openbabel", __version__)
+
 _thismodule = sys.modules[__name__]
 
 class OBProxy(object):
