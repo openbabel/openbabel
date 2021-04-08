@@ -59,7 +59,7 @@ data = bswap_16 (data);
 #    define READ_INT32(stream,data) \
 (stream).read ((char*)&data, sizeof(data)); \
 data = bswap_32 (data);
-#else BYTE_ORDER == LITTLE_ENDIAN
+#else //BYTE_ORDER == LITTLE_ENDIAN
 #    define READ_INT16(stream,data) \
 (stream).read ((char*)&data, sizeof(data));
 #    define READ_INT32(stream,data) \
