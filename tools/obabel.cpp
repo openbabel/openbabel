@@ -32,7 +32,7 @@ GNU General Public License for more details.
 #include <string>
 #include <map>
 #if HAVE_CONIO_H
-	#include <conio.h>
+    #include <conio.h>
 #endif
 #include <cstdlib> // for exit() on Linux
 
@@ -47,7 +47,7 @@ using namespace std;
 using namespace OpenBabel;
 
 void DoOption(const char* p, OBConversion& Conv, OBConversion::Option_type typ,
-	      int& arg, int argc, char *argv[]); 
+          int& arg, int argc, char *argv[]);
 void usage();
 void help();
 
@@ -56,7 +56,7 @@ static char *program_name;
 
 int main(int argc,char *argv[])
 {
-  OBConversion Conv(&cin, &cout); //default input and output are console 
+  OBConversion Conv(&cin, &cout); //default input and output are console
 
   OBFormat* pInFormat = nullptr;
   OBFormat* pOutFormat = nullptr;
@@ -100,7 +100,7 @@ int main(int argc,char *argv[])
 
                 case 'V':
                   {
-                    cout << "Open Babel " << BABEL_VERSION << " -- " 
+                    cout << "Open Babel " << BABEL_VERSION << " -- "
                          << __DATE__ << " -- " << __TIME__ << endl;
                     exit(0);
                   }
@@ -231,7 +231,7 @@ int main(int argc,char *argv[])
                           {
                             //use text from subsequent args
                             if(!txt.empty())txt += ' '; //..space separated if more than one
-                            txt += argv[++arg]; 
+                            txt += argv[++arg];
                           }
 
                         // If a API directive, e.g.---errorlevel
@@ -253,11 +253,11 @@ int main(int argc,char *argv[])
                       }
                   }
                   break;
-					
+
                 case 'm': //multiple output files
                   SplitOrBatch=true;
                   break;
-					
+
                 case 'a': //single character input option
                   p = argv[arg]+2;
                   DoOption(p,Conv,OBConversion::INOPTIONS,arg,argc,argv);
@@ -277,7 +277,7 @@ int main(int argc,char *argv[])
                     p = argv[++arg]; //space left after -f: use next argument
                   Conv.AddOption(opchar, OBConversion::GENOPTIONS, p);
                   break;
-                
+
                 case ':':
                   //e.g. -:c1ccccc1. SMILES passed as a file name and handled in OBConversion
                   FileList.push_back(argv[arg]);
@@ -307,7 +307,7 @@ int main(int argc,char *argv[])
       DLHandler::findFiles (FileList, *itr);
   }
 #endif
-  
+
   if (!gotInType)
     {
       if(FileList.empty())
@@ -331,7 +331,7 @@ int main(int argc,char *argv[])
           exit(1);
         }
     }
-  
+
     if(!Conv.SetInFormat(pInFormat)) //rely on autodetection for gzipped input
     {
       cerr << "Invalid input format" << endl;
@@ -368,7 +368,7 @@ int main(int argc,char *argv[])
     }
 
   int count = Conv.FullConvert(FileList, OutputFileName, OutputFileList);
- 
+
   Conv.ReportNumberConverted(count);
 
   if(OutputFileList.size()>1)
@@ -387,12 +387,12 @@ int main(int argc,char *argv[])
   cout << "Press any key to finish" <<endl;
   getch();
 #endif
-  
+
   return 0;
 }
 
 void DoOption(const char* p, OBConversion& Conv,
-	      OBConversion::Option_type typ, int& arg, int argc, char *argv[]) 
+          OBConversion::Option_type typ, int& arg, int argc, char *argv[])
 {
   //Unlike babel, cannot have multiple concatenated single char options
   //accepts: -sCCC -s CCC -s"CCC" -s CCC red -sCCC red
@@ -407,7 +407,7 @@ void DoOption(const char* p, OBConversion& Conv,
   {
     //use text from subsequent args
     if(!txt.empty())txt += ' '; //..space separated if more than one
-    txt += argv[++arg]; 
+    txt += argv[++arg];
   }
   Conv.AddOption(ch, typ, txt.c_str());
 }
@@ -435,8 +435,8 @@ void help()
   cout << "The extension of a file decides the format, unless it is overridden" <<endl;
   cout << " by -i or -o options, e.g. -icml, or -o smi" << endl;
   cout << "See below for available format-types, which are the same as the " << endl;
-  cout << "file extensions and are case independent." << endl; 
-  cout << "If no input or output file is given stdin or stdout are used instead." << endl << endl; 
+  cout << "file extensions and are case independent." << endl;
+  cout << "If no input or output file is given stdin or stdout are used instead." << endl << endl;
   cout << "More than one input file can be specified and their names can contain" <<endl;
   cout << "wildcard chars (* and ?). The format of each file can be different unless" <<endl;
   cout << "the -i option has been used, when they are all the same." <<endl;
@@ -446,12 +446,12 @@ void help()
   cout << "Options, other than -i -o -O -m, must come after the input files.\n" <<endl;
   cout << OBConversion::Description(); // Conversion options
   cout << "-H Outputs this help text" << endl;
-  cout << "-Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl; 
-  cout << "-Hall Outputs details of all formats" <<endl; 
-  cout << "-V Outputs version number" <<endl; 
+  cout << "-Hxxx (xxx is file format ID e.g. -Hcml) gives format info" <<endl;
+  cout << "-Hall Outputs details of all formats" <<endl;
+  cout << "-V Outputs version number" <<endl;
   cout << "-L <category> Lists plugin classes of this category, e.g. <formats>" << endl;
-  cout << "   Use just -L for a list of plugin categories." << endl; 
-  cout << "   Use -L <ID> e.g. -L sdf for details of a format or other plugin." << endl; 
+  cout << "   Use just -L for a list of plugin categories." << endl;
+  cout << "   Use -L <ID> e.g. -L sdf for details of a format or other plugin." << endl;
   cout << "-m Produces multiple output files, to allow:" <<endl;
   cout << "    Splitting: e.g.        " << program_name << " infile.mol -O new.smi -m" <<endl;
   cout << "      puts each molecule into new1.smi new2.smi etc" <<endl;
@@ -461,17 +461,17 @@ void help()
   cout << "   In Windows these can also be done using the forms" <<endl;
   cout << "     " << program_name << " infile.mol -O new*.smi and " << program_name << " *.mol -O *.smi respectively.\n" <<endl;
 #endif
-  
+
   OBFormat* pDefault = OBConversion::GetDefaultFormat();
   if(pDefault)
     cout << pDefault->TargetClassDescription();// some more options probably for OBMol
-  
+
   OBFormat* pAPI= OBConversion::FindFormat("obapi");
   if(pAPI)
     cout << pAPI->Description();
-  
-  cout << "To see a list of recognized file formats use\n  babel -L formats [read] [write]\n"
-       << "To see details and specific options for a particular format, e.g CML, use\n  babel -L cml\n"
+
+  cout << "To see a list of recognized file formats use\n  obabel -L formats [read] [write]\n"
+       << "To see details and specific options for a particular format, e.g CML, use\n  obabel -L cml\n"
        << endl;
   //cout << "The following file formats are recognized:" << endl;
   //OBPlugin::List("formats");
@@ -488,7 +488,7 @@ void help()
 *
 * \par DESCRIPTION
 *
-* Open Babel is a program designed to interconvert a number of 
+* Open Babel is a program designed to interconvert a number of
 * file formats currently used in molecular modeling software. \n\n
 *
 * Note that Open Babel can also be used as a library to interconvert
@@ -498,7 +498,7 @@ void help()
 *
 * \par OPTIONS
 *
-* If only input and output files are given, Open Babel will guess 
+* If only input and output files are given, Open Babel will guess
 * the file type from the filename extension. \n\n
 *
 * \b -V :
@@ -518,19 +518,19 @@ void help()
 *      * Splitting one input file - put each molecule into consecutively numbered output files \n
 *      * Batch conversion - convert each of multiple input files into a specified output format \n
 *     See examples below \n\n
-* \b -d : 
+* \b -d :
 *     Delete Hydrogens \n\n
-* \b -h : 
+* \b -h :
 *     Add Hydrogens \n\n
-* \b -p : 
+* \b -p :
 *     Add Hydrogens appropriate for pH (use transforms in phmodel.txt)  \n\n
 * \b -t :
 *     All input files describe a single molecule \n\n
-* \b -f\<#\> : 
+* \b -f\<#\> :
 *     For multiple entries input, start import at molecule # \n\n
-* \b -l\<#\> : 
+* \b -l\<#\> :
 *     For multiple entries input, stop import at molecule # \n\n
-* \b -c : 
+* \b -c :
 *     Center atomic coordinates at (0,0,0) \n\n
 * \b -s\<SMARTS\> :
 *     Convert only molecules matching the SMARTS pattern specified \n\n
@@ -541,7 +541,7 @@ void help()
 *
 * The following formats are currently supported by Open Babel:
 *  \n    alc -- Alchemy format
-*  \n    bgf -- BGF format     
+*  \n    bgf -- BGF format
 *  \n    box -- Dock 3.5 Box format
 *  \n    bs -- Ball and Stick format
 *  \n    c3d1 -- Chem3D Cartesian 1 format
@@ -558,7 +558,7 @@ void help()
 *  \n    crk3d -- Chemical Resource Kit 3D format
 *  \n    csr -- CSR format [Writeonly]
 *  \n    cssr -- CSD CSSR format [Writeonly]
-*  \n    ct -- ChemDraw Connection Table format 
+*  \n    ct -- ChemDraw Connection Table format
 *  \n    dmol -- DMol3 coordinates format
 *  \n    ent -- Protein Data Bank format
 *  \n    feat -- Feature format
@@ -614,7 +614,7 @@ void help()
 *  Output format options are preceded by 'x', e.g. -xn \n
 *    For further specific information and options, use -H<format-type> \n
 *    e.g., -Hcml
-* 
+*
 * \par EXAMPLES
 *  - Standard conversion \n
 *     babel -ixyz ethanol.xyz -opdb ethanol.pdb \n
