@@ -302,7 +302,7 @@ namespace OpenBabel
                        Monoclinic,
                        Orthorhombic,
                        Tetragonal,
-                       Rhombohedral /**< also called trigonal*/,
+                       Rhombohedral, //!< also called trigonal
                        Hexagonal,
                        Cubic};
 
