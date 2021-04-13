@@ -212,7 +212,7 @@ include_directories(
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp
           COMMAND ${CMAKE_COMMAND} -E make_directory ${openbabel_BINARY_DIR}/scripts/java/org/openbabel
-          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
+          COMMAND ${SWIG_EXECUTABLE} -java -package org.openbabel -c++ ${doxygen_switch} -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/java/openbabel-java.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/scripts/java/org/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-java.i
 			 COMMAND ${JAVA_COMPILE} ARGS "java/org/openbabel/*.java"
           COMMAND ${CMAKE_COMMAND} -E chdir ${openbabel_BINARY_DIR}/scripts/java ${JAVA_ARCHIVE} cf openbabel.jar org
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_BINARY_DIR}/scripts/java/openbabel.jar ${openbabel_SOURCE_DIR}/scripts/java
