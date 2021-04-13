@@ -418,10 +418,15 @@ if(UNIX AND BUILD_SHARED)
   if(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
+    if(BUILD_BY_PIP)
+      set(CMAKE_INSTALL_RPATH "\$ORIGIN/../${LIB_INSTALL_DIR}:\$ORIGIN/${LIB_INSTALL_DIR}:\$ORIGIN/../../")
+      set(DCMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+    else()
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
     set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
+    endif()
   endif()
 endif()
 
@@ -708,6 +713,9 @@ option(PHP_BINDINGS "Build PHP bindings" OFF)
 
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
+
+# Build by pip
+option(BUILD_BY_PIP "Build by pip" OFF)
 
 # Should Ruby bindings be built?
 option(RUBY_BINDINGS "Build Ruby bindings" OFF)
