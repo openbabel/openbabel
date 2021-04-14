@@ -91,7 +91,7 @@ namespace OpenBabel
 
     pmol->BeginModify();
 
-    int natoms;
+    int natoms = 0;
     string title = "";
     char buffer[BUFF_SIZE];
     vector<string> vs;
@@ -108,16 +108,21 @@ namespace OpenBabel
       return false;
     }
 
-    tokenize(vs,buffer);
+    string tempstr = buffer;
+    tokenize(vs, tempstr, " \t", 1);
+
     if (vs.size() < 1) {
+      errorMsg << "Problems reading a Tinker file: "
+               << "The first line is empty!";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false;
     } else if (vs.size() == 1) {
       title = pConv->GetTitle();
     } else {
       title = vs[1];
     }
-    pmol->SetTitle(title);
-    natoms = stoi(vs[0]);
+
+    stringstream(vs[0]) >> natoms;
 
     if (natoms < 1) {
       errorMsg << "Problems reading a Tinker file: "
@@ -127,6 +132,8 @@ namespace OpenBabel
       return false;
     }
     pmol->ReserveAtoms(natoms);
+
+    pmol->SetTitle(title);
 
     string str;
     double x,y,z;
