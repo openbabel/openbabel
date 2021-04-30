@@ -16,6 +16,7 @@
 //
 // Upadted (2016) by Mohammad Mehdi Ghahremanpour <mohammad.ghahremanpour@icm.uu.se>
 // Updated (2019) by Mohammad Mehdi Ghahremanpour <mohammad.ghahremanpour@yale.edu>
+// Updated (2021) by David van der Spoel <david.vanderspoel@icm.uu.se> for usage with alexandria
 //
 // Be careful lines do not exceed the maximum length of 150!
 
@@ -351,6 +352,8 @@ atom [#16X1]              						    s  "sp2 sulfur"
 atom [#16X1](=[C,O])              					s  "sp2 sulfur"
 atom [SX2]              						    ss "sp3 sulphur"
 atom [#16X2]              						    ss "sp3 sulphur"
+atom [SX2]=*            						    s2 "sp2 sulphur"
+atom [SX2]#*            						    s2 "sp2 sulphur"
 atom [SX2H]             						    sh "sp3 S in thiol"
 atom [SX3]              						    s4 "hypervalent S"
 atom [SX3](=*)-*=*      						    sx "conjugated S"
