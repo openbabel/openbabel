@@ -111,7 +111,7 @@ namespace OpenBabel
   bool EXYZFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -431,7 +431,7 @@ namespace OpenBabel
   bool EXYZFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

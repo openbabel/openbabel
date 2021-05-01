@@ -309,7 +309,7 @@ namespace OpenBabel {
           return true;
         }
       } else {
-        OBAtom *c = 0, *d = 0;
+        OBAtom *c = nullptr, *d = nullptr;
         // no a & b, check the remaining ids which will reveal same info
         for (int i = 0; i < 4; ++i) {
           if ((m_cfg.refs.at(i) == id1) || (m_cfg.refs.at(i) == id2))

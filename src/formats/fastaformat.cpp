@@ -46,7 +46,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("b", this);
       OBConversion::RegisterOptionParam("n", this);
       OBConversion::RegisterOptionParam("1", this);
-      OBConversion::RegisterOptionParam("t", NULL, 1, OBConversion::INOPTIONS);
+      OBConversion::RegisterOptionParam("t", nullptr, 1, OBConversion::INOPTIONS);
     }
 
     virtual const char* Description() //required
@@ -99,7 +99,7 @@ namespace OpenBabel
     //   OBResidue *res;
 
     pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol == NULL)
+    if (pmol == nullptr)
       return false;
     ostream &ofs = *pConv->GetOutStream();
 
@@ -375,7 +375,7 @@ namespace OpenBabel
           { // insert the bond from the previous residue
             add_bond(pmol, resBondFrom, bond_refs[0], 1);
           }
-        resBondFrom = 0;
+        resBondFrom = nullptr;
         for (ResidueBondRecord * bond_rec = res_rec->bond; bond_rec->bond_order; ++ bond_rec)
           {
             size_t from = bond_rec->from_idx - 1;
@@ -405,15 +405,15 @@ namespace OpenBabel
   void generate_sequence(const std::string & sequence, OBMol * pmol, unsigned long chain_no, const HelixParameters & helix, const char * IUPAC_codes, ResidueRecord * Residues, double & offset_x, double & offset_Theta, unsigned long & serial_no, bool create_bonds, bool bond_orders)
   {
     unsigned long residue_num = 1;
-    OBResidue * res = 0;
-    ptrAtom resBondFrom = 0;
+    OBResidue * res = nullptr;
+    ptrAtom resBondFrom = nullptr;
     for (std::string::const_iterator sx = sequence.begin(), sy = sequence.end(); sx != sy; ++ sx, ++ residue_num)
       {
         bool is_gap = (((* sx) == '-') || ((* sx) == '*'));
         if (is_gap)
           {
             offset_x += helix.unit_X * 2;
-            resBondFrom = 0;
+            resBondFrom = nullptr;
           }
         else
           {
@@ -439,7 +439,7 @@ namespace OpenBabel
           }
       }
 
-    if (res != 0)
+    if (res != nullptr)
       { // Add the end terminal
         add_residue(pmol, res, offset_x - helix.unit_X, offset_Theta - helix.unit_Theta, serial_no, & Residues[IUPAC_End], -2, resBondFrom, create_bonds, bond_orders);
       }
@@ -447,7 +447,7 @@ namespace OpenBabel
   }
 
   bool ReadFASTASequence(OBMol * pmol, int seq_type, std::istream * in, bool create_bonds, bool bond_orders,
-                         bool singleStrand, const char *turns = 0)
+                         bool singleStrand, const char *turns = nullptr)
   {
     /*
       Sequence is from 5' to 3' left -> right.
@@ -555,7 +555,7 @@ namespace OpenBabel
   bool FASTAFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if (pmol == 0)
+    if (pmol == nullptr)
       return false;
     pmol->BeginModify();
     bool rv = ReadFASTASequence(pmol, UnknownSequence, pConv->GetInStream(),

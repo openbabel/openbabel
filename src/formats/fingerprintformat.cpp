@@ -45,13 +45,13 @@ namespace OpenBabel
 
 "A list of available fingerprint types can be obtained by::\n\n"
 
-"  babel -L fingerprints\n\n"
+"  obabel -L fingerprints\n\n"
 
 "The current default type FP2 is is of the Daylight type, indexing a molecule\n"
 "based on the occurrence of linear fragment up to 7 atoms in length. To use a\n"
 "fingerprint type other than the default, use the ``-xf`` option, for example::\n\n"
 
-"  babel infile.xxx -ofpt -xfFP3\n\n"
+"  obabel infile.xxx -ofpt -xfFP3\n\n"
 
 "For a single molecule the fingerprint is output in hexadecimal form\n"
 "(intended mainly for debugging).\n\n"
@@ -176,7 +176,7 @@ namespace OpenBabel
         "The fingerprint must be unfolded when describing bits.", obError);
         return false;
       }
-      string descr = pFP->DescribeBits(fptvec, pConv->IsOption("s")!=NULL);
+      string descr = pFP->DescribeBits(fptvec, pConv->IsOption("s") != nullptr);
       if(descr=="")
         obErrorLog.ThrowError(__FUNCTION__,
         "Bit descriptions are not available for this fingerprint type", obError, onceOnly);

@@ -233,16 +233,17 @@ int main(int argc, char **argv)
 	  "\t -s, --separate   separate reference file into constituent molecules and report best RMSD\n"
 	  "\t -h, --help       help message\n";
 	struct option long_options[] = {
-	    {"firstonly", no_argument, 0, 'f'},
-	    {"minimize", no_argument, 0, 'm'},
-	    {"cross", no_argument, 0, 'x'},
-	    {"separate", no_argument, 0, 's'},
-	    {"out", required_argument, 0, 'o'},
-	    {"help", no_argument, 0, 'h'}
+	    {"firstonly", no_argument, nullptr, 'f'},
+	    {"minimize", no_argument, nullptr, 'm'},
+	    {"cross", no_argument, nullptr, 'x'},
+	    {"separate", no_argument, nullptr, 's'},
+	    {"out", required_argument, nullptr, 'o'},
+	    {"help", no_argument, nullptr, 'h'},
+	    {nullptr, 0, nullptr, 0}
 	};
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "hfmxso:", long_options, &option_index) ) > 0) {
+	while ((c = getopt_long(argc, argv, "hfmxso:", long_options, &option_index) ) != -1) {
 	  switch(c) {
 	    case 'o':
 	      fileOut = optarg;
@@ -284,7 +285,7 @@ int main(int argc, char **argv)
 	}
 
 	if(!docross && fileTest.size() == 0) {
-    cerr << helpmsg;
+	  cerr << helpmsg;
 	  cerr << "Command line parse error: test file is required but missing\n";
 	  exit(-1);
 	}

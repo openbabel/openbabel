@@ -90,7 +90,7 @@ void test_IsValid()
 
 void test_equalsOperator()
 {
-  OBCisTransStereo ct1(0), ct2(0);
+  OBCisTransStereo ct1(nullptr), ct2(nullptr);
   OBCisTransStereo::Config cfg;
   cfg.begin = 0;
   cfg.end = 1;
@@ -111,7 +111,7 @@ void test_equalsOperator()
 
 void test_GetSetConfig()
 {
-  OBCisTransStereo ct(0);
+  OBCisTransStereo ct(nullptr);
   OBCisTransStereo::Config cfg;
 
   // set clockwise, viewing from 1

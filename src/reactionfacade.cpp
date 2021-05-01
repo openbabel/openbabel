@@ -183,7 +183,7 @@ namespace OpenBabel
     case NO_REACTIONROLE:
       return &_unassigned_components;
     }
-    return (std::vector<unsigned int>*)0;
+    return nullptr;
   }
 
   int OBReactionFacadePrivate::GetId(const char* idtype, OBAtom *atom)

@@ -87,9 +87,9 @@ namespace OpenBabel {
         OBConversion::RegisterFormat("inp",   this, "chemical/x-gamess-input");
         OBConversion::RegisterFormat("gamin", this);
         // Command-line keywords
-        OBConversion::RegisterOptionParam("k", NULL, 1, OBConversion::OUTOPTIONS);
+        OBConversion::RegisterOptionParam("k", nullptr, 1, OBConversion::OUTOPTIONS);
         // Command-line keyword file
-        OBConversion::RegisterOptionParam("f", NULL, 1, OBConversion::OUTOPTIONS);
+        OBConversion::RegisterOptionParam("f", nullptr, 1, OBConversion::OUTOPTIONS);
       }
 
       // Required
@@ -205,7 +205,7 @@ namespace OpenBabel {
 
   bool GAMESSOutputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if (pmol == NULL)
+    if (pmol == nullptr)
       return false;
 
     // Define some references so we can use the old parameter names
@@ -267,7 +267,7 @@ namespace OpenBabel {
         mult=atoi(vs[2].c_str());
       }
 
-      if (strstr(buffer, "ATOMIC                      COORDINATES (BOHR)") != NULL) {
+      if (strstr(buffer, "ATOMIC                      COORDINATES (BOHR)") != nullptr) {
        ifs.getline(buffer, BUFF_SIZE); // column headings
        ifs.getline(buffer, BUFF_SIZE);
        tokenize(vs, buffer);
@@ -299,7 +299,7 @@ namespace OpenBabel {
        coordinates.clear();
        confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
 
-      } else if (strstr(buffer, "MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != NULL) {
+      } else if (strstr(buffer, "MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != nullptr) {
         /*This set of EFP coordinates belongs only to the
          * conformer directly above this (ATOMIC   COORDINATES (BOHR))
          */
@@ -350,7 +350,7 @@ namespace OpenBabel {
         vconf[0] = tmpCoords;
         coordinates.clear();
 
-      } else if (strstr(buffer, "COORDINATES OF ALL ATOMS ARE (ANGS)") != NULL) {
+      } else if (strstr(buffer, "COORDINATES OF ALL ATOMS ARE (ANGS)") != nullptr) {
         ifs.getline(buffer, BUFF_SIZE); // column headings
         ifs.getline(buffer, BUFF_SIZE); // ---------------
         ifs.getline(buffer, BUFF_SIZE);
@@ -375,7 +375,7 @@ namespace OpenBabel {
           tokenize(vs, buffer);
         }
 
-        if (strstr(buffer, "COORDINATES OF FRAGMENT") != NULL) {
+        if (strstr(buffer, "COORDINATES OF FRAGMENT") != nullptr) {
           ifs.getline(buffer, BUFF_SIZE); // column headings
           ifs.getline(buffer, BUFF_SIZE);
           ifs.getline(buffer, BUFF_SIZE);
@@ -423,12 +423,12 @@ namespace OpenBabel {
         coordinates.clear();
         confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
 
-      } else if ((strstr(buffer, "NSERCH=") != NULL) && (strstr(buffer, "ENERGY=") != NULL)) {
+      } else if (strstr(buffer, "NSERCH=") != nullptr && strstr(buffer, "ENERGY=") != nullptr) {
         char* tok = strtok(buffer, " ="); // my tokenize
         int n = 0;
         while (true) {
-          tok = strtok(NULL, " =");
-          if (tok == NULL)
+          tok = strtok(nullptr, " =");
+          if (tok == nullptr)
             break;
           n++;
           if (n == 3) {
@@ -437,7 +437,7 @@ namespace OpenBabel {
           }
         }
 
-      } else if (strstr(buffer, "ELECTROSTATIC MOMENTS") != NULL) {
+      } else if (strstr(buffer, "ELECTROSTATIC MOMENTS") != nullptr) {
         ifs.getline(buffer, BUFF_SIZE); //-----
         ifs.getline(buffer, BUFF_SIZE); // blank line
         ifs.getline(buffer, BUFF_SIZE); // column headings
@@ -458,7 +458,7 @@ namespace OpenBabel {
           mol.SetData(dipoleMoment);
         }
 
-      } else if (strstr(buffer, "MOPAC CHARGES") != NULL) {
+      } else if (strstr(buffer, "MOPAC CHARGES") != nullptr) {
         hasPartialCharges = true;
         ifs.getline(buffer, BUFF_SIZE); // ---------------
         ifs.getline(buffer, BUFF_SIZE); // column headings
@@ -473,7 +473,7 @@ namespace OpenBabel {
           tokenize(vs, buffer);
         }
 
-      } else if (strstr(buffer, "TOTAL MULLIKEN") != NULL) {
+      } else if (strstr(buffer, "TOTAL MULLIKEN") != nullptr) {
         hasPartialCharges = true;
         ifs.getline(buffer, BUFF_SIZE); // column headings
         ifs.getline(buffer, BUFF_SIZE);
@@ -491,26 +491,26 @@ namespace OpenBabel {
           tokenize(vs, buffer);
         }
 
-      } else if (strstr(buffer, "NUMBER OF OCCUPIED ORBITALS") != NULL) {
+      } else if (strstr(buffer, "NUMBER OF OCCUPIED ORBITALS") != nullptr) {
         tokenize(vs, buffer);
         if (vs.size() == 7)      // alpha
           aHOMO = atoi(vs[6].c_str());
         else if (vs.size() == 8) // beta
           bHOMO = atoi(vs[7].c_str());
 
-      } else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != NULL) {
+      } else if (strstr(buffer, "TAKEN AS ROTATIONS AND TRANSLATIONS") != nullptr) {
         tokenize(vs, buffer);
         if (vs.size() < 4)
           break;
         lowFreqModesBegin = atoi(vs[1].c_str());
         lowFreqModesEnd   = atoi(vs[3].c_str());
 
-      } else if (strstr(buffer, "TOTAL ENERGY      =") != NULL) {
+      } else if (strstr(buffer, "TOTAL ENERGY      =") != nullptr) {
         tokenize(vs, buffer);
         if (vs.size() == 4)
           mol.SetEnergy(atof(vs[3].c_str()));
 
-      } else if (strstr(buffer, "FREQUENCY:") != NULL) {
+      } else if (strstr(buffer, "FREQUENCY:") != nullptr) {
         tokenize(vs, buffer);
         for (unsigned int i=1; i < vs.size(); ++i) {
           if (vs[i] == "I") // artifact from previous imaginary frequency
@@ -522,7 +522,7 @@ namespace OpenBabel {
             frequencies.push_back(atof(vs[i].c_str()));
         }
         ifs.getline(buffer, BUFF_SIZE); // possibly symmetry or red. mass
-        if (strstr(buffer, "SYMMETRY:") != NULL) {
+        if (strstr(buffer, "SYMMETRY:") != nullptr) {
           // parse the vibrational symmetry
           ifs.getline(buffer, BUFF_SIZE); // reduced mass
         }
@@ -534,7 +534,7 @@ namespace OpenBabel {
             intensities.push_back(atof(vs[i].c_str()) * 42.255); // conver to km/mol
         }
         ifs.getline(buffer, BUFF_SIZE); // blank or Raman activitie
-        if (strstr(buffer, "RAMAN") != NULL) {
+        if (strstr(buffer, "RAMAN") != nullptr) {
           tokenize(vs, buffer);
           for (unsigned int i=2; i < vs.size(); ++i) {
             if (numIntens < lowFreqModesBegin || numIntens > lowFreqModesEnd)
@@ -597,16 +597,16 @@ namespace OpenBabel {
           modeCount = vs.size() - 3;
         }
 
-      } else if (strstr(buffer, "EIGENVECTORS") != NULL ||
-                 strstr(buffer, "MOLECULAR ORBITALS") != NULL) {
+      } else if (strstr(buffer, "EIGENVECTORS") != nullptr ||
+                 strstr(buffer, "MOLECULAR ORBITALS") != nullptr) {
 
         ifs.getline(buffer, BUFF_SIZE); // ------ line
         ifs.getline(buffer, BUFF_SIZE); // blank
         orbitals.clear();
         symmetries.clear();
 
-        while (strstr(buffer, "END OF RHF CALCULATION") == NULL
-               && strstr(buffer, "-------") == NULL) {
+        while (strstr(buffer, "END OF RHF CALCULATION") == nullptr &&
+               strstr(buffer, "-------") == nullptr) {
 
           ifs.getline(buffer, BUFF_SIZE); // orbitals!
           ifs.getline(buffer, BUFF_SIZE); // energies in hartree
@@ -622,8 +622,8 @@ namespace OpenBabel {
           // Orbital coefficients
           while (ifs.getline(buffer, BUFF_SIZE)
                  && strlen(buffer)
-                 && strstr(buffer, "END") == NULL
-                 && strstr(buffer, "---") == NULL) {
+                 && strstr(buffer, "END") == nullptr
+                 && strstr(buffer, "---") == nullptr) {
           }
             if (!ifs.good())
               break;
@@ -710,7 +710,7 @@ namespace OpenBabel {
       string method;
 
       if (cset) {
-        OBPairData* pd = NULL;
+        OBPairData* pd = nullptr;
 
         pd = (OBPairData*) cset->GetData("SCFTYP");
         if (pd) {
@@ -780,7 +780,7 @@ namespace OpenBabel {
         }
       }
 
-      OBPairData* nd = NULL;
+      OBPairData* nd = nullptr;
       if (model != "") {
         nd = new OBPairData();
         nd->SetAttribute("model");
@@ -860,7 +860,7 @@ namespace OpenBabel {
   ////////////////////////////////////////////////////////////////
   bool GAMESSInputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if (pmol == NULL)
+    if (pmol == nullptr)
       return false;
 
     // Define some references so we can use the old parameter names
@@ -878,7 +878,7 @@ namespace OpenBabel {
     mol.BeginModify();
     while (ifs.getline(buffer, BUFF_SIZE)) {
 
-      if (strstr(buffer, "$DATA") != NULL) {
+      if (strstr(buffer, "$DATA") != nullptr) {
         // Title
         ifs.getline(buffer, BUFF_SIZE);
         tokenize(vs, buffer);
@@ -888,7 +888,7 @@ namespace OpenBabel {
         ifs.getline(buffer, BUFF_SIZE);
         ifs.getline(buffer, BUFF_SIZE);
 
-        while (strstr(buffer, "$END") == NULL) {
+        while (strstr(buffer, "$END") == nullptr) {
           tokenize(vs, buffer);
           if (vs.size() == 5) {
             atom = mol.NewAtom();
@@ -905,8 +905,8 @@ namespace OpenBabel {
         }
       }
 
-      if (strstr(buffer, "$FMOXYZ") != NULL) {
-        while (strstr(buffer, "$END") == NULL) {
+      if (strstr(buffer, "$FMOXYZ") != nullptr) {
+        while (strstr(buffer, "$END") == nullptr) {
           tokenize(vs, buffer);
           if (vs.size() == 5) {
             atom = mol.NewAtom();
@@ -921,8 +921,8 @@ namespace OpenBabel {
         }
       }
 
-      if (strstr(buffer, "$EFRAG") != NULL) {
-        while (strstr(buffer, "FRAGNAME") == NULL) {
+      if (strstr(buffer, "$EFRAG") != nullptr) {
+        while (strstr(buffer, "FRAGNAME") == nullptr) {
           // Read $EFRAG parameters
           tokenize(vs, buffer, "=");
           if (vs.size() > 1)
@@ -930,7 +930,7 @@ namespace OpenBabel {
           if (!ifs.getline(buffer, BUFF_SIZE))
             break;
         }
-        while (strstr(buffer," $END") == NULL) {
+        while (strstr(buffer," $END") == nullptr) {
           tokenize(vs, buffer);
           if (vs.size() == 4) {
             atom = mol.NewAtom();
@@ -981,7 +981,7 @@ namespace OpenBabel {
 
   bool GAMESSInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv) {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if (pmol == NULL)
+    if (pmol == nullptr)
       return false;
 
     // Define some references so we can use the old parameter names

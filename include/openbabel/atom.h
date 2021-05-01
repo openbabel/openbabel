@@ -23,8 +23,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 
 #include <vector>
@@ -165,7 +165,7 @@ namespace OpenBabel
       //! Mark an atom as belonging to at least one ring
       void SetInRing(bool value=true)         { SET_OR_UNSET_FLAG(OB_RING_ATOM); }
       //! Clear the internal coordinate pointer
-      void ClearCoordPtr()     { _c = NULL; _cidx=0; }
+      void ClearCoordPtr()     { _c = nullptr; _cidx=0; }
       //@}
 
       //! \name Methods to retrieve atomic information
@@ -241,7 +241,7 @@ namespace OpenBabel
       //! (e.g., only vector3), NULL will be returned.
       double     *GetCoordinate(){
         if (_c)          return(&(*_c)[_cidx]);
-        else             return NULL;
+        else             return nullptr;
       }
       //! \return the coordinates as a vector3 object
       vector3   &GetVector();
@@ -310,7 +310,7 @@ namespace OpenBabel
       void DeleteResidue(){
         if (_residue) {
           delete _residue;
-          _residue = NULL; // Make sure to clear that a residue existed
+          _residue = nullptr; // Make sure to clear that a residue existed
         }
       }
       //! Add a bond to the internal list. Does not update the bond.
@@ -363,14 +363,18 @@ namespace OpenBabel
        */
       std::pair<int, int> LewisAcidBaseCounts() const;
       //! \return Is there any residue information?
-      bool HasResidue()    { return(_residue != NULL);    }
+      bool HasResidue()    { return(_residue != nullptr);    }
       //! \return Is this a HETATM in a residue (returns false if not in a residue)
       //! \since version 2.4
       bool IsHetAtom() {
-        if (_residue == NULL)
+        if (_residue == nullptr)
           return false;
         else
           return _residue->IsHetAtom(this);
+      }
+      //! \return Is the specified element, as specified by atom number (see OBElement namespace)?
+      bool IsElement(const unsigned int e) const {
+           return e == _ele;
       }
       //! \return Is the atom aromatic?
       bool IsAromatic()      const;
@@ -410,6 +414,8 @@ namespace OpenBabel
       bool IsAromaticNOxide();
       //! \return Is this atom chiral?
       bool IsChiral();
+      //! \return Is the atom part of a periodic unit cell?
+      bool IsPeriodic() const;
       //! \return Is this atom an axial atom in a ring
       bool IsAxial();
       //! \return Is this atom a hydrogen-bond acceptor  (considering also atom surrounding)

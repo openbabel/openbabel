@@ -377,14 +377,14 @@ namespace OpenBabel
 
   void OBRingSearch::AddRingFromClosure(OBMol &mol,OBBond *cbond)
   {
-    vector<OBRTree*> t1(mol.NumAtoms()+1,(OBRTree*)NULL);
-    vector<OBRTree*> t2(mol.NumAtoms()+1,(OBRTree*)NULL);
+    vector<OBRTree*> t1(mol.NumAtoms()+1, nullptr);
+    vector<OBRTree*> t2(mol.NumAtoms()+1, nullptr);
     OBBitVec bv1,bv2;
 
     bv1.SetBitOn(cbond->GetEndAtomIdx());
     bv2.SetBitOn(cbond->GetBeginAtomIdx());
-    BuildOBRTreeVector(cbond->GetBeginAtom(),NULL,t1,bv1);
-    BuildOBRTreeVector(cbond->GetEndAtom(),NULL,t2,bv2);
+    BuildOBRTreeVector(cbond->GetBeginAtom(), nullptr, t1, bv1);
+    BuildOBRTreeVector(cbond->GetEndAtom(), nullptr, t2, bv2);
 
     bool pathok;
     deque<int> p1,p2;

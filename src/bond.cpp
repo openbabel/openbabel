@@ -24,6 +24,7 @@ GNU General Public License for more details.
 #include <openbabel/ring.h>
 #include <openbabel/bond.h>
 #include <openbabel/mol.h>
+#include <openbabel/generic.h>
 #include <climits>
 
 using namespace std;
@@ -64,10 +65,10 @@ namespace OpenBabel
     _idx=0;
     _order=0;
     _flags=0;
-    _bgn=NULL;
-    _end=NULL;
+    _bgn=nullptr;
+    _end=nullptr;
     _vdata.clear();
-    _parent=(OBMol*)NULL;
+    _parent=nullptr;
   }
 
   OBBond::~OBBond()
@@ -96,6 +97,7 @@ namespace OpenBabel
     _order = (char)order;
   }
 
+  // TODO: Figure out how to consider periodicity, etc.
   void OBBond::SetLength(OBAtom *fixed, double length)
   {
     unsigned int i;
@@ -161,7 +163,7 @@ namespace OpenBabel
     // not in a ring, or in a large ring
     // and if it's a ring, not sp2
     OBRing *ring = FindSmallestRing();
-    if (ring != NULL) {
+    if (ring != nullptr) {
       if(!includeRingBonds)
         return false;
       if (ring->Size() <= 3)
@@ -181,10 +183,16 @@ namespace OpenBabel
     return (_bgn->GetHvyDegree() > 1 && _end->GetHvyDegree() > 1);
   }
   
+  bool OBBond::IsPeriodic() const
+  {
+    OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+    return mol->IsPeriodic();
+  }
+
    bool OBBond::IsAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -216,7 +224,7 @@ namespace OpenBabel
    bool OBBond::IsPrimaryAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -250,7 +258,7 @@ namespace OpenBabel
    bool OBBond::IsSecondaryAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -284,7 +292,7 @@ namespace OpenBabel
    bool OBBond::IsTertiaryAmide()
    {
       OBAtom *c,*n;
-      c = n = NULL;
+      c = n = nullptr;
 
       // Look for C-N bond
       if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 7)
@@ -415,7 +423,7 @@ namespace OpenBabel
   bool OBBond::IsEster()
   {
     OBAtom *a1,*a2;
-    a1 = a2 = NULL;
+    a1 = a2 = nullptr;
 
     if (_bgn->GetAtomicNum() == 6 && _end->GetAtomicNum() == 8)
       {
@@ -491,10 +499,7 @@ namespace OpenBabel
               {
                 if (nbrEnd != _bgn)
                   {
-                    torsion=fabs(CalcTorsionAngle(nbrStart->GetVector(),
-                                                  static_cast<OBAtom*>(_bgn)->GetVector(),
-                                                  static_cast<OBAtom*>(_end)->GetVector(),
-                                                  nbrEnd->GetVector()));
+                    torsion=fabs(_parent->GetTorsion(nbrStart, _bgn, _end, nbrEnd));
 
                     // >12&&<168 not enough
                     if (torsion > 15.0  && torsion < 160.0)
@@ -531,7 +536,7 @@ namespace OpenBabel
     OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
 
     rlist = mol->GetSSSR();
-    OBRing* result = (OBRing*) NULL;
+    OBRing* result = nullptr;
     size_t min_size = UINT_MAX;
     for (i = rlist.begin();i != rlist.end();++i) {
       if ((*i)->IsMember((OBBond*)this) && (*i)->Size() < min_size) {
@@ -595,11 +600,19 @@ namespace OpenBabel
     begin = GetBeginAtom();
     end = GetEndAtom();
 
-    d2 = SQUARE(begin->GetX() - end->GetX());
-    d2 += SQUARE(begin->GetY() - end->GetY());
-    d2 += SQUARE(begin->GetZ() - end->GetZ());
-
-    return(sqrt(d2));
+    if (!IsPeriodic())
+      {
+        d2 = SQUARE(begin->GetX() - end->GetX());
+        d2 += SQUARE(begin->GetY() - end->GetY());
+        d2 += SQUARE(begin->GetZ() - end->GetZ());
+        return(sqrt(d2));
+      }
+    else
+      {
+        OBMol *mol = (OBMol*)((OBBond*)this)->GetParent();
+        OBUnitCell *box = (OBUnitCell*)mol->GetData(OBGenericDataType::UnitCell);
+        return (box->MinimumImageCartesian(begin->GetVector() - end->GetVector())).length();
+      }
   }
 
   /*Now in OBBase

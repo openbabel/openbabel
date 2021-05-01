@@ -24,13 +24,13 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 #ifndef THREAD_LOCAL
 #ifdef SWIG
 # define THREAD_LOCAL
-# elif (__cplusplus >= 201103L) 
+# elif (__cplusplus >= 201103L)
 //this is required for correct multi-threading
 #  define THREAD_LOCAL thread_local
 # else
@@ -63,6 +63,7 @@ namespace OpenBabel
   class OBChainsParser;
 
   typedef std::vector<OBAtom*>::iterator OBAtomIterator;
+  typedef std::vector<OBAtom*>::const_iterator OBAtomConstIterator;
   typedef std::vector<OBBond*>::iterator OBBondIterator;
   typedef std::vector<OBResidue*>::iterator OBResidueIterator;
 
@@ -104,7 +105,9 @@ namespace OpenBabel
 #define OB_ATOMSPIN_MOL          (1<<21)
   //! Treat as reaction
 #define OB_REACTION_MOL          (1<<22)
-  // flags 22-32 unspecified
+  //! Molecule is repeating in a periodic unit cell
+#define OB_PERIODIC_MOL          (1<<23)
+  // flags 24-32 unspecified
 
 #define SET_OR_UNSET_FLAG(X) \
   if (value) SetFlag(X); \
@@ -251,7 +254,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \name Data retrieval methods
     //@{
     //! \return the entire set of flags. (Internal use, mainly.)
-    int          GetFlags()               { return(_flags); }
+    int          GetFlags() const         { return(_flags); }
     //! \return the title of this molecule (often the filename)
     //! \param replaceNewlines whether to replace any newline characters with spaces
     const char  *GetTitle(bool replaceNewlines = true) const;
@@ -260,7 +263,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \return the number of bonds (i.e. OBBond children)
     unsigned int NumBonds() const         {  return(_nbonds); }
     //! \return the number of non-hydrogen atoms
-    unsigned int NumHvyAtoms();
+    unsigned int NumHvyAtoms() const;
     //! \return the number of residues (i.e. OBResidue substituents)
     unsigned int NumResidues() const      { return(static_cast<unsigned int> (_residue.size())); }
     //! \return the number of rotatable bonds. If sampleRingBonds is true, will include rotors within rings (see OBBond::IsRotor() for details)
@@ -387,16 +390,21 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Mark that ring closure bonds have been assigned by graph traversal
     void   SetClosureBondsPerceived(bool value = true)   { SET_OR_UNSET_FLAG(OB_CLOSURE_MOL);  }
     //! Mark that explicit hydrogen atoms have been added
+
     void   SetHydrogensAdded(bool value = true) { SET_OR_UNSET_FLAG(OB_H_ADDED_MOL); }
     void   SetCorrectedForPH(bool value = true) { SET_OR_UNSET_FLAG(OB_PH_CORRECTED_MOL); }
     void   SetSpinMultiplicityAssigned(bool value = true) { SET_OR_UNSET_FLAG(OB_ATOMSPIN_MOL); }
     //! The OBMol is a pattern, not a complete molecule. Left unchanged by Clear().
     void   SetIsPatternStructure(bool value = true) { SET_OR_UNSET_FLAG(OB_PATTERN_STRUCTURE); }
-    void   SetIsReaction(bool value = true)               { SET_OR_UNSET_FLAG(OB_REACTION_MOL) };
+    void   SetIsReaction(bool value = true)               { SET_OR_UNSET_FLAG(OB_REACTION_MOL); }
+    //! Mark that distance calculations, etc., should apply periodic boundary conditions through the minimimum image convention.
+    //! Does not automatically recalculate bonding.
+    void   SetPeriodicMol(bool value = true){ SET_OR_UNSET_FLAG(OB_PERIODIC_MOL); }
     bool   HasFlag(int flag)   { return (_flags & flag) ? true : false; }
     void   SetFlag(int flag)   { _flags |= flag; }
     void   UnsetFlag(int flag) { _flags &= (~(flag)); }
     void   SetFlags(int flags) { _flags = flags; }
+
     //@}
 
     //! \name Molecule modification methods
@@ -430,37 +438,37 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     void Rotate(const double m[9],int nconf);
     //! Translate to the center of all coordinates (for this conformer)
     void Center();
-    //! Delete all hydrogens from the molecule
+    //! Suppress hydrogens by converting explicit hydrogen atoms to implicit
     //! \return Success
     bool DeleteHydrogens();
-    //! Delete all hydrogens from the supplied atom
+    //! Suppress explicit hydrogen atoms on the supplied atom
     //! \return Success
     bool DeleteHydrogens(OBAtom*);
-    //! Delete all hydrogen atoms connected to a polar atom
+    //! Suppress explicit hydrogen atoms connected to a polar atom
     //! \see OBAtom::IsPolarHydrogen
     //! \since version 2.4
     bool DeletePolarHydrogens();
-    //! Delete all hydrogen atoms connected to a non-polar atom
+    //! Suppress explicit hydrogen atoms connected to a non-polar atom
     //! \see OBAtom::IsNonPolarHydrogen
     bool DeleteNonPolarHydrogens();
-    //! Delete the supplied atom if it is a hydrogen
+    //! Suppress the supplied atom if it is a hydrogen
     //! (Helper function for DeleteHydrogens)
     bool DeleteHydrogen(OBAtom*);
-    //! Add hydrogens to the entire molecule to fill out implicit valence spots
+    //! Convert implicit hydrogens to explicit atoms in the molecular graph
     //! \param polaronly    Whether to add hydrogens only to polar atoms
     //! (i.e., not to C atoms)
     //! \param correctForPH Whether to call CorrectForPH() first
     //! \param pH The pH to use for CorrectForPH() modification
     //! \return Whether any hydrogens were added
     bool AddHydrogens(bool polaronly=false,bool correctForPH=false, double pH=7.4);
-    //! Add hydrogens only to the supplied atom to fill out implicit valence
+    //! For a particular atom, convert implicit hydrogens to explicit atoms in the molecular graph
     bool AddHydrogens(OBAtom*);
-    //! Add only polar hydrogens (i.e., attached to polar atoms, not C)
+    //! For polar atoms only, convert implicit hydrogens to explicit atoms in the molecular graph
     bool AddPolarHydrogens();
-    //! Add only nonpolar hydrogens (i.e., attached to C)
+    //! For non-polar atoms only, convert implicit hydrogens to explicit atoms in the molecular graph
     //! \since version 2.4
     bool AddNonPolarHydrogens();
-    //! Add polar and/or nonpolar hydrogens
+    //! For polar and/or non-polar atoms, convert implicit hydrogens to explicit atoms in the molecular graph
     //! \since verison 2.4
     bool AddNewHydrogens(HydrogenType whichHydrogen, bool correctForPH=false, double pH=7.4);
 
@@ -473,10 +481,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Iterative component of Separate to copy one fragment at a time
     bool GetNextFragment( OpenBabel::OBMolAtomDFSIter& iter, OBMol& newMol );
     // docs in mol.cpp
-    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)0,
+    bool CopySubstructure(OBMol& newmol, OBBitVec *includeatoms, OBBitVec *excludebonds = (OBBitVec*)nullptr,
       unsigned int correctvalence=1,
-      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)0,
-      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)0);
+      std::vector<unsigned int> *atomorder=(std::vector<unsigned int>*)nullptr,
+      std::vector<unsigned int> *bondorder=(std::vector<unsigned int>*)nullptr);
     //! Converts the charged form of coordinate bonds, e.g.[N+]([O-])=O to N(=O)=O
     bool ConvertDativeBonds();
     //! Converts 5-valent N and P only. Return true if conversion occurred.
@@ -587,6 +595,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     bool HasSpinMultiplicityAssigned() { return(HasFlag(OB_ATOMSPIN_MOL)); }
     //! Does this OBMol represent a reaction?
     bool IsReaction()                  { return HasFlag(OB_REACTION_MOL); }
+    //! Is this molecule periodic? Should periodic boundary conditions be applied?
+    bool IsPeriodic() { return(HasFlag(OB_PERIODIC_MOL)); }
+
     //! Are there any atoms in this molecule?
     bool Empty()                       { return(_natoms == 0);          }
     //@}
@@ -620,12 +631,12 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \return the array of coordinates for the first conformer
     double  *BeginConformer(std::vector<double*>::iterator&i)
     { i = _vconf.begin();
-      return((i == _vconf.end()) ? NULL:*i); }
+      return((i == _vconf.end()) ? nullptr:*i); }
     //! Advance the iterator to the next confomer, if possible
     //! \return The array of coordinates for the next conformer, or NULL if none exist
     double  *NextConformer(std::vector<double*>::iterator&i)
     { ++i;
-      return((i == _vconf.end()) ? NULL:*i); }
+      return((i == _vconf.end()) ? nullptr:*i); }
     //! \return the entire set of conformers for this molecule as a vector of floating point arrays
     std::vector<double*> &GetConformers() {   return(_vconf);     }
     //@}
@@ -634,8 +645,12 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //@{
     //! \return An atom iterator pointing to the beginning of the atom list
     OBAtomIterator BeginAtoms()   { return _vatom.begin(); }
+    //! \return A constant atom iterator pointing to the beginning of the atom list
+    OBAtomConstIterator CBeginAtoms() const { return _vatom.cbegin(); }
     //! \return An atom iterator pointing to the end of the atom list
-    OBAtomIterator EndAtoms()    { return _vatom.begin() + NumAtoms() ; }
+    OBAtomIterator EndAtoms() { return _vatom.begin() + NumAtoms() ; }
+    //! \return A constant atom iterator pointing to the end of the atom list
+    OBAtomConstIterator CEndAtoms() const { return _vatom.cbegin() + NumAtoms(); }
     //! \return A bond iterator pointing to the beginning of the bond list
     OBBondIterator BeginBonds()   { return _vbond.begin(); }
     //! \return A bond iterator pointing to the end of the bond list
@@ -648,9 +663,15 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Set the iterator @p i to the beginning of the atom list
     //! \return the first atom (or NULL if none exist)
     OBAtom *BeginAtom(OBAtomIterator &i);
+    //! Set the constant iterator @p i to the beginning of the atom list
+    //! \return the first atom (or NULL if none exist)
+    const OBAtom* BeginAtom(OBAtomConstIterator &i) const;
     //! Advance the iterator @p i to the next atom in the molecule
     //! \return the next atom (if any, or NULL if none exist)
     OBAtom *NextAtom(OBAtomIterator &i);
+    //! Advance the const iterator @p i to the next atom in the molecule
+    //! \return the next atom (if any, or NULL if none exist)
+    const OBAtom* NextAtom(OBAtomConstIterator &i) const;
     //! Set the iterator @p i to the beginning of the bond list
     //! \return the first bond (or NULL if none exist)
     OBBond *BeginBond(OBBondIterator &i);
@@ -662,14 +683,14 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBResidue *BeginResidue(OBResidueIterator &i)
     {
       i = _residue.begin();
-      return((i == _residue.end()) ? NULL:*i);
+      return((i == _residue.end()) ? nullptr:*i);
     }
     //! Advance the iterator @p i to the next residue in the molecule
     //! \return the next residue (if any, or NULL if not possible)
     OBResidue *NextResidue(OBResidueIterator &i)
     {
       ++i;
-      return((i == _residue.end()) ? NULL:*i);
+      return((i == _residue.end()) ? nullptr:*i);
     }
     //! Set the iterator to the beginning of the internal coordinate list
     //! \return the first internal coordinate record, or NULL if none exist
@@ -677,7 +698,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBInternalCoord *BeginInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       i = _internals.begin();
-      return((i == _internals.end()) ? NULL:*i);
+      return((i == _internals.end()) ? nullptr:*i);
     }
     //! Advance the iterator to the next internal coordinate record
     //! \return the next first internal coordinate record, or NULL if none exist
@@ -685,7 +706,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBInternalCoord *NextInternalCoord(std::vector<OBInternalCoord*>::iterator &i)
     {
       ++i;
-      return((i == _internals.end()) ? NULL:*i);
+      return((i == _internals.end()) ? nullptr:*i);
     }
     //@}
 

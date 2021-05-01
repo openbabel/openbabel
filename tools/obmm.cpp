@@ -346,7 +346,7 @@ int main(int argc,char **argv)
         continue;
       }
 
-      cout << "molecule succesfully loaded." << endl;
+      cout << "molecule successfully loaded." << endl;
       cout << "  " << mol.NumAtoms() << " atoms" << endl;
       cout << "  " << mol.NumBonds() << " bonds" << endl;
 
@@ -382,7 +382,7 @@ int main(int argc,char **argv)
         continue;
       }
 
-      cout << "molecule succesfully saved." << endl;
+      cout << "molecule successfully saved." << endl;
       cout << "  " << mol.NumAtoms() << " atoms" << endl;
       cout << "  " << mol.NumBonds() << " bonds" << endl;
 

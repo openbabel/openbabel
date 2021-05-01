@@ -237,7 +237,7 @@ private:
     int *  nsum[MAXBONDS];
     bool lflag[MAXFRAGS];
     char strg[MAXFRAGS+1];
-	char * strngs[MAXFRAGS+1];
+    char * strngs[MAXFRAGS+1];
     char tstr[MAXFRAGS+1];
     int  numdups, dupfrag, jump;
     bool jflag;
@@ -245,8 +245,8 @@ private:
     int  mx[MAXFRAGS];
 
 	//stack overflow message-move data from stack to heap
-	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)malloc(MAXFRAGS);
-    for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) malloc(MAXFRAGS);
+	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS,sizeof(char));
+    for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) calloc(MAXFRAGS,sizeof(int));
 
     // depth = recursion level
     if (depth > 10)
@@ -1335,7 +1335,7 @@ private:
   implementBondStereo(iA1,iA2,rx,ry,acount,bcount,bstereo);
 
 
-  if (pmol != NULL) {
+  if (pmol != nullptr) {
     for (i=0; i<acount; i++) {
       sa.Clear();
       sa.SetAtomicNum(aPosition[i]);
@@ -1492,7 +1492,7 @@ MCDLFormat theMCDLFormat;
 bool MCDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = pOb->CastAndClear<OBMol>();
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   istream& ifs = *pConv->GetInStream();
@@ -1520,7 +1520,7 @@ bool MCDLFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool MCDLFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL) return false;
+  if (pmol == nullptr) return false;
 
   std::ostream & ofs = *pConv->GetOutStream();
 

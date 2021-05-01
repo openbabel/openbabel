@@ -1,0 +1,4 @@
+^src/formats/outformat.cpp
+^src/formats/gamessformat.cpp
+^src/formats/libinchi
+^tools/obabel.cpp

@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     cerr << " Reading file " << argv[i] << endl;
 
     OBFormat *inFormat = conv.FormatFromExt(argv[i]);
-    if(inFormat==NULL || !conv.SetInFormat(inFormat))
+    if(inFormat==nullptr || !conv.SetInFormat(inFormat))
     {
       cerr << " Cannot read file format for " << argv[i] << endl;
       continue; // try next file
@@ -71,13 +71,13 @@ int main(int argc, char *argv[])
 
           OBAtom* b = bond->GetBeginAtom();
           OBAtom* c = bond->GetEndAtom();
-          OBAtom* a = NULL;
+          OBAtom* a = nullptr;
           FOR_NBORS_OF_ATOM(t, &*b) {
             a = &*t;
             if(a != c)
               break;
           }
-          OBAtom* d = NULL;
+          OBAtom* d = nullptr;
           FOR_NBORS_OF_ATOM(t, &*c) {
             d = &*t;
             if(d != b)

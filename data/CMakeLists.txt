@@ -62,3 +62,34 @@ if(NOT MSVC)
 else(NOT MSVC)
   install(FILES ${to_install} DESTINATION bin/data)
 endif(NOT MSVC)
+
+
+
+#input_file variable_name header
+set(datainfo
+"atomtyp.txt AtomTypeData atomtyp.h"
+"bondtyp.txt BondTypeData bondtyp.h"
+"phmodel.txt PhModelData phmodeldata.h"
+"resdata.txt ResidueData resdata.h"
+"torlib.txt TorsionDefaults torlib.h"
+"types.txt TypesData types.h"
+"atomization-energies.txt AtomicHeatOfFormationData atomizationenergies.h"
+"space-groups.txt SpaceGroupsData spacegroups.h"
+"ringtyp.txt RingTypeData ringtyp.h"
+)
+
+set(dataheaderfiles "")
+foreach(dinfo ${datainfo})
+ string(REPLACE " " ";" dlist ${dinfo})
+ list(GET dlist 2 doutput)
+ list(GET dlist 1 dname)
+ list(GET dlist 0 dinput)
+
+ add_custom_command(OUTPUT ${doutput}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/bin2hex.pl ${CMAKE_CURRENT_SOURCE_DIR}/${dinput} ${dname} ${dname} > ${doutput}
+    DEPENDS ${dinput} VERBATIM)    
+ set_source_files_properties(${doutput} PROPERTIES GENERATED TRUE)
+ list(APPEND dataheaderfiles ${doutput})
+endforeach(dinfo)
+
+add_custom_target(data_headers DEPENDS ${dataheaderfiles})

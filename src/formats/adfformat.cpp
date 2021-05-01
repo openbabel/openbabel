@@ -96,7 +96,7 @@ namespace OpenBabel {
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -118,7 +118,7 @@ namespace OpenBabel {
 
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"Coordinates (Cartesian)") != NULL)
+        if (strstr(buffer, "Coordinates (Cartesian)") != nullptr)
           {
             mol.Clear();
             mol.BeginModify();
@@ -130,7 +130,7 @@ namespace OpenBabel {
 
             ifs.getline(buffer,BUFF_SIZE);  // actual data
             tokenize(vs,buffer);
-            while (strstr(buffer, "----") == NULL && vs.size() >= 8)
+            while (strstr(buffer, "----") == nullptr && vs.size() >= 8)
               {
                 atom = mol.NewAtom();
                 atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str())); // atom number, then symbol
@@ -145,7 +145,7 @@ namespace OpenBabel {
                 tokenize(vs,buffer);
               }
           }
-        else if(strstr(buffer,"Dipole Moment  ***") != NULL)
+        else if (strstr(buffer, "Dipole Moment  ***") != nullptr)
           {
             ifs.getline(buffer,BUFF_SIZE);	// =========
             ifs.getline(buffer,BUFF_SIZE);	// blank line
@@ -165,7 +165,7 @@ namespace OpenBabel {
               }
             if (!ifs.getline(buffer,BUFF_SIZE)) break;
           }
-          else if(strstr(buffer,"M U L L I K E N") != NULL)
+          else if(strstr(buffer, "M U L L I K E N") != nullptr)
             {
               ifs.getline(buffer,BUFF_SIZE);	// ========
               ifs.getline(buffer,BUFF_SIZE);	// (blank)
@@ -192,7 +192,7 @@ namespace OpenBabel {
                   tokenize(vs,buffer);
                 }
             }
-        else if(strstr(buffer,"Net Charge") != NULL)
+        else if (strstr(buffer, "Net Charge") != nullptr)
           {
             tokenize(vs, buffer);
             if (vs.size() > 3) // Net Charge: ##
@@ -200,7 +200,7 @@ namespace OpenBabel {
                 charge = atoi(vs[2].c_str());
               }
           }
-        else if (strstr(buffer,"Bond Energy") != NULL)
+        else if (strstr(buffer, "Bond Energy") != nullptr)
           {
             double energy = 0;
             for (;;) {
@@ -297,7 +297,7 @@ namespace OpenBabel {
   bool ADFInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -676,7 +676,7 @@ public:
     }
 
     /// Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return 0; };
+    virtual const char* GetMIMEType() { return nullptr; }
 
       /// Return read/write flag: read only.
     virtual unsigned int Flags()
@@ -820,14 +820,14 @@ bool OBT41Format::ReadBinary( OBBase* pOb, OBConversion* pConv )
 bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
 {
       OBMol* pmol = dynamic_cast< OBMol* >(pOb);
-      if( pmol == 0 ) return false;
+      if (pmol == nullptr) return false;
 
       istream& ifs = *pConv->GetInStream();
 
       GridData gd;
       gd = ReadGridData( ifs );
 
-      OBGridData* t41Data = 0;
+      OBGridData* t41Data = nullptr;
       if( gd )
       {
          streampos current = ifs.tellg();

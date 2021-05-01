@@ -23,9 +23,10 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
-#include <openbabel/elements.h>
+#include <openbabel/kekulize.h>
 
 #include <openbabel/base.h>
+#include <openbabel/elements.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
@@ -209,6 +210,8 @@ CAST_GENERICDATA_TO(SquarePlanarStereo)
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
+%include <openbabel/kekulize.h>
+
 
 %import <openbabel/chains.h>
 %import <openbabel/typer.h>
@@ -229,6 +232,7 @@ namespace std { class stringbuf {}; }
 %include <openbabel/obconversion.h>
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+%include <openbabel/elements.h>
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/mol.h>

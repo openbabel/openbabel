@@ -50,7 +50,7 @@ namespace OpenBabel
   {
     /*
     Interprets the alias text and adds atom(s) as appropriate to mol.
-    Tries the following in turn until one is sucessful:
+    Tries the following in turn until one is successful:
     1) If starts with number treat as isotope+element e.g. 2H
     2) Looks up alias in superatom.txt e.g. COOH Pr
     3) If of the form Rn stored as a * atom with Atom Class data
@@ -325,7 +325,7 @@ void AliasData::RevertToAliasForm(OBMol& mol)
     FOR_ATOMS_OF_MOL(a, mol)
     {
       acted=false;
-      AliasData* ad = NULL;
+      AliasData* ad = nullptr;
       if((ad = (static_cast<AliasData*>(a->GetData(AliasDataType)))) && ad->IsExpanded())
       {
         ad->DeleteExpandedAtoms(mol);
@@ -357,18 +357,24 @@ bool AliasData::AddAliases(OBMol* pmol)
         for(unsigned iatom=1; iatom<mlist[imatch].size();++iatom)//each atom in match
         {
           int idx = mlist[imatch][iatom];
+
           if(AllExAtoms.count(idx))
           {
             //atom already appears in an alias so abandon this (smaller) alias
             delete ad;
-            ad = NULL;
+            ad = nullptr;
             break;
           }
           else
           {
-            AllExAtoms.insert(idx);
-            int id  =(pmol->GetAtom(idx))->GetId();
-            ad->AddExpandedAtom(id);
+            OBAtom* a = pmol->GetAtom(idx);
+            // atom might not be present in original molecule, because SMARTS are all with hydrogens added
+            // original molecule might lack them
+            if (a != nullptr) {
+              AllExAtoms.insert(idx);
+              int id  = a->GetId();
+              ad->AddExpandedAtom(id);
+            }
           }
         }
         if(ad)
@@ -387,7 +393,7 @@ public:
   OpGenAlias(const char* ID) : OBOp(ID, false){};
   const char* Description(){ return "Generate aliases as an alternative representation."; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
 };
 

@@ -33,7 +33,7 @@ public:
     "These are objects before filtering. Use AddOutIndex for objects after filtering\n"; }
 
   virtual bool WorksWith(OBBase* pOb)const{ return true; } //all objects
-  virtual bool Do(OBBase* pOb, const char*, OpMap*, OBConversion* pConv=NULL);
+  virtual bool Do(OBBase* pOb, const char*, OpMap*, OBConversion* pConv=nullptr);
 };
 
 /////////////////////////////////////////////////////////////////

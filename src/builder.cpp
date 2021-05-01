@@ -75,6 +75,26 @@ namespace OpenBabel
   std::map<std::string, std::vector<vector3> > OBBuilder::_rigid_fragments_cache;
   std::vector<std::pair<OBSmartsPattern*, std::vector<vector3> > > OBBuilder::_ring_fragments;
 
+  void OBBuilder::AddRingFragment(OBSmartsPattern *sp, const std::vector<vector3> &coords)
+  {
+    bool hasAllZeroCoords = true;
+    for (std::size_t i = 0; i < coords.size(); ++i) {
+      if (fabs(coords[i].x()) > 10e-8 ||
+          fabs(coords[i].y()) > 10e-8 ||
+          fabs(coords[i].z()) > 10e-8) {
+        hasAllZeroCoords = false;
+        break;
+      }
+    }
+
+    if (hasAllZeroCoords) {
+      std::stringstream ss;
+      ss << "Ring fragment " << sp->GetSMARTS() << " in ring-fragments.txt has all zero coordinates. Ignoring fragment.";
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+    } else
+      _ring_fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+  }
+
   void OBBuilder::LoadFragments()  {
     // open data/fragments.txt
     ifstream ifs;
@@ -101,7 +121,7 @@ namespace OpenBabel
 
     char buffer[BUFF_SIZE];
     vector<string> vs;
-    OBSmartsPattern *sp = NULL;
+    OBSmartsPattern *sp = nullptr;
     vector<vector3> coords;
     while (ifs.getline(buffer, BUFF_SIZE)) {
       if (buffer[0] == '#') // skip comment line (at the top)
@@ -110,14 +130,14 @@ namespace OpenBabel
       tokenize(vs, buffer);
 
       if (vs.size() == 1) { // SMARTS pattern
-        if (sp != NULL)
-          _ring_fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+        if (sp != nullptr)
+          AddRingFragment(sp, coords);
 
         coords.clear();
         sp = new OBSmartsPattern;
         if (!sp->Init(vs[0])) {
           delete sp;
-          sp = NULL;
+          sp = nullptr;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
         }
       } else if (vs.size() == 3) { // XYZ coordinates
@@ -125,7 +145,7 @@ namespace OpenBabel
         coords.push_back(coord);
       }
     }
-    _ring_fragments.push_back(pair<OBSmartsPattern*, vector<vector3> > (sp, coords));
+    AddRingFragment(sp, coords);
 
     // return the locale to the original one
     obLocale.RestoreLocale();
@@ -161,15 +181,27 @@ namespace OpenBabel
     ifs.seekg(_rigid_fragments_index[smiles]);
     char buffer[BUFF_SIZE];
     vector<string> vs;
+    bool hasAllZeroCoords = true;
     while (ifs.getline(buffer, BUFF_SIZE)) {
       tokenize(vs, buffer);
       if (vs.size() == 4) { // XYZ coordinates
         vector3 coord(atof(vs[1].c_str()), atof(vs[2].c_str()), atof(vs[3].c_str()));
+        if (fabs(coord.x()) > 10e-8 ||
+            fabs(coord.y()) > 10e-8 ||
+            fabs(coord.z()) > 10e-8)
+          hasAllZeroCoords = false;
         coords.push_back(coord);
       } else if (vs.size() == 1) { // SMARTS pattern
         break;
       }
     }
+
+    if (hasAllZeroCoords) {
+      std::stringstream ss;
+      ss << "Rigid fragment " << smiles << " in rigid-fragments.txt has all zero coordinates.";
+      obErrorLog.ThrowError(__FUNCTION__, ss.str(), obError);
+    }
+
     return coords;
   }
 
@@ -213,7 +245,7 @@ namespace OpenBabel
     bond4 = VZero;
     bond5 = VZero;
 
-    if (atom == NULL)
+    if (atom == nullptr)
       return VZero;
 
     int dimension = ((OBMol*)atom->GetParent())->GetDimension();
@@ -336,7 +368,7 @@ namespace OpenBabel
         v1 = v1.normalize();
 
         if (atom->GetHyb() == 2)
-          newbond = v1; 
+          newbond = v1;
         else if (atom->GetHyb() == 3) {
           v2 = cross(bond1, bond2); // find the perpendicular
           v2.normalize();
@@ -647,8 +679,8 @@ namespace OpenBabel
       if (atom->GetExplicitDegree() == 3) {
         OBStereoFacade stereoFacade((OBMol*)atom->GetParent());
         if (stereoFacade.HasTetrahedralStereo(atom->GetId())) {
-          OBBond *hash = 0;
-          OBBond *wedge = 0;
+          OBBond *hash = nullptr;
+          OBBond *wedge = nullptr;
           vector<OBBond*> plane;
           for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
             OBBond *bond = atom->GetBond(nbr);
@@ -725,9 +757,9 @@ namespace OpenBabel
     OBAtom *a = mol.GetAtom(idxA);
     OBAtom *b = mol.GetAtom(idxB);
 
-    if (a == NULL)
+    if (a == nullptr)
       return false;
-    if (b == NULL)
+    if (b == nullptr)
       return false;
 
     OBBitVec fragment = GetFragment(b);
@@ -860,12 +892,12 @@ namespace OpenBabel
     //
     // Get a neighbor of a and of b for setting the dihedral later
     //
-    OBAtom* nbr_a = NULL;
+    OBAtom* nbr_a = nullptr;
     FOR_NBORS_OF_ATOM(nbr, a) {
       nbr_a = &*nbr;
       break;
     }
-    OBAtom* nbr_b = NULL;
+    OBAtom* nbr_b = nullptr;
     FOR_NBORS_OF_ATOM(nbr, b) {
       if (fragment.BitIsSet(nbr->GetIdx())) {
         nbr_b = &*nbr;
@@ -925,13 +957,13 @@ namespace OpenBabel
     OBAtom *c = mol.GetAtom(idxC);
 
     // make sure the atoms exist
-    if (a == NULL || b == NULL || c == NULL)
+    if (a == nullptr || b == nullptr || c == nullptr)
       return false;
 
     OBBond *bond1 = mol.GetBond(idxA, idxB);
 
     // make sure a-b is connected
-    if (bond1 == NULL)
+    if (bond1 == nullptr)
       return false;
 
     // make sure the bond are not in a ring
@@ -967,14 +999,14 @@ namespace OpenBabel
     OBAtom *d = mol.GetAtom(idxD);
 
     // make sure the atoms exist
-    if (a == NULL || b == NULL || c == NULL || d == NULL)
+    if (a == nullptr || b == nullptr || c == nullptr || d == nullptr)
       return false;
 
     OBBond *bond1 = mol.GetBond(idxA, idxB);
     OBBond *bond2 = mol.GetBond(idxC, idxD);
 
     // make sure a-b and c-d are connected
-    if (bond1 == NULL || bond2 == NULL)
+    if (bond1 == nullptr || bond2 == nullptr)
       return false;
 
     // make sure the bonds are not in a ring
@@ -1143,7 +1175,7 @@ namespace OpenBabel
               for (k2 = j->begin(); k2 != j->end(); ++k2) {
                 OBAtom *atom2 = mol.GetAtom(*k2);
                 OBBond *bond = atom1->GetBond(atom2);
-                if (bond != NULL) {
+                if (bond != nullptr) {
                   workMol.AddBond(*bond);
                 }
               }
@@ -1171,7 +1203,7 @@ namespace OpenBabel
         // the first (most complex) fragment.
         // Stop if there are no unassigned ring atoms (ratoms).
         for (; i != _ring_fragments.end() && ratoms; ++i) {
-          if (i->first != NULL && i->first->Match(*f)) { // if match to fragment
+          if (i->first != nullptr && i->first->Match(*f)) { // if match to fragment
             i->first->Match(mol);                        // match over mol
             mlist = i->first->GetUMapList();
             for (j = mlist.begin();j != mlist.end();++j) { // for all matches
@@ -1199,7 +1231,7 @@ namespace OpenBabel
                 for (k2 = j->begin(); k2 != j->end(); ++k2) {
                   OBAtom *atom2 = mol.GetAtom(*k2);
                   OBBond *bond = atom1->GetBond(atom2);
-                  if (bond != NULL)
+                  if (bond != nullptr)
                     workMol.AddBond(*bond);
                 }
               }
@@ -1215,14 +1247,14 @@ namespace OpenBabel
         continue;
 
       // find an atom connected to the current atom that is already added
-      OBAtom *prev = NULL;
+      OBAtom *prev = nullptr;
       FOR_NBORS_OF_ATOM (nbr, &*a) {
         if (vdone.BitIsSet(nbr->GetIdx()))
           prev = &*nbr;
       }
 
       if (vfrag.BitIsSet(a->GetIdx())) { // Is this atom part of a fragment?
-        if (prev != NULL) { // if we have a previous atom, translate/rotate the fragment and connect it
+        if (prev != nullptr) { // if we have a previous atom, translate/rotate the fragment and connect it
           Connect(workMol, prev->GetIdx(), a->GetIdx(), mol.GetBond(prev, &*a)->GetBondOrder());
           // set the correct bond order
           int bondOrder = mol.GetBond(prev->GetIdx(), a->GetIdx())->GetBondOrder();
@@ -1240,7 +1272,7 @@ namespace OpenBabel
       //
 
       // get the position for the new atom, this is done with GetNewBondVector
-      if (prev != NULL) {
+      if (prev != nullptr) {
         int bondType = a->GetBond(prev)->GetBondOrder();
         if (a->GetBond(prev)->IsAromatic())
           bondType = -1;
@@ -1266,7 +1298,7 @@ namespace OpenBabel
       atom->SetVector(molvec);
 
       // add bond between previous part and added atom
-      if (prev != NULL) {
+      if (prev != nullptr) {
         OBBond *bond = a->GetBond(prev); // from mol
         workMol.AddBond(*bond);
       }
@@ -1305,13 +1337,13 @@ namespace OpenBabel
         if(_torsion.count(smiles) > 0) {
           OBAtom* b = bond->GetBeginAtom();
           OBAtom* c = bond->GetEndAtom();
-          OBAtom* a = NULL;
+          OBAtom* a = nullptr;
           FOR_NBORS_OF_ATOM(t, &*b) {
             a = &*t;
             if(a != c)
               break;
           }
-          OBAtom* d = NULL;
+          OBAtom* d = nullptr;
           FOR_NBORS_OF_ATOM(t, &*c) {
             d = &*t;
             if(d != b)
@@ -1663,7 +1695,7 @@ namespace OpenBabel
         success = false; // uncorrected bond
       }
 
-      // Reperceive non-ring TetrahedralStereos if an inversion occured
+      // Reperceive non-ring TetrahedralStereos if an inversion occurred
       if (inversion) {
         sgunits.clear();
         for (origth = nonringtetra.begin(); origth != nonringtetra.end(); ++origth)

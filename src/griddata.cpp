@@ -89,7 +89,7 @@ namespace OpenBabel {
     if (mol->HasData(OBGenericDataType::GridData)) {
       vector<OBGenericData*> grids = mol->GetAllData(OBGenericDataType::GridData)
       // Output the name of the grid
-      if (grids[0] != NULL)
+      if (grids[0] != nullptr)
         cout << grids[0]->GetAttribute();
     }
     \endcode

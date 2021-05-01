@@ -50,10 +50,10 @@ protected:
   string _patternsfile;
 
 public:
-  PatternFP(const char* ID, const char* filename=NULL,
+  PatternFP(const char* ID, const char* filename=nullptr,
       bool IsDefault=false) : OBFingerprint(ID, IsDefault)
   {
-    if(filename==NULL)
+    if (filename == nullptr)
       _patternsfile="patterns.txt";
     else
       _patternsfile = filename;
@@ -122,10 +122,10 @@ public:
            The pattern will set or clear numbits bits in the fingerprint.
            They will be in numoccurrences+1 groups, each containing an approximately
            equal number of bits.
-           The first group of bits will be set if numMatches > numoccurences;
+           The first group of bits will be set if numMatches > numoccurrences;
            The second group will be set if numMatches > numoccurrences - 1;
            and so on.
-           So with a pattern with numbits = 4 and numoccurences = 2,
+           So with a pattern with numbits = 4 and numoccurrences = 2,
            the groups would be 1, 1, and 2 bits.
            A molecule with
               1 match to the pattern would give 0011
@@ -255,7 +255,8 @@ public:
       int num =  ppat->numbits, div = ppat->numoccurrences+1, ngrp;
       while(num) //for each group of bits
       {
-        ngrp = (num + div -1)/div--; //rounds up
+        ngrp = (num + div - 1) / div; //rounds up
+        div -= 1;
         num -= ngrp;
         if(GetBit(fp, n) == bSet)
         {
@@ -339,8 +340,8 @@ description: SMARTS [occurrences [numbits]]
 A bit is set in the fingerprint for ach SMARTS pattern matched.
 The optional integer parameters refine this behaviour; the most obvious uses are:
  - if <occurrences> is present and greater than its default value of 0, the bit
-   is set only if the number of matches to the pattern is greater than <occurences>.
- - if <occurences> is 0 and <numbits> is greater than its default value of 1, then
+   is set only if the number of matches to the pattern is greater than <occurrences>.
+ - if <occurrences> is 0 and <numbits> is greater than its default value of 1, then
    the fingerprint has <numbits> bits set if there is a match. This gives greater weight
    to the pattern for use in similarity measures like Tanimoto.
  - if the parameters are n-1 and n and the number of matches is n,

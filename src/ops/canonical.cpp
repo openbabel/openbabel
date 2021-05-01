@@ -31,8 +31,8 @@ public:
   OpCanonical(const char* ID) : OBOp(ID, false){};
   const char* Description(){ return "Canonicalize the atom order"; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -56,7 +56,7 @@ bool OpCanonical::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBCon
   std::vector<unsigned int> canon_labels;
   CanonicalLabels(pmol, symmetry_classes, canon_labels);
 
-  std::vector<OBAtom*> newatoms(atoms.size(), 0);
+  std::vector<OBAtom*> newatoms(atoms.size(), nullptr);
   for (std::size_t i = 0; i < canon_labels.size(); ++i)
     newatoms[canon_labels[i]-1] = atoms[i];
 

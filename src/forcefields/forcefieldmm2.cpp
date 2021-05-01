@@ -47,7 +47,7 @@ namespace OpenBabel
       ab = va - vb;
 
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffbondparams);
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all bond parameters", obError);
         return 0.0;
       }
@@ -99,7 +99,7 @@ namespace OpenBabel
       bc = vb - vc;
 
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), 0, _ffangleparams);
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all angle parameters", obError);
         return 0.0;
       }
@@ -162,7 +162,7 @@ namespace OpenBabel
       l2 = b2->GetLength();
 
       parameter = GetParameter(atoi(b->GetType()), 0, 0, 0, _ffstretchbendparams);
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all stretch-bend parameters", obError);
         return 0.0;
       }
@@ -217,7 +217,7 @@ namespace OpenBabel
       cd = vc - vd;
 
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), atoi(c->GetType()), atoi(d->GetType()), _fftorsionparams);
-      if (parameter == NULL) {
+      if (parameter == nullptr) {
         obErrorLog.ThrowError(__FUNCTION__, "Could not find all torsion parameters", obError);
         return 0.0;
       }
@@ -291,14 +291,14 @@ namespace OpenBabel
 
       for (int idx=0; idx < _ffoutplanebendparams.size(); idx++) {
         if (atoi(b->GetType()) == _ffoutplanebendparams[idx].a) {
-          a = NULL;
-          c = NULL;
-          d = NULL;
+          a = nullptr;
+          c = nullptr;
+          d = nullptr;
 
           FOR_NBORS_OF_ATOM(nbr, b) {
-            if (a ==NULL)
+            if (a ==nullptr)
               a = (OBAtom*) &*nbr;
-            else if (c == NULL)
+            else if (c == nullptr)
               c = (OBAtom*) &*nbr;
             else
               d = (OBAtom*) &*nbr;
@@ -366,7 +366,7 @@ namespace OpenBabel
       ab = vb - va;
 
       parameter = GetParameter(atoi(a->GetType()), atoi(b->GetType()), 0, 0, _ffvdwprparams);
-      if (parameter != NULL) {
+      if (parameter != nullptr) {
         rr = parameter->_dpar[0];
         eps = parameter->_dpar[1];
       } else {

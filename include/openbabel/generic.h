@@ -72,7 +72,7 @@ namespace OpenBabel
     OBAtom *_atom;
     OBBond *_bond;
   public:
-  OBExternalBond(): _idx(0), _atom(NULL), _bond(NULL) {}
+  OBExternalBond(): _idx(0), _atom(nullptr), _bond(nullptr) {}
     OBExternalBond(OBAtom *,OBBond *,int);
     OBExternalBond(const OBExternalBond &);
     ~OBExternalBond()   {}
@@ -95,7 +95,7 @@ namespace OpenBabel
     OBExternalBondData();
 
     //Copying is not used and too much work to set up
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return NULL;}
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return nullptr;}
 
     void SetData(OBAtom*,OBBond*,int);
     std::vector<OBExternalBond> *GetData()
@@ -182,7 +182,7 @@ namespace OpenBabel
         if ((*i)->GetAttribute() == s)
           return(*i);
 
-      return(NULL);
+      return(nullptr);
     }
 
     //! \return the OBGenericData associate with the attribute name parameter.
@@ -194,7 +194,7 @@ namespace OpenBabel
         if ((*i)->GetAttribute() == s)
           return(*i);
 
-      return(NULL);
+      return(nullptr);
     }
 
     //! Gets the entire set.
@@ -264,7 +264,7 @@ namespace OpenBabel
     // exist due to Kekulize() in EndModify() in operator= in OBMol. Having
     // more than one RingData causes problems as one of them can become invalid
     // and cause segfaults.
-    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return NULL;}
+    virtual OBGenericData* Clone(OBBase* /*parent*/) const{return nullptr;}
     ~OBRingData();
 
     OBRingData &operator=(const OBRingData &);
@@ -302,7 +302,7 @@ namespace OpenBabel
                        Monoclinic,
                        Orthorhombic,
                        Tetragonal,
-                       Rhombohedral /**< also called trigonal*/,
+                       Rhombohedral, //!< also called trigonal
                        Hexagonal,
                        Cubic};
 
@@ -487,6 +487,29 @@ namespace OpenBabel
     //! \todo Make OBUnitCell::WrapFractionalCoordinate static in the next ABI break
     vector3 WrapFractionalCoordinate(vector3 frac);
     vector3 WrapFractionalCoordinate(vector3 frac) const;
+    //! Unwraps Cartesian coordinates near a reference location
+    //! \param new_loc Cartesian coordinates of target
+    //! \param ref_loc Cartesian coordinates of the reference location
+    //! \return Unwrapped coordinates of new_loc near ref_loc
+    vector3 UnwrapCartesianNear(vector3 new_loc, vector3 ref_loc);
+    vector3 UnwrapCartesianNear(vector3 new_loc, vector3 ref_loc) const;
+    //! Unwraps fractional coordinates near a reference location.
+    //! \param new_loc Fractional coordinates of target
+    //! \param ref_loc Fractional coordinates of the reference location
+    //! \return Unwrapped coordinates of new_loc near ref_loc
+    //! \todo Add a simple test case/example, like unwrapNear(<0.9, 0.2, 0.2>, <0.3, 0.9, 0.2>) -> <-0.1, 1.2, 0.2>
+    vector3 UnwrapFractionalNear(vector3 new_loc, vector3 ref_loc);
+    vector3 UnwrapFractionalNear(vector3 new_loc, vector3 ref_loc) const;
+    //! Applies the minimum image convention to a Cartesian displacement vector
+    //! \param cart Displacement vector between two atoms in Cartesian coordinates
+    //! \return Cartesian difference, wrapped within half the unit cell
+    vector3 MinimumImageCartesian(vector3 cart);
+    vector3 MinimumImageCartesian(vector3 cart) const;
+    //! Applies the minimum image convention to a fractional displacement vector
+    //! \param cart Displacement vector between two atoms in fractional coordinates
+    //! \return Fractional difference, wrapped within half the unit cell (-0.5 to 0.5)
+    vector3 MinimumImageFractional(vector3 frac);
+    vector3 MinimumImageFractional(vector3 frac) const;
 
     //! \return The numeric value of the given spacegroup
     int GetSpaceGroupNumber( std::string name = "" );
@@ -584,7 +607,7 @@ namespace OpenBabel
     //! double is angle in radians
     std::vector<triple<OBAtom*,OBAtom*,double> > _ads;
 
-    OBTorsion(): _bc((OBAtom *)NULL, (OBAtom *)NULL)      {      }
+    OBTorsion(): _bc((OBAtom *)nullptr, (OBAtom *)nullptr)      {      }
     //protected for use only by friend classes
     OBTorsion(OBAtom *, OBAtom *, OBAtom *, OBAtom *);
 
@@ -697,7 +720,7 @@ namespace OpenBabel
     OBAngle(const OBAngle &);
     ~OBAngle()
       {
-        _vertex = NULL;
+        _vertex = nullptr;
       }
 
     OBAngle &operator = (const OBAngle &);
@@ -1117,13 +1140,13 @@ namespace OpenBabel
     OBFreeGridPoint *BeginPoint(OBFreeGridPointIterator &i)
     {
       i = _points.begin();
-      return((i == _points.end()) ? (OBFreeGridPoint*)NULL : (OBFreeGridPoint*)*i);
+      return((i == _points.end()) ? (OBFreeGridPoint*)nullptr : (OBFreeGridPoint*)*i);
     }
 
     OBFreeGridPoint *NextPoint(OBFreeGridPointIterator &i)
     {
       ++i;
-      return((i == _points.end()) ? (OBFreeGridPoint*)NULL : (OBFreeGridPoint*)*i);
+      return((i == _points.end()) ? (OBFreeGridPoint*)nullptr : (OBFreeGridPoint*)*i);
     }
     
     void Clear();

@@ -635,6 +635,7 @@ using System.Runtime.InteropServices;
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/kekulize.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>

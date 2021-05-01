@@ -22,6 +22,7 @@ import os
 import sys
 import unittest
 import itertools
+import collections
 
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
@@ -54,6 +55,59 @@ class PybelWrapper(PythonBindings):
 
 class TestSuite(PythonBindings):
 
+    def testReadsLowerCaseInTurbmol(self):
+        """Support lowercase when reading Turbomole. Fix for #2063"""
+        tmol = """$coord
+    2.02871026746136      0.00016096463521      0.09107555338913      c
+    4.89930048862534      0.04854048717752      0.11762901668325      c
+    5.90748259036722      2.39968480185142      1.42109501042332      c
+    1.34938005428171     -1.70839952555376     -0.85607794562344      h
+    1.26886043300105      1.63876093409995     -0.91749501051641      h
+    1.26913011943130      0.01286165737104      2.01525659069294      h
+    5.60784060607910     -0.01912944162451     -1.82662623368806      h
+    5.60811561474418     -1.63627235546083      1.09011360983431      h
+    5.27020211768512      4.11415935313881      0.45463376946747      h
+    7.97573431608248      2.39090324576822      1.41600146807434      h
+    5.27052201944755      2.48814711866854      3.38732271725103      h
+$end"""
+        inchikey = pybel.readstring("tmol", tmol).write("inchikey").rstrip()
+        self.assertEqual("ATUOYWHBWRKTHZ-UHFFFAOYSA-N", inchikey)
+
+    def testSmartsSupportsHashZero(self):
+        """Ensure that we can match asterisks in SMILES with SMARTS"""
+        mol = pybel.readstring("smi", "*O")
+        # The following used to raise an OSError (SMARTS parse failure)
+        matches = pybel.Smarts("[#0]O").findall(mol)
+        self.assertEqual(matches, [(1, 2)])
+
+    def testSpecifySMILESOutputOrder(self):
+        """H valence was being reduced on the startatom"""
+        # Test same input, different output
+        smis = [
+          "[nH]1cccc1",
+          "c1[nH]ccc1",
+          "c1c[nH]cc1",
+          "c1cc[nH]c1",
+          "c1ccc[nH]1"
+          ]
+        refsmi = smis[0]
+        mol = pybel.readstring("smi", refsmi)
+        ref = collections.deque([1, 2, 3, 4, 5])
+        for i, smi in enumerate(smis):
+            order = "-".join(str(x) for x in ref)
+            out = mol.write("smi", opt={"nonewline": True, "n": True,
+                                        "o": order})
+            self.assertEqual(smi, out)
+            ref.rotate(1)
+        # Test different input, same output
+        for i, smi in enumerate(smis):
+            mol = pybel.readstring("smi", smi)
+            order = "-".join(str(x) for x in ref)
+            out = mol.write("smi", opt={"nonewline": True, "n": True,
+                                        "o": order})
+            self.assertEqual(refsmi, out)
+            ref.rotate(-1)
+
     def testInChIIsotopes(self):
         """Ensure that we correctly set and read isotopes in InChIs"""
         with open(os.path.join(here, "inchi", "inchi_isotopes.txt")) as inp:
@@ -64,6 +118,50 @@ class TestSuite(PythonBindings):
                 self.assertEqual(minchi, inchi)
                 msmi = pybel.readstring("inchi", minchi).write("smi").rstrip()
                 self.assertEqual(msmi, smi)
+
+    def testWLN(self):
+        """Test some WLN conversions"""
+        data = [ # Taken from Wikipedia
+                ("1H", "C"),
+                ("2H", "CC"),
+                ("3H", "CCC"),
+                ("1Y", "CC(C)C"),
+                ("1X", "CC(C)(C)C"),
+                ("Q1", "CO"),
+                ("1R", "c1ccccc1C"),
+                ("1V1", "CC(=O)C"),
+                ("2O2", "CCOCC"),
+                ("1VR", "CC(=O)c1ccccc1"),
+                ("ZR CVQ", "c1ccc(N)cc1C(=O)O"),
+                ("QVYZ1R", "NC(Cc1ccccc1)C(=O)O"),
+                ("QX2&2&2", "CCC(O)(CC)CC"),
+                ("QVY3&1VQ", "OC(=O)C(CCC)CC(=O)O"),
+                ("L66J BMR& DSWQ IN1&1", "CN(C=1C=C2C(=CC(=CC2=CC1)S(=O)(=O)O)NC1=CC=CC=C1)C"),
+                # The following is not supported
+                # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"),
+
+                # The following are from:
+                # https://www.nextmovesoftware.com/posters/Sayle_WisswesserLineNotation_BioIT_201904.pdf
+                ("WN3", "[O-][N+](=O)CCC"),
+                ("G1UU1G", "ClC#CCl"),
+                ("VH3", "O=CCCC"),
+                ("NCCN", "N#CC#N"),
+                ("ZYZUM", "NC(=N)N"),
+                ("QY", "CC(C)O"),
+                ("OV1 &-NA-", "CC(=O)[O-].[Na+]"),
+                ("RM1R", "c1ccccc1NCc2ccccc2"),
+                ("QVR BNUNR DN1&1", "OC(=O)c1ccccc1N=Nc2ccc(cc2)N(C)C"),
+                ("L6TJ A- AL6TJ AVO2N2&2 &GH",
+                 "CCN(CC)CCOC(=O)C1(CCCCC1)C2CCCCC2.Cl"),
+                ("T56 BMJ B D- DT6N CNJ BMR BO1 DN1&2N1&1 EMV1U1",
+                 "Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C"),
+                ("T56 AN CN GNJ B- BT5MTJ AV1UU2& DR DVM- BT6NJ&& FZ",
+                 "CC#CC(=O)N1CCCC1c2nc(c3n2ccnc3N)c4ccc(cc4)C(=O)Nc5ccccn5"),
+               ]
+        for wln, smi in data:
+            mol = pybel.readstring("wln", wln)
+            ans = pybel.readstring("smi", smi).write("can")
+            self.assertEqual(ans, mol.write("can"))
 
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
@@ -264,6 +362,29 @@ H          0.74700        0.50628       -0.64089
         for smi in smis:
             pybel.readstring("smi", smi)
 
+    def testNeutralize(self):
+        """Test the --neutralize operation and its 'changed' option"""
+        neutralize = ob.OBOp.FindType("neutralize")
+        self.assertTrue(neutralize is not None)
+        data = [("C(=O)[O-]", "C(=O)O"),
+                ("C[NH3+]", "CN"),
+                ("C[N+](=O)[O-]", None),
+                ("c1ccc[n+]([O-])c1", None), # pyridine N-oxide
+                ("CC", None),
+                ]
+        for i in range(2):
+            option = "changed" if i==1 else ""
+            for before, after in data:
+                ans = before if not after else after
+                mol = pybel.readstring("smi", before).OBMol
+                changed = neutralize.Do(mol, option)
+                result = pybel.Molecule(mol).write("smi").rstrip()
+                self.assertEqual(ans, result)
+                if not option:
+                    self.assertEqual(True, changed)
+                else:
+                    self.assertEqual(True if after else False, changed)
+
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
         implicitly cis"""
@@ -284,6 +405,8 @@ H          0.74700        0.50628       -0.64089
         # as we write them)
         data = [("Cs1(=O)ccccn1",
                  "CS1(=O)=NC=CC=C1"),
+                ("O=s1(=O)cccn1",
+                 "O=S1(=O)C=CC=N1"),
                 ("n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12",
                  "n1c2-c(c3cccc4cccc2c34)n(=N)c2ccccc12")]
         for inp, out in data:
@@ -353,6 +476,30 @@ M  END
             mol = pybel.readstring("smi", smi)
             mol.OBMol.AssignTotalChargeToAtoms(charge)
             self.assertEqual(mol.write("smi").rstrip(), ans)
+
+    def testParsingChargeInSmiles(self):
+        """Be more strict when parsing charges"""
+        good= [
+                ("[CH3+]", 1),
+                ("[CH2++]", 2),
+                ("[CH2+2]", 2),
+                ("[CH3-]", -1),
+                ("[CH2--]", -2),
+                ("[CH2-2]", -2),
+                ]
+        bad = [
+                "[CH2++2]",
+                "[C+-+-]",
+                "[C+2+]"
+                "[CH2--2]",
+                "[C-+-+]",
+                "[C-2-]"
+                ]
+        for smi, charge in good:
+            mol = pybel.readstring("smi", smi)
+            self.assertEqual(charge, mol.atoms[0].formalcharge)
+        for smi in bad:
+            self.assertRaises(IOError, pybel.readstring, "smi", smi)
 
     def testReadingBenzyne(self):
         """Check that benzyne is read correctly"""
@@ -435,8 +582,6 @@ H         -0.26065        0.64232       -2.62218
         """The stereo ref for an implicit H ref was being set to 0"""
         smis = ["C", "[C@@H](Br)(Cl)I"]
         mols = [pybel.readstring("smi", smi) for smi in smis]
-        # FIXME - does not seem to be possible to work out whether
-        # tetrahedral or not from Python?
         stereodata = mols[1].OBMol.GetData(ob.StereoData)
         config = ob.toTetrahedralStereo(stereodata).GetConfig()
         self.assertEqual(config.from_or_towards, 4294967294)
@@ -446,6 +591,36 @@ H         -0.26065        0.64232       -2.62218
         config = ob.toTetrahedralStereo(stereodata).GetConfig()
         self.assertEqual(config.from_or_towards, 4294967294)
 
+    def testCastToStereoBase(self):
+        """Support casting to StereoBase"""
+        mol = pybel.readstring("smi", "F/C=C/C[C@@H](Cl)Br")
+
+        num_cistrans = 0
+        num_tetra = 0
+        for genericdata in mol.OBMol.GetAllData(ob.StereoData):
+            stereodata = ob.toStereoBase(genericdata)
+            stereotype = stereodata.GetType()
+
+            if stereotype == ob.OBStereo.CisTrans:
+                cistrans = ob.toCisTransStereo(stereodata)
+                cfg = cistrans.GetConfig()
+                if cfg.specified:
+                    num_cistrans += 1
+
+            elif stereotype == ob.OBStereo.Tetrahedral:
+                tetra = ob.toTetrahedralStereo(stereodata)
+                cfg = tetra.GetConfig()
+                if cfg.specified:
+                    num_tetra += 1
+
+        self.assertEqual(1, num_tetra)
+        self.assertEqual(1, num_cistrans)
+
+    def testHydrogenIsotopes(self):
+        """Are D and T supported by GetAtomicNum?"""
+        for symbol in "DT":
+            self.assertEqual(1, ob.GetAtomicNum(symbol))
+
     def testWhetherAllElementsAreSupported(self):
         """Check whether a new element has been correctly added"""
         N = 0
@@ -454,6 +629,7 @@ H         -0.26065        0.64232       -2.62218
             # Is the symbol parsed?
             symbol = ob.GetSymbol(N)
             self.assertEqual(N, ob.GetAtomicNum(symbol))
+            self.assertEqual(N, ob.GetAtomicNum(symbol.lower())) # test lowercase version
             # Has an exact mass been set?
             self.assertNotEqual(0.0, ob.GetExactMass(N))
             # Has the symbol been added to the SMILES parser?
@@ -541,6 +717,10 @@ M  END
             mol.draw(show=False, update=True)
         assert(True) # Segfaults before...
 
+    def testKekulize(self):
+        '''smoketest for OBKekulize binding'''
+        m = pybel.readstring('smi','c1ccccc1')
+        self.assertTrue(ob.OBKekulize(m.OBMol),"OBKekulize failed")
 
 class NewReactionHandling(PythonBindings):
 
@@ -895,6 +1075,28 @@ class AtomClass(PythonBindings):
     """Tests to ensure that refactoring the atom class handling retains
     functionality"""
 
+    def testAtomProperties(self):
+        mol = pybel.readstring("smi","C=C")
+        #some of these weren't working after 3.0
+        a =  mol.atoms[0]
+        self.assertEqual(a.atomicmass,12.0107)
+        self.assertEqual(a.atomicnum,6)
+        self.assertEqual(a.coordidx,0)
+        self.assertEqual(a.degree, 1)
+        self.assertEqual(a.exactmass, 12.0)
+        self.assertEqual(a.formalcharge, 0)
+        self.assertEqual(a.heavydegree,1)
+        self.assertEqual(a.heterodegree,0)
+        self.assertEqual(a.hyb, 2)
+        self.assertEqual(a.idx, 1)
+        self.assertEqual(a.totalvalence, 4)
+        self.assertEqual(a.explicitvalence, 2)
+        self.assertEqual(a.isotope, 0)
+        self.assertEqual(a.partialcharge, 0.0)
+        self.assertEqual(a.spin, 0)
+        self.assertEqual(a.type, 'C2')
+        self.assertEqual(a.index, 0)
+
     def testSMILES(self):
         mol = pybel.readstring("smi", "C[CH3:6]")
         atom = mol.OBMol.GetAtom(2)
@@ -958,6 +1160,7 @@ class AtomClass(PythonBindings):
         mol.OBMol.DeleteHydrogens()
         nsmi = mol.write("smi", opt={"a": True, "h": True})
         self.assertEqual("C[H:1]", nsmi.rstrip())
+
 
 if __name__ == "__main__":
     unittest.main()

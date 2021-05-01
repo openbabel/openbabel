@@ -24,8 +24,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 
 #include <openbabel/base.h>
@@ -89,8 +89,8 @@ namespace OpenBabel
       enum StereoFlag {
         Wedge       = (1<<2),  //!< A solid black wedge in 2D representations -- i.e., "up" from the 2D plane
         Hash        = (1<<3),  //!< A dashed "hash" bond in 2D representations -- i.e., "down" from the 2D plane
-        WedgeOrHash = (1<<11), //!< The bond is either wedge or hash, this is a seperate flag!
-        CisOrTrans  = (1<<12)  //!< Indicates the 2D/3D coordinates are accidently cis/trans.
+        WedgeOrHash = (1<<11), //!< The bond is either wedge or hash, this is a separate flag!
+        CisOrTrans  = (1<<12)  //!< Indicates the 2D/3D coordinates are accidentally cis/trans.
       };
       //! Whether this bond has been visited by a graph algorithm
       /** \deprecated Use OBBitVec objects instead to be fully thread-safe. **/
@@ -217,6 +217,8 @@ namespace OpenBabel
       bool IsRotor(bool includeRingBonds=false);
       /** \return Is the bond an amide link (i.e., between a carbonyl C and a N)?
            No distinction is made between primary, secondary, and tertiary amides. **/
+      bool IsPeriodic() const;
+      //! \return Is the bond within a periodic unit cell?
       bool IsAmide();
       /** \return Is the bond a primary amide (i.e., between carbonyl C and a NH2)?
            In versions prior to 2.3, this function incorrectly identified secondary amides. **/
@@ -241,7 +243,7 @@ namespace OpenBabel
       bool IsHash()  {    return(HasFlag(OB_HASH_BOND));     }
       /**
        * @return True if this bond is either a wedge or hash.
-       * @note: This is a seperate bond type
+       * @note: This is a separate bond type
        * @since version 2.3
        */
       bool IsWedgeOrHash() const { return(HasFlag(WedgeOrHash)); }

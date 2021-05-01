@@ -137,7 +137,7 @@ public:
 
   virtual bool ReadChemObject(OBConversion* pConv)
   {
-    bool ret = ReadMolecule(NULL, pConv);
+    bool ret = ReadMolecule(nullptr, pConv);
     pConv->GetChemObject(); //increments output index
     return ret;
   };
@@ -172,7 +172,7 @@ virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 private:
   int _count; //number of chemical objects converted
   vector<char> CopyOfInput;
-  unsigned bytesToIEND; //number of bytes upto but not including the IEND chunk.
+  unsigned bytesToIEND; //number of bytes up to but not including the IEND chunk.
   unsigned origBytesToIEND; //saved between WriteMolecule calls
   bool _hasInputPngFile;
 
@@ -422,7 +422,7 @@ files in any format. Each can contain multiple molecules. Each molecule is outpu
 in a separate chunk in a format specified by the -xO option. the default with no
 option is InChI. The chunk ID is normally tEXt but can be specified in the -xa option.
 For example
-  babel OrigImg.png Firstmol.smi Secondmol.mol2 OutImg.png -xO "cml" -xa "chEm"
+  obabel OrigImg.png Firstmol.smi Secondmol.mol2 OutImg.png -xO "cml" -xa "chEm"
 
 It should be possible to embed into png filesusing the API.
 The following is simplified and UNTESTED:

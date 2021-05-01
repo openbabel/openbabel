@@ -42,7 +42,7 @@ public:
 
   ///Required function that does the work. Normally return true, unless object is not to be output.
   //NOTE: the parameters were changed in r3532
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL)=0;
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr)=0;
 
   /// \return true if this op is designed to work with the class of pOb, e.g. OBMol
   virtual bool WorksWith(OBBase* pOb)const=0;

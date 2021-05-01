@@ -102,7 +102,7 @@ int ffgaff(int argc, char* argv[])
 
   OBForceField* pFF = OBForceField::FindForceField("GAFF");
 
-  if (pFF == NULL) {
+  if (pFF == nullptr) {
     cerr << "Bail out! Cannot load force field!" << endl;
     return -1; // test failed
   }
@@ -179,7 +179,7 @@ void NGenerateEnergies()
 
   OBForceField* pFF = OBForceField::FindForceField("GAFF");
 
-  if (pFF == NULL) {
+  if (pFF == nullptr) {
     cerr << "Cannot load force field!" << endl;
     return;
   }

@@ -128,7 +128,7 @@ bool OBGUIApp::OnInit()
   {
     wxSplashScreen* splash = new wxSplashScreen(bitmap,
       wxSPLASH_CENTRE_ON_PARENT|wxSPLASH_TIMEOUT,
-      4000, NULL, -1, wxDefaultPosition, wxDefaultSize,
+      4000, nullptr, -1, wxDefaultPosition, wxDefaultSize,
       wxBORDER_SIMPLE|wxSTAY_ON_TOP);
   }
   wxImage::RemoveHandler(wxT("PNG file"));
@@ -141,7 +141,7 @@ bool OBGUIApp::OnInit()
 // ----------------------------------------------------------------------------
 
 OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
-       : wxFrame(NULL,wxID_ANY,title, position,size), m_pGenOptsPanel(NULL)
+       : wxFrame(nullptr,wxID_ANY,title, position,size), m_pGenOptsPanel(nullptr)
 {
   // set the frame icon
   SetIcon(wxICON(sample));
@@ -230,7 +230,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pOptsWindow->SetScrollRate(0,10);
 
   m_pInFormat    = new wxChoice(panel,ID_INFORMAT,	wxDefaultPosition,wxDefaultSize,
-    0, static_cast<wxString*> (NULL));
+    0, static_cast<wxString*> (nullptr));
   m_pInInfo      = new wxButton  (panel, ID_ININFO, wxT("?"),
         wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT);
   m_pForceInFormat  = new wxCheckBox(panel,ID_INFORCEFORMAT,
@@ -253,7 +253,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
   m_pConvert->SetToolTip(_T("Do conversion (Alt C)"));
 
   m_pOutFormat   = new wxChoice(panel,ID_OUTFORMAT,wxDefaultPosition,wxDefaultSize,
-    0, static_cast<wxString*> (NULL));
+    0, static_cast<wxString*> (nullptr));
   m_pOutInfo     = new wxButton  (panel, ID_OUTINFO, wxT("?"),
         wxDefaultPosition,wxDefaultSize,wxBU_EXACTFIT);
   m_pOutFilename = new wxTextCtrl(panel, ID_OUTFILENAME,wxEmptyString,
@@ -311,7 +311,7 @@ OBGUIFrame::OBGUIFrame(const wxString& title, wxPoint position, wxSize size)
 
   OutAuxSizer->Add(m_pNoOutFile,0, wxLEFT|wxBOTTOM,5);
 #ifndef __WXMAC__
-  if(OBPlugin::GetPlugin(NULL, "0xout")) //display checkbox only if extra output capability is present
+  if(OBPlugin::GetPlugin(nullptr, "0xout")) //display checkbox only if extra output capability is present
     OutAuxSizer->Add(m_pDisplay,0,wxLEFT|wxBOTTOM,5);
 #endif
 
@@ -501,7 +501,7 @@ void OBGUIFrame::OnHelp(wxCommandEvent& WXUNUSED(event))
 }
 void OBGUIFrame::OnAbout(wxCommandEvent& WXUNUSED(event))
 {
-  //(wxT not required after v2.90)  
+  //(wxT not required after v2.90)
   std::string cmsg =
     "OpenBabelGUI (C) 2006 by Chris Morley\n\n"
     "This program is part of the OpenBabel project,\n"
@@ -576,7 +576,7 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
      An unsatisfactory workaround is to set in obgui project
      ConfigurationProperties/Linker/General/Force File Output to
      Multiply Defined Symbol Only (/FORCE:MULTIPLE)
-     
+
      A better way is to build wxWidgets with wxUSE_STD_IOSTREAM set to 0 in setup.h
      (the top level version: \lib\vc_lib\mswu\wx\setup.h with Windows).
      This means wxStreamToTextRedirector does not work, so its functionality is provided
@@ -587,7 +587,7 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
   std::string s(m_pInText->GetValue().ToAscii());
   std::istringstream ss(s);
   ss.str();
-  
+
   //With wxUSE_STD_IOSTREAM=0 none of these work. Locale problem?
   //std::string s1(m_pInText->GetValue().mb_str());
   //std::string s2(m_pInText->GetValue().ToStdString());
@@ -603,7 +603,7 @@ void OBGUIFrame::OnConvert(wxCommandEvent& WXUNUSED(event))
   int oSel = m_pOutFormat->GetSelection();
   if((oSel)<0) return;
 
-  OBFormat* pInFormat = NULL;
+  OBFormat* pInFormat = nullptr;
   OBFormat* pOutFormat = (OBFormat*)m_pOutFormat->GetClientData(oSel);
   if(m_pForceInFormat->IsChecked() || m_pInputHere->IsChecked())
     pInFormat = (OBFormat*)m_pInFormat->GetClientData(iSel);
@@ -844,9 +844,9 @@ void OBGUIFrame::OnChangeFormat(wxCommandEvent& WXUNUSED(event))
   if(!pInFormat || !pOutFormat)
     return;
   if(viewMenu->IsChecked(ID_SHOWOBJOPTIONS1)) //Single char
-    m_pGenOptsPanel->Construct(pOutFormat->TargetClassDescription(),NULL,1);
+    m_pGenOptsPanel->Construct(pOutFormat->TargetClassDescription(),nullptr,1);
   if(viewMenu->IsChecked(ID_SHOWOBJOPTIONS2)) //Multi char
-    m_pGenOptsPanel->Construct(pOutFormat->TargetClassDescription(),NULL,2);
+    m_pGenOptsPanel->Construct(pOutFormat->TargetClassDescription(),nullptr,2);
 
   if(viewMenu->IsChecked(ID_SHOWINOPTIONS))
   {
@@ -963,7 +963,7 @@ void OBGUIFrame::DoOptions(OpenBabel::OBConversion& Conv)
     if(m_pAPIOptsPanel->SetOptions(apiConv, OBConversion::GENOPTIONS))
     {
       apiConv.SetOutFormat(pAPI);
-      apiConv.Write(NULL, &std::cout);
+      apiConv.Write(nullptr, &std::cout);
     }
   }
   m_pGenOptsPanel->SetOptions(Conv, OBConversion::GENOPTIONS);
@@ -984,7 +984,7 @@ void OBGUIFrame::GetAvailableFormats()
   m_ActiveFormats.Clear();
 
   std::vector<std::string> vec;
-  if(OBPlugin::ListAsVector("formats", NULL, vec))//check that there are some formats
+  if(OBPlugin::ListAsVector("formats", nullptr, vec))//check that there are some formats
   {
     OBFormat::PluginIterator itr;
     for(itr=OBFormat::Begin("formats");itr!=OBFormat::End("formats");++itr)
@@ -994,7 +994,7 @@ void OBGUIFrame::GetAvailableFormats()
         continue;
 
       std::string stxt;
-      itr->second->Display(stxt, NULL, itr->first);
+      itr->second->Display(stxt, nullptr, itr->first);
       wxString txt(stxt.c_str(), wxConvUTF8);
       int pos = txt.find('[');
       if(pos!=wxString::npos)
@@ -1020,12 +1020,12 @@ void OBGUIFrame::GetAvailableFormats()
   if(m_pInFormat->GetCount()==0)
   {
     m_pInFormat->Append(_T("No input format in the selected set"));
-    m_pInFormat->SetClientData(0,NULL);
+    m_pInFormat->SetClientData(0,nullptr);
   }
   if(m_pOutFormat->GetCount()==0)
   {
     m_pOutFormat->Append(_T("No output format in the selected set"));
-    m_pOutFormat->SetClientData(0,NULL);
+    m_pOutFormat->SetClientData(0,nullptr);
   }
   m_pInFormat->SetSelection(nInSel);
   m_pOutFormat->SetSelection(nOutSel);
@@ -1097,13 +1097,13 @@ void OBGUIFrame::MakePluginsMenu()
 {
   int n=0;
   std::vector<std::string> topvec;
-  OBPlugin::ListAsVector(NULL, NULL, topvec);//get 'formats', 'fingerprints', etc
+  OBPlugin::ListAsVector(nullptr, nullptr, topvec);//get 'formats', 'fingerprints', etc
   for(int itop=0; itop < topvec.size(); ++itop)
   {
     wxMenu* subMenu = new wxMenu();
     std::vector<std::string> subvec;
 //    std::vector<std::string> verbosevec;
-    OBPlugin::ListAsVector(topvec[itop].c_str(), NULL, subvec);//get each format, etc as single line
+    OBPlugin::ListAsVector(topvec[itop].c_str(), nullptr, subvec);//get each format, etc as single line
 //    OBPlugin::ListAsVector(topvec[itop].c_str(), "verbose", verbosevec);//get full description of each format
     subMenu->Append(ID_HINT,_T("     (Click to see details and to copy ID to clipboard)"));
     for(int isub=0; isub < subvec.size(); ++isub)
@@ -1275,5 +1275,3 @@ bool CFilenames::ToNextFile(int delta)
     return false;
 }
 //***********************************************
-
-

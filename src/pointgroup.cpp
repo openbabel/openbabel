@@ -161,25 +161,25 @@ namespace OpenBabel {
       MinOptStep            = 1e-6;
       GradientStep          = 1e-7;
       OptChangeThreshold    = 1e-10;
-      DistanceFromCenter    = NULL;
+      DistanceFromCenter    = nullptr;
       verbose               = -1;
       MaxOptCycles          = 500;
       OptChangeHits         = 5;
       MaxAxisOrder          = 20;
       PlanesCount           = 0;
-      Planes                = NULL;
-      MolecularPlane        = NULL;
+      Planes                = nullptr;
+      MolecularPlane        = nullptr;
       InversionCentersCount = 0;
-      InversionCenters      = NULL;
+      InversionCenters      = nullptr;
       NormalAxesCount       = 0;
-      NormalAxes            = NULL;
+      NormalAxes            = nullptr;
       ImproperAxesCount     = 0;
-      ImproperAxes          = NULL;
-      NormalAxesCounts      = NULL;
-      ImproperAxesCounts    = NULL;
+      ImproperAxes          = nullptr;
+      NormalAxesCounts      = nullptr;
+      ImproperAxesCounts    = nullptr;
       BadOptimization       = 0;
       SymmetryCode          = "";
-      PointGroupRejectionReason = NULL ;
+      PointGroupRejectionReason = nullptr ;
 
       StatTotal             = 0 ;
       StatEarly             = 0 ;
@@ -259,7 +259,7 @@ namespace OpenBabel {
 
       PairedAtoms.clear();
 
-      if( atom_used == NULL ){
+      if (atom_used == nullptr){
         //        fprintf( stderr, "Out of memory for tagging array in establish_pairs()\n" ) ;
         return 0;
       }
@@ -369,15 +369,15 @@ namespace OpenBabel {
       SYMMETRY_ELEMENT * elem = (SYMMETRY_ELEMENT *)calloc( 1, sizeof( SYMMETRY_ELEMENT ) ) ;
       unsigned int i;
 
-      if( elem == NULL ){
+      if (elem == nullptr){
         //        fprintf( stderr, "Out of memory allocating symmetry element\n" ) ;
-        return NULL;
+        return nullptr;
       }
       elem->transform = (int*)calloc( _mol->NumAtoms(), sizeof( int ) ) ;
-      if( elem->transform == NULL ){
+      if (elem->transform == nullptr){
         //        fprintf( stderr, "Out of memory allocating transform table for symmetry element\n" ) ;
         free(elem);
-        return NULL;
+        return nullptr;
       }
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
         elem->transform[i] = _mol->NumAtoms() + 1 ; /* An impossible value */
@@ -388,8 +388,8 @@ namespace OpenBabel {
     void
     destroy_symmetry_element( SYMMETRY_ELEMENT *elem )
     {
-      if( elem != NULL ){
-        if( elem->transform != NULL )
+      if (elem != nullptr) {
+        if (elem->transform != nullptr)
           free( elem->transform ) ;
         free( elem ) ;
       }
@@ -463,7 +463,7 @@ namespace OpenBabel {
         if( r > maxr ) maxr = r ;
         target += r ;
       }
-      if( finish != NULL ){
+      if (finish != nullptr) {
         *finish = 0 ;
         if( maxr < ToleranceFinal )
           *finish = 1 ;
@@ -524,10 +524,10 @@ namespace OpenBabel {
         for( i = 0 ; i < vars ; i++ ){
           values[i] -= GradientStep ;
           set_params( elem, values ) ;
-          fdn        = eval_optimization_target_function( elem, NULL ) ;
+          fdn        = eval_optimization_target_function(elem, nullptr);
           values[i] += 2*GradientStep ;
           set_params( elem, values ) ;
-          fup        = eval_optimization_target_function( elem, NULL ) ;
+          fup        = eval_optimization_target_function(elem, nullptr);
           values[i] -= GradientStep ;
           grad[i]    = ( fup - fdn ) / ( 2 * GradientStep ) ;
           force[i]   = ( fup + fdn - 2*f ) / ( GradientStep * GradientStep ) ;
@@ -552,7 +552,7 @@ namespace OpenBabel {
             values[i] += step[i] ;
           }
           set_params( elem, values ) ;
-          fnew = eval_optimization_target_function( elem, NULL ) ;
+          fnew = eval_optimization_target_function(elem, nullptr);
           if( fnew < f )
             break ;
           for( i = 0 ; i < vars ; i++ ){
@@ -566,7 +566,7 @@ namespace OpenBabel {
           for( i = 0 ; i < vars ; i++ )
             values[i] += step[i] ;
           set_params( elem, values ) ;
-          fnew2 = eval_optimization_target_function( elem, NULL ) ;
+          fnew2 = eval_optimization_target_function(elem, nullptr);
           if( verbose > 1 ) printf( "        interpolation base points: %g, %g, %g\n", f, fnew, fnew2 ) ;
           for( i = 0 ; i < vars ; i++ )
             values[i] -= 2*step[i] ;
@@ -595,7 +595,7 @@ namespace OpenBabel {
           set_params( elem, values ) ;
         }
       } while( snorm > MinOptStep && ++cycle < MaxOptCycles ) ;
-      f = eval_optimization_target_function( elem, NULL ) ;
+      f = eval_optimization_target_function(elem, nullptr);
       if( cycle >= MaxOptCycles ) BadOptimization = 1 ;
       if( verbose > 0 ) {
         if( cycle >= MaxOptCycles )
@@ -707,7 +707,7 @@ namespace OpenBabel {
       if( rab < ToleranceSame ){
         //        fprintf( stderr, "Atoms %d and %d coincide (r = %g)\n", i, j, rab ) ;
         destroy_symmetry_element(plane);
-        return NULL;
+        return nullptr;
       }
       for( k = 0, r = 0 ; k < DIMENSION ; k++ ){
         plane->normal[k] = dx[k]/rab ;
@@ -724,7 +724,7 @@ namespace OpenBabel {
       if( refine_symmetry_element( plane, 1 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the plane\n" ) ;
         destroy_symmetry_element( plane ) ;
-        return NULL ;
+        return nullptr;
       }
       return plane ;
     }
@@ -773,14 +773,14 @@ namespace OpenBabel {
         s1 += d1[k] ;
         s2 += d2[k] ;
       }
-      d = NULL ;
+      d = nullptr;
       if( s0 >= s1 && s0 >= s2 ) d = d0 ;
       if( s1 >= s0 && s1 >= s2 ) d = d1 ;
       if( s2 >= s0 && s2 >= s1 ) d = d2 ;
-      if( d == NULL ){
+      if (d == nullptr) {
         fprintf( stderr, "Catastrophe in init_ultimate_plane(): %g, %g and %g have no ordering!\n", s0, s1, s2 ) ;
         destroy_symmetry_element(plane);
-        return NULL;
+        return nullptr;
       }
       for( k = 0, r = 0 ; k < DIMENSION ; k++ )
         r += d[k]*d[k] ;
@@ -802,7 +802,7 @@ namespace OpenBabel {
       if( refine_symmetry_element( plane, 0 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the plane\n" ) ;
         destroy_symmetry_element( plane ) ;
-        return NULL ;
+        return nullptr;
       }
       return plane ;
     }
@@ -854,7 +854,7 @@ namespace OpenBabel {
       if( refine_symmetry_element( center, 1 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the inversion center\n" ) ;
         destroy_symmetry_element( center ) ;
-        return NULL ;
+        return nullptr;
       }
       return center ;
     }
@@ -959,7 +959,7 @@ namespace OpenBabel {
       if( refine_symmetry_element( axis, 0 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the infinity axis\n" ) ;
         destroy_symmetry_element( axis ) ;
-        return NULL ;
+        return nullptr;
       }
       return axis ;
     }
@@ -986,7 +986,7 @@ namespace OpenBabel {
       if( fabs( ris - rjs ) > TolerancePrimary ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    Support can't actually define a rotation axis\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       axis                 = alloc_symmetry_element() ;
       axis->transform_atom = rotate_atom ;
@@ -1012,7 +1012,7 @@ namespace OpenBabel {
       r = sqrt(SQUARE(center[0]) + SQUARE(center[1]) + SQUARE(center[2]));
 
       if( r <= TolerancePrimary ){ /* c2 is underdefined, let's do something special */
-        if( MolecularPlane != NULL ){
+        if (MolecularPlane != nullptr) {
           if( verbose > 0 ) printf( "    c2 is underdefined, but there is a molecular plane\n" ) ;
           for( k = 0 ; k < DIMENSION ; k++ )
             axis->direction[k] = MolecularPlane->normal[k] ;
@@ -1048,7 +1048,7 @@ namespace OpenBabel {
       if( refine_symmetry_element( axis, 1 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the c2 axis\n" ) ;
         destroy_symmetry_element( axis ) ;
-        return NULL ;
+        return nullptr;
       }
       return axis ;
     }
@@ -1071,7 +1071,7 @@ namespace OpenBabel {
       if( fabs( ra - rb ) > TolerancePrimary || fabs( ra - rc ) > TolerancePrimary || fabs( rb - rc ) > TolerancePrimary ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    points are not on a sphere\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       for( i = 0 ; i < DIMENSION ; i++ ){
         rab += (a[i]-b[i])*(a[i]-b[i]) ;
@@ -1084,12 +1084,12 @@ namespace OpenBabel {
       if( fabs( rab - rbc ) > TolerancePrimary ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    points can't be rotation-equivalent\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       if( rab <= ToleranceSame || rbc <= ToleranceSame || rac <= ToleranceSame ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    rotation is underdefined by these points: %8.3f %8.3f %8.3f\n", rab, rbc, rac ) ;
-        return NULL ;
+        return nullptr;
       }
       rab   = (rab+rbc)/2 ;
       angle = M_PI - 2*asin( rac/(2*rab) ) ;
@@ -1097,13 +1097,13 @@ namespace OpenBabel {
       if( fabs(angle) <= M_PI/(MaxAxisOrder+1) ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    atoms are too close to a straight line\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       order = static_cast<int> (floor( (2*M_PI)/angle + 0.5 )) ;
       if( order <= 2 || order > MaxAxisOrder ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    rotation axis order (%d) is not from 3 to %d\n", order, MaxAxisOrder ) ;
-        return NULL ;
+        return nullptr;
       }
       axis = alloc_symmetry_element() ;
       axis->order          = order ;
@@ -1180,15 +1180,15 @@ namespace OpenBabel {
       c[1] = _mol->GetAtom(ic+1)->y() - CenterOfSomething[1];
       c[2] = _mol->GetAtom(ic+1)->z() - CenterOfSomething[2];
 
-      if( ( axis = init_axis_parameters( a, b, c ) ) == NULL ){
+      if ((axis = init_axis_parameters(a, b, c)) == nullptr) {
         if( verbose > 0 ) printf( "    no coherrent axis is defined by the points\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       axis->transform_atom = rotate_atom ;
       if( refine_symmetry_element( axis, 1 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the c%d axis\n", axis->order ) ;
         destroy_symmetry_element( axis ) ;
-        return NULL ;
+        return nullptr;
       }
       return axis ;
     }
@@ -1272,7 +1272,7 @@ namespace OpenBabel {
       if( r <= ToleranceSame ){
         StatEarly++ ;
         if( verbose > 0 ) printf( "    atoms can not define improper axis of the order more than 2\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       for( i = 0 ; i < DIMENSION ; i++ )
         centerpoint[i] /= r ;
@@ -1281,15 +1281,15 @@ namespace OpenBabel {
       for( i = 0 ; i < DIMENSION ; i++ )
         b[i] = 2*r*centerpoint[i] - b[i] ;
       /* Do a quick check of geometry validity */
-      if( ( axis = init_axis_parameters( a, b, c ) ) == NULL ){
+      if ((axis = init_axis_parameters(a, b, c)) == nullptr) {
         if( verbose > 0 ) printf( "    no coherrent improper axis is defined by the points\n" ) ;
-        return NULL ;
+        return nullptr;
       }
       axis->transform_atom = rotate_reflect_atom ;
       if( refine_symmetry_element( axis, 1 ) < 0 ){
         if( verbose > 0 ) printf( "    refinement failed for the s%d axis\n", axis->order ) ;
         destroy_symmetry_element( axis ) ;
-        return NULL ;
+        return nullptr;
       }
       return axis ;
     }
@@ -1318,7 +1318,7 @@ namespace OpenBabel {
         printf( "Center of something is at %15.10f, %15.10f, %15.10f\n",
                 CenterOfSomething[0], CenterOfSomething[1], CenterOfSomething[2] ) ;
       DistanceFromCenter = (double *) calloc( _mol->NumAtoms(), sizeof( double ) ) ;
-      if( DistanceFromCenter == NULL ){
+      if (DistanceFromCenter == nullptr) {
         //        fprintf( stderr, "Unable to allocate array for the distances\n" ) ;
         return;
       }
@@ -1339,11 +1339,11 @@ namespace OpenBabel {
       SYMMETRY_ELEMENT * plane ;
 
       plane = init_ultimate_plane() ;
-      if( plane != NULL ){
+      if (plane != nullptr) {
         MolecularPlane = plane ;
         PlanesCount++ ;
         Planes = (SYMMETRY_ELEMENT **) realloc( Planes, sizeof( SYMMETRY_ELEMENT* ) * PlanesCount ) ;
-        if( Planes == NULL ){
+        if (Planes == nullptr) {
           perror( "Out of memory in find_planes" ) ;
           exit( EXIT_FAILURE ) ;
         }
@@ -1353,10 +1353,10 @@ namespace OpenBabel {
         for( j = 0 ; j < i ; j++ ){
           if( !equivalentAtoms(*_mol->GetAtom(i+1), *_mol->GetAtom(j+1)) )
             continue ;
-          if( ( plane = init_mirror_plane( i, j ) ) != NULL ){
+          if ((plane = init_mirror_plane(i, j)) != nullptr) {
             PlanesCount++ ;
             Planes = (SYMMETRY_ELEMENT **) realloc( Planes, sizeof( SYMMETRY_ELEMENT* ) * PlanesCount ) ;
-            if( Planes == NULL ){
+            if (Planes == nullptr) {
               perror( "Out of memory in find_planes" ) ;
               exit( EXIT_FAILURE ) ;
             }
@@ -1371,7 +1371,7 @@ namespace OpenBabel {
     {
       SYMMETRY_ELEMENT * center ;
 
-      if( ( center = init_inversion_center() ) != NULL ){
+      if ((center = init_inversion_center()) != nullptr) {
         InversionCenters = (SYMMETRY_ELEMENT **) calloc( 1, sizeof( SYMMETRY_ELEMENT* ) ) ;
         InversionCenters[0]   = center ;
         InversionCentersCount = 1 ;
@@ -1383,10 +1383,10 @@ namespace OpenBabel {
     {
       SYMMETRY_ELEMENT * axis ;
 
-      if( ( axis = init_ultimate_axis() ) != NULL ){
+      if ((axis = init_ultimate_axis()) != nullptr) {
         NormalAxesCount++ ;
         NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
-        if( NormalAxes == NULL ){
+        if (NormalAxes == nullptr) {
           perror( "Out of memory in find_infinity_axes()" ) ;
           return;
         }
@@ -1404,7 +1404,7 @@ namespace OpenBabel {
       SYMMETRY_ELEMENT * axis ;
       OBAtom           *a1, *a2, *a3, *a4;
 
-      if( distances == NULL ){
+      if (distances == nullptr) {
         //        fprintf( stderr, "Out of memory in find_c2_axes()\n" ) ;
         return;
       }
@@ -1427,10 +1427,10 @@ namespace OpenBabel {
                - vector3(CenterOfSomething[0], CenterOfSomething[1], CenterOfSomething[2])).length();
 
           if( r > 5*TolerancePrimary ){ /* It's Ok to use CenterOfSomething */
-            if( ( axis = init_c2_axis( i, j, CenterOfSomething ) ) != NULL ){
+            if ((axis = init_c2_axis(i, j, CenterOfSomething)) != nullptr) {
               NormalAxesCount++ ;
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
-              if( NormalAxes == NULL ){
+              if (NormalAxes == nullptr) {
                 perror( "Out of memory in find_c2_axes" ) ;
                 free(distances);
                 return;
@@ -1444,10 +1444,10 @@ namespace OpenBabel {
            *  middle of the other pair.
            */
           for( k = 0 ; k < _mol->NumAtoms() ; k++ ){
-            if( ( axis = init_c2_axis( i, j, _mol->GetAtom(k+1)->GetVector().AsArray() ) ) != NULL ){
+            if ((axis = init_c2_axis(i, j, _mol->GetAtom(k+1)->GetVector().AsArray())) != nullptr) {
               NormalAxesCount++ ;
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
-              if( NormalAxes == NULL ){
+              if (NormalAxes == nullptr) {
                 perror( "Out of memory in find_c2_axes" ) ;
                 free(distances);
                 return;
@@ -1478,10 +1478,10 @@ namespace OpenBabel {
               center[1] = (a3->y() + a4->y()) / 2.0;
               center[2] = (a3->z() + a4->z()) / 2.0;
 
-              if( ( axis = init_c2_axis( i, j, center ) ) != NULL ){
+              if ((axis = init_c2_axis(i, j, center)) != nullptr) {
                 NormalAxesCount++ ;
                 NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
-                if( NormalAxes == NULL ){
+                if (NormalAxes == nullptr) {
                   perror( "Out of memory in find_c2_axes" ) ;
                   free(distances);
                   return;
@@ -1513,10 +1513,10 @@ namespace OpenBabel {
             if( ( fabs( DistanceFromCenter[i] - DistanceFromCenter[k] ) > TolerancePrimary ) ||
                 ( fabs( DistanceFromCenter[j] - DistanceFromCenter[k] ) > TolerancePrimary ) )
               continue ;
-            if( ( axis = init_higher_axis( i, j, k ) ) != NULL ){
+            if ((axis = init_higher_axis(i, j, k)) != nullptr) {
               NormalAxesCount++ ;
               NormalAxes = (SYMMETRY_ELEMENT **) realloc( NormalAxes, sizeof( SYMMETRY_ELEMENT* ) * NormalAxesCount ) ;
-              if( NormalAxes == NULL ){
+              if (NormalAxes == nullptr) {
                 perror( "Out of memory in find_higher_axes" ) ;
                 return;
               }
@@ -1536,10 +1536,10 @@ namespace OpenBabel {
       for( i = 0 ; i < _mol->NumAtoms() ; i++ ){
         for( j = i + 1 ; j < _mol->NumAtoms() ; j++ ){
           for( k = 0 ; k < _mol->NumAtoms() ; k++ ){
-            if( ( axis = init_improper_axis( i, j, k ) ) != NULL ){
+            if ((axis = init_improper_axis(i, j, k)) != nullptr) {
               ImproperAxesCount++ ;
               ImproperAxes = (SYMMETRY_ELEMENT **) realloc( ImproperAxes, sizeof( SYMMETRY_ELEMENT* ) * ImproperAxesCount ) ;
-              if( ImproperAxes == NULL ){
+              if (ImproperAxes == nullptr) {
                 perror( "Out of memory in find_improper_axes" ) ;
                 return;
               }
@@ -1754,7 +1754,7 @@ namespace OpenBabel {
       char *       symmetry_code = (char*)calloc( 1, 10*(PlanesCount+NormalAxesCount+ImproperAxesCount+InversionCentersCount+2) ) ;
       char         buf[ 100 ] ;
 
-      if( symmetry_code == NULL ){
+      if (symmetry_code == nullptr) {
         //        fprintf( stderr, "Unable to allocate memory for symmetry ID code in report_symmetry_elements_brief()\n" ) ;
         return;
       }

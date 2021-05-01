@@ -85,13 +85,13 @@ namespace OpenBabel
         };
 
       static void RegisterXMLFormat(XMLBaseFormat* pFormat,
-                                    bool IsDefault=false, const char* uri=NULL);
+                                    bool IsDefault=false, const char* uri=nullptr);
 
       ///Returns the extended OBConversion class, making it if necessary
       static XMLConversion* GetDerived(OBConversion* pConv, bool ForReading=true);
 
       ///Because OBConversion::Convert is still using the unextended OBConversion object
-      ///we need to obtain the conversion paramters from it when requested
+      ///we need to obtain the conversion parameters from it when requested
       bool IsLast()
         { return _pConv->IsLast(); }
       int GetOutputIndex()

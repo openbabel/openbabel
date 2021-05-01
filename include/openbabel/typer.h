@@ -21,7 +21,7 @@ GNU General Public License for more details.
 #define OB_TYPER_H
 
 #include <openbabel/babelconfig.h>
-#include <openbabel/mol.h>
+#include <openbabel/mol.h>  //needed for THREAD_LOCAL definition
 
 #include <vector>
 #include <string>
@@ -62,12 +62,12 @@ public:
 #ifndef THREAD_LOCAL
 # define THREAD_LOCAL
 #endif
-#ifndef EXTERN
-#error EXTERN
+#ifndef OB_EXTERN
+#error OB_EXTERN
 #endif
 //! Global OBAtomTyper for marking internal valence, hybridization,
 //!  and atom types (for internal and external use)
-THREAD_LOCAL EXTERN OBAtomTyper      atomtyper;
+THREAD_LOCAL OB_EXTERN OBAtomTyper      atomtyper;
 
 // class introduction in typer.cpp
 class OBAPI OBAromaticTyper
@@ -81,7 +81,7 @@ public:
 };
 
 //! Global OBAromaticTyper for detecting aromatic atoms and bonds
-THREAD_LOCAL EXTERN OBAromaticTyper  aromtyper;
+THREAD_LOCAL OB_EXTERN OBAromaticTyper  aromtyper;
 
 // class introduction in typer.cpp
 class OBAPI OBRingTyper : public OBGlobalDataBase

@@ -45,8 +45,8 @@ Installation
 
 ::
 
-    tar -xzvf openbabel-3-0-0.tar.gz
-    cd openbabel-openbabel-3-0-0
+    tar -xzvf openbabel-3-1-0.tar.gz
+    cd openbabel-openbabel-3-1-0
     python setup.py install
     
 **Option 3**: While building Open Babel itself.

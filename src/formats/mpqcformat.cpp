@@ -104,7 +104,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -122,13 +122,13 @@ namespace OpenBabel
     mol.BeginModify();
     while	(ifs.getline(buffer,BUFF_SIZE))
       {
-        if(strstr(buffer,"<Molecule>:") != NULL)
+        if (strstr(buffer, "<Molecule>:") != nullptr)
           {
             // mol.EndModify();
             mol.Clear();
-            while	(strstr(buffer,"geometry") == NULL)
+            while (strstr(buffer, "geometry") == nullptr)
               {
-                if (strstr(buffer,"angstrom") != NULL)
+                if (strstr(buffer, "angstrom") != nullptr)
                   bohr = false;
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   return(false);
@@ -180,7 +180,7 @@ namespace OpenBabel
   bool MPQCInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

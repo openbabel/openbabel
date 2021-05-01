@@ -131,7 +131,7 @@ namespace OpenBabel
     //! Get a pointer to a specific base pointer (i.e., specific conformer)
     double *GetBaseCoordinateSet(unsigned int i) const
     {
-      return (i<_c.size()) ? _c[i] : NULL;
+      return (i<_c.size()) ? _c[i] : nullptr;
     }
 
     //! \return The number of atoms in the base OBMol

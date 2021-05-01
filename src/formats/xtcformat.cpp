@@ -123,7 +123,7 @@ namespace OpenBabel
   {
     //OBMol* pmol = pOb->CastAndClear<OBMol>();
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     OBMol &mol = *pmol;
@@ -273,12 +273,12 @@ namespace OpenBabel
 
     if (init_done == 0) {
       for (xdrid = 1; xdrid < MAXID; xdrid++) {
-        xdridptr[xdrid] = NULL;
+        xdridptr[xdrid] = nullptr;
       }
       init_done = 1;
     }
     xdrid = 1;
-    while (xdrid < MAXID && xdridptr[xdrid] != NULL) {
+    while (xdrid < MAXID && xdridptr[xdrid] != nullptr) {
       xdrid++;
     }
     if (xdrid == MAXID) {
@@ -292,8 +292,8 @@ namespace OpenBabel
 	    lmode = XDR_DECODE;
     }
     xdrfiles[xdrid] = fopen(filename, type);
-    if (xdrfiles[xdrid] == NULL) {
-      xdrs = NULL;
+    if (xdrfiles[xdrid] == nullptr) {
+      xdrs = nullptr;
       return 0;
     }
     xdrmodes[xdrid] = *type;
@@ -302,8 +302,8 @@ namespace OpenBabel
      * (C users are expected to pass the address of an already allocated
      * XDR staructure)
      */
-    if (xdrs == NULL) {
-      xdridptr[xdrid] = (XDR *) malloc(sizeof(XDR));
+    if (xdrs == nullptr) {
+      xdridptr[xdrid] = (XDR *) calloc(1,sizeof(XDR));
       xdrstdio_create(xdridptr[xdrid], xdrfiles[xdrid], lmode);
     } else {
       xdridptr[xdrid] = xdrs;
@@ -325,7 +325,7 @@ namespace OpenBabel
   int XTCFormat::xdrclose(XDR *xdrs) {
     int xdrid;
 
-    if (xdrs == NULL) {
+    if (xdrs == nullptr) {
       fprintf(stderr, "xdrclose: passed a NULL pointer\n");
       return 0;
     }
@@ -334,7 +334,7 @@ namespace OpenBabel
 
         xdr_destroy(xdrs);
         fclose(xdrfiles[xdrid]);
-        xdridptr[xdrid] = NULL;
+        xdridptr[xdrid] = nullptr;
         return 1;
       }
     }
@@ -613,9 +613,9 @@ namespace OpenBabel
   */
 
   int XTCFormat::xdr3dfcoord(XDR *xdrs, float *fp, int *size, float *precision) {
-    int *ip = NULL;
+    int *ip = nullptr;
     int oldsize = 0;
-    int *buf = 0;
+    int *buf = nullptr;
 
     int minint[3], maxint[3], mindiff, *lip, diff;
     int lint1, lint2, lint3, oldlint1, oldlint2, oldlint3, smallidx;
@@ -658,28 +658,28 @@ namespace OpenBabel
       }
 
       xdr_float(xdrs, precision);
-      if (ip == NULL) {
-        ip = (int *)malloc(size3 * sizeof(*ip));
+      if (ip == nullptr) {
+        ip = (int *)calloc(size3, sizeof(*ip));
         if (ip == NULL) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         bufsize = static_cast<int> (size3 * 1.2);
-        buf = (int *)malloc(bufsize * sizeof(*buf));
-        if (buf == NULL) {
+        buf = (int *)calloc(bufsize, sizeof(*buf));
+        if (buf == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         oldsize = *size;
       } else if (*size > oldsize) {
         ip = (int *)realloc(ip, size3 * sizeof(*ip));
-        if (ip == NULL) {
+        if (ip == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         bufsize = static_cast<int> (size3 * 1.2);
         buf = (int *)realloc(buf, bufsize * sizeof(*buf));
-        if (buf == NULL) {
+        if (buf == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
@@ -902,28 +902,28 @@ namespace OpenBabel
                            (xdrproc_t)xdr_float));
       }
       xdr_float(xdrs, precision);
-      if (ip == NULL) {
-        ip = (int *)malloc(size3 * sizeof(*ip));
-        if (ip == NULL) {
+      if (ip == nullptr) {
+        ip = (int *)calloc(size3, sizeof(*ip));
+        if (ip == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         bufsize = static_cast<int> (size3 * 1.2);
-        buf = (int *)malloc(bufsize * sizeof(*buf));
-        if (buf == NULL) {
+        buf = (int *)calloc(bufsize, sizeof(*buf));
+        if (buf == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         oldsize = *size;
       } else if (*size > oldsize) {
         ip = (int *)realloc(ip, size3 * sizeof(*ip));
-        if (ip == NULL) {
+        if (ip == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }
         bufsize = static_cast<int> (size3 * 1.2);
         buf = (int *)realloc(buf, bufsize * sizeof(*buf));
-        if (buf == NULL) {
+        if (buf == nullptr) {
           fprintf(stderr,"malloc failed\n");
           return 0;
         }

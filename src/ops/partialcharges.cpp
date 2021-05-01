@@ -32,13 +32,13 @@ class OpPartialCharge : public OBOp
 {
 public:
   OpPartialCharge(const char* ID) : OBOp(ID, false) {
-    OBConversion::RegisterOptionParam(ID, NULL, 1, OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam(ID, nullptr, 1, OBConversion::GENOPTIONS);
   }
 
   const char* Description(){ return "<method> Calculate partial charges by specified method"; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 
   OBChargeModel *_pChargeModel;
 };
@@ -49,9 +49,9 @@ OpPartialCharge theOpPartialCharge("partialcharge"); //Global instance
 /////////////////////////////////////////////////////////////////
 bool OpPartialCharge::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
 {
-	char *arg = NULL;
-	const char *tok1= NULL;
- 	const char *tok2= NULL;
+  char *arg = nullptr;
+  const char *tok1= nullptr;
+  const char *tok2= nullptr;
   OpMap::const_iterator iter;
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   bool print = false;
@@ -66,7 +66,7 @@ bool OpPartialCharge::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBCon
 	if( OptionText ) {
 		arg = strdup( OptionText );
 		tok1 = strtok( arg, ":" );
-		tok2 = strtok( NULL, "\0" );
+		tok2 = strtok( nullptr, "\0" );
 	}
 	else {
 		tok1 = OptionText;

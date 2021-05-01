@@ -79,7 +79,7 @@ namespace OpenBabel
     _spacing=spacing;
     _halfSpace=_spacing/2.0;
     _inv_spa=1.0/_spacing;
-    _ival=NULL;
+    _ival=nullptr;
 
     // Calculate the size needed, resize the vector and initialise it to 0.0
     int size = _xdim*_ydim*_zdim;
@@ -478,11 +478,11 @@ namespace OpenBabel
   vector<int> *OBProxGrid::GetProxVector(double x,double y,double z)
   {
     if (x < _xmin || x > _xmax)
-      return(NULL);
+      return nullptr;
     if (y < _ymin || y > _ymax)
-      return(NULL);
+      return nullptr;
     if (z < _zmin || z > _zmax)
-      return(NULL);
+      return nullptr;
 
     x -= _xmin;
     y -= _ymin;
@@ -493,7 +493,7 @@ namespace OpenBabel
     k = (int) (z*_inc);
     idx = (i*_nyinc*_nzinc)+(j*_nzinc)+k;
     if (idx >= _maxinc)
-      return(NULL);
+      return nullptr;
 
     return(&cell[idx]);
   }

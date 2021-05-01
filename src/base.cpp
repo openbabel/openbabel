@@ -134,7 +134,7 @@ namespace OpenBabel
       if ((*i)->GetAttribute() == s)
         return *i;
 
-    return (OBGenericData*)0;
+    return nullptr;
   }
 
   //! \return the value given an attribute name
@@ -146,7 +146,7 @@ namespace OpenBabel
       if (strcmp((*i)->GetAttribute().c_str(), s)==0)
         return *i;
 
-    return (OBGenericData*)0;
+    return nullptr;
   }
 
   OBGenericData *OBBase::GetData(const unsigned int dt)
@@ -155,7 +155,7 @@ namespace OpenBabel
     for (i = _vdata.begin();i != _vdata.end();++i)
       if ((*i)->GetDataType() == dt)
         return(*i);
-    return(NULL);
+    return nullptr;
   }
 
   std::vector<OBGenericData *> OBBase::GetAllData(const unsigned int dt)

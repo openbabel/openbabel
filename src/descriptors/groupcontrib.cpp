@@ -92,7 +92,7 @@ namespace OpenBabel
       else
       {
         delete sp;
-        sp = NULL;
+        sp = nullptr;
         obErrorLog.ThrowError(__FUNCTION__, " Could not parse SMARTS from contribution data file", obInfo);
 
         // return the locale to the original one

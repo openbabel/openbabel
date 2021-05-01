@@ -119,7 +119,7 @@ namespace OpenBabel {
     enum View
     {
       ViewFrom = 1, //!< view from the atom (id parameter) towards the center atom
-      ViewTowards = 2 //!< view from center atom towards the atom (id paramater)
+      ViewTowards = 2 //!< view from center atom towards the atom (id parameter)
     };
 
     /**
@@ -274,8 +274,8 @@ namespace OpenBabel {
     }
 
     OBStereo::Type type; //!< the type for this stereogenic unit
-    unsigned long id; //! the atom/bond (depends on type) unique id
-    bool para; //! para- (=ressemble) or true-stereocenter
+    unsigned long id; //!< the atom/bond (depends on type) unique id
+    bool para; //!< para- (=ressemble) or true-stereocenter
   };
   /**
    * @brief A single set of OBStereoUnit objects.
@@ -335,7 +335,7 @@ namespace OpenBabel {
       /**
        * Destructor.
        */
-      virtual ~OBStereoBase() { m_mol = 0; }
+      virtual ~OBStereoBase() { m_mol = nullptr; }
 
       ///@name Geniric (for all OBStereo::Type) stereochemistry
       //@{
@@ -403,6 +403,10 @@ namespace OpenBabel {
        */
       unsigned int NumTetrahedralStereo();
       /**
+       * Get all the OBTetrahedralStereo objects.
+       */
+      std::vector<OBTetrahedralStereo*> GetAllTetrahedralStereo();
+      /**
        * Check if atom with @p id is a tetrahedral center.
        * @return True if the atom with @p id has tetrahedral stereochemistry.
        */
@@ -422,6 +426,10 @@ namespace OpenBabel {
        */
       unsigned int NumCisTransStereo();
       /**
+       * Get all the OBCisTransStereo objects.
+       */
+      std::vector<OBCisTransStereo*> GetAllCisTransStereo();
+      /**
        * Check if bond with @p id is a stereogenic cis/trans double bond.
        * @return True if the bond with @p id has cis/trans stereochemistry.
        */
@@ -440,6 +448,10 @@ namespace OpenBabel {
        * Get the number of square-planar stereocenters.
        */
       unsigned int NumSquarePlanarStereo();
+      /**
+       * Get all the OBSquarePlanarStereo objects.
+       */
+      std::vector<OBSquarePlanarStereo*> GetAllSquarePlanarStereo();
       /**
        * Check if atom with @p id is a stereogenic square-planar atom.
        * @return True if the atom with @p id has square-planar stereochemistry.
@@ -524,7 +536,7 @@ namespace OpenBabel {
    * @since version 2.3
    */
   OBAPI void StereoFrom2D(OBMol *mol,
-    std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool force = false);
+    std::map<OBBond*, enum OBStereo::BondDirection> *updown = nullptr, bool force = false);
   /**
    * Convert the 3D coordinates of molecule @p mol to OBStereo objects. This
    * function makes use of the lower level functions TetrahedralFrom3D(),
@@ -740,7 +752,7 @@ namespace OpenBabel {
    */
   OBAPI std::vector<OBCisTransStereo*> CisTransFrom2D(OBMol *mol,
       const OBStereoUnitSet &stereoUnits,
-      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = NULL, bool addToMol = true);
+      const std::map<OBBond*, enum OBStereo::BondDirection> *updown = nullptr, bool addToMol = true);
   /**
    * Convert a molecule's OBTetrahedralStereo objects to a series of hash or
    * wedge bonds. Note that the molecule itself is not modified; the result
@@ -982,8 +994,8 @@ namespace OpenBabel {
    * - C11: 1 true stereocenter OR 1 para stereocenter
    *
    * These criteria are analogous to the rules from the Razinger paper on
-   * stereoisomer generation. Since the existance of stereocenters can depend
-   * on the existance of other stereocenters (in the ligands), the stereocenters
+   * stereoisomer generation. Since the existence of stereocenters can depend
+   * on the existence of other stereocenters (in the ligands), the stereocenters
    * are found by iterating until no new stereocenters are found.
    *
    * @verbatim
@@ -1137,7 +1149,7 @@ namespace OpenBabel {
    * For many file formats no additional code is needed. For example, if a 3D format
    * doesn't require stereo parity flags, writing the coordinates is enough. For 2D
    * file formats it will often suffice to write the coordinates and bond properties.
-   * If parity flags are needed, the OBStereoFacade class can be used to retreive the
+   * If parity flags are needed, the OBStereoFacade class can be used to retrieve the
    * objects for all types of stereochemistry supported by the file format.
    *
    *

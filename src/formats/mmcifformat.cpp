@@ -45,6 +45,7 @@ namespace OpenBabel
      // OBConversion::RegisterFormat("cif", this, "chemical/x-cif");
 
      OBConversion::RegisterOptionParam("s", this);
+     OBConversion::RegisterOptionParam("p", this);
      OBConversion::RegisterOptionParam("b", this);
      OBConversion::RegisterOptionParam("w", this);
    }
@@ -55,6 +56,7 @@ namespace OpenBabel
        "Macromolecular Crystallographic Info\n "
        "Read Options e.g. -as\n"
        "  s  Output single bonds only\n"
+       "  p  Apply periodic boundary conditions for bonds\n"
        "  b  Disable bonding entirely\n"
        "  w  Wrap atomic coordinates into unit cell box\n\n";
    };
@@ -241,9 +243,9 @@ namespace OpenBabel
      TokenType type;
      string as_text;
      double  as_number() const
-       { return strtod(as_text.c_str(), 0); }
+       { return strtod(as_text.c_str(), nullptr); }
      unsigned long  as_unsigned() const
-       { return strtoul(as_text.c_str(), 0, 10); }
+       { return strtoul(as_text.c_str(), nullptr, 10); }
      };
    CIFLexer(std::istream * in)
    :input(in)
@@ -491,7 +493,7 @@ namespace OpenBabel
  bool mmCIFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
  {
    OBMol* pmol = pOb->CastAndClear<OBMol>();
-   if(pmol==NULL)
+   if (pmol == nullptr)
      return false;
 
    CIFLexer lexer(pConv->GetInStream());
@@ -616,7 +618,7 @@ namespace OpenBabel
              use_fract = 0;
              }
            size_t column_idx = 0;
-           OBAtom * atom = 0;
+           OBAtom * atom = nullptr;
            double x = 0.0, y = 0.0, z = 0.0;
            CIFResidueMap ResidueMap;
            unsigned long chain_num = 1, residue_num = 1;
@@ -624,8 +626,6 @@ namespace OpenBabel
            string residue_name, atom_label, atom_mol_label, tmpSymbol;
            int atomicNum;
            OBPairData *label;
-           OBPairFloatingPoint * occup;
-           double occupancy = 1.0;
            while (token.type == CIFLexer::ValueToken) // Read in the Fields
              {
              if (column_idx == 0)
@@ -783,15 +783,14 @@ namespace OpenBabel
                residue_num = token.as_unsigned();
                break;
              case CIFTagID::_atom_site_occupancy: // The occupancy of the site.
-               occup = new OBPairFloatingPoint;
-               occup->SetAttribute("_atom_site_occupancy");
-               occupancy = token.as_number();
-               if (occupancy <= 0.0 || occupancy > 1.0){
-                 occupancy = 1.0;
-               }
-               occup->SetValue(occupancy);
-               occup->SetOrigin(fileformatInput);
-               atom->SetData(occup);
+               {
+                 OBPairFloatingPoint * occup = new OBPairFloatingPoint;
+                 occup->SetAttribute("_atom_site_occupancy");
+                 double occupancy = std::max(0.0, std::min(1.0, token.as_number())); // clamp occupancy to [0.0, 1.0] bugfix  
+                 occup->SetValue(occupancy);
+                 occup->SetOrigin(fileformatInput);
+                 atom->SetData(occup);
+               }  
                break;
              case CIFTagID::unread_CIFDataName:
              default:
@@ -820,7 +819,7 @@ namespace OpenBabel
                  res->AddAtom(atom);
                  if (!atom_label.empty())
                    res->SetAtomID(atom, atom_label);
-                 unsigned long serial_no = strtoul(atom_mol_label.c_str(), 0, 10);
+                 unsigned long serial_no = strtoul(atom_mol_label.c_str(), nullptr, 10);
                  if (serial_no > 0)
                    res->SetSerialNum(atom, serial_no);
                  }
@@ -961,7 +960,7 @@ namespace OpenBabel
        {
        if (use_cell >= 6)
          {
-         OBUnitCell * pCell = new OBUnitCell;
+         OBUnitCell * pCell = new OBUnitCell;  // No matching "delete" because it's saved in pmol->SetData
          pCell->SetOrigin(fileformatInput);
          pCell->SetData(cell_a, cell_b, cell_c,
                         cell_alpha,
@@ -985,14 +984,16 @@ namespace OpenBabel
                                pCell->WrapFractionalCoordinate(atom->GetVector())));
              else
                atom->SetVector(pCell->FractionalToCartesian(atom->GetVector()));
-             }
+             }  // Note: this is where we could keep the original fractional coordinates, e.g. in a new OBCoord class
            }
+         if (pConv->IsOption("p",OBConversion::INOPTIONS))
+           pmol->SetPeriodicMol();
          }
        for (OBAtomIterator atom_x = pmol->BeginAtoms(), atom_y = pmol->EndAtoms(); atom_x != atom_y; ++atom_x )
        {
          OBAtom * atom = (* atom_x);
          OBPairData * pd = dynamic_cast<OBPairData *>( atom->GetData( "_atom_site_label" ) );
-         if ( pd != NULL )
+         if (pd != nullptr)
          {
            if( atomic_charges.count( pd->GetValue() ) > 0 )
            {
@@ -1044,7 +1045,7 @@ namespace OpenBabel
  bool mmCIFFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
  {
    OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-   if(pmol==NULL)
+   if (pmol == nullptr)
      return false;
 
    //Define some references so we can use the old parameter names
@@ -1058,7 +1059,7 @@ namespace OpenBabel
        id.append(1, (char)toupper(* p));
    if (id.empty())
      {
-     snprintf(buffer, BUFF_SIZE, "T%lu", (unsigned long)time(0));
+     snprintf(buffer, BUFF_SIZE, "T%lu", (unsigned long)time(nullptr));
      id.assign(buffer);
      }
    ofs << "# --------------------------------------------------------------------------" << endl;

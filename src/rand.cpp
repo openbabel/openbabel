@@ -510,7 +510,7 @@ namespace OpenBabel
 #else
 
     timeval time;
-    gettimeofday(&time,(struct timezone *)NULL);
+    gettimeofday(&time, (struct timezone *)nullptr);
     x = (time.tv_usec%p);
     srand( x );
 #ifdef HAVE_SRANDDEV

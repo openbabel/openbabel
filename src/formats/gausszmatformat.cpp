@@ -75,7 +75,7 @@ namespace OpenBabel
   bool GaussianZMatrixInputFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -145,7 +145,7 @@ namespace OpenBabel
     OBAtom *a,*b,*c;//, *atom;
 
     vector<OBInternalCoord*> vic;
-    vic.push_back((OBInternalCoord*)NULL);
+    vic.push_back(nullptr);
 		FOR_ATOMS_OF_MOL(atom, mol)
       vic.push_back(new OBInternalCoord);
 
@@ -243,7 +243,7 @@ namespace OpenBabel
   bool GaussianZMatrixInputFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -255,7 +255,7 @@ namespace OpenBabel
 
     OBAtom *atom;
 		vector<OBInternalCoord*> vic;
-	  vic.push_back((OBInternalCoord*)NULL); // OBMol indexed from 1 -- potential atom index problem
+	  vic.push_back(nullptr); // OBMol indexed from 1 -- potential atom index problem
 
     vector<string> vs;
     int charge = 0;
@@ -299,7 +299,7 @@ namespace OpenBabel
         }
       }
 
-			if (strcasestr(buffer, "VARIABLE") != NULL) {
+			if (strcasestr(buffer, "VARIABLE") != nullptr) {
 				readVariables = true;
         continue;
 			}
@@ -413,6 +413,6 @@ _strcasestr(const char *s, const char *pattern)
 	    return s;
 	s++;
     }
-    return 0;
+    return nullptr;
 }
 

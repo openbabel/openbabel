@@ -71,7 +71,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -162,7 +162,7 @@ namespace OpenBabel
   bool CacaoFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -217,7 +217,7 @@ namespace OpenBabel
     OBAtom *atom,*a1,*a2,*ref;
     vector<OBAtom*>::iterator ai;
 
-    vit.push_back((OBInternalCoord*)NULL);
+    vit.push_back(nullptr);
     for (atom = mol.BeginAtom(ai);atom;atom = mol.NextAtom(ai))
       vit.push_back(new OBInternalCoord (atom));
 
@@ -234,7 +234,7 @@ namespace OpenBabel
     unsigned int i,j;
     for (i = 2;i <= mol.NumAtoms();i++)
       {
-        ref = (OBAtom*)NULL;
+        ref = nullptr;
         a1 = mol.GetAtom(i);
         sum = 100.0;
         for (j = 1;j < i;j++)
@@ -269,6 +269,7 @@ namespace OpenBabel
         a = vit[i]->_a;
         b = vit[i]->_b;
         c = vit[i]->_c;
+        // TODO: fix explicit calculations for PBC?
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector() - a->GetVector();
         vit[i]->_ang = vectorAngle(v1,v2);
@@ -318,7 +319,7 @@ namespace OpenBabel
   bool CacaoInternalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -367,7 +368,7 @@ namespace OpenBabel
       if (*j)
         {
           delete *j;
-          *j = NULL;
+          *j = nullptr;
         }
 
     return(true);

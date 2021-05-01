@@ -72,7 +72,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -160,8 +160,8 @@ namespace OpenBabel
       atom->SetVector(x,y,z); //set coordinates
     }
 
-    if (ifs.getline(buffer,BUFF_SIZE) && (strstr(buffer, "!Charges") != NULL
-          || strstr(buffer, "!PartialCharges") != NULL))
+    if (ifs.getline(buffer, BUFF_SIZE) && (strstr(buffer, "!Charges") != nullptr
+          || strstr(buffer, "!PartialCharges") != nullptr))
     {
       hasPartialCharges = true;
       for (i = 1; i <= natoms; i ++)
@@ -179,7 +179,7 @@ namespace OpenBabel
     // look for the !End block if it exists
     while (ifs.getline(buffer,BUFF_SIZE))
     {
-      if(strstr(buffer,"!End") != NULL)
+      if (strstr(buffer, "!End") != nullptr)
         break;
     }
 
@@ -205,7 +205,7 @@ namespace OpenBabel
   bool GhemicalFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names

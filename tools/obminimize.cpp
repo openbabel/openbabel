@@ -232,7 +232,7 @@ int main(int argc,char **argv)
       totalSteps++;
 
       if (pFF->DetectExplosion()) {
-        cerr << "explosion has occured!" << endl;
+        cerr << "explosion has occurred!" << endl;
         conv.Write(&mol, &cout);
         return(1);
       } else

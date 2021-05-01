@@ -52,13 +52,13 @@ int main(int argc,char *argv[])
     }
 
   pFormat1 = conv.FormatFromExt(argv[1]);
-  if ( pFormat1 == NULL )
+  if (pFormat1 == nullptr)
     {
       cerr << argv[0] << ": Cannot read file #1 format!" << endl;
       return(-1);
     }
   pFormat2 = conv.FormatFromExt(argv[2]);
-  if ( pFormat2 == NULL )
+  if (pFormat2 == nullptr)
     {
       cerr << argv[0] << ": Cannot read file #2 format!" << endl;
       return(-1);

@@ -86,7 +86,7 @@ public:
           textlines.push_back(ln);
       }
       //look up class name in map maintained in OBPlugin
-      if(!textlines.empty() && FindDef(textlines[0].c_str())!=NULL)
+      if(!textlines.empty() && FindDef(textlines[0].c_str()) != nullptr)
       {
         //Save a copy of textlines so that const char* pointers in new instance point
         //to something which has not been deleted
@@ -203,7 +203,7 @@ OBPlugin* OBDefine::FindDef(const char* ID)
         return iter->second;
     }
   }
-  return NULL;
+  return nullptr;
 }
 
 }//namespace

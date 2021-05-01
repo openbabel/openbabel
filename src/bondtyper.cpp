@@ -93,7 +93,7 @@ namespace OpenBabel
         else
           {
             delete sp;
-            sp = NULL;
+            sp = nullptr;
           }
       }
   }
@@ -104,7 +104,7 @@ namespace OpenBabel
     for (i = _fgbonds.begin();i != _fgbonds.end();++i)
       {
         delete i->first;
-        i->first = NULL;
+        i->first = nullptr;
       }
   }
 

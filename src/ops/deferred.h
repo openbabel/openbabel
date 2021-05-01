@@ -35,7 +35,7 @@ rather than before most of them. See OpLargest for an example.
 class DeferredFormat : public OBFormat
 {
 public:
-  DeferredFormat(OBConversion* pConv, OBOp* pOp=NULL, bool CallDo=false)
+  DeferredFormat(OBConversion* pConv, OBOp* pOp=nullptr, bool CallDo=false)
   {
     _pRealOutFormat = pConv->GetOutFormat();
     pConv->SetOutFormat(this);

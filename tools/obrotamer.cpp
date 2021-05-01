@@ -59,7 +59,7 @@ int main(int argc,char *argv[])
   OBFormat* pFormat;
   
   pFormat = conv.FormatFromExt(argv[1]);
-  if ( pFormat == NULL )
+  if (pFormat == nullptr)
     {
       cerr << "Error! Cannot read file format!" << endl;
       return(-1);

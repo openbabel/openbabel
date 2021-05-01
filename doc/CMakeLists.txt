@@ -1,5 +1,7 @@
+include(GNUInstallDirs)
+
 file(GLOB man_1 *.1)
-install(FILES ${man_1} DESTINATION share/man/man1)
+install(FILES ${man_1} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
 install(FILES splash.png DESTINATION share/openbabel/${BABEL_VERSION})
 
 OPTION(BUILD_DOCS "Build Open Babel documentation" OFF)

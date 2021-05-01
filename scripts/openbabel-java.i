@@ -15,8 +15,11 @@
 
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/kekulize.h>
+
 
 #include <openbabel/base.h>
+#include <openbabel/elements.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
@@ -93,7 +96,6 @@ namespace std {
 %feature("ignore") vector< vector<T> >::push_back;
 %feature("ignore") vector< vector<T> >::rbegin;
 %feature("ignore") vector< vector<T> >::rend;
-%feature("ignore") vector< vector<T> >::reserve;
 %feature("ignore") vector< vector<T> >::resize;
 %feature("ignore") vector< vector<T> >::swap;
 %template(vectorv ## name) vector< vector<T> >;
@@ -117,7 +119,6 @@ namespace std {
 %feature("ignore") vector<T>::push_back;
 %feature("ignore") vector<T>::rbegin;
 %feature("ignore") vector<T>::rend;
-%feature("ignore") vector<T>::reserve;
 %feature("ignore") vector<T>::resize;
 %feature("ignore") vector<T>::swap;
 %template(vector ## vectorname) vector<T>;
@@ -141,7 +142,6 @@ namespace std {
 %feature("ignore") vector< pair<T1, T2> >::push_back;
 %feature("ignore") vector< pair<T1, T2> >::rbegin;
 %feature("ignore") vector< pair<T1, T2> >::rend;
-%feature("ignore") vector< pair<T1, T2> >::reserve;
 %feature("ignore") vector< pair<T1, T2> >::resize;
 %feature("ignore") vector< pair<T1, T2> >::swap;
 %template(vpair ## vectorname) vector< pair<T1, T2> >;
@@ -245,6 +245,7 @@ CAST_GENERICDATA_TO(VirtualBond)
 %warnfilter(516) OpenBabel::OBUnitCell; // Ignoring const methods in favour of non-const ones
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
+%include <openbabel/kekulize.h>
 
 %include <openbabel/chains.h>
 %include <openbabel/typer.h>
@@ -265,8 +266,14 @@ namespace std { class stringbuf {}; }
 %ignore OpenBabel::OBConversion::FindFormat(const char *);
 %ignore OpenBabel::OBConversion::FormatFromExt(const char *);
 %include <openbabel/obconversion.h>
+
+//avoid conflicts with OBElement
+%rename(resC) OpenBabel::OBResidueIndex::C;
+%rename(resI) OpenBabel::OBResidueIndex::I;
+%rename(resU) OpenBabel::OBResidueIndex::U;
 %include <openbabel/residue.h>
 %include <openbabel/internalcoord.h>
+%include <openbabel/elements.h>
 
 %typemap(javacode) OpenBabel::OBAtom
 %{

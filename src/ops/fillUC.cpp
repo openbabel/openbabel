@@ -36,7 +36,7 @@ class OpFillUC : public OBOp
 {
 public:
   OpFillUC(const char* ID) : OBOp(ID, false){
-    OBConversion::RegisterOptionParam("fillUC", NULL, 1, OBConversion::GENOPTIONS);
+    OBConversion::RegisterOptionParam("fillUC", nullptr, 1, OBConversion::GENOPTIONS);
   }
   const char* Description(){ return "<param> Fill the unit cell (strict or keepconnect)\n"
     "using unique positions, unit cell and spacegroup"
@@ -44,8 +44,8 @@ public:
     "   strict (keep only atoms inside the UC) => use \"--fillUC strict\"\n"
     "   keepconnect (fill the unit cell but keep the original connectivity => use \"--fillUC keepconnect\""; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 };
 
 /////////////////////////////////////////////////////////////////
@@ -147,7 +147,7 @@ bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConver
     pSG = pUC->GetSpaceGroup();
   }
 
-  if (pSG == NULL)
+  if (pSG == nullptr)
   {
     obErrorLog.ThrowError(__FUNCTION__, "Cannot fill unit cell without spacegroup information !" , obWarning);
     return false;

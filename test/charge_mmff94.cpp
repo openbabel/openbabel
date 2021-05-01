@@ -96,7 +96,7 @@ int charge_mmff94(int argc, char* argv[])
       
     pCM = OBChargeModel::FindType("mmff94");
 
-    if (pCM == NULL) {
+    if (pCM == nullptr) {
       cerr << "Bail out! Cannot load charge model!" << endl;
       return -1; // test failed
     }
@@ -198,7 +198,7 @@ void GenerateMMFF94Charges()
 
   OBChargeModel *pCM = OBChargeModel::FindType("mmff94");
 
-  if (pCM == NULL) {
+  if (pCM == nullptr) {
     cerr << "Cannot load charge model!" << endl;
     return;
   }

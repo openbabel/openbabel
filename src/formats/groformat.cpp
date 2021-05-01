@@ -140,7 +140,7 @@ GROFormat theGROFormat;
 bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = pOb->CastAndClear<OBMol>();
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   istream& ifs = *pConv->GetInStream();
@@ -382,7 +382,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false; // Stop converting
 
   ostream& ofs = *pConv->GetOutStream();

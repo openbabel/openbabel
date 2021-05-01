@@ -64,7 +64,7 @@ namespace OpenBabel
   char *trim_spaces(char *string)
   {
     if (!string)
-      return(NULL);
+      return nullptr;
 
     size_t length;
 
@@ -148,7 +148,7 @@ namespace OpenBabel
     return txt;
   }
 
-  //!Read and discard all characters from input stream upto the occurence of a string
+  //!Read and discard all characters from input stream up to the occurrence of a string
   //! \param ifs The input file stream.
   //! \param txt (which is also discarded), or the end of the stream.
   //! \returns the stream.

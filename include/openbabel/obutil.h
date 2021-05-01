@@ -74,12 +74,12 @@ namespace OpenBabel
     //! Mark the start of "stopwatch" timing
     void Start()
     {
-      gettimeofday(&start, NULL);
+      gettimeofday(&start, nullptr);
     }
     //! \return The time since calling OBStopwatch::Start() in seconds.
     double Lap()
     {
-      gettimeofday(&stop, NULL);
+      gettimeofday(&stop, nullptr);
       return((stop.tv_sec - start.tv_sec)
              + (stop.tv_usec - start.tv_usec)/1000000.0);
     }
@@ -100,14 +100,14 @@ namespace OpenBabel
     double _max,_incr,*_tbl;
   public:
   OBSqrtTbl():
-    _max(0.0), _incr(0.0),  _tbl(NULL)
+    _max(0.0), _incr(0.0),  _tbl(nullptr)
       { }
     //! \brief Create a square root table to handle up to the square root of @p max
     //! (e.g., if you want the square root of 144, supply 12 for max)
     //! \param max The maximum square root stored in the lookup table
     //! \param incr The floating point resolution of the lookup table
   OBSqrtTbl(const double max, const double incr):
-    _max(max*max), _incr(incr), _tbl(NULL)
+    _max(max*max), _incr(incr), _tbl(nullptr)
       {
         Init(max,incr);
       }
@@ -116,7 +116,7 @@ namespace OpenBabel
         if (_tbl)
           {
             delete [] _tbl;
-            _tbl = NULL;
+            _tbl = nullptr;
           }
       }
     //! \brief Fast square root calculation using a lookup table
@@ -159,7 +159,7 @@ namespace OpenBabel
   OBAPI void  rotate_coords(double*,double m[3][3],unsigned);
   OBAPI double calc_rms(double*,double*,unsigned int);
 #endif
- 
+
 #ifndef SWIG
   //! \name  String conversion utilities
   //@{

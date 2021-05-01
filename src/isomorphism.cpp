@@ -70,7 +70,7 @@ namespace OpenBabel {
       }
 
       struct Candidate {
-        Candidate() : queryAtom(0), queriedAtom(0) {}
+        Candidate() : queryAtom(nullptr), queriedAtom(nullptr) {}
         Candidate(OBQueryAtom *_queryAtom, OBAtom *_queriedAtom)
             : queryAtom(_queryAtom), queriedAtom(_queriedAtom) {}
 
@@ -92,7 +92,7 @@ namespace OpenBabel {
             : functor(_functor), query(_query), queried(_queried), queriedMask(mask)
         {
           abort = false;
-          mapping.resize(query->NumAtoms(), 0);
+          mapping.resize(query->NumAtoms(), nullptr);
           queryDepths.resize(query->NumAtoms(), 0);
           queriedDepths.resize(queried->NumAtoms(), 0);
         }
@@ -314,7 +314,7 @@ namespace OpenBabel {
        */
       void MapNext(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom)
       {
-        if (time(NULL) - m_startTime > m_timeout)
+        if (time(nullptr) - m_startTime > m_timeout)
           return;
         if (state.abort)
           return;
@@ -344,7 +344,7 @@ namespace OpenBabel {
           cout << red << "backtrack... " << normal << state.queryPath.size()-1 << endl;
         // remove last atoms from the mapping
         if (state.queryPath.size()) {
-          state.mapping[state.queryPath.back()] = 0;
+          state.mapping[state.queryPath.back()] = nullptr;
           state.queryPathBits.SetBitOff(state.queryPath.back());
           state.queryPath.pop_back();
         }
@@ -467,7 +467,7 @@ namespace OpenBabel {
 
       void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask)
       {
-        m_startTime = time(NULL);
+        m_startTime = time(nullptr);
         if(m_query->NumAtoms() == 0) return;
         // set all atoms to 1 if the mask is empty
         OBBitVec queriedMask = mask;
@@ -498,7 +498,7 @@ namespace OpenBabel {
           }
         }
 
-        if (time(NULL) - m_startTime > m_timeout)
+        if (time(nullptr) - m_startTime > m_timeout)
           obErrorLog.ThrowError(__FUNCTION__, "time limit exceeded...", obError);
 
       }

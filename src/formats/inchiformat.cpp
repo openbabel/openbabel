@@ -62,7 +62,7 @@ static unsigned int GetInChIAtomicMass(unsigned int atomicnum)
 bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = pOb->CastAndClear<OBMol>();
-  if(pmol==NULL) return false;
+  if (pmol == nullptr) return false;
   istream &ifs = *pConv->GetInStream();
 
   //Extract InChI from input stream even if it is split
@@ -111,7 +111,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   //Read name if requested e.g InChI=1/CH4/h1H4 methane
   //OR InChI=1/CH4/h1H4 "First alkane"  Quote can be any punct char and
-  //uses upto the end of the line if second quote is not found
+  //uses up to the end of the line if second quote is not found
   if(pConv->IsOption("n",OBConversion::INOPTIONS))
   {
     string name;
@@ -281,12 +281,12 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   //Although the OBMol may be altered, it is restored before exit.
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL) return false;
+  if (pmol == nullptr) return false;
     OBMol& mol = *pmol;
 
   string ostring; //the inchi string
   inchi_Output inout;
-  inout.szInChI = NULL; // We are going to test this value later
+  inout.szInChI = nullptr; // We are going to test this value later
 
   stringstream molID;
   if(strlen(mol.GetTitle())==0)
@@ -300,9 +300,9 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   //in preference to determining it from the structure.
   //but only if no InChI output option has been specified that would
   //modify a standard InChI
-  if (pmol->HasData("inchi") && pConv->IsOption("r")==NULL && pConv->IsOption("a")==NULL &&
-    pConv->IsOption("s")==NULL && pConv->IsOption("X")==NULL && pConv->IsOption("F")==NULL &&
-    pConv->IsOption("M")==NULL)
+  if (pmol->HasData("inchi") && pConv->IsOption("r") == nullptr && pConv->IsOption("a") == nullptr &&
+    pConv->IsOption("s") == nullptr && pConv->IsOption("X") == nullptr && pConv->IsOption("F") == nullptr &&
+    pConv->IsOption("M") == nullptr)
   {
     //All origins for the data are currently acceptable.
     //Possibly this may need to be restricted to data with a local origin.
@@ -320,7 +320,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     map<OBBond*, OBStereo::BondDirection> updown;
     map<OBBond*, OBStereo::Ref> from;
     map<OBBond*, OBStereo::Ref>::const_iterator from_cit;
-    if (mol.GetDimension() == 3 || (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)!=NULL))
+    if (mol.GetDimension() == 3 || (mol.GetDimension() == 2 && pConv->IsOption("s", pConv->OUTOPTIONS) != nullptr))
       TetStereoToWedgeHash(mol, updown, from);
     set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
@@ -356,7 +356,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
         iat.bond_type[nbonds]     = bo;
 
         OBStereo::BondDirection stereo = OBStereo::NotStereo;
-        if (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS)==NULL) {
+        if (mol.GetDimension()==2 && pConv->IsOption("s", pConv->OUTOPTIONS) == nullptr) {
           if (pbond->IsWedge())
             stereo = OBStereo::UpBond;
           else if (pbond->IsHash())
@@ -428,16 +428,22 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.type = INCHI_StereoType_Tetrahedral;
             stereo.central_atom = OBAtomIdToInChIAtomId(mol, config.center);
 
-            bool has_implicit = false; // Does chirality involve implicit lone pair?
-            if (config.from == OBStereo::ImplicitRef || config.refs[0] == OBStereo::ImplicitRef) {
-              has_implicit = true;
-              config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the lone pair
-            }
+            // count number of implicit refs
+            int num_implicit = 0;
+            if (config.from == OBStereo::ImplicitRef)
+              num_implicit = 1;
+            num_implicit += std::count(config.refs.begin(), config.refs.end(), OBStereo::ImplicitRef);
 
-            if (!has_implicit)
-              stereo.neighbor[0] = OBAtomIdToInChIAtomId(mol, config.from);
-            else
+            // ignore invalid cases with more than 1 implicit ref
+            if (num_implicit > 1)
+              continue;
+
+            if (num_implicit) {
+              config = ts->GetConfig(OBStereo::ImplicitRef); // Make the 'from' atom the implicit ref
               stereo.neighbor[0] = stereo.central_atom;
+            } else
+              stereo.neighbor[0] = OBAtomIdToInChIAtomId(mol, config.from);
+
             for(int i=0; i<3; ++i)
               stereo.neighbor[i + 1] = OBAtomIdToInChIAtomId(mol, config.refs[i]);
 
@@ -463,6 +469,13 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             stereo.central_atom = NO_ATOM;
             stereo.type = INCHI_StereoType_DoubleBond;
             OBStereo::Refs refs = config.refs;
+
+            // ignore invalid cases with 2 implicit refs on one side
+            if (refs[0] == OBStereo::ImplicitRef && refs[1] == OBStereo::ImplicitRef)
+              continue;
+            if (refs[2] == OBStereo::ImplicitRef && refs[3] == OBStereo::ImplicitRef)
+              continue;
+
             unsigned long start = refs[0];
             if (refs[0]==OBStereo::ImplicitRef)
               start = refs[1];
@@ -550,7 +563,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   if(pConv->IsOption("K")) //Generate InChIKey and add after InChI on same line
   {
     char szINCHIKey[28];
-    GetINCHIKeyFromINCHI(ostring.c_str(), 0 ,0, szINCHIKey, NULL, NULL);
+    GetINCHIKeyFromINCHI(ostring.c_str(), 0 ,0, szINCHIKey, nullptr, nullptr);
     ostring = szINCHIKey;
   }
 
@@ -589,7 +602,7 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   // Note that inout.szInChI will still be NULL if this is an InChI->InChIKey conversion
   // and so the following section will not apply.
-  if (inout.szInChI != NULL) {
+  if (inout.szInChI != nullptr) {
     if (pConv->IsOption("a"))
       ofs << inout.szAuxInfo << endl;
 
@@ -709,7 +722,7 @@ OBAtom* InChIFormat::GetCommonAtom(OBBond* pb1, OBBond* pb2)
   pa1 = pb1->GetEndAtom();
   if(pa1==pb2->GetBeginAtom() || pa1==pb2->GetEndAtom())
     return pa1;
-  return NULL; //not adjacent bonds
+  return nullptr; //not adjacent bonds
 }
 
 

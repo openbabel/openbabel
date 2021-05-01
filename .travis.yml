@@ -13,7 +13,7 @@ before_install:
  - sudo apt-get update -qq
 
 install:
- - sudo apt-get install -qq swig libeigen3-dev
+ - sudo apt-get install -qq swig libeigen3-dev libboost-all-dev
 
 before_script:
  - mkdir build

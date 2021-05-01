@@ -65,7 +65,7 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   OBMol* pmol = pOb->CastAndClear<OBMol>();
   if(!pmol)
     return false;
-  bool stopOnEnd = pConv->IsOption("e",OBConversion::INOPTIONS)!=NULL;
+  bool stopOnEnd = pConv->IsOption("e", OBConversion::INOPTIONS) != nullptr;
   pmol->SetDimension(0);
   OBNasaThermoData* pND = new OBNasaThermoData; //to store rate constant data
   pND->SetOrigin(fileformatInput);

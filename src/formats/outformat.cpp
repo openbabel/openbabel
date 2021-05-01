@@ -81,55 +81,55 @@ namespace OpenBabel
     // if we get to the end, emit a warning
     istream &ifs = *pConv->GetInStream();
     char buffer[BUFF_SIZE];
-    OBFormat *pFormat = NULL;
+    OBFormat *pFormat = nullptr;
     std::string formatName;
 
     // the detection strings are from the Chemical MIME project
     // http://chemical-mime.sourceforge.net/chemical-mime-data.html
     while (ifs.getline(buffer,BUFF_SIZE)) {
-      if ((strstr(buffer,"GAMESS execution script") != NULL) ||
-          (strstr(buffer,"PC GAMESS") != NULL) ||
-          (strstr(buffer,"GAMESS VERSION") != NULL)) {
+      if (strstr(buffer, "GAMESS execution script") != nullptr ||
+          strstr(buffer, "PC GAMESS") != nullptr ||
+          strstr(buffer, "GAMESS VERSION") != nullptr) {
         // GAMESS output
         formatName = "gamout";
         break;
-      } else if (strstr(buffer,"===  G A M E S S - U K    === ") != NULL) {
+      } else if (strstr(buffer, "===  G A M E S S - U K    === ") != nullptr) {
         // GAMESS-UK output
         formatName = "gukout";
         break;
-      } else if (strstr(buffer,"Gaussian, Inc") != NULL) {
+      } else if (strstr(buffer, "Gaussian, Inc") != nullptr) {
         // Gaussian output
         formatName = "g03";
         break;
-      } else if (strstr(buffer,"GENERAL UTILITY LATTICE PROGRAM") != NULL) {
+      } else if (strstr(buffer, "GENERAL UTILITY LATTICE PROGRAM") != nullptr) {
         // GULP output -- not currently supported
         break;
-      } else if (strstr(buffer,"MOPAC") != NULL) {
+      } else if (strstr(buffer, "MOPAC") != nullptr) {
         // MOPAC output
         formatName = "mopout";
         break;
-      } else if (strstr(buffer,"Program PWSCF") != NULL) {
+      } else if (strstr(buffer, "Program PWSCF") != nullptr) {
         // PWSCF
         formatName = "pwscf";
         break;
-      } else if (strstr(buffer,"Welcome to Q-Chem") != NULL) {
+      } else if (strstr(buffer, "Welcome to Q-Chem") != nullptr) {
         // Q-Chem output
         formatName = "qcout";
         break;
-      } else if (strstr(buffer,"Amsterdam Density Functional") != NULL) {
+      } else if (strstr(buffer, "Amsterdam Density Functional") != nullptr) {
         // ADF output
         // Determine the kind of ADF output
         while (ifs.getline(buffer, BUFF_SIZE)) {
-          if (strstr(buffer, "|     A D F     |") != NULL) {
+          if (strstr(buffer, "|     A D F     |") != nullptr) {
             formatName = "adfout";
             break;
-          } else if (strstr(buffer, "|     B A N D     |") != NULL) {
+          } else if (strstr(buffer, "|     B A N D     |") != nullptr) {
             formatName = "adfband";
             break;
-          } else if (strstr(buffer, "|     D F T B     |") != NULL) {
+          } else if (strstr(buffer, "|     D F T B     |") != nullptr) {
             formatName = "adfdftb";
             break;
-          } else if (strstr(buffer, "DFTB Engine") != NULL) {
+          } else if (strstr(buffer, "DFTB Engine") != nullptr) {
             // "|     D F T B     |" is no longer printed in ADF 2018
             // Hopefully, "DFTB Engine" will work fine...
             formatName = "adfdftb";
@@ -137,41 +137,41 @@ namespace OpenBabel
           }
         }
         break;
-      } else if (strstr(buffer,"Northwest Computational Chemistry") != NULL) {
+      } else if (strstr(buffer, "Northwest Computational Chemistry") != nullptr) {
         // NWChem output
         formatName = "nwo";
         break;
-      } else if (strstr(buffer,"MPQC: Massively Parallel Quantum Chemistry") != NULL) {
+      } else if (strstr(buffer, "MPQC: Massively Parallel Quantum Chemistry") != nullptr) {
         // MPQC output
         formatName = "mpqc";
         break;
-      } else if (strstr(buffer,"PROGRAM SYSTEM MOLPRO") != NULL) {
+      } else if (strstr(buffer, "PROGRAM SYSTEM MOLPRO") != nullptr) {
         // MOLPRO output
         formatName = "mpo";
         break;
-      } else if ((strstr(buffer,"Schrodinger, Inc.") != NULL) &&
-                 (strstr(buffer,"Jaguar") != NULL)) {
+      } else if (strstr(buffer, "Schrodinger, Inc.") != nullptr &&
+                 strstr(buffer, "Jaguar") != nullptr) {
         // Jaguar
         formatName = "jout";
         break;
-      } else if (strstr(buffer, "ABINIT") != NULL) {
+      } else if (strstr(buffer, "ABINIT") != nullptr) {
         // Abinit
         formatName = "abinit";
         break;
-      } else if (strstr(buffer, "ACES2") != NULL) {
+      } else if (strstr(buffer, "ACES2") != nullptr) {
         // ACESII
         formatName = "acesout";
         break;
-      } else if (strstr(buffer, "CRYSTAL06") != NULL ||
-                 strstr(buffer, "CRYSTAL09") != NULL) {
+      } else if (strstr(buffer, "CRYSTAL06") != nullptr ||
+                 strstr(buffer, "CRYSTAL09") != nullptr) {
         // CRYSTAL09
         formatName = "c09out";
         break;
-      } else if (strstr(buffer, "* O   R   C   A *") != NULL) {
+      } else if (strstr(buffer, "* O   R   C   A *") != nullptr) {
         // ORCA
         formatName = "orca";
         break;
-      } else if (strstr(buffer, "WELCOME TO SIESTA") != NULL) {
+      } else if (strstr(buffer, "WELCOME TO SIESTA") != nullptr) {
         // SIESTA
         formatName = "siesta";
         break;

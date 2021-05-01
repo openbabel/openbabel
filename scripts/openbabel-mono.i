@@ -284,6 +284,7 @@ CAST_GENERICDATA_TO(VibrationData)
 CAST_GENERICDATA_TO(VirtualBond)
 
 %include <openbabel/griddata.h> // Needs to come after generic.h
+%include <openbabel/kekulize.h>
 
 %include <openbabel/chains.h>
 //# %import <openbabel/bitvec.h>

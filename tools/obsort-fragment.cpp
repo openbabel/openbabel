@@ -2,14 +2,14 @@
 obsort -- sort the fragment database
 
 Copyright (C) 2007 Geoffrey R. Hutchison
- 
+
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.sourceforge.net/>
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation version 2 of the License.
- 
+
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -38,7 +38,7 @@ using namespace std;
 using namespace OpenBabel;
 
 bool CompareSMILES(const string &a, const string &b)
-{ 
+{
   // Originally a.length() > b.length()
   // Now it uses the actual number of atoms and number of bonds
   vector<string> va;
@@ -68,32 +68,32 @@ int main(int argc,char *argv[])
     cout << "Usage: obsort <fragments> <freq>" << endl;
     return(-1);
   }
-  
+
   ifstream ifs(argv[1]);
   if (!ifs)    {
     cout << "Bail out! Cannot read input file!" << endl;
     return(-1);
   }
-  
+
   OBConversion conv(&ifs, &cout);
   OBFormat* pFormat;
-  
+
   pFormat = conv.FormatFromExt(argv[1]);
-  if ( pFormat == NULL )    {
+  if ( pFormat == nullptr )    {
     cout << "Bail out! Cannot read file format!" << endl;
     return(-1);
   }
-  
+
   if (! conv.SetInAndOutFormats(pFormat, pFormat))    {
     cout << "Bail out! File format isn't loaded" << endl;
     return (-1);
   }
-  
+
   ifstream freq(argv[2]);
   if (!freq) {
     cout << "Bail out! Cannot read list of frequencies!" << endl;
   }
-  
+
   OBMol *mol;
   OBAtom *atom;
   OBSmartsPattern sp;
@@ -106,12 +106,12 @@ int main(int argc,char *argv[])
   while(ifs.peek() != EOF && ifs.good())    {
     mol = new OBMol;
     conv.Read(mol);
-    
+
     /*if (!mol->Has3D())
       continue; // invalid coordinates*/
-    
+
     temp = std::string(mol->GetTitle());
-    
+
     //cout << "Title" << temp << endl;
     OBMol clone;
     clone = OBMol(*mol);
@@ -128,7 +128,7 @@ int main(int argc,char *argv[])
     if (molCount % 500 == 0)
       cerr << "Count: " << molCount << endl;
   } // while reading molecules
-  
+
   // Now read in the list of frequencies and SMILES
   // (We sort the SMILES by length -- it's already sorted by frequency)
   vector<string> smilesIndex;
@@ -140,17 +140,17 @@ int main(int argc,char *argv[])
     string title = vs[2] + "\t" + vs[3] + "\t" + vs[4];
     if (molIndex.find(title) == molIndex.end())
       continue;
-    
+
     smilesIndex.push_back(title);
   }  while (freq.peek() != EOF && freq.good());
   sort(smilesIndex.begin(), smilesIndex.end(), CompareSMILES);
-   
+
   // Finally, we loop through the index of SMILES and write the molecules
   for (vector<string>::iterator j = smilesIndex.begin(); j != smilesIndex.end(); ++j) {
     mol = molIndex[(*j)];
     if (!mol) // Shouldn't happen, but it's good defensive programming
       continue;
-      
+
     mol->Center();
 //    cout << mol->NumAtoms() << "\n";
     tokenize(vs, *j);
@@ -164,7 +164,7 @@ int main(int argc,char *argv[])
     }
 
 //    delete(mol);
-    mol = NULL;
+    mol = nullptr;
   }
 
   return(0);

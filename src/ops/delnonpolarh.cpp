@@ -29,8 +29,8 @@ public:
   OpDelNonPolarH(const char* ID) : OBOp(ID, false){};
   const char* Description(){ return "Deletes hydrogen from nonpolar atoms only"; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=NULL, OpMap* pOptions=NULL, OBConversion* pConv=NULL);
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
 };
 
 /////////////////////////////////////////////////////////////////

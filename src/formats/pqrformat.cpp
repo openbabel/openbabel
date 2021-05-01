@@ -96,7 +96,7 @@ namespace OpenBabel
   {
 
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -396,8 +396,8 @@ namespace OpenBabel
 
     /* residue sequence number */
     string resnum = sbuf.substr(16,4);
-    OBResidue *res  = (mol.NumResidues() > 0) ? mol.GetResidue(mol.NumResidues()-1) : NULL;
-    if (res == NULL || res->GetName() != resname
+    OBResidue *res  = mol.NumResidues() > 0 ? mol.GetResidue(mol.NumResidues()-1) : nullptr;
+    if (res == nullptr || res->GetName() != resname
         || res->GetNumString() != resnum)
       {
         vector<OBResidue*>::iterator ri;
@@ -407,7 +407,7 @@ namespace OpenBabel
               && static_cast<int>(res->GetChain()) == chain)
             break;
 
-        if (res == NULL)
+        if (res == nullptr)
           {
             res = mol.NewResidue();
             res->SetChain(chain);
@@ -434,7 +434,7 @@ namespace OpenBabel
   bool PQRFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
@@ -511,7 +511,7 @@ namespace OpenBabel
             snprintf(type_name, sizeof(type_name), " %-3s", tmp);
           }
 
-        if ( (res = atom->GetResidue()) != 0 )
+        if ((res = atom->GetResidue()) != nullptr)
           {
             het = res->IsHetAtom(atom);
             snprintf(the_res,4,"%s",(char*)res->GetName().c_str());

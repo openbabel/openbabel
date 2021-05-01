@@ -85,7 +85,7 @@ namespace OpenBabel
   {
     if (d) {
       delete d;
-      d = NULL;
+      d = nullptr;
     }
   }
 
@@ -100,7 +100,7 @@ namespace OpenBabel
 #ifndef ANDROID
       // Original global POSIX interface
       // regular UNIX, no USELOCALE, no ANDROID
-      d->old_locale_string = strdup (setlocale (LC_NUMERIC, NULL));
+      d->old_locale_string = strdup(setlocale(LC_NUMERIC, nullptr));
 #else
       // ANDROID should stay as "C" -- Igor Filippov
       d->old_locale_string = "C";

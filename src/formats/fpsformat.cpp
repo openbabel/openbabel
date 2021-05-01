@@ -175,7 +175,7 @@ string FPSFormat::getTimeStr()
   size_t time_res;                             /* Result of strftime                */
 
   /* ---- Get the system-time ---- */
-  akttime = time((time_t *) NULL);
+  akttime = time((time_t *) nullptr);
   time_res = strftime(timestr,
                       TIME_STR_SIZE,
                       "%Y-%m-%dT%H:%M:%S",

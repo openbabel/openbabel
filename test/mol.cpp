@@ -116,7 +116,7 @@ int mol(int argc, char* argv[])
   OBFormat* pFormat;
   
   pFormat = conv.FindFormat("XYZ");
-  if ( pFormat == NULL )
+  if (pFormat == nullptr)
     {
       cout << "Bail out! Cannot read file format!" << endl;
       return(-1);
@@ -183,7 +183,7 @@ int mol(int argc, char* argv[])
   
   // Attempt to write an empty InChI (PR#2864334)
   pFormat = conv.FindFormat("InChI");
-  if ( pFormat != NULL && conv.SetOutFormat(pFormat))
+  if (pFormat != nullptr && conv.SetOutFormat(pFormat))
     {
       if (conv.Write(&emptyMol))
         cout << "ok 12" << endl;

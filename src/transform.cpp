@@ -59,7 +59,7 @@ namespace OpenBabel
     // should delete the molecule itself (unlike the -s, --filter options,
     // which delete it in this function).
     if(!OBOp::DoOps(this, pOptions, pConv))
-      return (OBBase *)NULL;
+      return nullptr;
 
     bool ret=true;
 
@@ -93,7 +93,7 @@ namespace OpenBabel
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       }
       else {
-        double pH = strtod(itr->second.c_str(), 0);
+        double pH = strtod(itr->second.c_str(), nullptr);
         if(!AddHydrogens(false, true, pH))
           ret=false;
       }
@@ -228,7 +228,7 @@ namespace OpenBabel
       {
         //filter failed: delete OBMol and return NULL
         delete this;
-        return NULL;
+        return nullptr;
       }
     else
       {
@@ -236,7 +236,7 @@ namespace OpenBabel
           {
             obErrorLog.ThrowError(__FUNCTION__, "Error executing an option", obError);
             delete this; //added 9March2006
-            return NULL;
+            return nullptr;
           }
         else
           return this;

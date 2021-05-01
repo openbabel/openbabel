@@ -49,7 +49,7 @@ namespace OpenBabel {
    * 1432   2431   3421   4321
    * @endcode
    *
-   * Based on which reference ids are on opposite sides (180°), it is possible
+   * Based on which reference ids are on opposite sides (180 deg), it is possible
    * to divide these 24 combinations in three sets. For this it is also needed
    * to make use of a shape to map the reference id indexes on the points in
    * the plane. Without these shapes or a fixed meaning, these sequences have

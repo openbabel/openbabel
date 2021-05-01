@@ -49,7 +49,8 @@ class OpUnique : public OBOp
 {
 public:
   OpUnique(const char* ID) : OBOp(ID, false){
-    OBConversion::RegisterOptionParam("unique", NULL, 1, OBConversion::GENOPTIONS);}
+    OBConversion::RegisterOptionParam("unique", nullptr, 1, OBConversion::GENOPTIONS);
+  }
 
   const char* Description(){ return
     "[param] remove duplicates by descriptor;default inchi\n"
@@ -70,7 +71,7 @@ public:
     "/noiso    ignore isotopes\n\n"
 ; }
 
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=NULL; }
+  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
   virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
 
 private:

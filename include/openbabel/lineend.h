@@ -60,7 +60,7 @@ namespace OpenBabel
   {
   public:
     FilteringInputStreambuf(
-      std::istream*        source = NULL) ;
+      std::istream*        source = nullptr) ;
     virtual                 ~FilteringInputStreambuf()
     {
       //sync(); comment out so can be deleted in OBConversion destructor
@@ -131,7 +131,7 @@ namespace OpenBabel
     int result( EOF ) ;
     if( gptr() < egptr() )
       result = *gptr() ;
-    else if ( mySource != NULL )
+    else if ( mySource != nullptr )
     {
       result = myExtractor( *mySource ) ;
       if ( result != EOF )
@@ -151,7 +151,7 @@ namespace OpenBabel
   FilteringInputStreambuf< Extractor >::sync()
   {
     int result( 0 ) ;
-    if ( mySource != NULL )
+    if ( mySource != nullptr )
     {
       if ( gptr() < egptr() )
       { //have read something but not provided it

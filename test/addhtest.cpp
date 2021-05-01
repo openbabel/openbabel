@@ -34,6 +34,10 @@ GNU General Public License for more details.
 #include <iostream>
 #include <fstream>
 
+#if defined(__sun)
+#include <alloca.h>
+#endif
+
 using namespace std;
 using namespace OpenBabel;
 

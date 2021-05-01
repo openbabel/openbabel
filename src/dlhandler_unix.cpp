@@ -81,7 +81,7 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,
   if (!path.empty())
     paths.push_back(path);
 
-  if (getenv("BABEL_LIBDIR") != NULL)
+  if (getenv("BABEL_LIBDIR") != nullptr)
     {
       // environment variable should override built-in path
       paths.clear();
@@ -115,11 +115,11 @@ int DLHandler::findFiles (std::vector <std::string>& file_list,
     {
       currentPath=paths[i];
 
-      if ((dp = opendir(currentPath.c_str())) == NULL)
+      if ((dp = opendir(currentPath.c_str())) == nullptr)
         continue; // no big deal, this path causes an error
       else
         {
-          while((entry = readdir(dp)) != NULL)
+          while((entry = readdir(dp)) != nullptr)
             {
               if (matchFiles(entry) != 0)
                 file_list.push_back(currentPath + getSeparator() + (entry)->d_name);
@@ -162,7 +162,7 @@ bool DLHandler :: openLib(const string& lib_name)
 #else
 bool DLHandler::openLib(const string& lib_name)
 {
-  bool success = (dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != 0);
+  bool success = (dlopen(lib_name.c_str(), RTLD_LAZY | RTLD_GLOBAL) != nullptr);
   if (!success) {
     char buffer[BUFF_SIZE];
     sprintf(buffer, "%s did not load properly.\n Error: %s",

@@ -90,19 +90,19 @@ public:
       //But here isn't entirely appropriate either, since one could have
       //OBMol formats loaded but which don't derived from this class.
       //However, this possibility is remote.
-      OBConversion::RegisterOptionParam("s", NULL, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("v", NULL, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("h", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("d", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("b", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("c", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("p", NULL, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("t", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("k", NULL, 0,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("filter", NULL, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("add", NULL, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("delete", NULL, 1,OBConversion::GENOPTIONS);
-      OBConversion::RegisterOptionParam("append", NULL, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("s", nullptr, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("v", nullptr, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("h", nullptr, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("d", nullptr, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("b", nullptr, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("c", nullptr, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("p", nullptr, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("t", nullptr, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("k", nullptr, 0,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("filter", nullptr, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("add", nullptr, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("delete", nullptr, 1,OBConversion::GENOPTIONS);
+      OBConversion::RegisterOptionParam("append", nullptr, 1,OBConversion::GENOPTIONS);
     }
   }
 

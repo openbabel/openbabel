@@ -25,8 +25,8 @@ GNU General Public License for more details.
 #include <openbabel/stereo/stereo.h>
 #include <vector>
 
-#ifndef EXTERN
-#  define EXTERN extern
+#ifndef OB_EXTERN
+#  define OB_EXTERN extern
 #endif
 
 namespace OpenBabel {
@@ -47,7 +47,7 @@ namespace OpenBabel {
 
     public:
       //! Constructor
-      OBGraphSym(OBMol* pmol, const OBBitVec* frag_atoms = NULL);
+      OBGraphSym(OBMol* pmol, const OBBitVec* frag_atoms = nullptr);
       //! Destructor
       virtual ~OBGraphSym();
 
@@ -80,5 +80,3 @@ namespace OpenBabel {
 
 //! \file graphsym.h
 //! \brief Handle and perceive graph symmtery for canonical numbering
-
-

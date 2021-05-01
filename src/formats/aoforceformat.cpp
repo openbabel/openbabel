@@ -50,7 +50,7 @@ AoforceFormat theAoforceFormat;
 
 bool AoforceFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
   OBMol* pmol = pOb->CastAndClear<OBMol>();
-  if (pmol == NULL) return false;
+  if (pmol == nullptr) return false;
 
   std::istream &ifs = *pConv->GetInStream();
   std::string line;

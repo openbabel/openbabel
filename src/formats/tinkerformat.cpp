@@ -83,7 +83,7 @@ namespace OpenBabel
   bool TinkerFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = pOb->CastAndClear<OBMol>();
-    if(pmol==NULL)
+    if (pmol == nullptr)
         return false;
 
     //Define some references so we can use the old parameter names
@@ -156,16 +156,16 @@ namespace OpenBabel
   bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-    if(pmol==NULL)
+    if (pmol == nullptr)
       return false;
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
     OBMol &mol = *pmol;
     bool mm2Types = false;
-    bool mmffTypes = pConv->IsOption("m",OBConversion::OUTOPTIONS) != NULL;
-    bool mm3Types = pConv->IsOption("3",OBConversion::OUTOPTIONS) != NULL;
-    bool classTypes = pConv->IsOption("c", OBConversion::OUTOPTIONS) != NULL;
+    bool mmffTypes = pConv->IsOption("m", OBConversion::OUTOPTIONS) != nullptr;
+    bool mm3Types = pConv->IsOption("3", OBConversion::OUTOPTIONS) != nullptr;
+    bool classTypes = pConv->IsOption("c", OBConversion::OUTOPTIONS) != nullptr;
 
     unsigned int i;
     char buffer[BUFF_SIZE];

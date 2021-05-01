@@ -69,7 +69,7 @@ bool TitleFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 bool TitleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
-  if(pmol==NULL)
+  if (pmol == nullptr)
       return false;
 
   ostream &ofs = *pConv->GetOutStream();

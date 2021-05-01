@@ -10,7 +10,7 @@ private:
 	wxString& active;
 public:
 	SelFormatsDialog(wxArrayString& AllFormatsArray, wxString& ActiveFormatsString)
-		: wxDialog(NULL, wxID_ANY, _T("Set Active Formats"),
+		: wxDialog(nullptr, wxID_ANY, _T("Set Active Formats"),
 		wxPoint(100,60), wxDefaultSize, wxDEFAULT_DIALOG_STYLE | wxRESIZE_BORDER),
 		active(ActiveFormatsString)
 	{
@@ -96,4 +96,3 @@ public:
 };
 
 #endif
-

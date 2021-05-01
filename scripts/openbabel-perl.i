@@ -17,6 +17,7 @@
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/generic.h>
 #include <openbabel/griddata.h>
+#include <openbabel/kekulize.h>
 
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
@@ -188,6 +189,8 @@ CAST_GENERICDATA_TO(VirtualBond)
 %include <openbabel/base.h>
 %include <openbabel/generic.h>
 %include <openbabel/griddata.h>
+%include <openbabel/kekulize.h>
+
 
 %import <openbabel/chains.h>
 %import <openbabel/typer.h>
