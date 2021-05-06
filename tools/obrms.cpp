@@ -285,7 +285,7 @@ int main(int argc, char **argv)
 	}
 
 	if(!docross && fileTest.size() == 0) {
-    cerr << helpmsg;
+	  cerr << helpmsg;
 	  cerr << "Command line parse error: test file is required but missing\n";
 	  exit(-1);
 	}

@@ -430,7 +430,7 @@ virtual const char* Description() //required
                   "Currently, updating is only done on index files that"
                   "have the same name as the datafile.\n"
                   "Do not specify an output file; use the form:\n"
-	                "   babel datafile.xxx -ofs -xu", obError);
+	                "   obabel datafile.xxx -ofs -xu", obError);
                 return false;
               }
           }

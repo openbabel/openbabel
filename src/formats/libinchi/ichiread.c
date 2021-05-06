@@ -1037,7 +1037,7 @@ int ReadWriteInChI(INCHI_IOSTREAM *pInp, INCHI_IOSTREAM *pOut, INCHI_IOSTREAM *p
                 }
 #endif
 
-                if ( szMessage ) 
+                if ( 1 ) 
                 {
                     int len;
                     InchiTimeGet(&ulTStart);

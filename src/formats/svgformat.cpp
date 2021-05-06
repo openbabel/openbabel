@@ -56,7 +56,7 @@ public:
 
       "Multiple molecules are displayed in a grid of dimensions specified by\n"
       "the ``-xr`` and ``-xc`` options (number of rows and columns respectively\n"
-      "and ``--rows``, ``--cols`` with babel).\n"
+      "and ``--rows``, ``--cols`` with obabel).\n"
       "When displayed in most modern browsers, like Firefox, there is\n"
       "javascript support for zooming (with the mouse wheel)\n"
       "and panning (by dragging with the left mouse button).\n\n"
@@ -196,7 +196,7 @@ bool SVGFormat::WriteChemObject(OBConversion* pConv)
 
     pConv->AddOption("svgbswritechemobject"); // to show WriteMolecule that this function has been called
     const char* pc = pConv->IsOption("c");
-    //alternative for babel because -xc cannot take a parameter, because some other format uses it
+    //alternative for obabel because -xc cannot take a parameter, because some other format uses it
     //similarly for -xr -xp
     if(!pc)
       pc = pConv->IsOption("cols", OBConversion::GENOPTIONS);

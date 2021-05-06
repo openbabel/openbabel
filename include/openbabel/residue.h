@@ -41,6 +41,8 @@ namespace OpenBabel {
   class OBAtom;
   //! A standard iterator over a vector of atoms
   typedef std::vector<OBAtom*>::iterator OBAtomIterator;
+  //! A standard constant iterator over a vector of atoms
+  typedef std::vector<OBAtom*>::const_iterator OBAtomConstIterator;
   class OBBond;
   //! A standard iterator over a vector of bonds
   typedef std::vector<OBBond*>::iterator OBBondIterator;
@@ -107,6 +109,8 @@ namespace OpenBabel {
     std::string     GetNumString(void);
     //! \return The number of atoms in this residue
     unsigned int   GetNumAtoms()                  const;
+    //! \return The number of heavy atoms in this residue
+    unsigned int   GetNumHvyAtoms()               const;
     //! \return The ID of the chain which includes this residue
     char           GetChain(void)                 const;
     //! \return The number of the chain which includes this residue
@@ -151,8 +155,12 @@ namespace OpenBabel {
     //@{
     //! \return An iterator to the beginning of the atom list in this residue
     OBAtomIterator BeginAtoms()   { return _atoms.begin(); }
+    //! \return A constant iterator to the beginning of the atom list in this residue
+    OBAtomConstIterator CBeginAtoms() const { return _atoms.cbegin(); }
     //! \return An iterator to the end of the atom list in this residue
     OBAtomIterator EndAtoms()     { return _atoms.end();   }
+    //! \return A constant iterator to the end of the atom list in this residue
+    OBAtomConstIterator CEndAtoms() const { return _atoms.cend(); }
     //! Set the iterator @p i to the beginning of the atom list in this residue
     //! \return The first atom (or NULL if none exist)
     OBAtom *BeginAtom(std::vector<OBAtom*>::iterator &i);

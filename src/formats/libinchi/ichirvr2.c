@@ -254,12 +254,14 @@ int RestoreAtomConnectionsSetStereo( StrFromINChI *pStruct, int iComponent, int 
                 i2 ++;
             }
             /* find whether it is an allene */
+            jv = at[n_vertex].neighbor[0];
+            jn = at[n_vertex].neighbor[1];
             if ( at[n_vertex].valence == 2 &&
                  at[n_vertex].num_H   == 0 &&
                  bCanAtomBeMiddleAllene(at[n_vertex].elname, 0, 0) &&
-                 at[jv = at[n_vertex].neighbor[0]].valence + at[jv].num_H == 3 &&
+                 at[jv].valence + at[jv].num_H == 3 &&
                  bCanAtomBeTerminalAllene(at[jv].elname, 0, 0)     &&
-                 at[jn = at[n_vertex].neighbor[1]].valence + at[jn].num_H == 3 &&
+                 at[jn].valence + at[jn].num_H == 3 &&
                  bCanAtomBeTerminalAllene(at[jn].elname, 0, 0) ) {
                 /* allene */
                 if ( !at[jv].at_type && at[jv].num_H ) {
@@ -3022,16 +3024,26 @@ int MovePlusFromS2DiaminoCarbon( BN_STRUCT *pBNS, BN_DATA *pBD, StrFromINChI *pS
     }
     /* find (NH2)C=S(+) */
     for ( i = 0; i < num_at; i ++ ) {
+        pvS = pBNS->vert+i;
+        ePlusS = pVA[i].nCPlusGroupEdge-1;
+        pePlusS=pBNS->edge+ePlusS;
+        pe1=pBNS->edge + pvS->iedge[0];
+        pe2=pBNS->edge + pvS->iedge[1];
+        peSC=pe1->flow? pe1 : pe2;
+        vC = peSC->neighbor12 ^ i;
+        ePlusC=pVA[vC].nCPlusGroupEdge-1;
+        pePlusC=pBNS->edge+ePlusC;
+        eMinusC=pVA[vC].nCMinusGroupEdge-1;
         if ( !pVA[i].cMetal && pVA[i].cNumValenceElectrons == 6 &&
              at2[i].valence == 2 && 
-             (pvS = pBNS->vert+i)->st_edge.cap == pvS->st_edge.flow &&
-             0 <= (ePlusS = pVA[i].nCPlusGroupEdge-1) && !(pePlusS=pBNS->edge+ePlusS)->flow && /* S(+) */
-             (pe1=pBNS->edge + pvS->iedge[0])->flow + 
-             (pe2=pBNS->edge + pvS->iedge[1])->flow == 1 /* -S(+)= */ &&
-             pVA[vC = (peSC=pe1->flow? pe1 : pe2)->neighbor12 ^ i].cNumValenceElectrons == 4 &&
+             pvS->st_edge.cap == pvS->st_edge.flow &&
+             0 <= ePlusS && !pePlusS->flow && /* S(+) */
+             pe1->flow + 
+             pe2->flow == 1 /* -S(+)= */ &&
+             pVA[vC].cNumValenceElectrons == 4 &&
              at2[vC].valence == 3 &&
-             0 <= (ePlusC=pVA[vC].nCPlusGroupEdge-1) && (pePlusC=pBNS->edge+ePlusC)->flow &&
-             !(0 <= (eMinusC=pVA[vC].nCMinusGroupEdge-1) && pBNS->edge[eMinusC].flow ) ) {
+             0 <= ePlusC && pePlusC->flow &&
+             !(0 <= eMinusC && pBNS->edge[eMinusC].flow ) ) {
             /* found >C=S(+)- */
             pvC = pBNS->vert + vC;
             for ( j = k = 0; j < at[vC].valence; j ++ ) {

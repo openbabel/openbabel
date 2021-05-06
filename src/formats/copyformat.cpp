@@ -42,7 +42,7 @@ public:
 "  Extract only structures that include at least one aromatic carbon\n"
 "  (by matching the SMARTS pattern ``[c]``)::\n\n"
 
-"   babel -s '[c]' database.sdf -ocopy new.sd\n\n"
+"   obabel database.sdf -ocopy -O new.sdf -s '[c]' \n\n"
 
 ".. note::\n\n"
 " XML files may be missing non-object elements\n"

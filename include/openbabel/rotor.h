@@ -444,6 +444,8 @@ namespace OpenBabel
     void SetNumCoords(int UNUSED(nc)) {}
     ///@}
 
+    ; // Added to workaround https://github.com/swig/swig/issues/1636
+
   };
 
 
@@ -639,6 +641,8 @@ namespace OpenBabel
     //! SetRotAtoms()
     void SetRotAtomsByFix(OBMol&);
     ///@}
+
+    ; // Added to workaround https://github.com/swig/swig/issues/1636
 
   };
 

@@ -303,3 +303,13 @@ if(TEST_DEPICTION AND UNIX)
         alias ${CMAKE_SOURCE_DIR}/test/files/alias.png)
   endif()
 endif()
+
+if(DEFINED ENV{LIB_FUZZING_ENGINE})
+  add_executable(fuzz_obconversion_smiles fuzz/fuzz_obconversion.cpp)
+  target_compile_definitions(fuzz_obconversion_smiles PRIVATE -DFUZZ_INPUT_FORMAT="SMILES")
+  target_link_libraries(fuzz_obconversion_smiles ${libs} $ENV{LIB_FUZZING_ENGINE})
+
+  add_executable(fuzz_obconversion_sdf fuzz/fuzz_obconversion.cpp)
+  target_compile_definitions(fuzz_obconversion_sdf PRIVATE -DFUZZ_INPUT_FORMAT="SDF")
+  target_link_libraries(fuzz_obconversion_sdf ${libs} $ENV{LIB_FUZZING_ENGINE})
+endif()

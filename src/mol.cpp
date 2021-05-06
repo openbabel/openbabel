@@ -803,13 +803,13 @@ namespace OpenBabel
       vgid.push_back(k->second);
   }
 
-  unsigned int OBMol::NumHvyAtoms()
+  unsigned int OBMol::NumHvyAtoms() const
   {
-    OBAtom *atom;
-    vector<OBAtom*>::iterator(i);
+    const OBAtom *atom;
+    vector<OBAtom*>::const_iterator(i);
     unsigned int count = 0;
 
-    for(atom = this->BeginAtom(i);atom;atom = this->NextAtom(i))
+    for(atom = this->BeginAtom(i); atom; atom = this->NextAtom(i))
       {
         if (atom->GetAtomicNum() != OBElements::Hydrogen)
           count++;
@@ -3948,10 +3948,22 @@ namespace OpenBabel
     return i == _vatom.end() ? nullptr : (OBAtom*)*i;
   }
 
+  const OBAtom* OBMol::BeginAtom(OBAtomConstIterator &i) const
+  {
+    i = _vatom.cbegin();
+    return i == _vatom.cend() ? nullptr : (OBAtom *)*i;
+  }
+
   OBAtom *OBMol::NextAtom(OBAtomIterator &i)
   {
     ++i;
     return i == _vatom.end() ? nullptr : (OBAtom*)*i;
+  }
+
+  const OBAtom* OBMol::NextAtom(OBAtomConstIterator &i) const
+  {
+    ++i;
+    return i == _vatom.cend() ? nullptr : (OBAtom *)*i;
   }
 
   OBBond *OBMol::BeginBond(OBBondIterator &i)

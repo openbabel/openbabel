@@ -35,6 +35,7 @@ obtained in part or whole from RasMol2 by Roger Sayle.
 #include <openbabel/oberror.h>
 #include <openbabel/bitvec.h>
 #include <openbabel/bond.h>
+#include <openbabel/elements.h>
 #include <cstring>
 #include <cstdlib>
 
@@ -1049,6 +1050,21 @@ namespace OpenBabel
   unsigned int OBResidue::GetNumAtoms(void) const
   {
     return (unsigned int)_atoms.size();
+  }
+
+  unsigned int OBResidue::GetNumHvyAtoms(void) const
+  {
+    unsigned int num_hvy_atoms = 0;
+
+    for (auto atom = this->CBeginAtoms(); atom != this->CEndAtoms(); atom++)
+    {
+      if ((*atom)->GetAtomicNum() != OBElements::Hydrogen)
+      {
+        num_hvy_atoms++;
+      }
+    }
+
+    return num_hvy_atoms;
   }
 
   char OBResidue::GetChain(void) const
