@@ -224,7 +224,7 @@ atom [#53]*                    	  					    i    (-*) "general iodine"
 // SMARTS rules for phosphorous
 
 atom [#15X1]                 	  					        p2 "other sp2 P"
-[#15X1]#[#6,#7,#8,#16,#15]                                                  p1 "sp P"
+atom [#15X1]#[#6,#7,#8,#16,#15]                                                  p1 "sp P"
 atom [#15X2]                  	     					    p2 "other sp2 P"
 atom [#15X2;R](=*)-*=*        	     					    pc "sp2 P of conjugated ring"
 atom [#15X2;R](=*)-*#*        	     					    pc "sp2 P of conjugated ring"
