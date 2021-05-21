@@ -301,7 +301,7 @@ atom [#7X3r6]([#6X3]=[#8])([#6X3]=[#8])[#1] 				    n  "sp2 N in amides"
 atom [#7X3r6]([#6X3]=[#8])([#6X3]=[#8])[#6X4] 				    n  "sp2 N in amides"
 atom [#7X3r6]([#6X3]=[#8])([#6X3])[#1]  				    n  "sp2 N in amides"
 atom [#7X3r6]([#6X3]=[#8])([#6X3])[#6X4]  				    n  "sp2 N in amides"
-atom [#7X3&H0](=O)=O    						    no "N in nitro group"
+atom [#7X3&H0](=O)-O    						    no "N in nitro group"
 atom [#7X4]             						    n4 "sp3 N"
 
 // SMARTS rules for oxygens

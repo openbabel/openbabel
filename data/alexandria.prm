@@ -313,7 +313,8 @@ atom [#7X3r6]([#6X3]=[#8])([#6X3])[#1]  		  n  "sp2 N in amides"
 atom [#7X3r6]([#6X3]=[#8])([#6X3])[#6X4]  		  n  "sp2 N in amides"
 atom [#7X4]             						  n4 "sp3 N"
 #atom [ND3](=*)(-*)(-*)                            n4 "sp3 N"
-atom [ND3](=O)(=O)-*    						  no "N in nitro group"
+//atom [ND3](=O)(=O)-*    						  no "N in nitro group"
+atom [NX3](-[OX1])(=[OX1])-*                          no "N in nitro group"
 
 // SMARTS rules for oxygens
 
@@ -360,7 +361,9 @@ atom [OX3H]             			      oh "O in hydroxyl group"
 atom [#8X2H1]-[#6X3]=[#6,#7,#8,#16,#15]       o2 "sp2 oxygen, like in a carboxylic acid or other analogs"
 atom [oX2r5]                                          o2 "sp2 O, aromatic 5r"
 atom [oX2r6]                                          o2 "sp2 O, aromatic 6r"
-atom [OD1]=[ND3]=[OD1]     	                      on "N in nitro group"
+//atom [OD1]=[ND3]=[OD1]     	                      on "N in nitro group"
+atom [OX1]=[NX3]-[OX1]                                on "N in nitro group"
+atom [OX1]-[NX3]=[OX1]                                on "N in nitro group"
 
 // SMARTS rules for sulfur
 
