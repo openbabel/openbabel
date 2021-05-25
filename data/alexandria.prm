@@ -363,8 +363,8 @@ atom [#8X2H1]-[#6X3]=[#6,#7,#8,#16,#15]                                     o2 "
 atom [oX2r5]                                                                o2 "sp2 O, aromatic 5r"
 atom [oX2r6]                                                                o2 "sp2 O, aromatic 6r"
 //atom [OD1]=[ND3]=[OD1]     	                                              on "N in nitro group"
-atom [OX1]=[NX3]-[OX1]                                                      on "N in nitro group"
-atom [OX1]-[NX3]=[OX1]                                                      on "N in nitro group"
+atom [#8X1]=[#7X3]-[#8X1]                                                      on "N in nitro group"
+atom [#8X1]-[#7X3]=[#8X1]                                                      on "N in nitro group"
 
 // SMARTS rules for sulfur
 
