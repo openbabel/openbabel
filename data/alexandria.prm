@@ -219,10 +219,10 @@ atom [#6X4r8]  				    				    c3
 
 // SMARTS rules for halogens
 
-atom [#9]*               						    f    (-*) "general fluorine"
-atom [#17]*                   	  					    cl   (-*) "general chlorine"
-atom [#35]*                   	  					    br   (-*) "general bromine"
-atom [#53]*                    	  					    i    (-*) "general iodine"
+atom [#9]~*               						    f    (-*) "general fluorine"
+atom [#17]~*                   	  					    cl   (-*) "general chlorine"
+atom [#35]~*                   	  					    br   (-*) "general bromine"
+atom [#53]~*                    	  			            i    (-*) "general iodine"
 
 // SMARTS rules for phosphorous
 
@@ -261,8 +261,8 @@ atom [#7X2](=[#7X2])(=[#7X2])					            n1 "sp1 N"
 atom [#7X2](#*)-*							    n1 "sp1 N"
 atom [#7X2](=[#7X2])-*						            n2 "sp1 N"
 atom [nX2]								    nb "aromatic N"
-atom [#7X2;R](=*)=*           					            nb "aromatic N"
-atom [#7X2;R](=*)(-*)         					            nb "aromatic N"
+#atom [#7X2;R](=*)=*           					            nb "aromatic N; MMW: Aromatic?"
+#atom [#7X2;R](=*)(-*)         					            nb "aromatic N; MMW: Aromatic?"
 atom [#7X2;R](=[#7])[#16]               		                    nd "sp2 N of conjugated ring"
 atom [#7X2;R](:[#6])[#7] 						    nd "sp2 N of conjugated ring"
 atom [#7X2;R]=[#6][#7]        					            nd "sp2 N of conjugated ring"
@@ -365,6 +365,7 @@ atom [oX2r6]                                                                o2 "
 //atom [OD1]=[ND3]=[OD1]     	                                              on "N in nitro group"
 atom [#8X1]=[#7X3]-[#8X1]                                                      on "N in nitro group"
 atom [#8X1]-[#7X3]=[#8X1]                                                      on "N in nitro group"
+atom [#8X3](-[#1])(-[#1])(-[#1])                                            o3 "sp3 O in hydronium"
 
 // SMARTS rules for sulfur
 
