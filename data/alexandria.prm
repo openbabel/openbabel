@@ -378,7 +378,6 @@ atom [oX2r6]                                                                o2 "
 //atom [OD1]=[ND3]=[OD1]     	                                              on "N in nitro group"
 atom [#8X1]=[#7X3]-[#8X1]                                                      on "N in nitro group"
 atom [#8X1]-[#7X3]=[#8X1]                                                      on "N in nitro group"
-atom [#8X3](-[#1])(-[#1])(-[#1])                                            o3 "sp3 O in hydronium"
 
 
 // SMARTS rules for sulfur
