@@ -49,12 +49,13 @@
 [#16D3]([#8D1])([*!#8])([*!#8])			0 1 2 0 2 1 0 3 1
 # Sulfite
 [#16D3]([#8D1])([#8D1-])([#8D1-])		0 1 2 0 2 1 0 3 1
+#[#16D3]([#8D1])([#8D1])([#8D1])               0 1 2 0 2 1 0 3 1
 # Sulfur trioxide
 [#16D3]([#8D1])([#8D1])([#8D1])			0 1 2 0 2 2 0 3 2
 # Sulfites
 [#16D3]([#8D1])([#8])([#8])			0 1 2 0 2 1 0 3 1
 # 1-Sulfinylethane and analogs
-[#8X1][#16X2][#6X3]                             0 1 2 1 2 2
+[#8X1][#16X2][#6X3]                       0 1 2 1 2 2
 # Sulfone, sulfonic acid and sulfonic ester
 [#16X4]([#8X1])([#8X1])([#8,#6X4])*             0 1 2 0 2 2 0 3 1 0 4 1
 # Disulfur monoxide
@@ -65,7 +66,10 @@
 [#16D2]([#8D1])([#8D1])				0 1 2 0 2 2
 # dimethyl-oxido-sulfanylidene-lambda5-phosphane and analogs
 [#16X1][#15]                                    0 1 2
-
+# dihydroxy-sulfanylidene--lambda4-sulfane and analogs
+[#16X1;!-][#16X3,#16X4]                         0 1 2
+# dimethyl-methylidene-oxo-l6-sulfane and analogs
+#[#8X1][#16X3,#16X4]                             0 1 2
 
 #Phosphite
 [#15D3]([#8D1])([#8D1])([#8D2])		0 1 2 0 2 2 0 3 1
@@ -108,8 +112,6 @@
 # avoid aromatics (pdb_ligands_sdf/1yry_msg.sdf)
 [CD3^2]([#16D1])([N])*		0 1 2 0 2 1 0 3 1
 
-#hydronium
-[#8X3]([#1X1])([#1X1])([#1X1])             0 1 1 0 2 1 0 3 1  
 
 # allene C=C=C
 # (this is problematic -- need to make sure the center carbon is sp)
