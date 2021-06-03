@@ -3091,8 +3091,10 @@ namespace OpenBabel
     vector<OBBond*>::iterator l, m;
     int valCount;
     bool changed;
+    // Removed the bond deletion loop. DvdS 210603
+    if (false) {
     BeginModify(); //prevent needless re-perception in DeleteBond
-    for (atom = BeginAtom(i);atom;atom = NextAtom(i))
+    for (atom = BeginAtom(i); atom;atom = NextAtom(i))
       {
         while (atom->GetExplicitValence() > static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
                || atom->SmallestBondAngle() < 45.0)
@@ -3162,6 +3164,7 @@ namespace OpenBabel
           }
       }
     EndModify();
+    }
     if (unset)
       {
         if (_c != nullptr){
@@ -3197,7 +3200,6 @@ namespace OpenBabel
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::PerceiveBondOrders", obAuditMsg);
-
     OBAtom *atom, *b, *c;
     vector3 v1, v2;
     double angle;//, dist1, dist2;
