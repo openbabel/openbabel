@@ -3091,8 +3091,6 @@ namespace OpenBabel
     vector<OBBond*>::iterator l, m;
     int valCount;
     bool changed;
-    // Removed the bond deletion loop. DvdS 210603
-    if (false) {
     BeginModify(); //prevent needless re-perception in DeleteBond
     for (atom = BeginAtom(i); atom;atom = NextAtom(i))
       {
@@ -3164,7 +3162,6 @@ namespace OpenBabel
           }
       }
     EndModify();
-    }
     if (unset)
       {
         if (_c != nullptr){
