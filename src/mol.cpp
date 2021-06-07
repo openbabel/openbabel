@@ -3224,6 +3224,10 @@ namespace OpenBabel
             && atom->GetExplicitDegree() == 2
             && angle > 109.5)
           atom->SetHyb(2);
+        else if(atom->GetAtomicNum() == OBElements::Nitrogen
+            && atom->GetExplicitDegree() == 2
+            && atom->IsInRing()) //azete
+          atom->SetHyb(2);
 
       } // pass 1
 
