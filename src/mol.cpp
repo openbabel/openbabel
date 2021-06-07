@@ -3251,6 +3251,7 @@ namespace OpenBabel
             && atom->GetExplicitDegree() == 2
             && atom->IsInRing()) //azete
           atom->SetHyb(2);
+
       } // pass 1
 
     // Make sure upcoming calls to GetHyb() don't kill these temporary values
