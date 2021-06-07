@@ -25,6 +25,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/oberror.h>
 #include <openbabel/phmodel.h>
+#include <openbabel/obfunctions.h>
 
 #include <cstdlib>
 
@@ -323,11 +324,10 @@ namespace OpenBabel
             if (j->first < (signed)i->size()) { //goof proofing
               OBAtom *atom = mol.GetAtom((*i)[j->first]);
               int old_charge = atom->GetFormalCharge();
-              atom->SetFormalCharge(j->second);
-              int new_hcount = atom->GetImplicitHCount() + (j->second - old_charge);
-              if (new_hcount < 0)
-                new_hcount = 0;
-              atom->SetImplicitHCount(new_hcount);
+              if(j->second != old_charge) {
+                atom->SetFormalCharge(j->second);
+                OBAtomAssignTypicalImplicitHydrogens(atom); //update with new charge info
+              }
             }
       }
 
