@@ -3223,7 +3223,10 @@ namespace OpenBabel
             && atom->GetExplicitDegree() == 2
             && angle > 109.5)
           atom->SetHyb(2);
-
+        else if(atom->GetAtomicNum() == OBElements::Nitrogen
+            && atom->GetExplicitDegree() == 2
+            && atom->IsInRing()) //azete
+          atom->SetHyb(2);
       } // pass 1
 
     // Make sure upcoming calls to GetHyb() don't kill these temporary values
@@ -4363,7 +4366,7 @@ namespace OpenBabel
   bool OBMol::AssignTotalChargeToAtoms(int charge)
   {
     int extraCharge = charge - GetTotalCharge(); //GetTotalCharge() gets charge on atoms
-
+    
     FOR_ATOMS_OF_MOL (atom, this)
     {
       unsigned int atomicnum = atom->GetAtomicNum();

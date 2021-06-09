@@ -77,7 +77,7 @@ atom [#6X2](#[#7])[#6X3]           					    cg "sp C in conjugated system"
 atom [#6X2](#[#6])[#1]        	       					    c1 "sp C"
 atom [#6X2](#[#6X2])(-[#7X3])                                               c1
 atom [#6X3]								    c2 "sp2 C in aliphatic system"
-atom [#6X3](=[#7X3])(-[#8X1])                                               c  "C-O- in resonance structure of amide"
+//atom [#6X3](=[#7X3])(-[#8X1])                                               c  "C-O- in resonance structure of amide"
 atom [#6X3](=[#6X3])([#6X4])[#6X3]					    c2 "sp2 C in aliphatic system"
 atom [#6X3;!R](=[#6])([#1])[#1]						    c2 "sp2 C in aliphatic system"
 atom [#6X3;!R](=[#6])([#6])[#1]						    c2 "sp2 C in aliphatic system" 
@@ -103,6 +103,7 @@ atom [#6X3;R](=[#7])(-[#6,#7])[#1]                   			    cc "sp2 C in a ring"
 atom [#6X3;R](=[#6])([#8X2,#16X2])[#6]					    cc "sp2 C in a ring"
 atom [#6X3;R]([#7,#8,#16])[#7,#8,#16]					    cc "sp2 C in a ring with 2 electron-withdrawal group"
 atom [#6X3]=[O,S]							    c  "C=O or C=S"
+atom [#6X3](=[#7X3])(-[#8X1])                                               c  "C-O- in resonance structure of amide"
 atom [#6X3](-[OD1])=[O]                                                     cm "COO- NEW"
 atom [#6X3;R]([#7,#8,#16])([#7,#8,#16])[#1]			    	    cc "sp2 C in a ring with 2 electron-withdrawal group"
 atom [#6X3;R](=[#6])([#7,#8,#16])[#1]					    cc "sp2 C in a ring with 1 electron-withdrawal group"
@@ -216,7 +217,7 @@ atom [#6X4r6]([#6X4])([#8X2])([#6X2])[#1]  				    c3
 atom [#6X4r6]([#6X4][#8X2])([#7])([#1])[#1]  				    c3
 atom [#6X4r7]  				    				    c3
 atom [#6X4r8]  				    				    c3
-
+atom [CX3r5]1=[CX3r5][CX3r5]=[CX3r5][NX3r5]1                                        ca "sp2 N pyrrole"
 
 // SMARTS rules for halogens
 
@@ -318,6 +319,7 @@ atom [#7X4]             						    n4 "sp3 N"
 #atom [ND3](=*)(-*)(-*)                                                      n4 "sp3 N"
 //atom [ND3](=O)(=O)-*    						      no "N in nitro group"
 atom [NX3](-[OX1])(=[OX1])-*                                                no "N in nitro group"
+atom [NX3r5]1[CX3r5]=[CX3r5][CX3r5]=[CX3r5]1                                        nb "sp2 N pyrrole"
 
 // SMARTS rules for oxygens
 
