@@ -37,8 +37,8 @@
 
 #include <iostream>
 
-#include <stdlib.h>
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
 #include <cstdlib>
 
 #ifndef M_PI

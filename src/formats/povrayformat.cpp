@@ -15,9 +15,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 /* ---- C includes ---- */
-#include <math.h>
-#include <time.h>
-#include <stdlib.h>
+#include <cmath>
+#include <ctime>
+#include <cstdlib>
 
 /* ---- OpenBabel include ---- */
 #include <openbabel/obmolecformat.h>

@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 
 
-#include <limits.h>
+#include <climits>
 #include <locale> // For isalpha(int)
 #include <map>
 #include <stdexcept>
