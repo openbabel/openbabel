@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/chains.h>
 #include <openbabel/residue.h>
 #include <cstdlib>
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 using namespace std;

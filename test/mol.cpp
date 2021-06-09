@@ -28,7 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <cstdlib>
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 using namespace std;

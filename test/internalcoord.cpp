@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/internalcoord.h>
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 using namespace std;

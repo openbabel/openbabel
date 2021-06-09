@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <iostream>
 
 #include <string>
-#include <math.h>
+#include <cmath>
 #include <cstring>
 #include <algorithm>
 

@@ -30,7 +30,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 

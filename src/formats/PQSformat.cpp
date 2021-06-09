@@ -19,7 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <cstdlib>
 
-#include <ctype.h>
+#include <cctype>
 
 #if HAVE_STRINGS_H
 #include <strings.h>

@@ -29,7 +29,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 #include <iostream>
 #include <memory>
 #include <vector>
-#include <stdio.h>
+#include <cstdio>
 #include <openbabel/op.h>
 #include <openbabel/mol.h>
 #include <openbabel/bond.h>
