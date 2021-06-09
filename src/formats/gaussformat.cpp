@@ -1363,13 +1363,14 @@ namespace OpenBabel
     // ConnectTheDots will remove conformers, so we add those later
     mol.SetCoordinates(vconf[vconf.size() - 1]);
     
-    mol.SetTotalCharge(total_charge);
-    mol.AssignTotalChargeToAtoms(total_charge);
-
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
+    mol.SetTotalCharge(total_charge);
+
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
+
+    mol.AssignTotalChargeToAtoms(total_charge);
 
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
