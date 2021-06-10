@@ -1690,7 +1690,7 @@ namespace OpenBabel
               // TODO: Think about edge cases, particularly atoms on the border of the unit cell.
               uc_direction = end_expected - end_orig;
 
-              std:vector<int> uc;
+              std::vector<int> uc;
               for (int i = 0; i < 3; ++i) {
                   double raw_cell = uc_direction[i];
                   uc.push_back(static_cast<int>(lrint(raw_cell)));
