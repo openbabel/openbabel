@@ -1536,6 +1536,9 @@ namespace OpenBabel
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
+    //mol.SetTotalCharge(total_charge);
+    mol.AssignTotalChargeToAtoms(total_charge);
+
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
 
