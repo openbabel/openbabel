@@ -4366,7 +4366,7 @@ namespace OpenBabel
   bool OBMol::AssignTotalChargeToAtoms(int charge)
   {
     int extraCharge = charge - GetTotalCharge(); //GetTotalCharge() gets charge on atoms
-    
+
     FOR_ATOMS_OF_MOL (atom, this)
     {
       unsigned int atomicnum = atom->GetAtomicNum();
