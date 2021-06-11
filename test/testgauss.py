@@ -34,12 +34,8 @@ def get_mol_dict(filename, fileformat, forcefield=None):
     
     obmol.AssignTotalChargeToAtoms(charge)
     obmol.SetAromaticPerceived(False) 
-    obconversion.SetOutFormat("inchi")
-    inchi      = obconversion.WriteString(obmol).strip()
-    obconversion.SetOutFormat("inchikey")
-    inchikey   = obconversion.WriteString(obmol).strip()
 
-    molecule_dict["molecule"].update({"title": title, "mol_weight": mol_weight, "numb_atoms": numb_atoms, "formula": formula, "charge": charge,  "multiplicity": None, "inchi": inchi, "inchikey": inchikey})
+    molecule_dict["molecule"].update({"title": title, "mol_weight": mol_weight, "numb_atoms": numb_atoms, "formula": formula, "charge": charge,  "multiplicity": None })
 
     if forcefield:
         ff = ob.OBForceField.FindForceField(forcefield)
@@ -73,20 +69,12 @@ def get_mol_dict(filename, fileformat, forcefield=None):
         bbb = (bond.GetBeginAtomIdx(), bond.GetEndAtomIdx())
         molecule_dict["bonds"][bbb] = bond.GetBondOrder()
         
-    if debug:
-        print(molecule_dict)
-        
     return molecule_dict
 
-def run_one(molname, forcefield, filetype, filedir):
-    if filetype == "sdf":
-        filename = os.path.join(filedir, ('%s.sdf' % molname ))
-    else:
-        filename = os.path.join(filedir, ('%s.log.gz' % molname ))
-        
+def run_one(filename, forcefield, filetype):
     if not os.path.exists(filename):
         print("File %s does not exist" % ( filename ))
-        return None, None
+        return None, None, None, None
     
     moldict = get_mol_dict(filename, filetype, forcefield)
     atypes = []
@@ -102,12 +90,10 @@ def run_one(molname, forcefield, filetype, filedir):
     for bb in moldict["bonds"]:
         thisbond = ("%d-%d:%d" % ( bb[0], bb[1], moldict["bonds"][bb]))
         btypes.append(thisbond)
-    if debug:
-        print(atypes)
-        print(btypes)
-    return atypes, btypes
+    return moldict["molecule"]["charge"], moldict["molecule"]["formula"], atypes, btypes
 
 def atp_equal(a, b):
+    # Atom type checking taking into account GAFF atom type assignmnet
     pairs = [ ( "cc", "cd" ), ( "ce", "cf" ), ( "cp", "cq" ), ( "nc", "nd" ), ( "ne", "nf" ), ( "pc", "pd" ), ( "pe", "pf" ) ]
     if a == b:
         return True
@@ -175,34 +161,46 @@ def compare_types(molname, ttype, references, actual, verbose):
     else:
         comp  = compare_btypes(references, actual)
     if len(comp) == 0:
-        print("%s %s: Passed." % ( molname, ttype ))
+        if debug:
+            print("%s %s: Passed." % ( molname, ttype ))
         return True
     else:
         extra = ""
         if verbose:
             extra = (" ref %s actual %s" % ( reference, actual ) )
-        print("%s %s: Failed.%s%s" % ( molname, ttype, comp, extra ) )
+        if debug:
+            print("%s %s: Failed.%s%s" % ( molname, ttype, comp, extra ) )
         return False
     
 def compare_sdf_log(filedir, forcefield, verbose):
-    sdfs      = filedir + "testgauss/*.sdf"
+    sdfs      = filedir + "/*.sdf"
     mol_list  = glob.glob(sdfs)
     filetypes = [ "sdf", "g09" ]
     summary   = { "atoms": 0, "bonds": 0 }
     passed    = True
     for mol in mol_list:
-        molname = mol[:-4]
         atypes = {}
         btypes = {}
+        qtot   = {}
+        formula= {}
         failed = False
         for filetype in filetypes:
-            atypes[filetype], btypes[filetype] = run_one(molname, forcefield, filetype, filedir)
-            if not atypes[filetype] or not btypes[filetype]:
+            if filetype == "sdf":
+                filename = mol
+            else:
+                filename = mol[:-3] + "log.gz"
+            qtot[filetype], formula[filetype], atypes[filetype], btypes[filetype] = run_one(filename, forcefield, filetype)
+            if (qtot[filetype]    == None or 
+                formula[filetype] == None or
+                atypes[filetype]  == None or
+                btypes[filetype]  == None):
                 failed = True
                 passed = False
  
         if not failed:
-            different = False
+            different = (qtot[filetypes[0]]    != qtot[filetypes[1]] or
+                         formula[filetypes[0]] != formula[filetypes[1]])
+                             
             # Now compare atom types
             ref = ""
             for at in atypes[filetypes[0]]:
@@ -210,26 +208,26 @@ def compare_sdf_log(filedir, forcefield, verbose):
             if not compare_types(mol, forcefield+"-"+"-atoms", ref, atypes[filetypes[1]], verbose):
                 summary["atoms"] += 1
                 different = True
-                # Now compare bond types
-                ref = ""
-                for bt in btypes[filetypes[0]]:
-                    ref += (" %s" % bt)
-                if not compare_types(mol, forcefield+"-"+"-bonds", ref, btypes[filetypes[1]], verbose):
-                    summary["bonds"] += 1
-                    different = True
+                
+            # Now compare bond types
+            ref = ""
+            for bt in btypes[filetypes[0]]:
+                ref += (" %s" % bt)
+            if not compare_types(mol, forcefield+"-"+"-bonds", ref, btypes[filetypes[1]], verbose):
+                summary["bonds"] += 1
+                different = True
             # Write the atom and bond types, for sdf only
             if different:
+                passed = False
                 if debug:
-                    msg = ""
                     for filetype in filetypes:
-                        msg += ("%s-%s|" % ( mol[:-4], filetype) )
+                        msg = ("%s %s qtot %s %s|" % ( mol[:-4], filetype, qtot[filetype], formula[filetype] ) )
                         for i in range(len(atypes[filetype])):
                             msg += (" %s" % atypes[filetype][i])
                         msg += ("|")
                         for i in range(len(btypes[filetype])):
                             msg += (" %s" % btypes[filetype][i])
-                    print(msg)
-                passed = False
+                        print(msg)
     for ab in summary.keys():
         if debug:
             print("%d error(s) in %s-%s" % ( summary[ab], forcefield, ab))
@@ -241,7 +239,8 @@ class TestGauss(BaseTest):
     
     def testGauss(self):
         filedir = os.path.join(os.path.dirname(__file__), 'testgauss')
-        compare_sdf_log(filedir, "gaff", True)
+        result = compare_sdf_log(filedir, "gaff", True)
+        self.assertTrue(result)
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

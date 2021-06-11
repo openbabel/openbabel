@@ -1,4 +1,4 @@
-OPT/sulfur-trioxide/sulfur-trioxide3-opt.log.gz
+sulfur-trioxide.sdf
  OpenBabel07261715163D
 Gaussian 03 #P B3LYP/gen Int(Grid=Ultrafine) maxdisk=40GB SCF(Save,MaxCycle=100)
   4  3  0  0  0  0  0  0  0  0999 V2000
