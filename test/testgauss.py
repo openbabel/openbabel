@@ -84,7 +84,8 @@ def run_one(filename, forcefield, filetype):
             if moldict["atoms"][ai]["atomtype"]:
                 atype = moldict["atoms"][ai]["atomtype"]
         else:
-            print("No atom %d in %s with %d atoms" % ( ai, molname, moldict["molecule"]["numb_atoms"]))
+            if debug:
+                print("No atom %d in %s with %d atoms" % ( ai, molname, moldict["molecule"]["numb_atoms"]))
         atypes.append(atype)
     btypes = []
     for bb in moldict["bonds"]:
@@ -103,16 +104,25 @@ def atp_equal(a, b):
                 return True
     return False
 
-def compare_atypes(reference, actual):
-    comp = ""
-    for i in range(len(reference)):
-        if reference[i] != actual[i]:
-            if not atp_equal(reference[i],actual[i]):
-                comp = comp + ( " %d: %s != %s" % ( i+1, reference[i], actual[i] ))
-    return comp
+class TestGauss(BaseTest):
+    """Test reading files from Gaussian"""
 
-def compare_btypes(references, actual):
-    for reference in references.split(";"):
+    def compare_atom_types(self, reference, actual):
+        comp = ""
+        for i in range(len(reference)):
+            if reference[i] != actual[i]:
+                if not atp_equal(reference[i],actual[i]):
+                    comp = comp + ( " %d: %s != %s" % ( i+1, reference[i], actual[i] ))
+                    # We only do the assert after testing ourselves
+                    # since the comparison is non-trivial
+                    # When debugging we do not do the assertion, since
+                    # we will not get output.
+                    if not debug:
+                        self.assertEqual(reference[i],actual[i])
+                    
+        return comp
+
+    def compare_bond_orders(self, reference, actual):
         refhash = {}
         for r in reference.split():
             rrr = r.split(":")
@@ -122,124 +132,122 @@ def compare_btypes(references, actual):
         for a in actual:
             aaa = a.split(":")
             if aaa[0] in refhash:
-                if aaa[1] == refhash[aaa[0]]:
-                    continue
-                else:
+                if not debug:
+                    self.assertEqual(aaa[1], refhash[aaa[0]])
+                if aaa[1] != refhash[aaa[0]]:
                     comp = ( " ref %s:%s actual %s" % ( aaa[0], refhash[aaa[0]], a ))
             else:
                 bbb = aaa[0].split("-")
                 bnew = ( "%s-%s" % ( bbb[1], bbb[0] ))
                 if bnew in refhash:
-                    if aaa[1] == refhash[bnew]:
-                        continue
-                    else:
+                    if not debug:
+                        self.assertEqual(bnew, refhash[bnew])
+                    if aaa[1] != refhash[bnew]:
                         comp += ( " ref %s:%s actual %s," % ( bnew, refhash[bnew], a ))
                 else:
+#                    self.assertTrue(False)
                     comp += ( " %s notfound" % bnew)
+        return comp
+
+    def compare_types(self, molname, ttype, references, actual, verbose):
+        comp_atoms = ttype.find("atoms") >= 0
+        if comp_atoms:
+            reference = references.split()
+        else:
+            reference = references.split(";")[0].split()
+        if len(reference) == 0:
+            print("%s: no reference types for %s" % (molname, ttype))
+            return
+        if len(reference) != len(actual):
+            extra = ""
+            if verbose:
+                extra = ( " ref %s actual %s" % ( reference, actual ))
+            print("%s: number of %s in reference %d, actual %d%s" % ( molname, ttype, len(reference), len(actual), extra))
+            return
+            
+        # Now we have the same, non-zero, number of atom types
+        if comp_atoms:
+            comp  = self.compare_atom_types(reference, actual)
+        else:
+            comp  = self.compare_bond_orders(references, actual)
         if len(comp) == 0:
-            break
-    return comp
-
-def compare_types(molname, ttype, references, actual, verbose):
-    comp_atoms = ttype.find("atoms") >= 0
-    if comp_atoms:
-        reference = references.split()
-    else:
-        reference = references.split(";")[0].split()
-    if len(reference) == 0:
-        print("%s: no reference types for %s" % (molname, ttype))
-        return
-    if len(reference) != len(actual):
-        extra = ""
-        if verbose:
-            extra = ( " ref %s actual %s" % ( reference, actual ))
-        print("%s: number of %s in reference %d, actual %d%s" % ( molname, ttype, len(reference), len(actual), extra))
-        return
-    # Now we have the same, non-zero, number of atom types
-    if comp_atoms:
-        comp  = compare_atypes(reference, actual)
-    else:
-        comp  = compare_btypes(references, actual)
-    if len(comp) == 0:
-        if debug:
-            print("%s %s: Passed." % ( molname, ttype ))
-        return True
-    else:
-        extra = ""
-        if verbose:
-            extra = (" ref %s actual %s" % ( reference, actual ) )
-        if debug:
-            print("%s %s: Failed.%s%s" % ( molname, ttype, comp, extra ) )
-        return False
+            if debug:
+                print("%s %s: Passed." % ( molname, ttype ))
+            return True
+        else:
+            extra = ""
+            if verbose:
+                extra = (" ref %s actual %s" % ( reference, actual ) )
+            if debug:
+                print("%s %s: Failed.%s%s" % ( molname, ttype, comp, extra ) )
+            return False
     
-def compare_sdf_log(filedir, forcefield, verbose):
-    sdfs      = filedir + "/*.sdf"
-    mol_list  = glob.glob(sdfs)
-    filetypes = [ "sdf", "g09" ]
-    summary   = { "atoms": 0, "bonds": 0 }
-    passed    = True
-    for mol in mol_list:
-        atypes = {}
-        btypes = {}
-        qtot   = {}
-        formula= {}
-        failed = False
-        for filetype in filetypes:
-            if filetype == "sdf":
-                filename = mol
-            else:
-                filename = mol[:-3] + "log.gz"
-            qtot[filetype], formula[filetype], atypes[filetype], btypes[filetype] = run_one(filename, forcefield, filetype)
-            if (qtot[filetype]    == None or 
-                formula[filetype] == None or
-                atypes[filetype]  == None or
-                btypes[filetype]  == None):
-                failed = True
-                passed = False
+    def compare_sdf_log(self, filedir, forcefield, verbose):
+        sdfs      = filedir + "/*.sdf"
+        mol_list  = glob.glob(sdfs)
+        filetypes = [ "sdf", "g09" ]
+        summary   = { "atoms": 0, "bonds": 0 }
+        passed    = True
+        for mol in mol_list:
+            atypes = {}
+            btypes = {}
+            qtot   = {}
+            formula= {}
+            failed = False
+            for filetype in filetypes:
+                if filetype == "sdf":
+                    filename = mol
+                else:
+                    filename = mol[:-3] + "log.gz"
+                qtot[filetype], formula[filetype], atypes[filetype], btypes[filetype] = run_one(filename, forcefield, filetype)
+                if (qtot[filetype]    == None or 
+                    formula[filetype] == None or
+                    atypes[filetype]  == None or
+                    btypes[filetype]  == None):
+                    failed = True
+                    passed = False
  
-        if not failed:
-            different = (qtot[filetypes[0]]    != qtot[filetypes[1]] or
-                         formula[filetypes[0]] != formula[filetypes[1]])
+            if not failed:
+                different = (qtot[filetypes[0]]    != qtot[filetypes[1]] or
+                             formula[filetypes[0]] != formula[filetypes[1]])
                              
-            # Now compare atom types
-            ref = ""
-            for at in atypes[filetypes[0]]:
-                ref += (" %s" % at)
-            if not compare_types(mol, forcefield+"-"+"-atoms", ref, atypes[filetypes[1]], verbose):
-                summary["atoms"] += 1
-                different = True
+                # Now compare atom types
+                ref = ""
+                for at in atypes[filetypes[0]]:
+                    ref += (" %s" % at)
+                if not self.compare_types(mol, forcefield+"-"+"-atoms", ref, atypes[filetypes[1]], verbose):
+                    summary["atoms"] += 1
+                    different = True
                 
-            # Now compare bond types
-            ref = ""
-            for bt in btypes[filetypes[0]]:
-                ref += (" %s" % bt)
-            if not compare_types(mol, forcefield+"-"+"-bonds", ref, btypes[filetypes[1]], verbose):
-                summary["bonds"] += 1
-                different = True
-            # Write the atom and bond types, for sdf only
-            if different:
-                passed = False
+                # Now compare bond types
+                ref = ""
+                for bt in btypes[filetypes[0]]:
+                    ref += (" %s" % bt)
+                if not self.compare_types(mol, forcefield+"-"+"-bonds", ref, btypes[filetypes[1]], verbose):
+                    summary["bonds"] += 1
+                    different = True
+                # Write the atom and bond types, for sdf only
+                if different:
+                    passed = False
+                    if debug:
+                        for filetype in filetypes:
+                            msg = ("%s %s qtot %s %s|" % ( mol[:-4], filetype, qtot[filetype], formula[filetype] ) )
+                            for i in range(len(atypes[filetype])):
+                                msg += (" %s" % atypes[filetype][i])
+                            msg += ("|")
+                            for i in range(len(btypes[filetype])):
+                                msg += (" %s" % btypes[filetype][i])
+                            print(msg)
+            for ab in summary.keys():
                 if debug:
-                    for filetype in filetypes:
-                        msg = ("%s %s qtot %s %s|" % ( mol[:-4], filetype, qtot[filetype], formula[filetype] ) )
-                        for i in range(len(atypes[filetype])):
-                            msg += (" %s" % atypes[filetype][i])
-                        msg += ("|")
-                        for i in range(len(btypes[filetype])):
-                            msg += (" %s" % btypes[filetype][i])
-                        print(msg)
-    for ab in summary.keys():
-        if debug:
-            print("%d error(s) in %s-%s" % ( summary[ab], forcefield, ab))
+                    print("%d error(s) in %s-%s" % ( summary[ab], forcefield, ab))
 
-    return passed
+        return passed
 
-class TestGauss(BaseTest):
-    """Test reading files from Gaussian """
     
     def testGauss(self):
         filedir = os.path.join(os.path.dirname(__file__), 'testgauss')
-        result = compare_sdf_log(filedir, "gaff", True)
+        result = self.compare_sdf_log(filedir, "gaff", True)
         self.assertTrue(result)
 
 if __name__ == "__main__":
