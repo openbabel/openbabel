@@ -3027,6 +3027,7 @@ namespace OpenBabel
             // bonded if closer than elemental Rcov + tolerance
             cutoff = SQUARE(rad[j] + rad[k] + 0.45);
 
+
             // Use minimum image convention if the unit cell is periodic
             // Otherwise, use a simpler (faster) distance calculation based on raw coordinates
             if (IsPeriodic())
@@ -3099,6 +3100,29 @@ namespace OpenBabel
           {
             bond = atom->BeginBond(l);
             maxbond = bond;
+
+            // Marie-Madeleine Walz, 2021-06-11, Begin
+            // prevent bond of thiirene and others to get deleted
+            if (atom ->IsInRing() 
+                  && (atom->GetAtomicNum() == OBElements::Phosphorus || atom->GetAtomicNum() == OBElements::Sulfur)
+                  && atom->GetExplicitValence() < static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum()))
+                  && atom->SmallestBondAngle() < 45.0
+                  && atom->SmallestBondAngle() > 37.7
+                  )
+              {
+                changed = false;
+                //printf("valence %d\n", atom->GetExplicitValence());
+                //printf("angle %f\n", atom->SmallestBondAngle());
+                //printf("atomicnumber %d\n", atom->GetAtomicNum());
+                break; 
+              }     
+  
+            //printf("valence %d\n", atom->GetExplicitValence());
+            //printf("othervalence %d\n", static_cast<unsigned int>(OBElements::GetMaxBonds(atom->GetAtomicNum())));
+            //printf("angle %f\n", atom->SmallestBondAngle());
+            //printf("otherangle %f\n", 45.0);
+            // Marie-Madeleine Walz, 2021-06-11, End
+
             // Fix from Liu Zhiguo 2008-01-26
             // loop past any bonds
             // which existed before ConnectTheDots was called
