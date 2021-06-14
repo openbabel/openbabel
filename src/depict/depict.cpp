@@ -381,8 +381,7 @@ namespace OpenBabel
     if (!d->painter)
       return false;
 
-    if (d->mol != nullptr)
-      delete d->mol;
+    delete d->mol;
     d->mol = new OBMol(*mol); // Copy it
 
     double width=0.0, height=0.0;

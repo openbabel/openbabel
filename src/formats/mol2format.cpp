@@ -243,8 +243,7 @@ namespace OpenBabel
                 //! @todo allow better multi-line comments
                 // which don't allow ill-formed data to consume memory
                 // Thanks to Andrew Dalke for the pointer
-                if (comment != nullptr)
-                  delete [] comment;
+                delete [] comment;
                 comment = new char [len];
                 memcpy(comment,buffer,len);
               }

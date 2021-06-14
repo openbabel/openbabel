@@ -1053,7 +1053,7 @@ namespace OpenBabel {
     };
     //end addition from 16 April 2006
     if (bkExt == nullptr) free(bk);
-    if (blStore != nullptr) delete(blStore);
+    delete blStore;
     return result;
   };
 
@@ -3481,9 +3481,9 @@ namespace OpenBabel {
       result=k;
     };
     //freeing resources
-    if (smCopy != nullptr) delete(smCopy);
-    if (bestStore != nullptr) delete(bestStore);
-    if (tmpStore != nullptr) delete(tmpStore);
+    delete smCopy;
+    delete bestStore;
+    delete tmpStore;
 
     return result;
   };
