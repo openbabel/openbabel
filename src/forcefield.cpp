@@ -823,12 +823,10 @@ namespace OpenBabel
       _mol = mol;
       _ncoords = _mol.NumAtoms() * 3;
 
-      if (_velocityPtr)
-        delete [] _velocityPtr;
+      delete [] _velocityPtr;
       _velocityPtr = nullptr;
 
-      if (_gradientPtr)
-        delete [] _gradientPtr;
+      delete [] _gradientPtr;
       _gradientPtr = new double[_ncoords];
 
       if (_mol.NumAtoms() && _constraints.Size())
@@ -879,12 +877,10 @@ namespace OpenBabel
       _mol = mol;
       _ncoords = _mol.NumAtoms() * 3;
 
-      if (_velocityPtr)
-        delete [] _velocityPtr;
+      delete [] _velocityPtr;
       _velocityPtr = nullptr;
 
-      if (_gradientPtr)
-        delete [] _gradientPtr;
+      delete [] _gradientPtr;
       _gradientPtr = new double[_ncoords];
 
       _constraints = constraints;
@@ -2892,8 +2888,7 @@ namespace OpenBabel
       OBFFLog("--------------------------------\n");
     }
 
-    if (_grad1 != nullptr)
-      delete [] _grad1;
+    delete [] _grad1;
     _grad1 = new double[_ncoords];
     memset(_grad1, '\0', sizeof(double)*_ncoords);
 
