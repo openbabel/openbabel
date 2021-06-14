@@ -1,0 +1,23 @@
+sulfite.sdf
+ OpenBabel07261715213D
+Gaussian lap/gaussian/09.d.01/g09/g09 #P B3LYP/gen Pseudo=Read Int(Grid=Ultrafin
+  4  3  0  0  0  0  0  0  0  0999 V2000
+    0.0000    0.0000    0.3381 S   0  0  0  0  0  0  0  0  0  0  0  0
+    1.4013    0.3656   -0.2254 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0173    1.0308   -0.2254 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3841   -1.3963   -0.2254 O   0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  3  1  1  0  0  0  0
+  4  1  1  0  0  0  0
+M  CHG  2   3  -1   4  -1
+M  END
+>  <program>
+Gaussian 09, Revision D.01
+
+>  <basis>
+gen
+
+>  <method>
+B3LYP
+
+$$$$
