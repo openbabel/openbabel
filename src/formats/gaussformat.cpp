@@ -1369,9 +1369,6 @@ namespace OpenBabel
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
-    //mol.SetTotalCharge(total_charge);
-    mol.AssignTotalChargeToAtoms(total_charge);
-
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
     if (vconf.size() > 1)
@@ -1395,8 +1392,9 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
-    
  
+    mol.SetTotalCharge(total_charge);
+    mol.AssignTotalChargeToAtoms(total_charge);
     mol.SetTotalSpinMultiplicity(spin_multiplicity);
 
     mol.SetTitle(title);
