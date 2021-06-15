@@ -1569,6 +1569,9 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
+    
+    mol.AssignTotalChargeToAtoms(total_charge);
+    mol.SetTotalCharge(total_charge);
     mol.SetTotalSpinMultiplicity(spin_multiplicity);
     mol.SetTitle(title);
     return(true);
