@@ -1,3 +1,12 @@
+---
+name: Bug report
+about: Create a report to help us improve
+title: ''
+labels: ''
+assignees: ''
+
+---
+
 <!--
  Before submitting please search open and closed issues at
  https://github.com/openbabel/openbabel
@@ -8,11 +17,8 @@
  The GitHub issue tracker is for bug reports and feature requests.
  If you have a question about using Open Babel, please post to openbabel-discuss@lists.sourceforge.net
 
- Feel free to use the following as a template and remove or add fields as you see fit. You can convert `[ ]` into `[x]` to check boxes.
+ Feel free to use the following as a template and remove or add fields as you see fit.
 -->
-
-- [ ] I believe this to be a bug with Open Babel
-- [ ] This is a feature request
 
 ## Environment Information
 Open Babel version:
