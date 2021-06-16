@@ -99,7 +99,7 @@ namespace OpenBabel
     cairo_set_source_rgb(m_cairo, color.red, color.green, color.blue);
   }
 
-  void CairoPainter::SetFillRadial(const OBColor &start, const OBColor &end)
+  void CairoPainter::SetFillRadial(const OBColor & /*start*/, const OBColor &end)
   {
     cairo_set_source_rgb(m_cairo, end.red, end.green, end.blue);
   }

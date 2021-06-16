@@ -65,7 +65,7 @@ public:
    For the rest, even when stopped by encountering atoms already visited
          0    , atno(1), bo(1)(2), atno(2), bo(2)(3),...atno(n)
   **/
-virtual std::string DescribeBits(const std::  vector<unsigned int> fp, bool bSet=true)
+virtual std::string DescribeBits(const std::vector<unsigned int> /*fp*/, bool /*bSet*/ = true)
   { return _ss.str(); }
 
   virtual unsigned int Flags() { return _flags;};

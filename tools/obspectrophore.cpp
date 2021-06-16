@@ -536,7 +536,7 @@ showHelp(const char* cmd)
 
 
 void
-showImplementationDetails(const char* cmd)
+showImplementationDetails(const char* /*cmd*/)
 {
 	std::cout << "\n*******************************************\n";
 	std::cout << "SPECTROPHORE(TM) CALCULATOR: OBSPECTROPHORE\n";

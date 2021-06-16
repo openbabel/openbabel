@@ -59,7 +59,7 @@ class LpmdFormat : public OBMoleculeFormat
   //Optional
   virtual const char* GetMIMEType()  { return "chemical/lpmd"; };
 
-  virtual int SkipObjects(int n, OBConversion* pConv)
+  virtual int SkipObjects(int /*n*/, OBConversion* /*pConv*/)
   {
    return 0;
   };
@@ -94,7 +94,7 @@ class LpmdFormat : public OBMoleculeFormat
 
 LpmdFormat theLpmdFormat;
 
-bool LpmdFormat::ReadHeader( std::istream &ifs, OBMol &mol )
+bool LpmdFormat::ReadHeader(std::istream &ifs, OBMol & /*mol*/)
 {
  //Header Line
  if( ! ifs.getline(buffer,BUFF_SIZE) )

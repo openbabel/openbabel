@@ -24,15 +24,6 @@ GNU General Public License for more details.
 #include <openbabel/typer.h>
 #include <openbabel/bitvec.h>
 
-#ifdef UNUSED
-#elif (__GNUC__ == 4)
-# define UNUSED(x) UNUSED_ ## x __attribute__((unused))
-#elif defined(__LCLINT__)
-# define UNUSED(x) /*@unused@*/ x
-#else
-# define UNUSED(x) x
-#endif
-
 namespace OpenBabel
 {
   class OBRing;
@@ -425,7 +416,7 @@ namespace OpenBabel
     ///@name Deprecated
     ///@{
     /** @deprecated Has no effect. */
-    void SetDelta(double UNUSED(d)) {}
+    void SetDelta(double) {}
     /** @deprecated Has no effect. */
     double GetDelta() { return 10.0; }
     /** @deprecated */
@@ -441,7 +432,7 @@ namespace OpenBabel
     /** @deprecated Bad name, see GetTorsionValues() */
     std::vector<double> &GetResolution() { return _torsionAngles; }
     /** @deprecated */
-    void SetNumCoords(int UNUSED(nc)) {}
+    void SetNumCoords(int) {}
     ///@}
 
     ; // Added to workaround https://github.com/swig/swig/issues/1636

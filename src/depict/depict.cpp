@@ -1066,7 +1066,7 @@ namespace OpenBabel
     }
   }
   void OBDepictPrivateBallAndStick::DrawSimpleBond(OBAtom* beginAtom,
-  OBAtom* endAtom, int order, bool crossed_bond)
+  OBAtom* endAtom, int order, bool /*crossed_bond*/)
   {
     const vector3 begin = beginAtom->GetVector();
     const vector3 end = endAtom->GetVector();
@@ -1222,7 +1222,7 @@ OBBitVec& drawnBonds)
     }
   }
 
-  inline void OBDepictPrivateBallAndStick::DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 &center, double dist)
+  inline void OBDepictPrivateBallAndStick::DrawAromaticRingBond(OBAtom *prevAtom, OBAtom *beginAtom, OBAtom *endAtom, OBAtom *nextAtom, const vector3 & /*center*/, double /*dist*/)
   {
     const vector3 prev  = prevAtom->GetVector();
     const vector3 begin = beginAtom->GetVector();

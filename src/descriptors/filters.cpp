@@ -32,7 +32,7 @@ class MWFilter : public OBDescriptor {
 public:
   MWFilter(const char *ID) : OBDescriptor(ID){};
   virtual const char *Description() { return "Molecular Weight filter"; };
-  virtual double Predict(OBBase *pOb, string *param = nullptr) {
+  virtual double Predict(OBBase *pOb, string * /*param*/ = nullptr) {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -46,7 +46,7 @@ class RotatableBondsFilter : public OBDescriptor {
 public:
   RotatableBondsFilter(const char *ID) : OBDescriptor(ID){};
   virtual const char *Description() { return "Rotatable bonds filter"; };
-  virtual double Predict(OBBase *pOb, string *param = nullptr) {
+  virtual double Predict(OBBase *pOb, string * /*param*/ = nullptr) {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -152,7 +152,7 @@ public:
   virtual const char *Description() { return "Chemical formula"; };
 
   virtual double GetStringValue(OBBase *pOb, std::string &svalue,
-                                std::string *param = nullptr) {
+                                std::string * /*param*/ = nullptr) {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (pmol)
       svalue = pmol->GetSpacedFormula(1, ""); // actually unspaced

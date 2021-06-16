@@ -83,7 +83,7 @@ namespace OpenBabel
     virtual const char* GetMIMEType() { return nullptr; }
 
     // Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+    virtual int SkipObjects(int /*n*/, OpenBabel::OBConversion* /*pConv*/) { return 0; }
 
     virtual unsigned int Flags()
     {

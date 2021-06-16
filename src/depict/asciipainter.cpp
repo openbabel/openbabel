@@ -77,7 +77,7 @@ namespace OpenBabel
     return 0.0;
   }
 
-  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes)
+  void ASCIIPainter::DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & /*dashes*/)
   {
     vector<pair<int, int> > coords;
     vector<pair<int, int> >::iterator vp_it;
@@ -121,7 +121,7 @@ namespace OpenBabel
     }
   }
 
-  OBFontMetrics ASCIIPainter::GetFontMetrics(const std::string &text)
+  OBFontMetrics ASCIIPainter::GetFontMetrics(const std::string & /*text*/)
   {
     OBFontMetrics metrics;
     // The following line tries to workaround the fact that fontSize is an int

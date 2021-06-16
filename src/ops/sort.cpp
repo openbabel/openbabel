@@ -68,7 +68,7 @@ private:
 OpSort theOpSort("sort"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpSort::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpSort::Do(OBBase* /*pOb*/, const char* OptionText, OpMap* /*pmap*/, OBConversion* pConv)
 {
   if(pConv && pConv->IsFirstInput())
   {
