@@ -24,9 +24,9 @@ GNU General Public License for more details.
  */
 #include <openbabel/babelconfig.h>
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
+#include <cstdlib>
+#include <cstdio>
+#include <cmath>
 
 #include "rand.h"
 

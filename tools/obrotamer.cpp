@@ -31,7 +31,7 @@ GNU General Public License for more details.
 #include "../src/rand.h"
 #include "../src/rand.cpp"
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 

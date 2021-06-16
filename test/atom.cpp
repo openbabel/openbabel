@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/atom.h>
 #include <openbabel/obconversion.h>
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 using namespace std;

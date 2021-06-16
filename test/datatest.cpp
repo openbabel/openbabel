@@ -23,8 +23,8 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include <iostream>
 
 #include <openbabel/mol.h>

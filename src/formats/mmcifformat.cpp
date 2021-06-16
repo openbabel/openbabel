@@ -26,7 +26,7 @@ GNU General Public License for more details.
 
 #include <iostream>
 #include <algorithm>
-#include <ctype.h>
+#include <cctype>
 
 using namespace std;
 namespace OpenBabel

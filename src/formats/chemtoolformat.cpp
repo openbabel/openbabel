@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/elements.h>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 using namespace std;
 namespace OpenBabel

@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <iostream>
 #include <iomanip>
 #include <sstream>
-#include <math.h>
+#include <cmath>
 using namespace std;
 
 #if defined(_MSC_VER) && _MSC_VER >= 1200 && _MSC_VER < 1800 // Between VC++ 6.0 and VC++ 11.0

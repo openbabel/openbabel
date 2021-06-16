@@ -43,7 +43,7 @@ GNU General Public License for more details.
 #include <typeinfo>
 #include <iterator>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <openbabel/obconversion.h>
 //#include <openbabel/mol.h>

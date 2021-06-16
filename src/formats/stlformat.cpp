@@ -37,8 +37,8 @@
 
 #include <iostream>
 
-#include <stdlib.h>
-#include <math.h>
+#include <cstdlib>
+#include <cmath>
 
 // uint8_t and uint16_t are not defined for earlier versions of msvc
 #if defined(_MSC_VER) && _MSC_VER <= 1600

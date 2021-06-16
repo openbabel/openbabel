@@ -27,7 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/xml.h>
-#include <float.h>
+#include <cfloat>
 #ifdef HAVE_SHARED_POINTER
   #include <openbabel/reaction.h>
 #endif
