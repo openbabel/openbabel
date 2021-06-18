@@ -352,8 +352,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// SUM
             tokenize(vs, buffer);
             if (vs.size() == 5) {
-              if (dipoleMoment)
-                delete dipoleMoment;
+              delete dipoleMoment;
 
               dipoleMoment = new OBVectorData;
               double x, y, z;
