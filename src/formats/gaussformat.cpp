@@ -1362,7 +1362,7 @@ namespace OpenBabel
     // set some default coordinates
     // ConnectTheDots will remove conformers, so we add those later
     mol.SetCoordinates(vconf[vconf.size() - 1]);
-    
+
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     
@@ -1392,11 +1392,9 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
- 
     mol.SetTotalCharge(total_charge);
     mol.AssignTotalChargeToAtoms(total_charge);
     mol.SetTotalSpinMultiplicity(spin_multiplicity);
-
     mol.SetTitle(title);
     return(true);
   }
