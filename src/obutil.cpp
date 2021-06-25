@@ -52,6 +52,7 @@ namespace OpenBabel
 
   //! Deprecated: use the OBMessageHandler class instead
   //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
+  OB_DEPRECATED_MSG("use the OBMessageHandler class instead")
   void ThrowError(char *str)
   {
     obErrorLog.ThrowError("", str, obInfo);
@@ -59,6 +60,7 @@ namespace OpenBabel
 
   //! Deprecated: use the OBMessageHandler class instead
   //! \deprecated Throw an error through the OpenBabel::OBMessageHandler class
+  OB_DEPRECATED_MSG("use the OBMessageHandler class instead")
   void ThrowError(std::string &str)
   {
     obErrorLog.ThrowError("", str, obInfo);

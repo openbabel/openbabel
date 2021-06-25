@@ -34,7 +34,7 @@ namespace OpenBabel
 #define PT_METAL	   8
 
 // class introduction in patty.cpp
-class OBAPI patty
+class OBAPI OB_DEPRECATED patty
 {
     std::vector<OBSmartsPattern*> _sp;
     std::vector<std::string> smarts;

@@ -93,6 +93,7 @@ namespace OpenBabel
 
     @param norm specifies the normal to the plane
   */
+  OB_DEPRECATED
   void matrix3x3::PlaneReflection(const vector3 &norm)
   {
     //@@@ add a safety net
@@ -125,6 +126,7 @@ namespace OpenBabel
     @param v specifies the axis of the rotation
     @param angle angle in degrees (0..360)
   */
+  OB_DEPRECATED
   void matrix3x3::RotAboutAxisByAngle(const vector3 &v,const double angle)
   {
     double theta = angle*DEG_TO_RAD;
