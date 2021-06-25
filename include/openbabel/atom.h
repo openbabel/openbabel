@@ -335,7 +335,8 @@ namespace OpenBabel
       bool HtoMethyl();
       //! Change the hybridization of this atom and modify the geometry accordingly
       //! \return success or failure
-      bool SetHybAndGeom(int);
+      //! \deprecated This will be removed in future versions of Open Babel
+      OB_DEPRECATED bool SetHybAndGeom(int);
       //@}
 
       //! \name Property information
