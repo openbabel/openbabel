@@ -112,7 +112,7 @@ namespace OpenBabel
     return co ;
   }
 
-  OBAPI int vector3::operator== ( const vector3& other ) const
+  OBAPI bool vector3::operator== ( const vector3& other ) const
   {
     return ( ( x() == other.x() ) &&
              ( y() == other.y() ) &&
