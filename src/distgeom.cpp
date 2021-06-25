@@ -110,7 +110,9 @@ namespace OpenBabel {
   };
 
 
-  OBDistanceGeometry::OBDistanceGeometry(): _d(nullptr) {}
+  OBDistanceGeometry::OBDistanceGeometry(): _d(nullptr) {
+    prng.reset(new OBRandom{});
+  }
 
   OBDistanceGeometry::OBDistanceGeometry(const OBMol &mol, bool useCurrentGeometry): _d(nullptr)
   {
@@ -231,6 +233,10 @@ namespace OpenBabel {
       }
     }
     return true;
+  }
+
+  void OBDistanceGeometry::Seed(uint_fast64_t seed) {
+    prng->Seed(seed);
   }
 
   // Set the default bounds to a maximum distance
@@ -1017,13 +1023,11 @@ namespace OpenBabel {
     unsigned int N = _mol.NumAtoms();
     // random distance matrix
     Eigen::MatrixXd distMat = Eigen::MatrixXd::Zero(N, N);
-    OBRandom generator;
-    generator.TimeSeed();
     for (size_t i=0; i<N; ++i) {
       for(size_t j=0; j<i; ++j) {
         double lb = _d->GetLowerBounds(i, j);
         double ub = _d->GetUpperBounds(i, j);
-        double v = generator.NextFloat() * (ub - lb) + lb;
+        double v = prng->UniformReal(lb, ub);
         distMat(i, j) = v;
         distMat(j, i) = v;
       }
@@ -1175,9 +1179,6 @@ namespace OpenBabel {
     double *confCoord = new double [_mol.NumAtoms() * 3]; // initial state (random)
     _mol.AddConformer(confCoord);
     _mol.SetConformer(_mol.NumConformers());
-
-    OBRandom generator(true); // Use system rand() functions
-    generator.TimeSeed();
 
     if (_d->debug) {
       cerr << " max box size: " << _d->maxBoxSize << endl;

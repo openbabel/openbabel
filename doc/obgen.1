@@ -32,6 +32,11 @@ Generate 3D coordinates for the molecule(s) in file test.smi:
 Generate 3D coordinates for the molecule(s) in file test.smi using the
 UFF forcefield:
 .Dl "obgen -ff UFF test.smi"
+.Sh ENVIRONMENT
+.Bl -tag -width flag
+.It Ev OB_RANDOM_SEED
+Specify seed for pseudo random number generator.
+If not specified, random seed is used.
 .Sh SEE ALSO
 .Xr obabel 1 ,
 .Xr obminimize 1 ,

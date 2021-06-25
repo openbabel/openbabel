@@ -21,9 +21,9 @@ GNU General Public License for more details.
 #ifndef OB_VECTOR_H
 #define OB_VECTOR_H
 
-#include <ostream>
-#include <math.h>
+#include <cmath>
 #include <iostream>
+#include <memory>
 
 #include <openbabel/babelconfig.h>
 
@@ -39,12 +39,14 @@ namespace OpenBabel
 {
 
   class matrix3x3; // declared in math/matrix3x3.h
+  class OBRandom;
 
   // class introduction in vector3.cpp
   class OBAPI vector3
   {
   private :
     double _vx, _vy, _vz ;
+    std::shared_ptr<OBRandom> prng;
 
   public :
     //! Constructor
@@ -211,6 +213,9 @@ namespace OpenBabel
     //! \todo Currently unimplemented
     vector3& operator*= ( const matrix3x3 &);
 
+    //! Reset prng by the specified seed
+    void seed(uint_fast64_t seed);
+
     //! Create a random unit vector
     void randomUnitVector();
 
@@ -231,7 +236,7 @@ namespace OpenBabel
     //! \return The vector length
     double length () const
     {
-      return sqrt( length_2() );
+      return std::sqrt( length_2() );
     };
     //! Access function to get the x-coordinate of the vector
     const double & x () const

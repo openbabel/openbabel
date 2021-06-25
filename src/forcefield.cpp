@@ -931,6 +931,11 @@ namespace OpenBabel
     return true;
   }
 
+  void OBForceField::Seed(uint_fast64_t seed)
+  {
+    prng.reset(new OBRandom{seed});
+  }
+
   bool OBForceField::SetLogLevel(int level)
   {
     _loglvl = level;
@@ -1437,8 +1442,8 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
-    OBRandom generator;
-    generator.TimeSeed();
+    if (!prng)
+      prng.reset(new OBRandom{});
     _origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1483,7 +1488,7 @@ namespace OpenBabel
       rotor = rl.BeginRotor(ri);
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
-        rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
+        rotorKey[i] = prng->UniformInt(0, rotor->GetResolution().size() - 1u);
       }
       rotamers.AddRotamer(rotorKey);
     }
@@ -1607,8 +1612,8 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
-    OBRandom generator;
-    generator.TimeSeed();
+    if (!prng)
+      prng.reset(new OBRandom{});
     int origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1732,7 +1737,6 @@ namespace OpenBabel
 
     int best_conformer=-1;
     //    double penalty; // for poor performance
-    double randFloat; // generated random number -- used to pick a rotor
     double total; // used to calculate the total probability
 
     // Start with the current coordinates
@@ -1756,19 +1760,18 @@ namespace OpenBabel
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
         rotorKey[i] = -1; // default = don't change dihedral
-        randFloat = generator.NextFloat();
-        if (randFloat < defaultRotor) // should we just leave this rotor with default setting?
+        if (prng->Bernoulli(defaultRotor))  // should we just leave this rotor with default setting?
           continue;
 
-        randFloat = generator.NextFloat();
+        double p = prng->UniformReal();
         total = 0.0;
         for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
-          if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
+          if (p > total && p < total + rotorWeights[i][j]) {
             rotorKey[i] = j;
             break;
-          }
-          else
+          } else {
             total += rotorWeights[i][j];
+          }
         }
       }
 
@@ -3421,8 +3424,8 @@ namespace OpenBabel
   void OBForceField::GenerateVelocities()
   {
     cout << "OBForceField::GenerateVelocities()" << endl;
-    OBRandom generator;
-    generator.TimeSeed();
+    if (!prng)
+      prng.reset(new OBRandom{});
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
     double velocity;
@@ -3439,7 +3442,7 @@ namespace OpenBabel
         if (!_constraints.IsXFixed(a->GetIdx())) {
           velocity = 0.0;
           for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
+            velocity += prng->UniformReal();
           velocity -= 6.0;
           velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
@@ -3448,7 +3451,7 @@ namespace OpenBabel
         if (!_constraints.IsYFixed(a->GetIdx())) {
           velocity = 0.0;
           for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
+            velocity += prng->UniformReal();
           velocity -= 6.0;
           velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+1] = velocity; // idem
@@ -3457,7 +3460,7 @@ namespace OpenBabel
         if (!_constraints.IsZFixed(a->GetIdx())) {
           velocity = 0.0;
           for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
+            velocity += prng->UniformReal();
           velocity -= 6.0;
           velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
           _velocityPtr[velocityIdx+2] = velocity; // idem

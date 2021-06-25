@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #ifndef OB_FORCEFIELD_H
 #define OB_FORCEFIELD_H
 
+#include <memory>
 #include <vector>
 #include <string>
 
@@ -564,6 +565,8 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     std::vector<OBBitVec> _interGroup; //!< groups for which intra-molecular interactions should be calculated
     std::vector<std::pair<OBBitVec, OBBitVec> > _interGroups; //!< groups for which intra-molecular
                                                               //!< interactions should be calculated
+    std::shared_ptr<OBRandom> prng;
+
   public:
     /*! Clone the current instance. May be desirable in multithreaded environments,
      *  Should be deleted after use
@@ -632,6 +635,10 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      *  \return True if successful.
      */
     bool Setup(OBMol &mol, OBFFConstraints &constraints);
+    /*!
+     * reset prng by the specified seed
+     */
+    void Seed(uint_fast64_t seed);
     /*! Load the parameters (this function is overloaded by the individual forcefields,
      *  and is called autoamically from OBForceField::Setup()).
      */

@@ -24,12 +24,15 @@ GNU General Public License for more details.
 #include <openbabel/mol.h>
 #include <openbabel/rotor.h>
 #include <openbabel/rotamer.h>
+#include <memory>
 
 namespace OpenBabel {
 
   typedef std::vector<int> RotorKey;
   typedef std::vector<RotorKey> RotorKeys;
   typedef std::map<std::vector<int>,double> mapRotorEnergy;
+
+  class OBRandom;
 
   ///@addtogroup conformer Conformer Searching
   ///@{
@@ -286,6 +289,10 @@ namespace OpenBabel {
       bool Setup(const OBMol &mol, int numConformers = 30, int numChildren = 5,
           int mutability = 5, int convergence = 25);
       /**
+       * reset prng by the specified seed
+       */
+      void Seed(uint_fast64_t seed);
+      /**
        * Set the number of conformers.
        */
       void SetNumConformers(int numConformers) { m_numConformers = numConformers; }
@@ -444,7 +451,7 @@ namespace OpenBabel {
       std::vector<std::vector <int> > dynamic_niches; //!< The dynamically found niches
       std::vector<int> niche_map;                     //!< Procide the sharing niche index, given the key inddex
       
-      void *d; // Opaque pointer - currently for storing OBRandom* which may be removed in future
+      std::unique_ptr<OBRandom> prng;
       bool use_sharing;		//!< Whether to use sharing or not.
       double alpha_share;	//!< The alpha parameter in sharing function
       double sigma_share;		//!< The sigma parameter in sharing function

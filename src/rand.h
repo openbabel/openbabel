@@ -21,25 +21,13 @@ GNU General Public License for more details.
 #define RAND_H
 
 #include <openbabel/babelconfig.h>
+#include <memory>
+#include <random>
 
 namespace OpenBabel
 {
 
-  //******************************************
-  //*** Stuff for random number generation ***
-  //******************************************
-
-  //! \struct DoubleType rand.h <openbabel/rand.h>
-  //! \brief Used for internal random number generation OBRandom (unless the system random generator is used)
-  typedef struct
-  {
-    unsigned int hi;
-    unsigned int lo;
-  }
-  DoubleType;
-
-  
-  //! \class OBRandom rand.h <openbabel/rand.h>
+  //! \class OBRandom rand.h
   //! \brief Random number generator
   /**
      The OBRandom class can be used to facilitate cross-platform random number
@@ -47,46 +35,36 @@ namespace OpenBabel
      use the current time or other arbitrary data as a seed.
 
      \code
-     OBRandom generator; // Don't use system rand() functions
-     generator.TimeSeed(); // initialize from the current time
+     OBRandom generator;        // use a random seed
+     //OBRandom generator{42};  // specify a seed
+     //generator.Seed(42);      // reset by a seed
 
-     cerr << " New Random Integer " << generator.NextInt() << endl;
-     cerr << " New Random Floating-Point " << generator.NextFloat() << endl;
-     \endcode
-
-     Alternatively, OBRandom can be used as an interface to the system random
-     number generator.
-
-     \code
-     OBRandom generator(true); // Use system rand() functions
-     generator.Seed(10246);// Use a specific initial seed value for reproducing sequence
+     cerr << "New Random Integer " << generator.UniformInt(0, 6) << endl;
+     cerr << "New Random Floating-Point " << generator.UniformReal(0.0, 1.0) << endl;
      \endcode
    **/
   class OBRandom
   {
-    DoubleType d;
-    unsigned int m,a,c;
-    unsigned int p;
-    unsigned int i;
-    unsigned int x;
-    bool OBRandomUseSysRand;
-
   public:
-    //! \brief Constructor. @p useSys will use the system rand() function
-    OBRandom(bool useSys= false);
+    OBRandom() { Reset(); }
+    explicit OBRandom(uint_fast64_t seed) { Seed(seed); }
     //! Use @p seed for the random number generator seed
-    void Seed(int seed)
-    {
-      x = seed;
-    }
-    //! Use the current time for the random number generator seed
-    //! If sranddev is available (e.g., Mac OS X, BSD...) use this instead
-    //! for more random seeds
-    void TimeSeed();
-    //! \return a random integer
-    int NextInt();
-    //! \return a random floating-point number between 0.0 and 1.0
-    double NextFloat();
+    void Seed(uint_fast64_t seed) { prng.reset(new std::mt19937_64{seed}); }
+    //! Reset underlying pseudo random number generator by a random seed.
+    //! Use a non-deterministic random device if available (e.g., Mac OS X, BSD...),
+    //! otherwise the current time.
+    void Reset();
+    //! \return a random integer in [a, b]
+    int UniformInt(int a, int b);
+    //! \return a random floating-point number in [0, 1)
+    double UniformReal() { return UniformReal(0.0, 1.0); }
+    //! \return a random floating-point number in [a, b)
+    double UniformReal(double a, double b);
+    //! \return true with probability of p
+    bool Bernoulli(double p = 0.5);
+
+  private:
+    std::unique_ptr<std::mt19937_64> prng;
   };
 
 } // end namespace OpenBabel
