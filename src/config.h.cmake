@@ -31,6 +31,20 @@
  #define OB_HIDDEN
 #endif
 
+// deprecated attribute (C++14)
+#if defined(__has_cpp_attribute) && !defined(SWIG)
+  #if __has_cpp_attribute(deprecated)
+    #define OB_DEPRECATED [[deprecated]]
+    #define OB_DEPRECATED_MSG(msg) [[deprecated(msg)]]
+  #else
+    #define OB_DEPRECATED
+    #define OB_DEPRECATED_MSG(msg)
+  #endif
+#else
+  #define OB_DEPRECATED
+  #define OB_DEPRECATED_MSG(msg)
+#endif
+
 /* Used to export symbols for DLL / shared library builds */
 #if defined(MAKE_OBDLL) // e.g. in src/main.cpp
  #ifndef OB_EXTERN

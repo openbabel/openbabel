@@ -102,7 +102,7 @@ namespace OpenBabel
   {
   protected:
     std::vector<double> _values;   //!< floating point values
-    int   *_ival;             //!< for integer values (deprecated)
+    OB_DEPRECATED int   *_ival;    //!< for integer values \deprecated
     double _midz,_midx,_midy; //!< center of grid in world coordinates
     int _ydim,_xdim,_zdim;    //!< grid dimensions
     double _spacing,_inv_spa; //!< spacing between grid points and its inverse
@@ -128,6 +128,7 @@ namespace OpenBabel
     //! Get the minimum point in the grid.
     //! \deprecated Will be removed.
     //! Use \sa GetMin()
+    OB_DEPRECATED_MSG("Use GetMin() instead")
     void GetMin(double *a)
     {
       a[0]=_xmin;
@@ -141,6 +142,7 @@ namespace OpenBabel
     //! Get the maximum point in the grid.
     //! \deprecated Will be removed.
     //! \sa GetMax()
+    OB_DEPRECATED_MSG("Use GetMax() instead")
     void GetMax(double *a)
     {
       a[0]=_xmax;
@@ -153,6 +155,7 @@ namespace OpenBabel
     //! Get the grid spacing.
     //! \deprecated Will be removed.
     //! \sa GetSpacing()
+    OB_DEPRECATED_MSG("Use GetSpacing() instead")
     void GetSpacing(double &s)
     {
       s=_spacing;
@@ -170,6 +173,7 @@ namespace OpenBabel
     //! Get the x, y and z dimensions (must pass an double[3] at least).
     //! \deprecated May be removed in future.
     //! \sa GetXdim() \sa GetYdim() \sa GetZdim()
+    OB_DEPRECATED_MSG("Use GetXdim(), GetYdim() or GetZdim() instead")
     void GetDim(int *a)
     {
       a[0]=_xdim;
@@ -221,6 +225,7 @@ namespace OpenBabel
                    const vector3& z);
     //! \deprecated Will be removed.
     //! \sa SetLimits(const vector3& origin, const vector3& x, const vector3& y, const vector3& z)
+    OB_DEPRECATED_MSG("Use vector version instead")
     void SetLimits(const double origin[3], const double x[3], const double y[3],
                    const double z[3]);
 
@@ -235,6 +240,7 @@ namespace OpenBabel
     //! one dimensional array.
     //! \deprecated Will be removed.
     //! \sa GetDataVector()
+    OB_DEPRECATED_MSG("Use GetDataVector instead")
     double *GetVals()    {        return(&_values[0]);    }
 
     //! \return Value at the point in the grid specified by i, j and k.
@@ -248,6 +254,7 @@ namespace OpenBabel
 
     //! \deprecated Will be removed.
     //! \sa SetVals(const std::vector<double> & vals)
+    OB_DEPRECATED_MSG("Use vector version instead")
     void SetVals(double *ptr)
     {
      for (int i = 0; i < _xdim*_ydim*_zdim; ++i)
@@ -295,7 +302,7 @@ namespace OpenBabel
   //! \class OBProxGrid grid.h <openbabel/grid.h>
   //! \brief A grid for determining the proximity of a given point to atoms in an OBMol
   //! \deprecated May be removed in the future, since docking is not a key feature
- class OBAPI OBProxGrid: public OBGrid
+ class OBAPI OB_DEPRECATED OBProxGrid: public OBGrid
   {
   protected:
     int _gridtype;
@@ -337,7 +344,7 @@ namespace OpenBabel
   //! \class OBScoreGrid grid.h <openbabel/grid.h>
   //! \brief A base class for scoring docking interactions between multiple molecules
   //! \deprecated Will disappear in future versions. Use your own code.
-  class OBAPI OBScoreGrid
+  class OBAPI OB_DEPRECATED OBScoreGrid
   {
   protected:
     score_t gridtype;

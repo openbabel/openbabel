@@ -276,6 +276,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBAtom      *GetAtomById(unsigned long id) const;
     //! \return the first atom in this molecule, or NULL if none exist.
     //! \deprecated Will be removed in favor of more standard iterator methods
+    OB_DEPRECATED
     OBAtom      *GetFirstAtom() const;
     //! \return the bond at index @p idx or NULL if it does not exist.
     //! \warning Bond indexing may change. Use iterator methods instead.

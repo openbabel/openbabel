@@ -1246,7 +1246,7 @@ namespace OpenBabel
   }
 
   //! \deprecated This will be removed in future versions of Open Babel
-  bool OBAtom::SetHybAndGeom(int hyb)
+  OB_DEPRECATED bool OBAtom::SetHybAndGeom(int hyb)
   {
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::SetHybridizationAndGeometry",

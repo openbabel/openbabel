@@ -270,11 +270,13 @@ namespace OpenBabel
     //! \deprecated This method uses unreliable floating point == comparisons
     //!    Use vector3::IsApprox() instead.
     //! \return true if every component is equal
-    int operator== ( const vector3& ) const;
+    OB_DEPRECATED_MSG("Use vector3::IsApprox() instead.")
+    bool operator== ( const vector3& ) const;
     //! \deprecated This method uses unreliable floating point == comparisons
     //!    Use vector3::IsApprox() instead.
     //! \return true if at least one component of the two vectors is !=
-    int operator!= ( const vector3& other ) const
+    OB_DEPRECATED_MSG("Use vector3::IsApprox() instead.")
+    bool operator!= ( const vector3& other ) const
     {
       return ! ( (*this) == other );
     }

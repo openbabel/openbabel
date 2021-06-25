@@ -168,6 +168,7 @@ namespace OpenBabel
       /*! \warning row or column are not in the range 0..2, zero is returned
        *! \deprecated use the constant operator() instead
        */
+      OB_DEPRECATED_MSG("use the constant operator() instead")
       double Get(int row,int column) const
         {
 #ifdef OB_OLD_MATH_CHECKS
@@ -184,6 +185,7 @@ namespace OpenBabel
       /*! \warning if row or column are not in the range 0..2, nothing will happen
        *! \deprecated use the non-constant operator() instead
        */
+      OB_DEPRECATED_MSG("use the non-constant operator() instead")
       void Set(int row,int column, double v)
         {
 #ifdef OB_OLD_MATH_CHECKS

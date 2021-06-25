@@ -326,6 +326,7 @@ namespace OpenBabel
   //!  string and null-terminating as needed
   //! \deprecated Because there is no guarantee on the length of an atom type
   //!  you should consider using std::string instead
+  OB_DEPRECATED_MSG("you should consider using std::string instead")
   bool OBTypeTable::Translate(char *to, const char *from)
   {
     if (!_init)
