@@ -261,14 +261,10 @@ namespace OpenBabel
       OBAtomAssignTypicalImplicitHydrogens(&*matom);
 
     // clean out remaining blank lines
-    std::streampos ipos;
-    do
+    while(ifs.peek() == '\n' && !ifs.eof())
     {
-      ipos = ifs.tellg();
       ifs.getline(buffer,BUFF_SIZE);
     }
-    while(strlen(buffer) == 0 && !ifs.eof() );
-    ifs.seekg(ipos);
 
     return(true);
   }
