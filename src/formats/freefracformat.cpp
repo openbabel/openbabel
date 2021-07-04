@@ -36,7 +36,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("fract",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
 "Free Form Fractional format\n"
@@ -88,16 +88,16 @@ namespace OpenBabel
 "Read Options e.g. -as\n"
 "  s  Output single bonds only\n"
 "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://openbabel.org/wiki/Free_Form_Fractional";}; //optional
+    const char* SpecificationURL() override
+    { return "http://openbabel.org/wiki/Free_Form_Fractional"; }  // optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

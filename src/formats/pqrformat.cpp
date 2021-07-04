@@ -42,27 +42,27 @@ namespace OpenBabel
       OBConversion::RegisterFormat("pqr",this, "chemical/x-pqr");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "PQR format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "";};
+    const char* SpecificationURL() override
+    { return ""; }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-pqr"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-pqr"; }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual int SkipObjects(int n, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    int SkipObjects(int n, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
   //***

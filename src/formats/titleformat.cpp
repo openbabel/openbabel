@@ -30,17 +30,17 @@ public:
       OBConversion::RegisterFormat("txt",this);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
       "Title format\n"
       "Displays and reads molecule titles\n";
   }
-	virtual unsigned int Flags() { return ZEROATOMSOK; }
+  unsigned int Flags() override { return ZEROATOMSOK; }
 
   /// The "API" interface functions
-	virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
 /////////////////////////////////////////////////////
 TitleFormat theTitleFormat;

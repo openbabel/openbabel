@@ -109,9 +109,9 @@ namespace OpenBabel
     OBRotorRules();
     ~OBRotorRules();
 
-    void ParseLine(const char*);
+    void ParseLine(const char*) override;
     //! \return the number of rotor rules
-    size_t GetSize()                 { return _vr.size();}
+    size_t GetSize() override { return _vr.size(); }
 
     //! Set the filename to be used for the database. Default = torlib.txt
     void SetFilename(std::string &s)       { _filename = s;    }

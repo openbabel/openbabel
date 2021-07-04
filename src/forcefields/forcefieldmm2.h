@@ -94,10 +94,10 @@ namespace OpenBabel
       }
 
       //!Clone the current instance. May be desirable in multithreaded environments
-      virtual OBForceFieldMM2* MakeNewInstance(){ return new OBForceFieldMM2(*this); }
+      OBForceFieldMM2* MakeNewInstance() override { return new OBForceFieldMM2(*this); }
 
 
-      virtual const char* Description()
+      const char* Description() override
       { return "MM2 force field.";};
 
 

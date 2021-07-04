@@ -36,7 +36,7 @@ namespace OpenBabel
     //Register this format type ID
     FPSFormat() {OBConversion::RegisterFormat("fps",this);}
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     { return
     "FPS text fingerprint format (Dalke)\n\n"
     "The FPS file format for fingerprints was developed by Andrew Dalke to\n"
@@ -57,11 +57,11 @@ namespace OpenBabel
       " p Use full input path as source, not just filename\n"
       " t <text> Use <text> as source in header\n\n";
     }
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   { return "http://code.google.com/p/chem-fingerprints/wiki/FPS"; }
 
-    virtual unsigned int Flags(){return NOTREADABLE;};
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    unsigned int Flags() override { return NOTREADABLE; }
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   private:
     string getTimeStr();
   private:

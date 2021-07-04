@@ -82,7 +82,7 @@ public:
      Finish the options with a blank line as shown, if there are more than one
      group of options, or if there are further comments after them.
   */
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
     "GRO format\n"
@@ -95,10 +95,10 @@ public:
     " s  Consider single bonds only\n"
     " b  Disable bonding entierly\n"
     ;
-  };
+  }
 
   //Optional URL where the file format is specified
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   {
     return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#gro";
   }
@@ -107,7 +107,7 @@ public:
      molecule. It is used to quickly position the input stream after the nth
      molecule without requiring to convert and discard all the n molecules.
      See obconversion.cpp for details.*/
-  virtual int SkipObjects(int n, OBConversion* pConv)
+  int SkipObjects(int n, OBConversion* pConv) override
   {
     string line = "";
     int natoms = 0;
@@ -124,12 +124,12 @@ public:
     }
 
     return ifs.good() ? 1 : -1;
-  };
+  }
 
   ////////////////////////////////////////////////////
   /// Declarations for the "API" interface functions. Definitions are below
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
   ////////////////////////////////////////////////////
 //Make an instance of the format class

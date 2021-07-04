@@ -57,7 +57,7 @@ public:
     }
 
     /// Return description.
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
         return
         "M.F. Sanner's MSMS input format\n"
@@ -68,31 +68,31 @@ public:
 
     /// Return a specification url, not really a specification since
     /// I couldn't find it but close enough.
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
         return "http://www.scripps.edu/~sanner";
     }
 
     /// Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return nullptr; }
+    const char* GetMIMEType() override { return nullptr; }
 
       /// Return read/write flag: read only.
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
         return WRITEONEONLY | NOTREADABLE;
-    };
+    }
 
     /// Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+    int SkipObjects(int n, OpenBabel::OBConversion* pConv) override { return 0; }
 
     /// Read: always return false.
-    virtual bool ReadMolecule( OpenBabel::OBBase*, OpenBabel::OBConversion* )
+    bool ReadMolecule(OpenBabel::OBBase*, OpenBabel::OBConversion*) override
     {
         return false;
     }
 
     /// Write.
-    virtual bool WriteMolecule( OpenBabel::OBBase* , OpenBabel::OBConversion* );
+    bool WriteMolecule(OpenBabel::OBBase*, OpenBabel::OBConversion*) override;
 };
 
 //------------------------------------------------------------------------------

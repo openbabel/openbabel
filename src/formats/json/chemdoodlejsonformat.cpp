@@ -40,7 +40,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       OBConversion::RegisterFormat("cdjson", this);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
       "ChemDoodle JSON\n"
@@ -57,11 +57,11 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       ;
     };
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     { return "http://web.chemdoodle.com/docs/chemdoodle-json-format"; };
 
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     rapidjson::Document inRoot;

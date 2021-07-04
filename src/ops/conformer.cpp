@@ -52,7 +52,7 @@ namespace OpenBabel
     public:
       OpConformer(const char *ID) : OBOp(ID, false) {}
 
-      const char* Description()
+      const char* Description() override
       {
         return "Conformer Searching (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yy --conformer --nconf\n"
@@ -83,11 +83,11 @@ namespace OpenBabel
           ;
       }
 
-      virtual bool WorksWith(OBBase* pOb) const
+      bool WorksWith(OBBase* pOb) const override
       {
         return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
-      virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+      bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
   };
 
   //////////////////////////////////////////////////////////

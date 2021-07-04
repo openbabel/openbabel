@@ -34,29 +34,29 @@ namespace OpenBabel
       OBConversion::RegisterFormat("cache",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "CAChe MolStruct format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "";}; //optional
+    const char* SpecificationURL() override
+    { return ""; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-cache"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-cache"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     ////////////////////////////////////////////////////
   };

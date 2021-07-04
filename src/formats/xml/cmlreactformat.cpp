@@ -37,11 +37,11 @@ public:
     OBConversion::RegisterOptionParam("l", this);
     XMLConversion::RegisterXMLFormat(this, false,"http://www.xml-cml.org/schema/cml2/react");
   }
-  virtual const char* NamespaceURI()const
+  const char* NamespaceURI() const override
   {return "http://www.xml-cml.org/schema";}
 
 
-  const char* Description()
+  const char* Description() override
   {
     return
       "CML Reaction format\n"
@@ -73,23 +73,23 @@ public:
       "if this was unacceptable.\n\n";
   }
 
-  virtual const char* TargetClassDescription()
+  const char* TargetClassDescription() override
   {
       return OBReaction::ClassDescription();
   }
 
-  unsigned Flags()
+  unsigned Flags() override
   {
     return 0;
   }
-  virtual bool ReadChemObject(OBConversion* pConv);
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteChemObject(OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool DoElement(const string& ElName);
-  virtual bool EndElement(const string& ElName);
-  virtual const char* EndTag(){ return "/reaction>"; };
-  const type_info& GetType()
+  bool ReadChemObject(OBConversion* pConv) override;
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteChemObject(OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool DoElement(const string& ElName) override;
+  bool EndElement(const string& ElName) override;
+  const char* EndTag() override { return "/reaction>"; }
+  const type_info& GetType() override
   {
     return typeid(OBReaction*);
   };

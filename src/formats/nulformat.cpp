@@ -22,16 +22,16 @@ class NulFormat : public OBFormat
 public:
   NulFormat() { OBConversion::RegisterFormat("nul",this); }
 
-  virtual const char* Description() { return "Outputs nothing"; };
+  const char* Description() override { return "Outputs nothing"; }
 
-  virtual unsigned int Flags() { return NOTREADABLE; };
+  unsigned int Flags() override { return NOTREADABLE; }
 
-  virtual bool WriteChemObject(OBConversion* pConv)
+  bool WriteChemObject(OBConversion* pConv) override
   {
     delete pConv->GetChemObject();
     return true;
   }
-  bool WriteMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/) { return false; }
+  bool WriteMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/) override { return false; }
 };
 
 NulFormat theNulFormat;

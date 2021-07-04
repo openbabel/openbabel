@@ -26,7 +26,7 @@ public:
     OBConversion::RegisterFormat("text",this);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
      "Read and write raw text\n"
@@ -34,7 +34,7 @@ public:
   }
 
 /////////////////////////////////////////////////////////////////
-  virtual bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   {
     //Makes a new OBText
     OBText* pReact = new OBText;
@@ -55,7 +55,7 @@ public:
   }
 
 ///////////////////////////////////////////////////////////////////////
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override
   {
     //It's really text, not a molecule.
     OBText* pText = dynamic_cast<OBText*>(pOb);
@@ -66,7 +66,7 @@ public:
     return !fileText.empty();
   }
 
-  virtual bool WriteChemObject(OBConversion* pConv)
+  bool WriteChemObject(OBConversion* pConv) override
   {
     //Output an OBText object and delete any other type.
     OBBase* pOb = pConv->GetChemObject();

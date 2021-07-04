@@ -48,7 +48,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("i", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "MolPrint2D format\n"
@@ -72,23 +72,23 @@ namespace OpenBabel
            "  n prefix molecule names with name of file \n"
            "  c use XML style separators instead \n"
            "  i use IDX atom types of babel internal \n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
       return "https://doi.org/10.1021/ci034207y";
-    }; //optional
+    } //optional
 
 
-    virtual unsigned int Flags() //Flags() can return be any the following combined by | or be omitted if none apply
+    unsigned int Flags() override  //Flags() can return be any the following combined by | or be omitted if none apply
     {                            // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
       return NOTREADABLE;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
     void ClearLayer(int a[][LAYER_SIZE]);
     void PrintLayer(int a[][LAYER_SIZE],ostream &ofs);
     void PrintXML(int layer_a[][LAYER_SIZE],ostream &ofs);

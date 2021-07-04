@@ -35,7 +35,7 @@ class OpHighlight : public OBOp
 {
 public:
   OpHighlight(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return
+  const char* Description() override { return
     "<param> Highlight substructures in 2D depictions\n"
     "Usage: --highlight \"SMARTS1 color1 [SMARTS2 color2 ...]\"\n"
     "\n"
@@ -49,8 +49,9 @@ public:
     "     --highlight \"c1ccccc1 green C(=O)O #FFA500\"";
   }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 private:
   bool AddDataToSubstruct(OBMol* pmol,
         const std::vector<int>& atomIdxs,

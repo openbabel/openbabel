@@ -41,12 +41,13 @@ protected:
   
 public:
   OpChangeCell(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Change cell size:\n"
+  const char* Description() override { return "Change cell size:\n"
                                     "     [keepfract];[*]a;[*]b;[*]c\n"
                                     "     Original cell dimensions can be changed to value a, b or c or multiplied with key '*' " ; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

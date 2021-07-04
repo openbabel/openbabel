@@ -43,7 +43,7 @@ namespace OpenBabel {
         : m_maps(maps), m_memory(0), m_maxMemory(maxMemory)
       {
       }
-      bool operator()(OBIsomorphismMapper::Mapping &map)
+      bool operator()(OBIsomorphismMapper::Mapping &map) override
       {
         m_maps.push_back(map);
         m_memory += 2 * sizeof(unsigned int) * map.size();
@@ -363,7 +363,7 @@ namespace OpenBabel {
        * @param queried The queried molecule.
        * @return The mapping.
        */
-      void MapFirst(const OBMol *queried, Mapping &map, const OBBitVec &mask)
+      void MapFirst(const OBMol *queried, Mapping &map, const OBBitVec &mask) override
       {
         class MapFirstFunctor : public Functor
         {
@@ -373,7 +373,7 @@ namespace OpenBabel {
             MapFirstFunctor(Mapping &map) : m_map(map)
             {
             }
-            bool operator()(Mapping &map)
+            bool operator()(Mapping &map) override
             {
               m_map = map;
               // stop mapping
@@ -390,7 +390,7 @@ namespace OpenBabel {
        * @param queried The queried molecule.
        * @return The unique mappings
        */
-      void MapUnique(const OBMol *queried, Mappings &maps, const OBBitVec &mask)
+      void MapUnique(const OBMol *queried, Mappings &maps, const OBBitVec &mask) override
       {
         class MapUniqueFunctor : public OBIsomorphismMapper::Functor
         {
@@ -400,7 +400,7 @@ namespace OpenBabel {
             MapUniqueFunctor(OBIsomorphismMapper::Mappings &maps) : m_maps(maps)
             {
             }
-            bool operator()(OBIsomorphismMapper::Mapping &map)
+            bool operator()(OBIsomorphismMapper::Mapping &map) override
             {
               // get the values from the map
               std::vector<unsigned int> values;
@@ -450,7 +450,7 @@ namespace OpenBabel {
        * @param queried The queried molecule.
        * @return The mappings.
        */
-      void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask, std::size_t maxMemory)
+      void MapAll(const OBMol *queried, Mappings &maps, const OBBitVec &mask, std::size_t maxMemory) override
       {
         maps.clear();
         MapAllFunctor functor(maps, maxMemory);
@@ -465,7 +465,7 @@ namespace OpenBabel {
 
       }
 
-      void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask)
+      void MapGeneric(Functor &functor, const OBMol *queried, const OBBitVec &mask) override
       {
         m_startTime = time(nullptr);
         if(m_query->NumAtoms() == 0) return;
@@ -535,7 +535,7 @@ namespace OpenBabel {
       {
       }
 
-      bool Matches(const OBAtom *atom) const
+      bool Matches(const OBAtom *atom) const override
       {
         return (symClasses[atom->GetIndex()] == symClass);
       }
@@ -616,7 +616,7 @@ namespace OpenBabel {
             if (m_fragment.BitIsSet(j + 1))
               m_indexes.push_back(j);
         }
-        bool operator()(Automorphism &map)
+        bool operator()(Automorphism &map) override
         {
           // convert the continuous mapping map to a mapping with gaps (considering key values)
           for (Automorphism::iterator it = map.begin(); it != map.end(); ++it)

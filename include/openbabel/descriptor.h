@@ -36,7 +36,7 @@ class OBAPI OBDescriptor : public OBPlugin
   MAKE_PLUGIN(OBDescriptor)
 
 public:
-  const char* TypeID(){return "descriptors";};
+  const char* TypeID() override { return "descriptors"; }
 
   /// \return the value of a numeric descriptor
   virtual double Predict(OBBase* /* pOb */, std::string* /* param */ =nullptr)
@@ -54,7 +54,7 @@ public:
   ///Write information on a plugin class to the string txt.
   ///If the parameter is a descriptor ID, displays the verbose description for that descriptor only
   /// e.g. babel -L descriptors HBA1
-  virtual bool Display(std::string& txt, const char* param, const char* ID=nullptr);
+  bool Display(std::string& txt, const char* param, const char* ID=nullptr) override;
 
   /// Comparison of the values of the descriptor. Used in sorting.
   /// Descriptors may use more complicated ordering than this default (e.g.InChIFilter)

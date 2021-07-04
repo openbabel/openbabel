@@ -31,15 +31,16 @@ class OpGen2D : public OBOp
 {
 public:
   OpGen2D(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return
+  const char* Description() override { return
     "Generate 2D coordinates\n"
     "Trepalin, S. V.; Yarkov, A. V.; Pletnev, I. V.; Gakh, A.A."
     "A Java Chemical Structure Editor Supporting the"
     "Modular Chemical Descriptor Language (MCDL)."
     "Molecules, 2006, 11, 219-231"; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 };
 
 /////////////////////////////////////////////////////////////////

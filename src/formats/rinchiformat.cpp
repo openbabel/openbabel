@@ -39,7 +39,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("rinchi",this);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "RInChI\n"
@@ -61,20 +61,20 @@ namespace OpenBabel
         "\n";
     }
 
-    virtual const char* TargetClassDescription()
+    const char* TargetClassDescription() override
     {
       return OBMol::ClassDescription();
     }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE;
     }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

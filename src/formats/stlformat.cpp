@@ -74,7 +74,7 @@ namespace OpenBabel
       }
 
       /// Return description.
-      virtual const char* Description() //required
+      const char* Description() override  // required
       {
         return
           "STL 3D-printing format\n"
@@ -85,31 +85,31 @@ namespace OpenBabel
           "  c add CPK colours\n\n";
       }
 
-      virtual const char* SpecificationURL()
+      const char* SpecificationURL() override
       {
         return "http://www.ennex.com/~fabbers/StL.asp";
       }
 
       /// Return MIME type, NULL in this case.
-      virtual const char* GetMIMEType() { return "application/sla"; };
+      const char* GetMIMEType() override { return "application/sla"; }
 
       /// Return read/write flag: read only.
-      virtual unsigned int Flags()
+      unsigned int Flags() override
       {
         return WRITEONEONLY | NOTREADABLE;
-      };
+      }
 
       /// Skip to object: used for multi-object file formats.
-      virtual int SkipObjects( int n, OpenBabel::OBConversion* pConv ) { return 0; }
+      int SkipObjects(int n, OpenBabel::OBConversion* pConv) override { return 0; }
 
       /// Read: always return false.
-      virtual bool ReadMolecule( OpenBabel::OBBase*, OpenBabel::OBConversion* )
+      bool ReadMolecule(OpenBabel::OBBase*, OpenBabel::OBConversion*) override
       {
         return false;
       }
 
       /// Write.
-      virtual bool WriteMolecule( OpenBabel::OBBase* , OpenBabel::OBConversion* );
+      bool WriteMolecule(OpenBabel::OBBase*, OpenBabel::OBConversion*) override;
   };
 
 

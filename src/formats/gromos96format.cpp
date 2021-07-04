@@ -70,29 +70,29 @@ namespace OpenBabel
       OBConversion::RegisterFormat("gr96",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "GROMOS96 format\n"
         "Write Options e.g. -xn\n"
         " n output nm (not Angstroms)\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
       return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#g96";
     }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

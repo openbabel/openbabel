@@ -33,7 +33,7 @@ class OpLargest : public OBOp
 {
 public:
   OpLargest(const char* ID) : OBOp(ID, false){};
-  const char* Description()
+  const char* Description() override
   {
     //Need to use a member variable so that const char* is valid when it is returned
     description = (strcmp(GetID(),"largest")!=0) ?
@@ -54,9 +54,10 @@ public:
     return description.c_str();
   }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
-  virtual bool ProcessVec(vector<OBBase*>& vec);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
+  bool ProcessVec(vector<OBBase*>& vec) override;
   static bool MatchPairData(OBBase* pOb, std::string& s); //Copy of protected OBDescriptor function
 
 private:

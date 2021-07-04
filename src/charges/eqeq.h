@@ -50,10 +50,10 @@ class EQEqCharges : public OBChargeModel
 public:
   EQEqCharges(void) : OBChargeModel("fake ID", false){};
   EQEqCharges(const char* ID) : OBChargeModel(ID, false){};
-  const char* Description(){ return "Assign EQEq (charge equilibration) partial charges."; }
+  const char* Description() override { return "Assign EQEq (charge equilibration) partial charges."; }
 
   /// \return whether partial charges were successfully assigned to this molecule
-  bool ComputeCharges(OBMol &mol);
+  bool ComputeCharges(OBMol &mol) override;
 
 private:
   int _chargeCenter[TABLE_OF_ELEMENTS_SIZE + 1]; // Common charge of metallic ions

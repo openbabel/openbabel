@@ -44,7 +44,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       OBConversion::RegisterFormat("pcjson",this);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
       "PubChem JSON\n"
@@ -61,12 +61,12 @@ class PubChemJSONFormat : public OBMoleculeFormat
       ;
     };
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     { return "http://www.ncbi.nlm.nih.gov/data_specs/asn/pcsubstance.asn"; };
     // http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html also useful
 
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     rapidjson::Document inRoot;

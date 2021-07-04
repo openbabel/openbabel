@@ -36,12 +36,12 @@ namespace OpenBabel
       OBConversion::RegisterFormat("pcm", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override //required
     {
       return
         "PCModel Format\n"
         "No comments yet\n";
-    };
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -50,14 +50,14 @@ namespace OpenBabel
     //    return NOTREADABLE;
     //  };
 
-    virtual const char* SpecificationURL()
-    {return "http://www.serenasoft.com/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.serenasoft.com/"; }  // optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

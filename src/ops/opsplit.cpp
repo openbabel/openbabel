@@ -30,8 +30,8 @@ class OpSplit : public OBOp
 {
 public:
   OpSplit(const char* ID) : OBOp(ID, false){};
-  const char* Description()
-  { 
+  const char* Description() override
+  {
     return "[param] split, each filename from param;default title\n"
            "param is an optional property or descriptor.\n"
            "    obabel  in.sdf  -omol2  --split\n"
@@ -68,8 +68,9 @@ public:
            "cannot be changed. So if you don't like .smiles, use a dummy filename.\n\n"
            ;
   }
-  virtual bool WorksWith(OBBase* pOb)const { return true; } //all OBBase objects
-  virtual bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr, OBConversion* pConv=nullptr);
+  bool WorksWith(OBBase* pOb) const override { return true; }  // all OBBase objects
+  bool Do(OBBase* pOb, const char* OptionText=nullptr, OpMap* pOptions=nullptr,
+      OBConversion* pConv=nullptr) override;
 private:
   int _inputCount;
   OBFormat* _realOutFormat;

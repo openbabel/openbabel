@@ -35,29 +35,29 @@ namespace OpenBabel
       OBConversion::RegisterFormat("msi", this, "chemical/x-msi-msi");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Accelrys/MSI Cerius II MSI format\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://openbabel.org/wiki/MSI_format";}; //optional
+    const char* SpecificationURL() override
+    { return "http://openbabel.org/wiki/MSI_format"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-msi-msi"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-msi-msi"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 
