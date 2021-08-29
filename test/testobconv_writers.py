@@ -155,7 +155,7 @@ def test_write_string(test_case, mol, conv, expected_output, normalize):
         print(output)
         print("===")
     if 0:
-        save_to_pasteboard(text)
+        save_to_pasteboard(output)
 
     # Apply normalizations to both sides
     if normalize is not None:
