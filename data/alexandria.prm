@@ -364,7 +364,7 @@ atom [OX2&H0;!R]([#6X3])([CX3]=[OX1])            	                    os "O in e
 atom [OX2]([#6X3]=[OX1])[#6X4] 						    os "O in esters and ethers"
 atom [OX2]([#6X3]=[OX1])[#6X3]=[OX1] 				            os "O in esters and ethers"
 atom [OX3&H0]              						    os "O in esters and ethers"
-atom [#8X2]-[#6X3]=[#6,#7,#8,#16,#15]                                       o2 "sp2 oxygen, like in ester and other analogs"
+atom [#8X2!H]-[#6X3]=[#6,#7,#8,#16,#15]                                       o2 "sp2 oxygen, like in ester and other analogs"
 atom [OX3H]             			                            oh "O in hydroxyl group"
 atom [oX2r5]                                                                o2 "sp2 O, aromatic 5r"
 atom [oX2r6]                                                                o2 "sp2 O, aromatic 6r"
