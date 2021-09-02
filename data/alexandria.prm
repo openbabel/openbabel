@@ -401,6 +401,7 @@ atom [SX6]              						   s8 "sp3d2 S, hypervalent S"
 
 atom [He]               						    He ""
 atom [Li]               						    Li ""
+atom [Li+]                                                                  Li+ ""
 atom [Be]               						    Be ""
 atom [B]                						    B  ""
 atom [Ne]               						    Ne ""
