@@ -45,30 +45,30 @@ namespace OpenBabel
       OBConversion::RegisterFormat("g16",this);
     }
 
-    const char* Description() override  // required
+    virtual const char* Description() //required
     {
       return
         "Gaussian Output\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    }
+    };
 
-    const char* SpecificationURL() override
-    { return "https://www.gaussian.com/"; }
+    virtual const char* SpecificationURL()
+    { return "https://www.gaussian.com/"; };
 
-    const char* GetMIMEType() override
-    { return "chemical/x-gaussian-log"; }
+    virtual const char* GetMIMEType()
+    { return "chemical/x-gaussian-log"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    unsigned int Flags() override
+    virtual unsigned int Flags()
     {
       return READONEONLY | NOTWRITABLE;
-    }
+    };
 
     /// The "API" interface functions
-    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
   };
 
   //Make an instance of the format class
@@ -91,7 +91,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("f", nullptr, 1, OBConversion::OUTOPTIONS);
     }
 
-    const char* Description() override  // required
+    virtual const char* Description() //required
     {
       return
         "Gaussian Input\n"
@@ -100,24 +100,24 @@ namespace OpenBabel
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n"
         "  u               Write the crystallographic unit cell, if present.\n\n";
-    }
+    };
 
-    const char* SpecificationURL() override
-    { return "https://www.gaussian.com/input/"; }
+    virtual const char* SpecificationURL()
+    { return "https://www.gaussian.com/input/"; };
 
-    const char* GetMIMEType() override
-    { return "chemical/x-gaussian-input"; }
+    virtual const char* GetMIMEType()
+    { return "chemical/x-gaussian-input"; };
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    unsigned int Flags() override
+    virtual unsigned int Flags()
     {
       return NOTREADABLE | WRITEONEONLY;
-    }
+    };
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
   };
 
@@ -481,7 +481,7 @@ namespace OpenBabel
 
     //Vibrational data
     std::vector< std::vector< vector3 > > Lx;
-    std::vector<double> Frequencies, Intensities, RamanActivities;
+    std::vector<double> Frequencies, Intensities;
     //Rotational data
     std::vector<double> RotConsts(3);
     int RotSymNum=1;
@@ -515,7 +515,7 @@ namespace OpenBabel
             // The "nosym" keyword has been requested
             no_symmetry = true;
           }
-        if (strstr(buffer, "orientation:") != nullptr && (strstr(buffer, "Dipole") == nullptr))
+        if (strstr(buffer, "orientation:") != nullptr)
           {
             i++;
             tokenize (vs, buffer);
@@ -1029,13 +1029,9 @@ namespace OpenBabel
 
           ifs.getline(buffer, BUFF_SIZE); // column labels or Raman intensity
           if(strstr(buffer, "Raman Activ")) {
-            tokenize(vs, buffer);
-            for(unsigned int i=3; i<vs.size(); ++i)
-              RamanActivities.push_back(atof(vs[i].c_str()));
             ifs.getline(buffer, BUFF_SIZE); // Depolar (P)
-
-            while (strstr(buffer, "Atom") == nullptr)
-              ifs.getline(buffer, BUFF_SIZE); // eventually column labels
+            ifs.getline(buffer, BUFF_SIZE); // Depolar (U)
+            ifs.getline(buffer, BUFF_SIZE); // column labels
           }
           ifs.getline(buffer, BUFF_SIZE); // actual displacement data
           tokenize(vs, buffer);
@@ -1474,22 +1470,7 @@ namespace OpenBabel
     if(Frequencies.size()>0)
     {
       OBVibrationData* vd = new OBVibrationData;
-      if (RamanActivities.size() != 0) {
-        // check to see if they're all zero
-        bool allZero = true;
-        for (auto &i : RamanActivities) {
-          if (i != 0.0) {
-            allZero = false;
-            break;
-          }
-        }
-        if (!allZero) {
-          vd->SetData(Lx, Frequencies, Intensities, RamanActivities);
-        } else { // zero Raman
-          vd->SetData(Lx, Frequencies, Intensities);
-        }
-      } else // no Raman
-        vd->SetData(Lx, Frequencies, Intensities);
+      vd->SetData(Lx, Frequencies, Intensities);
       vd->SetOrigin(fileformatInput);
       mol.SetData(vd);
     }
@@ -1526,18 +1507,11 @@ namespace OpenBabel
     // set some default coordinates
     // ConnectTheDots will remove conformers, so we add those later
     mol.SetCoordinates(vconf[vconf.size() - 1]);
-    
-    mol.SetTotalCharge(total_charge);
-    mol.AssignTotalChargeToAtoms(total_charge);
-
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
-
-    //mol.SetTotalCharge(total_charge);
-    mol.AssignTotalChargeToAtoms(total_charge);
 
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
@@ -1569,7 +1543,6 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
-    
     mol.SetTotalCharge(total_charge);
     mol.AssignTotalChargeToAtoms(total_charge);
     mol.SetTotalSpinMultiplicity(spin_multiplicity);
