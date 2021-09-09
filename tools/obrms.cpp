@@ -138,7 +138,6 @@ class Matcher
 						testcoord[3 * i + c] -= tave[c];
 					}
 				}
-
 				qtrfit(refcoord, testcoord, N, rmatrix);
 				rotate_coords(testcoord, rmatrix, N); 
 
@@ -370,7 +369,6 @@ int main(int argc, char **argv)
         }
 
         cout << "RMSD " << molref.GetTitle() << ":" <<  moltest.GetTitle() << " " << bestRMSD << "\n";
-
         if(out)
         {
           outconv.Write(&moltest, &out);

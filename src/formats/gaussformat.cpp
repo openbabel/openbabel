@@ -463,20 +463,15 @@ namespace OpenBabel
     // Set conformers to all coordinates we adopted
     std::vector<double*> vconf; // index of all frames/conformers
     std::vector<double> coordinates; // coordinates in each frame
+    // Added by MMW START
+    std::vector<double> coordinates_all; // coordinates from all frames
+    std::vector<double> esp_x;           // esp points (coords and V) from the second set of calculation
+    std::vector<double> esp_y;           // this code assumes that there is a geometry optimization
+    std::vector<double> esp_z;           // if there is no optimization, then the esp points will be
+    std::vector<double> esp_V;           // missing
+    // Added by MMW END
     int natoms = 0; // number of atoms -- ensure we don't go to a new job with a different molecule
     
-    // Added by MMW START; 
-    // define vectors for dipole, quadrupole and polarisability to store the values from the different calculations that are done for input coordinates, optimized geometry, and additional calculation in the end
-    // define vectors for all the calculated charges: Mulliken, Hirshfeld, CM5 and ESP charges
-    std::vector<double> dipoles; 
-    std::vector<double> quadrupoles;
-    std::vector<double> polarisabilities;
-    std::vector<double> Mulliken_charges;
-    std::vector<double> Hirshfeld_charges;
-    std::vector<double> CM5_charges;
-    std::vector<double> ESP_charges;
-    // Added by MMW END
-
     // OBConformerData stores information about multiple steps
     // we can change attribute later if needed (e.g., IRC)
     OBConformerData *confData = new OBConformerData();
@@ -650,9 +645,15 @@ namespace OpenBabel
             double *tmpCoords = new double [(natoms)*3];
             memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
             vconf.push_back(tmpCoords);
+
+            // Added by MMW START; put all sets of coordinates in coordinates_all
+            for (auto it = coordinates.begin(); it != coordinates.end(); it++)
+              coordinates_all.push_back(*it);
+            // Added by MMW END
+
             coordinates.clear();
             confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
-          }
+          } 
         else if(strstr(buffer, "Dipole moment") != nullptr)
             {
               ifs.getline(buffer,BUFF_SIZE); // actual components   X ###  Y #### Z ###
@@ -660,27 +661,23 @@ namespace OpenBabel
               if (vs.size() >= 6)
                 {
                   OBVectorData *dipoleMoment = new OBVectorData;
+                  // ######## Added by MMW START ######## 
+                  // Takes the last dipole calculation of three calculations (before it was the first one)
+                  if (mol.HasData("Dipole Moment"))                                               
+                    {                                                                                    
+                      mol.DeleteData("Dipole Moment"); // Delete the old one to add the new one.  
+                    }
+                  // ######## Added by MMW END ######## 
+
                   dipoleMoment->SetAttribute("Dipole Moment");
                   double x, y, z;
                   x = atof(vs[1].c_str());
                   y = atof(vs[3].c_str());
                   z = atof(vs[5].c_str());
 
-                  // ########## Added by MMW START ########## Before (old code) the first dipole was taken that belonged to the input standard coords
-                  dipoles.push_back(x);
-                  dipoles.push_back(y);
-                  dipoles.push_back(z); 
-                  if (dipoles.size() == 6)
-                    {
-                    dipoleMoment->SetData(x, y, z);
-                    dipoleMoment->SetOrigin(fileformatInput);
-                    mol.SetData(dipoleMoment);
-                    } 
-                  // ########## Added by MMW END ########## 
-
-                  //dipoleMoment->SetData(x, y, z);            // old code
-                  //dipoleMoment->SetOrigin(fileformatInput);  // old code
-                  //mol.SetData(dipoleMoment);                 // old code
+                  dipoleMoment->SetData(x, y, z);            
+                  dipoleMoment->SetOrigin(fileformatInput);  
+                  mol.SetData(dipoleMoment);                 
                 }
               if (!ifs.getline(buffer,BUFF_SIZE)) break;
             }
@@ -703,31 +700,19 @@ namespace OpenBabel
                   Q[2][0] = Q[0][2] = atof(vs2[3].c_str());
                   Q[2][1] = Q[1][2] = atof(vs2[5].c_str());
                   matrix3x3 quad(Q);
-                  quadrupoleMoment->SetAttribute("Traceless Quadrupole Moment");
-                  
-                  // ########## Added by MMW START ########## Before (old code) the first qudrupole was taken that belonged to the input standard coords
-                  quadrupoles.push_back(Q[0][0]);
-                  quadrupoles.push_back(Q[1][1]);
-                  quadrupoles.push_back(Q[2][2]);
-                  quadrupoles.push_back(Q[1][0]);
-                  quadrupoles.push_back(Q[2][0]);
-                  quadrupoles.push_back(Q[2][1]);
-                  //std::cout << quadrupoles.size() << ' ';
-                  //std::cout << '\n'; 
-                  if (quadrupoles.size() == 12)
-                    {
-                    quadrupoleMoment->SetData(quad);
-                    quadrupoleMoment->SetOrigin(fileformatInput);
-                    mol.SetData(quadrupoleMoment);
+
+                  // ######## Added by MMW START ######## 
+                  // Takes the last quadrupole calculation of three calculations (before it was the first one)
+                  if (mol.HasData("Traceless Quadrupole Moment"))                                               
+                    {                                                                                    
+                      mol.DeleteData("Traceless Quadrupole Moment"); // Delete the old one to add the new one.  
                     }
-                  //std::cout << '\n';  
-                  //for (auto it = quadrupoles.begin(); it != quadrupoles.end(); it++)
-                  //  cout << *it << " ";  
-                  // ########## Added by MMW END ########## 
-                  
-                  //quadrupoleMoment->SetData(quad);              // old code
-                  //quadrupoleMoment->SetOrigin(fileformatInput); // old code
-                  //mol.SetData(quadrupoleMoment);                // old code
+                  // ######## Added by MMW END ######## 
+
+                  quadrupoleMoment->SetAttribute("Traceless Quadrupole Moment");
+                  quadrupoleMoment->SetData(quad);              
+                  quadrupoleMoment->SetOrigin(fileformatInput); 
+                  mol.SetData(quadrupoleMoment);                
                 }
               if (!ifs.getline(buffer,BUFF_SIZE)) break;
             }
@@ -751,36 +736,18 @@ namespace OpenBabel
                   Q[2][1] = Q[1][2] = yz;
                   matrix3x3 pol(Q);
 
-                  //if (mol.HasData("Exact polarizability"))                                               // old code
-                  //  {                                                                                    // old code
-                  //    mol.DeleteData("Exact polarizability"); // Delete the old one to add the new one.  // old code
-                  //  }                                                                                    // old code
+                  if (mol.HasData("Exact polarizability"))                                               
+                    {                                                                                    
+                      mol.DeleteData("Exact polarizability"); // Delete the old one to add the new one.  
+                    }                                                                                    
                   
                   pol_tensor->SetAttribute("Exact polarizability");
 
-                  // ########## Added by MMW START ########## Before the last polarisability was taken that belonged to the last set of standard coords
-                  polarisabilities.push_back(Q[0][0]);
-                  polarisabilities.push_back(Q[1][1]);
-                  polarisabilities.push_back(Q[2][2]);
-                  polarisabilities.push_back(Q[1][0]);
-                  polarisabilities.push_back(Q[2][0]);
-                  polarisabilities.push_back(Q[2][1]);
-                  //std::cout << polarisabilities.size() << ' ';
-                  //std::cout << '\n'; 
-                  if (polarisabilities.size() == 12)
-                    {
-                    pol_tensor->SetData(pol);
-                    pol_tensor->SetOrigin(fileformatInput);
-                    mol.SetData(pol_tensor);
-                    }
-                  //std::cout << '\n';  
-                  //for (auto it = polarisabilities.begin(); it != polarisabilities.end(); it++)
-                  //  cout << *it << " ";  
-                  // ########## Added by MMW END ########## 
+                  // Takes the last polarisability calculation (either the last of three, or the one that was calculated for the last set of coords)
 
-                  // pol_tensor->SetData(pol);                  // old code
-                  // pol_tensor->SetOrigin(fileformatInput);    // old code
-                  // mol.SetData(pol_tensor);                   // old code
+                  pol_tensor->SetData(pol);                  
+                  pol_tensor->SetOrigin(fileformatInput);    
+                  mol.SetData(pol_tensor);                   
                 }
               if (!ifs.getline(buffer,BUFF_SIZE)) break;
             }
@@ -798,10 +765,11 @@ namespace OpenBabel
               delete the previously added Data to store the
               new one.
              */
-            //if (mol.HasData("Mulliken charges"))        // old code
-            //  {                                         // old code
-            //    mol.DeleteData("Mulliken charges");     // old code
-            //  }                                         // old code
+            // MMW: Takes the last set of calculated Mulliken charges
+            if (mol.HasData("Mulliken charges"))        
+              {                                         
+                mol.DeleteData("Mulliken charges");     
+              }                                         
             OBPcharge *Mulliken = new OpenBabel::OBPcharge();
             std::vector<double> MPA_q;
 
@@ -822,27 +790,12 @@ namespace OpenBabel
               }
             if (MPA_q.size() == mol.NumAtoms())
             {
-                // ########## Added by MMW START ########## This adds the charges that belong to the optimized geometry, i.e. the sedond set (and not the last one) 
-                //for (auto it = Mulliken_charges.begin(); it != Mulliken_charges.end(); it++)
-                //  cout << *it << " "; 
-                //std::cout << '\n';  
-                //std::cout << Mulliken_charges.size() << ' '; 
-                for (int i = 0; i < MPA_q.size(); i++) {
-                  Mulliken_charges.push_back(MPA_q.at(i));
-                  }
-                if (Mulliken_charges.size() == mol.NumAtoms()*2)
-                  {
-                  Mulliken->AddPartialCharge(MPA_q);
-                  Mulliken->SetAttribute("Mulliken charges");
-                  Mulliken->SetOrigin(fileformatInput);
-                  mol.SetData(Mulliken);
-                  }
-                // ########## Added by MMW END ########## 
 
-                //Mulliken->AddPartialCharge(MPA_q);           // old code
-                //Mulliken->SetAttribute("Mulliken charges");  // old code
-                //Mulliken->SetOrigin(fileformatInput);        // old code
-                //mol.SetData(Mulliken);                       // old code
+
+                Mulliken->AddPartialCharge(MPA_q);           
+                Mulliken->SetAttribute("Mulliken charges");  
+                Mulliken->SetOrigin(fileformatInput);        
+                mol.SetData(Mulliken);                       
             }
             else
             {
@@ -858,14 +811,15 @@ namespace OpenBabel
              */
             hasPartialCharges = true;
             chargeModel = "Hirshfeld";
-            //if (mol.HasData("Hirshfeld charges"))         // old code
-            //  {                                           // old code
-            //    mol.DeleteData("Hirshfeld charges");      // old code
-            //  }                                           // old code
-            //if (mol.HasData("CM5 charges"))               // old code 
-            //  {                                           // old code
-            //    mol.DeleteData("CM5 charges");            // old code
-            //  }                                           // old code
+            // MMW: Takes the last set of calculated Hirshfeld and CM5 charges
+            if (mol.HasData("Hirshfeld charges"))         
+              {                                           
+                mol.DeleteData("Hirshfeld charges");      
+              }                                          
+            if (mol.HasData("CM5 charges"))                
+              {                                           
+                mol.DeleteData("CM5 charges");            
+              }                                           
             OBPcharge *Hirshfeld = new OpenBabel::OBPcharge();
             OBPcharge *CM5       = new OpenBabel::OBPcharge();
             std::vector<double> HPA_q;
@@ -889,38 +843,14 @@ namespace OpenBabel
             if (CM5_q.size() == mol.NumAtoms() and
                 HPA_q.size() == mol.NumAtoms())
             {
-
-                // ########## Added by MMW START ########## This adds the charges that belong to the optimized geometry, i.e. the sedond set (and not the last one)         
-                for (int i = 0; i < HPA_q.size(); i++) {
-                  Hirshfeld_charges.push_back(HPA_q.at(i));
-                  }
-                if (Hirshfeld_charges.size() == mol.NumAtoms()*2)
-                  {
-                  Hirshfeld->AddPartialCharge(HPA_q);
-                  Hirshfeld->SetAttribute("Hirshfeld charges");
-                  Hirshfeld->SetOrigin(fileformatInput);
-                  mol.SetData(Hirshfeld);
-                  }
-                for (int i = 0; i < CM5_q.size(); i++) {
-                  CM5_charges.push_back(CM5_q.at(i));
-                  }
-                if (CM5_charges.size() == mol.NumAtoms()*2)
-                  {
-                  CM5->AddPartialCharge(CM5_q);
-                  CM5->SetAttribute("CM5 charges");
-                  CM5->SetOrigin(fileformatInput);
-                  mol.SetData(CM5);
-                  }
-                  // ########## Added by MMW END ########## 
-
-                //Hirshfeld->AddPartialCharge(HPA_q);                   // old code
-                //Hirshfeld->SetAttribute("Hirshfeld charges");         // old code
-                //Hirshfeld->SetOrigin(fileformatInput);                // old code
-                //CM5->AddPartialCharge(CM5_q);                         // old code
-                //CM5->SetAttribute("CM5 charges");                     // old code
-                //CM5->SetOrigin(fileformatInput);                      // old code
-                //mol.SetData(CM5);                                     // old code
-                //mol.SetData(Hirshfeld);                               // old code
+                Hirshfeld->AddPartialCharge(HPA_q);                   
+                Hirshfeld->SetAttribute("Hirshfeld charges");         
+                Hirshfeld->SetOrigin(fileformatInput);                
+                CM5->AddPartialCharge(CM5_q);                         
+                CM5->SetAttribute("CM5 charges");                     
+                CM5->SetOrigin(fileformatInput);                      
+                mol.SetData(CM5);                                     
+                mol.SetData(Hirshfeld);                               
             }
             else
             {
@@ -935,19 +865,35 @@ namespace OpenBabel
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
-            if (nullptr == esp)
-              esp = new OpenBabel::OBFreeGrid();
+            //if (nullptr == esp)                   // old code
+            //  esp = new OpenBabel::OBFreeGrid();  // old code
             if (vs.size() == 8)
               {
-                esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()),
-                              atof(vs[7].c_str()),0);
+                //esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()), // old code
+                //              atof(vs[7].c_str()),0);                  // old code
+                // Added by MMW START
+                if (NumEspCounter == 2)
+                {
+                  esp_x.push_back(atof(vs[5].c_str()));
+                  esp_y.push_back(atof(vs[6].c_str()));
+                  esp_z.push_back(atof(vs[7].c_str()));
+                 } 
+                // Added by MMW END
               }
             else if (vs.size() > 5)
               {
                 double x,y,z;
                 if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
-                    esp->AddPoint(x,y,z,0);
+                    // esp->AddPoint(x,y,z,0);        //old code
+                    // Added by MMW START
+                    if (NumEspCounter == 2)
+                    {
+                      esp_x.push_back(x);
+                      esp_y.push_back(y);
+                      esp_z.push_back(z);
+                    }  
+                    // Added by MMW END
                   }
               }
           }
@@ -955,73 +901,106 @@ namespace OpenBabel
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
-            if (nullptr == esp)
-              esp = new OpenBabel::OBFreeGrid();
+            //if (nullptr == esp)                   // old code
+            //  esp = new OpenBabel::OBFreeGrid();  // old code
             if (vs.size() == 9)
               {
-                esp->AddPoint(atof(vs[6].c_str()),atof(vs[7].c_str()),
-                              atof(vs[8].c_str()),0);
+                // esp->AddPoint(atof(vs[6].c_str()),atof(vs[7].c_str()), // old code
+                //              atof(vs[8].c_str()),0);                   // old code
+                // Added by MMW START
+                if (NumEspCounter == 2)
+                {
+                  esp_x.push_back(atof(vs[6].c_str()));
+                  esp_y.push_back(atof(vs[7].c_str()));
+                  esp_z.push_back(atof(vs[8].c_str()));
+                }  
+                // Added by MMW END
               }
             else if (vs.size() > 6)
               {
                 double x,y,z;
                 if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
-                    esp->AddPoint(x,y,z,0);
+                    //esp->AddPoint(x,y,z,0);     // old code
+                    // Added by MMW START
+                    if (NumEspCounter == 2)
+                    {
+                      esp_x.push_back(x);
+                      esp_y.push_back(y);
+                      esp_z.push_back(z);
+                    }
+                    // Added by MMW END
+
                   }
               }
           }
         else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != nullptr && !ESPisAdded)
           {
-            int i,np;
-            OpenBabel::OBFreeGridPoint *fgp;
-            OpenBabel::OBFreeGridPointIterator fgpi;
+            //int i,np;                                 // old code
+            //OpenBabel::OBFreeGridPoint *fgp;          // old code
+            //OpenBabel::OBFreeGridPointIterator fgpi;  // old code
             for(i=0; (i<5); i++)
               {
                 ifs.getline(buffer,BUFF_SIZE);	// skip line
               }
             // Assume file is correct and that potentials are present
             // where they should.
-            np = esp->NumPoints();
-            fgpi = esp->BeginPoints();
-            i = 0;
-            for(fgp = esp->BeginPoint(fgpi); nullptr != fgp; fgp = esp->NextPoint(fgpi))
-              {
+            //np = esp->NumPoints();                     // old code 
+            //fgpi = esp->BeginPoints();                 // old code
+            //i = 0;                                     // old code
+            //for(fgp = esp->BeginPoint(fgpi); nullptr != fgp; fgp = esp->NextPoint(fgpi)) // old code
+            //  {                                        // old code 
+            
+            // Added by MMW START
+            for (int i = 0; i < esp_x.size(); i++)
+            { 
+            // Added by MMW END  
                 ifs.getline(buffer,BUFF_SIZE);
                 tokenize(vs,buffer);
                 if (vs.size() >= 2)
                   {
-                    fgp->SetV(atof(vs[2].c_str()));
-                    i++;
+                    //fgp->SetV(atof(vs[2].c_str()));    // old code
+                    //i++;                               // old code
+                    // Added by MMW START
+                    if (NumEspCounter == 2)
+                    {
+                      esp_V.push_back(atof(vs[2].c_str()));
+                    }  
+                    // Added by MMW END
                   }
+              // Added by MMW START    
               }
-            if (NumEsp == NumEspCounter)
-              {
-                if (i == np)
-                  {
-                    esp->SetAttribute("Electrostatic Potential");
-                    esp->SetOrigin(fileformatInput);
-                    mol.SetData(esp);
-                    ESPisAdded = true;
-                  }
-                else
-                  {
-                    cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
-                  }
-              }
-            else if (!ESPisAdded)
-              {
-                esp->Clear();
-              }
+              // Added by MMW END
+              //}
+
+            //if (NumEsp == NumEspCounter)            // old code START
+            //  {
+            //    if (i == np)
+            //      {
+            //        esp->SetAttribute("Electrostatic Potential");
+            //        esp->SetOrigin(fileformatInput);
+            //        mol.SetData(esp);
+            //        ESPisAdded = true;
+            //      }
+            //    else
+            //      {
+            //        cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
+            //      }
+            //  } 
+            //else if (!ESPisAdded)
+            //  {
+            //    esp->Clear();
+            //  }                                     // old code END                   
           }
         else if (strstr(buffer, "Charges from ESP fit") != nullptr)
           {
             hasPartialCharges = true;
             chargeModel = "ESP";
-            //if (mol.HasData("ESP charges"))     // old code
-            //  {                                 // old code
-            //    mol.DeleteData("ESP charges");  // old code
-            //  }                                 // old code
+             // MMW: Takes the last set of calculated ESP charges
+            if (mol.HasData("ESP charges"))     
+              {                                 
+                mol.DeleteData("ESP charges");  
+              }                                 
             OBPcharge *ESP = new OpenBabel::OBPcharge();
             std::vector<double> ESP_q;
             ifs.getline(buffer,BUFF_SIZE);	// Charge / dipole line
@@ -1041,23 +1020,10 @@ namespace OpenBabel
               }
             if (ESP_q.size() == mol.NumAtoms())
             {
-                // ########## Added by MMW START ########## This adds the charges that belong to the optimized geometry, i.e. the sedond set (and not the last one)      
-                for (int i = 0; i < ESP_q.size(); i++) {
-                  ESP_charges.push_back(ESP_q.at(i));
-                  }
-                if (ESP_charges.size() == mol.NumAtoms()*2)
-                  {
-                  ESP->AddPartialCharge(ESP_q);
-                  ESP->SetAttribute("ESP charges");
-                  ESP->SetOrigin(fileformatInput);
-                  mol.SetData(ESP);
-                  }
-                // ########## Added by MMW END ########## 
-
-                //ESP->AddPartialCharge(ESP_q);      // old code
-                //ESP->SetAttribute("ESP charges");  // old code
-                //ESP->SetOrigin(fileformatInput);   // old code
-                //mol.SetData(ESP);                  // old code
+                ESP->AddPartialCharge(ESP_q);      
+                ESP->SetAttribute("ESP charges");  
+                ESP->SetOrigin(fileformatInput);   
+                mol.SetData(ESP);                  
             }
             else
             {
@@ -1389,11 +1355,96 @@ namespace OpenBabel
               }
           }
       } // end while
-    // Added MMW START  
-    dipoles.clear();
-    quadrupoles.clear();
-    polarisabilities.clear();
-    // Added MMW END
+    
+    // Added by MMW START; Get optimized coords and the last set of coords to determine the rotation matrix
+    // Using the rotation matrix we will then rotate the esp grid points 
+ 
+    int ncoords = 0;
+    int ncoords_all = 0;
+    int nsets = 0;
+    
+
+    ncoords = natoms*3;
+    ncoords_all = coordinates_all.size();
+    nsets = ncoords_all/ncoords;
+    
+    int m = ncoords_all - ncoords, n = ncoords_all, o = ncoords_all - (ncoords*2);
+    std::vector<double> coordinates_opt(coordinates_all.begin()+o, coordinates_all.begin()+m);
+    std::vector<double> coordinates_last(coordinates_all.begin()+m, coordinates_all.begin()+n);
+    coordinates_all.clear();
+
+    int N = natoms;
+
+    // START code from obrms.cpp line 90-106,110-142
+    double *refcoord = (double*)alloca(sizeof(double)*N * 3);
+    double *testcoord = (double*)alloca(sizeof(double)*N * 3);
+
+    for (unsigned i = 0; i < N; i++)
+    {
+      //obmol indices are 1-indexed while the mapper is zero indexed 
+      //const OBAtom *ratom = ref->GetAtom(map[i].first + 1);
+      //const OBAtom *tatom = test.GetAtom(map[i].second + 1);
+      //assert(ratom && tatom);
+
+      for (unsigned c = 0; c < 3; c++)
+      {
+        refcoord[3 * i + c] = coordinates_last.at(3 * i + c); //ratom->GetVector()[c];
+        testcoord[3 * i + c] = coordinates_opt.at(3 * i + c); //tatom->GetVector()[c];
+      }
+    }
+
+    double rmatrix[3][3] = { 0 };
+    double rave[3] = { 0, 0, 0 };
+    double tave[3] ={ 0, 0, 0 };
+    //center
+    for (unsigned i = 0; i < N; i++)
+    {
+      for (unsigned c = 0; c < 3; c++)
+      {
+        rave[c] += refcoord[3 * i + c];
+        tave[c] += testcoord[3 * i + c];
+      }
+    }
+
+    for (unsigned c = 0; c < 3; c++)
+    {
+      rave[c] /= N;
+      tave[c] /= N;
+    }
+
+    for (unsigned i = 0; i < N; i++)
+    {
+      for (unsigned c = 0; c < 3; c++)
+      {
+        refcoord[3 * i + c] -= rave[c];
+        testcoord[3 * i + c] -= tave[c];
+      }
+    }
+    qtrfit(refcoord, testcoord, N, rmatrix);
+    // END code from obrms.cpp
+    
+    // Rotate esp grid points to match the last set of coordinates
+    if (nullptr == esp)  
+    {                                      
+      esp = new OpenBabel::OBFreeGrid();   
+      for (int i = 0; i < esp_V.size(); i++)
+      {  
+        double x_rotate = esp_x.at(i)*rmatrix[0][0]  + esp_y.at(i)*rmatrix[0][1] + esp_z.at(i)*rmatrix[0][2];
+        double y_rotate = esp_x.at(i)*rmatrix[1][0]  + esp_y.at(i)*rmatrix[1][1] + esp_z.at(i)*rmatrix[1][2];
+        double z_rotate = esp_x.at(i)*rmatrix[2][0]  + esp_y.at(i)*rmatrix[2][1] + esp_z.at(i)*rmatrix[2][2];
+        esp->AddPoint(x_rotate, y_rotate, z_rotate, esp_V.at(i)); 
+      } 
+    esp_x.clear();
+    esp_y.clear();
+    esp_z.clear();
+    esp_V.clear();   
+    esp->SetAttribute("Electrostatic Potential");
+    esp->SetOrigin(fileformatInput);
+    mol.SetData(esp);
+    ESPisAdded = true;    
+    }  
+    // Added by MMW END  
+
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
       return false;
@@ -1488,7 +1539,6 @@ namespace OpenBabel
     // set some default coordinates
     // ConnectTheDots will remove conformers, so we add those later
     mol.SetCoordinates(vconf[vconf.size() - 1]);
-    
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     
@@ -1497,8 +1547,15 @@ namespace OpenBabel
 
     // Set conformers to all coordinates we adopted
     // but remove last geometry -- it's a duplicate
-    if (vconf.size() > 1)
-      vconf.pop_back();
+
+    // Added by MMW START: commenting out the following code to avoid removing the last set of coords; 
+    // this is not the duplicate of the optimized structure, but tha last set of coords because of the additional 
+    // calculation polarisability calculation
+    //  
+    //if (vconf.size() > 1).   // old code
+    //  vconf.pop_back();      // old code
+    // Added by MMW END
+
 
     mol.SetConformers(vconf);
     mol.SetConformer(mol.NumConformers() - 1);
