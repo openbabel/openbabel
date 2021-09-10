@@ -63,6 +63,7 @@ namespace OpenBabel
   class OBChainsParser;
 
   typedef std::vector<OBAtom*>::iterator OBAtomIterator;
+  typedef std::vector<OBAtom*>::const_iterator OBAtomConstIterator;
   typedef std::vector<OBBond*>::iterator OBBondIterator;
   typedef std::vector<OBResidue*>::iterator OBResidueIterator;
 
@@ -253,7 +254,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \name Data retrieval methods
     //@{
     //! \return the entire set of flags. (Internal use, mainly.)
-    int          GetFlags()               { return(_flags); }
+    int          GetFlags() const         { return(_flags); }
     //! \return the title of this molecule (often the filename)
     //! \param replaceNewlines whether to replace any newline characters with spaces
     const char  *GetTitle(bool replaceNewlines = true) const;
@@ -262,7 +263,7 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \return the number of bonds (i.e. OBBond children)
     unsigned int NumBonds() const         {  return(_nbonds); }
     //! \return the number of non-hydrogen atoms
-    unsigned int NumHvyAtoms();
+    unsigned int NumHvyAtoms() const;
     //! \return the number of residues (i.e. OBResidue substituents)
     unsigned int NumResidues() const      { return(static_cast<unsigned int> (_residue.size())); }
     //! \return the number of rotatable bonds. If sampleRingBonds is true, will include rotors within rings (see OBBond::IsRotor() for details)
@@ -644,8 +645,12 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //@{
     //! \return An atom iterator pointing to the beginning of the atom list
     OBAtomIterator BeginAtoms()   { return _vatom.begin(); }
+    //! \return A constant atom iterator pointing to the beginning of the atom list
+    OBAtomConstIterator CBeginAtoms() const { return _vatom.cbegin(); }
     //! \return An atom iterator pointing to the end of the atom list
-    OBAtomIterator EndAtoms()    { return _vatom.begin() + NumAtoms() ; }
+    OBAtomIterator EndAtoms() { return _vatom.begin() + NumAtoms() ; }
+    //! \return A constant atom iterator pointing to the end of the atom list
+    OBAtomConstIterator CEndAtoms() const { return _vatom.cbegin() + NumAtoms(); }
     //! \return A bond iterator pointing to the beginning of the bond list
     OBBondIterator BeginBonds()   { return _vbond.begin(); }
     //! \return A bond iterator pointing to the end of the bond list
@@ -658,9 +663,15 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! Set the iterator @p i to the beginning of the atom list
     //! \return the first atom (or NULL if none exist)
     OBAtom *BeginAtom(OBAtomIterator &i);
+    //! Set the constant iterator @p i to the beginning of the atom list
+    //! \return the first atom (or NULL if none exist)
+    const OBAtom* BeginAtom(OBAtomConstIterator &i) const;
     //! Advance the iterator @p i to the next atom in the molecule
     //! \return the next atom (if any, or NULL if none exist)
     OBAtom *NextAtom(OBAtomIterator &i);
+    //! Advance the const iterator @p i to the next atom in the molecule
+    //! \return the next atom (if any, or NULL if none exist)
+    const OBAtom* NextAtom(OBAtomConstIterator &i) const;
     //! Set the iterator @p i to the beginning of the bond list
     //! \return the first bond (or NULL if none exist)
     OBBond *BeginBond(OBBondIterator &i);

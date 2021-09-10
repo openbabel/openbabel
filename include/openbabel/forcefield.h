@@ -526,7 +526,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     // general variables
     OBMol 	_mol; //!< Molecule to be evaluated or minimized
     bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
-    std::string	_parFile; //! < parameter file name
+    std::string	_parFile; //!< parameter file name
     bool 	_validSetup; //!< was the last call to Setup successful
     double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
     // logging variables

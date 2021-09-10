@@ -29,6 +29,7 @@ GNU General Public License for more details.
 
 // private data headers with default parameters
 #include "atomtyp.h"
+#include "ringtyp.h"
 
 #ifdef WIN32
 #pragma warning (disable : 4786)
@@ -247,7 +248,7 @@ namespace OpenBabel
     _envvar = "BABEL_DATADIR";
     _filename = "ringtyp.txt";
     _subdir = "data";
-    //_dataptr = RingTypeData;
+    _dataptr = RingTypeData;
   }
 
   void OBRingTyper::ParseLine(const char *buffer)

@@ -237,7 +237,7 @@ private:
     int *  nsum[MAXBONDS];
     bool lflag[MAXFRAGS];
     char strg[MAXFRAGS+1];
-	char * strngs[MAXFRAGS+1];
+    char * strngs[MAXFRAGS+1];
     char tstr[MAXFRAGS+1];
     int  numdups, dupfrag, jump;
     bool jflag;
@@ -245,8 +245,8 @@ private:
     int  mx[MAXFRAGS];
 
 	//stack overflow message-move data from stack to heap
-	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)malloc(MAXFRAGS);
-    for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) malloc(MAXFRAGS);
+	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS,sizeof(char));
+    for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) calloc(MAXFRAGS,sizeof(int));
 
     // depth = recursion level
     if (depth > 10)

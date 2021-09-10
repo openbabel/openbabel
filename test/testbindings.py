@@ -717,6 +717,10 @@ M  END
             mol.draw(show=False, update=True)
         assert(True) # Segfaults before...
 
+    def testKekulize(self):
+        '''smoketest for OBKekulize binding'''
+        m = pybel.readstring('smi','c1ccccc1')
+        self.assertTrue(ob.OBKekulize(m.OBMol),"OBKekulize failed")
 
 class NewReactionHandling(PythonBindings):
 
@@ -1071,6 +1075,28 @@ class AtomClass(PythonBindings):
     """Tests to ensure that refactoring the atom class handling retains
     functionality"""
 
+    def testAtomProperties(self):
+        mol = pybel.readstring("smi","C=C")
+        #some of these weren't working after 3.0
+        a =  mol.atoms[0]
+        self.assertEqual(a.atomicmass,12.0107)
+        self.assertEqual(a.atomicnum,6)
+        self.assertEqual(a.coordidx,0)
+        self.assertEqual(a.degree, 1)
+        self.assertEqual(a.exactmass, 12.0)
+        self.assertEqual(a.formalcharge, 0)
+        self.assertEqual(a.heavydegree,1)
+        self.assertEqual(a.heterodegree,0)
+        self.assertEqual(a.hyb, 2)
+        self.assertEqual(a.idx, 1)
+        self.assertEqual(a.totalvalence, 4)
+        self.assertEqual(a.explicitvalence, 2)
+        self.assertEqual(a.isotope, 0)
+        self.assertEqual(a.partialcharge, 0.0)
+        self.assertEqual(a.spin, 0)
+        self.assertEqual(a.type, 'C2')
+        self.assertEqual(a.index, 0)
+
     def testSMILES(self):
         mol = pybel.readstring("smi", "C[CH3:6]")
         atom = mol.OBMol.GetAtom(2)
@@ -1134,6 +1160,7 @@ class AtomClass(PythonBindings):
         mol.OBMol.DeleteHydrogens()
         nsmi = mol.write("smi", opt={"a": True, "h": True})
         self.assertEqual("C[H:1]", nsmi.rstrip())
+
 
 if __name__ == "__main__":
     unittest.main()
