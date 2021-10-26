@@ -79,6 +79,32 @@ void test_ChemDraw_Basic()
   }
 }
 
+// Very basic test for cdxml
+void test_ChemDraw_XML_Basic()
+{
+  static const CdxData cdxmlData[] = {
+      {"methanol.cdxml", "CO\t8\n"}};
+
+  ios_base::openmode imode = ios_base::in;
+  unsigned int size = sizeof(cdxmlData) / sizeof(CdxData);
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("cdxml", "smi"));
+  std::stringstream outs;
+  conv.SetOutStream(&outs);
+
+  for (int i = 0; i < size; ++i)
+  {
+    std::string fname = OBTestUtil::GetFilename(cdxmlData[i].fname);
+    std::ifstream ifs(fname.c_str(), imode);
+    OB_REQUIRE(ifs.good());
+    conv.SetInStream(&ifs);
+    outs.str("");
+    conv.Convert();
+    std::string out = outs.str();
+    OB_COMPARE(remove_slashr(out.c_str()), cdxmlData[i].smi);
+  }
+}
+
 // A basic test of functionality
 void test_OBChemTsfm()
 {
@@ -574,6 +600,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 228:
     test_ChemDraw_Basic();
+    break;
+  case 229:
+    test_ChemDraw_XML_Basic();
     break;
   case 240:
     test_Fix1912_PDBReading();
