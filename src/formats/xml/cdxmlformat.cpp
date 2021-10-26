@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
+#include <openbabel/obfunctions.h>
 #include <algorithm>
 #include <vector>
 
@@ -101,7 +102,7 @@ private:
   int _offset; // used to ensure that atoms have different ids.
   double _scale; // current scale
   double xCdxmlShift, yCdxmlShift;
-
+  std::vector<unsigned int> _handleImplicitHydrogens; //list of atoms w/o hydrogen count
 };
 
 ////////////////////////////////////////////////////////////////////
@@ -164,6 +165,13 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
     buf = _pxmlConv->GetAttribute("Isotope");
     if (buf.length())
       _tempAtom.SetIsotope(atoi(buf.c_str()));
+    buf = _pxmlConv->GetAttribute("NumHydrogens");
+    if (buf.length())
+    {
+      _tempAtom.SetImplicitHCount(atoi(buf.c_str()));
+    }
+    else
+      _handleImplicitHydrogens.push_back(_tempAtom.GetIdx());
   }
   else if(name=="b")
   {
@@ -252,6 +260,12 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
   else if(name=="fragment") //this is the end of the molecule we are extracting
   {
     EnsureEndElement();
+    
+    // Add implicit hydrogens on atoms without "hydrogens" property
+    for (vector<unsigned int>::iterator vit = _handleImplicitHydrogens.begin();
+         vit != _handleImplicitHydrogens.end(); ++vit)
+           OBAtomAssignTypicalImplicitHydrogens(_pmol->GetAtom(atoms[*vit]));
+
     _pmol->EndModify();
 
     // This alone will already store the "Formula" property in the molecule property block
