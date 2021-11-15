@@ -497,6 +497,24 @@ void test_github_issue_2111()
   test_github_issue_2111_impl("F/N=C(/C)[H]");
 }
 
+void test_github_issue_2428_data_in_png()
+{
+  ios_base::openmode imode = ios_base::in | ios_base::binary;
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("png", "can"));
+  std::stringstream outs;
+  conv.SetOutStream(&outs);
+
+  std::string fname = OBTestUtil::GetFilename("pyridine.png");
+  std::ifstream ifs(fname.c_str(), imode);
+  OB_REQUIRE(ifs.good());
+  conv.SetInStream(&ifs);
+  outs.str("");
+  conv.Convert();
+  std::string out = outs.str();
+  OB_COMPARE(remove_slashr(out.c_str()), "c1cccnc1\t\n");
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -558,6 +576,9 @@ int regressionstest(int argc, char* argv[])
     break;
   case 2111:
     test_github_issue_2111();
+    break;
+  case 2428:
+    test_github_issue_2428_data_in_png();
     break;
   //case N:
   //  YOUR_TEST_HERE();
