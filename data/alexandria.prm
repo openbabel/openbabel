@@ -325,7 +325,8 @@ atom [NX3r5]1[CX3r5]=[CX3r5][CX3r5]=[CX3r5]1                                    
 
 // SMARTS rules for oxygens
 
-atom [OX1]                                                                  o
+atom [OD1]                                                                  o
+//atom [$([#8D1]~[#6^2]~[#8D1])]                                      o
 atom [OD1]=[#6]              			                            o  "O in C=O"
 atom [OD1]=[#7]              			                            o  "O in N=O"
 atom [OD1]=[#16]                                                            o  "O in S=O"
