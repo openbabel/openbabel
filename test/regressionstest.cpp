@@ -497,6 +497,34 @@ void test_github_issue_2111()
   test_github_issue_2111_impl("F/N=C(/C)[H]");
 }
 
+void test_SegCopySubstructure()
+{
+  // Invalid memory access (atom->GetIdx()) detected in valgrind and sometimes
+  // triggering a sefault.
+  OBConversion conv;
+  OB_ASSERT(conv.SetInFormat("smi"));
+  OBMol mol;
+  std::string smi = "C[C@@H]1CO1";
+  OB_ASSERT(conv.ReadString(&mol, smi));
+
+  OBBitVec atomsToCopy;
+  atomsToCopy.Clear();
+  atomsToCopy.SetBitOn(2);
+  atomsToCopy.SetBitOn(3);
+  atomsToCopy.SetBitOn(4);
+  OBBitVec bondsToExclude;
+  bondsToExclude.Clear();
+  bondsToExclude.SetBitOn(0);
+
+  OBMol copy;
+  std::vector<unsigned int> atomorder;
+  atomorder.clear();
+  bool ok = mol.CopySubstructure(copy, &atomsToCopy, &bondsToExclude, 2, &atomorder);
+  OB_ASSERT(ok);
+  OB_COMPARE(4, copy.NumAtoms());
+  OB_COMPARE(4, copy.NumBonds());
+}
+
 int regressionstest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -520,6 +548,8 @@ int regressionstest(int argc, char* argv[])
   case 1:
     test_Issue135_UniversalSmiles();
     break;
+  case 2:
+    test_SegCopySubstructure();
   case 221:
     test_Issue134_InChI_addH();
     break;
