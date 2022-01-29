@@ -4317,6 +4317,8 @@ namespace OpenBabel
             OBAtom *atomB, *atomE;
             if (skipping_bond) {
               for(int N=0; N<2; ++N) {
+                atomB = nullptr;
+                atomE = nullptr;
                 if (N==0) {
                   if (posB != AtomMap.end()) {
                     atomB = posB->second;
@@ -4330,6 +4332,8 @@ namespace OpenBabel
                   if (record_atomorder)
                     atomorder->push_back(bond->GetBeginAtomIdx());
                 }
+                if (atomB == nullptr || atomE == nullptr)
+                  continue;
                 newmol.AddBond(atomB->GetIdx(), atomE->GetIdx(),
                   bond->GetBondOrder(), bond->GetFlags());
                 if (record_bondorder)
