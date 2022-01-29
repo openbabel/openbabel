@@ -550,6 +550,7 @@ int regressionstest(int argc, char* argv[])
     break;
   case 2:
     test_SegCopySubstructure();
+    break;
   case 221:
     test_Issue134_InChI_addH();
     break;
