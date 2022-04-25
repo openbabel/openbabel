@@ -101,7 +101,7 @@ class TestToolkit(myTestCase):
     def testRSformaterror(self):
         """Test that invalid formats raise an error"""
         self.assertRaises(ValueError, self.toolkit.readstring, "noel", "jkjk")
-        self.assertRaises(IOError, self.toolkit.readstring, "smi", "&*)(%)($)")
+        self.assertRaises(OSError, self.toolkit.readstring, "smi", "&*)(%)($)")
 
     def testselfconversion(self):
         """Test that the toolkit can eat its own dog-food."""
@@ -189,7 +189,7 @@ M  END
 
     def testRFmissingfile(self):
         """Test that reading from a non-existent file raises an error."""
-        self.assertRaises(IOError, self.RFreaderror)
+        self.assertRaises(OSError, self.RFreaderror)
 
     def RFformaterror(self):
         mol = getattr(self.toolkit.readfile("noel", "head.sdf"), nextmethod)()
@@ -225,7 +225,7 @@ M  END
         filecontents = input.readlines()[0].split("\t")[0].strip()
         input.close()
         self.assertEqual(filecontents, test)
-        self.assertRaises(IOError, mol.write, "smi", "testoutput.txt")
+        self.assertRaises(OSError, mol.write, "smi", "testoutput.txt")
         os.remove("testoutput.txt")
         self.assertRaises(ValueError, mol.write, "noel", "testoutput.txt")
 
@@ -235,8 +235,8 @@ M  END
         with self.toolkit.Outputfile("sdf", "testoutput.txt") as outputfile:
             for mol in self.head:
                 outputfile.write(mol)
-        self.assertRaises(IOError, outputfile.write, mol)
-        self.assertRaises(IOError, self.toolkit.Outputfile, "sdf", "testoutput.txt")
+        self.assertRaises(OSError, outputfile.write, mol)
+        self.assertRaises(OSError, self.toolkit.Outputfile, "sdf", "testoutput.txt")
         input = open("testoutput.txt", "r")
         numdollar = len([x for x in input.readlines()
                          if x.rstrip() == "$$$$"])
@@ -314,7 +314,7 @@ M  END
         self.assertEqual(str(self.atom), test)
 
     def invalidSMARTStest(self):
-        # Should raise IOError
+        # Should raise OSError
         return self.toolkit.Smarts("[#NOEL][#NOEL]")
 
     def testSMARTS(self):
@@ -324,7 +324,7 @@ M  END
         ans = smarts.findall(mol)
         self.assertEqual(len(ans), 3)
         self.toolkit.ob.obErrorLog.SetOutputLevel(self.toolkit.ob.obError)
-        self.assertRaises(IOError, self.invalidSMARTStest)
+        self.assertRaises(OSError, self.invalidSMARTStest)
         self.toolkit.ob.obErrorLog.SetOutputLevel(self.toolkit.ob.obWarning)
 
     def testAddh(self):

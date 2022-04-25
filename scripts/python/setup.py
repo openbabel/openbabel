@@ -26,7 +26,7 @@ def find_version():
                 if version_match:
                     return version_match.group(1)
             raise Exception('Could not find version string in openbabel/__init__.py.')
-    except IOError:
+    except OSError:
         raise Exception('Could not find openbabel/__init__.py.')
 
 
