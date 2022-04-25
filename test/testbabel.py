@@ -115,15 +115,15 @@ class TestOBabel(BaseTest):
         """Ensure that this does not segfault (PR#1818)"""
         self.canFindExecutable("obabel")
         output, error = run_exec("obabel -i")
-        self.assertTrue(len(output) > 1, "Did not generate output")
-        self.assertTrue(len(error) > 1, "Did not generate error message")
+        self.assertGreater(len(output), 1, "Did not generate output")
+        self.assertGreater(len(error), 1, "Did not generate error message")
 
     def testShortOutfileName(self):
         # Test that -O can handle short file names
         # if not the command will show warning on 2D coords
         self.canFindExecutable("obabel")
         _, errormsg = run_exec("CCC", "obabel -ismi -omol -Otf --gen2D")
-        self.assertFalse("No 2D or 3D coordinates" in errormsg)
+        self.assertNotIn("No 2D or 3D coordinates", errormsg)
 
     def testSMItoInChI(self):
         self.canFindExecutable("obabel")
@@ -142,7 +142,7 @@ class TestOBabel(BaseTest):
         errors = ["reactant", "agent", "product"]
         for rsmi, error in zip(data, errors):
             output, errormsg = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
-            self.assertTrue(error in errormsg)
+            self.assertIn(error, errormsg)
 
     def sort(self, rsmi):
         # TODO: Change OBMol.Separate to preserve the order. This
@@ -164,10 +164,10 @@ class TestOBabel(BaseTest):
                 "c%(000001)ccccc%(000001)", "c%(51)ccccc%(15)"]
         for smi in data:
             output, error = run_exec("obabel -:%s -osmi" % smi)
-            self.assertTrue("0 molecules converted" in error)
+            self.assertIn("0 molecules converted", error)
         # Now test writing of %(NNN) notation
         output, error = run_exec("obabel %s -osmi" % self.getTestFile("102Uridine.smi"))
-        self.assertTrue("%(100)" in output)
+        self.assertIn("%(100)", output)
 
     def testPDBQT(self):
         self.canFindExecutable("obabel")
@@ -250,7 +250,7 @@ TORSDOF 5
         else:
             os.environ.pop("BABEL_LIBDIR")
 
-        self.assertTrue('BABEL_LIBDIR' in msg)
+        self.assertIn('BABEL_LIBDIR', msg)
 
     def testCOFtoCAN(self):
         self.canFindExecutable("obabel")
@@ -430,7 +430,7 @@ TORSDOF 5
         other mol2 test here'''
         mol2file = self.getTestFile('5sun_protein.mol2')
         outputerr = run_exec( "obabel -imol2 %s -osdf" % mol2file)
-        self.assertTrue(len(outputerr[0]) > 0, "Did not generate output")
+        self.assertGreater(len(outputerr[0]), 0, "Did not generate output")
 
     def testXYZph(self):
         '''This is a bug report from Stefano Forli on the openbabel-devel list.

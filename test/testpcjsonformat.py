@@ -83,7 +83,7 @@ class TestPcJsonFormat(PybelWrapper):
         mols = list(pybel.readfile("pcjson", os.path.join(filedir, 'CID_2244_2D.json')))
         output = json.loads(mols[0].write('pcjson'))
         self.assertEqual(len(output['PC_Compounds']), 1)
-        self.assertTrue('id' in output['PC_Compounds'][0])
+        self.assertIn('id', output['PC_Compounds'][0])
         self.assertEqual(output['PC_Compounds'][0]['id']['id']['cid'], '2244')
 
     def test_write_atoms(self):
@@ -99,9 +99,9 @@ class TestPcJsonFormat(PybelWrapper):
         """Test writing minified output."""
         mols = list(pybel.readfile("pcjson", os.path.join(filedir, 'CID_6857552_2D.json')))
         output = mols[0].write('pcjson', opt={'m': None})
-        self.assertTrue('\n' not in output)
+        self.assertNotIn('\n', output)
         output = mols[0].write('pcjson')
-        self.assertTrue('\n' in output)
+        self.assertIn('\n', output)
 
     def test_write_complex_bonds(self):
         """Test writing complex bonds."""
