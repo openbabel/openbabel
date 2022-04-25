@@ -131,7 +131,6 @@ public:
   // and "CH4" is less than "C2H6"
   // and "CH4" is less than "ClH" (hydrogen chloride)
   struct InchiLess
-    : public std::binary_function<const std::string&, const std::string&, bool>
   {
     bool operator()(const std::string& s1, const std::string& s2) const
     {
