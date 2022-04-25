@@ -256,7 +256,7 @@ M  END
             # (even those that are supposed to be immune like TPSA)
             self.mols[1].addh()
         desc = self.mols[1].calcdesc()
-        self.assertTrue(len(desc) > 3)
+        self.assertGreater(len(desc), 3)
         self.assertAlmostEqual(desc[self.tpsaname], 26.02, 2)
         self.assertRaises(ValueError, self.RFdesctest)
 
@@ -273,24 +273,25 @@ M  END
         newvalues = {'hey':'there', 'yo':1}
         data.update(newvalues)
         self.assertEqual(data['yo'], '1')
-        self.assertTrue('there' in data.values())
+        self.assertIn('there', data.values())
 
     def testMDglobalaccess(self):
         """Check out the keys"""
         data = self.head[0].data
-        self.assertFalse('Noel' in data)
+        self.assertNotIn('Noel', data)
         self.assertEqual(len(data), len(self.datakeys))
         for key in data:
-            self.assertEqual(key in self.datakeys, True)
+            self.assertIn(key, self.datakeys)
         r = repr(data)
-        self.assertTrue(r[0]=="{" and r[-2:]=="'}", r)
+        self.assertEqual(r[0], "{", r)
+        self.assertEqual(r[-2:], "'}", r)
 
     def testMDdelete(self):
         """Delete some keys"""
         data = self.head[0].data
-        self.assertTrue('NSC' in data)
+        self.assertIn('NSC', data)
         del data['NSC']
-        self.assertFalse('NSC' in data)
+        self.assertNotIn('NSC', data)
         data.clear()
         self.assertEqual(len(data), 0)
 
@@ -358,7 +359,7 @@ class TestPybel(TestToolkit):
     def testMDcomment(self):
         """Mess about with the comment field"""
         data = self.head[0].data
-        self.assertEqual('Comment' in data, True)
+        self.assertIn('Comment', data)
         self.assertEqual(data['Comment'], 'CORINA 2.61 0041  25.10.2001')
         data['Comment'] = 'New comment'
         self.assertEqual(data['Comment'], 'New comment')
