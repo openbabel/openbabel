@@ -323,7 +323,7 @@ $end"""
             mol = pybel.readstring("smi", smi)
             self.assertTrue(mol.OBMol.GetData(ob.StereoData))
         for smi in bad:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
         for smi in alsobad:
             mol = pybel.readstring("smi", smi)
             self.assertTrue(mol.OBMol.GetData(ob.StereoData))
@@ -356,7 +356,7 @@ H          0.74700        0.50628       -0.64089
         smis = [r"\0", "&0", "=&",
                 "[H][S][S][S@S00]0[S][S@S00H](0[S@S00][S])0n"]
         for smi in smis:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
         smis = ["c0C[C@H](B)00O0"] # warning and stereo ignored
         for smi in smis:
@@ -461,7 +461,7 @@ M  END
         data += " [C@,](Br)(Cl)(I)F C1,CC1 C%1,1CC%11 C%(1,1)CC%11"
         data += " C=,C"
         for smi in data.split(" "):
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
     def testOBMolAssignTotalChargeToAtoms(self):
         """Run the test cases described in the source code"""
@@ -499,7 +499,7 @@ M  END
             mol = pybel.readstring("smi", smi)
             self.assertEqual(charge, mol.atoms[0].formalcharge)
         for smi in bad:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
     def testReadingBenzyne(self):
         """Check that benzyne is read correctly"""
@@ -544,7 +544,7 @@ M  END
         for smi in smis:
             mol = pybel.readstring("smi", smi)
             self.assertEqual(mol.write("smi").rstrip(), smi)
-        self.assertRaises(IOError, pybel.readstring, "smi", "[11111C]")
+        self.assertRaises(OSError, pybel.readstring, "smi", "[11111C]")
         mol = pybel.readstring("smi", "[C]")
         mol.atoms[0].OBAtom.SetIsotope(65535)
         self.assertEqual(mol.write("smi").rstrip(), "[C]")
@@ -652,7 +652,7 @@ H         -0.26065        0.64232       -2.62218
 
         for smi, rt in smis:
             if rt==-1:
-                self.assertRaises(IOError, pybel.readstring, "smi", smi)
+                self.assertRaises(OSError, pybel.readstring, "smi", smi)
                 continue
             if rt is None:
                 rt = smi
@@ -731,7 +731,7 @@ class NewReactionHandling(PythonBindings):
             self.assertEqual(smi, nsmi)
         badsmis = ["C>>N>O", ">>>", "C>N>O>", ">", ">N", "N>"]
         for smi in badsmis:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
     def testFacade(self):
         parts = "CNO"
