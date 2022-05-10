@@ -323,7 +323,6 @@ namespace OpenBabel {
 
   OBConformerSearch::~OBConformerSearch()
   {
-    delete m_filter;
     delete (OBRandom*)d;
   }
 

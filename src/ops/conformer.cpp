@@ -243,8 +243,11 @@ namespace OpenBabel
       if(iter!=pmap->end())
         check_hydrogens = false;
  
+      std::unique_ptr<OBConformerFilter> f;
       if (filter == "steric")
-        cs.SetFilter(new OBStericConformerFilter(cutoff, vdw_factor, check_hydrogens));
+        f.reset(new OBStericConformerFilter(cutoff, vdw_factor, check_hydrogens));
+      if (f)
+        cs.SetFilter(f.get());
 
       iter = pmap->find("printrot");
       if(iter!=pmap->end())

@@ -318,7 +318,6 @@ namespace OpenBabel {
        */
       void SetFilter(OBConformerFilter *filter)
       {
-        delete m_filter;
         m_filter = filter;
       }
       /**
