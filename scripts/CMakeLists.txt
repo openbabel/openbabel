@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6.0)
+cmake_minimum_required(VERSION 3.6.0)
 # Library versioning (used in Mac Python bindings)x
 set(SOVERSION 4)
 
