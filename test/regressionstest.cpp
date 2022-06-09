@@ -497,6 +497,53 @@ void test_github_issue_2111()
   test_github_issue_2111_impl("F/N=C(/C)[H]");
 }
 
+void test_bad_bondorders() //make sure N in aromatic rings get right bond orders
+{
+    //from PDB 1U71
+  const char* pdb = "REMARK 800 SITE_DESCRIPTION: BINDING SITE FOR RESIDUE MXA A 187\n\
+HET    MXA  A 187      24                                                       \n\
+HETNAM     MXA 6-(2,5-DIMETHOXY-BENZYL)-5-METHYL-PYRIDO[2,3-                    \n\
+HETNAM   2 MXA  D]PYRIMIDINE-2,4-DIAMINE                                        \n\
+FORMUL   4  MXA    C17 H19 N5 O2                                                \n\
+HETATM 1517  N1  MXA A 187      28.796  13.139  -4.319  0.50  2.21           N  \n\
+HETATM 1518  C2  MXA A 187      27.596  12.644  -4.455  0.50  2.00           C  \n\
+HETATM 1519  N2  MXA A 187      27.196  12.327  -5.700  0.50  2.00           N  \n\
+HETATM 1520  N3  MXA A 187      26.752  12.365  -3.424  0.50  2.00           N  \n\
+HETATM 1521  C4  MXA A 187      27.102  12.613  -2.212  0.50  2.38           C  \n\
+HETATM 1522  N4  MXA A 187      26.137  12.302  -1.332  0.50  2.06           N  \n\
+HETATM 1523  C4A MXA A 187      28.375  13.227  -1.915  0.50  3.60           C  \n\
+HETATM 1524  C5  MXA A 187      28.903  13.607  -0.674  0.50  5.54           C  \n\
+HETATM 1525  C5M MXA A 187      28.179  13.440   0.652  0.50  5.83           C  \n\
+HETATM 1526  C6  MXA A 187      30.171  14.172  -0.645  0.50  7.15           C  \n\
+HETATM 1527  C7  MXA A 187      30.848  14.357  -1.861  0.50  5.90           C  \n\
+HETATM 1528  N8  MXA A 187      30.407  14.021  -3.042  0.50  3.72           N  \n\
+HETATM 1529  C8A MXA A 187      29.188  13.455  -3.076  0.50  3.31           C  \n\
+HETATM 1530  C9  MXA A 187      30.823  14.676   0.605  0.50 10.20           C  \n\
+HETATM 1531  C1' MXA A 187      32.247  14.320   0.954  0.50 12.53           C  \n\
+HETATM 1532  C2' MXA A 187      33.277  15.250   0.897  0.50 13.42           C  \n\
+HETATM 1533  O2' MXA A 187      32.883  16.513   0.499  0.50 13.85           O  \n\
+HETATM 1534  C21 MXA A 187      33.905  17.478   0.251  0.50 13.61           C  \n\
+HETATM 1535  C3' MXA A 187      34.547  14.874   1.267  0.50 14.29           C  \n\
+HETATM 1536  C4' MXA A 187      34.808  13.570   1.706  0.50 14.41           C  \n\
+HETATM 1537  C5' MXA A 187      33.819  12.674   1.740  0.50 13.91           C  \n\
+HETATM 1538  O5' MXA A 187      33.800  11.326   2.099  0.50 16.10           O  \n\
+HETATM 1539  C51 MXA A 187      32.462  10.825   2.070  0.50 15.86           C  \n\
+HETATM 1540  C6' MXA A 187      32.533  13.060   1.396  0.50 13.52           C  ";
+
+    OBConversion conv;
+    OB_ASSERT(conv.SetInAndOutFormats("pdb", "sdf"));
+    OBMol mol;
+    conv.ReadString(&mol, pdb);
+    //no nitrogens should have 4 bonds
+    for (OBAtomIterator it=mol.BeginAtoms(); it != mol.EndAtoms(); it++)
+    {
+        OBAtom *a = *it;
+        if(a->GetAtomicNum() == 7) {
+        	OB_ASSERT((a->GetTotalValence() < 4));
+        }
+    }
+}
+    
 void test_SegCopySubstructure()
 {
   // Invalid memory access (atom->GetIdx()) detected in valgrind and sometimes
@@ -590,6 +637,9 @@ int regressionstest(int argc, char* argv[])
   case 2111:
     test_github_issue_2111();
     break;
+  case 2384:
+	  test_bad_bondorders();
+	  break;
   //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test
