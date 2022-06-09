@@ -158,7 +158,7 @@ def readfile(format, filename, opt=None):
     if not formatok:
         raise ValueError("%s is not a recognised Open Babel format" % format)
     if not os.path.isfile(filename):
-        raise IOError("No such file: '%s'" % filename)
+        raise OSError("No such file: '%s'" % filename)
 
     def filereader():
         obmol = ob.OBMol()
@@ -206,7 +206,7 @@ def readstring(format, string, opt=None):
 
     success = obconversion.ReadString(obmol, string)
     if not success:
-        raise IOError("Failed to convert '%s' to format '%s'" % (
+        raise OSError("Failed to convert '%s' to format '%s'" % (
             string, format))
     return Molecule(obmol)
 
@@ -242,7 +242,7 @@ class Outputfile(object):
         self.format = format
         self.filename = filename
         if not overwrite and os.path.isfile(self.filename):
-            raise IOError(
+            raise OSError(
                 "%s already exists. Use 'overwrite=True' to overwrite it." %
                 self.filename)
 
@@ -272,7 +272,7 @@ class Outputfile(object):
            molecule
         """
         if not self.filename:
-            raise IOError("Outputfile instance is closed.")
+            raise OSError("Outputfile instance is closed.")
 
         if self.total == 0:
             self.obConversion.WriteFile(molecule.OBMol, self.filename)
@@ -554,7 +554,7 @@ class Molecule(object):
 
         if filename:
             if not overwrite and os.path.isfile(filename):
-                raise IOError(("%s already exists. Use 'overwrite=True' to "
+                raise OSError(("%s already exists. Use 'overwrite=True' to "
                                "overwrite it.") % filename)
             obconversion.WriteFile(self.OBMol, filename)
             obconversion.CloseOutFile()
@@ -952,7 +952,7 @@ class Smarts(object):
         self.obsmarts = ob.OBSmartsPattern()
         success = self.obsmarts.Init(smartspattern)
         if not success:
-            raise IOError("Invalid SMARTS pattern")
+            raise OSError("Invalid SMARTS pattern")
 
     def findall(self, molecule):
         """Find all matches of the SMARTS pattern to a particular molecule.

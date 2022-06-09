@@ -22,13 +22,14 @@ def testfile(name):
 
 class MyTestCase(unittest.TestCase):
     def assertClose(self, val, expect):
-        if expect > 0:
-            self.assertTrue((expect * 0.9999) < val < (expect * 1.0001), val)
-        else:
-            self.assertTrue((expect * 1.0001) < val < (expect * 0.9999), val)
+        a, b = 0.9999, 1.0001
+        if expect < 0:
+            a, b = b, a
+        self.assertLess(expect * a, val, val)
+        self.assertLess(val, expect * b, val)
 
     def assertZero(self, val):
-        self.assertTrue(abs(val) < 0.00001, val)
+        self.assertLess(abs(val), 0.00001, val)
 
 
 # Make a temporary directory for use during the "with" context block.
@@ -137,8 +138,7 @@ class TestIO(MyTestCase):
             conv.CloseOutFile()
 
             lines = open(tempdir("blah.smi"), "U").readlines()
-            self.assertTrue(lines[0] == "CCO\t#1\n" or
-                              lines[0] == "OCC\t#1\n", repr(lines[0]))
+            self.assertIn(lines[0], ["CCO\t#1\n", "OCC\t#1\n"], repr(lines[0]))
             self.assertTrue(lines[1] == "[NH4+]\tmol2\n", repr(lines[1]))
 
     def test_write_sdf(self):
@@ -199,28 +199,28 @@ class TestPlugins(MyTestCase):
     def test_known_types(self):
         for name in TestPlugins.known_types:
             s = ob.OBPlugin.ListAsString(name)
-            self.assertFalse("not a recognized" in s, s)
+            self.assertNotIn("not a recognized", s, s)
 
             v = ob.vectorString()
             ob.OBPlugin.ListAsVector(name, None, v)
-            self.assertTrue(len(v) > 0, list(v))
+            self.assertGreater(len(v), 0, list(v))
 
     def test_as_string(self):
         s = ob.OBPlugin.ListAsString("fingerprints")
-        self.assertTrue("FP2" in s, s)
-        self.assertTrue("FP3" in s, s)
-        self.assertTrue("MACCS" in s, s)
+        self.assertIn("FP2", s, s)
+        self.assertIn("FP3", s, s)
+        self.assertIn("MACCS", s, s)
 
     def test_as_string_unknown_type(self):
         s = ob.OBPlugin.ListAsString("qwerty.shrdlu")
-        self.assertTrue("\nfingerprints\n" in s, s)
-        self.assertTrue("\nloaders\n" in s, s)
+        self.assertIn("\nfingerprints\n", s, s)
+        self.assertIn("\nloaders\n", s, s)
 
     def test_as_vector(self):
         v = ob.vectorString()
         ob.OBPlugin.ListAsVector("formats", None, v)
         formats = set(v)
-        self.assertTrue("smiles -- SMILES format" in formats, formats)
+        self.assertIn("smiles -- SMILES format", formats, formats)
 
 ##     def test_list(self):
 ##         # XXX GRR! To capture requires passing a 3rd argument which is a std:ostream
@@ -243,7 +243,7 @@ class TestFingerprints(MyTestCase):
             ("FP4", "SMARTS patterns specified in the file SMARTS_InteLigand.txt" + P),
             ("MACCS", "SMARTS patterns specified in the file MACCS.txt" + P)):
             fingerprinter = ob.OBFingerprint.FindFingerprint(name)
-            self.assertFalse(fingerprinter is None)
+            self.assertIsNotNone(fingerprinter)
             self.assertEqual(fingerprinter.GetID(), name)
             self.assertEqual(fingerprinter.Description(), expected_description)
             # Which supported platforms have non-32-bit integers?
@@ -489,8 +489,8 @@ class TestSmarts(MyTestCase):
         self.assertEqual(pat.Match(mol, v), 1)
         self.assertEqual(len(v), 2)
         results = list(v)
-        self.assertTrue((5, 6, 7) in results, results)
-        self.assertTrue((1, 6, 7) in results, results)
+        self.assertIn((5, 6, 7), results, results)
+        self.assertIn((1, 6, 7), results, results)
 
     def test_vector_match_with_one_unique_hit(self):
         mol = parse_smiles("c1ccccc1O")
@@ -507,7 +507,7 @@ class TestSmarts(MyTestCase):
         self.assertEqual(pat.Match(mol, v, ob.OBSmartsPattern.Single), 1)
         self.assertEqual(len(v), 1)
         result = v[0]
-        self.assertTrue(result == (5, 6, 7) or result == (1, 6, 7), result)
+        self.assertIn(result, ((5, 6, 7), (1, 6, 7)), result)
 
     def test_vector_match_with_all_hits(self):
         mol = parse_smiles("c1ccccc1O")
@@ -548,21 +548,21 @@ class TestDescriptors(MyTestCase):
         #mol.AddHydrogens() # doesn't change the results
         logp = calc_logp.Predict(mol)
 
-        self.assertTrue(abs(logp - 1.4008) <= 0.0001, logp)
+        self.assertLessEqual(abs(logp - 1.4008), 0.0001, logp)
 
     def test_tpsa(self):
         calc_tpsa = ob.OBDescriptor.FindType("TPSA")
         mol = parse_smiles("Oc1ccccc1OC")
         #mol.AddHydrogens() # doesn't change the results
         tpsa = calc_tpsa.Predict(mol)
-        self.assertTrue(abs(tpsa - 29.460) <= 0.001, tpsa)
+        self.assertLessEqual(abs(tpsa - 29.460), 0.001, tpsa)
 
     def test_mr(self):
         calc_mr = ob.OBDescriptor.FindType("MR")
         mol = parse_smiles("Oc1ccccc1OC")
         #mol.AddHydrogens() # doesn't change the results
         mr = calc_mr.Predict(mol)
-        self.assertTrue(abs(mr - 34.957) <= 0.001, mr)
+        self.assertLessEqual(abs(mr - 34.957), 0.001, mr)
 
     def test_gotta_try_them_all(self):
         v = ob.vectorString()
@@ -571,7 +571,7 @@ class TestDescriptors(MyTestCase):
         for term in v:
             name = term.split()[0]
             prop_calculator = ob.OBDescriptor.FindType(name)
-            self.assertFalse(prop_calculator is None, "Could not find " + name)
+            self.assertIsNotNone(prop_calculator, "Could not find " + name)
             prop_calculator.Predict(mol)
 
 
@@ -702,9 +702,9 @@ class TestAtomAndBond(MyTestCase):
         mol = parse_smiles("[12CH4-]")
         mol.SetTitle("Spam!")
         atom = mol.GetAtom(0)
-        self.assertTrue(atom is None, "GetAtom(0)")
+        self.assertIsNone(atom, "GetAtom(0)")
         atom = mol.GetAtom(1)
-        self.assertTrue(atom is not None, "GetAtom(1)")
+        self.assertIsNotNone(atom, "GetAtom(1)")
 
         self.assertEqual(atom.GetAtomicNum(), 6)
         self.assertEqual(atom.GetIsotope(), 12)
@@ -788,7 +788,7 @@ class TestAtomAndBond(MyTestCase):
 
         self.assertClose(atom.GetPartialCharge(), -0.25658)
 
-        self.assertTrue(atom.GetParent().GetTitle() == mol.GetTitle(),
+        self.assertEqual(atom.GetParent().GetTitle(), mol.GetTitle(),
                           "parent is mol")
 
         self.assertFalse(atom.IsAromatic())
@@ -816,7 +816,7 @@ class TestAtomAndBond(MyTestCase):
         C = mol.GetAtom(1)
         N = mol.GetAtom(2)
         # XXX Why do bonds starts from 0 and not 1
-        self.assertTrue(mol.GetBond(1) is None)
+        self.assertIsNone(mol.GetBond(1))
 
         bond = mol.GetBond(0)
         self.assertEqual(bond.GetLength(), 0.0)
@@ -1041,7 +1041,7 @@ class TestAtomAndBond(MyTestCase):
 class SpectorphoreTest(MyTestCase):
     def assertWithin_0_001(self, val, expect):
         assert val > 0
-        self.assertTrue(abs(val - expect) < 0.001, val)
+        self.assertLess(abs(val - expect), 0.001, val)
     def _make_mol(self):
         mol = ob.OBMol()
         def new_atom(eleno):
@@ -1147,19 +1147,19 @@ class TestForceFields(MyTestCase):
         # Huh. The plugin system uses case-insensitive lookup
         names = [x.split()[0].lower() for x in v]
 
-        self.assertTrue("gaff" in names, names)
-        self.assertTrue("mmff94" in names, names)
-        self.assertTrue("uff" in names, names)
+        self.assertIn("gaff", names, names)
+        self.assertIn("mmff94", names, names)
+        self.assertIn("uff", names, names)
 
         pFF1 = ob.OBForceField.FindForceField("GAFF")
         pFF2 = ob.OBForceField.FindForceField("GafF")
-        self.assertFalse(pFF1 is None)
-        self.assertFalse(pFF2 is None)
+        self.assertIsNotNone(pFF1)
+        self.assertIsNotNone(pFF2)
         self.assertEqual(pFF1.GetID(), pFF2.GetID())
 
     def _test_energies(self, plugin_name, expected_results, filename = None):
         pFF = ob.OBForceField.FindForceField(plugin_name)
-        self.assertFalse(pFF is None, "Cannot load " + plugin_name)
+        self.assertIsNotNone(pFF, "Cannot load " + plugin_name)
 
         if filename is None:
             filename = testfile("forcefield.sdf")

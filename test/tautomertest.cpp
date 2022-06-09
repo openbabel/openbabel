@@ -271,7 +271,8 @@ int tautomertest(int argc, char* argv[]) {
       break;
     case 21:
       // tenoxicam
-      testEnumerateTautomers("CN1/C(=C(\\NC2=CC=CC=N2)/O)/C(=O)C3=C(S1(=O)=O)C=CS3", 5);
+      //testEnumerateTautomers("CN1/C(=C(\\NC2=CC=CC=N2)/O)/C(=O)C3=C(S1(=O)=O)C=CS3", 5);
+      testEnumerateTautomers("CN1C(=C(NC2=CC=CC=N2)O)C(=O)C3=C(S1(=O)=O)C=CS3", 5);
       testCanonicalTautomers("CN1/C(=C(\\NC2=CC=CC=N2)/O)/C(=O)C3=C(S1(=O)=O)C=CS3");
       testVerifyCanonicalTautomer("CN1/C(=C(\\NC2=CC=CC=N2)/O)/C(=O)C3=C(S1(=O)=O)C=CS3", "OC(=C1C(=O)c2sccc2S(=O)(=O)N1C)Nc1ccccn1");
       break;
@@ -316,6 +317,16 @@ int tautomertest(int argc, char* argv[]) {
       testEnumerateTautomers("Oc1cccc2c1C(=O)c1c(C2)cccc1O", 2);
       testCanonicalTautomers("Oc1cccc2c1C(=O)c1c(C2)cccc1O");
       testVerifyCanonicalTautomer("Oc1cccc2c1C(=O)c1c(C2)cccc1O", "O=C1C=CC=C2C1=C(O)c1c(C2)cccc1O");
+      break;
+    case 29:
+      // see https://github.com/openbabel/openbabel/pull/2171
+      testEnumerateTautomers("S=c1[nH]c(c([nH]1)c1ccccc1)c1ccccc1", 2);
+      testCanonicalTautomers("S=c1[nH]c(c([nH]1)c1ccccc1)c1ccccc1");
+      testCanonicalTautomers("Sc1[nH]c(c(n1)c1ccccc1)c1ccccc1");
+      testCanonicalTautomers("S=c1[nH]c(c2ccccc2)c(c2ccccc2)[nH]1");
+      testVerifyCanonicalTautomer("S=c1[nH]c(c([nH]1)c1ccccc1)c1ccccc1", "Sc1nc(c([nH]1)c1ccccc1)c1ccccc1");
+      testVerifyCanonicalTautomer("Sc1[nH]c(c(n1)c1ccccc1)c1ccccc1", "Sc1nc(c([nH]1)c1ccccc1)c1ccccc1");
+      testVerifyCanonicalTautomer("S=c1[nH]c(c2ccccc2)c(c2ccccc2)[nH]1", "Sc1nc(c([nH]1)c1ccccc1)c1ccccc1");
       break;
     default:
       std::cout << "Test number " << choice << " does not exist!\n";

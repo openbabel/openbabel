@@ -543,6 +543,32 @@ HETATM 1540  C6' MXA A 187      32.533  13.060   1.396  0.50 13.52           C  
         }
     }
     
+void test_SegCopySubstructure()
+{
+  // Invalid memory access (atom->GetIdx()) detected in valgrind and sometimes
+  // triggering a sefault.
+  OBConversion conv;
+  OB_ASSERT(conv.SetInFormat("smi"));
+  OBMol mol;
+  std::string smi = "C[C@@H]1CO1";
+  OB_ASSERT(conv.ReadString(&mol, smi));
+
+  OBBitVec atomsToCopy;
+  atomsToCopy.Clear();
+  atomsToCopy.SetBitOn(2);
+  atomsToCopy.SetBitOn(3);
+  atomsToCopy.SetBitOn(4);
+  OBBitVec bondsToExclude;
+  bondsToExclude.Clear();
+  bondsToExclude.SetBitOn(0);
+
+  OBMol copy;
+  std::vector<unsigned int> atomorder;
+  atomorder.clear();
+  bool ok = mol.CopySubstructure(copy, &atomsToCopy, &bondsToExclude, 2, &atomorder);
+  OB_ASSERT(ok);
+  OB_COMPARE(4, copy.NumAtoms());
+  OB_COMPARE(4, copy.NumBonds());
 }
 
 int regressionstest(int argc, char* argv[])
@@ -569,8 +595,8 @@ int regressionstest(int argc, char* argv[])
     test_Issue135_UniversalSmiles();
     break;
   case 2:
-	  test_bad_bondorders();
-	  break;
+    test_SegCopySubstructure();
+    break;
   case 221:
     test_Issue134_InChI_addH();
     break;
@@ -610,6 +636,9 @@ int regressionstest(int argc, char* argv[])
   case 2111:
     test_github_issue_2111();
     break;
+  case 2384:
+	  test_bad_bondorders();
+	  break;
   //case N:
   //  YOUR_TEST_HERE();
   //  Remember to update CMakeLists.txt with the number of your test

@@ -39,7 +39,7 @@ except ImportError:
 
 class PythonBindings(unittest.TestCase):
     def setUp(self):
-        self.assertTrue(ob is not None, "Failed to import the openbabel module")
+        self.assertIsNotNone(ob, "Failed to import the openbabel module")
 
 class TestPythonBindings(PythonBindings):
     def testSimple(self):
@@ -51,7 +51,7 @@ class TestPythonBindings(PythonBindings):
 
 class PybelWrapper(PythonBindings):
     def testDummy(self):
-        self.assertTrue(pybel is not None, "Failed to import the Pybel module")
+        self.assertIsNotNone(pybel, "Failed to import the Pybel module")
 
 class TestSuite(PythonBindings):
 
@@ -208,7 +208,7 @@ $end"""
             self.assertEqual(res, atomorder)
         mol = pybel.readstring("smi", "CC")
         mol.write("can")
-        self.assertFalse("SMILES Atom Order" in mol.data)
+        self.assertNotIn("SMILES Atom Order", mol.data)
 
     def testECFP(self):
         data = [
@@ -224,7 +224,7 @@ $end"""
             ecfp2 = mol.calcfp("ecfp2").bits
             self.assertEqual(len(ecfp2), numB)
             for bit in ecfp0:
-                self.assertTrue(bit in ecfp2)
+                self.assertIn(bit, ecfp2)
 
     def testOldRingInformationIsWipedOnReperception(self):
         """Previously, the code that identified ring atoms and bonds
@@ -323,7 +323,7 @@ $end"""
             mol = pybel.readstring("smi", smi)
             self.assertTrue(mol.OBMol.GetData(ob.StereoData))
         for smi in bad:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
         for smi in alsobad:
             mol = pybel.readstring("smi", smi)
             self.assertTrue(mol.OBMol.GetData(ob.StereoData))
@@ -356,7 +356,7 @@ H          0.74700        0.50628       -0.64089
         smis = [r"\0", "&0", "=&",
                 "[H][S][S][S@S00]0[S][S@S00H](0[S@S00][S])0n"]
         for smi in smis:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
         smis = ["c0C[C@H](B)00O0"] # warning and stereo ignored
         for smi in smis:
@@ -380,10 +380,10 @@ H          0.74700        0.50628       -0.64089
                 changed = neutralize.Do(mol, option)
                 result = pybel.Molecule(mol).write("smi").rstrip()
                 self.assertEqual(ans, result)
-                if not option:
-                    self.assertEqual(True, changed)
+                if not option or after:
+                    self.assertTrue(changed)
                 else:
-                    self.assertEqual(True if after else False, changed)
+                    self.assertFalse(changed)
 
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
@@ -393,12 +393,12 @@ H          0.74700        0.50628       -0.64089
             ringsize = i + 4
             ringsmi = smi + "1"
             roundtrip = pybel.readstring("smi", ringsmi).write("smi")
-            self.assertTrue("/" not in roundtrip)
+            self.assertNotIn("/", roundtrip)
             smi += "C"
         ringsize = 9
         ringsmi = smi + "1"
         roundtrip = pybel.readstring("smi", ringsmi).write("smi")
-        self.assertTrue("/" in roundtrip)
+        self.assertIn("/", roundtrip)
 
     def testKekulizationOfHypervalents(self):
         # We should support hypervalent aromatic S and N (the latter
@@ -461,7 +461,7 @@ M  END
         data += " [C@,](Br)(Cl)(I)F C1,CC1 C%1,1CC%11 C%(1,1)CC%11"
         data += " C=,C"
         for smi in data.split(" "):
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
     def testOBMolAssignTotalChargeToAtoms(self):
         """Run the test cases described in the source code"""
@@ -499,7 +499,7 @@ M  END
             mol = pybel.readstring("smi", smi)
             self.assertEqual(charge, mol.atoms[0].formalcharge)
         for smi in bad:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
     def testReadingBenzyne(self):
         """Check that benzyne is read correctly"""
@@ -544,7 +544,7 @@ M  END
         for smi in smis:
             mol = pybel.readstring("smi", smi)
             self.assertEqual(mol.write("smi").rstrip(), smi)
-        self.assertRaises(IOError, pybel.readstring, "smi", "[11111C]")
+        self.assertRaises(OSError, pybel.readstring, "smi", "[11111C]")
         mol = pybel.readstring("smi", "[C]")
         mol.atoms[0].OBAtom.SetIsotope(65535)
         self.assertEqual(mol.write("smi").rstrip(), "[C]")
@@ -638,7 +638,7 @@ H         -0.26065        0.64232       -2.62218
             # Check whether the element is available as a constant
             self.assertEqual(N, getattr(ob, ob.GetName(N)))
 
-        self.assertTrue(N > 100)
+        self.assertGreater(N, 100)
 
     def testElementsSpecifiedByAtomicNumberInSmiles(self):
         smis = [
@@ -652,7 +652,7 @@ H         -0.26065        0.64232       -2.62218
 
         for smi, rt in smis:
             if rt==-1:
-                self.assertRaises(IOError, pybel.readstring, "smi", smi)
+                self.assertRaises(OSError, pybel.readstring, "smi", smi)
                 continue
             if rt is None:
                 rt = smi
@@ -678,7 +678,7 @@ H         -0.26065        0.64232       -2.62218
             for a, b in itertools.combinations(mol.atoms, 2)
         ]
         mindist = min(dists)
-        self.assertTrue(mindist > 0.00001)
+        self.assertGreater(mindist, 0.00001)
 
     def testRegressionBenzene2D(self):
         """Check that benzene is given a correct layout, see #1900"""
@@ -731,7 +731,7 @@ class NewReactionHandling(PythonBindings):
             self.assertEqual(smi, nsmi)
         badsmis = ["C>>N>O", ">>>", "C>N>O>", ">", ">N", "N>"]
         for smi in badsmis:
-            self.assertRaises(IOError, pybel.readstring, "smi", smi)
+            self.assertRaises(OSError, pybel.readstring, "smi", smi)
 
     def testFacade(self):
         parts = "CNO"
@@ -884,16 +884,16 @@ class AcceptStereoAsGiven(PythonBindings):
         # Should preserve stereo
         tet = "[C@@H](Br)(Br)Br"
         out = pybel.readstring("smi", tet).write("smi")
-        self.assertTrue("@" in out)
+        self.assertIn("@", out)
         cistrans = r"C/C=C(\C)/C"
         out = pybel.readstring("smi", cistrans).write("smi")
-        self.assertTrue("/" in out)
+        self.assertIn("/", out)
         # Should wipe stereo
         out = pybel.readstring("smi", tet, opt={"S": True}).write("smi")
-        self.assertFalse("@" in out)
+        self.assertNotIn("@", out)
         cistrans = r"C/C=C(\C)/C"
         out = pybel.readstring("smi", cistrans, opt={"S": True}).write("smi")
-        self.assertFalse("/" in out)
+        self.assertNotIn("/", out)
 
 class OBMolCopySubstructure(PythonBindings):
     """Tests for copying a component of an OBMol"""
@@ -1126,7 +1126,7 @@ class AtomClass(PythonBindings):
         smi = "[*:6]C"
         mol = pybel.readstring("smi", smi)
         molfile = mol.write("mol")
-        self.assertTrue("M  RGP  1   1   6" in molfile)
+        self.assertIn("M  RGP  1   1   6", molfile)
         molb = pybel.readstring("mol", molfile)
         out = mol.write("smi", opt={"a":True, "n":True, "nonewline":True})
         self.assertEqual(smi, out)
