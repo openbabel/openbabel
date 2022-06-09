@@ -77,6 +77,7 @@ endif(MSVC OR HAVE_REGEX_H)
 if(WITH_JSON)
   set(formats_json
     chemdoodlejsonformat
+    chemicaljsonformat
     pubchemjsonformat
   )
 endif()

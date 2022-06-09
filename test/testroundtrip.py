@@ -174,7 +174,7 @@ def roundtripFile(fname):
 class TestSuite(unittest.TestCase):
 
     def setUp(self):
-        self.assertTrue(ob is not None, "Failed to import the openbabel module")
+        self.assertIsNotNone(ob, "Failed to import the openbabel module")
         
     def canFindFile(self, filename):
         self.assertTrue(os.path.exists(filename),
@@ -210,11 +210,11 @@ class TestSuite(unittest.TestCase):
               if ret != None:
                 print(i,fname)
                 print(ret)
-                self.assertTrue(ret == None, ret)
+                self.assertIsNone(ret, ret)
             except TimeoutError:
               print(i,fname)
               print("Timeout or segfault")
-              self.assertTrue(False,"Timeout or segfault with %s"%fname)
+              self.fail("Timeout or segfault with %s"%fname)
           
 
           
