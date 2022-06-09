@@ -119,8 +119,7 @@ namespace OpenBabel {
 
   OBDistanceGeometry::~OBDistanceGeometry()
   {
-    if (_d != nullptr)
-      delete _d;
+    delete _d;
   }
 
   float OBDistanceGeometry::GetUpperBounds(int i, int j) {
@@ -131,8 +130,7 @@ namespace OpenBabel {
   }
   bool OBDistanceGeometry::Setup(const OBMol &mol, bool useCurrentGeometry)
   {
-    if (_d != nullptr)
-      delete _d;
+    delete _d;
     // TODO: add IsSetupNeeded() like OBForceField to prevent duplication of work
 
     dim = 4;
