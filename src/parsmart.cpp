@@ -18,7 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
-#include <ctype.h>
+#include <cctype>
 #include <iomanip>
 #include <cstring>
 
