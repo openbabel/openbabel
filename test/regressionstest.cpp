@@ -542,6 +542,7 @@ HETATM 1540  C6' MXA A 187      32.533  13.060   1.396  0.50 13.52           C  
         	OB_ASSERT((a->GetTotalValence() < 4));
         }
     }
+}
     
 void test_SegCopySubstructure()
 {
