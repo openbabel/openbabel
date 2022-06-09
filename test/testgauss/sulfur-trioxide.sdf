@@ -1,0 +1,22 @@
+sulfur-trioxide.sdf
+ OpenBabel07261715163D
+Gaussian 03 #P B3LYP/gen Int(Grid=Ultrafine) maxdisk=40GB SCF(Save,MaxCycle=100)
+  4  3  0  0  0  0  0  0  0  0999 V2000
+    0.0000    1.4397    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+    0.0000    0.0000    0.0000 S   0  0  0  0  0  0  0  0  0  0  0  0
+    1.2468   -0.7198    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2468   -0.7198    0.0000 O   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  2  0  0  0  0
+M  END
+>  <program>
+Gaussian 03, Revision D.01
+
+>  <basis>
+gen
+
+>  <method>
+B3LYP
+
+$$$$

@@ -226,7 +226,7 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
   if(PYTHON_EXECUTABLE)
     set(pytests
-        babel sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+        babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
       PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
