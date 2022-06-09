@@ -1,6 +1,8 @@
 name: Build SWIG bindings
 
-on: [push, pull_request]
+# for now just use manual dispatch
+#on: [push, pull_request]
+on: workflow_dispatch
 
 env:
   BUILD_TYPE: Release

@@ -13,12 +13,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-        - {
-            name: "Ubuntu Latest GCC SWIG",
-            os: ubuntu-latest,
-            cc: "gcc", cxx: "g++",
-            cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
-          }
+#        - {
+#            name: "Ubuntu Latest GCC SWIG",
+#            os: ubuntu-latest,
+#            cc: "gcc", cxx: "g++",
+#            cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+#          }
         - {
             name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
