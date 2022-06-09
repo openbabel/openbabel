@@ -432,6 +432,52 @@ TORSDOF 5
         outputerr = run_exec( "obabel -imol2 %s -osdf" % mol2file)
         self.assertTrue(len(outputerr[0]) > 0, "Did not generate output")
 
+    def testXYZph(self):
+        '''This is a bug report from Stefano Forli on the openbabel-devel list.
+        When applying the pH model to an xyz file an extra hydrogen is added'''
+        self.canFindExecutable("obabel")
+        xyz = '''8
+*****
+C          1.04210        0.04810        0.07080
+N          2.49960        0.04810        0.07080
+H          0.66220        1.07950        0.23570
+H          0.66220       -0.61040        0.88150
+H          0.66220       -0.32470       -0.90480
+H          2.84760        0.40010        0.99180
+H          2.84760        0.66970       -0.69450
+H          2.84760       -0.92540       -0.08490
+'''
+        mol2 = '''@<TRIPOS>MOLECULE
+*****
+ 8 7 0 0 0
+SMALL
+GASTEIGER
+
+@<TRIPOS>ATOM
+      1 C           1.0421    0.0481    0.0708 C.3     1  UNL1       -0.0466
+      2 N           2.4996    0.0481    0.0708 N.4     1  UNL1        0.2163
+      3 H           0.6854    0.9091    0.5965 H       1  UNL1        0.0776
+      4 H           0.6854   -0.8377    0.5536 H       1  UNL1        0.0776
+      5 H           0.6854    0.0728   -0.9377 H       1  UNL1        0.0776
+      6 H           2.8396    0.0245    1.0322 H       1  UNL1        0.1991
+      7 H           2.8396    0.8925   -0.3895 H       1  UNL1        0.1991
+      8 H           2.8396   -0.7727   -0.4303 H       1  UNL1        0.1991
+@<TRIPOS>UNITY_ATOM_ATTR
+2 1
+charge 1
+@<TRIPOS>BOND
+     1     1     2    1
+     2     1     3    1
+     3     1     4    1
+     4     1     5    1
+     5     2     6    1
+     6     2     7    1
+     7     2     8    1
+'''
+        output, error = run_exec(xyz, "obabel -ixyz -p7 -omol2")
+        self.maxDiff = None
+        # mol2 displays element twice
+        self.assertEqual(output.count('H'), 12)
 
 if __name__ == "__main__":
     unittest.main()
