@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 
 #include <set>
-#include <assert.h>
+#include <cassert>
 
 // private data headers with default parameters
 #include "torlib.h"

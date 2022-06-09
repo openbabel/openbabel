@@ -39,7 +39,7 @@ set (lssr_parts 1 2 3 4 5)
 set (isomorphism_parts 1 2 3 4 5 6 7 8 9)
 set (multicml_parts 1)
 set (periodic_parts 1 2 3 4)
-set (regressions_parts 1 2 221 222 223 224 225 226 227 228 240 241 242 1794 2111)
+set (regressions_parts 1 2 221 222 223 224 225 226 227 228 229 240 241 242 1794 2111)
 set (rotor_parts 1 2 3 4)
 set (shuffle_parts 1 2 3 4 5)
 set (smiles_parts 1 2 3)
@@ -226,7 +226,7 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
   if(PYTHON_EXECUTABLE)
     set(pytests
-        babel sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+        babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
     foreach(pytest ${pytests})
     SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
       PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"

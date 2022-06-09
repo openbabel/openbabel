@@ -43,7 +43,7 @@ GNU General Public License for more details.
 #include <typeinfo>
 #include <iterator>
 
-#include <stdlib.h>
+#include <cstdlib>
 
 #include <openbabel/obconversion.h>
 //#include <openbabel/mol.h>
@@ -311,10 +311,7 @@ namespace OpenBabel {
   OBConversion::~OBConversion()
   {
     if(pAuxConv!=this)
-      if(pAuxConv)
-      {
-        delete pAuxConv;
-      }
+      delete pAuxConv;
     // Free any remaining streams from convenience functions
     SetInStream(nullptr);
     SetOutStream(nullptr);
@@ -1050,7 +1047,7 @@ namespace OpenBabel {
     ofstream *ofs = new ofstream(filePath.c_str(),omode);
     if(!ofs || !ofs->good())
       {
-        if(ofs) delete ofs;
+        delete ofs;
         obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + filePath, obError);
         return false;
       }
@@ -1095,7 +1092,7 @@ namespace OpenBabel {
     ifstream *ifs = new ifstream(filePath.c_str(),imode);
     if(!ifs || !ifs->good())
     {
-        if(ifs) delete ifs;
+        delete ifs;
         obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + filePath, obError);
         return false;
     }
@@ -1123,7 +1120,7 @@ namespace OpenBabel {
     ifstream *ifs = new ifstream(infilepath.c_str(),ios_base::in|ios_base::binary);  //always open in binary mode
     if(!ifs || !ifs->good())
     {
-      if(ifs) delete ifs;
+      delete ifs;
       obErrorLog.ThrowError(__FUNCTION__,"Cannot read from " + infilepath, obError);
       return false;
     }
@@ -1141,7 +1138,7 @@ namespace OpenBabel {
     ofstream *ofs = new ofstream(outfilepath.c_str(),ios_base::out|ios_base::binary);//always open in binary mode
     if(!ofs || !ofs->good())
     {
-      if(ofs) delete ofs;
+      delete ofs;
       obErrorLog.ThrowError(__FUNCTION__,"Cannot write to " + outfilepath, obError);
       return false;
     }
