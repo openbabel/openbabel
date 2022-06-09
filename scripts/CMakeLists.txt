@@ -106,6 +106,7 @@ if (DO_PYTHON_BINDINGS)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
+            LIBRARY_OUTPUT_DIRECTORY "${openbabel_SOURCE_DIR}/scripts/python/openbabel/"
             SUFFIX .so )
         execute_process(
           COMMAND
