@@ -157,6 +157,13 @@ namespace OpenBabel
         //set atomic number
         atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
+        // set atom class number
+        OBPairInteger *pac = new OBPairInteger();
+        pac->SetAttribute("Atom Class");
+        pac->SetValue(stoi(vs[5]));
+        pac->SetOrigin(fileformatInput);
+        atom->SetData(pac);
+
         // add bonding
         if (vs.size() > 6)
           for (unsigned int j = 6; j < vs.size(); ++j)
