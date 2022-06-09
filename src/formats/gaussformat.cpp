@@ -509,7 +509,7 @@ namespace OpenBabel
             // The "nosym" keyword has been requested
             no_symmetry = true;
           }
-        if (strstr(buffer, "orientation:") != nullptr)
+        if (strstr(buffer, "orientation:") != nullptr && (strstr(buffer, "Dipole") == nullptr))
           {
             i++;
             tokenize (vs, buffer);
