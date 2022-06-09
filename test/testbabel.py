@@ -438,6 +438,7 @@ TORSDOF 5
         the bond orders for azete were not being correctly inferred.'''
         self.canFindExecutable("obabel")
         xyz = '''7
+
 N          2.78347       -0.65317       -0.45845
 C          2.69876        1.26920       -0.07255
 C          3.48123        0.26482        0.36016
@@ -468,7 +469,7 @@ GASTEIGER
      6     2     3    2
      7     3     6    1
 '''
-        output, error = run_exec(pdb, "obabel -ixyz -omol2")
+        output, error = run_exec(xyz, "obabel -ixyz -omol2")
         self.maxDiff = None
         self.assertEqual(output.replace("\r", ""), mol2.replace("\r", ""))
 
