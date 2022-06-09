@@ -432,6 +432,46 @@ TORSDOF 5
         outputerr = run_exec( "obabel -imol2 %s -osdf" % mol2file)
         self.assertGreater(len(outputerr[0]), 0, "Did not generate output")
 
+    def testXYZazete(self):
+        '''This is a regression test for a bug reported by Madeleine Walz
+        on the openbabel-devel list.  Given a file format without bond orders,
+        the bond orders for azete were not being correctly inferred.'''
+        self.canFindExecutable("obabel")
+        xyz = '''7
+N          2.78347       -0.65317       -0.45845
+C          2.69876        1.26920       -0.07255
+C          3.48123        0.26482        0.36016
+C          2.03055        0.28009       -0.87887
+H          2.63915        2.32997        0.12878
+H          4.31353        0.16434        1.05148
+H          1.18818        0.42748       -1.56337
+'''
+        mol2 = '''@<TRIPOS>MOLECULE
+azete.xyz
+ 7 7 0 0 0
+SMALL
+GASTEIGER
+@<TRIPOS>ATOM
+      1 N           2.7835   -0.6532   -0.4585 N.2     1  UNL1       -0.2632
+      2 C           2.6988    1.2692   -0.0726 C.2     1  UNL1       -0.0255
+      3 C           3.4812    0.2648    0.3602 C.2     1  UNL1        0.0290
+      4 C           2.0305    0.2801   -0.8789 C.2     1  UNL1        0.0290
+      5 H           2.6391    2.3300    0.1288 H       1  UNL1        0.0648
+      6 H           4.3135    0.1643    1.0515 H       1  UNL1        0.0830
+      7 H           1.1882    0.4275   -1.5634 H       1  UNL1        0.0830
+@<TRIPOS>BOND
+     1     7     4    1
+     2     4     1    2
+     3     4     2    1
+     4     1     3    1
+     5     2     5    1
+     6     2     3    2
+     7     3     6    1
+'''
+        output, error = run_exec(pdb, "obabel -ixyz -omol2")
+        self.maxDiff = None
+        self.assertEqual(output.replace("\r", ""), mol2.replace("\r", ""))
+
     def testXYZph(self):
         '''This is a bug report from Stefano Forli on the openbabel-devel list.
         When applying the pH model to an xyz file an extra hydrogen is added'''
