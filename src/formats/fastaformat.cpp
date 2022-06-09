@@ -344,10 +344,7 @@ namespace OpenBabel
   typedef OBAtom * ptrAtom;
   void add_bond(OBMol * pmol, OBAtom * from, OBAtom * to, int bond_order)
   {
-    OBBond * bond = pmol->NewBond();
-    bond->SetBegin(from);
-    bond->SetEnd(to);
-    bond->SetBondOrder(bond_order);
+    pmol->AddBond(from->GetIdx(), to->GetIdx(), bond_order);
   }
   // #define GEN_BONDS 1
   void add_residue(OBMol * pmol, OBResidue * res, double offset_x, double offset_Theta, unsigned long & serial_no, ResidueRecord * res_rec, int resBondFromOffset, ptrAtom & resBondFrom, bool create_bonds, bool bond_orders)
