@@ -323,7 +323,6 @@ namespace OpenBabel {
 
   OBConformerSearch::~OBConformerSearch()
   {
-    delete m_filter;
     delete (OBRandom*)d;
   }
 
@@ -346,28 +345,28 @@ namespace OpenBabel {
     m_rotorList.Setup(m_mol);
 
     // Print all available rotors if so desired
-    if (m_printrotors){
+    if (m_printrotors && m_logstream != nullptr){
       OBRotorIterator it;
       OBRotorIterator end_it = m_rotorList.EndRotors();
       OBRotor* r = m_rotorList.BeginRotor(it);
       int rotcount = 1;
-      std::cout << "Rotors:" << std::endl;
+      (*m_logstream) << "Rotors:" << std::endl;
       while(r){
         OBBond* b = r->GetBond();
         int at1,at2;
         at1 = b->GetBeginAtomIdx();
         at2 = b->GetEndAtomIdx();
-        std::cout << at1 << "-" << at2 << "  ";
+        (*m_logstream) << at1 << "-" << at2 << "  ";
         r = m_rotorList.NextRotor(it);
-        if (rotcount%4==0 && r){std::cout << std::endl;}
+        if (rotcount%4==0 && r){(*m_logstream) << std::endl;}
         ++rotcount;
       }
-      std::cout << std::endl;
+      (*m_logstream) << std::endl;
       return false;
     }
     // Print those that are fixed
-    if (!m_fixedBonds.IsEmpty()){
-      std::cout << "Fixed Rotors: " << std::endl;
+    if (!m_fixedBonds.IsEmpty() && m_logstream != nullptr){
+      (*m_logstream) << "Fixed Rotors: " << std::endl;
       int end_it = m_fixedBonds.EndBit();
       int it = m_fixedBonds.FirstBit();
       int rotcount = 1;
@@ -376,12 +375,12 @@ namespace OpenBabel {
         int at1,at2;
         at1 = b->GetBeginAtomIdx();
         at2 = b->GetEndAtomIdx();
-        std::cout << at1 << "-" << at2 << "  ";
+        (*m_logstream) << at1 << "-" << at2 << "  ";
         it = m_fixedBonds.NextBit(it);
-        if (rotcount%4==0 && it!=end_it){std::cout << std::endl;}
+        if (rotcount%4==0 && it!=end_it){(*m_logstream) << std::endl;}
         ++rotcount;
       }
-      std::cout << std::endl;
+      (*m_logstream) << std::endl;
     }
 
     nb_rotors = m_rotorList.Size();
@@ -697,14 +696,18 @@ namespace OpenBabel {
     rotamers.SetBaseCoordinateSets(mol);
     rotamers.Setup(mol, m_rotorList);
 
-    std::cout << "GetConformers:" << std::endl;
+    if (m_logstream != nullptr)
+      (*m_logstream) << "GetConformers:" << std::endl;
     // Add all (parent + children) unique rotor keys
     for (unsigned int i = 0; i < m_rotorKeys.size(); ++i) {
       rotamers.AddRotamer(m_rotorKeys[i]);
 
-      for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
-        std::cout << m_rotorKeys[i][j] << " ";
-      std::cout << std::endl;
+      if (m_logstream != nullptr)
+        {
+          for (unsigned int j = 1; j < m_rotorKeys[i].size(); ++j)
+            (*m_logstream) << m_rotorKeys[i][j] << " ";
+          (*m_logstream) << std::endl;
+        }
     }
 
     // Get conformers for the rotor keys

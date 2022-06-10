@@ -47,7 +47,7 @@
 # Sulfite
 [#16D3]([#8D1])([#8D1-])([#8D1-])		0 1 2 0 2 1 0 3 1
 # Sulfur trioxide
-[#16D3]([#8D1])([#8D1])([#8D1])			0 1 2 0 2 2 0 3 2
+[#16D3^2]([#8D1])([#8D1])([#8D1])                      0 1 2 0 2 2 0 3 2
 # Sulfites
 [#16D3]([#8D1])([#8])([#8])			0 1 2 0 2 1 0 3 1
 # Disulfur monoxide
@@ -94,10 +94,6 @@
 
 # isonitrile / isocyano
 [#6D1][#7D2^1]*  0 1 3 1 2 1
-# NR2 in ring with hybridized carbon neighbors, do not apply to aromatic N
-# valence insted of degree used to fix pdb_ligands_sdf/3dcv_55e.sdf
-[Nv2R][#6v3^2][#8v2] 0 1 2 1 2 1
-[Nv2R][#6v3^2][Nv2] 0 1 2 1 2 1
 
 # if three N are present in R-N-guanidine-ish, prefer double bond to the
 #  non-terminal N (i.e. D2 if present)

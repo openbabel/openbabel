@@ -24,7 +24,7 @@ GNU General Public License for more details.
 #include<openbabel/chargemodel.h>
 #include <openbabel/obconversion.h>
 
-#include <string.h>
+#include <cstring>
 namespace OpenBabel
 {
 

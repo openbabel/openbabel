@@ -30,9 +30,9 @@ GNU General Public License for more details.
 #include <openbabel/math/vector3.h>
 #include <openbabel/elements.h>
 
-#include <float.h> // For DBL_MAX
+#include <cfloat> // For DBL_MAX
 #include <algorithm> // For min
-#include <limits.h> // For UINTS_MAX with certain old GCC4
+#include <climits> // For UINTS_MAX with certain old GCC4
 
 #include <iomanip> // For setprecision
 
@@ -391,7 +391,8 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     if (rotor_sizes.size() > 0 && combinations == 0) { // Overflow!
       combinations = UINT_MAX;
     }
-    std::cout << "..tot conformations = " << combinations << "\n";
+    if (verbose)
+      std::cout << "..tot conformations = " << combinations << "\n";
 
     if (nconfs == 0)
       nconfs = 1 << 20;
@@ -432,7 +433,8 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
       }
       counter++;
     } while (combination != 1 && counter < nconfs); // The LFSR always terminates with a 1
-    std::cout << "..tot confs tested = " << counter << "\n..below energy threshold = " << N_low_energy << "\n";
+    if (verbose)
+      std::cout << "..tot confs tested = " << counter << "\n..below energy threshold = " << N_low_energy << "\n";
 
     // Reset the coordinates to those of the initial structure
     _mol.SetCoordinates(store_initial);

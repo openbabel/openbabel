@@ -273,7 +273,7 @@ namespace OpenBabel {
 #ifdef DEBUG
     void PrintAtomTypes(const std::vector<Type> &atomTypes, int indent = 0)
     {
-      std::cout << indentation(indent);
+      std::cout << indentation(indent) << "atom types: ";
       for(std::size_t i = 0; i < atomTypes.size(); ++i) {
         std::cout << i;
         switch (atomTypes[i]) {
@@ -301,7 +301,7 @@ namespace OpenBabel {
 
     void PrintBondTypes(OBMol *mol, const std::vector<Type> &bondTypes, int indent = 0)
     {
-      std::cout << indentation(indent);
+      std::cout << indentation(indent) << "bond types: ";
       for(std::size_t i = 0; i < bondTypes.size(); ++i) {
         OBBond *bond = mol->GetBond(i);
         std::cout << bond->GetBeginAtomIdx() - 1;
@@ -587,26 +587,33 @@ namespace OpenBabel {
       if (IsLeafNode(atomTypes)) {
 
         // Check to make sure there are no unassigned bonds remaining
-        // This happens for phenyl rings...
-        bool unassignedBonds = false;
+        // This happens for phenyl rings and other fragments consisting of only hybridized atoms
         for (std::size_t i = 0; i < bondTypes.size(); ++i)
           if (bondTypes[i] == Unassigned) {
-            unassignedBonds = true;
-            // Randomly assign a single bond, the other bonds will be propagated
+            // Randomly assign a bond, the other bonds will be propagated
             OBBond *bond = mol->GetBond(i);
+
+            // try assigning it double
+            propagation.assignBond(bond, Double);
+#ifdef DEBUG
+            std::cout << ee.indentation() << "-> Unasigned bonds remaining, assigning " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Double" << std::endl;
+#endif
+            AssignmentPropagation(mol, atomTypes, bondTypes, numHydrogens, functor, depth + 1);
+            if (m_canonical && m_foundLeafNode) {
+              propagation.release();
+              return;
+            }
+
+            // try assigning it single
             propagation.assignBond(bond, Single);
 #ifdef DEBUG
             std::cout << ee.indentation() << "-> Unasigned bonds remaining, assigning " << bond->GetBeginAtomIdx()-1 << "-" << bond->GetEndAtomIdx()-1 << " Single" << std::endl;
 #endif
-            break;
+            AssignmentPropagation(mol, atomTypes, bondTypes, numHydrogens, functor, depth + 1);
+            if (m_canonical && m_foundLeafNode)
+              propagation.release();
+            return;
           }
-
-        if (unassignedBonds) {
-          AssignmentPropagation(mol, atomTypes, bondTypes, numHydrogens, functor, depth + 1);
-          if (m_canonical && m_foundLeafNode)
-            propagation.release();
-          return;
-        }
 
         //
         if (!numHydrogens) {
@@ -744,7 +751,7 @@ namespace OpenBabel {
     {
       atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
 #ifdef DEBUG
-      std::cout << indentation(indent) << "Decremented " << atom->GetIndex() << " (" << atom->GetAtomicNum() << ") to " << atom->GetImplicitHCount() << std::endl;
+      std::cout << indentation(indent) << "Decremented " << atom->GetIndex() << " (" << atom->GetAtomicNum() << ") to " << static_cast<unsigned int>(atom->GetImplicitHCount()) << std::endl;
       SanityCheckHydrogens(atom, indent);
 #endif
     }

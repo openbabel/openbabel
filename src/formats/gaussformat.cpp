@@ -509,7 +509,7 @@ namespace OpenBabel
             // The "nosym" keyword has been requested
             no_symmetry = true;
           }
-        if (strstr(buffer, "orientation:") != nullptr)
+        if (strstr(buffer, "orientation:") != nullptr && (strstr(buffer, "Dipole") == nullptr))
           {
             i++;
             tokenize (vs, buffer);
@@ -1391,6 +1391,7 @@ namespace OpenBabel
       dp->SetOrigin(fileformatInput);
       mol.SetData(dp);
     }
+    mol.AssignTotalChargeToAtoms(total_charge);
     mol.SetTotalCharge(total_charge);
     mol.SetTotalSpinMultiplicity(spin_multiplicity);
 

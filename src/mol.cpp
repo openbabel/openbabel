@@ -3224,7 +3224,10 @@ namespace OpenBabel
             && atom->GetExplicitDegree() == 2
             && angle > 109.5)
           atom->SetHyb(2);
-
+        else if(atom->GetAtomicNum() == OBElements::Nitrogen
+            && atom->GetExplicitDegree() == 2
+            && atom->IsInRing()) //azete
+          atom->SetHyb(2);
       } // pass 1
 
     // Make sure upcoming calls to GetHyb() don't kill these temporary values
@@ -4291,6 +4294,8 @@ namespace OpenBabel
             OBAtom *atomB, *atomE;
             if (skipping_bond) {
               for(int N=0; N<2; ++N) {
+                atomB = nullptr;
+                atomE = nullptr;
                 if (N==0) {
                   if (posB != AtomMap.end()) {
                     atomB = posB->second;
@@ -4304,6 +4309,8 @@ namespace OpenBabel
                   if (record_atomorder)
                     atomorder->push_back(bond->GetBeginAtomIdx());
                 }
+                if (atomB == nullptr || atomE == nullptr)
+                  continue;
                 newmol.AddBond(atomB->GetIdx(), atomE->GetIdx(),
                   bond->GetBondOrder(), bond->GetFlags());
                 if (record_bondorder)

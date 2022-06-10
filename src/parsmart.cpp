@@ -18,7 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 
-#include <ctype.h>
+#include <cctype>
 #include <iomanip>
 #include <cstring>
 
@@ -1716,7 +1716,6 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const char *buffer)
   {
-    if (_buffer != nullptr)
       delete[] _buffer;
     _buffer = new char[strlen(buffer) + 1];
     strcpy(_buffer,buffer);
@@ -1731,8 +1730,7 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const std::string &s)
   {
-    if (_buffer != nullptr)
-      delete[] _buffer;
+    delete[] _buffer;
     _buffer = new char[s.length() + 1];
     strcpy(_buffer, s.c_str());
 
@@ -1748,8 +1746,7 @@ namespace OpenBabel
   {
     if (_pat)
       FreePattern(_pat);
-    if(_buffer)
-    	delete [] _buffer;
+    delete [] _buffer;
   }
 
   bool OBSmartsPattern::Match(OBMol &mol,bool single)
@@ -2324,8 +2321,7 @@ namespace OpenBabel
 
   OBSSMatch::~OBSSMatch()
   {
-    if (_uatoms)
-      delete [] _uatoms;
+    delete [] _uatoms;
   }
 
   void OBSSMatch::Match(std::vector<std::vector<int> > &mlist,int bidx)

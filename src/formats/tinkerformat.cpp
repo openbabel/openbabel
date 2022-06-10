@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/data.h>
 #include <openbabel/generic.h>
+#include <openbabel/obiter.h>
 
 #include <openbabel/forcefield.h>
 #include <cstdlib>
@@ -86,26 +87,53 @@ namespace OpenBabel
     if (pmol == nullptr)
         return false;
 
-    //Define some references so we can use the old parameter names
     istream &ifs = *pConv->GetInStream();
-    OBMol &mol = *pmol;
-    const char* title = pConv->GetTitle();
 
-    int natoms;
+    pmol->BeginModify();
+
+    int natoms = 0;
+    string title = "";
     char buffer[BUFF_SIZE];
     vector<string> vs;
+    stringstream errorMsg;
 
-    ifs.getline(buffer, BUFF_SIZE);
-    tokenize(vs,buffer);
-    if (vs.size() < 2)
+    if (!ifs || ifs.peek() == EOF) {
+      return false; // Trying to read past end of the file
+    }
+
+    if (!ifs.getline(buffer, BUFF_SIZE)) {
+      errorMsg << "Problems reading a Tinker file: "
+               << "Cannot read the first line!";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false;
-    natoms = atoi(vs[0].c_str());
+    }
 
-    // title is 2nd token (usually add tokens for the atom types)
-    mol.SetTitle(vs[1]);
+    string tempstr = buffer;
+    tokenize(vs, tempstr, " \t", 1);
 
-    mol.ReserveAtoms(natoms);
-    mol.BeginModify();
+    if (vs.size() < 1) {
+      errorMsg << "Problems reading a Tinker file: "
+               << "The first line is empty!";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      return false;
+    } else if (vs.size() == 1) {
+      title = pConv->GetTitle();
+    } else {
+      title = vs[1];
+    }
+
+    stringstream(vs[0]) >> natoms;
+
+    if (natoms < 1) {
+      errorMsg << "Problems reading a Tinker file: "
+               << "There are no atoms in the file or the first line is"
+               << " incorrectly written.";
+      obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      return false;
+    }
+    pmol->ReserveAtoms(natoms);
+
+    pmol->SetTitle(title);
 
     string str;
     double x,y,z;
@@ -114,29 +142,36 @@ namespace OpenBabel
     for (int i = 1; i <= natoms; ++i)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
-            return(false);
+            return false;
         tokenize(vs,buffer);
         // e.g. "2  C      2.476285    0.121331   -0.001070     2     1     3    14"
         if (vs.size() < 5)
-            return(false);
+            return false;
 
-        atom = mol.NewAtom();
-        x = atof((char*)vs[2].c_str());
-        y = atof((char*)vs[3].c_str());
-        z = atof((char*)vs[4].c_str());
+        atom = pmol->NewAtom();
+        x = stof(vs[2]);
+        y = stof(vs[3]);
+        z = stof(vs[4]);
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
         atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
 
+        // set atom class number
+        OBPairInteger *pac = new OBPairInteger();
+        pac->SetAttribute("Atom Class");
+        pac->SetValue(stoi(vs[5]));
+        pac->SetOrigin(fileformatInput);
+        atom->SetData(pac);
+
         // add bonding
         if (vs.size() > 6)
           for (unsigned int j = 6; j < vs.size(); ++j)
-            mol.AddBond(mol.NumAtoms(), atoi((char *)vs[j].c_str()), 1); // we don't know the bond order
+            pmol->AddBond(pmol->NumAtoms(), stoi(vs[j]), 1); // we don't know the bond order
 
     }
     if (!pConv->IsOption("s",OBConversion::INOPTIONS))
-      mol.PerceiveBondOrders();
+      pmol->PerceiveBondOrders();
 
     // clean out remaining blank lines
     std::streampos ipos;
@@ -148,9 +183,9 @@ namespace OpenBabel
     while(strlen(buffer) == 0 && !ifs.eof() );
     ifs.seekg(ipos);
 
-    mol.EndModify();
-    mol.SetTitle(title);
-    return(true);
+    pmol->EndModify();
+    pmol->SetTitle(title);
+    return true;
   }
 
   bool TinkerFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
@@ -161,96 +196,88 @@ namespace OpenBabel
 
     //Define some references so we can use the old parameter names
     ostream &ofs = *pConv->GetOutStream();
-    OBMol &mol = *pmol;
     bool mm2Types = false;
     bool mmffTypes = pConv->IsOption("m", OBConversion::OUTOPTIONS) != nullptr;
     bool mm3Types = pConv->IsOption("3", OBConversion::OUTOPTIONS) != nullptr;
     bool classTypes = pConv->IsOption("c", OBConversion::OUTOPTIONS) != nullptr;
 
-    unsigned int i;
     char buffer[BUFF_SIZE];
-    OBBond *bond;
-    vector<OBBond*>::iterator j;
 
     // Before we try output of MMFF94 atom types, check if it works
     OBForceField *ff = OpenBabel::OBForceField::FindForceField("MMFF94");
-    if (mmffTypes && ff && ff->Setup(mol))
-      mmffTypes = ff->GetAtomTypes(mol);
+    if (mmffTypes && ff && ff->Setup(*pmol))
+      mmffTypes = ff->GetAtomTypes(*pmol);
     else
       mmffTypes = false; // either the force field isn't available, or it doesn't work
 
     if (!mmffTypes && !mm3Types && !classTypes) {
-      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n",mol.NumAtoms(),mol.GetTitle());
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM2 parameters\n", pmol->NumAtoms(), pmol->GetTitle());
       mm2Types = true;
     }
     else if (mm3Types)
-      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM3 parameters\n",mol.NumAtoms(),mol.GetTitle());
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MM3 parameters\n",pmol->NumAtoms(), pmol->GetTitle());
     else if (classTypes)
-      snprintf(buffer, BUFF_SIZE, "%6d %-20s   Custom parameters\n",mol.NumAtoms(),mol.GetTitle());
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   Custom parameters\n", pmol->NumAtoms(), pmol->GetTitle());
     else
-      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MMFF94 parameters\n",mol.NumAtoms(),mol.GetTitle());
+      snprintf(buffer, BUFF_SIZE, "%6d %-20s   MMFF94 parameters\n", pmol->NumAtoms(), pmol->GetTitle());
     ofs << buffer;
 
     ttab.SetFromType("INT");
 
-    OBAtom *atom;
     string str,str1;
     int atomType;
-    for(i = 1;i <= mol.NumAtoms(); i++)
-      {
-        atom = mol.GetAtom(i);
-        str = atom->GetType();
-        atomType = 0; // Something is very wrong if this doesn't get set below
+    FOR_ATOMS_OF_MOL(atom, pmol) {
+      str = atom->GetType();
+      atomType = 0; // Something is very wrong if this doesn't get set below
 
-        if (mm2Types) {
-          ttab.SetToType("MM2");
-          ttab.Translate(str1,str);
-          atomType = atoi((char*)str1.c_str());
+      if (mm2Types) {
+        ttab.SetToType("MM2");
+        ttab.Translate(str1,str);
+        atomType = stoi(str1);
+      }
+      if (mmffTypes) {
+        // Override the MM2 typing
+        OBPairData *type = (OpenBabel::OBPairData*)atom->GetData("FFAtomType");
+        if (type) {
+          str1 = type->GetValue();
+          atomType = stoi(str1);
         }
-        if (mmffTypes) {
-          // Override the MM2 typing
-          OBPairData *type = (OpenBabel::OBPairData*)atom->GetData("FFAtomType");
-          if (type) {
-            str1 = type->GetValue().c_str();
-            atomType = atoi((char*)str1.c_str());
+      }
+      if (mm3Types) {
+        // convert to integer for MM3 typing
+        atomType = SetMM3Type(&(*atom));
+      }
+      if (classTypes) {
+        // Atom classes are set by the user, so use those
+        OBGenericData *data = atom->GetData("Atom Class");
+        if (data) {
+          OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
+          if (acdata) {
+            int ac = acdata->GetGenericValue();
+            if (ac >= 0)
+              atomType = ac;
           }
         }
-        if (mm3Types) {
-          // convert to integer for MM3 typing
-          atomType = SetMM3Type(atom);
-        }
-        if (classTypes) {
-          // Atom classes are set by the user, so use those
-          OBGenericData *data = atom->GetData("Atom Class");
-          if (data) {
-            OBPairInteger* acdata = dynamic_cast<OBPairInteger*>(data); // Could replace with C-style cast if willing to live dangerously
-            if (acdata) {
-              int ac = acdata->GetGenericValue();
-              if (ac >= 0)
-                atomType = ac;
-            }
-          }
-        }
-
-        snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
-                 i,
-                 OBElements::GetSymbol(atom->GetAtomicNum()),
-                 atom->GetX(),
-                 atom->GetY(),
-                 atom->GetZ(),
-                 atomType);
-        ofs << buffer;
-
-        for (bond = atom->BeginBond(j); bond; bond = atom->NextBond(j))
-          {
-            snprintf(buffer, BUFF_SIZE, "%6d", (bond->GetNbrAtom(atom))->GetIdx());
-            ofs << buffer;
-          }
-
-        ofs << endl;
       }
 
-    return(true);
+      snprintf(buffer, BUFF_SIZE, "%6d %2s  %12.6f%12.6f%12.6f %5d",
+               atom->GetIdx(),
+               OBElements::GetSymbol(atom->GetAtomicNum()),
+               atom->GetX(),
+               atom->GetY(),
+               atom->GetZ(),
+               atomType);
+      ofs << buffer;
+
+      FOR_NBORS_OF_ATOM(nbor, &(*atom)) {
+        snprintf(buffer, BUFF_SIZE, "%6d", nbor->GetIdx());
+        ofs << buffer;
+      }
+
+      ofs << endl;
+    }
+
+    return true;
   }
 
   int SetMM3Type(OBAtom *atom)
@@ -407,17 +434,16 @@ namespace OpenBabel
       if (atom->GetFormalCharge() == 1)
         return 16; // sulfonium
 
-    // look at the neighbors
-    for (b = atom->BeginNbrAtom(j); b; b = atom->NextNbrAtom(j))
-      {
-        switch (b->GetAtomicNum()) {
+      // look at the neighbors
+      FOR_NBORS_OF_ATOM (nbor, atom) {
+        switch (nbor->GetAtomicNum()) {
         case 6:
-          if (b->GetHyb() == 2) // S=C
+          if (nbor->GetHyb() == 2) // S=C
             countNeighborC++; break;
         case 7:
           countNeighborN++; break;
         case 8:
-          if (b->GetHvyDegree() == 1)
+          if (nbor->GetHvyDegree() == 1)
             countNeighborO++;
           break;
         case 16:

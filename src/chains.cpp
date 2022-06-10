@@ -24,10 +24,10 @@ GNU General Public License for more details.
 //////////////////////////////////////////////////////////////////////////////
 #include <openbabel/babelconfig.h>
 
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <ctype.h>
+#include <cstdlib>
+#include <cstring>
+#include <cstdio>
+#include <cctype>
 #include <map>
 
 #include <openbabel/mol.h>

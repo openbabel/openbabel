@@ -22,7 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 
-#include <ctype.h>
+#include <cctype>
 #include <cstdlib>
 
 using namespace std;

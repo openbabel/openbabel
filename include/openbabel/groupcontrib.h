@@ -54,6 +54,8 @@ public:
   OBGroupContrib(const char* ID, const char* filename, const char* descr)
     : OBDescriptor(ID, false), _filename(filename), _descr(descr), _debug(false){}
 
+  virtual ~OBGroupContrib();
+
   virtual const char* Description();
 
   virtual OBGroupContrib* MakeInstance(const std::vector<std::string>& textlines)

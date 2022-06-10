@@ -26,7 +26,7 @@ GNU General Public License for more details.
 #include <cstdlib>
 #include <openbabel/obconversion.h>
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 
 using namespace std;
