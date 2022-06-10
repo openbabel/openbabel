@@ -77,6 +77,7 @@ def run_one(filename, forcefield, filetype):
         return None, None, None, None
     
     moldict = get_mol_dict(filename, filetype, forcefield)
+    molname = molecule["molecule"]["title"]
     atypes = []
     for ai in range(1, 1+moldict["molecule"]["numb_atoms"]):
         atype = "X"
