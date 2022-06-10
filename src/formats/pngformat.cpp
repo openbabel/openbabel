@@ -222,7 +222,7 @@ bool PNGFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   char readbytes[9];
   ifs.read(readbytes, 8);
 
-  if(!equal(pngheader, pngheader+8, readbytes))
+  if(!equal(pngheader, pngheader+8, (unsigned char*)readbytes))
   {
     obErrorLog.ThrowError("PNG Format","Not a PNG file", obError);
      return false;
