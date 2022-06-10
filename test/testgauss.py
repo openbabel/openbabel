@@ -12,7 +12,7 @@ import os, sys, glob, unittest
 from testbabel import BaseTest
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except:
     print("OpenBabel not found, stopping test.")
     sys.exit(0)
@@ -77,6 +77,7 @@ def run_one(filename, forcefield, filetype):
         return None, None, None, None
     
     moldict = get_mol_dict(filename, filetype, forcefield)
+    molname = moldict["molecule"]["title"]
     atypes = []
     for ai in range(1, 1+moldict["molecule"]["numb_atoms"]):
         atype = "X"
