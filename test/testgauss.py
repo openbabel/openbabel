@@ -12,7 +12,7 @@ import os, sys, glob, unittest
 from testbabel import BaseTest
 
 try:
-    import openbabel as ob
+    from openbabel import openbabel as ob
 except:
     print("OpenBabel not found, stopping test.")
     sys.exit(0)
