@@ -78,6 +78,8 @@ set(datainfo
 "ringtyp.txt RingTypeData ringtyp.h"
 )
 
+find_package(Perl REQUIRED)
+
 set(dataheaderfiles "")
 foreach(dinfo ${datainfo})
  string(REPLACE " " ";" dlist ${dinfo})
@@ -86,7 +88,7 @@ foreach(dinfo ${datainfo})
  list(GET dlist 0 dinput)
 
  add_custom_command(OUTPUT ${doutput}
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/bin2hex.pl ${CMAKE_CURRENT_SOURCE_DIR}/${dinput} ${dname} ${dname} > ${doutput}
+    COMMAND ${PERL_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/bin2hex.pl ${CMAKE_CURRENT_SOURCE_DIR}/${dinput} ${dname} ${dname} > ${doutput}
     DEPENDS ${dinput} VERBATIM)    
  set_source_files_properties(${doutput} PROPERTIES GENERATED TRUE)
  list(APPEND dataheaderfiles ${doutput})
