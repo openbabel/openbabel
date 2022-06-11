@@ -14,7 +14,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#include <map>
 #include <openbabel/atom.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/bond.h>
@@ -233,6 +232,14 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
   rapidjson::Value coords3d(rapidjson::kArrayType);
   rapidjson::Value elementNumbers(rapidjson::kArrayType);
   rapidjson::Value formalCharges(rapidjson::kArrayType);
+  rapidjson::Value partialCharges(rapidjson::kArrayType);
+  rapidjson::Value nmrShifts(rapidjson::kArrayType);
+
+  std::string chargeMethod = "Gasteiger"; // that's the default
+  OBPairData *dp = (OBPairData *)pmol->GetData("PartialCharges");
+  if (dp != nullptr)
+    chargeMethod = dp->GetValue();
+
   FOR_ATOMS_OF_MOL(patom, pmol) {
     // Add coordinates
     coords3d.PushBack(patom->x(), al);
@@ -244,6 +251,14 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
 
     // formal charges
     formalCharges.PushBack(patom->GetFormalCharge(), al);
+
+    // partial charges
+    partialCharges.PushBack(patom->GetPartialCharge(), al);
+
+    // check for NMR shifts
+    if (patom->HasData("NMR Isotropic Shift"))
+      nmrShifts.PushBack(
+          rapidjson::StringRef(patom->GetData("NMR Isotropic Shift")->GetValue().c_str()), al);
   }
 
   // conformers / multiple coordinates
@@ -273,6 +288,20 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
   atoms.AddMember("formalCharges", formalCharges, al);
   doc.AddMember("atoms", atoms, al);
 
+  rapidjson::Value charges(rapidjson::kObjectType);
+  charges.AddMember(rapidjson::StringRef(chargeMethod.c_str()), partialCharges,
+                    al);
+  doc.AddMember("partialCharges", charges, al);
+
+  // optionally add the NMR spectra
+  // spectra: { "nmr": { "shifts": [1.123, 115.0, 3.75] } }
+  rapidjson::Value spectra(rapidjson::kObjectType);
+  if (nmrShifts.Size() > 0) {
+    rapidjson::Value nmr(rapidjson::kObjectType);
+    nmr.AddMember("shifts", nmrShifts, al);
+    spectra.AddMember("nmr", nmr, al);
+  }
+
   // Bonds
   if (pmol->NumBonds() > 0) {
     rapidjson::Value bonds(rapidjson::kObjectType);
@@ -291,22 +320,6 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
     bonds.AddMember("order", bondOrder, al);
     doc.AddMember("bonds", bonds, al);
   }
-
-  // Partial Charges -- method / array , etc.
-  std::string chargeMethod = "Gasteiger"; // that's the default
-  OBPairData *dp = (OBPairData *)pmol->GetData("PartialCharges");
-  if (dp != nullptr)
-    chargeMethod = dp->GetValue();
-
-  // now we spit out the array
-  rapidjson::Value partialCharges(rapidjson::kArrayType);
-  FOR_ATOMS_OF_MOL(patom, pmol) {
-    partialCharges.PushBack(patom->GetPartialCharge(), al);
-  }
-  rapidjson::Value charges(rapidjson::kObjectType);
-  charges.AddMember(rapidjson::StringRef(chargeMethod.c_str()), partialCharges,
-                    al);
-  doc.AddMember("partialCharges", charges, al);
 
   // unit cells
   if (pmol->HasData(OBGenericDataType::UnitCell)) {
@@ -384,9 +397,46 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
     doc.AddMember("vibrations", vibrations, al);
   }
 
+  // check for electronic spectra (UV/Vis, CD)
+  if (pmol->HasData(OBGenericDataType::ElectronicData)) {
+    OBElectronicTransitionData *edata =
+        (OBElectronicTransitionData *)pmol->GetData(
+            OBGenericDataType::ElectronicTransitionData);
+    rapidjson::Value electronic(rapidjson::kObjectType);
+    rapidjson::Value energies(rapidjson::kArrayType);
+    rapidjson::Value intensities(rapidjson::kArrayType);
+    // get the energies and intensities
+    std::vector<double> wavelengths = edata->GetWavelengths();
+    std::vector<double> forces = edata->GetForces();
+
+    // we need to convert the wavelengths to eV
+    const double hc = 1239.841984332; // in eV*nm
+    for (unsigned int i = 0; i < wavelengths.size(); i++) {
+      energies.PushBack(hc / wavelengths[i], al);
+      intensities.PushBack(forces[i], al);
+    }
+    electronic.AddMember("energies", energies, al);
+    electronic.AddMember("intensities", intensities, al);
+
+    std::vector<double> rotatoryStrengthsVec =
+        edata->GetRotatoryStrengthsLength();
+    if (rotatoryStrengthsVec.size() > 0) {
+      rapidjson::Value rotatoryStrengths(rapidjson::kArrayType);
+      for (unsigned int i = 0; i < rotatoryStrengthsVec.size(); i++) {
+        rotatoryStrengths.PushBack(rotatoryStrengthsVec[i], al);
+      }
+      electronic.AddMember("rotation", rotatoryStrengths, al);
+    }
+    spectra.AddMember("electronic", electronic, al);
+  }
+
+  if (spectra.MemberCount() > 0) {
+    doc.AddMember("spectra", spectra, al);
+  }
+
   // @todo
   // residues / chains
-  // spectra
+  // other spectra
   // other properties
 
   // Write json to output stream if this is the last molecule in the file
