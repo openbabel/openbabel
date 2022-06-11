@@ -81,6 +81,23 @@ jobs:
         cmake $GITHUB_WORKSPACE -GNinja -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} ${{matrix.config.cmake_flags}}
       shell: bash
 
+    - name: Windows data headers
+      if: runner.os == 'Windows'
+      run: |
+        # somehow cmake isn't creating these correctly
+        srcdir = "${{ runner.workspace }}/openbabel/data"
+        datadir= "${{ runner.workspace }}/build/data"
+        ${srcdir}/bin2hex.pl atomtyp.txt AtomTypeData AtomTypeData >${datadir}/atomtyp.h
+        ${srcdir}/bin2hex.pl bondtyp.txt BondTypeData BondTypeData >${datadir}/bondtyp.h
+        ${srcdir}/bin2hex.pl atomtyp.txt PhModelData PhModelData >${datadir}/phmodeldata.h
+        ${srcdir}/bin2hex.pl resdata.txt ResidueData ResidueData >${datadir}/resdata.h
+        ${srcdir}/bin2hex.pl torlib.txt TorsionDefaults TorsionDefaults >${datadir}/torlib.h
+        ${srcdir}/bin2hex.pl types.txt TypesData TypesData >${datadir}/types.h
+        ${srcdir}/bin2hex.pl atomization-energies.txt AtomicHeatOfFormationData AtomicHeatOfFormationData >${datadir}/atomizationenergies.h
+        ${srcdir}/bin2hex.pl space-groups.txt SpaceGroupsData SpaceGroupsData >${datadir}/spacegroups.h
+        ${srcdir}/bin2hex.pl ringtyp.txt RingTypeData RingTypeData >${datadir}/ringtyp.h
+      shell: bash
+
     - name: Build
       run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build .
       shell: bash
