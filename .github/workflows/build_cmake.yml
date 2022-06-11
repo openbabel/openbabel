@@ -107,3 +107,7 @@ jobs:
       with:
         path: ${{ runner.workspace }}/instdir/../${{ matrix.config.artifact }}
         name: ${{ matrix.config.artifact }}
+
+    - name: Setup tmate debugging session
+      if: ${{ failure() }}
+      uses: mxschmitt/action-tmate@v3
