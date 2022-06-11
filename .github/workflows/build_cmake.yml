@@ -86,8 +86,7 @@ jobs:
       run: |
         # somehow cmake isn't creating these correctly
         srcdir="${{ runner.workspace }}/openbabel/data"
-        datadir= "${{ runner.workspace }}/build/data"
-        echo ${srcdir} ${datadir}
+        datadir="${{ runner.workspace }}/build/data"
         perl ${srcdir}/bin2hex.pl ${srcdir}/atomtyp.txt AtomTypeData AtomTypeData >${datadir}/atomtyp.h
         perl ${srcdir}/bin2hex.pl ${srcdir}/bondtyp.txt BondTypeData BondTypeData >${datadir}/bondtyp.h
         perl ${srcdir}/bin2hex.pl ${srcdir}/atomtyp.txt PhModelData PhModelData >${datadir}/phmodeldata.h
