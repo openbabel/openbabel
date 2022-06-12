@@ -182,8 +182,8 @@
 #define OB_MODULE_PATH "@OB_MODULE_PATH@"
 
 #ifndef TIME_WITH_SYS_TIME
-  #ifdef HAVE_SYS_TIME
-    #ifdef HAVE_TIME
+  #ifdef HAVE_SYS_TIME_H
+    #ifdef HAVE_TIME_H
       #define TIME_WITH_SYS_TIME 1
     #else
       #define TIME_WITH_SYS_TIME 0
