@@ -20,9 +20,9 @@ GNU General Public License for more details.
 #include <memory>
 
 #ifdef __cpp_alias_templates
-  template<class t> using obsharedptr = OB_SHARED_PTR_IMPLEMENTATION<t>;
+  template<class t> using obsharedptr = std::shared_ptr<t>;
 #else
-  #define obsharedptr OB_SHARED_PTR_IMPLEMENTATION
+  #define obsharedptr std::shared_ptr
 #endif
 
 #endif // OB_SHARED_PTR_H

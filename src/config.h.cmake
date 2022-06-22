@@ -149,9 +149,6 @@
 /* have struct clock_t */
 #cmakedefine HAVE_CLOCK_T 1
 
-/* shared pointer implementation to be used */
-#cmakedefine OB_SHARED_PTR_IMPLEMENTATION @OB_SHARED_PTR_IMPLEMENTATION@
-
 #if defined(WIN32)
  #ifndef HAVE_SNPRINTF
   #define snprintf _snprintf
