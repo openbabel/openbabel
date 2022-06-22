@@ -19,18 +19,8 @@ GNU General Public License for more details.
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
-#ifdef _MSC_VER
-  #include <unordered_map>
-#endif
-
 #include <ciso646>  // detect std::lib
-#ifdef _LIBCPP_VERSION
-  #include <unordered_map>
-#elif __GNUC__ == 4 && __GNUC_MINOR__ >= 1
-  #include <tr1/unordered_map>
-#elif defined(USE_BOOST)
-  #include <boost/tr1/unordered_map.hpp>
-#endif
+#include <unordered_map>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
@@ -141,15 +131,7 @@ public:
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat);
 #endif
 
-#ifdef _MSC_VER
-  typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
-#elif defined(_LIBCPP_VERSION)
   typedef std::unordered_map<std::string, unsigned> NameIndexType;
-#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__)) || defined (USE_BOOST)
-  typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
-#else
-  typedef std::map<std::string, unsigned> NameIndexType;
-#endif
 
   // documentation in obmolecformat.cpp
   static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
