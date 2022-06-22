@@ -315,30 +315,6 @@ if(MINGW)
   set (CMAKE_EXE_LINKER_FLAGS "-Wl,--enable-auto-import ${CMAKE_EXE_LINKER_FLAGS}")
 endif()
 
-message(STATUS "Checking available shared pointer...")
-include(CheckCXXSourceCompiles)
-check_cxx_source_compiles("#include <memory>
-                           int main(){ std::shared_ptr<int> p; return 0; }"
-                           HAVE_STD_SHARED_PTR)
-check_cxx_source_compiles("#include <memory>
-                           int main(){ std::tr1::shared_ptr<int> p; return 0; }"
-                           HAVE_STD_TR1_SHARED_PTR)
-check_cxx_source_compiles("#include <tr1/memory>
-                           int main(){ std::tr1::shared_ptr<int> p; return 0; }"
-                           HAVE_STD_TR1_SHARED_PTR_IN_TR1_HEADER)
-if(HAVE_STD_SHARED_PTR)
-elseif(HAVE_STD_TR1_SHARED_PTR)
-elseif(HAVE_STD_TR1_SHARED_PTR_IN_TR1_HEADER)
-else()
-  find_package(Boost)
-  if(Boost_FOUND)
-    include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
-    add_definitions(-DUSE_BOOST)
-  else()
-    message(FATAL_ERROR "Boost is required to compile OpenBabel with GCC 3.x")
-  endif()
-endif()
-
 find_package(Boost COMPONENTS program_options iostreams)
   if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS} ${Boost_INCLUDE_DIR})
