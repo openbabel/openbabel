@@ -246,7 +246,7 @@ bool AliasData::LoadFile(SuperAtomTable& table)
   }
   return true;
 }
-#ifdef HAVE_SHARED_POINTER
+
 bool AliasData::LoadFile(SmartsTable& smtable)
 {
   //Re-parse the datafile. Seems simpler than trying to extract from the map.
@@ -289,7 +289,6 @@ bool AliasData::LoadFile(SmartsTable& smtable)
   }
   return true;
 }
-#endif
 
 void AliasData::AddExpandedAtom(int id) { _expandedatoms.push_back(id); };
 
@@ -336,7 +335,6 @@ void AliasData::RevertToAliasForm(OBMol& mol)
   }while(acted);
 }
 
-#ifdef HAVE_SHARED_POINTER
 bool AliasData::AddAliases(OBMol* pmol)
 {
   static SmartsTable smtable;
@@ -412,7 +410,6 @@ bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversi
     return false;
   return AliasData::AddAliases(pmol);
 }
-#endif // HAVE_SHARED_POINTER
 
 }//namespace
 

@@ -18,9 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/mol.h>
-#ifdef HAVE_SHARED_POINTER
-  #include <openbabel/reaction.h>
-#endif
+#include <openbabel/reaction.h>
 
 #include <algorithm>
 #include <iterator> // Required for MSVC2015 use of std::back_inserter
@@ -175,12 +173,10 @@ namespace OpenBabel
           ret = pFormat->WriteMolecule(pmol,pConv);
     }
 
-#ifdef HAVE_SHARED_POINTER
     //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
     OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);
     if(pReact)
       ret = OutputMolsFromReaction(pReact, pConv, pFormat);
-#endif
     delete pOb;
     return ret;
   }
@@ -420,7 +416,6 @@ namespace OpenBabel
   }
 
   ///////////////////////////////////////////////////////////////////
-#ifdef HAVE_SHARED_POINTER
   bool OBMoleculeFormat::OutputMolsFromReaction
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat)
   {
@@ -461,7 +456,7 @@ namespace OpenBabel
     }
     return ok;
   }
-#endif
+
   //////////////////////////////////////////////////////////////////
   /** Attempts to read the index file datafilename.obindx successively
       from the following directories:
