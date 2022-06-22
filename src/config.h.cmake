@@ -152,9 +152,6 @@
 /* shared pointer implementation to be used */
 #cmakedefine OB_SHARED_PTR_IMPLEMENTATION @OB_SHARED_PTR_IMPLEMENTATION@
 
-/* header to be included for shared pointers */
-#cmakedefine OB_SHARED_PTR_HEADER <@OB_SHARED_PTR_HEADER@>
-
 #if defined(WIN32)
  #ifndef HAVE_SNPRINTF
   #define snprintf _snprintf

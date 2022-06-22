@@ -17,7 +17,7 @@ GNU General Public License for more details.
 #define OB_SHARED_PTR_H
 
 #include "openbabel/babelconfig.h"
-#include OB_SHARED_PTR_HEADER
+#include <memory>
 
 #ifdef __cpp_alias_templates
   template<class t> using obsharedptr = OB_SHARED_PTR_IMPLEMENTATION<t>;
