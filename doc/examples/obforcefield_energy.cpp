@@ -1,6 +1,6 @@
+#include <memory>
 #include <openbabel/obconversion.h>
 #include <openbabel/mol.h>
-#include <openbabel/shared_ptr.h>
 #include <openbabel/forcefield.h>
 
 #include <iostream>
@@ -8,10 +8,10 @@
 using namespace OpenBabel;
 
 // Helper function to read molecule from file
-shared_ptr<OBMol> GetMol(const std::string &filename)
+std::shared_ptr<OBMol> GetMol(const std::string &filename)
 {
   // Create the OBMol object.
-  shared_ptr<OBMol> mol(new OBMol);
+  std::shared_ptr<OBMol> mol(new OBMol);
 
   // Create the OBConversion object.
   OBConversion conv;
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
   }
 
   // Read the file.
-  shared_ptr<OBMol> mol = GetMol(argv[1]);
+  std::shared_ptr<OBMol> mol = GetMol(argv[1]);
 
   // Get the forcefield.
   OBForceField *ff = OBForceField::FindType("MMFF94");

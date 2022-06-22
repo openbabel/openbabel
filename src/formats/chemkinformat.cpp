@@ -83,7 +83,7 @@ private:
   bool              ReadHeader(istream& ifs, OBConversion* pConv);
   bool              ParseReactionLine(OBReaction* pReact, OBConversion* pConv);
   bool              ReadReactionQualifierLines(istream& ifs, OBReaction* pReact);
-  obsharedptr<OBMol> CheckSpecies(string& name, string& ln, bool MustBeKnown);
+  std::shared_ptr<OBMol> CheckSpecies(string& name, string& ln, bool MustBeKnown);
   bool              ReadThermo(OBConversion* pConv);
   bool              ReadStdThermo(const string& datafilename);
   OBFormat*         GetThermoFormat();
@@ -91,8 +91,8 @@ private:
   bool              WriteReactionLine(OBReaction* pReact, OBConversion* pConv);
   bool              WriteHeader(OBConversion* pConv);
 private:
-  typedef map<string,obsharedptr<OBMol> > MolMap;
-  typedef set<obsharedptr<OBMol> > MolSet;
+  typedef map<string,std::shared_ptr<OBMol> > MolMap;
+  typedef set<std::shared_ptr<OBMol> > MolSet;
   //used on input
   MolMap IMols;
   string ln;
@@ -220,7 +220,7 @@ void ChemKinFormat::Init()
     SpeciesListed=false;
     IMols.clear();
     //Special species name
-    obsharedptr<OBMol> sp(new OBMol);
+    std::shared_ptr<OBMol> sp(new OBMol);
     sp.get()->SetTitle("M");
     IMols["M"] = sp;
 }
@@ -285,7 +285,7 @@ bool ChemKinFormat::ReadHeader(istream& ifs, OBConversion* pConv)
           break;
         }
         //Add all species to IMols
-        obsharedptr<OBMol> sp(new OBMol);
+        std::shared_ptr<OBMol> sp(new OBMol);
         sp.get()->SetTitle(*itr);
         IMols[*itr] = sp;
       }
@@ -351,7 +351,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
   OBRateData* pRD = new OBRateData; //to store rate constant data. Attach only if rate data found
 
   int n=0;
-  obsharedptr<OBMol> sp;
+  std::shared_ptr<OBMol> sp;
 
   string::size_type eqpos = ln.find('=');
 
@@ -648,7 +648,7 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
 }
 
 ///////////////////////////////////////////////////////////////
-obsharedptr<OBMol> ChemKinFormat::CheckSpecies(string& name, string& ln, bool MustBeKnown)
+std::shared_ptr<OBMol> ChemKinFormat::CheckSpecies(string& name, string& ln, bool MustBeKnown)
 {
   MolMap::iterator mapitr = IMols.find(name);
   if(mapitr==IMols.end())
@@ -658,14 +658,14 @@ obsharedptr<OBMol> ChemKinFormat::CheckSpecies(string& name, string& ln, bool Mu
     {
       obErrorLog.ThrowError(__FUNCTION__,
         name + " not recognized as a species in\n" + ln, obError);
-      obsharedptr<OBMol> sp;
+      std::shared_ptr<OBMol> sp;
       return sp; //empty
     }
     else
     {
       // There was no REACTIONS section in input file and probably no SPECIES section.
       // Unknown species that appear in a reaction can be made here with just a name.
-      obsharedptr<OBMol> sp(new OBMol);
+      std::shared_ptr<OBMol> sp(new OBMol);
       sp->SetTitle(name.c_str());
       return sp;
     }
@@ -702,7 +702,7 @@ bool ChemKinFormat::ReadThermo(OBConversion* pConv)
       MolMap::iterator mapitr = IMols.find(thmol.GetTitle());
       if(mapitr!=IMols.end())
       {
-        obsharedptr<OBMol> psnewmol(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(),&thmol));
+        std::shared_ptr<OBMol> psnewmol(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(),&thmol));
         IMols.erase(mapitr);
         IMols[thmol.GetTitle()] = psnewmol;
       }
@@ -748,7 +748,7 @@ bool ChemKinFormat::ReadStdThermo(const string& datafilename)
       OBMol thmol;
       stdthermo.seekg(itr->second);
       StdThermConv.Read(&thmol);
-      obsharedptr<OBMol> psnewmol(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(),&thmol));
+      std::shared_ptr<OBMol> psnewmol(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(),&thmol));
       IMols[thmol.GetTitle()] = psnewmol;
     }
     else
@@ -920,7 +920,7 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
   int i;
   for(i=0;i<pReact->NumReactants();++i)
   {
-    obsharedptr<OBMol> psMol = pReact->GetReactant(i);
+    std::shared_ptr<OBMol> psMol = pReact->GetReactant(i);
 //    if(strcasecmp(psMol->GetTitle(),"M"))
     OMols.insert(psMol);
 
@@ -959,7 +959,7 @@ bool ChemKinFormat::WriteReactionLine(OBReaction* pReact, OBConversion* pConv)
 
   for(i=0;i<pReact->NumProducts();++i)
   {
-    obsharedptr<OBMol> psMol = pReact->GetProduct(i);
+    std::shared_ptr<OBMol> psMol = pReact->GetProduct(i);
     if(strcasecmp(psMol->GetTitle(),"M"))
       OMols.insert(psMol);
 

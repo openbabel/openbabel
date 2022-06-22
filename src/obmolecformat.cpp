@@ -422,7 +422,7 @@ namespace OpenBabel
     //Output all the constituent molecules of the reaction
 
     //Collect the molecules first, just for convenience
-    vector<obsharedptr<OBMol> > mols;
+    vector<std::shared_ptr<OBMol> > mols;
     for(int i=0;i<pReact->NumReactants();i++)
       mols.push_back(pReact->GetReactant(i));
     for(int i=0;i<pReact->NumProducts();i++)

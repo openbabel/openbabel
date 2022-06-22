@@ -15,9 +15,9 @@ GNU General Public License for more details.
 #ifndef OB_ALIAS_H
 #define OB_ALIAS_H
 
+#include <memory>
 #include <vector>
 #include <openbabel/generic.h>
-#include <openbabel/shared_ptr.h>
 
 namespace OpenBabel
 {
@@ -115,7 +115,7 @@ private:
     return t;
   }
   bool        FromNameLookup(OBMol& mol, const unsigned int atomindex);
-  typedef std::vector< std::pair<std::string, obsharedptr<OBSmartsPattern> > > SmartsTable;
+  typedef std::vector< std::pair<std::string, std::shared_ptr<OBSmartsPattern> > > SmartsTable;
   static bool LoadFile(SmartsTable& smtable);
 };
 } //namespace
