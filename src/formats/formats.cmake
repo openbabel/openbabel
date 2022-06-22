@@ -152,7 +152,6 @@ if(NOT BUILD_SHARED)
   set(formats_misc ${formats_misc} genbankformat)
 endif(NOT BUILD_SHARED)
 
-if(MSVC OR SHARED_POINTER)
   set(formats_misc
     ${formats_misc}
     rxnformat
@@ -161,7 +160,6 @@ if(MSVC OR SHARED_POINTER)
     rinchiformat
     rsmiformat
   )
-endif(MSVC OR SHARED_POINTER)
 
 set(optional_formatgroups "")
 if(CAIRO_FOUND)
@@ -239,12 +237,10 @@ if(LIBXML2_FOUND AND (BUILD_SHARED OR WITH_STATIC_LIBXML))
     pubchem
     xmlformat
   )
-  if(MSVC OR SHARED_POINTER)
     set(formats_xml
         ${formats_xml}
         cmlreactformat
     )
-  endif(MSVC OR SHARED_POINTER)
 endif(LIBXML2_FOUND AND (BUILD_SHARED OR WITH_STATIC_LIBXML))
 
 if(HAVE_RPC_XDR_H)
