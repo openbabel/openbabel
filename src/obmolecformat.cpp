@@ -470,8 +470,7 @@ namespace OpenBabel
       if the environment variable is not set
       - in a subdirectory of the BABEL_DATADIR directory with the version of OpenBabel as its name
       An index of type NameIndexType is then constructed. NameIndexType is defined
-      in obmolecformat.h and may be a std::tr1::unordered_map (a hash_map) or std::map.
-      In any case it is searched by
+      in obmolecformat.h as std::unordered_map. It is searched by
       @code
       NameIndexType::iterator itr = index.find(molecule_name);
       if(itr!=index.end())
