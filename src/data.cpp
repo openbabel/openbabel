@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #pragma warning (disable : 4786)
 #endif
 #include <cstdlib>
+#include <algorithm>
 #include <openbabel/babelconfig.h>
 #include <openbabel/data.h>
 #include <openbabel/data_utilities.h>
@@ -614,14 +615,30 @@ namespace OpenBabel
     return(false);
   }
 
+  static std::string trim(const std::string &s)
+  {
+      auto start = s.begin();
+      while (start != s.end() && std::isspace(*start)) {
+          start++;
+      }
+
+      auto end = s.end();
+      do {
+          end--;
+      } while (std::distance(start, end) > 0 && std::isspace(*end));
+
+      return std::string(start, end + 1);
+  }
+
   int OBResidueData::LookupBO(const string &s)
   {
     if (_resnum == -1)
       return(0);
 
+    string strim = trim(s);
     unsigned int i;
     for (i = 0;i < _resbonds[_resnum].size();++i)
-      if (_resbonds[_resnum][i].first == s)
+      if (_resbonds[_resnum][i].first == strim)
         return(_resbonds[_resnum][i].second);
 
     return(0);
@@ -633,12 +650,15 @@ namespace OpenBabel
       return(0);
     string s;
 
-    s = (s1 < s2) ? s1 + " " + s2 : s2 + " " + s1;
+    string s1strip = trim(s1);
+    string s2strip = trim(s2);
 
+    s = (s1strip < s2strip) ? s1strip + " " + s2strip : s2strip + " " + s1strip;
     unsigned int i;
     for (i = 0;i < _resbonds[_resnum].size();++i)
-      if (_resbonds[_resnum][i].first == s)
+      if (_resbonds[_resnum][i].first == s) {
         return(_resbonds[_resnum][i].second);
+      }
 
     return(0);
   }
