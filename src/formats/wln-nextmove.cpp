@@ -934,6 +934,8 @@ struct WLNParser {
                     done = true;
                     ptr +=ptr_it+1;
                     break;}
+            default:
+                break;
         }
 
         if (!done)
