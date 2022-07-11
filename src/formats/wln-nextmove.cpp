@@ -160,11 +160,11 @@ struct WLNParser {
         aptr->SetFormalCharge(charge-count);
     }
 
-    void fuse(OpenBabel::OBAtom* src, OpenBabel::OBAtom* dst, unsigned int order)
+    void fuse(OpenBabel::OBAtom* src, OpenBabel::OBAtom* dst, unsigned int bond_order)
     {
-        dec_h(src,order);
-        dec_h(dst,order);
-        NMOBMolNewBond(mol,src,dst,order,false);
+        dec_h(src,bond_order);
+        dec_h(dst,bond_order);
+        NMOBMolNewBond(mol,src,dst,bond_order,false);
     }
 
     void next(OpenBabel::OBAtom* aptr, unsigned int bo) {
@@ -617,7 +617,7 @@ struct WLNParser {
             wln_string.insert(1, " A");}
 
         for (int i = 0; i < wln_string.size(); i++) {
-            if (std::isdigit(wln_string[i]) && wln_string[i - 1] == ' ' && wln_string[i + 1] != ' ') { // Change point 1
+            if (isdigit(wln_string[i]) && wln_string[i - 1] == ' ' && wln_string[i + 1] != ' ') { // Change point 1
                 if (wln_string[i + 1] >= 'D') {
                     fprintf(stderr, "Peri Points Greater Than Char Level 3 Are Currently Unstable \n");
                     return error();
@@ -797,7 +797,7 @@ struct WLNParser {
                 return error();
             cyclic_set = cycles.at(0);
             for (int i = 0; i < cyclic_set; i++) {
-                if (std::isdigit(wln_string[i])) {
+                if (isdigit(wln_string[i])) {
                     ring_count++;
                     atom_sum += wln_string[i] - '0';
                     ptr_it = i;}
@@ -969,7 +969,7 @@ struct WLNParser {
                                 aptr = ring[i];
                                 if (aptr->IsAromatic() &&
                                     aptr->GetAtomicNum() == 6) {
-                                    unsigned int hcount = aptr->GetImplicitHCount();
+                                    hcount = aptr->GetImplicitHCount();
                                     NMOBAtomSetAromatic(aptr, false);
                                     aptr->SetImplicitHCount(hcount + 1);
                                 }
@@ -1056,7 +1056,7 @@ struct WLNParser {
                         aptr = ring[i];
                         if (aptr->IsAromatic() &&
                             aptr->GetAtomicNum()==6) {
-                            unsigned int hcount = aptr->GetImplicitHCount();
+                            hcount = aptr->GetImplicitHCount();
                             aptr->SetImplicitHCount(hcount+1);  // hcount +1
                             NMOBAtomSetAromatic(aptr,false);
                         }
