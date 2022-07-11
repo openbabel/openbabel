@@ -24,6 +24,8 @@ GNU General Public License for more details.
 #include <numeric>
 #include <openbabel/obiter.h>
 
+#include <cstdlib>
+
 #define PENDING_NONE   0
 #define PENDING_DEPROT 1
 #define PENDING_METHYL 2
@@ -644,7 +646,7 @@ struct WLNParser {
 
     void AtomCharVector(int ptr_it, std::string wln_string,std::vector<int> &atom_vector, std::vector<char> &char_vector){
         for (int i = 0; i <= ptr_it; i++) {
-            if (std::isdigit(wln_string.at(i))) {
+            if (isdigit(wln_string.at(i))) {
                 atom_vector.push_back(wln_string.at(i) - '0');
                 if (isalpha(wln_string.at(i-1))) {;
                     char_vector.push_back(wln_string.at(i-1));}
@@ -915,6 +917,7 @@ struct WLNParser {
                     size = 12;
                     ptr++;}
                 break;
+
             case 9 ... 50:
                 if (macro){
                     macro=false;
