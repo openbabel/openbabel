@@ -611,9 +611,9 @@ struct WLNParser {
         bool peri = false;
         int peri_count = 0;
         int peri_index = 0;
-        if (std::isdigit(ptr[1]) &&
-            std::isdigit(ptr[2]) &&
-            std::isdigit(ptr[3])){
+        if (isdigit(ptr[1]) &&
+            isdigit(ptr[2]) &&
+            isdigit(ptr[3])){
             wln_string.insert(1, " A");}
 
         for (int i = 0; i < wln_string.size(); i++) {
@@ -646,7 +646,7 @@ struct WLNParser {
         for (int i = 0; i <= ptr_it; i++) {
             if (std::isdigit(wln_string.at(i))) {
                 atom_vector.push_back(wln_string.at(i) - '0');
-                if (std::isalpha(wln_string.at(i-1))) {;
+                if (isalpha(wln_string.at(i-1))) {;
                     char_vector.push_back(wln_string.at(i-1));}
                 else
                     char_vector.push_back('A');}
@@ -811,7 +811,7 @@ struct WLNParser {
                     if (wln_string[i] == ' '){
                         ptr_it=i;
                         break;}
-                    if (std::isalpha(wln_string[i])){
+                    if (isalpha(wln_string[i])){
                         peri_vector.push_back(wln_string[i]);}
                 }
             }
