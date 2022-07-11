@@ -135,6 +135,10 @@ namespace OpenBabel
     string line, key, value;
     OBPairData *dp;
 
+    // Hack by DvdS 2022-07-11
+    bool errorThrown = false;
+    // end
+    
     mol.SetTitle(title);
     // We need to prevent chains perception routines from running while
     // we are adding residues from the PDB file
@@ -160,12 +164,13 @@ namespace OpenBabel
         }
         if (EQn(buffer,"ATOM",4) || EQn(buffer,"HETATM",6))
           {
-            if( ! parseAtomRecord(buffer,mol,chainNum))
+            if( ! parseAtomRecord(buffer,mol,chainNum) && !errorThrown)
               {
                 stringstream errorMsg;
                 errorMsg << "WARNING: Problems reading a PDB file\n"
                          << "  Problems reading a ATOM/HETATM record.\n";
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
+                errorThrown = true;
               }
             continue;
           }
