@@ -29,6 +29,9 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 
+//testing header
+//#include "southampton_wln.h"
+
 ////////////////////////////////////////////////////////////////////////
 // Utility Classes
 
@@ -1689,7 +1692,7 @@ bool WriteWLN::SanitiseString(std::vector<char> &wln_string){
 //  --- Output Function ---
 bool WriteWLN::CreateString(std::vector<char> &wln_string){
 
-    std::vector<WLNSymbol> wln_vector;
+    std::vector<WLNSymbol> wln_vector{};
     if(!BuildGlobalStacks(Mol))
         return Error("stacks");
 
@@ -1719,8 +1722,7 @@ bool WriteWLN::CreateString(std::vector<char> &wln_string){
             return Error("sanitise");
     }
 
-    else
-        return Error("unknown");
+    return true;
 }
 bool WriteWLN::Error(const char* type){
     fprintf(stderr, "Error in wln write\n");
@@ -2078,8 +2080,6 @@ bool WriteWLN::LinkRings(std::vector<WLNSymbol> &wln_vector){
 
 bool WriteWLN::BuildRing(WLNSymbol virtual_ring, std::vector<char> &wln_string){
 
-    std::cout << virtual_ring.ring_type << std::endl;
-
     wln_string.push_back(virtual_ring.contained_ring.hetero);
 
     if (virtual_ring.ring_type == "NULL")
@@ -2412,11 +2412,6 @@ WLNSymbol WriteWLN::MergeRingSymbol(WLNSymbol subject, WLNSymbol target, std::ve
     bool peri = false;
     bool multi = false;
     bool poly = false;
-
-    std::cout << subject.ring_type <<":" << subject.atom_container.size();
-    std::cout << "   ";
-    std::cout << target.ring_type << ":" << target.atom_container.size();
-    std::cout << "   " <<atom_intersection.size() << std::endl;
 
     // Main path block - always consistent - Merges the subject and target rings
     std::vector<AtomContainer> AllRingAtoms;
@@ -2927,11 +2922,10 @@ std::string TranslateToWLN(const char* smiles_string){
 
 bool MBWriterWLN(OpenBabel::OBMol *mol, std::string &buffer){
     // converts wln to a given buffer
-    mol->DeleteHydrogens();
     WriteWLN wr{mol};
     std::vector<char> wln_string;
     if (!wr.CreateString(wln_string))
-        return false;
+        return wr.Error("read");
 
     // this should return the wln string
     std::string res(begin(wln_string), end(wln_string));
