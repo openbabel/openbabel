@@ -1,5 +1,6 @@
 /**********************************************************************
 Copyright (C) 2019 by NextMove Software
+Some portions Copyright (C) 2022 by Michael Blakey
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -16,11 +17,12 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
-
+#include <string>
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
 bool NMReadWLN(const char *ptr, OpenBabel::OBMol* mol);
+bool MBWriterWLN(OpenBabel::OBMol *mol, std::string &buffer);
 
 using namespace std;
 namespace OpenBabel
@@ -39,7 +41,7 @@ namespace OpenBabel
     {
       return
         "Wiswesser Line Notation\n"
-	"A chemical line notation developed by Wiswesser\n\n"
+	    "A chemical line notation developed by Wiswesser\n\n"
 
         "WLN was invented in 1949, by William J. Wiswesser, as one of the first attempts\n"
         "to codify chemical structure as a line notation, enabling collation on punched\n"
@@ -94,10 +96,17 @@ namespace OpenBabel
         "- T56 BMJ B D - DT6N CNJ BMR BO1 DN1 & 2N1 & 1 EMV1U1   (osimertinib)\n"
         "  Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C\n\n"
 
-        "This reader was contributed by Roger Sayle (NextMove Software). The text of\n"
+        "The reader was contributed by Roger Sayle (NextMove Software). The text of\n"
         "this description was taken from his Bio-IT World poster [3]. Note that not\n"
-        "all of WLN is currently supported; however, about 76% of the WLN strings\n"
-        "found in PubChem can be interpreted.\n\n"
+        "all of WLN is currently supported; initially 76% of the WLN strings\n"
+        "found in PubChem can be interpreted. Contributions by Michael Blakey \n"
+        "has added functionality for poly/peri fused rings, taking this percentage to"
+        "97%, with a paper currently in review discussing read/write rules\n\n"
+
+        "The Writer was contributed by Michael Blakey (University of Southampton). Not\n"
+        "all of WLN can be converted at this time, with limited support for complex ring\n"
+        "systems containing multiple peri and poly fused cycles. This still in active\n"
+        "development, publication is currently in review stage.\n\n"
 
         "1. Elbert G. Smith, \"The Wiswesser Line-Formula Chemical Notation\",\n"
         "   McGraw-Hill Book Company publishers, 1968.\n"
@@ -111,15 +120,22 @@ namespace OpenBabel
         ;
     };
 
-    virtual unsigned int Flags()
-    {
-      return NOTWRITABLE;
-    }
+    // Now writable so does the flag go?
+    //virtual unsigned int Flags()
+    //{
+      //return NOTWRITABLE;
+    //}
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
     virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+
+    ////////////////////////////////////////////////////
+    virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
+
+
   };
   //***
 
@@ -144,6 +160,29 @@ namespace OpenBabel
     NMReadWLN(buffer, pmol);
 
     return true;
+  }
+
+  bool WLNFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
+      // Following formats given for Smiles and Inchi
+      OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+      if (pmol == nullptr)
+          return false;
+
+
+      ostream &ofs = *pConv->GetOutStream();
+
+      if(!pConv->IsOption("n")) //OBConversion::OUTOPTIONS is the default
+          ofs << "Title = " << pmol->GetTitle() << endl;
+
+      std::string buffer;
+      buffer.reserve(1000);
+
+      if (!MBWriterWLN(pmol, buffer))
+          return false;
+
+      // I think this should do it?
+      ofs << buffer;
+      return true;
   }
 
   ////////////////////////////////////////////////////////////////
