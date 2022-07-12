@@ -23,6 +23,7 @@ GNU General Public License for more details.
 #include <vector>
 #include <numeric>
 #include <openbabel/obiter.h>
+#include <algorithm>
 
 #include <cstdlib>
 
