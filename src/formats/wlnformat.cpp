@@ -167,12 +167,11 @@ namespace OpenBabel
       OBMol* pmol = dynamic_cast<OBMol*>(pOb);
       if (pmol == nullptr)
           return false;
-
-
+      
       ostream &ofs = *pConv->GetOutStream();
 
-      if(!pConv->IsOption("n")) //OBConversion::OUTOPTIONS is the default
-          ofs << "Title = " << pmol->GetTitle() << endl;
+//      if(!pConv->IsOption("n")) //OBConversion::OUTOPTIONS is the default
+//          ofs << "Title = " << pmol->GetTitle() << endl;
 
       std::string buffer;
       buffer.reserve(1000);
