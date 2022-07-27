@@ -296,7 +296,7 @@ if(NOT MSVC)
     set(HAVE_GCC_VISIBILITY ${HAVE_GCC_VISIBILITY} CACHE BOOL "GCC support for hidden visibility")
     set(_GCC_COMPILED_WITH_BAD_ALLOCATOR FALSE)
     if(GCC_IS_NEWER_THAN_4_1)
-      exec_program(${CMAKE_C_COMPILER} ARGS -v OUTPUT_VARIABLE _gcc_alloc_info)
+      execute_process(COMMAND ${CMAKE_C_COMPILER} -v OUTPUT_VARIABLE _gcc_alloc_info)
       string(REGEX MATCH "(--enable-libstdcxx-allocator=mt)" _GCC_COMPILED_WITH_BAD_ALLOCATOR "${_gcc_alloc_info}")
     endif()
     if(HAVE_GCC_VISIBILITY AND GCC_IS_NEWER_THAN_4_2 AND ENABLE_SYMBOL_VISIBILITY
