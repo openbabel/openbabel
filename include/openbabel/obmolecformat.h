@@ -31,9 +31,7 @@ namespace OpenBabel {
 
   class OBMol;
   class OBDescriptor;
-#ifdef HAVE_SHARED_POINTER
   class OBReaction;
-#endif
 
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
@@ -125,11 +123,9 @@ public:
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
   //@}
 
-#ifdef HAVE_SHARED_POINTER
   //!When sent an OBReaction object, output all the constituent molecules
   static bool OutputMolsFromReaction
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat);
-#endif
 
   typedef std::unordered_map<std::string, unsigned> NameIndexType;
 

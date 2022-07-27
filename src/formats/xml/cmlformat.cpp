@@ -28,9 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/obfunctions.h>
 #include <openbabel/xml.h>
 #include <cfloat>
-#ifdef HAVE_SHARED_POINTER
-  #include <openbabel/reaction.h>
-#endif
+#include <openbabel/reaction.h>
 
 
 #ifdef WIN32
@@ -1423,7 +1421,6 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==nullptr)
     {
-#ifdef HAVE_SHARED_POINTER
         OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
         if(!pReact)
           return false;
@@ -1440,9 +1437,6 @@ namespace OpenBabel
         bool ret = pCMLRFormat->WriteMolecule(pOb,_pxmlConv);
         _pxmlConv->RemoveOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
         return ret;
-#else
-        return false;
-#endif
     }
 
 

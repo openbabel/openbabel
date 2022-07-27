@@ -27,13 +27,13 @@
 #define USING_OBDLL
 #endif
 #include <cstdlib>
+#include <memory>
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/query.h>
 #include <openbabel/isomorphism.h>
-#include <openbabel/shared_ptr.h>
 #include <openbabel/obutil.h>
 
 #include "getopt.h"
@@ -68,8 +68,8 @@ class AtomDistanceSorter
 class Matcher
 {
 	const OBMol *ref;
-	obsharedptr<OBQuery> query;
-	obsharedptr<OBIsomorphismMapper> mapper;
+	std::shared_ptr<OBQuery> query;
+	std::shared_ptr<OBIsomorphismMapper> mapper;
 
 	class MapRMSDFunctor: public OBIsomorphismMapper::Functor
 	{
@@ -167,8 +167,8 @@ class Matcher
 public:
 	Matcher(OBMol& mol) : ref(&mol)
 	{
-		query = obsharedptr<OBQuery>(CompileMoleculeQuery(&mol));
-		mapper = obsharedptr<OBIsomorphismMapper>(OBIsomorphismMapper::GetInstance(query.get()));
+		query = std::shared_ptr<OBQuery>(CompileMoleculeQuery(&mol));
+		mapper = std::shared_ptr<OBIsomorphismMapper>(OBIsomorphismMapper::GetInstance(query.get()));
 	}
 
 

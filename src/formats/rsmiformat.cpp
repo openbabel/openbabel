@@ -195,7 +195,7 @@ namespace OpenBabel
     }
     mols = jreactants.Separate();
     for(itr=mols.begin();itr!=mols.end();++itr)
-      pReact->AddReactant(obsharedptr<OBMol>(new OBMol(*itr)));
+      pReact->AddReactant(std::shared_ptr<OBMol>(new OBMol(*itr)));
 
     pos2 = rsmiles.find('>', pos+1);
     if(pos2==string::npos)
@@ -215,7 +215,7 @@ namespace OpenBabel
         delete pAgent;
         return false;
       }
-      pReact->AddAgent(obsharedptr<OBMol>(pAgent));
+      pReact->AddAgent(std::shared_ptr<OBMol>(pAgent));
     }
 
     //Extract products and split into separate molecules
@@ -229,7 +229,7 @@ namespace OpenBabel
     mols.clear();
     mols = jproducts.Separate();
     for(itr=mols.begin();itr!=mols.end();++itr)
-      pReact->AddProduct(obsharedptr<OBMol>(new OBMol(*itr)));
+      pReact->AddProduct(std::shared_ptr<OBMol>(new OBMol(*itr)));
 
     return true;
   }
