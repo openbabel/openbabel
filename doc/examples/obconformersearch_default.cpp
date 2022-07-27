@@ -1,17 +1,17 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/mol.h>
-#include <openbabel/shared_ptr.h>
 #include <openbabel/conformersearch.h>
 
 #include <iostream>
+#include <memory>
 
 using namespace OpenBabel;
 
 // Helper function to read molecule from file
-obsharedptr<OBMol> GetMol(const std::string &filename)
+std::shared_ptr<OBMol> GetMol(const std::string &filename)
 {
   // Create the OBMol object.
-  obsharedptr<OBMol> mol(new OBMol);
+  std::shared_ptr<OBMol> mol(new OBMol);
 
   // Create the OBConversion object.
   OBConversion conv;
@@ -44,7 +44,7 @@ int main(int argc, char **argv)
   }
 
   // Read the file
-  obsharedptr<OBMol> mol = GetMol(argv[1]);
+  std::shared_ptr<OBMol> mol = GetMol(argv[1]);
 
   // Create the OBConformerSearch object
   OBConformerSearch cs;

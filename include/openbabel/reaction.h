@@ -19,8 +19,8 @@ GNU General Public License for more details.
 #ifndef OB_REACT_H
 #define OB_REACT_H
 
+#include <memory>
 #include <vector>
-#include <openbabel/shared_ptr.h>
 #include <openbabel/base.h>
 
 
@@ -37,10 +37,10 @@ namespace OpenBabel
 class OBReaction : public OBBase
 {
 private:
-  std::vector<obsharedptr<OBMol> > _reactants;
-  std::vector<obsharedptr<OBMol> > _products;
-  std::vector<obsharedptr<OBMol> > _agents;
-  obsharedptr<OBMol> _ts;
+  std::vector<std::shared_ptr<OBMol> > _reactants;
+  std::vector<std::shared_ptr<OBMol> > _products;
+  std::vector<std::shared_ptr<OBMol> > _agents;
+  std::shared_ptr<OBMol> _ts;
   std::string _title;
   std::string _comment;
   bool _reversible;
@@ -59,41 +59,41 @@ public:
     return static_cast<int> (_agents.size());
   }
 
-  void AddReactant(const obsharedptr<OBMol> sp)
+  void AddReactant(const std::shared_ptr<OBMol> sp)
   { _reactants.push_back(sp); }
 
-  void AddProduct(const obsharedptr<OBMol> sp)
+  void AddProduct(const std::shared_ptr<OBMol> sp)
   { _products.push_back(sp); }
 
-  void SetTransitionState(const obsharedptr<OBMol> sp)
+  void SetTransitionState(const std::shared_ptr<OBMol> sp)
   { _ts = sp; }
 
-  void AddAgent(const obsharedptr<OBMol> sp)
+  void AddAgent(const std::shared_ptr<OBMol> sp)
   { _agents.push_back(sp); }
 
-  obsharedptr<OBMol> GetReactant(const unsigned i)
+  std::shared_ptr<OBMol> GetReactant(const unsigned i)
   {
-    obsharedptr<OBMol> sp;
+    std::shared_ptr<OBMol> sp;
     if(i<_reactants.size())
       sp = _reactants[i];
     return sp; //returns empty if out of range
   }
-  obsharedptr<OBMol> GetProduct(const unsigned i)
+  std::shared_ptr<OBMol> GetProduct(const unsigned i)
   {
-    obsharedptr<OBMol> sp;
+    std::shared_ptr<OBMol> sp;
     if(i<_products.size())
       sp = _products[i];
     return sp; //returns empty if out of range
   }
-  obsharedptr<OBMol> GetAgent(const unsigned i)
+  std::shared_ptr<OBMol> GetAgent(const unsigned i)
   {
-    obsharedptr<OBMol> sp;
+    std::shared_ptr<OBMol> sp;
     if (i<_agents.size())
       sp = _agents[i];
     return sp; //returns empty if out of range
   }
 
-  obsharedptr<OBMol> GetTransitionState()const
+  std::shared_ptr<OBMol> GetTransitionState()const
   { return _ts; }
 
   std::string GetTitle()	const { return _title; }

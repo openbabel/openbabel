@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <cstdlib>
+#include <memory>
 
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
-#include <openbabel/shared_ptr.h>
 
 #ifdef _MSC_VER
 #define FUNCTION_SIGNATURE __FUNCSIG__
@@ -38,7 +38,7 @@ const char* ob_expr(const char *expr);
 
 
 // some utility functions
-typedef obsharedptr<OpenBabel::OBMol> OBMolPtr;
+typedef std::shared_ptr<OpenBabel::OBMol> OBMolPtr;
 
 struct OBTestUtil
 {
