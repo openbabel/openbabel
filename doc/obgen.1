@@ -9,14 +9,17 @@
 .Op Ar OPTIONS
 .Ar filename
 .Sh DESCRIPTION
-The obgen tool will generate 3D coordinates for molecules in a file
+The
+.Nm
+tool will generate 3D coordinates for molecules in a file
 (e.g. multi-molecule SMILES files). The resulting structure will be
 optimized using the given forcefield and checked for the
 lowest-energy conformer using a Monte Carlo search.
 Output will be sent to standard output in the SDF file format.
 .Sh OPTIONS
-If no filename is given, obgen will give all options including the
-available forcefields.
+If no filename is given,
+.Nm
+will give all options including the available forcefields.
 .Bl -tag -width flag
 .It Fl ff Ar forcefield
 Select the forcefield
@@ -47,7 +50,7 @@ The obgen program was contributed by
 .An Tim Vandermeersch.
 .Pp
 .An -nosplit
-Open Babel is developed by a cast of many, including currrent maintainers
+Open Babel is developed by a cast of many, including current maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
 .An Michael Banck ,

@@ -11,23 +11,25 @@
 .Ar filename2
 .Sh DESCRIPTION
 Computes the heavy-atom RMSD of identical compound structures.
-Structures in multi-structure files are compared one-by-one unless -firstonly
+Structures in multi-structure files are compared one-by-one unless
+.Fl -firstonly
 is passed, in which case only the first structure in the reference file is used.
 .Sh OPTIONS
 .Bl -tag -width flag
-.It Fl f, -firstonly
-use only the first structure in the reference file (otherwise the nth molecule
-in the reference file is compared to the nth molecule in the test file)
-.It Fl m,  -minimize
-Compute the minimum RMSD achievable by applying a rigid-body transformation to 
+.It Fl f , -firstonly
+use only the first structure in the reference file (otherwise the n-th molecule
+in the reference file is compared to the n-th molecule in the test file)
+.It Fl m ,  -minimize
+Compute the minimum RMSD achievable by applying a rigid-body transformation to
 the test molecule
-.It Fl x, -cross
+.It Fl x , -cross
 Compute all n^2 RMSDs between molecules of the reference file.  Test file is ignored.
-.It Fl s, -separate 
+.It Fl s , -separate
 Separate reference file into constituent molecules (disconnected fragments)
 and report best RMSD
-.It Fl o, -out 
-Re-oriented test structure output (used with -m) 
+.It Fl o , -out
+Re-oriented test structure output (used with
+.Fl m )
 .Sh EXAMPLES
 .Dl "obrms ref.sdf test.sdf"
 .Pp
@@ -45,7 +47,7 @@ The web pages for Open Babel can be found at:
 \%<\fBhttp://openbabel.org/\fR>
 .Sh AUTHORS
 .An -nosplit
-Open Babel is developed by a cast of many, including currrent maintainers
+Open Babel is developed by a cast of many, including current maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
 .An Michael Banck ,
