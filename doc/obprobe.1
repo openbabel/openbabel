@@ -11,14 +11,17 @@
 .Ar pchg
 .Ar filename
 .Sh DESCRIPTION
-The obprobe tool creates a grid around a molecule, placing a probe
+The
+.Nm
+tool creates a grid around a molecule, placing a probe
 atom with a specified atom type and partial charge at each point to
 calculate the MMFF94 energy. This can be used for docking experiments
 to test hydrogen-bond affinity, electrostatic potential, etc.
 Output is sent to standard output using the Gaussian Cube format.
 .Sh OPTIONS
-If no filename is given, obprobe will give all options including the
-example probes.
+If no filename is given,
+.Nm
+will give all options including the example probes.
 .Bl -tag -width flag
 .It Fl s Ar stepsize
 Set the resolution of the grid (stepsize)
@@ -49,7 +52,7 @@ The obprobe program was contributed by
 .An Tim Vandermeersch.
 .Pp
 .An -nosplit
-Open Babel is developed by a cast of many, including currrent maintainers
+Open Babel is developed by a cast of many, including current maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
 .An Michael Banck ,
