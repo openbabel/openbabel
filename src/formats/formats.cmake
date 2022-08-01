@@ -146,7 +146,7 @@ set(formats_misc
       yasaraformat
       )
 
-set(wlnformat_additional_sources wln-nextmove.cpp)
+set(wlnformat_additional_sources wln-nextmove.cpp wln-soton.cpp)
 # genbankformat can currently only be built statically
 if(NOT BUILD_SHARED)
   set(formats_misc ${formats_misc} genbankformat)

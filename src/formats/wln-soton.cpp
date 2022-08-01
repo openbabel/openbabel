@@ -466,9 +466,9 @@ class WriteWLN{
 public:
     char* smiles;
     OpenBabel::OBMol *Mol;
-    std::vector<BondContainer> global_bond_stack{};
-    std::vector<AtomContainer> global_atom_stack{};
-    std::vector<RingContainer> global_ring_stack{};
+    std::vector<BondContainer> global_bond_stack;
+    std::vector<AtomContainer> global_atom_stack;
+    std::vector<RingContainer> global_ring_stack;
 
 public:
     // Constructors/Destructors
@@ -615,8 +615,6 @@ bool WriteWLN::BuildGlobalStacks(OpenBabel::OBMol *Mol) {
         global_ring_stack.push_back(ring_container);
     }
 
-    // Mol deletion checked
-    delete Mol;
     return true;
 }
 bool WriteWLN::SegmentAtomStack(std::vector<WLNSymbol> &wln_vector){
@@ -1692,7 +1690,7 @@ bool WriteWLN::SanitiseString(std::vector<char> &wln_string){
 //  --- Output Function ---
 bool WriteWLN::CreateString(std::vector<char> &wln_string){
 
-    std::vector<WLNSymbol> wln_vector{};
+    std::vector<WLNSymbol> wln_vector;
     if(!BuildGlobalStacks(Mol))
         return Error("stacks");
 
@@ -2922,11 +2920,11 @@ std::string TranslateToWLN(const char* smiles_string){
 
 bool MBWriterWLN(OpenBabel::OBMol *mol, std::string &buffer){
     // converts wln to a given buffer
-    WriteWLN wr{mol};
+    WriteWLN wr(mol);
     std::vector<char> wln_string;
     if (!wr.CreateString(wln_string))
-        return wr.Error("read");
-
+        return wr.Error("Write");
+    wln_string.push_back('\n'); 
     // this should return the wln string
     std::string res(begin(wln_string), end(wln_string));
     buffer = res;

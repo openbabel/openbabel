@@ -111,7 +111,6 @@ struct WLNParser {
     OpenBabel::OBAtom* prev;
 
     WLNParser(const char *wln, OpenBabel::OBMol* m) {
-        mol = m;
         orig = wln;
         ptr = wln;
 
