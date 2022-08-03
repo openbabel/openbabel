@@ -94,6 +94,7 @@ namespace OpenBabel
       };
       //! Whether this bond has been visited by a graph algorithm
       /** \deprecated Use OBBitVec objects instead to be fully thread-safe. **/
+      OB_DEPRECATED_MSG("Use OBBitVec objects instead to be fully thread-safe.")
       bool Visit;
 
       //! Constructor

@@ -62,6 +62,7 @@ namespace OpenBabel
     size_t    Size()     const  {    return(_path.size());  }
     //! \return the size of this ring (i.e., how many atoms in the cycle)
     //! \deprecated Use Size() instead
+    OB_DEPRECATED_MSG("Use Size() instead")
     size_t    PathSize() const  {    return(_path.size());  }
 
     //! \return whether this ring is aromatic
@@ -117,7 +118,7 @@ namespace OpenBabel
   **/
   class OBAPI OBRingSearch
   {
-    std::vector<OBBond*> _bonds; //!< the internal list of closure bonds (deprecated)
+    OB_DEPRECATED std::vector<OBBond*> _bonds; //!< the internal list of closure bonds (deprecated)
     std::vector<OBRing*> _rlist; //!< the internal list of rings
   public:
     OBRingSearch()    {}

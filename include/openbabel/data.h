@@ -253,6 +253,7 @@ namespace OpenBabel
       bool SetResName(const std::string &);
       //! \return the bond order for the bond specified in the current residue
       //! \deprecated Easier to use the two-argument form
+      OB_DEPRECATED_MSG("Easier to use the two-argument form")
       int  LookupBO(const std::string &);
       //! \return the bond order for the bond specified between the two specified
       //! atom labels
