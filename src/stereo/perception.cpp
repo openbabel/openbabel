@@ -2969,9 +2969,6 @@ namespace OpenBabel {
   }
 
   void StereoRefToImplicit(OBMol& mol, OBStereo::Ref atomId) {
-    // The following is for use in replace_if(...) below
-    const std::binder1st<std::equal_to<OBStereo::Ref> > equal_to_atomId = std::bind1st (equal_to<OBStereo::Ref>(), atomId);
-
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
       OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
@@ -2987,23 +2984,20 @@ namespace OpenBabel {
       if (datatype == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         OBCisTransStereo::Config ct_cfg = ct->GetConfig();
-        replace_if(ct_cfg.refs.begin(), ct_cfg.refs.end(), equal_to_atomId, (OBStereo::Ref) OBStereo::ImplicitRef);
+        replace(ct_cfg.refs.begin(), ct_cfg.refs.end(), atomId, (OBStereo::Ref) OBStereo::ImplicitRef);
         ct->SetConfig(ct_cfg);
       }
       else if (datatype == OBStereo::Tetrahedral) {
         OBTetrahedralStereo *ts = dynamic_cast<OBTetrahedralStereo*>(*data);
         OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
         if (ts_cfg.from == atomId) ts_cfg.from = OBStereo::ImplicitRef;
-        replace_if(ts_cfg.refs.begin(), ts_cfg.refs.end(), equal_to_atomId, (OBStereo::Ref) OBStereo::ImplicitRef);
+        replace(ts_cfg.refs.begin(), ts_cfg.refs.end(), atomId, (OBStereo::Ref) OBStereo::ImplicitRef);
         ts->SetConfig(ts_cfg);
       }
     }
   }
 
   void ImplicitRefToStereo(OBMol& mol, OBStereo::Ref centerId, OBStereo::Ref newId) {
-    // The following is for use in replace_if(...) below
-    const std::binder1st<std::equal_to<OBStereo::Ref> > equal_to_implicitRef = std::bind1st (equal_to<OBStereo::Ref>(), (OBStereo::Ref) OBStereo::ImplicitRef);
-
     std::vector<OBGenericData*> vdata = mol.GetAllData(OBGenericDataType::StereoData);
     for (std::vector<OBGenericData*>::iterator data = vdata.begin(); data != vdata.end(); ++data) {
       OBStereo::Type datatype = ((OBStereoBase*)*data)->GetType();
@@ -3022,9 +3016,9 @@ namespace OpenBabel {
         if (ct_cfg.begin == centerId || ct_cfg.end == centerId) {
           // Assumption: the first two refs are on the begin atom, the last two on the end atom
           if (ct_cfg.begin == centerId)
-            replace_if(ct_cfg.refs.begin(), ct_cfg.refs.begin()+2, equal_to_implicitRef, (OBStereo::Ref) newId);
+            replace(ct_cfg.refs.begin(), ct_cfg.refs.begin()+2, (OBStereo::Ref) OBStereo::ImplicitRef, (OBStereo::Ref) newId);
           if (ct_cfg.end == centerId)
-            replace_if(ct_cfg.refs.begin()+2, ct_cfg.refs.end(), equal_to_implicitRef, (OBStereo::Ref) newId);
+            replace(ct_cfg.refs.begin()+2, ct_cfg.refs.end(), (OBStereo::Ref) OBStereo::ImplicitRef, (OBStereo::Ref) newId);
           ct->SetConfig(ct_cfg);
         }
       }
@@ -3033,7 +3027,7 @@ namespace OpenBabel {
         OBTetrahedralStereo::Config ts_cfg = ts->GetConfig();
         if (ts_cfg.center == centerId) {
           if (ts_cfg.from == OBStereo::ImplicitRef) ts_cfg.from = newId;
-          replace_if(ts_cfg.refs.begin(), ts_cfg.refs.end(), equal_to_implicitRef, (OBStereo::Ref) newId);
+          replace(ts_cfg.refs.begin(), ts_cfg.refs.end(), (OBStereo::Ref) OBStereo::ImplicitRef, (OBStereo::Ref) newId);
           ts->SetConfig(ts_cfg);
         }
       }
