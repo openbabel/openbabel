@@ -53,7 +53,7 @@ namespace OpenBabel
   class MDLFormat : public OBMoleculeFormat
   {
     public:
-      virtual const char* Description()
+      const char* Description() override
       {
         return "MDL MOL format\n"
                "Reads and writes V2000 and V3000 versions\n\n"
@@ -105,20 +105,20 @@ namespace OpenBabel
                " H  use HYD extension (always on if mol contains zero-order bonds)\n\n";
       }
 
-      virtual const char* SpecificationURL()
+      const char* SpecificationURL() override
       {
         return "https://www.3dsbiovia.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html";
       }
 
-      virtual const char* GetMIMEType()
+      const char* GetMIMEType() override
       {
         return "chemical/x-mdl-molfile";
       }
 
-      virtual unsigned int Flags() { return DEFAULTFORMAT | ZEROATOMSOK; }
-      virtual const char* TargetClassDescription() { return OBMol::ClassDescription(); }
+      unsigned int Flags() override { return DEFAULTFORMAT | ZEROATOMSOK; }
+      const char* TargetClassDescription() override { return OBMol::ClassDescription(); }
 
-      virtual int SkipObjects(int n, OBConversion* pConv)
+      int SkipObjects(int n, OBConversion* pConv) override
       {
         if (n == 0)
           n++;
@@ -131,8 +131,8 @@ namespace OpenBabel
 
       ////////////////////////////////////////////////////
       /// The "API" interface functions
-      virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-      virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+      bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+      bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
       ////////////////////////////////////////////////////
       //V3000 routines
@@ -193,7 +193,7 @@ namespace OpenBabel
         OBConversion::RegisterFormat("sdf",this, "chemical/x-mdl-sdfile");
       }
 
-      virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
+      bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override
       {
         //The sd option ensures that a $$$$ is written at the end of the file
         pConv->AddOption("sd", OBConversion::OUTOPTIONS);

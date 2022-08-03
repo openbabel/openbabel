@@ -36,29 +36,29 @@ namespace OpenBabel
       OBConversion::RegisterFormat("caccrt",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Cacao Cartesian format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     static void SetHilderbrandt(OBMol&,vector<OBInternalCoord*>&);
   };
@@ -291,26 +291,27 @@ namespace OpenBabel
       OBConversion::RegisterFormat("cacint",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Cacao Internal format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL(){return
-        "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";}; //optional
+    const char* SpecificationURL() override {
+      return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";
+    } //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class

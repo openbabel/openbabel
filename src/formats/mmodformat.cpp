@@ -38,31 +38,31 @@ namespace OpenBabel
       OBConversion::RegisterFormat("mmod",this, "chemical/x-macromodel-input");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "MacroModel format\n"
         "No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "";}; //optional
+    const char* SpecificationURL() override
+    { return ""; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-macromodel-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-macromodel-input"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY;
-    };
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 

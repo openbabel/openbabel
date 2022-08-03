@@ -51,7 +51,7 @@ FastSearchFormat() : fsi(nullptr)
   OBConversion::RegisterOptionParam("e", this, 0, OBConversion::INOPTIONS);
 }
 
-virtual const char* Description() //required
+const char* Description() override  // required
 { return
   "Fastsearch format\n"
   "Fingerprint-aided substructure and similarity searching\n\n"
@@ -102,13 +102,13 @@ virtual const char* Description() //required
   "     Alternative to using exact in ``-s`` parameter, see above\n"
   " n  No further SMARTS filtering after fingerprint phase\n\n"
   ;
-};
+}
 
-  virtual unsigned int Flags(){return READBINARY | READONEONLY | WRITEBINARY;};
+  unsigned int Flags() override { return READBINARY | READONEONLY | WRITEBINARY; }
 
   public:
-    virtual bool ReadChemObject(OBConversion* pConv);
-    virtual bool WriteChemObject(OBConversion* pConv);
+    bool ReadChemObject(OBConversion* pConv) override;
+    bool WriteChemObject(OBConversion* pConv) override;
 
   private:
     bool ObtainTarget(OBConversion* pConv, std::vector<OBMol>& patternMols, const std::string& indexname);

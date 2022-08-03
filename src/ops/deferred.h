@@ -42,9 +42,9 @@ public:
     _pOp = pOp;
     _callDo = CallDo;
   }
-  virtual const char* Description() { return "Read and write an OBBase* array"; }
+  const char* Description() override { return "Read and write an OBBase* array"; }
 
-  virtual bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   {
     if(_obvec.empty())
     {
@@ -57,7 +57,7 @@ public:
     return true;
   }
 
-  virtual bool WriteChemObject(OBConversion* pConv)
+  bool WriteChemObject(OBConversion* pConv) override
   {
     OBBase* pOb = pConv->GetChemObject();
     if(!_callDo || _pOp->Do(pOb, "", pConv->GetOptions(OBConversion::GENOPTIONS), pConv))  

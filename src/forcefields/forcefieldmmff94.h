@@ -101,7 +101,7 @@ namespace OpenBabel
   {
     protected:
       //! \return Parses the parameter file
-      bool ParseParamFile();
+      bool ParseParamFile() override;
       bool ParseParamProp(std::string &filename);
       bool ParseParamDef(std::string &filename);
       bool ParseParamBond(std::string &filename);
@@ -119,15 +119,15 @@ namespace OpenBabel
       //! \return Get the MMFF94 atom type for atom
       int GetType(OBAtom *atom);
       //! \return Sets atomtypes to MMFF94 in _mol
-      bool SetTypes();
+      bool SetTypes() override;
       //! fill OBFFXXXCalculation vectors
-      bool SetupCalculations();
+      bool SetupCalculations() override;
       //! Setup pointers in OBFFXXXCalculation vectors
-      bool SetupPointers();
+      bool SetupPointers() override;
       //!  Sets formal charges
-      bool SetFormalCharges();
+      bool SetFormalCharges() override;
       //!  Sets partial charges
-      bool SetPartialCharges();
+      bool SetPartialCharges() override;
       //! \return The row of the element atom in the periodic table
       int GetElementRow(OBAtom *atom);
       //! \return The bond type (BTIJ)
@@ -257,13 +257,13 @@ namespace OpenBabel
       OBForceFieldMMFF94 &operator = (OBForceFieldMMFF94 &);
 
       //!Clone the current instance. May be desirable in multithreaded environments
-      virtual OBForceFieldMMFF94* MakeNewInstance()
+      OBForceFieldMMFF94* MakeNewInstance() override
       {
         return new OBForceFieldMMFF94(_id, false);
       }
 
       //! Get the description for this force field
-      const char* Description()
+      const char* Description() override
       {
         if (mmff94s)
           return "MMFF94s force field.";
@@ -272,63 +272,63 @@ namespace OpenBabel
       }
 
       //! Get the unit in which the energy is expressed
-      std::string GetUnit()
+      std::string GetUnit() override
       {
         return std::string("kcal/mol");
       }
 
       //! \return that analytical gradients are implemented for MMFF94
-      bool HasAnalyticalGradients() { return true; }
+      bool HasAnalyticalGradients() override { return true; }
 
       //! Returns total energy
-      double Energy(bool gradients = true);
+      double Energy(bool gradients = true) override;
       //! Returns the bond stretching energy
       template<bool> double E_Bond();
-      double E_Bond(bool gradients = true)
+      double E_Bond(bool gradients = true) override
       {
         return gradients ? E_Bond<true>() : E_Bond<false>();
       }
       //! Returns the angle bending energy
       template<bool> double E_Angle();
-      double E_Angle(bool gradients = true)
+      double E_Angle(bool gradients = true) override
       {
         return gradients ? E_Angle<true>() : E_Angle<false>();
       }
       //! Returns the stretch-bend energy
       template<bool> double E_StrBnd();
-      double E_StrBnd(bool gradients = true)
+      double E_StrBnd(bool gradients = true) override
       {
         return gradients ? E_StrBnd<true>() : E_StrBnd<false>();
       }
       //! Returns the torsional energy
       template<bool> double E_Torsion();
-      double E_Torsion(bool gradients = true)
+      double E_Torsion(bool gradients = true) override
       {
         return gradients ? E_Torsion<true>() : E_Torsion<false>();
       }
       //! Returns the out-of-plane bending energy
       template<bool> double E_OOP();
-      double E_OOP(bool gradients = true)
+      double E_OOP(bool gradients = true) override
       {
         return gradients ? E_OOP<true>() : E_OOP<false>();
       }
       //! Returns the Van der Waals energy (Buckingham potential)
       template<bool> double E_VDW();
-      double E_VDW(bool gradients = true)
+      double E_VDW(bool gradients = true) override
       {
         return gradients ? E_VDW<true>() : E_VDW<false>();
       }
       //! Returns the dipole-dipole interaction energy
       template<bool> double E_Electrostatic();
-      double E_Electrostatic(bool gradients = true)
+      double E_Electrostatic(bool gradients = true) override
       {
         return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>();
       }
 
       //! Validate MMFF94 using validation suite
-      bool Validate();
+      bool Validate() override;
       //! Compare and print the numerical and analytical gradients
-      bool ValidateGradients();
+      bool ValidateGradients() override;
 
   }; // class OBForceFieldMM2
 

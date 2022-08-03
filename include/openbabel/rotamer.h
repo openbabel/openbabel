@@ -57,7 +57,7 @@ namespace OpenBabel
         _type= OBGenericDataType::RotamerList;
         _attr="RotamerList";
       }
-		virtual OBGenericData* Clone(OBBase* parent) const;
+    OBGenericData* Clone(OBBase* parent) const override;
 
     ~OBRotamerList();
     //! Set up a rotamer list based on an already created OBRotorList

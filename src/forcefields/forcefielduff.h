@@ -93,13 +93,13 @@ namespace OpenBabel
   {
   protected:
     //!  Parses the parameter file
-    bool ParseParamFile();
+    bool ParseParamFile() override;
     //!  Sets atomtypes to UFF types in _mol
-    bool SetTypes();
+    bool SetTypes() override;
     //!  Fill OBFFXXXCalculation vectors
-    bool SetupCalculations();
+    bool SetupCalculations() override;
     //! Setup pointers in OBFFXXXCalculation vectors
-    bool SetupPointers();
+    bool SetupPointers() override;
     bool SetupVDWCalculation(OBAtom *a, OBAtom *b, OBFFVDWCalculationUFF &vdwcalc);
     //!  By default, electrostatic terms are disabled
     //!  This is discouraged, since the parameterization is not designed for it
@@ -137,7 +137,7 @@ namespace OpenBabel
     virtual ~OBForceFieldUFF();
 
      //!Clone the current instance. May be desirable in multithreaded environments
-     virtual OBForceFieldUFF* MakeNewInstance()
+     OBForceFieldUFF* MakeNewInstance() override
      {
        return new OBForceFieldUFF(_id, false);
      }
@@ -146,61 +146,61 @@ namespace OpenBabel
     OBForceFieldUFF &operator = (OBForceFieldUFF &);
 
     //! Get the description for this force field
-    const char* Description()
+    const char* Description() override
     {
       return "Universal Force Field.";
     }
 
     //! Get the unit in which the energy is expressed
-    std::string GetUnit()
+    std::string GetUnit() override
       {
         return std::string("kJ/mol");  // Note that we convert from kcal/mol internally
       }
 
     //! \return that analytical gradients are implemented for UFF
-    bool HasAnalyticalGradients() { return true; }
+    bool HasAnalyticalGradients() override { return true; }
 
     //! \return total energy
-    double Energy(bool gradients = true);
+    double Energy(bool gradients = true) override;
     //! \return the bond stretching energy
     template<bool> double E_Bond();
-    double E_Bond(bool gradients = true)
+    double E_Bond(bool gradients = true) override
     {
       return gradients ? E_Bond<true>() : E_Bond<false>();
     }
     //! Returns the angle bending energy
     template<bool> double E_Angle();
-    double E_Angle(bool gradients = true)
+    double E_Angle(bool gradients = true) override
     {
       return gradients ? E_Angle<true>() : E_Angle<false>();
     }
     //! Returns the torsional energy
     template<bool> double E_Torsion();
-    double E_Torsion(bool gradients = true)
+    double E_Torsion(bool gradients = true) override
     {
       return gradients ? E_Torsion<true>() : E_Torsion<false>();
     }
     //! Returns the out-of-plane bending energy
     template<bool> double E_OOP();
-    double E_OOP(bool gradients = true)
+    double E_OOP(bool gradients = true) override
     {
       return gradients ? E_OOP<true>() : E_OOP<false>();
     }
     //! Returns the Van der Waals energy (Buckingham potential)
     template<bool> double E_VDW();
-    double E_VDW(bool gradients = true)
+    double E_VDW(bool gradients = true) override
     {
       return gradients ? E_VDW<true>() : E_VDW<false>();
     }
     //! Returns the dipole-dipole interaction energy
     template<bool> double E_Electrostatic();
-    double E_Electrostatic(bool gradients = true)
+    double E_Electrostatic(bool gradients = true) override
     {
       return gradients ? E_Electrostatic<true>() : E_Electrostatic<false>();
     }
 
     //! Compare and print the numerical and analytical gradients
-    bool ValidateGradients();
+    bool ValidateGradients() override;
 
   }; // class OBForceFieldUFF
 

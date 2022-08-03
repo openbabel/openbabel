@@ -44,7 +44,7 @@ namespace OpenBabel
 
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ACR format\n"
@@ -54,25 +54,24 @@ namespace OpenBabel
         //			"  n  Omit (virtual) title\n"
         "Read Options e.g. -as\n"
         "  s  Consider single bonds only\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://pros.orange.fr/carine.crystallography/books/31/carine_31_us.pdf";};
+    const char* SpecificationURL() override
+    { return "http://pros.orange.fr/carine.crystallography/books/31/carine_31_us.pdf"; }
 
-    virtual const char* GetMIMEType() { return "chemical/x-acr"; };
+    const char* GetMIMEType() override { return "chemical/x-acr"; }
 
-
-	  virtual unsigned int Flags()
-	  {
+    unsigned int Flags() override
+    {
       return READONEONLY | NOTWRITABLE;
-	  };
+    }
 
-    virtual int SkipObjects(int n, OBConversion* pConv)
+    int SkipObjects(int n, OBConversion* pConv) override
     {
       return 0;
-    };
+    }
 
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
     //virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
 
   private:
