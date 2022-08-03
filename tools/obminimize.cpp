@@ -66,7 +66,9 @@ int main(int argc,char **argv)
     cout << endl;
     cout << "  -newton     use Newton2Num linesearch (default=Simple)" << endl;
     cout << endl;
-    cout << "  -ff ffid    select a forcefield:" << endl;
+    cout << "  -ff ffid    select a forcefield" << endl;
+    cout << endl;
+    cout << "  -o fmt      select the output file format" << endl;
     cout << endl;
     cout << "  -h          add hydrogen atoms" << endl;
     cout << endl;
@@ -79,6 +81,8 @@ int main(int argc,char **argv)
     cout << "  -rele rele  specify the Electrostatic cut-off distance (default=10.0)" << endl;
     cout << endl;
     cout << "  -pf freq    specify the frequency to update the non-bonded pairs (default=10)" << endl;
+    cout << endl;
+    cout << "available forcefields:" << endl;
     cout << endl;
     OBPlugin::List("forcefields", "verbose");
     exit(-1);

@@ -36,31 +36,64 @@ available forcefields.
 <p>
 <dl>
 
-<dt><b>-n</b> <i>steps</i></dt></dt>
-<dd>
-Specify the maximum number of steps (default=2500)
-
-<p></dd>
-
-<dt><b>-cg</b> </dt></dt>
-<dd>Use conjugate gradients algorithm (default)
-
-<p></dd>
-
-<dt><b>-sd</b> </dt></dt>
-<dd>Use steepest descent algorithm
-
-<p></dd>
-
-<dt><b>-c</b> <i>criteria</i></dt></dt>
+<dt><b>-c</b> <i>criteria</i></dt>
 <dd>
 Set convergence criteria (default=1e-6)
 
 <p></dd>
-
-<dt><b>-ff</b> <i>forcefield</i></dt></dt>
+<dt><b>-cg</b></dt>
 <dd>
-Select the forcefield
+Use conjugate gradients algorithm (default)
+
+<p></dd>
+<dt><b>-sd</b></dt>
+<dd>
+Use steepest descent algorithm
+
+<p></dd>
+<dt><b>-newton</b></dt>
+<dd>
+Use Newton2Num linesearch (default=Simple)
+
+<p></dd>
+<dt><b>-ff</b> <i>forcefield</i></dt>
+<dd>
+Select a forcefield
+
+<p></dd>
+<dt><b>-o</b> <i>format</i></dt>
+<dd>
+Select the output file format
+
+<p></dd>
+<dt><b>-h</b></dt>
+<dd>
+Add hydrogen atoms
+
+<p></dd>
+<dt><b>-n</b> <i>steps</i></dt>
+<dd>
+Specify the maximum numer of steps (default=2500)
+
+<p></dd>
+<dt><b>-cut</b></dt>
+<dd>
+Use cut-off (default=don't use cut-off)
+
+<p></dd>
+<dt><b>-rvdw</b> <i>rvdw</i></dt>
+<dd>
+Specify the VDW cut-off distance (default=6.0)
+
+<p></dd>
+<dt><b>-rele</b> <i>rele</i></dt>
+<dd>
+Specify the Electrostatic cut-off distance (default=10.0)
+
+<p></dd>
+<dt><b>-pf</b> <i>freq</i></dt>
+<dd>
+Specify the frequency to update the non-bonded pairs (default=10)
 
 <p></dd>
 </dl>
