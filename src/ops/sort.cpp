@@ -29,7 +29,7 @@ namespace OpenBabel
 {
 
 template<class T>
-struct Order : public std::binary_function<std::pair<OBBase*,T>, std::pair<OBBase*,T>, bool>
+struct Order
 {
   Order(OBDescriptor* pDesc, bool rev) : _pDesc(pDesc), _rev(rev){}
   bool operator()(std::pair<OBBase*,T> p1, std::pair<OBBase*,T> p2) const
