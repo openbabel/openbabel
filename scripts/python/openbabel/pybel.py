@@ -178,13 +178,16 @@ def readfile(format=None, filename=None, opt=None):
     obconversion = ob.OBConversion()
     formatok = obconversion.SetInFormat(format)
     if not formatok:
-        if filename == '>>/NONE':
-            raise ValueError("Input file does not exist")
+        if format:
+            raise ValueError("%s is not a recognised Open Babel format" % format)
         else:
-            raise ValueError(
-                "File format (%s) guessed from file (%s) "
-                "is not a recognised Open Babel format" % (format,filename)
-            )
+            if filename == '>>/NONE':
+                raise ValueError("Input file does not exist")
+            else:
+                raise ValueError(
+                    "File format (%s) guessed from file (%s) "
+                    "is not a recognised Open Babel format" % (format,filename)
+                )
     if not os.path.isfile(filename):
         raise OSError("Input file does not exist")
     if opt is None:
