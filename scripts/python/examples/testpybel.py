@@ -192,7 +192,7 @@ M  END
         self.assertRaises(OSError, self.RFreaderror)
 
     def RFformaterror(self):
-        mol = getattr(self.toolkit.readfile("noel", "head.sdf"), nextmethod)()
+        mol = getattr(self.toolkit.readfile("noel", self.head), nextmethod)()
 
     def testRFformaterror(self):
         """Test that invalid formats raise an error"""
