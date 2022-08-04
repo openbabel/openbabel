@@ -19,9 +19,9 @@ try:
         cinfony = None
     try:
         from openbabel import pybel
-        rdkit = cdk = None
     except ImportError:
         pybel = None
+    rdkit = cdk = None
 except AttributeError:
     from cinfony import cdk
     pybel = rdkit = None
@@ -192,7 +192,7 @@ M  END
         self.assertRaises(OSError, self.RFreaderror)
 
     def RFformaterror(self):
-        mol = getattr(self.toolkit.readfile("noel", "head.sdf"), nextmethod)()
+        mol = getattr(self.toolkit.readfile("noel", os.path.join(here,"head.sdf")), nextmethod)()
 
     def testRFformaterror(self):
         """Test that invalid formats raise an error"""
