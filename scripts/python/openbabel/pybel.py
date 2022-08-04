@@ -157,7 +157,7 @@ def readfile(format=None, filename=None, opt=None):
     43
     """
     if not os.path.isfile(filename):
-        raise IOError("No such file: '%s'" % filename)
+        raise ValueError("No such file: '%s'" % filename)
     if not format:
         if filename.endswith('.tgz'):
             new = filename[:-4]
