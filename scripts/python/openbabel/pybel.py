@@ -156,8 +156,14 @@ def readfile(format=None, filename=None, opt=None):
     >>> print atomtotal
     43
     """
+    # To be compitable with testing work inside `python/examples/testpybel.py`,
+    # "format" has to be checked first, ValueError should be raised, if it does
+    # not work, whether it's defined by user-input or guessed from filename.
+    #
+    # If filename does not exist, OSError should be raised instead.
     if not os.path.isfile(filename):
-        raise ValueError("No such file: '%s'" % filename)
+        # use a very unusual string to clarify errors when format not works
+        filename = '>>/NONE'
     if not format:
         if filename.endswith('.tgz'):
             new = filename[:-4]
@@ -172,7 +178,15 @@ def readfile(format=None, filename=None, opt=None):
     obconversion = ob.OBConversion()
     formatok = obconversion.SetInFormat(format)
     if not formatok:
-        raise ValueError("%s is not a recognised Open Babel format" % format)
+        if filename == '>>/NONE':
+            raise ValueError("Input file does not exist")
+        else:
+            raise ValueError(
+                "File format (%s) guessed from file (%s) "
+                "is not a recognised Open Babel format" % (format,filename)
+            )
+    if not os.path.isfile(filename):
+        raise OSError("Input file does not exist")
     if opt is None:
         opt = {}
     for k, v in opt.items():
