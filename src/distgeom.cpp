@@ -1016,12 +1016,12 @@ namespace OpenBabel {
     // random distance matrix
     Eigen::MatrixXd distMat = Eigen::MatrixXd::Zero(N, N);
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
     for (size_t i=0; i<N; ++i) {
       for(size_t j=0; j<i; ++j) {
         double lb = _d->GetLowerBounds(i, j);
         double ub = _d->GetUpperBounds(i, j);
-        double v = generator.NextFloat() * (ub - lb) + lb;
+        double v = generator.UniformReal(lb, ub);
         distMat(i, j) = v;
         distMat(j, i) = v;
       }
@@ -1175,7 +1175,7 @@ namespace OpenBabel {
     _mol.SetConformer(_mol.NumConformers());
 
     OBRandom generator(true); // Use system rand() functions
-    generator.TimeSeed();
+    generator.Reset();
 
     if (_d->debug) {
       cerr << " max box size: " << _d->maxBoxSize << endl;

@@ -95,7 +95,7 @@ namespace OpenBabel
     double l;
     do
       {
-        this->Set(singleRand.NextFloat()-0.5, singleRand.NextFloat()-0.5, singleRand.NextFloat()-0.5);
+        this->Set(singleRand.UniformReal(-0.5, 0.5), singleRand.UniformReal(-0.5, 0.5), singleRand.UniformReal(-0.5, 0.5));
         l = length_2();
       }
     while ( (l > 1.0) || (l < 1e-4) );

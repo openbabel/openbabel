@@ -1434,7 +1434,7 @@ namespace OpenBabel
     OBRotor *rotor;
 
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
     _origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1479,7 +1479,7 @@ namespace OpenBabel
       rotor = rl.BeginRotor(ri);
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
-        rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
+        rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u);
       }
       rotamers.AddRotamer(rotorKey);
     }
@@ -1604,7 +1604,7 @@ namespace OpenBabel
     OBRotor *rotor;
 
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
     int origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1752,11 +1752,10 @@ namespace OpenBabel
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
         rotorKey[i] = -1; // default = don't change dihedral
-        randFloat = generator.NextFloat();
-        if (randFloat < defaultRotor) // should we just leave this rotor with default setting?
+        if (generator.Bernoulli(defaultRotor)) // should we just leave this rotor with default setting?
           continue;
 
-        randFloat = generator.NextFloat();
+        randFloat = generator.UniformReal(0.0, 1.0);
         total = 0.0;
         for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
           if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
@@ -3417,10 +3416,9 @@ namespace OpenBabel
   {
     cout << "OBForceField::GenerateVelocities()" << endl;
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
-    double velocity;
 
     _velocityPtr = new double[_ncoords];
     memset(_velocityPtr, '\0', sizeof(double)*_ncoords);
@@ -3429,32 +3427,20 @@ namespace OpenBabel
       if (!_constraints.IsFixed(a->GetIdx()) || (_fixAtom == a->GetIdx()) || (_ignoreAtom == a->GetIdx())) {
         velocityIdx = (a->GetIdx() - 1) * 3;
 
-        // add twelve random numbers between 0.0 and 1.0,
-        // subtract 6.0 from their sum, multiply with sqrt(kT/m)
+        // sqrt(kT/m)
+        const double sigma = sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
         if (!_constraints.IsXFixed(a->GetIdx())) {
-          velocity = 0.0;
-          for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
-          velocity -= 6.0;
-          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
+          double velocity = generator.Normal(0.0, sigma);
           _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
         }
 
         if (!_constraints.IsYFixed(a->GetIdx())) {
-          velocity = 0.0;
-          for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
-          velocity -= 6.0;
-          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
+          double velocity = generator.Normal(0.0, sigma);
           _velocityPtr[velocityIdx+1] = velocity; // idem
         }
 
         if (!_constraints.IsZFixed(a->GetIdx())) {
-          velocity = 0.0;
-          for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
-          velocity -= 6.0;
-          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
+          double velocity = generator.Normal(0.0, sigma);
           _velocityPtr[velocityIdx+2] = velocity; // idem
         }
       }
