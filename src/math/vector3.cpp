@@ -84,22 +84,18 @@ namespace OpenBabel
   }
 
   /*! Replaces *this with a random unit vector, which is (supposed
-    to be) uniformly distributed over the unit sphere. Uses the
-    system number generator with a time seed.
-
+    to be) uniformly distributed over the unit sphere.
   */
   void vector3::randomUnitVector()
   {
-    OBRandom *ptr;
     static OBRandom singleRand(true);
-    ptr = &singleRand;
 
     // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
     // the vector to obtain a random vector of length 1.0.
     double l;
     do
       {
-        this->Set(ptr->NextFloat()-0.5, ptr->NextFloat()-0.5, ptr->NextFloat()-0.5);
+        this->Set(singleRand.NextFloat()-0.5, singleRand.NextFloat()-0.5, singleRand.NextFloat()-0.5);
         l = length_2();
       }
     while ( (l > 1.0) || (l < 1e-4) );
