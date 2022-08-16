@@ -27,6 +27,10 @@ GNU General Public License for more details.
 #include "../rand.h"
 #include <openbabel/obutil.h>
 
+#ifndef OB_USE_IMPROVED_RANDOM_UNIT_VECTOR
+#define OB_USE_IMPROVED_RANDOM_UNIT_VECTOR (OB_VERSION >= OB_VERSION_CHECK(4, 0, 0))
+#endif
+
 using namespace std;
 
 namespace OpenBabel
@@ -90,6 +94,7 @@ namespace OpenBabel
   {
     static OBRandom singleRand(true);
 
+#if !OB_USE_IMPROVED_RANDOM_UNIT_VECTOR
     // obtain a random vector with 0.001 <= length^2 <= 1.0, normalize
     // the vector to obtain a random vector of length 1.0.
     double l;
@@ -100,6 +105,12 @@ namespace OpenBabel
       }
     while ( (l > 1.0) || (l < 1e-4) );
     this->normalize();
+#else
+    double z = singleRand.UniformReal(-1.0, 1.0);
+    double phi = singleRand.UniformReal(0.0, 2 * M_PI);
+    double rho = sqrt(1.0 - z * z);
+    this->Set(rho * cos(phi), rho * sin(phi), z);
+#endif
   }
 
   OBAPI ostream& operator<< ( ostream& co, const vector3& v )
