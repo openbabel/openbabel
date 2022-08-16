@@ -83,10 +83,24 @@ namespace OpenBabel
     //! If sranddev is available (e.g., Mac OS X, BSD...) use this instead
     //! for more random seeds
     void TimeSeed();
+    void Reset() { TimeSeed(); }
     //! \return a random integer
     int NextInt();
     //! \return a random floating-point number between 0.0 and 1.0
     double NextFloat();
+    //! \param a lower bound
+    //! \param b upper bound
+    //! \warning this implementation has mudulo bias
+    int UniformInt(int a, int b) { return a + NextInt() % (b - a + 1); }
+    //! \param a lower bound
+    //! \param b upper bound
+    double UniformReal(double a, double b) { return a + (b - a) * NextFloat(); }
+    //! \param mu mean
+    //! \param sigma standard deviation
+    //! \warning normal distribution is approximated by Irwin–Hall distribution
+    double Normal(double mu, double sigma);
+    //! \param p probability of true
+    bool Bernoulli(double p = 0.5);
   };
 
 } // end namespace OpenBabel
