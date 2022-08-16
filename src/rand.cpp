@@ -520,6 +520,19 @@ namespace OpenBabel
 #endif
   }
 
+  double OBRandom::Normal(double mu, double sigma) {
+    const int n = 12;
+    double z = -0.5 * n;
+    for (int _ = 0; _ < n; _++) {
+      z += NextFloat();
+    }
+    return mu + z * sigma;
+  }
+
+  bool OBRandom::Bernoulli(double p) {
+    return UniformReal(0.0, 1.0) <= p;
+  }
+
 } //end namespace OpenBabel
 
 //! \file rand.cpp
