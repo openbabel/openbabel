@@ -24,6 +24,13 @@ will give all options including the available forcefields.
 .It Fl ff Ar forcefield
 Select the forcefield
 .El
+.Sh ENVIRONMENT
+.Bl -tag -width flag
+.It Ev OB_RANDOM_SEED
+Seed for pseudo random number generator; random seed is used if unset or null.
+This feature is effective if Open Babel is built with \fI-DOB_USE_OBRANDOMMT\fP cpreprocessor flag
+(will be automatically enabled when version 4 is released).
+.El
 .Sh EXAMPLES
 .Pp
 View the possible options, including available forcefields:
