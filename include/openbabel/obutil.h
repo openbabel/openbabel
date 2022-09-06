@@ -36,6 +36,10 @@ GNU General Public License for more details.
 #endif
 #endif
 
+#if HAVE_CLOCK_T
+#include <ctime>
+#endif
+
 #include <math.h>
 
 #ifndef M_PI
