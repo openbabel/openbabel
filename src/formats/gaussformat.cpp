@@ -1379,7 +1379,6 @@ namespace OpenBabel
         std::vector<double> coordinates_opt(coordinates_all.begin()+o, coordinates_all.begin()+m);
         std::vector<double> coordinates_last(coordinates_all.begin()+m, coordinates_all.begin()+n);
         coordinates_all.clear();
-        printf("opt.size = %zu last.size = %zu\n", coordinates_opt.size(), coordinates_last.size());
         int N = natoms;
         
         // START code from obrms.cpp line 90-106,110-142
