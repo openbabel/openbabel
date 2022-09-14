@@ -88,7 +88,7 @@ namespace OpenBabel
   /// Utility functions
   static void fixRhombohedralSpaceGroupWriter(string &strHM);
   static void fixRhombohedralSpaceGroupReader(string &strHM);
-  static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum);
+  static bool parseAtomRecord(char *buffer, OBMol & mol, int chainNum, bool *printedError);
   static bool parseConectRecord(char *buffer, OBMol & mol);
   static bool readIntegerFromRecord(char *buffer, unsigned int columnAsSpecifiedInPDB, long int *target);
 
@@ -136,7 +136,7 @@ namespace OpenBabel
     OBPairData *dp;
 
     // Hack by DvdS 2022-07-11
-    bool errorThrown = false;
+    bool printedError = false;
     // end
     
     mol.SetTitle(title);
@@ -164,13 +164,12 @@ namespace OpenBabel
         }
         if (EQn(buffer,"ATOM",4) || EQn(buffer,"HETATM",6))
           {
-            if( ! parseAtomRecord(buffer,mol,chainNum) && !errorThrown)
+              if( ! parseAtomRecord(buffer,mol,chainNum, &printedError) )
               {
                 stringstream errorMsg;
                 errorMsg << "WARNING: Problems reading a PDB file\n"
                          << "  Problems reading a ATOM/HETATM record.\n";
                 obErrorLog.ThrowError(__FUNCTION__, errorMsg.str() , obError);
-                errorThrown = true;
               }
             continue;
           }
@@ -898,7 +897,7 @@ namespace OpenBabel
 	77 - 78        LString(2)      Element symbol, right-justified.
 	79 - 80        LString(2)      Charge on the atom.
   */
-  static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/)
+static bool parseAtomRecord(char *buffer, OBMol &mol,int /*chainNum*/, bool *printedError)
   /* ATOMFORMAT "(i5,1x,a4,a1,a3,1x,a1,i4,a1,3x,3f8.3,2f6.2,a2,a2)" */
   {
     string sbuf = &buffer[6];
@@ -940,7 +939,7 @@ namespace OpenBabel
           }
       }
 
-    if (!elementFound)
+    if (!elementFound && !*printedError)
       {
         stringstream errorMsg;
         errorMsg << "WARNING: Problems reading a PDB file\n"
@@ -949,6 +948,7 @@ namespace OpenBabel
                  << "  columns 77-78 should contain the element symbol of an atom.\n"
                  << "  but OpenBabel found '" << element << "' (atom " << mol.NumAtoms()+1 << ")";
         obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+        *printedError = true;
       }
 
     // charge - optional
