@@ -648,7 +648,9 @@ namespace OpenBabel
 
             // Added by MMW START; put all sets of coordinates in coordinates_all
             for (auto it = coordinates.begin(); it != coordinates.end(); it++)
-              coordinates_all.push_back(*it);
+            {
+                coordinates_all.push_back(*it);
+            }
             // Added by MMW END
 
             coordinates.clear();
@@ -664,9 +666,9 @@ namespace OpenBabel
                   // ######## Added by MMW START ######## 
                   // Takes the last dipole calculation of three calculations (before it was the first one)
                   if (mol.HasData("Dipole Moment"))                                               
-                    {                                                                                    
+                  {                                                                                    
                       mol.DeleteData("Dipole Moment"); // Delete the old one to add the new one.  
-                    }
+                  }
                   // ######## Added by MMW END ######## 
 
                   dipoleMoment->SetAttribute("Dipole Moment");
@@ -1363,86 +1365,95 @@ namespace OpenBabel
     int ncoords_all = 0;
     int nsets = 0;
     
+    // The target of the fitting is to find this rotation matrix
+    double rmatrix[3][3] = { 0 };
 
     ncoords = natoms*3;
     ncoords_all = coordinates_all.size();
     nsets = ncoords_all/ncoords;
+    if (nsets > 1)
+    {
+        int m = ncoords_all - ncoords;
+        int n = ncoords_all;
+        int o = ncoords_all - (ncoords*nsets);
+        std::vector<double> coordinates_opt(coordinates_all.begin()+o, coordinates_all.begin()+m);
+        std::vector<double> coordinates_last(coordinates_all.begin()+m, coordinates_all.begin()+n);
+        coordinates_all.clear();
+        printf("opt.size = %zu last.size = %zu\n", coordinates_opt.size(), coordinates_last.size());
+        int N = natoms;
+        
+        // START code from obrms.cpp line 90-106,110-142
+        double *refcoord = (double*)alloca(sizeof(double)*N * 3);
+        double *testcoord = (double*)alloca(sizeof(double)*N * 3);
+        
+        for (unsigned i = 0; i < N; i++)
+        {
+            //obmol indices are 1-indexed while the mapper is zero indexed 
+            //const OBAtom *ratom = ref->GetAtom(map[i].first + 1);
+            //const OBAtom *tatom = test.GetAtom(map[i].second + 1);
+            //assert(ratom && tatom);
+        
+            for (unsigned c = 0; c < 3; c++)
+            {
+                refcoord[3 * i + c] = coordinates_last.at(3 * i + c); //ratom->GetVector()[c];
+                testcoord[3 * i + c] = coordinates_opt.at(3 * i + c); //tatom->GetVector()[c];
+            }
+        }
     
-    int m = ncoords_all - ncoords, n = ncoords_all, o = ncoords_all - (ncoords*2);
-    std::vector<double> coordinates_opt(coordinates_all.begin()+o, coordinates_all.begin()+m);
-    std::vector<double> coordinates_last(coordinates_all.begin()+m, coordinates_all.begin()+n);
-    coordinates_all.clear();
-
-    int N = natoms;
-
-    // START code from obrms.cpp line 90-106,110-142
-    double *refcoord = (double*)alloca(sizeof(double)*N * 3);
-    double *testcoord = (double*)alloca(sizeof(double)*N * 3);
-
-    for (unsigned i = 0; i < N; i++)
-    {
-      //obmol indices are 1-indexed while the mapper is zero indexed 
-      //const OBAtom *ratom = ref->GetAtom(map[i].first + 1);
-      //const OBAtom *tatom = test.GetAtom(map[i].second + 1);
-      //assert(ratom && tatom);
-
-      for (unsigned c = 0; c < 3; c++)
-      {
-        refcoord[3 * i + c] = coordinates_last.at(3 * i + c); //ratom->GetVector()[c];
-        testcoord[3 * i + c] = coordinates_opt.at(3 * i + c); //tatom->GetVector()[c];
-      }
+        double rave[3] = { 0, 0, 0 };
+        double tave[3] ={ 0, 0, 0 };
+        //center
+        for (unsigned i = 0; i < N; i++)
+        {
+            for (unsigned c = 0; c < 3; c++)
+            {
+                rave[c] += refcoord[3 * i + c];
+                tave[c] += testcoord[3 * i + c];
+            }
+        }
+        
+        for (unsigned c = 0; c < 3; c++)
+        {
+            rave[c] /= N;
+            tave[c] /= N;
+        }
+        
+        for (unsigned i = 0; i < N; i++)
+        {
+            for (unsigned c = 0; c < 3; c++)
+            {
+                refcoord[3 * i + c] -= rave[c];
+                testcoord[3 * i + c] -= tave[c];
+            }
+        }
+        qtrfit(refcoord, testcoord, N, rmatrix);
     }
-
-    double rmatrix[3][3] = { 0 };
-    double rave[3] = { 0, 0, 0 };
-    double tave[3] ={ 0, 0, 0 };
-    //center
-    for (unsigned i = 0; i < N; i++)
+    else
     {
-      for (unsigned c = 0; c < 3; c++)
-      {
-        rave[c] += refcoord[3 * i + c];
-        tave[c] += testcoord[3 * i + c];
-      }
+        rmatrix[0][0] = rmatrix[1][1] = rmatrix[2][2] = 1;
     }
-
-    for (unsigned c = 0; c < 3; c++)
-    {
-      rave[c] /= N;
-      tave[c] /= N;
-    }
-
-    for (unsigned i = 0; i < N; i++)
-    {
-      for (unsigned c = 0; c < 3; c++)
-      {
-        refcoord[3 * i + c] -= rave[c];
-        testcoord[3 * i + c] -= tave[c];
-      }
-    }
-    qtrfit(refcoord, testcoord, N, rmatrix);
     // END code from obrms.cpp
     
     // Rotate esp grid points to match the last set of coordinates
     if (nullptr == esp)  
     {                                      
-      esp = new OpenBabel::OBFreeGrid();   
-      for (int i = 0; i < esp_V.size(); i++)
-      {  
-        double x_rotate = esp_x.at(i)*rmatrix[0][0]  + esp_y.at(i)*rmatrix[0][1] + esp_z.at(i)*rmatrix[0][2];
-        double y_rotate = esp_x.at(i)*rmatrix[1][0]  + esp_y.at(i)*rmatrix[1][1] + esp_z.at(i)*rmatrix[1][2];
-        double z_rotate = esp_x.at(i)*rmatrix[2][0]  + esp_y.at(i)*rmatrix[2][1] + esp_z.at(i)*rmatrix[2][2];
-        esp->AddPoint(x_rotate, y_rotate, z_rotate, esp_V.at(i)); 
-      } 
-    esp_x.clear();
-    esp_y.clear();
-    esp_z.clear();
-    esp_V.clear();   
-    esp->SetAttribute("Electrostatic Potential");
-    esp->SetOrigin(fileformatInput);
-    mol.SetData(esp);
-    ESPisAdded = true;    
-    }  
+        esp = new OpenBabel::OBFreeGrid();   
+        for (int i = 0; i < esp_V.size(); i++)
+        {  
+            double x_rotate = esp_x.at(i)*rmatrix[0][0]  + esp_y.at(i)*rmatrix[0][1] + esp_z.at(i)*rmatrix[0][2];
+            double y_rotate = esp_x.at(i)*rmatrix[1][0]  + esp_y.at(i)*rmatrix[1][1] + esp_z.at(i)*rmatrix[1][2];
+            double z_rotate = esp_x.at(i)*rmatrix[2][0]  + esp_y.at(i)*rmatrix[2][1] + esp_z.at(i)*rmatrix[2][2];
+            esp->AddPoint(x_rotate, y_rotate, z_rotate, esp_V.at(i)); 
+        } 
+        esp_x.clear();
+        esp_y.clear();
+        esp_z.clear();
+        esp_V.clear();   
+        esp->SetAttribute("Electrostatic Potential");
+        esp->SetOrigin(fileformatInput);
+        mol.SetData(esp);
+        ESPisAdded = true;    
+    }
     // Added by MMW END  
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
