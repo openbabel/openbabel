@@ -58,7 +58,7 @@ void test_ChemDraw_Basic()
     // cyclohexane -> benzene reaction, plus another cyclohexane drawn on its own
     { "molrxnmix.cdx", "C1CCCCC1>>c1ccccc1\t\nC1CCCCC1\t\n" },
     { "MeCN.cdx", "CC#N\t\n"},
-    { "acetate.cdx", "CC(=O)[O-1]\t\n"}
+    { "acetate.cdx", "CC(=O)[O-]\t\n"}
   };
 
   ios_base::openmode imode = ios_base::in | ios_base::binary;
