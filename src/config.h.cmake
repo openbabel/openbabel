@@ -31,6 +31,20 @@
  #define OB_HIDDEN
 #endif
 
+// deprecated attribute (C++14)
+#if defined(__has_cpp_attribute) && !defined(SWIG)
+  #if __has_cpp_attribute(deprecated)
+    #define OB_DEPRECATED [[deprecated]]
+    #define OB_DEPRECATED_MSG(msg) [[deprecated(msg)]]
+  #else
+    #define OB_DEPRECATED
+    #define OB_DEPRECATED_MSG(msg)
+  #endif
+#else
+  #define OB_DEPRECATED
+  #define OB_DEPRECATED_MSG(msg)
+#endif
+
 /* Used to export symbols for DLL / shared library builds */
 #if defined(MAKE_OBDLL) // e.g. in src/main.cpp
  #ifndef OB_EXTERN
@@ -149,12 +163,6 @@
 /* have struct clock_t */
 #cmakedefine HAVE_CLOCK_T 1
 
-/* shared pointer implementation to be used */
-#cmakedefine OB_SHARED_PTR_IMPLEMENTATION @OB_SHARED_PTR_IMPLEMENTATION@
-
-/* header to be included for shared pointers */
-#cmakedefine OB_SHARED_PTR_HEADER <@OB_SHARED_PTR_HEADER@>
-
 #if defined(WIN32)
  #ifndef HAVE_SNPRINTF
   #define snprintf _snprintf
@@ -182,8 +190,8 @@
 #define OB_MODULE_PATH "@OB_MODULE_PATH@"
 
 #ifndef TIME_WITH_SYS_TIME
-  #ifdef HAVE_SYS_TIME
-    #ifdef HAVE_TIME
+  #ifdef HAVE_SYS_TIME_H
+    #ifdef HAVE_TIME_H
       #define TIME_WITH_SYS_TIME 1
     #else
       #define TIME_WITH_SYS_TIME 0

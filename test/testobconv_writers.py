@@ -108,7 +108,7 @@ def get_mol(test_case, mol):
             
         mol = ob.OBMol()
         if not _smi_conv.ReadString(mol, smiles):
-            test_case.assert_("Cannot parse SMILES %r" % (smiles,))
+            test_case.fail("Cannot parse SMILES %r" % (smiles,))
         mol.SetTitle(title)
         return mol
 
@@ -120,7 +120,7 @@ def get_mol(test_case, mol):
 def get_converter(test_case, output_format, options=None):
     conv = ob.OBConversion()
     if not conv.SetInAndOutFormats("smi", output_format):
-        test_case.assert_("Cannot set output format %r" % (output_format,))
+        test_case.fail("Cannot set output format %r" % (output_format,))
     
     if options:
         # Can pass in a dictionary ...
@@ -155,7 +155,7 @@ def test_write_string(test_case, mol, conv, expected_output, normalize):
         print(output)
         print("===")
     if 0:
-        save_to_pasteboard(text)
+        save_to_pasteboard(output)
 
     # Apply normalizations to both sides
     if normalize is not None:

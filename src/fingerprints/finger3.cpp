@@ -60,7 +60,7 @@ public:
   }
 
 /////////////////////////////////////////////////////////////////////////////
-  virtual const char* Description()
+  const char* Description() override
   {
     static string desc;
     //Read patterns file if it has not been done already,
@@ -81,16 +81,16 @@ public:
 
 //////////////////////////////////////////////////////////////////////////////
   //Each bit represents a single substructure
-  virtual unsigned int Flags() { return FPT_UNIQUEBITS;};
+  unsigned int Flags() override { return FPT_UNIQUEBITS; }
 
 ///////////////////////////////////////////////////////////////////////////////
-  virtual PatternFP* MakeInstance(const std::vector<std::string>& textlines)
+  PatternFP* MakeInstance(const std::vector<std::string>& textlines) override
   {
     return new PatternFP(textlines[1].c_str(),textlines[2].c_str());
   }
 
 ////////////////////////////////////////////////////////////////////////////////
-  virtual bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int foldbits)
+  bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int foldbits) override
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)
@@ -244,7 +244,7 @@ public:
   }
 
 ///////////////////////////////////////////////////////////////////////////////
-  virtual string DescribeBits(const vector<unsigned int> fp, bool bSet=true)
+  string DescribeBits(const vector<unsigned int> fp, bool bSet=true) override
   {
     //checkmol-type output with tab separated functional group names
     stringstream ss;

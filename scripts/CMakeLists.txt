@@ -106,7 +106,9 @@ if (DO_PYTHON_BINDINGS)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
+            LIBRARY_OUTPUT_DIRECTORY "${openbabel_SOURCE_DIR}/scripts/python/openbabel/"
             SUFFIX .so )
+      if( "${PYTHON_INSTDIR}" STREQUAL "" )
         execute_process(
           COMMAND
           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
@@ -123,6 +125,7 @@ if (DO_PYTHON_BINDINGS)
           )
           set(PYTHON_INSTDIR "${PYTHON_INSTDIR}/dist-packages")
 	endif()
+      endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
@@ -237,11 +240,14 @@ include_directories(
       add_dependencies(bindings_java openbabel)
     endif()
 
+    if( "${JAVA_INSTDIR}" STREQUAL "" )
+      set( JAVA_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(TARGETS bindings_java
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION "${JAVA_INSTDIR}"
             COMPONENT bindings_java)
     install(FILES ${openbabel_SOURCE_DIR}/scripts/java/openbabel.jar
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION "${JAVA_INSTDIR}"
             COMPONENT bindings_java)
 
 endif (DO_JAVA_BINDINGS)
@@ -292,11 +298,14 @@ if (DO_R_BINDINGS)
 		 add_dependencies(bindings_R openbabel)
     endif()
 
+    if( "${R_INSTDIR}" STREQUAL "" )
+      set( R_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
 	 install(TARGETS bindings_R
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION "${R_INSTDIR}"
 				COMPONENT bindings_R)
 	 install(FILES ${openbabel_BINARY_DIR}/scripts/R/openbabel_R.R
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION "${R_INSTDIR}"
 				COMPONENT bindings_R)
 
 endif (DO_R_BINDINGS)
@@ -372,11 +381,14 @@ if (DO_PERL_BINDINGS)
       add_dependencies(bindings_perl openbabel)
     endif()
 
+    if( "${PERL_INSTDIR}" STREQUAL "" )
+      set( PERL_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(TARGETS bindings_perl
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}/auto/Chemistry/OpenBabel/
+            LIBRARY DESTINATION ${PERL_INSTDIR}/auto/Chemistry/OpenBabel/
             COMPONENT bindings_perl)
     install(FILES ${openbabel_SOURCE_DIR}/scripts/perl/OpenBabel.pm
-            DESTINATION ${LIB_INSTALL_DIR}/Chemistry/
+            DESTINATION ${PERL_INSTDIR}/Chemistry/
             COMPONENT bindings_perl)
 
 endif (DO_PERL_BINDINGS)
@@ -434,8 +446,11 @@ if (DO_RUBY_BINDINGS)
       add_dependencies(bindings_ruby openbabel)
     endif()
 
+    if( "${RUBY_INSTDIR}" STREQUAL "" )
+      set( RUBY_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(TARGETS bindings_ruby
-            LIBRARY DESTINATION ${LIB_INSTALL_DIR}
+            LIBRARY DESTINATION ${RUBY_INSTDIR}
             COMPONENT bindings_ruby)
 
 endif (DO_RUBY_BINDINGS)
@@ -487,8 +502,11 @@ if (DO_CSHARP_BINDINGS)
     target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
     set_target_properties(bindings_csharp PROPERTIES
         OUTPUT_NAME openbabel_csharp )
-    install(TARGETS bindings_csharp LIBRARY DESTINATION ${LIB_INSTALL_DIR})
-    install(FILES ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll DESTINATION ${LIB_INSTALL_DIR})
+    if( "${CSHARP_INSTDIR}" STREQUAL "" )
+      set( CSHARP_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
+    install(TARGETS bindings_csharp LIBRARY DESTINATION "${CSHARP_INSTDIR}")
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/csharp/OBDotNet.dll DESTINATION "${CSHARP_INSTDIR}")
 
 endif (DO_CSHARP_BINDINGS)
 
@@ -569,11 +587,15 @@ if (DO_PHP_BINDINGS)
     install(TARGETS bindings_php
             LIBRARY DESTINATION ${PHP_EXTENSION_DIR}
 	    COMPONENT bindings_php)
+
+    if( "${PHP_INSTDIR}" STREQUAL "" )
+      set( PHP_INSTDIR "${LIB_INSTALL_DIR}" )
+    endif()
     install(FILES ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
-            DESTINATION ${LIB_INSTALL_DIR}
+            DESTINATION "${PHP_INSTDIR}"
 	    COMPONENT bindings_php)
-	install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
-	        DESTINATION ${LIB_INSTALL_DIR}
+    install(FILES ${openbabel_SOURCE_DIR}/scripts/php/baphpel.php
+            DESTINATION "${PHP_INSTDIR}"
 	    COMPONENT bindings_php)
 
 endif (DO_PHP_BINDINGS)

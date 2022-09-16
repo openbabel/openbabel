@@ -21,27 +21,10 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 #include <openbabel/descriptor.h>
 #include <openbabel/inchiformat.h>
-#if defined(_MSC_VER) || defined(_LIBCPP_VERSION)
-  #include <unordered_map>
-#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__))
-  #include <tr1/unordered_map>
-#else
-  #ifdef USE_BOOST
-    #include <boost/tr1/unordered_map.hpp>
-  #else
-    #define NO_UNORDERED_MAP
-    #include <map>
-  #endif
-#endif
+#include <unordered_map>
 
 using namespace std;
-#ifndef NO_UNORDERED_MAP
-  #ifdef _LIBCPP_VERSION
-    using std::unordered_map;
-  #else
-    using std::tr1::unordered_map;
-  #endif
-#endif
+
 namespace OpenBabel
 {
 
@@ -52,7 +35,7 @@ public:
     OBConversion::RegisterOptionParam("unique", nullptr, 1, OBConversion::GENOPTIONS);
   }
 
-  const char* Description(){ return
+  const char* Description() override { return
     "[param] remove duplicates by descriptor;default inchi\n"
     "param is a descriptor or property, or a truncation spec for InChI\n"
     "(making the comparison less detailed, see below).\n"
@@ -71,8 +54,8 @@ public:
     "/noiso    ignore isotopes\n\n"
 ; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv) override;
 
 private:
 
@@ -82,11 +65,7 @@ private:
   unsigned _ndups;
   bool _inv;
 
-#ifdef NO_UNORDERED_MAP
-  typedef map<std::string, std::string> UMap;
-#else
   typedef unordered_map<std::string, std::string> UMap;
-#endif
 
   //key is descriptor text(usually inchi) value is molecule title
   UMap _inchimap;

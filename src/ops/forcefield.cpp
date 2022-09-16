@@ -48,7 +48,7 @@ namespace OpenBabel
     public:
       OpEnergy(const char *ID) : OBOp(ID, false) {}
 
-      const char* Description()
+      const char* Description() override
       {
         return "ForceField Energy Evaluation (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yy --energy --log\n"
@@ -63,11 +63,11 @@ namespace OpenBabel
           ;
       }
 
-      virtual bool WorksWith(OBBase* pOb) const
+      bool WorksWith(OBBase* pOb) const override
       {
         return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
-      virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+      bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
   };
 
   //////////////////////////////////////////////////////////
@@ -137,7 +137,7 @@ namespace OpenBabel
     public:
       OpMinimize(const char* ID) : OBOp(ID, false) {}
 
-      const char* Description()
+      const char* Description() override
       {
         return "ForceField Energy Minimization (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yyy --minimize --steps 1500 --sd\n"
@@ -160,11 +160,11 @@ namespace OpenBabel
           ;
       }
 
-      virtual bool WorksWith(OBBase* pOb) const
+      bool WorksWith(OBBase* pOb) const override
       {
         return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
-      virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+      bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
   };
 
   //////////////////////////////////////////////////////////

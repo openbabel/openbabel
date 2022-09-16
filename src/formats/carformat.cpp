@@ -37,29 +37,29 @@ namespace OpenBabel
       OBConversion::RegisterFormat("arc",this, "chemical/x-msi-car");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Accelrys/MSI Biosym/Insight II CAR format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    { return "http://www.centrcn.umontreal.ca/accelrys/life/insight2000.1/formats980/Files980TOC.doc.html";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.centrcn.umontreal.ca/accelrys/life/insight2000.1/formats980/Files980TOC.doc.html"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-msi-car"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-msi-car"; }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class

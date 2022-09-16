@@ -73,7 +73,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("pdbqt",this, "chemical/x-pdbqt");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
 
@@ -93,21 +93,21 @@ namespace OpenBabel
       "  s  Output as a flexible residue\n"
       "  p  Preserve atom indices from input file (default is to renumber atoms sequentially)\n"
       "  h  Preserve hydrogens\n"
-			"  n  Preserve atom names\n\n";
-    };
+      "  n  Preserve atom names\n\n";
+    }
 
-    virtual const char* SpecificationURL()
-      {return "http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file";};
+    const char* SpecificationURL() override
+      { return "http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file"; }
 
-    virtual const char* GetMIMEType()
-      {return "chemical/x-pdbqt";};
+    const char* GetMIMEType() override
+      { return "chemical/x-pdbqt"; }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual int SkipObjects(int n, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    int SkipObjects(int n, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
   //***

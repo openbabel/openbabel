@@ -37,31 +37,31 @@ namespace OpenBabel
       OBConversion::RegisterFormat("ins",this, "chemical/x-shelx");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ShelX format\n"
         "Read Options e.g. -as\n"
         " s  Output single bonds only\n"
         " b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://shelx.uni-ac.gwdg.de/SHELX/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://shelx.uni-ac.gwdg.de/SHELX/"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-shelx"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-shelx"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

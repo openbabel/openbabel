@@ -74,8 +74,8 @@ class TestCdJsonFormat(PybelWrapper):
         output = json.loads(mols[0].write('cdjson'))
         self.assertEqual(len(output['m'][0]['a']), 4)
         for a in output['m'][0]['a']:
-            self.assertTrue('x' in a)
-            self.assertTrue('y' in a)
+            self.assertIn('x', a)
+            self.assertIn('y', a)
 
     def test_write_bonds(self):
         """Test writing bonds."""
@@ -87,9 +87,9 @@ class TestCdJsonFormat(PybelWrapper):
         """Test writing minified output."""
         mols = list(pybel.readfile("cdjson", os.path.join(filedir, 'butane.json')))
         output = mols[0].write('cdjson', opt={'m': None})
-        self.assertTrue('\n' not in output)
+        self.assertNotIn('\n', output)
         output = mols[0].write('cdjson')
-        self.assertTrue('\n' in output)
+        self.assertIn('\n', output)
 
 
 if __name__ == "__main__":

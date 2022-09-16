@@ -57,7 +57,7 @@ namespace OpenBabel
 				OBConversion::RegisterOptionParam(levels_option, this, 1);
 			}
 
-			virtual const char* Description()
+			const char* Description() override
 			{
         stringstream ss;
 				ss <<
@@ -144,19 +144,19 @@ namespace OpenBabel
 				static const string s(ss.str());
 
 				return s.c_str();
-			};
+			}
 
-			virtual const char* SpecificationURL()
+			const char* SpecificationURL() override
 			{
 				return "http://openbabel.org/wiki/Multilevel_Neighborhoods_of_Atoms";
-			};
+			}
 
-			virtual unsigned int Flags()
+			unsigned int Flags() override
 			{
 				return NOTREADABLE;	// possibly WRITEONEONLY??
-			};
+			}
 
-			virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+			bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 			static MNAZ Z2MNAZ(unsigned);
 
 		private:

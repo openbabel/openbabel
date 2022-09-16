@@ -30,8 +30,8 @@ GNU General Public License for more details.
 #include "../src/rand.cpp"
 
 #include <iostream>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdlib>
+#include <cstring>
 #include <cstdio>
 
 #define REPEAT 1000

@@ -46,11 +46,11 @@ class OpNewS : public OBOp
 {
 public:
   OpNewS(const char* ID) : OBOp(ID, false){}
-  const char* Description();
-  virtual bool WorksWith(OBBase* pOb)const{ return dynamic_cast<OBMol*>(pOb)!=nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+  const char* Description() override;
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
   std::vector<int> GetMatchAtoms(){ return firstmatch; }
-  virtual bool ProcessVec(std::vector<OBBase*>& vec);//Extra target mols
+  bool ProcessVec(std::vector<OBBase*>& vec) override; //Extra target mols
 
 private:
   std::vector<std::string> vec; //parsed parameter text

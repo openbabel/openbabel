@@ -75,22 +75,22 @@ namespace OpenBabel {
   class SMIBaseFormat : public OBMoleculeFormat
   {
   public:
-    virtual const char* GetMIMEType()
-    { return "chemical/x-daylight-smiles"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-daylight-smiles"; }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     ///////////////////////////////////////////////////////
 
-    virtual const char* TargetClassDescription(){return OBMol::ClassDescription();};
+    const char* TargetClassDescription() override { return OBMol::ClassDescription(); }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.daylight.com/smiles/";};
+    const char* SpecificationURL() override
+    { return "http://www.daylight.com/smiles/"; }
 
-    virtual int SkipObjects(int n, OBConversion* pConv)
+    int SkipObjects(int n, OBConversion* pConv) override
     {
       if(n==0) return 1; //already points after current line
       istream& ifs = *pConv->GetInStream();
@@ -127,7 +127,7 @@ namespace OpenBabel {
       OBConversion::RegisterOptionParam("x", this);
       OBConversion::RegisterOptionParam("C", this);	// "anti-canonical" form (random order)
     }
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "SMILES format\n"
@@ -213,7 +213,7 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("can", this, "chemical/x-daylight-cansmiles");
     }
 
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv)
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override
     {
       //The "c" option sets us to use canonical ordering
       pConv->AddOption("c",OBConversion::OUTOPTIONS);
@@ -222,7 +222,7 @@ namespace OpenBabel {
 
     ///////////////////////////////////////////////////////
 
-    virtual const char* Description() {
+    const char* Description() override {
       return
         "Canonical SMILES format\n"
         "A canonical form of the SMILES linear text format\n"
@@ -251,7 +251,7 @@ namespace OpenBabel {
         "     The output will be rearranged so that any additional\n"
         "     SMILES added to the end will be attached to this atom.\n"
         "     See the :ref:`SMILES_format` for more information.\n\n";
-    };
+    }
 
   };
 
@@ -4250,26 +4250,26 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("fix",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "SMILES FIX format\n"
         "  No comments yet\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "";}; //optional
+    const char* SpecificationURL() override
+    { return ""; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

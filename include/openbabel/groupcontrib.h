@@ -54,15 +54,16 @@ public:
   OBGroupContrib(const char* ID, const char* filename, const char* descr)
     : OBDescriptor(ID, false), _filename(filename), _descr(descr), _debug(false){}
 
-  virtual const char* Description();
+  virtual ~OBGroupContrib();
 
-  virtual OBGroupContrib* MakeInstance(const std::vector<std::string>& textlines)
+  const char* Description() override;
+
+  virtual OBGroupContrib* MakeInstance(const std::vector<std::string>& textlines) override
   {
     return new OBGroupContrib(textlines[1].c_str(),textlines[2].c_str(),textlines[3].c_str());
   }
 
-
-  virtual double Predict(OBBase* pOb, std::string* param=nullptr);
+  double Predict(OBBase* pOb, std::string* param=nullptr) override;
 
  private:
   bool ParseFile();

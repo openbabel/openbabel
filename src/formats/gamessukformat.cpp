@@ -23,12 +23,12 @@
 
 #include <algorithm>
 #include <cmath>
-
-#ifdef _MSC_VER
+#include <regex>
+/*#ifdef _MSC_VER
 #include <regex>
 #else
 #include <regex.h>
-#endif
+#endif*/
 
 using namespace std;
 
@@ -507,29 +507,29 @@ namespace OpenBabel
     }
 
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "GAMESS-UK Input\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.cfs.dl.ac.uk";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.cfs.dl.ac.uk"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gamessuk-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gamessuk-input"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY; // | NOTREADABLE;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class
@@ -713,18 +713,18 @@ namespace OpenBabel
     GAMESSUKOutputFormat()
     { OBConversion::RegisterFormat("gukout",this, "chemical/x-gamess-output"); }
 
-    virtual const char* Description() //required
-    { return "GAMESS-UK Output\n"; };
+    const char* Description() override  // required
+    { return "GAMESS-UK Output\n"; }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.cfs.dl.ac.uk";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.cfs.dl.ac.uk"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-gamessuk-output"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-gamessuk-output"; }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     enum RunType_t { UNKNOWN, SINGLEPOINT, OPTXYZ, OPTZMAT, SADDLE, FREQUENCIES };
@@ -797,20 +797,20 @@ namespace OpenBabel
     //                     ------label--------   -------charge-------- < seems enough for a match
     string pattern(" *\\* *[a-zA-Z]{1,2}[0-9]* *[0-9]{1,3}\\.[0-9]{1}");
     bool iok;
-#ifdef _MSC_VER
-    std::tr1::regex myregex;
+//#ifdef _MSC_VER
+    regex myregex;
     try {
       myregex.assign(pattern,
-                     std::tr1::regex_constants::extended |
-                     std::tr1::regex_constants::nosubs);
+                     regex_constants::extended |
+                     regex_constants::nosubs);
       iok = true;
-    } catch (std::tr1::regex_error ex) {
+    } catch (regex_error ex) {
       iok = false;
     }
-#else
+/*#else
     regex_t *myregex = new regex_t;
     iok = regcomp(myregex, pattern.c_str(), REG_EXTENDED | REG_NOSUB)==0;
-#endif
+#endif*/
     if (!iok) cerr << "Error compiling regex in GUK OUTPUT!\n";
 
     // Read in the coordinates - we process them directly rather
@@ -820,11 +820,11 @@ namespace OpenBabel
 
       // End of geometry block
       if (strstr(buffer, "*************************") != nullptr) break;
-#ifdef _MSC_VER
-      if (std::tr1::regex_search(buffer, myregex)) {
-#else
+//#ifdef _MSC_VER
+      if (regex_search(buffer, myregex)) {
+/*#else
         if (regexec(myregex, buffer, 0, nullptr, 0) == 0) {
-#endif
+#endif*/
           //cerr << "Got Coord line: " << buffer << endl;
           OBAtom *atom = mol.NewAtom();
           tokenize(tokens,buffer," ");
@@ -841,9 +841,9 @@ namespace OpenBabel
         }
       }
       mol.EndModify();
-#ifndef _MSC_VER
+/*#ifndef _MSC_VER
       regfree(myregex);
-#endif
+#endif*/
       return true;
     } // End ReadInitalCartesian
 

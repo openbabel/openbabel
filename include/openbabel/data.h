@@ -157,12 +157,12 @@ namespace OpenBabel
       ~OBAtomicHeatOfFormationTable() {}
 
       //! \return the number of elements in the Atomic Heat Of Formation table
-      size_t GetSize() { return _atomhof.size(); }
+      size_t GetSize() override { return _atomhof.size(); }
 
       /** \brief Read one line in the file and parse it
           @param Unnamed the line to be parsed
       */
-      void	ParseLine(const char*);
+      void	ParseLine(const char*) override;
       /** \brief Extract heat of formation and entropy for an atom
        @param elem         The chemical element we're looking for
        @param charge       At this formal charge
@@ -196,10 +196,10 @@ namespace OpenBabel
       OBTypeTable(void);
       ~OBTypeTable() {}
 
-      void ParseLine(const char*);
+      void ParseLine(const char*) override;
 
       //! \return the number of atom types in the translation table
-      size_t GetSize() { return _table.size(); }
+      size_t GetSize() override { return _table.size(); }
 
       //! Set the initial atom type to be translated
       bool SetFromType(const char*);
@@ -242,10 +242,10 @@ namespace OpenBabel
     public:
 
       OBResidueData();
-      void ParseLine(const char*);
+      void ParseLine(const char*) override;
 
       //! \return the number of residues in the table
-      size_t GetSize() { return _resname.size(); }
+      size_t GetSize() override { return _resname.size(); }
 
       //! Sets the table to access the residue information for a specified
       //!  residue name
@@ -253,6 +253,7 @@ namespace OpenBabel
       bool SetResName(const std::string &);
       //! \return the bond order for the bond specified in the current residue
       //! \deprecated Easier to use the two-argument form
+      OB_DEPRECATED_MSG("Easier to use the two-argument form")
       int  LookupBO(const std::string &);
       //! \return the bond order for the bond specified between the two specified
       //! atom labels

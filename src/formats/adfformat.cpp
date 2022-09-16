@@ -64,27 +64,27 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("adfout",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ADF output format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.scm.com/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.scm.com/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 
@@ -265,29 +265,29 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("adf", this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ADF cartesian input format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.scm.com/Doc/Doc2007.01/ADF/ADFUsersGuide/page32.html";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.scm.com/Doc/Doc2007.01/ADF/ADFUsersGuide/page32.html"; }  // optional
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override
       { return false; }
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
   };
   //***
 
@@ -372,23 +372,23 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("adfband",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return "ADF Band output format\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "https://www.scm.com/product/band_periodicdft/";}; //optional
+    const char* SpecificationURL() override
+    { return "https://www.scm.com/product/band_periodicdft/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 
@@ -508,23 +508,23 @@ namespace OpenBabel {
       OBConversion::RegisterFormat("adfdftb",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return "ADF DFTB output format\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "https://www.scm.com/product/dftb/";}; //optional
+    const char* SpecificationURL() override
+    { return "https://www.scm.com/product/dftb/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
-    };
+    }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 
@@ -654,7 +654,7 @@ public:
     }
 
     /// Return description.
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
         return
         "ADF TAPE41 format\n\n"
@@ -670,31 +670,31 @@ public:
 
     /// Return a specification url, not really a specification since
     /// I couldn't find it but close enough.
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {
         return "http://www.scm.com/Doc/Doc2006.01/ADF/Analysis/page8.html";
     }
 
     /// Return MIME type, NULL in this case.
-    virtual const char* GetMIMEType() { return nullptr; }
+    const char* GetMIMEType() override { return nullptr; }
 
       /// Return read/write flag: read only.
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
         return READONEONLY | READBINARY | NOTWRITABLE;
-    };
+    }
 
     /// Skip to object: used for multi-object file formats.
-    virtual int SkipObjects( int n, OBConversion* pConv ) { return 0; }
+    int SkipObjects(int n, OBConversion* pConv) override { return 0; }
 
     /// Read.
-    virtual bool ReadMolecule( OBBase* pOb, OBConversion* pConv );
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     bool ReadASCII( OBBase* pOb, OBConversion* pConv);
     bool ReadBinary( OBBase* pOb, OBConversion* pConv);
 
     /// Write: always returns false.
-    virtual bool WriteMolecule( OBBase* , OBConversion* )
+    bool WriteMolecule(OBBase*, OBConversion*) override
     { return false; }
 
 private:

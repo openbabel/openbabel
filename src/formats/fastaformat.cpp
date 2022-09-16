@@ -49,7 +49,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("t", nullptr, 1, OBConversion::INOPTIONS);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "FASTA format\n"
@@ -61,22 +61,22 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n"
         "Write Options e.g. -xn \n"
         "  n  Omit title and comments\n";
-    };
+    }
 
-    virtual const char* SpecificationURL() {
+    const char* SpecificationURL() override {
       return "http://www.ebi.ac.uk/help/formats_frame.html";
-    };
+    }
     // Additionally http://www.ncbi.nlm.nih.gov/blast/fasta.shtml
 
-    virtual const char* GetMIMEType()
+    const char* GetMIMEType() override
     { return "chemical/x-fasta"; }
 
-    virtual unsigned int Flags() {
+    unsigned int Flags() override {
       return READONEONLY | WRITEONEONLY;
-    };
+    }
 
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     enum SequenceType
       {
@@ -344,10 +344,7 @@ namespace OpenBabel
   typedef OBAtom * ptrAtom;
   void add_bond(OBMol * pmol, OBAtom * from, OBAtom * to, int bond_order)
   {
-    OBBond * bond = pmol->NewBond();
-    bond->SetBegin(from);
-    bond->SetEnd(to);
-    bond->SetBondOrder(bond_order);
+    pmol->AddBond(from->GetIdx(), to->GetIdx(), bond_order);
   }
   // #define GEN_BONDS 1
   void add_residue(OBMol * pmol, OBResidue * res, double offset_x, double offset_Theta, unsigned long & serial_no, ResidueRecord * res_rec, int resBondFromOffset, ptrAtom & resBondFrom, bool create_bonds, bool bond_orders)

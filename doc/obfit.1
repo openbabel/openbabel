@@ -11,15 +11,19 @@
 .Ar outfile
 .Sh DESCRIPTION
 Superimpose two molecules using a quaternion fit. The atoms used to
-fit the two molecules are defined by the SMARTS pattern given by the
-user. It is useful to align congeneric series of molecules on a common
-structural scaffold for 3D-QSAR studies. It can also be useful for
-displaying the results of conformational generation.
+fit the two molecules are defined by the
+.Ar SMARTS-pattern
+given by the user. It is useful to align congeneric series of
+molecules on a common structural scaffold for 3D-QSAR studies. It can
+also be useful for displaying the results of conformational
+generation.
 .Pp
-Any molecules matching the supplied SMARTS pattern will be rotated and
-translated to provide the smallest possible RMSD between the matching
-regions. If a molecule does not match the SMARTS pattern, it will be
-output with no transformation.
+Any molecules matching the supplied
+.Ar SMARTS-pattern
+will be rotated and translated to provide the smallest possible RMSD
+between the matching regions. If a molecule does not match the
+.Ar SMARTS-pattern ,
+it will be output with no transformation.
 .Sh EXAMPLES
 Align all the molecules in 'testmv.sdf' on a single molecule of 'testref.sdf'
 by superimposing them on its N-methylpiperidyl portion
@@ -42,7 +46,7 @@ The obfit program was contributed by
 .An Fabien Fontaine
 .Pp
 .An -nosplit
-Open Babel is developed by a cast of many, including currrent maintainers
+Open Babel is developed by a cast of many, including current maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
 .An Michael Banck ,

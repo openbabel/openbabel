@@ -19,18 +19,8 @@ GNU General Public License for more details.
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
-#ifdef _MSC_VER
-  #include <unordered_map>
-#endif
-
 #include <ciso646>  // detect std::lib
-#ifdef _LIBCPP_VERSION
-  #include <unordered_map>
-#elif __GNUC__ == 4 && __GNUC_MINOR__ >= 1
-  #include <tr1/unordered_map>
-#elif defined(USE_BOOST)
-  #include <boost/tr1/unordered_map.hpp>
-#endif
+#include <unordered_map>
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
@@ -41,9 +31,7 @@ namespace OpenBabel {
 
   class OBMol;
   class OBDescriptor;
-#ifdef HAVE_SHARED_POINTER
   class OBReaction;
-#endif
 
 // This macro is used in DLL builds. If it has not
 // been set in babelconfig.h, define it as nothing.
@@ -112,11 +100,11 @@ public:
   static bool WriteChemObjectImpl(OBConversion* pConv, OBFormat*);
 
   /// The "Convert" interface for reading a new molecule
-  virtual bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   { return ReadChemObjectImpl(pConv, this);}
 
   /// The "Convert" interface for writing a new molecule
-  virtual bool WriteChemObject(OBConversion* pConv)
+  bool WriteChemObject(OBConversion* pConv) override
   { return WriteChemObjectImpl(pConv, this);}
 
   ///Applies output options to molecule. Returns false to terminate output.
@@ -135,28 +123,18 @@ public:
   static OBMol* MakeCombinedMolecule(OBMol* pFirst, OBMol* pSecond);
   //@}
 
-#ifdef HAVE_SHARED_POINTER
   //!When sent an OBReaction object, output all the constituent molecules
   static bool OutputMolsFromReaction
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat);
-#endif
 
-#ifdef _MSC_VER
-  typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
-#elif defined(_LIBCPP_VERSION)
   typedef std::unordered_map<std::string, unsigned> NameIndexType;
-#elif (__GNUC__ == 4 && __GNUC_MINOR__ >= 1 && !defined(__APPLE_CC__)) || defined (USE_BOOST)
-  typedef std::tr1::unordered_map<std::string, unsigned> NameIndexType;
-#else
-  typedef std::map<std::string, unsigned> NameIndexType;
-#endif
 
   // documentation in obmolecformat.cpp
   static bool   ReadNameIndex(NameIndexType& index, const std::string& datafilename,
                   OBFormat* pInFormat);
 
   //! \return the type of data converted by this format (here, OBMol)
-  const std::type_info& GetType()
+  const std::type_info& GetType() override
   {
     return typeid(OBMol*);
   }

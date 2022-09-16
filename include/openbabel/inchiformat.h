@@ -52,7 +52,7 @@ public:
     OBConversion::RegisterOptionParam("T", this, 1, OBConversion::OUTOPTIONS);
   }
 
-  virtual const char* Description()
+  const char* Description() override
   {
     return
     "InChI format\n"
@@ -111,12 +111,12 @@ public:
 ;
   };
 
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   { return "http://www.iupac.org/inchi/";};
 
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual int  SkipObjects(int n, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+  int  SkipObjects(int n, OBConversion* pConv) override;
 
   static char CompareInchi(const std::string& Inchi1, const std::string& Inchi2);
   static std::string InChIErrorMessage(const char ch);
@@ -131,7 +131,6 @@ public:
   // and "CH4" is less than "C2H6"
   // and "CH4" is less than "ClH" (hydrogen chloride)
   struct InchiLess
-    : public std::binary_function<const std::string&, const std::string&, bool>
   {
     bool operator()(const std::string& s1, const std::string& s2) const
     {

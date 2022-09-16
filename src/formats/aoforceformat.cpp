@@ -30,19 +30,19 @@ class AoforceFormat : public OBMoleculeFormat {
     // Register this format type ID
     AoforceFormat() { OBConversion::RegisterFormat("aoforce", this); }
 
-    virtual const char* Description() {  // required
+    const char* Description() override {  // required
       return
           "Turbomole AOFORCE output format\n"
           "Read vibrational frequencies and intensities\n";
     }
 
-    virtual const char* SpecificationURL() {
+    const char* SpecificationURL() override {
       return "http://www.turbomole-gmbh.com/manuals/";
     }
 
-    virtual unsigned int Flags() { return READONEONLY | NOTWRITABLE; }
+    unsigned int Flags() override { return READONEONLY | NOTWRITABLE; }
 
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 };
 
 // Instantiate

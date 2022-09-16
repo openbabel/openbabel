@@ -29,7 +29,7 @@ Compile with tools/obabel.cpp rather than tools/babel.cpp
 #include <iostream>
 #include <memory>
 #include <vector>
-#include <stdio.h>
+#include <cstdio>
 #include <openbabel/op.h>
 #include <openbabel/mol.h>
 #include <openbabel/bond.h>
@@ -52,7 +52,7 @@ namespace OpenBabel
     public:
       OpConformer(const char *ID) : OBOp(ID, false) {}
 
-      const char* Description()
+      const char* Description() override
       {
         return "Conformer Searching (not displayed in GUI)\n"
           "Typical usage: obabel infile.xxx -O outfile.yy --conformer --nconf\n"
@@ -83,11 +83,11 @@ namespace OpenBabel
           ;
       }
 
-      virtual bool WorksWith(OBBase* pOb) const
+      bool WorksWith(OBBase* pOb) const override
       {
         return dynamic_cast<OBMol*>(pOb) != nullptr;
       }
-      virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+      bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
   };
 
   //////////////////////////////////////////////////////////
@@ -243,8 +243,11 @@ namespace OpenBabel
       if(iter!=pmap->end())
         check_hydrogens = false;
  
+      std::unique_ptr<OBConformerFilter> f;
       if (filter == "steric")
-        cs.SetFilter(new OBStericConformerFilter(cutoff, vdw_factor, check_hydrogens));
+        f.reset(new OBStericConformerFilter(cutoff, vdw_factor, check_hydrogens));
+      if (f)
+        cs.SetFilter(f.get());
 
       iter = pmap->find("printrot");
       if(iter!=pmap->end())

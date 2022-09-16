@@ -156,8 +156,7 @@ namespace OpenBabel
     StopErrorWrap();
 
     // free the internal filter streambuf
-    if (_filterStreamBuf != nullptr)
-      delete _filterStreamBuf;
+    delete _filterStreamBuf;
   }
 
   void OBMessageHandler::ThrowError(OBError err, errorQualifier qualifier)

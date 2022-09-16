@@ -18,9 +18,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
 #include <openbabel/mol.h>
-#ifdef HAVE_SHARED_POINTER
-  #include <openbabel/reaction.h>
-#endif
+#include <openbabel/reaction.h>
 
 #include <algorithm>
 #include <iterator> // Required for MSVC2015 use of std::back_inserter
@@ -175,12 +173,10 @@ namespace OpenBabel
           ret = pFormat->WriteMolecule(pmol,pConv);
     }
 
-#ifdef HAVE_SHARED_POINTER
     //If sent a OBReaction* (rather than a OBMol*) output the consituent molecules
     OBReaction* pReact = dynamic_cast<OBReaction*> (pOb);
     if(pReact)
       ret = OutputMolsFromReaction(pReact, pConv, pFormat);
-#endif
     delete pOb;
     return ret;
   }
@@ -420,14 +416,13 @@ namespace OpenBabel
   }
 
   ///////////////////////////////////////////////////////////////////
-#ifdef HAVE_SHARED_POINTER
   bool OBMoleculeFormat::OutputMolsFromReaction
     (OBReaction* pReact, OBConversion* pConv, OBFormat* pFormat)
   {
     //Output all the constituent molecules of the reaction
 
     //Collect the molecules first, just for convenience
-    vector<obsharedptr<OBMol> > mols;
+    vector<std::shared_ptr<OBMol> > mols;
     for(int i=0;i<pReact->NumReactants();i++)
       mols.push_back(pReact->GetReactant(i));
     for(int i=0;i<pReact->NumProducts();i++)
@@ -461,7 +456,7 @@ namespace OpenBabel
     }
     return ok;
   }
-#endif
+
   //////////////////////////////////////////////////////////////////
   /** Attempts to read the index file datafilename.obindx successively
       from the following directories:
@@ -470,8 +465,7 @@ namespace OpenBabel
       if the environment variable is not set
       - in a subdirectory of the BABEL_DATADIR directory with the version of OpenBabel as its name
       An index of type NameIndexType is then constructed. NameIndexType is defined
-      in obmolecformat.h and may be a std::tr1::unordered_map (a hash_map) or std::map.
-      In any case it is searched by
+      in obmolecformat.h as std::unordered_map. It is searched by
       @code
       NameIndexType::iterator itr = index.find(molecule_name);
       if(itr!=index.end())

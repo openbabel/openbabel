@@ -37,7 +37,7 @@
 extern "C" int strncasecmp(const char *s1, const char *s2, size_t n);
 #endif
 
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <fstream>
 #include <sstream>

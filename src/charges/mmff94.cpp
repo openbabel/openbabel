@@ -32,12 +32,12 @@ class MMFF94Charges : public OBChargeModel
 {
 public:
   MMFF94Charges(const char* ID) : OBChargeModel(ID, false){};
-  const char* Description(){ return "   Assign MMFF94 partial charges"; }
+  const char* Description() override { return "   Assign MMFF94 partial charges"; }
 
   /// \return whether partial charges were successfully assigned to this molecule
-  bool ComputeCharges(OBMol &mol);
+  bool ComputeCharges(OBMol &mol) override;
 
-  double DipoleScalingFactor() { return 3.8558; } // fit from regression across MMFF94 validation set
+  double DipoleScalingFactor() override { return 3.8558; } // fit from regression across MMFF94 validation set
 };
 
 /////////////////////////////////////////////////////////////////

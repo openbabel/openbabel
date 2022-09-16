@@ -109,9 +109,9 @@ namespace OpenBabel
     OBRotorRules();
     ~OBRotorRules();
 
-    void ParseLine(const char*);
+    void ParseLine(const char*) override;
     //! \return the number of rotor rules
-    size_t GetSize()                 { return _vr.size();}
+    size_t GetSize() override { return _vr.size(); }
 
     //! Set the filename to be used for the database. Default = torlib.txt
     void SetFilename(std::string &s)       { _filename = s;    }
@@ -425,22 +425,31 @@ namespace OpenBabel
     ///@name Deprecated
     ///@{
     /** @deprecated Has no effect. */
+    OB_DEPRECATED_MSG("Has no effect.")
     void SetDelta(double UNUSED(d)) {}
     /** @deprecated Has no effect. */
+    OB_DEPRECATED_MSG("Has no effect.")
     double GetDelta() { return 10.0; }
     /** @deprecated */
+    OB_DEPRECATED
     OBBitVec &GetFixedAtoms() { return _fixedatoms; }
     /** @deprecated See SetFixedBonds */
+    OB_DEPRECATED_MSG("See SetFixedBonds")
     void SetFixedAtoms(OBBitVec &bv) { _fixedatoms = bv; }
     /** @deprecated */
+    OB_DEPRECATED
     OBBitVec &GetEvalAtoms() { return _evalatoms; }
     /** @deprecated */
+    OB_DEPRECATED
     void SetEvalAtoms(OBBitVec &bv) { _evalatoms = bv; }
     /** @deprecated */
+    OB_DEPRECATED
     void* GetRotAtoms() { return &_rotatoms; }
     /** @deprecated Bad name, see GetTorsionValues() */
+    OB_DEPRECATED_MSG("See GetTorsionValues()")
     std::vector<double> &GetResolution() { return _torsionAngles; }
     /** @deprecated */
+    OB_DEPRECATED
     void SetNumCoords(int UNUSED(nc)) {}
     ///@}
 
@@ -615,11 +624,13 @@ namespace OpenBabel
     ///@{
     // Not declared
     //! \deprecated Not declared. Use Setup() for top-level functionality
+    OB_DEPRECATED_MSG("Not declared. Use Setup() for top-level functionality")
     bool   IdentifyEvalAtoms(OBMol &mol) { return SetEvalAtoms(mol); }
     /**
      * Set the list of fixed (invariant) atoms to the supplied OBBitVec
      * @deprecated See SetFixedBonds()
      */
+    OB_DEPRECATED_MSG("See SetFixedBonds()")
     void SetFixAtoms(OBBitVec &fix)
     {
       _fixedatoms = fix;
@@ -629,12 +640,14 @@ namespace OpenBabel
      * @return whether this rotor list has any fixed (invariant) atoms
      * @deprecated See HasFixedBonds()
      */
+    OB_DEPRECATED_MSG("See HasFixedBonds()")
     bool HasFixedAtoms()
     {
       return(!_fixedatoms.IsEmpty());
     }
     //! Has no effect
     //! \deprecated Currently has no effect
+    OB_DEPRECATED_MSG("Currently has no effect")
     void IgnoreSymmetryRemoval()    { _removesym = false;}
     //! \brief Set the atoms to rotate from the dihedral atoms for each rotor
     //! Insures the fixed atoms are respected, but otherwise functions like

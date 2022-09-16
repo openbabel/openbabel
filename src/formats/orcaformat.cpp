@@ -23,12 +23,12 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 #include <cstdlib>
-
-#ifdef _MSC_VER
+#include <regex>
+/*#ifdef _MSC_VER
 #include <regex>
 #else
 #include <regex.h>
-#endif
+#endif*/
 
 #include <iomanip>
 
@@ -46,7 +46,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("orca",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ORCA output format\n"
@@ -55,19 +55,19 @@ namespace OpenBabel
         " b  Disable bonding entirely\n\n";
     }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {return "http://www.cec.mpg.de/forum/portal.php";} //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
     }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     string checkColumns(string tmp);
   };
@@ -84,7 +84,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("orcainp",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ORCA input format\n"
@@ -93,19 +93,19 @@ namespace OpenBabel
         "  f    <file>     Read the file specified for input keywords\n\n";
     }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {return"http://www.cec.mpg.de/forum/portal.php";} //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
     }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 
@@ -316,14 +316,23 @@ namespace OpenBabel
 
         if (checkKeywords.find("VIBRATIONAL FREQUENCIES") != notFound) {
             FrequenciesAll.resize(0);
-            ifs.getline(buffer,BUFF_SIZE);      // skip ----------
-            ifs.getline(buffer,BUFF_SIZE);      // skip empty line
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while (vs.size() >1) {
+            ifs.getline(buffer, BUFF_SIZE); // skip ----------
+            ifs.getline(buffer, BUFF_SIZE); // skip empty line
+            ifs.getline(buffer, BUFF_SIZE);
+            // check to see if we have a "scaling factor for ORCA 5"
+            if (strstr(buffer, "Scaling factor") != nullptr)
+            {
+                while (strstr(buffer, "cm**-1") == nullptr)
+                {
+                    ifs.getline(buffer, BUFF_SIZE);
+                    }
+            }
+            tokenize(vs, buffer);
+            while (vs.size() > 1)
+            {
                 FrequenciesAll.push_back(atof(vs[1].c_str()));
-                ifs.getline(buffer,BUFF_SIZE);
-                tokenize(vs,buffer);
+                ifs.getline(buffer, BUFF_SIZE);
+                tokenize(vs, buffer);
             }
             nModeAll = FrequenciesAll.size();
 
@@ -393,7 +402,12 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE); // skip empty line
             ifs.getline(buffer, BUFF_SIZE); // skip header
             ifs.getline(buffer, BUFF_SIZE); // skip ---------------------
+            // for ORCA 5 there are two lines of header...
             ifs.getline(buffer, BUFF_SIZE);
+            if (strstr(buffer, "------") != nullptr)
+                 {
+                     ifs.getline(buffer, BUFF_SIZE);
+                 }
             tokenize(vs,buffer);
 
             while (vs.size() >= 6) {
@@ -696,26 +710,26 @@ namespace OpenBabel
 
 // small function to avoid wrong parsing
 // if there is no whitespace between the numbers in the column structure
-#ifdef _MSC_VER
+//#ifdef _MSC_VER
   string OrcaOutputFormat::checkColumns(string checkBuffer)
   {
     string pattern ("[0-9]-");
-    std::tr1::regex myregex;
-    std::tr1::smatch pm;
+    regex myregex;
+    smatch pm;
     try {
       myregex.assign(pattern,
-                     std::tr1::regex_constants::extended);
+                     regex_constants::extended);
       //iok = true;
-    } catch (std::tr1::regex_error ex) {
+    } catch (regex_error ex) {
         return (checkBuffer); // do nothing
       //iok = false;
     }
-    while (std::tr1::regex_search (checkBuffer,pm,myregex)) {
+    while (regex_search (checkBuffer,pm,myregex)) {
         checkBuffer.insert(pm.position(0)+1, " ");
     }
     return (checkBuffer);
   }
-#else
+/*#else
   string OrcaOutputFormat::checkColumns(string checkBuffer)
   {
       string pattern ("[0-9]-");
@@ -729,5 +743,5 @@ namespace OpenBabel
       }
       return (checkBuffer);
   }
-#endif
+#endif*/
 } //namespace OpenBabel

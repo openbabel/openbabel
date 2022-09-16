@@ -37,11 +37,11 @@ public:
     OBConversion::RegisterOptionParam("l", this);
     XMLConversion::RegisterXMLFormat(this, false,"http://www.xml-cml.org/schema/cml2/react");
   }
-  virtual const char* NamespaceURI()const
+  const char* NamespaceURI() const override
   {return "http://www.xml-cml.org/schema";}
 
 
-  const char* Description()
+  const char* Description() override
   {
     return
       "CML Reaction format\n"
@@ -73,37 +73,37 @@ public:
       "if this was unacceptable.\n\n";
   }
 
-  virtual const char* TargetClassDescription()
+  const char* TargetClassDescription() override
   {
       return OBReaction::ClassDescription();
   }
 
-  unsigned Flags()
+  unsigned Flags() override
   {
     return 0;
   }
-  virtual bool ReadChemObject(OBConversion* pConv);
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool WriteChemObject(OBConversion* pConv);
-  virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
-  virtual bool DoElement(const string& ElName);
-  virtual bool EndElement(const string& ElName);
-  virtual const char* EndTag(){ return "/reaction>"; };
-  const type_info& GetType()
+  bool ReadChemObject(OBConversion* pConv) override;
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool WriteChemObject(OBConversion* pConv) override;
+  bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+  bool DoElement(const string& ElName) override;
+  bool EndElement(const string& ElName) override;
+  const char* EndTag() override { return "/reaction>"; }
+  const type_info& GetType() override
   {
     return typeid(OBReaction*);
   };
 
 private:
-  typedef map<string,obsharedptr<OBMol> > MolMap;
-  string AddMolToList(obsharedptr<OBMol> spmol, MolMap& mmap);
+  typedef map<string,std::shared_ptr<OBMol> > MolMap;
+  string AddMolToList(std::shared_ptr<OBMol> spmol, MolMap& mmap);
   bool WriteRateData(OBReaction* pReact, xmlChar* altprefix);
   void WriteMetadataList(OBReaction& react);
 
 private:
   OBReaction* _preact;
   OBMol* pmol;
-  obsharedptr<OBMol> _spmol;
+  std::shared_ptr<OBMol> _spmol;
   MolMap IMols; //used on input
   MolMap OMols; //used on output
   int nextmol;
@@ -127,7 +127,7 @@ bool CMLReactFormat::ReadChemObject(OBConversion* pConv)
   {
     IMols.clear();
     //add special species
-    obsharedptr<OBMol> sp(new OBMol);
+    std::shared_ptr<OBMol> sp(new OBMol);
     sp.get()->SetTitle("M");
     IMols["M"] = sp;
   }
@@ -196,7 +196,7 @@ bool CMLReactFormat::DoElement(const string& name)
     }
     else
     {
-      obsharedptr<OBMol> sp(new OBMol);
+      std::shared_ptr<OBMol> sp(new OBMol);
       OBFormat* pCMLFormat = OBConversion::FindFormat("cml");
       if(!pCMLFormat)
         return false;
@@ -335,7 +335,7 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if (pmol != nullptr)
     {
-      obsharedptr<OBMol> sp(pmol);
+      std::shared_ptr<OBMol> sp(pmol);
       AddMolToList(sp, OMols);
       pConv->SetOutputIndex(-1); //Signals that molecules have been added
 
@@ -628,7 +628,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   return true;
 }
 
-string CMLReactFormat::AddMolToList(obsharedptr<OBMol> spmol, MolMap& mmap)
+string CMLReactFormat::AddMolToList(std::shared_ptr<OBMol> spmol, MolMap& mmap)
 {
   //Adds a molecule to the map
   string id = spmol->GetTitle();
@@ -668,7 +668,7 @@ string CMLReactFormat::AddMolToList(obsharedptr<OBMol> spmol, MolMap& mmap)
     {
       //already in map.
       //Get a molecule with the best bits of both old and new molecules and immediately make a shared_ ptr
-      obsharedptr<OBMol> spnew(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(), spmol.get()));
+      std::shared_ptr<OBMol> spnew(OBMoleculeFormat::MakeCombinedMolecule(mapitr->second.get(), spmol.get()));
       if(spnew)
       {
         spmol.swap(spnew);
