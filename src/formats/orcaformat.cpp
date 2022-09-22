@@ -147,6 +147,7 @@ namespace OpenBabel
     // Conformer data
     bool newMol = false;
     double* confCoords;
+    std::vector<double*> vconf; // index of all frames/conformers
 
     // Unit cell
     bool unitCell = false;
@@ -176,6 +177,7 @@ namespace OpenBabel
 
         if (checkKeywords.find("Geometry Optimization Run") != notFound) {
             geoOptRun = true;
+            // cout << " geom opt run " << endl;
             while	(ifs.getline(buffer,BUFF_SIZE)) {
                 string checkNAtoms(buffer);
 
@@ -215,6 +217,8 @@ namespace OpenBabel
                     confCoords[i*3] = x;
                     confCoords[i*3+1] = y;
                     confCoords[i*3+2] = z;
+                    atom = mol.GetAtom(i+1);
+                    atom->SetVector(x,y,z);
                     i++;
                 } else {
                     atom->SetVector(x,y,z); //set atom coordinates
@@ -230,9 +234,7 @@ namespace OpenBabel
 //                for (int j=0;j<3;j++){
 //                    cout << confCoords[j*3] << " " << confCoords[j*3+1] << " " << confCoords[j*3+2] << endl;
 //                }
-
-                mol.AddConformer(confCoords);
-                mol.SetConformer(mol.NumConformers());
+                vconf.push_back(confCoords);
             }
         } // if "output coordinates"
 
@@ -638,16 +640,16 @@ namespace OpenBabel
         mol.SetData(etd);
     }
 
-
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
     if (!pConv->IsOption("s",OBConversion::INOPTIONS) && !pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.PerceiveBondOrders();
 
-    mol.EndModify();
+    // should provide all the coordinates
+    mol.SetConformers(vconf);
+    mol.SetConformer(mol.NumConformers() - 1);
 
-
-//    cout << "num conformers = " << mol.NumConformers() << endl;
+    // cout << "num conformers = " << mol.NumConformers() << endl;
     //cout << "Atom index 0 = " << mol.GetAtom(0)->GetX() << " " << mol.GetAtom(0)->GetY() << " " << mol.GetAtom(0)->GetZ() << endl;
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();
