@@ -2734,7 +2734,7 @@ namespace OpenBabel {
 
     if (atom->GetFormalCharge() != 0 // charged elements
       || (options.isomeric && atom->GetIsotope()) // isotopes
-      || (options.showatomclass && atom->HasData("Atom Class")) ) // If the molecule has Atom Class data and -xa option set and atom has data
+      || (options.showatomclass) ) // If the molecule has Atom Class data and -xa option set and atom has data
       bracketElement = true;
 
     const char* stereo = nullptr;
@@ -2897,6 +2897,12 @@ namespace OpenBabel {
             buffer += tchar;
           }
         }
+      } else {
+        // If atom class is not set, use the atom index
+        buffer += ':';
+        char tchar[12]; // maxint has 10 digits
+        snprintf(tchar, 12, "%d", atom->GetIdx());
+        buffer += tchar;
       }
     }
 
