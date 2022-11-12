@@ -454,7 +454,6 @@ namespace OpenBabel
     // In this case, ESP is calculated once before
     // the geometry optmization and once after. If this
     // happens, the second ESP must be added to OBMol.
-    OBFreeGrid *esp   = nullptr;
     int NumEsp        = 1;
     int NumEspCounter = 0;
     bool ESPisAdded   = false;
@@ -640,7 +639,9 @@ namespace OpenBabel
             // done with reading atoms
             natoms = mol.NumAtoms();
             if(natoms==0)
+            {
               return false;
+            }
             // malloc / memcpy
             double *tmpCoords = new double [(natoms)*3];
             memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
@@ -867,19 +868,15 @@ namespace OpenBabel
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
-            //if (nullptr == esp)                   // old code
-            //  esp = new OpenBabel::OBFreeGrid();  // old code
             if (vs.size() == 8)
               {
-                //esp->AddPoint(atof(vs[5].c_str()),atof(vs[6].c_str()), // old code
-                //              atof(vs[7].c_str()),0);                  // old code
                 // Added by MMW START
                 if (NumEspCounter == 2)
                 {
                   esp_x.push_back(atof(vs[5].c_str()));
                   esp_y.push_back(atof(vs[6].c_str()));
                   esp_z.push_back(atof(vs[7].c_str()));
-                 } 
+                } 
                 // Added by MMW END
               }
             else if (vs.size() > 5)
@@ -887,7 +884,6 @@ namespace OpenBabel
                 double x,y,z;
                 if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
                   {
-                    // esp->AddPoint(x,y,z,0);        //old code
                     // Added by MMW START
                     if (NumEspCounter == 2)
                     {
@@ -903,12 +899,8 @@ namespace OpenBabel
           {
             // Data points for ESP calculation
             tokenize(vs,buffer);
-            //if (nullptr == esp)                   // old code
-            //  esp = new OpenBabel::OBFreeGrid();  // old code
             if (vs.size() == 9)
               {
-                // esp->AddPoint(atof(vs[6].c_str()),atof(vs[7].c_str()), // old code
-                //              atof(vs[8].c_str()),0);                   // old code
                 // Added by MMW START
                 if (NumEspCounter == 2)
                 {
@@ -922,8 +914,7 @@ namespace OpenBabel
               {
                 double x,y,z;
                 if (3 == sscanf(buffer+32,"%10lf%10lf%10lf",&x,&y,&z))
-                  {
-                    //esp->AddPoint(x,y,z,0);     // old code
+                {
                     // Added by MMW START
                     if (NumEspCounter == 2)
                     {
@@ -938,31 +929,21 @@ namespace OpenBabel
           }
         else if (strstr(buffer, "Electrostatic Properties (Atomic Units)") != nullptr && !ESPisAdded)
           {
-            //int i,np;                                 // old code
-            //OpenBabel::OBFreeGridPoint *fgp;          // old code
-            //OpenBabel::OBFreeGridPointIterator fgpi;  // old code
             for(i=0; (i<5); i++)
               {
                 ifs.getline(buffer,BUFF_SIZE);	// skip line
               }
             // Assume file is correct and that potentials are present
             // where they should.
-            //np = esp->NumPoints();                     // old code 
-            //fgpi = esp->BeginPoints();                 // old code
-            //i = 0;                                     // old code
-            //for(fgp = esp->BeginPoint(fgpi); nullptr != fgp; fgp = esp->NextPoint(fgpi)) // old code
-            //  {                                        // old code 
             
             // Added by MMW START
             for (int i = 0; i < esp_x.size(); i++)
             { 
-            // Added by MMW END  
+                // Added by MMW END  
                 ifs.getline(buffer,BUFF_SIZE);
                 tokenize(vs,buffer);
                 if (vs.size() >= 2)
                   {
-                    //fgp->SetV(atof(vs[2].c_str()));    // old code
-                    //i++;                               // old code
                     // Added by MMW START
                     if (NumEspCounter == 2)
                     {
@@ -970,29 +951,9 @@ namespace OpenBabel
                     }  
                     // Added by MMW END
                   }
-              // Added by MMW START    
-              }
-              // Added by MMW END
-              //}
-
-            //if (NumEsp == NumEspCounter)            // old code START
-            //  {
-            //    if (i == np)
-            //      {
-            //        esp->SetAttribute("Electrostatic Potential");
-            //        esp->SetOrigin(fileformatInput);
-            //        mol.SetData(esp);
-            //        ESPisAdded = true;
-            //      }
-            //    else
-            //      {
-            //        cout << "Read " << esp->NumPoints() << " ESP points i = " << i << "\n";
-            //      }
-            //  } 
-            //else if (!ESPisAdded)
-            //  {
-            //    esp->Clear();
-            //  }                                     // old code END                   
+                // Added by MMW START
+            }
+            // Added by MMW END
           }
         else if (strstr(buffer, "Charges from ESP fit") != nullptr)
           {
@@ -1357,7 +1318,11 @@ namespace OpenBabel
               }
           }
       } // end while
-    
+    if (natoms == 0) { // e.g., if we're at the end of a file PR#1737209
+        mol.EndModify();
+        return false;
+    }
+
     // Added by MMW START; Get optimized coords and the last set of coords to determine the rotation matrix
     // Using the rotation matrix we will then rotate the esp grid points 
  
@@ -1368,6 +1333,7 @@ namespace OpenBabel
     // The target of the fitting is to find this rotation matrix
     double rmatrix[3][3] = { 0 };
 
+    
     ncoords = natoms*3;
     ncoords_all = coordinates_all.size();
     nsets = ncoords_all/ncoords;
@@ -1434,31 +1400,23 @@ namespace OpenBabel
     // END code from obrms.cpp
     
     // Rotate esp grid points to match the last set of coordinates
-    if (nullptr == esp)  
-    {                                      
-        esp = new OpenBabel::OBFreeGrid();   
+    if (!esp_V.empty())  
+    {
+        auto esp = new OpenBabel::OBFreeGrid();   
         for (int i = 0; i < esp_V.size(); i++)
         {  
             double x_rotate = esp_x.at(i)*rmatrix[0][0]  + esp_y.at(i)*rmatrix[0][1] + esp_z.at(i)*rmatrix[0][2];
             double y_rotate = esp_x.at(i)*rmatrix[1][0]  + esp_y.at(i)*rmatrix[1][1] + esp_z.at(i)*rmatrix[1][2];
             double z_rotate = esp_x.at(i)*rmatrix[2][0]  + esp_y.at(i)*rmatrix[2][1] + esp_z.at(i)*rmatrix[2][2];
             esp->AddPoint(x_rotate, y_rotate, z_rotate, esp_V.at(i)); 
-        } 
-        esp_x.clear();
-        esp_y.clear();
-        esp_z.clear();
-        esp_V.clear();   
-        esp->SetAttribute("Electrostatic Potential");
+        }
+        const char *esp_attribute = "Electrostatic Potential";
+        esp->SetAttribute(esp_attribute);
         esp->SetOrigin(fileformatInput);
         mol.SetData(esp);
         ESPisAdded = true;    
     }
     // Added by MMW END  
-
-    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
-      mol.EndModify();
-      return false;
-    }
 
     mol.EndModify();
 
