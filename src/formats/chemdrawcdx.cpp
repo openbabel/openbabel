@@ -504,7 +504,7 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
             break;
         case kCDXProp_Atom_Charge:
           if(cdxr.GetLen()==1)
-            charge = cdxr.data().get();
+            charge = (int8_t)cdxr.data().get();
           else
             READ_INT32(cdxr.data(), charge);
           break;
