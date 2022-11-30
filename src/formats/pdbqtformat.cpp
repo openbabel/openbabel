@@ -304,6 +304,10 @@ namespace OpenBabel
 
     mol.SetChainsPerceived();
 
+    // Guess how many hydrogens are present on each atom based on typical valencies (from pdbformat.cpp)
+    FOR_ATOMS_OF_MOL(matom, mol)
+      OBAtomAssignTypicalImplicitHydrogens(&*matom);
+
     // clean out remaining blank lines
     std::streampos ipos;
     do
