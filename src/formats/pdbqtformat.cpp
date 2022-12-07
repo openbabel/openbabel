@@ -22,6 +22,7 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/obmolecformat.h>
+#include <openbabel/obfunctions.h>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
@@ -303,6 +304,10 @@ namespace OpenBabel
     if (!pConv->IsOption("b",OBConversion::INOPTIONS)) {mol.ConnectTheDots(); mol.PerceiveBondOrders();}
 
     mol.SetChainsPerceived();
+
+    // Guess how many hydrogens are present on each atom based on typical valencies (from pdbformat.cpp)
+    FOR_ATOMS_OF_MOL(matom, mol)
+      OBAtomAssignTypicalImplicitHydrogens(&*matom);
 
     // clean out remaining blank lines
     std::streampos ipos;
