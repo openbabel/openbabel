@@ -37,6 +37,7 @@ GNU General Public License for more details.
 #endif
 
 #include <math.h>
+#include <ctime>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
