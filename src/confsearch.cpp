@@ -131,7 +131,7 @@ namespace OpenBabel
 
     const double arr[] = {3.0, 2.0, 1.5, 1.0, 0.5, 0.25};
     std::vector<double> vec (arr, arr + sizeof(arr) / sizeof(arr[0]) );
-    vec.erase(std::remove_if(vec.begin(), vec.end(), std::bind2nd(std::less<double>(), (cutoff + 0.1) )), vec.end());
+    vec.erase(std::remove_if(vec.begin(), vec.end(), [=](double v) { return v < cutoff + 0.1; }), vec.end());
     vec.push_back(cutoff);
 
     levels = vec;
@@ -443,7 +443,7 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     UpdateConformersFromTree(&_mol, _energies, &divposes, verbose);
 
     // Add back the energy offset
-    transform(_energies.begin(), _energies.end(), _energies.begin(), bind2nd(std::plus<double>(), energy_offset));
+    transform(_energies.begin(), _energies.end(), _energies.begin(), [=](double e) { return e + energy_offset; });
 
     // Clean up
     delete [] store_initial;
