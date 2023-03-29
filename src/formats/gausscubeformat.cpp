@@ -589,7 +589,7 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetOriginVector(origin);
 
     // negAtoms keeps track of the two variants of the cube format, for single grid (false) or multiple grid (true)
-    bool negAtoms = (pmol->GetAllData(OBGenericDataType::GridData).size() > 1);
+    const bool negAtoms = (pmol->GetAllData(OBGenericDataType::GridData).size() > 1);
 
     // line 3: number of atoms, origin x y z
     if(negAtoms) {
