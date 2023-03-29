@@ -588,9 +588,17 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     gd->GetNumberOfPoints(nx, ny, nz);
     gd->GetOriginVector(origin);
 
+    // negAtoms keeps track of the two variants of the cube format, for single grid (false) or multiple grid (true)
+    bool negAtoms = (pmol->GetAllData(OBGenericDataType::GridData).size() > 1);
+
     // line 3: number of atoms, origin x y z
-    snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", - static_cast<signed int> (mol.NumAtoms()),
-        origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
+    if(negAtoms) {
+      snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", - static_cast<signed int> (mol.NumAtoms()),
+          origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
+    } else {
+      snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", + static_cast<signed int> (mol.NumAtoms()),
+          origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
+    }
     ofs << buffer << endl;
 
     // line 4: number of points x direction, axis x direction x y z
@@ -618,14 +626,16 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     }
 
     vector<OBGenericData*> grids = pmol->GetAllData(OBGenericDataType::GridData);
-    snprintf(buffer, BUFF_SIZE," %5lu", (unsigned long)grids.size());
-    ofs << buffer << flush;
-    for (unsigned int l = 1; l <= grids.size(); ++l)
-    {
-      snprintf(buffer, BUFF_SIZE," %3d", l);
+    if(negAtoms) {
+      snprintf(buffer, BUFF_SIZE," %5lu", (unsigned long)grids.size());
       ofs << buffer << flush;
+      for (unsigned int l = 1; l <= grids.size(); ++l)
+      {
+        snprintf(buffer, BUFF_SIZE," %3d", l);
+        ofs << buffer << flush;
+      }
+      ofs << endl;
     }
-    ofs << endl;
 
     for (unsigned int l = 0; l < grids.size(); ++l)
     {
