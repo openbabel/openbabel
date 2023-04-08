@@ -180,10 +180,10 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     //! \param atom        the atom to add
     //! \param forceNewId  whether to make a new atom Id even if the atom already has one (default is false)
     //! \return Whether the method was successful
-    bool AddAtom(OBAtom& atom, bool forceNewId = false);
+    bool AddAtom(const OBAtom& atom, bool forceNewId = false);
     //! Add a new atom to this molecule (like AddAtom)
     //! Calls BeginModify() before insertion and EndModify() after insertion
-    bool InsertAtom(OBAtom &);
+    bool InsertAtom(const OBAtom &);
     //! Add a new bond to the molecule with the specified parameters
     //! \param beginIdx  the atom index of the "start" atom
     //! \param endIdx    the atom index of the "end" atom
