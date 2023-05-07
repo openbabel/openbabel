@@ -94,10 +94,20 @@ namespace OpenBabel
         "- T56 BMJ B D - DT6N CNJ BMR BO1 DN1 & 2N1 & 1 EMV1U1   (osimertinib)\n"
         "  Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C\n\n"
 
-        "This reader was contributed by Roger Sayle (NextMove Software). The text of\n"
+        "The original reader was contributed by Roger Sayle (NextMove Software). The text of\n"
         "this description was taken from his Bio-IT World poster [3]. Note that not\n"
-        "all of WLN is currently supported; however, about 76% of the WLN strings\n"
-        "found in PubChem can be interpreted.\n\n"
+        "all of WLN is was supported at this time; however, about 76% of the WLN strings\n"
+        "found in PubChem were interpretable.\n\n"
+        
+        "Michael Blakey (University of Southampton) submitted a new reader to handle\n"
+        "nearly all rules contained in Elbert G. Smith's rule book, with only exceptions\n"
+        "being multipliers and WLN uncertainties, 98% of Pubchem WLN strings are now \n"
+        "successfully converted, with greater than 200 WLN rules accounted for\n\n" 
+        
+        "Writing to WLN is in early prototype stage, and can handle simple compounds, plus\n"
+        "some uncomplex ring systems. The challenge of the writer is locant pathdefinitions\n"
+        "where a NP-Complete algorithm is currently used to reform the notation\n"
+        "this is still development as part of Michaels PhD work\n\n"
 
         "1. Elbert G. Smith, \"The Wiswesser Line-Formula Chemical Notation\",\n"
         "   McGraw-Hill Book Company publishers, 1968.\n"
