@@ -151,7 +151,7 @@ namespace OpenBabel
     if (!ifs.getline(buffer,BUFF_SIZE))
       return false;
 
-    NMReadWLN(buffer, pmol);
+    ReadWLN(buffer, pmol);
 
     return true;
   }
