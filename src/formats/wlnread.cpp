@@ -43,6 +43,7 @@ GNU General Public License for more details.
 // --- macros ---
 #define REASONABLE 1024
 
+
 // --- inputs ---
 const char *cli_inp;
 const char *dotfile;
@@ -1667,7 +1668,7 @@ struct WLNRing
   }
 
   /* parse the WLN ring block, use ignore for already predefined spiro atoms */
-  void FormWLNRing(std::string &block, unsigned int start, unsigned char spiro_atom='\0'){
+  void FormWLNRing(std::string block, unsigned int start, unsigned char spiro_atom='\0'){
 
 
     enum RingType{ POLY=1, PERI=2, BRIDGED=3, PSDBRIDGED = 4}; 
@@ -1711,13 +1712,10 @@ struct WLNRing
     std::vector<indexed_pair>                            indexed_bindings;  
     
   
-    unsigned int i = 0; 
+    unsigned int i = 0;    
     unsigned int len = block.size();
-    char *block_str = (char*)malloc((len+1)*sizeof(char)); 
-    
-    strcpy(block_str,block.c_str());
+    const char *block_str = block.c_str();
     unsigned char ch = *block_str++;
-
 
     while(ch){
 
@@ -1805,9 +1803,8 @@ struct WLNRing
         case '-':{
 
           // gives us a local working copy
-          char local_arr [strlen(block_str)+1]; 
-          memset(local_arr,'\0',strlen(block_str)+1);
-          memcpy(local_arr,block_str,strlen(block_str));
+          char local_arr [strlen(block_str)+1] = {0}; 
+          strcpy(local_arr,block_str);
           const char *local = local_arr;
 
           unsigned char local_ch = *(local)++; // moved it over
@@ -2724,8 +2721,6 @@ struct WLNRing
         || !handle_post_orders(saturations,0,final_size))
       Fatal(start+i);
 
-    if(block_str)
-      free(block_str);
   }
 
 };
@@ -3029,8 +3024,11 @@ struct WLNGraph
 
 
   /* returns the head of the graph, parse all normal notation */
-  bool ParseWLNString(std::string wln_string) 
+  bool ParseWLNString(const char *string) 
   {
+    
+    std::string wln_string = std::string(string);
+    // keep the memory alive
 
     if (opt_debug)
       fprintf(stderr, "Parsing WLN notation: %s\n",wln_string.c_str());
@@ -3066,9 +3064,7 @@ struct WLNGraph
     unsigned int block_end = 0;
 
     unsigned int len = wln_string.length();
-    char *wln_ptr = (char*)malloc((len+1)*sizeof(char)); 
-    strcpy(block_str,block.c_str());
-
+    const char * wln_ptr = wln_string.c_str();
     unsigned int zero_position = search_ionic(wln_ptr,len,ionic_charges);
     
     unsigned int i=0;
@@ -4492,9 +4488,8 @@ struct WLNGraph
 
           // look ahead and consume the special
 
-          char local_arr [strlen(wln_ptr)+1]; 
-          memset(local_arr,'\0',strlen(wln_ptr)+1);
-          memcpy(local_arr,wln_ptr,strlen(wln_ptr));
+          char local_arr [strlen(wln_ptr)+1] = {0}; 
+          strcpy(local_arr,wln_ptr);
           const char *local = local_arr;
           
           unsigned char local_ch = *(++local); // moved it over
@@ -4657,10 +4652,6 @@ struct WLNGraph
 
     if(!AssignCharges(ionic_charges))
       Fatal(len);
-
-
-    if(wln_ptr)
-      free(wln_ptr);
 
       // use this for recursion on multipliers
     return true;
@@ -5034,7 +5025,7 @@ bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol)
   WLNGraph wln_graph;
   BabelGraph obabel; 
 
-  if(!wln_graph.ParseWLNString(std::string(ptr))){
+  if(!wln_graph.ParseWLNString(ptr)){
     fprintf(stderr,"Error: string pass was successful but return nullptr for wln graph\n");
     return false;
   }
