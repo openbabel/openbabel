@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
-bool NMReadWLN(const char *ptr, OpenBabel::OBMol* mol);
+bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol);
 
 using namespace std;
 namespace OpenBabel
