@@ -15,9 +15,9 @@ GNU General Public License for more details.
 #ifndef OB_ALIAS_H
 #define OB_ALIAS_H
 
+#include <memory>
 #include <vector>
 #include <openbabel/generic.h>
-#include <openbabel/shared_ptr.h>
 
 namespace OpenBabel
 {
@@ -84,11 +84,9 @@ public:
   ///Interprets the alias text and adds atoms as appropriate to mol.
   bool Expand(OBMol& mol, const unsigned int atomindex);
 
- #ifdef HAVE_SHARED_POINTER
  ///Matches univalent fragments in the molecule and adds AliasData to provide an alternative representation.
   ///The molecule remains a respectable OBMol. Data in superatoms.txt decides what aliases are added.
   static bool AddAliases(OBMol* pmol);
- #endif
 
 private:
   /// Interpret the alias as a formula
@@ -117,10 +115,8 @@ private:
     return t;
   }
   bool        FromNameLookup(OBMol& mol, const unsigned int atomindex);
-#ifdef HAVE_SHARED_POINTER
-  typedef std::vector< std::pair<std::string, obsharedptr<OBSmartsPattern> > > SmartsTable;
+  typedef std::vector< std::pair<std::string, std::shared_ptr<OBSmartsPattern> > > SmartsTable;
   static bool LoadFile(SmartsTable& smtable);
-#endif
 };
 } //namespace
 

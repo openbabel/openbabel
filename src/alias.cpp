@@ -13,6 +13,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <cstdlib>
+#include <memory>
 #include <sstream>
 #include <string>
 #include <openbabel/alias.h>
@@ -25,7 +26,6 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/mcdlutil.h>
-#include <openbabel/shared_ptr.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 
@@ -246,7 +246,7 @@ bool AliasData::LoadFile(SuperAtomTable& table)
   }
   return true;
 }
-#ifdef HAVE_SHARED_POINTER
+
 bool AliasData::LoadFile(SmartsTable& smtable)
 {
   //Re-parse the datafile. Seems simpler than trying to extract from the map.
@@ -281,7 +281,7 @@ bool AliasData::LoadFile(SmartsTable& smtable)
         //OBSmartsPattern objects are not copyable without complications,
         //so reference semantics used.
 
-        obsharedptr<OBSmartsPattern> psp(new OBSmartsPattern);
+        std::shared_ptr<OBSmartsPattern> psp(new OBSmartsPattern);
         psp->Init(ssmarts.str());
         smtable.push_back(make_pair(vec[0], psp));
       }
@@ -289,7 +289,6 @@ bool AliasData::LoadFile(SmartsTable& smtable)
   }
   return true;
 }
-#endif
 
 void AliasData::AddExpandedAtom(int id) { _expandedatoms.push_back(id); };
 
@@ -336,7 +335,6 @@ void AliasData::RevertToAliasForm(OBMol& mol)
   }while(acted);
 }
 
-#ifdef HAVE_SHARED_POINTER
 bool AliasData::AddAliases(OBMol* pmol)
 {
   static SmartsTable smtable;
@@ -391,10 +389,10 @@ class OpGenAlias : public OBOp
 {
 public:
   OpGenAlias(const char* ID) : OBOp(ID, false){};
-  const char* Description(){ return "Generate aliases as an alternative representation."; }
+  const char* Description() override { return "Generate aliases as an alternative representation."; }
 
-  virtual bool WorksWith(OBBase* pOb) const { return dynamic_cast<OBMol*>(pOb) != nullptr; }
-  virtual bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*);
+  bool WorksWith(OBBase* pOb) const override { return dynamic_cast<OBMol*>(pOb) != nullptr; }
+  bool Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*) override;
 };
 
 /////////////////////////////////////////////////////////////////
@@ -412,7 +410,6 @@ bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversi
     return false;
   return AliasData::AddAliases(pmol);
 }
-#endif // HAVE_SHARED_POINTER
 
 }//namespace
 

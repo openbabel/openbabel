@@ -38,25 +38,25 @@ namespace OpenBabel
       OBConversion::RegisterFormat("moo",this, "chemical/x-mopac-out");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "MOPAC Output format\n"
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTWRITABLE;
-    };
+    }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-mopac-out"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-mopac-out"; }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
     //	virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv); Is Read Only
   };
 
@@ -514,7 +514,7 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("f", nullptr, 1, OBConversion::OUTOPTIONS);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "MOPAC Cartesian format\n"
@@ -525,14 +525,14 @@ namespace OpenBabel
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n"
         "  u               Write the crystallographic unit cell, if present.\n\n";
-    };
+    }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-mopac-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-mopac-input"; }
 
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     ////////////////////////////////////////////////////
   };
@@ -844,21 +844,21 @@ namespace OpenBabel
       OBConversion::RegisterOptionParam("f", nullptr, 1, OBConversion::OUTOPTIONS);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return "MOPAC Internal\n"
         "Write Options e.g. -xk\n"
         "  k  \"keywords\" Use the specified keywords for input\n"
         "  f    <file>     Read the file specified for input keywords\n\n";
-    };
+    }
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-mopac-input"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-mopac-input"; }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
 
   //Make an instance of the format class

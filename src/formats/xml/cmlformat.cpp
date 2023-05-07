@@ -28,9 +28,7 @@ GNU General Public License for more details.
 #include <openbabel/obfunctions.h>
 #include <openbabel/xml.h>
 #include <cfloat>
-#ifdef HAVE_SHARED_POINTER
-  #include <openbabel/reaction.h>
-#endif
+#include <openbabel/reaction.h>
 
 
 #ifdef WIN32
@@ -68,9 +66,9 @@ namespace OpenBabel
 			XMLConversion::RegisterXMLFormat(this, false,CML1NamespaceURI());//CML1 also
 			XMLConversion::RegisterXMLFormat(this, false,CML2NamespaceURI());//Old CML2 also
     }
-    virtual const char* NamespaceURI()const{return "http://www.xml-cml.org/schema";}
+    const char* NamespaceURI() const override { return "http://www.xml-cml.org/schema"; }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return
         "Chemical Markup Language\n"
@@ -142,23 +140,23 @@ namespace OpenBabel
         "not yet been extensively tested.\n\n";
     };
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {return "http://www.xml-cml.org/";}
 
-    virtual const char* GetMIMEType()
+    const char* GetMIMEType() override
     { return "chemical/x-cml"; };
 
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READXML | ZEROATOMSOK;
     };
 
-    virtual bool WriteChemObject(OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteChemObject(OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   protected:
-    virtual bool DoElement(const string& name);
-    virtual bool EndElement(const string& name);
-    virtual const char* EndTag(){ return "/molecule>"; };
+    bool DoElement(const string& name) override;
+    bool EndElement(const string& name) override;
+    const char* EndTag() override { return "/molecule>"; }
   private:
     typedef vector< vector< pair<string,string> > > cmlArray;
     bool TransferArray(cmlArray& arr);
@@ -1423,7 +1421,6 @@ namespace OpenBabel
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(pmol==nullptr)
     {
-#ifdef HAVE_SHARED_POINTER
         OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
         if(!pReact)
           return false;
@@ -1440,9 +1437,6 @@ namespace OpenBabel
         bool ret = pCMLRFormat->WriteMolecule(pOb,_pxmlConv);
         _pxmlConv->RemoveOption("ReactionsNotStandalone", OBConversion::OUTOPTIONS);
         return ret;
-#else
-        return false;
-#endif
     }
 
 

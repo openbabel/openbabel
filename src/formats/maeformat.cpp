@@ -49,25 +49,25 @@ public:
 		OBConversion::RegisterFormat("maegz", this);
 	}
 
-	virtual const char* Description() override //required
-	{
-		return
-		"Maestro format\n"
-		"File format of Schrödinger Software\n";
-    };
+    const char* Description() override  // required
+    {
+      return
+        "Maestro format\n"
+        "File format of Schrödinger Software\n";
+    }
 
     //URL where the file format is specified
-    virtual const char* SpecificationURL() override
+    const char* SpecificationURL() override
     {
         return "https://github.com/schrodinger/maeparser";
-    };
+    }
 
-    virtual int SkipObjects(int n, OBConversion* pConv) override;
+    int SkipObjects(int n, OBConversion* pConv) override;
 
     ////////////////////////////////////////////////////
     /// Declarations for the "API" interface functions. Definitions are below
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 private:
     // TODO:  This will be implemented in maeparser more completely,

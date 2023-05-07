@@ -884,7 +884,7 @@ namespace OpenBabel {
   void CanonicalTautomer(OBMol *mol)
   {
     class Functor : public TautomerFunctor {
-      void operator()(OBMol *) {}
+      void operator()(OBMol *) override {}
     };
     Functor functor;
     TautomerImpl impl;

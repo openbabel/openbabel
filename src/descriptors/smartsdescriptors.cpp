@@ -34,7 +34,7 @@ namespace OpenBabel
     SmartsDescriptor(const char* ID, const char* smarts, const char* descr)
       : OBDescriptor(ID, false), _smarts(smarts), _descr(descr){}
 
-    virtual const char* Description()
+    const char* Description() override
     {
       //Adds the SMARTS string to the description
       static string txt;
@@ -45,7 +45,7 @@ namespace OpenBabel
       return txt.c_str();
     }
 
-    double Predict(OBBase* pOb, string* param=nullptr)
+    double Predict(OBBase* pOb, string* param=nullptr) override
     {
       OBMol* pmol = dynamic_cast<OBMol*> (pOb);
       if(!pmol)
@@ -58,7 +58,7 @@ namespace OpenBabel
         return 0.0;
     }
 
-    virtual SmartsDescriptor* MakeInstance(const std::vector<std::string>& textlines)
+    SmartsDescriptor* MakeInstance(const std::vector<std::string>& textlines) override
     {
       return new SmartsDescriptor(textlines[1].c_str(),textlines[2].c_str(),textlines[3].c_str());
     }

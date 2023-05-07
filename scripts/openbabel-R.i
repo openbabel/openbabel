@@ -293,13 +293,6 @@ CAST_GENERICDATA_TO(VirtualBond)
 
 %include <openbabel/chains.h>
 %include <openbabel/typer.h>
-
-// To avoid warning in plugin.h about "Nothing known about std::binary_function"
-namespace std { 
-        template <T1, T2, T3>
-        class binary_function {}; 
-}
-%template(dummy) std::binary_function <const char *, const char *, bool>;
 %include <openbabel/plugin.h>
 
 // To avoid warning in oberror.h about "Nothing known about std::stringbuf"

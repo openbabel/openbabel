@@ -129,7 +129,7 @@ public:
     OBConversion::RegisterFormat("cdx",this);
   }
 
-  virtual const char* Description() //required
+  const char* Description() override  // required
   {
     return
       "ChemDraw binary format\n"
@@ -152,19 +152,19 @@ public:
       " o display only objects in tree output\n";
   }
 
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm";}
 
-  virtual const char* GetMIMEType()
-  { return "chemical/x-cdx"; };
+  const char* GetMIMEType() override
+  { return "chemical/x-cdx"; }
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
     return READBINARY|NOTWRITABLE;
   }
 
   ////////////////////////////////////////////////////
-  virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
 private:
   enum graphicType {none, equilArrow};
@@ -504,7 +504,7 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
             break;
         case kCDXProp_Atom_Charge:
           if(cdxr.GetLen()==1)
-            charge = cdxr.data().get();
+            charge = (int8_t)cdxr.data().get();
           else
             READ_INT32(cdxr.data(), charge);
           break;

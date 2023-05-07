@@ -9,22 +9,39 @@
 .Op Ar OPTIONS
 .Ar filename
 .Sh DESCRIPTION
-The obminimize tool can be used to minimize the energy for molecules
+The
+.Nm
+tool can be used to minimize the energy for molecules
 inside (multi-)molecule files (e.g., MOL2, etc.)
 .Sh OPTIONS
-If no filename is given, obminimize will give all options including the
-available forcefields.
+If no filename is given,
+.Nm
+will give all options including the available forcefields.
 .Bl -tag -width flag
-.It Fl n Ar steps
-Specify the maximum number of steps (default=2500)
+.It Fl c Ar criteria
+Set convergence criteria (default=1e-6)
 .It Fl cg
 Use conjugate gradients algorithm (default)
 .It Fl sd
 Use steepest descent algorithm
-.It Fl c Ar criteria
-Set convergence criteria (default=1e-6)
+.It Fl newton
+Use Newton2Num linesearch (default=Simple)
 .It Fl ff Ar forcefield
 Select the forcefield
+.It Fl o Ar format
+Select the output file format
+.It Fl h
+Add hydrogen atoms
+.It Fl n Ar steps
+Specify the maximum numer of steps (default=2500)
+.It Fl cut
+Use cut-off (default=don't use cut-off)
+.It Fl rvdw Ar rvdw
+Specify the VDW cut-off distance (default=6.0)
+.It Fl rele Ar rele
+Specify the Electrostatic cut-off distance (default=10.0)
+.It Fl pf Ar freq
+Specify the frequency to update the non-bonded pairs (default=10)
 .El
 .Sh EXAMPLES
 .Pp
@@ -60,7 +77,7 @@ The minimize program was contributed by
 .An Tim Vandermeersch.
 .Pp
 .An -nosplit
-Open Babel is developed by a cast of many, including currrent maintainers
+Open Babel is developed by a cast of many, including current maintainers
 .An Geoff Hutchison ,
 .An Chris Morley ,
 .An Michael Banck ,

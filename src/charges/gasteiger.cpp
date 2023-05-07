@@ -28,12 +28,12 @@ class GasteigerCharges : public OBChargeModel
 {
 public:
   GasteigerCharges(const char* ID) : OBChargeModel(ID, false){};
-  const char* Description(){ return "Assign Gasteiger-Marsili sigma partial charges"; }
+  const char* Description() override { return "Assign Gasteiger-Marsili sigma partial charges"; }
 
   /// \return whether partial charges were successfully assigned to this molecule
-  bool ComputeCharges(OBMol &mol);
+  bool ComputeCharges(OBMol &mol) override;
 
-  double DipoleScalingFactor() { return 3.4927; } // fit from regression
+  double DipoleScalingFactor() override { return 3.4927; } // fit from regression
 };
 
 /////////////////////////////////////////////////////////////////

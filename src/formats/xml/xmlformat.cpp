@@ -26,7 +26,7 @@ public:
       OBConversion::RegisterFormat("xml",this);
   }
 
-  const char* Description()
+  const char* Description() override
   {
     return
       "General XML format\n"
@@ -48,14 +48,14 @@ public:
       " n  Read objects of first namespace only\n\n";
   }
 
-  const char* NamespaceURI()const{return "Undefined";};
+  const char* NamespaceURI() const override { return "Undefined"; }
 
-  unsigned Flags()
+  unsigned Flags() override
   {
     return READXML|NOTWRITABLE;
   }
 
-  bool ReadChemObject(OBConversion* pConv)
+  bool ReadChemObject(OBConversion* pConv) override
   {
     XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
     if(!pDefault || pDefault==this)
@@ -78,7 +78,7 @@ public:
     }
   };
 
-  bool ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override
   {
     XMLBaseFormat* pDefault = XMLConversion::GetDefaultXMLClass();
     if (pConv->GetOutFormat() != nullptr && pConv->GetOutFormat()->GetType() == pDefault->GetType())

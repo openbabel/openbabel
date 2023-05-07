@@ -37,24 +37,24 @@ namespace OpenBabel
       OBConversion::RegisterFormat("cof", this);
     }
 
-    virtual const char* Description()
+    const char* Description() override
     {
       return "Culgi object file format\n"
       "Culgi format\n"
       "No options currently \n";
-    };
+    }
 
     /* Flags() can return be any of the following combined by | or be omitted if none apply
      NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY  DEFAULTFORMAT
      READBINARY  WRITEBINARY  READXML  ZEROATOMSOK*/
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | WRITEONEONLY;
-    };
+    }
 
     /// Declarations for the "API" interface functions. Definitions are below
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
   ////////////////////////////////////////////////////

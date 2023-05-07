@@ -37,8 +37,8 @@ public:
     OBConversion::RegisterFormat("pc", this, "chemical/x-ncbi-asn1-xml");
 		XMLConversion::RegisterXMLFormat(this);
 	}
-	virtual const char* NamespaceURI()const{return "http://www.ncbi.nlm.nih.gov";}
-  virtual const char* Description()
+  const char* NamespaceURI() const override { return "http://www.ncbi.nlm.nih.gov"; }
+  const char* Description() override
   {
     return
       "PubChem format\n"
@@ -51,23 +51,23 @@ public:
       "(this needs testing).\n\n";
   }
 
-  virtual const char* SpecificationURL()
+  const char* SpecificationURL() override
   {return "ftp://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd";};
 
-  virtual const char* GetMIMEType()
+  const char* GetMIMEType() override
   { return "chemical/x-ncbi-asn1-xml"; };
 
-  virtual unsigned int Flags()
+  unsigned int Flags() override
   {
     return (READXML | NOTWRITABLE);
   };
 
-	virtual bool DoElement(const string& name);
-	virtual bool EndElement(const string& name);
+	bool DoElement(const string& name) override;
+	bool EndElement(const string& name) override;
 
 	// EndTag is used so that the stream buffer is is filled with the XML from
 	// complete objects, as far as possible.
-	virtual const char* EndTag(){ return "/PC-Compound>"; };
+	const char* EndTag() override { return "/PC-Compound>"; }
 
 private:
 	int dim;

@@ -34,28 +34,28 @@ namespace OpenBabel
       OBConversion::RegisterFormat("zin",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ZINDO input format\n"
         "The input format for the semiempirical quantum-mechanics program ZINDO.\n"
         "Write Options e.g. -xc\n"
         "  c  Write an input file for the CNDO/INDO program.\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "";}; //optional
+    const char* SpecificationURL() override
+    { return ""; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

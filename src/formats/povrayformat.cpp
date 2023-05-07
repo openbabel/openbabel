@@ -106,7 +106,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("pov",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
       "POV-Ray input format\n"
@@ -140,21 +140,21 @@ namespace OpenBabel
       " s Add a sky (with clouds)\n"
       " t Use transparent textures\n"
       ;
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://www.povray.org/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://www.povray.org/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   private:
     string model_type;
@@ -523,7 +523,7 @@ namespace OpenBabel
 
         /* ---- Add a pigment - statement for start-atom of bond ---- */
         bond_type = bond->GetBeginAtom() -> GetType();
-        bond_type.erase(remove_if(bond_type.begin(), bond_type.end(), bind1st(equal_to<char>(), '.')), bond_type.end());
+        bond_type.erase(remove(bond_type.begin(), bond_type.end(), '.'), bond_type.end());
         ofs << "\t    pigment{color Color_"
             << bond_type
             << "}" << endl;
@@ -584,7 +584,7 @@ namespace OpenBabel
 
         /* ---- Add a pigment - statement for end-atom of bond i ---- */
         bond_type = bond->GetEndAtom() -> GetType();
-        bond_type.erase(remove_if(bond_type.begin(), bond_type.end(), bind1st(equal_to<char>(), '.')), bond_type.end());
+        bond_type.erase(remove(bond_type.begin(), bond_type.end(), '.'), bond_type.end());
 
         ofs << "\t    pigment{color Color_"
             << bond_type

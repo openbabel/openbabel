@@ -116,12 +116,15 @@ ipython_3d = False
 """Toggles 2D vs 3D molecule representations in IPython notebook"""
 
 
-def readfile(format, filename, opt=None):
+def readfile(format=None, filename=None, opt=None):
     """Iterate over the molecules in a file.
 
     Required parameters:
        format - see the informats variable for a list of available
-                input formats
+                input formats.
+                If omitted, format will be guessed from filename,
+                specially, compressed gzip type with hints '.tar.gz' or
+                '.tgz' or '.gz' will also be accepted.
        filename
 
     Optional parameters:
@@ -145,21 +148,55 @@ def readfile(format, filename, opt=None):
     ...
     >>> print atomtotal
     43
+
+    >>> atomtotal = 0
+    >>> for mol in readfile(filename="head.sdf.tgz"):
+    ...     atomtotal += len(mol.atoms)
+    ...
+    >>> print atomtotal
+    43
     """
-    if opt is None:
-        opt = {}
+    # To be compitable with testing work inside `python/examples/testpybel.py`,
+    # "format" has to be checked first, ValueError should be raised, if it does
+    # not work, whether it's defined by user-input or guessed from filename.
+    #
+    # If filename does not exist, OSError should be raised instead.
+    if not os.path.isfile(filename):
+        # use a very unusual string to clarify errors when format not works
+        filename = '>>/NONE'
+    if not format:
+        if filename.endswith('.tgz'):
+            new = filename[:-4]
+        elif filename.endswith('.tar.gz'):
+            new = filename[:-7]
+        elif filename.endswith('.gz'):
+            # note: .gz has to be after .tar.gz
+            new = filename[:-3]
+        else:
+            new = filename
+        format = os.path.splitext(new)[1].lstrip('.')
     obconversion = ob.OBConversion()
     formatok = obconversion.SetInFormat(format)
+    if not formatok:
+        if format:
+            raise ValueError("%s is not a recognised Open Babel format" % format)
+        else:
+            if filename == '>>/NONE':
+                raise ValueError("Input file does not exist")
+            else:
+                raise ValueError(
+                    "File format (%s) guessed from file (%s) "
+                    "is not a recognised Open Babel format" % (format,filename)
+                )
+    if not os.path.isfile(filename):
+        raise OSError("Input file does not exist")
+    if opt is None:
+        opt = {}
     for k, v in opt.items():
         if v is None:
             obconversion.AddOption(k, obconversion.INOPTIONS)
         else:
             obconversion.AddOption(k, obconversion.INOPTIONS, str(v))
-    if not formatok:
-        raise ValueError("%s is not a recognised Open Babel format" % format)
-    if not os.path.isfile(filename):
-        raise OSError("No such file: '%s'" % filename)
-
     def filereader():
         obmol = ob.OBMol()
         notatend = obconversion.ReadFile(obmol, filename)

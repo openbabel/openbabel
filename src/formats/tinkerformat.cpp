@@ -39,7 +39,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("txyz",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "Tinker XYZ format\n"
@@ -54,22 +54,22 @@ namespace OpenBabel
         "  m  Write an input file for the CNDO/INDO program.\n"
         "  c  Write atom types using custom atom classes, if available\n"
         "  3  Write atom types for the MM3 forcefield.\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://dasher.wustl.edu/tinker/";}; //optional
+    const char* SpecificationURL() override
+    { return "http://dasher.wustl.edu/tinker/"; }  // optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | WRITEONEONLY;
-    };
+    }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 

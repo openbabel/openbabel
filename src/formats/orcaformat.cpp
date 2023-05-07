@@ -46,7 +46,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("orca",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ORCA output format\n"
@@ -55,19 +55,19 @@ namespace OpenBabel
         " b  Disable bonding entirely\n\n";
     }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {return "http://www.cec.mpg.de/forum/portal.php";} //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return READONEONLY | NOTWRITABLE;
     }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
 
     string checkColumns(string tmp);
   };
@@ -84,7 +84,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("orcainp",this);
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "ORCA input format\n"
@@ -93,19 +93,19 @@ namespace OpenBabel
         "  f    <file>     Read the file specified for input keywords\n\n";
     }
 
-    virtual const char* SpecificationURL()
+    const char* SpecificationURL() override
     {return"http://www.cec.mpg.de/forum/portal.php";} //optional
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
-    virtual unsigned int Flags()
+    unsigned int Flags() override
     {
       return NOTREADABLE | WRITEONEONLY;
     }
 
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
   };
 
@@ -316,14 +316,23 @@ namespace OpenBabel
 
         if (checkKeywords.find("VIBRATIONAL FREQUENCIES") != notFound) {
             FrequenciesAll.resize(0);
-            ifs.getline(buffer,BUFF_SIZE);      // skip ----------
-            ifs.getline(buffer,BUFF_SIZE);      // skip empty line
-            ifs.getline(buffer,BUFF_SIZE);
-            tokenize(vs,buffer);
-            while (vs.size() >1) {
+            ifs.getline(buffer, BUFF_SIZE); // skip ----------
+            ifs.getline(buffer, BUFF_SIZE); // skip empty line
+            ifs.getline(buffer, BUFF_SIZE);
+            // check to see if we have a "scaling factor for ORCA 5"
+            if (strstr(buffer, "Scaling factor") != nullptr)
+            {
+                while (strstr(buffer, "cm**-1") == nullptr)
+                {
+                    ifs.getline(buffer, BUFF_SIZE);
+                    }
+            }
+            tokenize(vs, buffer);
+            while (vs.size() > 1)
+            {
                 FrequenciesAll.push_back(atof(vs[1].c_str()));
-                ifs.getline(buffer,BUFF_SIZE);
-                tokenize(vs,buffer);
+                ifs.getline(buffer, BUFF_SIZE);
+                tokenize(vs, buffer);
             }
             nModeAll = FrequenciesAll.size();
 
@@ -393,7 +402,12 @@ namespace OpenBabel
             ifs.getline(buffer, BUFF_SIZE); // skip empty line
             ifs.getline(buffer, BUFF_SIZE); // skip header
             ifs.getline(buffer, BUFF_SIZE); // skip ---------------------
+            // for ORCA 5 there are two lines of header...
             ifs.getline(buffer, BUFF_SIZE);
+            if (strstr(buffer, "------") != nullptr)
+                 {
+                     ifs.getline(buffer, BUFF_SIZE);
+                 }
             tokenize(vs,buffer);
 
             while (vs.size() >= 6) {

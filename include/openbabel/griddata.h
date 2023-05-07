@@ -85,6 +85,7 @@ namespace OpenBabel {
     /// \param o set to the origin (i.e., the minimum x, y, and z coords of the grid).
     /// \deprecated Will be removed.
     /// \sa GetOriginVector()
+    OB_DEPRECATED_MSG("Use GetOriginVector() instead")
     void GetOriginVector(double o[3]) const;
     /// \return The maximum point in the grid.
     vector3 GetMaxVector() const;
@@ -107,6 +108,7 @@ namespace OpenBabel {
                    const vector3 &z);
     /// \deprecated Will be removed.
     /// \sa SetLimits(const vector3 &origin, const vector3 &x, const vector3 &y, const vector3 &z)
+    OB_DEPRECATED_MSG("Use vector version instead")
     void SetLimits(const double origin[3], const double x[3], const double y[3],
                    const double z[3]);
     /// Set an individual value, grid must have been initialised

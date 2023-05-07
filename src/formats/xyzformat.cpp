@@ -36,7 +36,7 @@ namespace OpenBabel
       OBConversion::RegisterFormat("xyz", this, "chemical/x-xyz");
     }
 
-    virtual const char* Description() //required
+    const char* Description() override  // required
     {
       return
         "XYZ cartesian coordinates format\n"
@@ -83,19 +83,19 @@ namespace OpenBabel
         "Read Options e.g. -as\n"
         "  s  Output single bonds only\n"
         "  b  Disable bonding entirely\n\n";
-    };
+    }
 
-    virtual const char* SpecificationURL()
-    {return "http://openbabel.org/wiki/XYZ";}; //optional
+    const char* SpecificationURL() override
+    { return "http://openbabel.org/wiki/XYZ"; }  // optional
 
-    virtual const char* GetMIMEType()
-    { return "chemical/x-xyz"; };
+    const char* GetMIMEType() override
+    { return "chemical/x-xyz"; }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
-    virtual bool WriteMolecule(OBBase* pOb, OBConversion* pConv);
+    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
+    bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
   };
   //***
 
