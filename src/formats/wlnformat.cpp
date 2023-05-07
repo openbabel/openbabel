@@ -104,6 +104,35 @@ namespace OpenBabel
         "being multipliers and WLN uncertainties, 98% of Pubchem WLN strings are now \n"
         "successfully converted, with greater than 200 WLN rules accounted for\n\n" 
         
+        
+        "Rules fully supported\n\n"
+      	"1. Unbranched and Branched Chains\n"
+      	"2. Systematic Contractions\n"
+      	"3. Organic Salts\n"
+        "4. Benzene Derivatives\n"
+        "5. Multisubstituted Benzene Rings\n"
+        "6. Benzene Rings in Branching Chains\n"
+        "7. Monocyclic Rings\n"
+        "8. Bicyclic Rings\n"
+        "9. Polycyclic Rings\n"
+        "10. Perifused Rings\n"
+        "11. Chains of Rings other than Benzene\n"
+        "12. Sprio Rings\n"
+        "13. Bicyclic Bridged Rings\n"
+        "14. Rings with Pseudo Bridges\n"
+        "15. Ring Structures with Crossed Bonds and Unbranched Bridges\n"
+        "16. Rings of Rings Contraction\n"
+        "17. Metallocenes and Catanenes\n" 
+        "18. Chelete Compounds\n"
+        "19. Ionic Charges, Free Radicals and Isotopes\n\n"
+
+
+        "Rules not supported\n\n"
+        "1. Multipliers\n"
+        "2. Ring Contractions and Multipliers\n"
+        "3. All Special Problems Rules\n\n\n"
+        
+        
         "Writing to WLN is in early prototype stage, and can handle simple compounds, plus\n"
         "some uncomplex ring systems. The challenge of the writer is locant pathdefinitions\n"
         "where a NP-Complete algorithm is currently used to reform the notation\n"
