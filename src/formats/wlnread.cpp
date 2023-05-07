@@ -1712,8 +1712,10 @@ struct WLNRing
     
   
     unsigned int i = 0; 
-    const char *block_str = block.c_str();    
     unsigned int len = block.size();
+    char *block_str = (char*)malloc((len+1)*sizeof(char)); 
+    
+    strcpy(block_str,block.c_str());
     unsigned char ch = *block_str++;
 
 
@@ -2722,6 +2724,8 @@ struct WLNRing
         || !handle_post_orders(saturations,0,final_size))
       Fatal(start+i);
 
+    if(block_str)
+      free(block_str);
   }
 
 };
@@ -3062,7 +3066,9 @@ struct WLNGraph
     unsigned int block_end = 0;
 
     unsigned int len = wln_string.length();
-    const char * wln_ptr = wln_string.c_str();
+    char *wln_ptr = (char*)malloc((len+1)*sizeof(char)); 
+    strcpy(block_str,block.c_str());
+
     unsigned int zero_position = search_ionic(wln_ptr,len,ionic_charges);
     
     unsigned int i=0;
@@ -4651,6 +4657,10 @@ struct WLNGraph
 
     if(!AssignCharges(ionic_charges))
       Fatal(len);
+
+
+    if(wln_ptr)
+      free(wln_ptr);
 
       // use this for recursion on multipliers
     return true;
