@@ -39,7 +39,7 @@ namespace OpenBabel
     {
       return
         "Wiswesser Line Notation\n"
-	"A chemical line notation developed by Wiswesser\n\n"
+	      "A chemical line notation developed by Wiswesser\n\n"
 
         "WLN was invented in 1949, by William J. Wiswesser, as one of the first attempts\n"
         "to codify chemical structure as a line notation, enabling collation on punched\n"
@@ -180,7 +180,8 @@ namespace OpenBabel
     if (!ifs.getline(buffer,BUFF_SIZE))
       return false;
 
-    ReadWLN(buffer, pmol);
+    if(!ReadWLN(buffer, pmol))
+      return false;
 
     return true;
   }

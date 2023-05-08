@@ -4792,9 +4792,11 @@ struct BabelGraph{
     
 
     if (!mol->AddBond(s->GetIdx(), e->GetIdx(), order)){
-      fprintf(stderr,"failed on molecule: %s\n",wln_string);
       fprintf(stderr, "Error: failed to make bond between atoms %d --> %d\n",s->GetIdx(),e->GetIdx());
-      return false;
+      
+      // this is usally a fatal fatal error, can we just exit for swig?
+      exit(1);
+
     }
         
     OpenBabel::OBBond* bptr = mol->GetBond(mol->NumBonds() - 1);
