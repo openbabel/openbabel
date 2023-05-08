@@ -52,10 +52,7 @@ const char *dotfile;
 static bool opt_wln2dot = false;
 static bool opt_debug = false;
 
-// --- globals MSVC compiler did not like these inline ---
 const char *wln_string;
-std::string r_notation;
-
 struct WLNSymbol;
 struct WLNEdge; 
 struct WLNRing;
@@ -1803,7 +1800,8 @@ struct WLNRing
         case '-':{
 
           // gives us a local working copy
-          char local_arr [strlen(block_str)+1] = {0}; 
+          char *local_arr = new char [strlen(block_str)+1]; 
+          memset(local_arr,'\0',strlen(block_str)+1);
           strcpy(local_arr,block_str);
           const char *local = local_arr;
 
@@ -2006,6 +2004,11 @@ struct WLNRing
             }
 
           }
+          if(local_arr){
+            delete [] local_arr;
+            local_arr = 0;
+          }
+
           special.clear();
           break;
         }
@@ -4108,7 +4111,7 @@ struct WLNGraph
           block_end = i;
           
           ring = AllocateWLNRing();
-          r_notation = get_notation(block_start,block_end);
+          std::string r_notation = get_notation(block_start,block_end);
 
           if(pending_spiro){
 
@@ -4263,7 +4266,7 @@ struct WLNGraph
           on_locant = '\0';
           ring = AllocateWLNRing();
 
-          r_notation = "L6J";
+          std::string r_notation = "L6J";
           ring->FormWLNRing(r_notation,i);
           branch_stack.push({ring,0});
 
@@ -4484,9 +4487,9 @@ struct WLNGraph
 #endif
         else{
 
-          // look ahead and consume the special
-
-          char local_arr [strlen(wln_ptr)+1] = {0}; 
+          // ahh variable length array.. gotcha
+          char *local_arr  = new char [strlen(wln_ptr)+1]; 
+          memset(local_arr,'\0',strlen(wln_ptr)+1);
           strcpy(local_arr,wln_ptr);
           const char *local = local_arr;
           
@@ -4562,6 +4565,11 @@ struct WLNGraph
             string_positions[i-gap] = curr;
             pending_unsaturate = 0;
             prev = curr;
+          }
+
+          if(local_arr){
+            delete [] local_arr;
+            local_arr = 0;
           }
         }
         break;
