@@ -4792,7 +4792,8 @@ struct BabelGraph{
     
 
     if (!mol->AddBond(s->GetIdx(), e->GetIdx(), order)){
-      fprintf(stderr, "Error: failed to make bond betweens atoms %d --> %d\n",s->GetIdx(),e->GetIdx());
+      fprintf(stderr,"failed on molecule: %s\n",wln_string);
+      fprintf(stderr, "Error: failed to make bond between atoms %d --> %d\n",s->GetIdx(),e->GetIdx());
       return false;
     }
         
