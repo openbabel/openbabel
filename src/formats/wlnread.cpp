@@ -1668,7 +1668,7 @@ struct WLNRing
   }
 
   /* parse the WLN ring block, use ignore for already predefined spiro atoms */
-  void FormWLNRing(std::string block, unsigned int start, unsigned char spiro_atom='\0'){
+  void FormWLNRing(std::string &block, unsigned int start, unsigned char spiro_atom='\0'){
 
 
     enum RingType{ POLY=1, PERI=2, BRIDGED=3, PSDBRIDGED = 4}; 
@@ -1699,10 +1699,10 @@ struct WLNRing
     std::vector<std::pair<unsigned char, unsigned char>>  unsaturations;
     std::vector<std::pair<unsigned char, unsigned char>>  saturations; 
 
-    std::vector<unsigned char>  pseudo_locants;
-    std::vector<unsigned int>   pseudo_positions; 
-    std::vector<unsigned char>  multicyclic_locants;
-    std::set<unsigned char>     broken_locants;
+    std::vector<unsigned char>    pseudo_locants;
+    std::vector<unsigned int>     pseudo_positions; 
+    std::vector<unsigned char>    multicyclic_locants;
+    std::set<unsigned char>       broken_locants;
     std::map<unsigned char,bool>  bridge_locants;
     
     // broken locants start at A = 129 for extended ascii 
@@ -3024,14 +3024,13 @@ struct WLNGraph
 
 
   /* returns the head of the graph, parse all normal notation */
-  bool ParseWLNString(const char *string) 
+  bool ParseWLNString(const char *wln_ptr) 
   {
     
-    std::string wln_string = std::string(string);
     // keep the memory alive
 
     if (opt_debug)
-      fprintf(stderr, "Parsing WLN notation: %s\n",wln_string.c_str());
+      fprintf(stderr, "Parsing WLN notation: %s\n",wln_ptr);
 
     ObjectStack branch_stack;   // access to both rings and symbols
     branch_stack.reserve(100);  // reasonable size given
@@ -3063,8 +3062,8 @@ struct WLNGraph
     unsigned int block_start = 0;
     unsigned int block_end = 0;
 
-    unsigned int len = wln_string.length();
-    const char * wln_ptr = wln_string.c_str();
+    std::string wln_string = std::string(wln_ptr); // constant reference
+    unsigned int len =strlen(wln_ptr);
     unsigned int zero_position = search_ionic(wln_ptr,len,ionic_charges);
     
     unsigned int i=0;
