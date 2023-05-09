@@ -1840,7 +1840,7 @@ struct WLNRing
             local_arr = 0;
           }
 
-          // this will change on metallocenes defintions
+          // this will change on metallocenes definitions
           if( (state_multi || state_pseudo) && expected_locants){
            gap = 0;
           }
@@ -1935,7 +1935,7 @@ struct WLNRing
                 if(std::isdigit(special[0])){
                   for(unsigned char dig_check : special){
                     if(!std::isdigit(dig_check)){
-                      fprintf(stderr,"Error: mixing numerical and alphabetical special defintions is not allowed\n");
+                      fprintf(stderr,"Error: mixing numerical and alphabetical special definitions is not allowed\n");
                       Fatal(start+i);
                     }
                   }
