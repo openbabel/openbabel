@@ -74,7 +74,7 @@ namespace OpenBabel
 #endif
 
         bool operator ==(const SpaceGroup &) const;
-        int operator!=(const SpaceGroup &other) const
+        bool operator!=(const SpaceGroup &other) const
           {
             return !((*this) == other);
           }
