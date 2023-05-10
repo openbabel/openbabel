@@ -376,7 +376,8 @@ WLNSymbol* define_hypervalent_element(unsigned char sym, WLNGraph &graph){
     case 'I':
     case 'F':
       new_symbol = AllocateWLNSymbol(sym,graph);
-      new_symbol->set_edge_and_type(6);            // allows FCl6
+      if(new_symbol)
+        new_symbol->set_edge_and_type(6);            // allows FCl6
       break;
 
     default:
@@ -1259,11 +1260,18 @@ WLNEdge* add_methyl(WLNSymbol *head, WLNGraph &graph){
   WLNSymbol *carbon = AllocateWLNSymbol('C',graph);
   WLNSymbol *hydrogen = 0;
   WLNEdge   *edge = 0;
-  carbon->set_edge_and_type(4); // used for hydrogens
+  
+  if(carbon)
+    carbon->set_edge_and_type(4); // used for hydrogens
+  else 
+    return 0;
   
   for(unsigned int i=0;i<3;i++){
     hydrogen = AllocateWLNSymbol('H',graph);
-    hydrogen->set_edge_and_type(1);
+    if(hydrogen)
+      hydrogen->set_edge_and_type(1);
+    else
+      return 0;
     edge = AllocateWLNEdge(hydrogen,carbon,graph);
     if(!edge)
       return 0;
@@ -1307,12 +1315,17 @@ bool add_diazo(WLNSymbol *head,WLNGraph &graph){
   WLNSymbol *oxygen = 0;
 
   oxygen = AllocateWLNSymbol('O',graph);
+  if(!oxygen)
+    return false;
+
   oxygen->set_edge_and_type(2,head->type);
   graph.charge_additions[oxygen] = -1;
 
   edge = AllocateWLNEdge(oxygen,head,graph);
   
   oxygen = AllocateWLNSymbol('O',graph);
+  if(!oxygen)
+    return false;
   oxygen->set_edge_and_type(2,head->type);
   edge = AllocateWLNEdge(oxygen,head,graph);
   
@@ -1584,6 +1597,9 @@ unsigned int CreateMultiCyclic( std::vector<std::pair<unsigned int,unsigned char
     unsigned char loc = int_to_locant(i);
     if(!ring->locants[loc]){
       curr = AllocateWLNSymbol('C',graph);
+      if(!curr)
+        return 0;
+
       curr->set_edge_and_type(4,RING);
       curr = assign_locant(loc,curr,ring);
     }
@@ -2951,7 +2967,11 @@ bool ExpandWLNSymbols(WLNGraph &graph){
         sym->ch = 'C';
         sym->set_edge_and_type(4);
         WLNSymbol *oxygen = AllocateWLNSymbol('O',graph);
-        oxygen->set_edge_and_type(2);
+        if(oxygen)
+          oxygen->set_edge_and_type(2);
+        else
+          return false;
+
         WLNEdge *e = AllocateWLNEdge(oxygen,sym,graph);
         e = unsaturate_edge(e,1);
         if(!e)
@@ -5067,4 +5087,113 @@ bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol)
     state = obabel.NMOBSanitizeMol(mol);
 
   return state;
+}
+
+
+
+static void DisplayHelp()
+{
+  fprintf(stderr, "\n--- wisswesser notation parser ---\n\n");
+  fprintf(stderr, " This parser reads and evaluates wiswesser\n"
+                  " line notation (wln), the parser is native\n"
+                  " and will can return either a reformatted string*\n"
+                  " *if rules do not parse exactly, and the connection\n"
+                  " table which can be used in other libraries\n");
+  exit(1);
+}
+
+static void DisplayUsage()
+{
+  fprintf(stderr, "readwln <options> < input (escaped) >\n");
+  fprintf(stderr, "<options>\n");
+  fprintf(stderr, "  -d | --debug                  print debug messages to stderr\n");
+  fprintf(stderr, "  -h | --help                   print debug messages to stderr\n");
+  fprintf(stderr, "  -w | --wln2dot                dump wln trees to dot file in [build]\n");
+  exit(1);
+}
+
+static void ProcessCommandLine(int argc, char *argv[])
+{
+
+  const char *ptr = 0;
+  int i, j;
+
+  cli_inp = (const char *)0;
+
+  if (argc < 2)
+    DisplayUsage();
+
+  j = 0;
+  for (i = 1; i < argc; i++)
+  {
+
+    ptr = argv[i];
+
+    if (ptr[0] == '-' && ptr[1])
+      switch (ptr[1])
+      {
+
+      case 'd':
+        opt_debug = true;
+        break;
+
+      case 'h':
+        DisplayHelp();
+
+      case 'w':
+        opt_wln2dot = true;
+        break;
+
+      case '-':
+
+        if (!strcmp(ptr, "--debug"))
+        {
+          opt_debug = true;
+          break;
+        }
+        else if (!strcmp(ptr, "--help"))
+        {
+          DisplayHelp();
+        }
+        else if (!strcmp(ptr, "--wln2dot"))
+        {
+          opt_wln2dot = true;
+          break;
+        }
+
+      default:
+        fprintf(stderr, "Error: unrecognised input %s\n", ptr);
+        DisplayUsage();
+      }
+
+    else
+      switch (j++)
+      {
+      case 0:
+        cli_inp = ptr;
+        break;
+      default:
+        break;
+      }
+  }
+
+  return;
+}
+
+int main(int argc, char *argv[])
+{
+  ProcessCommandLine(argc, argv);
+  
+  std::string res;
+  OpenBabel::OBMol mol;
+  if(!ReadWLN(cli_inp,&mol))
+    return 1;
+  
+
+  OpenBabel::OBConversion conv;
+  conv.SetOutFormat("smi");
+  res = conv.WriteString(&mol);
+
+  std::cout << res;
+  return 0;
 }
