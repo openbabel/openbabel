@@ -44,13 +44,14 @@ GNU General Public License for more details.
 
 
 // --- inputs ---
+const char *cli_inp;
 const char *dotfile;
 
 // --- options ---
 static bool opt_wln2dot = false;
 static bool opt_debug = false;
 
-const char *wln_string;
+std::string wln_string; 
 struct WLNSymbol;
 struct WLNEdge; 
 struct WLNRing;
@@ -63,7 +64,6 @@ unsigned int ring_count   = 0;
 WLNSymbol *SYMBOLS[REASONABLE];
 WLNEdge   *EDGES  [REASONABLE];
 WLNRing   *RINGS  [REASONABLE];
-void  RELEASE_MEMORY();
 
 std::map<WLNSymbol *, unsigned int> index_lookup;
 std::map<unsigned int, WLNSymbol *> symbol_lookup;
@@ -104,14 +104,13 @@ std::string get_notation(unsigned int s, unsigned int e)
 
 void Fatal(unsigned int pos)
 {
-  fprintf(stderr, "Fatal: %s\n", wln_string);
+  fprintf(stderr, "Fatal: %s\n", wln_string.c_str());
   fprintf(stderr, "       ");
   for (unsigned int i = 0; i < pos; i++)
     fprintf(stderr, " ");
 
   fprintf(stderr, "^\n");
 
-  RELEASE_MEMORY();
   exit(1);
 }
 
@@ -1834,13 +1833,13 @@ struct WLNRing
             local_ch = *local++;
           }
 
-          if(local_arr){
-            delete [] local_arr;
-            local = 0;
-            local_arr = 0;
-          }
+          
+          delete [] local_arr;
+          local = 0;
+          local_arr = 0;
+          
 
-          // this will change on metallocenes definitions
+          // this will change on metallocenes defintions
           if( (state_multi || state_pseudo) && expected_locants){
            gap = 0;
           }
@@ -1935,7 +1934,7 @@ struct WLNRing
                 if(std::isdigit(special[0])){
                   for(unsigned char dig_check : special){
                     if(!std::isdigit(dig_check)){
-                      fprintf(stderr,"Error: mixing numerical and alphabetical special definitions is not allowed\n");
+                      fprintf(stderr,"Error: mixing numerical and alphabetical special defintions is not allowed\n");
                       Fatal(start+i);
                     }
                   }
@@ -2880,7 +2879,13 @@ struct WLNGraph
   WLNSymbol *root;
 
   WLNGraph() : root{(WLNSymbol *)0} {};
-  ~WLNGraph(){};
+  ~WLNGraph(){ // handle all allocated memory
+    for (unsigned int i = 0; i < 1024;i++){
+      delete SYMBOLS[i];
+      delete EDGES[i];
+      delete RINGS[i];
+    }
+  };
 
 
 
@@ -4517,11 +4522,11 @@ struct WLNGraph
             local_ch = *(++local);
           }
 
-          if(local_arr){
-            delete [] local_arr;
-            local = 0;
-            local_arr = 0;
-          }
+          // safe without conditional 
+          delete [] local_arr;
+          local = 0;
+          local_arr = 0;
+          
           
           if(!found_next){
 
@@ -4751,7 +4756,7 @@ struct BabelGraph{
     atm->SetAromatic(arom);
   }
 
-
+  /* mol check should have already been done - SWIG issue?*/
   bool NMOBMolNewBond(OpenBabel::OBMol* mol,
                       OpenBabel::OBAtom* s,
                       OpenBabel::OBAtom* e,
@@ -5001,7 +5006,7 @@ bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol)
     return false;
   }
   else 
-    wln_string = ptr; 
+    wln_string = std::string(ptr); 
 
   WLNGraph wln_graph;
   BabelGraph obabel; 
@@ -5024,15 +5029,5 @@ bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol)
   if(state)
     state = obabel.NMOBSanitizeMol(mol);
 
-  RELEASE_MEMORY();
   return state;
 }
-
-void RELEASE_MEMORY(){
-  for (unsigned int i = 0; i < 1024;i++){
-    delete SYMBOLS[i];
-    delete EDGES[i];
-    delete RINGS[i];
-  }
-}
-
