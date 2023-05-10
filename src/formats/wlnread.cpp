@@ -1300,6 +1300,8 @@ WLNSymbol* create_carbon_chain(WLNSymbol *head,unsigned int size, WLNGraph &grap
   for(unsigned int i=0;i<size-1;i++){
     WLNSymbol* carbon = AllocateWLNSymbol('1',graph);
     carbon->set_edge_and_type(4); // allows hydrogen resolve
+    if(!carbon)
+      return 0;
     edge = AllocateWLNEdge(carbon,prev,graph);
     if(!edge)
       return 0;
@@ -5087,113 +5089,4 @@ bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol)
     state = obabel.NMOBSanitizeMol(mol);
 
   return state;
-}
-
-
-
-static void DisplayHelp()
-{
-  fprintf(stderr, "\n--- wisswesser notation parser ---\n\n");
-  fprintf(stderr, " This parser reads and evaluates wiswesser\n"
-                  " line notation (wln), the parser is native\n"
-                  " and will can return either a reformatted string*\n"
-                  " *if rules do not parse exactly, and the connection\n"
-                  " table which can be used in other libraries\n");
-  exit(1);
-}
-
-static void DisplayUsage()
-{
-  fprintf(stderr, "readwln <options> < input (escaped) >\n");
-  fprintf(stderr, "<options>\n");
-  fprintf(stderr, "  -d | --debug                  print debug messages to stderr\n");
-  fprintf(stderr, "  -h | --help                   print debug messages to stderr\n");
-  fprintf(stderr, "  -w | --wln2dot                dump wln trees to dot file in [build]\n");
-  exit(1);
-}
-
-static void ProcessCommandLine(int argc, char *argv[])
-{
-
-  const char *ptr = 0;
-  int i, j;
-
-  cli_inp = (const char *)0;
-
-  if (argc < 2)
-    DisplayUsage();
-
-  j = 0;
-  for (i = 1; i < argc; i++)
-  {
-
-    ptr = argv[i];
-
-    if (ptr[0] == '-' && ptr[1])
-      switch (ptr[1])
-      {
-
-      case 'd':
-        opt_debug = true;
-        break;
-
-      case 'h':
-        DisplayHelp();
-
-      case 'w':
-        opt_wln2dot = true;
-        break;
-
-      case '-':
-
-        if (!strcmp(ptr, "--debug"))
-        {
-          opt_debug = true;
-          break;
-        }
-        else if (!strcmp(ptr, "--help"))
-        {
-          DisplayHelp();
-        }
-        else if (!strcmp(ptr, "--wln2dot"))
-        {
-          opt_wln2dot = true;
-          break;
-        }
-
-      default:
-        fprintf(stderr, "Error: unrecognised input %s\n", ptr);
-        DisplayUsage();
-      }
-
-    else
-      switch (j++)
-      {
-      case 0:
-        cli_inp = ptr;
-        break;
-      default:
-        break;
-      }
-  }
-
-  return;
-}
-
-int main(int argc, char *argv[])
-{
-  ProcessCommandLine(argc, argv);
-  
-  std::string res;
-  OpenBabel::OBMol mol;
-  if(!ReadWLN(cli_inp,&mol))
-    return 1;
-  
-
-  OpenBabel::OBConversion conv;
-  conv.SetOutFormat("smi");
-  res = conv.WriteString(&mol);
-
-  std::cout << res;
-  return 0;
 }
