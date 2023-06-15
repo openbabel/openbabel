@@ -168,7 +168,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   string tempstr = "";
   long int residx = 0;
   OBAtom* atom;
-  OBResidue* res;
+  OBResidue* res = nullptr;
   OBVectorData* velocity;
 
   if (!ifs || ifs.peek() == EOF) {
@@ -275,6 +275,11 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
     if (resid == residx) {
       // Add atom to an existing residue
+      if (res == nullptr) {
+        res = pmol->NewResidue();
+        res->SetName(resname);
+        res->SetNum(resid);
+      }
       res->AddAtom(atom);
     } else {
       // Create new residue and use that
