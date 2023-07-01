@@ -165,10 +165,13 @@ class Matcher
 	};
 
 public:
-	Matcher(OBMol& mol) : ref(&mol)
+	Matcher(OBMol& mol, int timeout) : ref(&mol)
 	{
 		query = std::shared_ptr<OBQuery>(CompileMoleculeQuery(&mol));
 		mapper = std::shared_ptr<OBIsomorphismMapper>(OBIsomorphismMapper::GetInstance(query.get()));
+		if(timeout > 0) {
+			mapper->SetTimeout(timeout);
+		}
 	}
 
 
@@ -221,6 +224,7 @@ int main(int argc, char **argv)
 	string fileRef;
 	string fileTest;
 	string fileOut;
+	int timeout = 0;
 
 	const char *helpmsg =
 	 "obrms: Computes the heavy-atom RMSD of identical compound structures.\n"
@@ -231,19 +235,21 @@ int main(int argc, char **argv)
 	  "\t -m, --minimize   compute minimum RMSD\n"
 	  "\t -x, --cross      compute all n^2 RMSDs between molecules of reference file\n"
 	  "\t -s, --separate   separate reference file into constituent molecules and report best RMSD\n"
+	  "\t -t, --timeout   give up on matching after specified number of seconds\n"
 	  "\t -h, --help       help message\n";
 	struct option long_options[] = {
 	    {"firstonly", no_argument, nullptr, 'f'},
 	    {"minimize", no_argument, nullptr, 'm'},
 	    {"cross", no_argument, nullptr, 'x'},
 	    {"separate", no_argument, nullptr, 's'},
+	    {"timeout", required_argument, nullptr, 't'},
 	    {"out", required_argument, nullptr, 'o'},
 	    {"help", no_argument, nullptr, 'h'},
 	    {nullptr, 0, nullptr, 0}
 	};
 	int option_index = 0;
 	int c = 0;
-	while ((c = getopt_long(argc, argv, "hfmxso:", long_options, &option_index) ) != -1) {
+	while ((c = getopt_long(argc, argv, "hfmxst:o:", long_options, &option_index) ) != -1) {
 	  switch(c) {
 	    case 'o':
 	      fileOut = optarg;
@@ -260,6 +266,9 @@ int main(int argc, char **argv)
 	    case 's':
 	      separate = true;
 	      break;
+		case 't':
+		  timeout = atoi(optarg);
+		  break;
 	    case 'h':
 	      cout << helpmsg;
 	      exit(0);
@@ -325,7 +334,7 @@ int main(int argc, char **argv)
 
     for(unsigned i = 0, n = refmols.size() ; i < n; i++) {
       OBMol& ref = refmols[i];
-      Matcher matcher(ref);
+      Matcher matcher(ref, timeout);
       cout << ref.GetTitle();
       for(unsigned j = 0; j < n; j++) {
         OBMol& moltest = refmols[j];
@@ -336,6 +345,8 @@ int main(int argc, char **argv)
     }
 
 	} else {
+
+    OBConversion testconv(fileTest);
 
 	  //check comparison file
     while (refconv.Read(&molref))
@@ -350,11 +361,10 @@ int main(int argc, char **argv)
       vector<Matcher> matchers;
       for(unsigned i = 0, n = refmols.size(); i < n; i++) {
         processMol(refmols[i]);
-        Matcher matcher(refmols[i]); // create the matcher
+        Matcher matcher(refmols[i], timeout); // create the matcher
         matchers.push_back(matcher);
       }
 
-      OBConversion testconv(fileTest);
       OBMol moltest;
       while (testconv.Read(&moltest))
       {
