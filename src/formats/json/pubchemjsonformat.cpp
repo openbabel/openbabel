@@ -760,7 +760,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       // Coordinates
       // TODO: An option to round coordinates to n decimal places?
       xcoords.PushBack(rapidjson::Value(patom->GetX()).Move(), al);
-      ycoords.PushBack(rapidjson::Value(patom->GetX()).Move(), al);
+      ycoords.PushBack(rapidjson::Value(patom->GetY()).Move(), al);
       if (pmol->GetDimension() == 3) {
         zcoords.PushBack(rapidjson::Value(patom->GetZ()).Move(), al);
       }
