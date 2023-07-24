@@ -17,10 +17,11 @@ and so you can quickly develop the tests and try them out.
 import os
 import re
 import sys
-import math
 import unittest
 
 from subprocess import CalledProcessError, Popen, PIPE, check_output, STDOUT
+
+INF = float("inf")
 
 def run_exec(*args):
     """Run one of OpenBabel's executables
@@ -535,7 +536,7 @@ charge 1
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
         self.assertEqual(rmsds[0],0)
         self.assertEqual(rmsds[1],2.73807)
-        self.assertEqual(rmsds[-1],math.inf)
+        self.assertEqual(rmsds[-1],INF)
 
 
 
