@@ -525,7 +525,7 @@ charge 1
     def testOBRMS(self):
         '''Sanity checks for obrms'''
         sdffile = self.getTestFile('testsym_2Dtests.sdf')
-        output, err = run_exec( f"obrms -t 10 {sdffile} {sdffile}")
+        output, err = run_exec( "obrms -t 10 %s %s"%(sdffile,sdffile))
         # all rmsds should be zero
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
         for rmsd in rmsds:
