@@ -530,7 +530,7 @@ charge 1
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
         for rmsd in rmsds:
             self.assertEqual(rmsd, 0, "RMSD not zero between identical structures")
-        output, err = run_exec( f"obrms -t 10 -f {sdffile} {sdffile}")
+        output, err = run_exec( "obrms -t 10 -f %s %s" % (sdffile,sdffile))
         #first zero, second nonzero, last inf
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
         self.assertEqual(rmsds[0],0)
