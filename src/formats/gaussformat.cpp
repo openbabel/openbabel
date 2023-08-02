@@ -74,6 +74,7 @@ namespace OpenBabel
   //Make an instance of the format class
   GaussianOutputFormat theGaussianOutputFormat;
 
+#if 0
   class GaussianInputFormat : public OBMoleculeFormat
   {
   public:
@@ -270,6 +271,7 @@ namespace OpenBabel
     ofs << endl;
     return(true);
   }
+#endif
 
   static void add_unique_pairdata_to_mol(OpenBabel::OBMol *mol,
                                          string attribute,
