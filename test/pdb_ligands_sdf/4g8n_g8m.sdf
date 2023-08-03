@@ -1,0 +1,126 @@
+4G8M_G8M_A_301
+  RCSB PDB12061712403D
+Coordinates from PDB:4G8M:A:301 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    5.7850   25.8130   20.9120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8530   25.1800   20.3670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3420   25.3880   21.9490   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2570   27.1350   20.2690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6860   25.4090   17.6040   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4760   25.4020   17.3190   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5500   25.2250   16.7240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1300   25.6480   19.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5980   25.4850   19.1450   N 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6510   27.0270   19.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2680   27.6350   20.8750   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8680   28.1110   21.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  2  0  0  0  0
+  6  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  4  1  1  0  0  0  0
+  4 12  1  0  0  0  0
+  2  1  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  1  3  1  0  0  0  0
+A    1
+CD
+A    2
+OE1
+A    3
+OE2
+A    4
+CG
+A    5
+C
+A    6
+OXT
+A    7
+O
+A    8
+CA
+A    9
+N
+A   10
+CB
+A   11
+C6
+A   12
+C7
+M  END
+>  <InstanceId>
+4G8M_G8M_A_301
+
+>  <ChemCompId>
+G8M
+
+>  <PdbId>
+4G8M
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4
+
+>  <Name>
+(1S,2R)-2-[(S)-amino(carboxy)methyl]cyclobutanecarboxylic acid
+
+>  <SystematicName>
+(1S,2R)-2-[(1S)-1-azanyl-2-oxidanyl-2-oxidanylidene-ethyl]cyclobutane-1-carboxylic acid
+
+>  <Synonyms>
+(2S,1'R,2'S)-2-(2'-carboxycyclobutyl)glycine
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C7 H11 N O4
+
+>  <MolecularWeight>
+173.167
+
+>  <ModifiedDate>
+2012-08-03
+
+>  <Parent>
+GLU
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO4/c8-5(7(11)12)3-1-2-4(3)6(9)10/h3-5H,1-2,8H2,(H,9,10)(H,11,12)/t3-,4+,5+/m1/s1
+
+>  <InChIKey>
+SRAFHGOPGVYULO-WISUUJSJSA-N
+
+>  <SMILES>
+C1C[C@@H]([C@@H]1[C@@H](C(=O)O)N)C(=O)O
+
+$$$$

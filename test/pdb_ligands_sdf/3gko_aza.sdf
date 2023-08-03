@@ -1,0 +1,123 @@
+1J2G_AZA_A_4320
+  RCSB PDB12061702543D
+Coordinates from PDB:1J2G:A:4320 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -16.3810   43.3210    1.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8650   43.9870    2.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5260   45.1280    2.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6700   43.4440    2.9850   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0960   42.2010    2.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6860   41.3780    1.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7250   42.0500    0.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2770   41.4660   -0.2220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2970   40.1260    1.8240   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1060   40.1930    3.0440   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9740   41.4680    3.6100   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+O6
+A    9
+N7
+A   10
+N8
+A   11
+N9
+M  END
+>  <InstanceId>
+1J2G_AZA_A_4320
+
+>  <ChemCompId>
+AZA
+
+>  <PdbId>
+1J2G
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4320
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N5 O2
+
+>  <Name>
+8-AZAXANTHINE
+
+>  <SystematicName>
+3,4-dihydro-[1,2,3]triazolo[4,5-e]pyrimidine-5,7-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H3 N5 O2
+
+>  <MolecularWeight>
+153.099
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H3N5O2/c10-3-1-2(8-9-7-1)5-4(11)6-3/h(H3,5,6,7,8,9,10,11)
+
+>  <InChIKey>
+KVGVQTOQSNJTJI-UHFFFAOYSA-N
+
+>  <SMILES>
+c12c([nH]nn1)NC(=O)NC2=O
+
+$$$$

@@ -1,0 +1,134 @@
+4KGJ_IDF_A_911
+  RCSB PDB12061713213D
+Coordinates from PDB:4KGJ:A:911 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  328.0440  -40.6200  -23.5190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  328.6870  -41.7710  -23.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  328.2930  -42.7860  -22.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  330.0780  -41.6040  -24.0230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  330.5620  -42.8640  -24.4610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  330.0060  -40.7070  -25.1000   F 0  0  0  0  0  0  0  0  0  0  0  0
+  331.0260  -41.0590  -22.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  330.7920  -41.7720  -21.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  332.5030  -41.2830  -23.2510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  333.2240  -40.0390  -23.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+  332.7560  -41.7520  -24.6580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  334.1450  -42.0580  -24.9610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  331.8010  -42.8590  -25.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  331.5710  -42.6560  -26.5430   F 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 13  5  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  7  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+O6B
+A    2
+C6
+A    3
+O6A
+A    4
+C5
+A    5
+O5
+A    6
+F5
+A    7
+C4
+A    8
+O4
+A    9
+C3
+A   10
+O3
+A   11
+C2
+A   12
+O2
+A   13
+C1
+A   14
+F1
+M  END
+>  <InstanceId>
+4KGJ_IDF_A_911
+
+>  <ChemCompId>
+IDF
+
+>  <PdbId>
+4KGJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+911
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6 F2
+
+>  <Name>
+5-fluoro-alpha-L-idopyranosyluronic acid fluoride
+
+>  <SystematicName>
+(2S,3S,4R,5R,6S)-2,6-bis(fluoranyl)-3,4,5-tris(oxidanyl)oxane-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 F2 O6
+
+>  <MolecularWeight>
+214.121
+
+>  <ModifiedDate>
+2013-09-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8F2O6/c7-4-2(10)1(9)3(11)6(8,14-4)5(12)13/h1-4,9-11H,(H,12,13)/t1-,2-,3+,4-,6-/m1/s1
+
+>  <InChIKey>
+NQKZMBDISJYOPD-ORELYVPDSA-N
+
+>  <SMILES>
+[C@H]1([C@H]([C@@H](O[C@]([C@H]1O)(C(=O)O)F)F)O)O
+
+$$$$

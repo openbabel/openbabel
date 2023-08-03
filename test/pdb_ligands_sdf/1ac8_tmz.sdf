@@ -1,0 +1,111 @@
+1AC8_TMZ_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AC8:A:296 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   31.4200   94.3100   49.5800   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9000   93.4000   49.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9700   92.9300   48.0900   N 0  3  0  0  0  0  0  0  0  0  0  0
+   31.8500   93.3100   47.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8800   94.0200   47.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9800   92.1600   47.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7900   92.7700   45.9300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6000   94.6500   47.5000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  8  1  0  0  0  0
+M  CHG  1   3   1
+A    1
+S1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+M  END
+>  <InstanceId>
+1AC8_TMZ_A_296
+
+>  <ChemCompId>
+TMZ
+
+>  <PdbId>
+1AC8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N S
+
+>  <Name>
+3,4,5-TRIMETHYL-1,3-THIAZOLE
+
+>  <SystematicName>
+3,4,5-trimethyl-1,3-thiazol-3-ium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N S
+
+>  <MolecularWeight>
+128.215
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10NS/c1-5-6(2)8-4-7(5)3/h4H,1-3H3/q+1
+
+>  <InChIKey>
+LTPCOIDSGQEHKC-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(sc[n+]1C)C
+
+$$$$

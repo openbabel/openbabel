@@ -1,0 +1,135 @@
+5JIB_OIA_A_400
+  RCSB PDB12061718263D
+Coordinates from PDB:5JIB:A:400 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    0.4720   -7.5430  -31.2010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2870   -8.5940  -31.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5460   -8.5910  -31.4810   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3780   -9.9720  -31.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3780  -11.2950  -31.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8210  -11.3810  -29.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1930  -11.3770  -28.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8780  -11.4840  -27.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2590  -11.6470  -27.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9060  -11.6810  -28.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1810  -11.5580  -29.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6120  -11.5840  -31.0820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5630  -11.4660  -31.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6660  -11.4060  -33.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  2  0  0  0  0
+ 13  5  1  0  0  0  0
+ 13 12  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  6  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  9  8  1  0  0  0  0
+A    1
+O14
+A    2
+C11
+A    3
+O13
+A    4
+C10
+A    5
+C3
+A    6
+C9
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+N1
+A   13
+C2
+A   14
+O12
+M  END
+>  <InstanceId>
+5JIB_OIA_A_400
+
+>  <ChemCompId>
+OIA
+
+>  <PdbId>
+5JIB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3
+
+>  <Name>
+[(3S)-2-oxo-2,3-dihydro-1H-indol-3-yl]acetic acid
+
+>  <SystematicName>
+2-[(3~{S})-2-oxidanylidene-1,3-dihydroindol-3-yl]ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C10 H9 N O3
+
+>  <MolecularWeight>
+191.183
+
+>  <ModifiedDate>
+2017-02-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9NO3/c12-9(13)5-7-6-3-1-2-4-8(6)11-10(7)14/h1-4,7H,5H2,(H,11,14)(H,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+ILGMGHZPXRDCCS-ZETCQYMHSA-N
+
+>  <SMILES>
+c1ccc2c(c1)[C@@H](C(=O)N2)CC(=O)O
+
+$$$$

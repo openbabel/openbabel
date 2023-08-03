@@ -1,0 +1,127 @@
+5G43_5IM_A_1510
+  RCSB PDB12061717483D
+Coordinates from PDB:5G43:A:1510 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -23.8920   12.4850  -14.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3750   11.5740  -14.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.1700   10.3940  -14.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.1290    7.3570  -14.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0210    8.3450  -15.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8300    7.1490  -13.9940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3750    9.6370  -15.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.1350    8.4610  -13.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.0950   10.4140  -13.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0760    9.3610  -14.8510   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2570   11.7740  -13.3780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.3120   11.8370  -15.7050   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 12  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  9  2  0  0  0  0
+  3 10  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N9
+A   10
+N10
+A   11
+N11
+A   12
+S12
+M  END
+>  <InstanceId>
+5G43_5IM_A_1510
+
+>  <ChemCompId>
+5IM
+
+>  <PdbId>
+5G43
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1510
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 S
+
+>  <Name>
+2-(1-PIPERIDINYL)-1,3-THIAZOL-4-AMINE
+
+>  <SystematicName>
+2-piperidin-1-yl-1,3-thiazol-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H13 N3 S
+
+>  <MolecularWeight>
+183.274
+
+>  <ModifiedDate>
+2016-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13N3S/c9-7-6-12-8(10-7)11-4-2-1-3-5-11/h6H,1-5,9H2
+
+>  <InChIKey>
+UXCNXLNTJSYWJW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc(s1)N2CCCCC2)N
+
+$$$$

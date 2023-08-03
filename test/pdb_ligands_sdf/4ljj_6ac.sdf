@@ -1,0 +1,93 @@
+4LJJ_6AC_A_629
+  RCSB PDB12061713343D
+Coordinates from PDB:4LJJ:A:629 Model:1 without hydrogens
+  4  3  0  0  0  0            999 V2000
+    5.7720    3.6160   26.8420   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1900    3.5570   27.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5560    3.4630   28.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0180    4.5320   29.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  3  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+M  END
+>  <InstanceId>
+4LJJ_6AC_A_629
+
+>  <ChemCompId>
+6AC
+
+>  <PdbId>
+4LJJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+629
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N
+
+>  <Name>
+prop-2-enenitrile
+
+>  <SystematicName>
+prop-2-enenitrile
+
+>  <Synonyms>
+Acrylonitrile
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H3 N
+
+>  <MolecularWeight>
+53.063
+
+>  <ModifiedDate>
+2013-07-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H3N/c1-2-3-4/h2H,1H2
+
+>  <InChIKey>
+NLHHRLWOUZZQLW-UHFFFAOYSA-N
+
+>  <SMILES>
+C=CC#N
+
+$$$$

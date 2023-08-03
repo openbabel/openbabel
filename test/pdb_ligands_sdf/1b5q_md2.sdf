@@ -1,0 +1,133 @@
+1B5Q_MD2_A_590
+  RCSB PDB12061702033D
+Coordinates from PDB:1B5Q:A:590 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  132.7260   64.9910   -4.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.0990   60.5010   -6.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.1230   59.4620   -7.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  126.7980   57.4520   -4.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  125.5450   56.6120   -4.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.9940   64.5400   -5.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.2250   64.1150   -6.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.4540   62.8180   -6.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.0790   61.7390   -7.4310   N 0  0  0  0  0  0  0  0  0  0  0  0
+  129.6180   58.6620   -5.9750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  128.1610   58.2990   -6.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  127.9600   57.0880   -5.4660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  124.9300   56.7460   -6.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.3410   56.8800   -7.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5 13  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+C1
+A    2
+C6
+A    3
+C7
+A    4
+C11
+A    5
+C12
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+N5
+A   10
+C8
+A   11
+C9
+A   12
+N10
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+1B5Q_MD2_A_590
+
+>  <ChemCompId>
+MD2
+
+>  <PdbId>
+1B5Q
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+590
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N2
+
+>  <Name>
+N,N'-BIS(2,3-BUTADIENYL)-1,4-BUTANE-DIAMINE
+
+>  <SystematicName>
+N,N'-di(buta-2,3-dienyl)butane-1,4-diamine
+
+>  <Synonyms>
+MDL72527
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H20 N2
+
+>  <MolecularWeight>
+192.301
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H20N2/c1-3-5-9-13-11-7-8-12-14-10-6-4-2/h5-6,13-14H,1-2,7-12H2
+
+>  <InChIKey>
+IKSQCMLJDHRWOA-UHFFFAOYSA-N
+
+>  <SMILES>
+C=C=CCNCCCCNCC=C=C
+
+$$$$

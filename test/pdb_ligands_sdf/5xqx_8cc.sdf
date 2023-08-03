@@ -1,0 +1,139 @@
+5XQX_8CC_A_402
+  RCSB PDB12061720163D
+Coordinates from PDB:5XQX:A:402 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -8.2890  -10.9830   11.0210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0950   -9.9660   11.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3490  -15.8340   11.9360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4110  -14.8500   11.8450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3390  -14.6260   12.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3220  -15.2220   13.9840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.3780  -13.5800   12.7420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6290  -12.8470   11.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6980  -12.0050   11.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.0380  -12.2070   13.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2220  -13.1920   13.7470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.9630  -10.8720    9.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.5230   -9.7740    8.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3420   -8.8490    9.5640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6240   -8.9070   10.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 12  1  2  0  0  0  0
+ 15  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  2  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  9 10  2  0  0  0  0
+  7  5  1  0  0  0  0
+  7 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+C10
+A    2
+C15
+A    3
+C01
+A    4
+N02
+A    5
+C03
+A    6
+O04
+A    7
+C05
+A    8
+C06
+A    9
+C07
+A   10
+C08
+A   11
+N09
+A   12
+C11
+A   13
+C12
+A   14
+N13
+A   15
+C14
+M  END
+>  <InstanceId>
+5XQX_8CC_A_402
+
+>  <ChemCompId>
+8CC
+
+>  <PdbId>
+5XQX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O
+
+>  <Name>
+N-methyl-4-pyridin-4-yl-1H-pyrrole-2-carboxamide
+
+>  <SystematicName>
+~{N}-methyl-4-pyridin-4-yl-1~{H}-pyrrole-2-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N3 O
+
+>  <MolecularWeight>
+201.225
+
+>  <ModifiedDate>
+2017-08-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11N3O/c1-12-11(15)10-6-9(7-14-10)8-2-4-13-5-3-8/h2-7,14H,1H3,(H,12,15)
+
+>  <InChIKey>
+CUQAMHMOOUOTLK-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=O)c1cc(c[nH]1)c2ccncc2
+
+$$$$

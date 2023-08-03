@@ -1,0 +1,138 @@
+1O7A_GDL_A_600
+  RCSB PDB12061703313D
+Coordinates from PDB:1O7A:A:600 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   71.8230   81.4290   26.7940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.2070   80.3690   27.8930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.2870   78.8030   27.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.3320   78.7330   25.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.4610   79.6150   25.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.5920   79.5240   23.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.2780   80.5070   29.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.8100   80.7490   30.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.9130   80.4840   29.2020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   71.7520   82.6240   27.1520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   70.1480   78.1210   27.8860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   71.5620   77.4000   25.4340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   72.3230   81.0380   25.6810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   73.8080   80.1880   23.4040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.0580   80.5410   28.3880   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 15  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N1
+A   10
+O1
+A   11
+O3
+A   12
+O4
+A   13
+O5
+A   14
+O6
+A   15
+O7
+M  END
+>  <InstanceId>
+1O7A_GDL_A_600
+
+>  <ChemCompId>
+GDL
+
+>  <PdbId>
+1O7A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O6
+
+>  <Name>
+2-ACETAMIDO-2-DEOXY-D-GLUCONO-1,5-LACTONE
+
+>  <SystematicName>
+N-[(3R,4R,5S,6R)-4,5-dihydroxy-6-(hydroxymethyl)-2-oxo-oxan-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N O6
+
+>  <MolecularWeight>
+219.192
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13NO6/c1-3(11)9-5-7(13)6(12)4(2-10)15-8(5)14/h4-7,10,12-13H,2H2,1H3,(H,9,11)/t4-,5-,6-,7-/m1/s1
+
+>  <InChIKey>
+NELQYZRSPDCGRQ-DBRKOABJSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H]([C@@H]([C@H](OC1=O)CO)O)O
+
+$$$$

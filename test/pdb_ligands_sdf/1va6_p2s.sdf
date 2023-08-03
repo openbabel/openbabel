@@ -1,0 +1,161 @@
+1VA6_P2S_A_520
+  RCSB PDB12061704183D
+Coordinates from PDB:1VA6:A:520 Model:1 without hydrogens
+ 21 20  0  0  0  0            999 V2000
+   29.6530   -0.3710    0.8830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1620    0.4970   -0.3110   P 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0170    1.6600    0.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0760   -0.4290   -1.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8640    1.2010   -1.0400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4340    0.6250   -2.4980   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2540   -0.9410   -2.4140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6760    0.9700   -3.7330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4930    0.4670   -5.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3690   -0.5930   -5.4240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3920   -0.8970   -4.7020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0930   -1.3080   -6.4480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6510    1.4890   -6.0390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9940    1.8620   -6.0470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9890    1.4500   -2.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9010    1.2910   -1.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7200    1.8680   -2.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8480    3.1910   -2.7730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6170    1.7340   -1.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5690    0.7600   -0.7520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6490    2.5730   -1.6300   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6 15  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  1  0  0  0  0
+ 19 20  1  0  0  0  0
+ 19 21  2  0  0  0  0
+A    1
+OP3
+A    2
+P
+A    3
+OP1
+A    4
+OP2
+A    5
+NS
+A    6
+S
+A    7
+OS
+A    8
+CD
+A    9
+CE
+A   10
+C2
+A   11
+O2T
+A   12
+O2
+A   13
+CF
+A   14
+CH
+A   15
+CG
+A   16
+CB
+A   17
+CA
+A   18
+N
+A   19
+C1
+A   20
+O1
+A   21
+O1T
+M  END
+>  <InstanceId>
+1VA6_P2S_A_520
+
+>  <ChemCompId>
+P2S
+
+>  <PdbId>
+1VA6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+520
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O8 P S
+
+>  <Name>
+(2S)-2-AMINO-4-[[(2R)-2-CARBOXYBUTYL](PHOSPHONO)SULFONIMIDOYL]BUTANOIC ACID
+
+>  <SystematicName>
+(2S)-2-[[S-[(3S)-3-amino-4-hydroxy-4-oxo-butyl]-N-phosphono-sulfonimidoyl]methyl]butanoic acid
+
+>  <Synonyms>
+N-PHOSPHORYL (2S)-2-AMINO-4-[(2S)-2-CARBOXYBUTYL-(R)-SULFONIMIDOYL]BUTANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H19 N2 O8 P S
+
+>  <MolecularWeight>
+346.295
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H19N2O8PS/c1-2-6(8(12)13)5-21(19,11-20(16,17)18)4-3-7(10)9(14)15/h6-7H,2-5,10H2,1H3,(H,12,13)(H,14,15)(H2,16,17,18)/t6-,7+,21-/m1/s1
+
+>  <InChIKey>
+LVBQTRQMXKDEFG-CRRUPIIHSA-N
+
+>  <SMILES>
+CC[C@H](C[S@](=NP(=O)(O)O)(=O)CC[C@@H](C(=O)O)N)C(=O)O
+
+$$$$

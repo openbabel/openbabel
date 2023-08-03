@@ -1,0 +1,258 @@
+##############################################################################
+#                                                                            #
+#                   Open Babel file: atomtyp.txt                             #
+#                                                                            #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Some portions Copyright (c) 2001-2008 Geoffrey R. Hutchison               #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+# SMARTS patterns for atom typing (used by typer.cpp:OBAtomTyper)            #
+#                                                                            #
+# INTHYB: used to assign the internal hybridization values for atoms         #
+# IMPVAL: used to assign the implicit valence of an atom                     #
+# EXTTYP: used to assign the external type of an atom for translation to     #
+#         package specific types (i.e. Sybyl Mol2)                           #
+#        (these should correspond to INT type names in types.txt too.)       #
+#                                                                            #
+# The LAST PATTERN MATCHED is used to assign values with the corresponding   #
+# INTHYB, IMPVAL, and EXTTYP values. Additions to this file should be placed #
+# in the EXTRA DEFINITIONS section (to separate from original patterns.)     #
+#                                                                            #
+##############################################################################
+
+INTHYB  [D4]                      3       #any 4-valent atom -- tetrahedral
+INTHYB  [D5]                      5       #any 5-valent atom -- trigbipy
+INTHYB  [D6]                      6       #any 6-valent atom -- oct
+INTHYB  [C]                       3       #sp3 carbon
+INTHYB  [c,$(C=*)]                2       #sp2 carbon
+# INTHYB  [$([#6]([#8D1])[#8D1])]   2     # Commented out after PR#3089597
+INTHYB  [$(C#*),$(C(=*)=*)]       1       #sp  carbon
+
+INTHYB  [N]                       3       #sp3 nitrogen
+INTHYB  [n,$(N=*),$(N[#6,#7,#8]=,:,#*)] 2 #sp2 nitrogen
+INTHYB  [ND1,ND2,ND3]a            2       #sp2 nitrogen
+INTHYB  [$(N#*),$([ND2](=*)=*)]   1       #sp  nitrogen
+
+INTHYB  [O]                       3       #sp3 oxygen
+INTHYB  [o,$(O=*),$(O[#6,#7,#8]=,:*)] 2   #sp2 oxygen
+INTHYB  [$([#8D1][#6][#8D1])]     2       #sp2 oxygen
+INTHYB  [$(O#*)]                  1       #sp  oxygen
+
+INTHYB  [P]                       3       #sp3 phosphorus
+INTHYB  [#15;$([PD1]=*)]          2       #sp2 phosphorus
+INTHYB  [PD5]			  5	  #sp3d phosphorus, as in PF5
+INTHYB  [Pv5]			  5	  #sp3d phosphorus, as in H3PO4
+INTHYB  [S]                       3       #sp3 sulfur
+INTHYB  [#16;s,$([SD1]=*)]        2       #sp2 sulfur
+INTHYB  [SD6]			  6	  #sp3d2 sulfur, as in SF6
+INTHYB  [B]                       2       #sp2 boron
+INTHYB  [BD4]                     3       #sp3 boron
+
+INTHYB  [Al]                      2       # typical sp2 Al (and family)
+INTHYB  [Ga]                      2
+INTHYB  [In]                      2
+INTHYB  [Tl]                      2
+INTHYB  [AlD4]                    3       # sp3 Al
+INTHYB  [Si]                      3       # sp3 Si (and family)
+INTHYB  [Pb]                      3
+INTHYB  [Ge;!D5]                  3
+INTHYB  [Sn;!D5]                  3
+INTHYB  [AsD3]                    3       # AsCl3 (AsCl5 handled by D5 above)
+INTHYB  [SbD3]                    3       #
+# SbD5, AsD5 are all trigbpy so are handled by D5 above
+INTHYB  [BiD3]                    3       #
+INTHYB  [BiD5]                    6       # BiF5 is square-pyr, not trigbpy
+
+INTHYB  [se]                      2       # aromatic sp2 Se
+INTHYB  [Se]                      3       # sp3 hybridization Se (and family)
+INTHYB  [Te]                      3
+INTHYB  [Po]                      3
+
+INTHYB  [Be]                      1       # Alkaline earth, like sp hybrids
+INTHYB  [Mg]                      1
+INTHYB  [Ca]                      1
+INTHYB  [Sr]                      1
+INTHYB  [Ba]                      1
+INTHYB  [Ra]                      1
+
+#INTHYB  [Pt]                      4 # normally square planar
+#INTHYB  [Pd]                      4
+#INTHYB  [Cu]                      4
+#INTHYB  [Ag]                      4
+#INTHYB  [Au]                      4
+
+#
+#IMPLICIT VALENCE RULES
+#
+#IMPVAL  [#3,#11,#19,#37,#55,#87]  1 # Alkali metals
+#IMPVAL  [#4,#12,#20,#38,#56,#88]  2 # Alkaline earth
+
+IMPVAL  [#5+]                     2
+IMPVAL  [#5-]                     4
+IMPVAL  [#5]                      3 # Generic boron
+IMPVAL [$([#6+]=*)]		          2
+IMPVAL [$([#6+]#*)]		          1 # just for InChI C2
+
+IMPVAL  [#6^3]                    4
+IMPVAL  [#6^2]                    3
+IMPVAL  [#6^1]                    2
+IMPVAL  [#6^3+]                   3
+IMPVAL  [#6^2+]                   2
+IMPVAL  [#6^1+]                   1
+
+IMPVAL  [#6^3-]                   3
+IMPVAL  [#6^2-]                   2
+IMPVAL  [#6^1-]                   1 # isocyanides, CO (valence=1, bond order=3)
+IMPVAL  [c+]                      2
+
+IMPVAL  [N^3]                     3
+IMPVAL  [N^3+]                    4
+IMPVAL  [N^2]                     3
+#IMPVAL  [N^2-,N^3-]              2
+IMPVAL  [ND1^1]                   1
+IMPVAL  [ND2^1]                   2
+IMPVAL  [$(N([OD1])*)]            3
+IMPVAL  [$(NC=O)]                 3
+#IMPVAL  [$(n(c=O)c=O)]           3 # aromatic diimide
+IMPVAL  [$(N(~[OD1])~[OD1])]      3
+IMPVAL  [$([Nr0]C=[Nr0])]         3
+IMPVAL  [$(N=*)]                  2
+#IMPVAL [$([Nr0]=C[Nr0])]         3
+IMPVAL  [$([Nr0]=C[Nr0])]         2
+IMPVAL  [$([N+r0]=C[Nr0])]        3 # patch from Steve Constable
+IMPVAL  [$([#7D1-]=*)]            1
+IMPVAL  [N^1-]                    1 # N2O [N-]=[N+]=O (valence=1, bondorder=2)
+IMPVAL  [N-]                      2
+IMPVAL  [n]                       2
+IMPVAL  [n-]                      2
+IMPVAL  [n+]                      3
+IMPVAL  [$([#7-]=*)]              1
+IMPVAL  [$([#7+]#*)]              2
+IMPVAL  [$([#7+]=*)]              3
+IMPVAL  [$([#7+](=*)=*)]          2
+
+IMPVAL [#8]                       2 # Generic O
+IMPVAL [#8-]                      1
+IMPVAL [#8-2]                     0
+IMPVAL [#8+]                      3
+IMPVAL [$([#8]=*)]                1
+IMPVAL [#8^1+]                    1 # carbon monoxide
+IMPVAL [$([#8]#*)]                1
+
+IMPVAL  [#9D0]                    1
+IMPVAL  [#9D0-]                   0 #[F-]
+
+IMPVAL  [#13]                     3 # generic Al
+
+IMPVAL  [#14]                     4 # regular sp3 Si
+IMPVAL  [#14^2]                   2 # silylenes
+IMPVAL  [$([#14]=*)]              3 # e.g., Si=O
+IMPVAL  [$([#14](=*)=*)]          0 # e.g., Si(=O)=O
+IMPVAL  [$([#14+]#*)]		          1 # just for InChI Si2
+IMPVAL  [$([#14-]#*)]		          1 # just for InChI Si2
+
+IMPVAL  [#15D4]                   4
+IMPVAL  [#15D3]                   3
+IMPVAL  [#15D2]                   3
+IMPVAL  [#15D1^3]                 3
+IMPVAL  [#15D1^2]                 3
+IMPVAL  [#15D0]                   3
+IMPVAL  [$([#15]=[#6])]           2
+IMPVAL  [pD2]                     2
+IMPVAL  [$([#15]=[#8])]           4 # phosphinate (double bond = one valence)
+IMPVAL  [$([#15](=[#8])=[#8])]    3 # metaphosphate (double bond = one valence)
+IMPVAL  [$([#15+](=[#8])([#8]))]  0 # R-P+O2
+IMPVAL  [$([#15]#*)]                1 # for P#P
+
+IMPVAL  [#16]                     2 #revised CM April 2008
+IMPVAL  [$([#16D1]=*)]            1
+IMPVAL  [$([#16D3](=O)(=O)-O)]    4 #e.g. O[S](=O)=O
+IMPVAL  [$([#16D2](=O)-O)]        3 # e.g. O[S]=O
+IMPVAL  [#16D1-]                  1
+
+IMPVAL  [#17D0]                   1
+IMPVAL  [#17D0-]                  0 #[Cl-]
+
+IMPVAL  [#31]                     3
+IMPVAL  [#32]                     4
+
+IMPVAL  [#33]                     3
+IMPVAL  [as]                      3
+
+IMPVAL  [#34]                     2
+
+IMPVAL  [#35D0]                   1
+IMPVAL  [#35D0-]                  0 #[Br-]
+
+#IMPVAL  [#49,#81]                 3 # In, Tl, like Ga
+#IMPVAL  [#50,#82]                 4 # Sn, Pb, like Ge
+#IMPVAL  [#51,#83]                 3 # Sb, Bi, like As
+
+IMPVAL  [#52]                     2
+IMPVAL  [#53D0]                   1
+IMPVAL  [#53D0-]                  0 #[I-]
+
+#
+#EXTERNAL TYPE RULES
+#
+
+# Tinker OH hydrogens for MM2
+# Fixes PR# 1839274
+EXTTYP  [#1][#8]        HO
+
+EXTTYP  [#7^3]          N3
+EXTTYP  [#7X4]          N3+
+EXTTYP  [#7^2]          Npl
+EXTTYP  [#7^1]          N1
+EXTTYP  [$(N=*)]        N2
+EXTTYP  [$([Nr0]C(=[Nr0])[Nr0])]    Ng+
+EXTTYP  [$([Nr0]=C([Nr0])[Nr0])]    Ng+
+EXTTYP  [$([ND1]=C[ND1])]     Ng+
+EXTTYP  [$([ND1]C=[ND1])]     Ng+
+EXTTYP  [$(N(O)*)]        Nox
+EXTTYP  [$(NC=[O,S])]       Nam
+EXTTYP  [$(N(~[OD1])~[OD1])]      Ntr
+EXTTYP  [n]         Nar
+
+EXTTYP  [#6^3]          C3
+EXTTYP  [#6^2]          C2
+EXTTYP  [$(C(=O)[OD1])]       Cac
+EXTTYP  [c]         Car
+EXTTYP  [#6^1]          C1
+EXTTYP  [#6+]         C+
+EXTTYP  [#6-]         C-
+
+EXTTYP  [#8^3]          O3
+EXTTYP  [#8^2]          O2
+EXTTYP  [$(Oa)]         O2
+#The following 2 lines used for correct Sybyl atom typing
+EXTTYP  [$([OD2]C=[O,S])]     O3  #ester oxygen
+EXTTYP  [$(Oa)]         O3      #aromatic ether
+EXTTYP  [#8-]         O-
+EXTTYP  [$([#8D1]~[#6^2]~[#8D1])]     O.co2
+
+EXTTYP  [#15]         P
+EXTTYP  [#15X4+]        P3+
+EXTTYP  [#15;$([#15D4](~[OD1])(~[OD1])~[OD1])]  Pac
+EXTTYP  [#15;$([#15D3](~[OD1])~[OD1])]    Pac
+
+EXTTYP  [#16]         S3
+EXTTYP  [#16D3+,#16X3+]       S3+
+EXTTYP  [#16;s,$([SD1]=*)]      S2
+EXTTYP  [#16D4;$(S(=O)(=O))]      So2
+EXTTYP  [#16D3;$(S(=O))]      Sox
+EXTTYP  [#16;$([#16D4](~[OD1])(~[OD1])~[OD1])]  Sac
+EXTTYP  [#16;$([#16D3](~[OD1])~[OD1])]    Sac
+
+EXTTYP  [#5]          B2
+EXTTYP  [#5D4]          B3
+
+######################## Add Extra Definitions Here ##########################
+
+#INTHYB  [U]                      3
+#INTHYB  [W]                      3
+#INTHYB  [Mo]			  6 # for development
+#INTHYB  [Cr]			  5 # for development
+
+############################# End Extra Definitions ##########################

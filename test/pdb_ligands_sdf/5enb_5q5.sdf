@@ -1,0 +1,122 @@
+5ENB_5Q5_A_1501
+  RCSB PDB12061717313D
+Coordinates from PDB:5ENB:A:1501 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -21.5150    3.5070   -8.5720   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5740    1.8050   -7.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7270    1.8300   -8.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3350    3.0550   -8.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0740    3.1930   -9.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.1460    2.7910  -11.0960   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4050    3.0700   -9.8070   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8010    4.2630   -8.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3280    5.5950   -8.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0510    2.9840   -6.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6760    4.1970   -7.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  2  0  0  0  0
+  7  5  1  0  0  0  0
+  7  4  1  0  0  0  0
+  5  1  1  0  0  0  0
+  4  8  2  0  0  0  0
+  4  3  1  0  0  0  0
+  9  8  1  0  0  0  0
+  8 11  1  0  0  0  0
+  3  2  2  0  0  0  0
+ 11 10  2  0  0  0  0
+  2 10  1  0  0  0  0
+A    1
+N1
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+C7
+A    6
+S
+A    7
+N
+A    8
+C1
+A    9
+C
+A   10
+C3
+A   11
+C2
+M  END
+>  <InstanceId>
+5ENB_5Q5_A_1501
+
+>  <ChemCompId>
+5Q5
+
+>  <PdbId>
+5ENB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 S
+
+>  <Name>
+1-(2-methylphenyl)thiourea
+
+>  <SystematicName>
+1-(2-methylphenyl)thiourea
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N2 S
+
+>  <MolecularWeight>
+166.243
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N2S/c1-6-4-2-3-5-7(6)10-8(9)11/h2-5H,1H3,(H3,9,10,11)
+
+>  <InChIKey>
+ACLZYRNSDLQOIA-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccccc1NC(=S)N
+
+$$$$

@@ -1,0 +1,130 @@
+1T4P_2BH_A_1000
+  RCSB PDB12061704043D
+Coordinates from PDB:1T4P:A:1000 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    5.7810   49.2220   -2.0940   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9240   49.2700   -3.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8720   50.3420   -3.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0220   50.6480   -4.0200   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0260   50.9280   -2.0040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3300   47.8680   -3.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4870   47.4130   -2.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9270   46.0070   -2.4480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.6230   45.6600   -2.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1090   44.2340   -2.2840   B 0  5  0  0  0  0  0  0  0  0  0  0
+   -0.2700   44.0740   -1.9930   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8360   43.3670   -1.4180   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2550   43.5840   -3.4990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+M  CHG  1  10  -1
+A    1
+NP1
+A    2
+C02
+A    3
+C03
+A    4
+O04
+A    5
+O05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+B
+A   11
+O11
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+1T4P_2BH_A_1000
+
+>  <ChemCompId>
+2BH
+
+>  <PdbId>
+1T4P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1000
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O5 B
+
+>  <Name>
+[(1E,5S)-5-AMINO-5-CARBOXYPENT-1-ENYL](TRIHYDROXY)BORATE(1-)
+
+>  <SystematicName>
+[(E,5S)-5-amino-6-hydroxy-6-oxo-hex-1-enyl]-trihydroxy-boron
+
+>  <Synonyms>
+DEHYDRO-2(S)-AMINO-6-BORONOHEXANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 B N O5
+
+>  <MolecularWeight>
+189.982
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13BNO5/c8-5(6(9)10)3-1-2-4-7(11,12)13/h2,4-5,11-13H,1,3,8H2,(H,9,10)/q-1/b4-2+/t5-/m0/s1
+
+>  <InChIKey>
+CCCYGXMAMSUXAV-FYTLMZHYSA-N
+
+>  <SMILES>
+[B-](\C=C\CC[C@@H](C(=O)O)N)(O)(O)O
+
+$$$$

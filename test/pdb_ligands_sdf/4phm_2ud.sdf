@@ -1,0 +1,143 @@
+4PHM_2UD_A_301
+  RCSB PDB12061714143D
+Coordinates from PDB:4PHM:A:301 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   11.6330  -13.8690   25.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7980  -14.6990   25.1760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6470  -15.7600   25.8040   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9470  -14.4230   23.9490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8300  -15.5890   23.4510   S 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0940  -13.1640   23.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9290  -12.1590   23.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8060  -11.6030   22.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1320  -11.8680   21.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1150  -11.1230   20.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6130  -11.5000   18.6750  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7380  -10.1040   21.2680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3650   -9.8770   22.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4250  -10.6160   23.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9190  -10.5760   24.4200   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9820  -11.5260   24.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10 12  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 13  2  0  0  0  0
+  8 14  2  0  0  0  0
+  8  7  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  4  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  7 16  2  0  0  0  0
+  5  4  2  0  0  0  0
+  4  2  1  0  0  0  0
+ 15 16  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAN
+A    2
+CAM
+A    3
+OAO
+A    4
+CAK
+A    5
+SAL
+A    6
+CAJ
+A    7
+CAI
+A    8
+CAE
+A    9
+CAF
+A   10
+CAA
+A   11
+BR
+A   12
+CAB
+A   13
+CAC
+A   14
+CAD
+A   15
+NAG
+A   16
+CAH
+M  END
+>  <InstanceId>
+4PHM_2UD_A_301
+
+>  <ChemCompId>
+2UD
+
+>  <PdbId>
+4PHM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 Br S
+
+>  <Name>
+3-(5-bromo-1H-indol-3-yl)-2-thioxopropanoic acid
+
+>  <SystematicName>
+3-(5-bromanyl-1H-indol-3-yl)-2-sulfanylidene-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H8 Br N O2 S
+
+>  <MolecularWeight>
+298.156
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H8BrNO2S/c12-7-1-2-9-8(4-7)6(5-13-9)3-10(16)11(14)15/h1-2,4-5,13H,3H2,(H,14,15)
+
+>  <InChIKey>
+XFDKQHURWNNDLG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Br)c(c[nH]2)CC(=S)C(=O)O
+
+$$$$

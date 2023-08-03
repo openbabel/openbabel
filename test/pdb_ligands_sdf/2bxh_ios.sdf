@@ -1,0 +1,135 @@
+2BXH_IOS_A_1001
+  RCSB PDB12061705103D
+Coordinates from PDB:2BXH:A:1001 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    8.2820    1.6890  -15.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1570    4.1150  -12.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2900    3.5760  -13.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8520    2.4810  -14.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1110    2.2380  -13.5620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1280    1.2560  -13.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2780    1.3520  -12.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4120    2.4080  -11.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4260    3.3910  -11.7770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2680    3.2920  -12.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0650    2.0740  -15.8430   S 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6570    1.1320  -16.8350   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9610    2.2650  -14.9060   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2670    3.3000  -16.6320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  2  0  0  0  0
+ 11 14  1  0  0  0  0
+A    1
+O1
+A    2
+N1
+A    3
+C1
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+C7
+A   10
+C8
+A   11
+S
+A   12
+O2
+A   13
+O3
+A   14
+O4
+M  END
+>  <InstanceId>
+2BXH_IOS_A_1001
+
+>  <ChemCompId>
+IOS
+
+>  <PdbId>
+2BXH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4 S
+
+>  <Name>
+3-SULFOOXY-1H-INDOLE
+
+>  <SystematicName>
+1H-indol-3-yl hydrogen sulfate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N O4 S
+
+>  <MolecularWeight>
+213.21
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7NO4S/c10-14(11,12)13-8-5-9-7-4-2-1-3-6(7)8/h1-5,9H,(H,10,11,12)
+
+>  <InChIKey>
+BXFFHSIDQOFMLE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)OS(=O)(=O)O
+
+$$$$

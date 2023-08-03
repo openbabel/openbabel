@@ -1,0 +1,139 @@
+3H4A_HHS_A_182
+  RCSB PDB12061708503D
+Coordinates from PDB:3H4A:A:182 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -3.5980    8.7470    8.7340   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4830    8.4760   10.0120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6760    9.2420   10.8020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1190    7.4490   10.6330   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9310    6.5500    9.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5360    5.7140   10.5580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7860    5.9810    7.7520   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7050    5.4330    5.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4170    4.4530    6.2240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7630    5.8010    4.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8980    6.2930    6.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2700    7.4210    5.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5320    8.2300    6.6920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3950    7.9200    8.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0480    6.8090    8.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 15  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  7  2  0  0  0  0
+  7 15  1  0  0  0  0
+ 11  8  1  0  0  0  0
+ 12  8  1  0  0  0  0
+ 11  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+N2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+N5
+A    8
+C6A
+A    9
+O6A
+A   10
+O6B
+A   11
+C6
+A   12
+C7
+A   13
+N8
+A   14
+C9
+A   15
+C10
+M  END
+>  <InstanceId>
+3H4A_HHS_A_182
+
+>  <ChemCompId>
+HHS
+
+>  <PdbId>
+3H4A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+182
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O3
+
+>  <Name>
+6-CARBOXYPTERIN
+
+>  <SystematicName>
+2-amino-4-oxo-3H-pteridine-6-carboxylic acid
+
+>  <Synonyms>
+2-amino-4-oxo-3,4-dihydropteridine-6-carboxylic acid
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 N5 O3
+
+>  <MolecularWeight>
+207.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5N5O3/c8-7-11-4-3(5(13)12-7)10-2(1-9-4)6(14)15/h1H,(H,14,15)(H3,8,9,11,12,13)
+
+>  <InChIKey>
+QABAUCFGPWONOG-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc2c(n1)N=C(NC2=O)N)C(=O)O
+
+$$$$

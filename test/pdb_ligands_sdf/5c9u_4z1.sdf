@@ -1,0 +1,138 @@
+5C9U_4Z1_A_803
+  RCSB PDB12061717033D
+Coordinates from PDB:5C9U:A:803 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   32.3150   77.3470   61.1670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3920   75.6130   62.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.0090   79.8510   63.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9260   79.7600   63.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5730   79.5310   65.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.8200   80.0060   63.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9480   80.8990   62.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5370   79.3230   62.8650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9980   78.2570   63.6020   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9530   77.5380   63.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3570   78.0370   61.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8600   76.1550   61.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5620   75.3190   60.9470  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4300   76.3230   63.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0680   75.6630   64.9330  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+  1 12  2  0  0  0  0
+  1 11  1  0  0  0  0
+ 12  2  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  7  6  2  0  0  0  0
+  2 14  2  0  0  0  0
+  8  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  6  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 14 15  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+C10
+A    2
+C13
+A    3
+O01
+A    4
+C02
+A    5
+O03
+A    6
+C04
+A    7
+O05
+A    8
+N06
+A    9
+N07
+A   10
+C08
+A   11
+C09
+A   12
+C11
+A   13
+CL12
+A   14
+C14
+A   15
+CL15
+M  END
+>  <InstanceId>
+5C9U_4Z1_A_803
+
+>  <ChemCompId>
+4Z1
+
+>  <PdbId>
+5C9U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O3 Cl2
+
+>  <Name>
+[2-(2,4-dichlorophenyl)hydrazinyl](oxo)acetic acid
+
+>  <SystematicName>
+2-[2-(2,4-dichlorophenyl)hydrazinyl]-2-oxidanylidene-ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 Cl2 N2 O3
+
+>  <MolecularWeight>
+249.051
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6Cl2N2O3/c9-4-1-2-6(5(10)3-4)11-12-7(13)8(14)15/h1-3,11H,(H,12,13)(H,14,15)
+
+>  <InChIKey>
+LEIUKVPEVMKZOI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)Cl)NNC(=O)C(=O)O
+
+$$$$

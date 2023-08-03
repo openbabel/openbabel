@@ -1,0 +1,119 @@
+2PIO_2MI_A_933
+  RCSB PDB12061706393D
+Coordinates from PDB:2PIO:A:933 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   59.5380    9.4020   21.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1870    8.6740   19.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   59.6120    7.6920   19.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4830    7.3090   18.2960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.4330    6.3320   17.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.5220    6.1450   16.4600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.6600    6.9340   16.6020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7110    7.9120   17.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.6220    8.0980   18.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.4050    8.9340   19.4500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CAJ
+A    2
+CAG
+A    3
+CAC
+A    4
+CAA
+A    5
+CAD
+A    6
+CAH
+A    7
+CAI
+A    8
+CAF
+A    9
+CAB
+A   10
+NAE
+M  END
+>  <InstanceId>
+2PIO_2MI_A_933
+
+>  <ChemCompId>
+2MI
+
+>  <PdbId>
+2PIO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+933
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N
+
+>  <Name>
+2-METHYL-1H-INDOLE
+
+>  <SystematicName>
+2-methyl-1H-indole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N
+
+>  <MolecularWeight>
+131.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9N/c1-7-6-8-4-2-3-5-9(8)10-7/h2-6,10H,1H3
+
+>  <InChIKey>
+BHNHHSOHWZKFOX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc2ccccc2[nH]1
+
+$$$$

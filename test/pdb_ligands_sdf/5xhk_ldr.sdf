@@ -1,0 +1,140 @@
+3SE2_LDR_A_1
+  RCSB PDB12061710433D
+Coordinates from PDB:3SE2:A:1 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+   14.1800   -9.3390    3.9370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0400   -6.0760   -0.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7840   -7.2460    3.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1780   -5.3080   -0.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8410   -6.2410    2.5590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0720   -7.0430    0.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6130   -7.9680    3.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3500   -5.5040    0.1360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7250   -5.9760    1.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2460   -8.1790    2.3140   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3100   -8.4390    3.0780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2470   -7.2390    1.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4910   -7.7120    2.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3970   -6.4740    1.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5400   -6.7050    1.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  1  2  0  0  0  0
+  4  2  2  0  0  0  0
+  2  6  1  0  0  0  0
+  5  3  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  8  1  0  0  0  0
+  9  5  1  0  0  0  0
+  6 12  2  0  0  0  0
+ 13  7  2  0  0  0  0
+  8 14  2  0  0  0  0
+  9 15  2  0  0  0  0
+ 12 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 14 12  1  0  0  0  0
+ 15 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+OAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+NAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+M  END
+>  <InstanceId>
+3SE2_LDR_A_1
+
+>  <ChemCompId>
+LDR
+
+>  <PdbId>
+3SE2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O
+
+>  <Name>
+phenanthridin-6(5H)-one
+
+>  <SystematicName>
+5H-phenanthridin-6-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H9 N O
+
+>  <MolecularWeight>
+195.217
+
+>  <ModifiedDate>
+2011-07-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H9NO/c15-13-11-7-2-1-5-9(11)10-6-3-4-8-12(10)14-13/h1-8H,(H,14,15)
+
+>  <InChIKey>
+RZFVLEJOHSLEFR-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)-c3ccccc3NC2=O
+
+$$$$

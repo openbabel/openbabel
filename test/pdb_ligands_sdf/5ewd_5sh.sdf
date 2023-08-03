@@ -1,0 +1,127 @@
+5EWD_5SH_A_801
+  RCSB PDB12061717333D
+Coordinates from PDB:5EWD:A:801 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    8.8630  -10.1590    6.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9170   -9.3250    7.5640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0520   -8.2400    7.6610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1320   -7.9900    6.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0770   -8.8270    5.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9410   -9.9140    5.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8860  -10.7480    4.3220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0530  -11.3280    3.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0130  -12.1500    2.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7920  -12.4100    2.0800   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6190  -11.8240    2.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6720  -10.9940    3.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 12  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  1  1  0  0  0  0
+  5  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+CAF
+A    2
+CAB
+A    3
+CAA
+A    4
+CAC
+A    5
+CAG
+A    6
+CAK
+A    7
+CAL
+A    8
+CAH
+A    9
+CAD
+A   10
+NAJ
+A   11
+CAE
+A   12
+CAI
+M  END
+>  <InstanceId>
+5EWD_5SH_A_801
+
+>  <ChemCompId>
+5SH
+
+>  <PdbId>
+5EWD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N
+
+>  <Name>
+4-phenylpyridine
+
+>  <SystematicName>
+4-phenylpyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 N
+
+>  <MolecularWeight>
+155.196
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9N/c1-2-4-10(5-3-1)11-6-8-12-9-7-11/h1-9H
+
+>  <InChIKey>
+JVZRCNQLWOELDU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2ccncc2
+
+$$$$

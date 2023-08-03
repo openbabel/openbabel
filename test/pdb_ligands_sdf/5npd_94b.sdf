@@ -1,0 +1,127 @@
+5NPD_94B_A_915
+  RCSB PDB12061719123D
+Coordinates from PDB:5NPD:A:915 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   29.6660   80.0320   34.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1650   79.8580   34.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4150   80.4100   35.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0320   79.7990   37.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5310   80.1430   37.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1750   79.2380   38.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.3510   80.1080   36.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0030   77.8490   38.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2970   80.2440   38.3230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0520   80.0080   35.8090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7390   80.3550   33.4830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2650   81.2940   35.2110   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  1 12  1  0  0  0  0
+  1  7  1  0  0  0  0
+ 12  7  1  0  0  0  0
+ 10  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  5  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  8  6  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O6
+A    9
+O4
+A   10
+O2
+A   11
+O3
+A   12
+N12
+M  END
+>  <InstanceId>
+5NPD_94B_A_915
+
+>  <ChemCompId>
+94B
+
+>  <PdbId>
+5NPD
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+915
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O4
+
+>  <Name>
+(1~{S},2~{S},3~{S},4~{R},5~{R},6~{S})-5-(hydroxymethyl)-7-azabicyclo[4.1.0]heptane-2,3,4-triol
+
+>  <SystematicName>
+(1~{S},2~{S},3~{S},4~{R},5~{R},6~{S})-5-(hydroxymethyl)-7-azabicyclo[4.1.0]heptane-2,3,4-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N O4
+
+>  <MolecularWeight>
+175.182
+
+>  <ModifiedDate>
+2017-08-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13NO4/c9-1-2-3-4(8-3)6(11)7(12)5(2)10/h2-12H,1H2/t2-,3-,4-,5+,6-,7-/m0/s1
+
+>  <InChIKey>
+GPIFFOGPRPKRHS-GESKJZQWSA-N
+
+>  <SMILES>
+C([C@H]1[C@H]2[C@H](N2)[C@@H]([C@H]([C@@H]1O)O)O)O
+
+$$$$

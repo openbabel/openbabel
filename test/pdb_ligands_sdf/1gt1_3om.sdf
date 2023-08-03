@@ -1,0 +1,113 @@
+1GT1_3OM_B_1159
+  RCSB PDB12061702383D
+Coordinates from PDB:1GT1:B:1159 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   28.0810   19.7440   21.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4240   16.6830   19.8750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7510   18.2850   21.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6160   18.0390   20.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.9870   19.1630   19.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2040   18.5640   18.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7610   19.4840   17.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9940   19.0500   16.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5980   20.2120   15.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+M  END
+>  <InstanceId>
+1GT1_3OM_B_1159
+
+>  <ChemCompId>
+3OM
+
+>  <PdbId>
+1GT1
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1159
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O
+
+>  <Name>
+(3S)-1-octen-3-ol
+
+>  <SystematicName>
+(3S)-oct-1-en-3-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H16 O
+
+>  <MolecularWeight>
+128.212
+
+>  <ModifiedDate>
+2014-02-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H16O/c1-3-5-6-7-8(9)4-2/h4,8-9H,2-3,5-7H2,1H3/t8-/m1/s1
+
+>  <InChIKey>
+VSMOENVRRABVKN-MRVPVSSYSA-N
+
+>  <SMILES>
+CCCCC[C@@H](C=C)O
+
+$$$$

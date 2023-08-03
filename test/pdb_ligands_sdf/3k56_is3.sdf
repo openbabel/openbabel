@@ -1,0 +1,133 @@
+3K56_IS3_A_300
+  RCSB PDB12061709233D
+Coordinates from PDB:3K56:A:300 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+   49.6500   13.1260    8.3400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.5450   14.9850    9.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8990   15.4480    9.0300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2380   14.5510    8.8510   P 0  0  0  0  0  0  0  0  0  0  0  0
+   46.9730   14.8490    7.6000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9480   14.4510   10.1820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   50.5330   11.8240    7.8160   P 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5530   15.4030    7.4500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0380   15.1290    7.7090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8400   15.2560    6.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   51.0250   12.3140    6.4790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9070   16.0010    8.4460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.7310   10.4840    7.8210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   52.0360   11.4980    9.1350   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  8  1  0  0  0  0
+  7 11  2  0  0  0  0
+  7 13  1  0  0  0  0
+  7 14  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 12  1  0  0  0  0
+A    1
+O
+A    2
+C1
+A    3
+O1
+A    4
+P1
+A    5
+C2
+A    6
+O2
+A    7
+P2
+A    8
+C3
+A    9
+O3
+A   10
+C4
+A   11
+O4
+A   12
+C5
+A   13
+O5
+A   14
+S6
+M  END
+>  <InstanceId>
+3K56_IS3_A_300
+
+>  <ChemCompId>
+IS3
+
+>  <PdbId>
+3K56
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O6 P2 S
+
+>  <Name>
+Isopentenyl Diphosphate Beta-S
+
+>  <SystematicName>
+[hydroxy(3-methylbutoxy)phosphoryl]oxy-sulfanyl-phosphinic acid
+
+>  <Synonyms>
+O-(3-methylbutyl) trihydrogen thiodiphosphate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H14 O6 P2 S
+
+>  <MolecularWeight>
+264.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H14O6P2S/c1-5(2)3-4-10-12(6,7)11-13(8,9)14/h5H,3-4H2,1-2H3,(H,6,7)(H2,8,9,14)
+
+>  <InChIKey>
+JPPCYMVZXKAWTF-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)CCO[P@@](=O)(O)O[P@](=O)(O)S
+
+$$$$

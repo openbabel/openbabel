@@ -1,0 +1,130 @@
+5JMX_DZ5_A_304
+  RCSB PDB12061718273D
+Coordinates from PDB:5JMX:A:304 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   64.3000    2.9290   25.6230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.9900    3.8960   26.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.7610    4.3050   27.2860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5810    4.4920   26.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.1190    5.3060   27.2770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.7780    5.8790   27.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.0040    6.5130   26.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7300    7.0160   26.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2350    6.8970   28.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.9830    7.3900   28.3000   F 0  0  0  0  0  0  0  0  0  0  0  0
+   58.9100    6.3060   29.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   60.1830    5.8130   28.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   61.5930    4.0650   24.9250   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  4  1  0  0  0  0
+  1  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  2  0  0  0  0
+  2  3  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+F10
+A   11
+C11
+A   12
+C12
+A   13
+S13
+M  END
+>  <InstanceId>
+5JMX_DZ5_A_304
+
+>  <ChemCompId>
+DZ5
+
+>  <PdbId>
+5JMX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+304
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O2 S F
+
+>  <Name>
+(2Z)-3-(4-fluorophenyl)-2-sulfanylprop-2-enoic acid
+
+>  <SystematicName>
+(~{Z})-3-(4-fluorophenyl)-2-sulfanyl-prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 F O2 S
+
+>  <MolecularWeight>
+198.214
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7FO2S/c10-7-3-1-6(2-4-7)5-8(13)9(11)12/h1-5,13H,(H,11,12)/b8-5-
+
+>  <InChIKey>
+IBSBBUUSPOCCFV-YVMONPNESA-N
+
+>  <SMILES>
+c1cc(ccc1/C=C(/C(=O)O)\S)F
+
+$$$$

@@ -1,0 +1,122 @@
+4GE8_0WU_A_414
+  RCSB PDB12061712413D
+Coordinates from PDB:4GE8:A:414 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -1.7030  -36.3590  -12.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7570  -35.9150  -11.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0000  -34.6550  -11.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0350  -35.5700  -13.5390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1550  -35.6280  -10.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2100  -36.0230  -11.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3490  -35.4520   -9.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3030  -36.4430  -13.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.3360  -34.6430  -11.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1380  -33.8440  -11.4740   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6570  -35.5820  -12.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4 11  1  0  0  0  0
+  8 11  2  0  0  0  0
+  8  1  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9  3  1  0  0  0  0
+  6  5  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C9
+A    7
+C10
+A    8
+C3
+A    9
+C1
+A   10
+O1
+A   11
+C2
+M  END
+>  <InstanceId>
+4GE8_0WU_A_414
+
+>  <ChemCompId>
+0WU
+
+>  <PdbId>
+4GE8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+414
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+(5S)-2-methyl-5-(prop-1-en-2-yl)cyclohex-2-en-1-one
+
+>  <SystematicName>
+(5S)-2-methyl-5-prop-1-en-2-yl-cyclohex-2-en-1-one
+
+>  <Synonyms>
+S-carvone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O
+
+>  <MolecularWeight>
+150.218
+
+>  <ModifiedDate>
+2012-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O/c1-7(2)9-5-4-8(3)10(11)6-9/h4,9H,1,5-6H2,2-3H3/t9-/m0/s1
+
+>  <InChIKey>
+ULDHMXUKGWMISQ-VIFPVBQESA-N
+
+>  <SMILES>
+CC1=CC[C@@H](CC1=O)C(=C)C
+
+$$$$

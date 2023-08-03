@@ -1,0 +1,126 @@
+4AMX_5GF_A_1039
+  RCSB PDB12061711423D
+Coordinates from PDB:4AMX:A:1039 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   -0.9100  -22.3080  -22.0380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1420  -23.0950  -21.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5630  -20.1530  -21.9200   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0370  -22.4280  -19.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1090  -22.7940  -18.8010   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0760  -20.9100  -19.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9620  -20.4190  -18.7850   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5680  -20.5420  -21.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8690  -19.1440  -21.2870   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0720  -20.6440  -23.6250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9140  -21.5820  -24.0610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5190  -20.9250  -22.1910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+O5
+A    2
+C1
+A    3
+F
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+C6
+A   11
+O6
+A   12
+C5
+M  END
+>  <InstanceId>
+4AMX_5GF_A_1039
+
+>  <ChemCompId>
+5GF
+
+>  <PdbId>
+4AMX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1039
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C6 O5 F
+
+>  <Name>
+5-FLUORO-BETA-D-GLUCOPYRANOSE
+
+>  <SystematicName>
+(2R,3R,4R,5S,6S)-6-fluoranyl-6-(hydroxymethyl)oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C6 H11 F O6
+
+>  <MolecularWeight>
+198.146
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11FO6/c7-6(1-8)4(11)2(9)3(10)5(12)13-6/h2-5,8-12H,1H2/t2-,3-,4+,5-,6-/m1/s1
+
+>  <InChIKey>
+YQZCKDSOGGIGPL-VFUOTHLCSA-N
+
+>  <SMILES>
+C([C@@]1([C@H]([C@@H]([C@H]([C@@H](O1)O)O)O)O)F)O
+
+$$$$

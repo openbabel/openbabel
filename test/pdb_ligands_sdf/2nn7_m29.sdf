@@ -1,0 +1,146 @@
+2NN7_M29_A_311
+  RCSB PDB12061706243D
+Coordinates from PDB:2NN7:A:311 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+  -17.3450   -0.0940  -19.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0990    1.1180  -19.6320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7530    1.7170  -18.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.6730    1.1350  -17.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9350   -0.0430  -17.0520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2660   -0.6640  -18.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5430   -0.8610  -20.8190   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2170    0.2080  -21.7320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5190   -1.8370  -21.2900   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2320   -1.6140  -20.2810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.3900    1.7510  -16.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7590    3.0130  -15.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4590    3.6790  -14.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8600    4.8420  -13.9480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4620    3.2100  -13.8950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4960    5.5630  -12.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7570    6.8890  -12.7570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  2  0  0  0  0
+  7 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+S
+A    8
+O1
+A    9
+O2
+A   10
+N
+A   11
+C7
+A   12
+C8
+A   13
+C9
+A   14
+O3
+A   15
+O4
+A   16
+C10
+A   17
+C11
+M  END
+>  <InstanceId>
+2NN7_M29_A_311
+
+>  <ChemCompId>
+M29
+
+>  <PdbId>
+2NN7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+311
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O4 S
+
+>  <Name>
+ETHYL 3-[4-(AMINOSULFONYL)PHENYL]PROPANOATE
+
+>  <SystematicName>
+ethyl 3-(4-sulfamoylphenyl)propanoate
+
+>  <Synonyms>
+4-PROPYL BENZENESULFONAMIDE ETHYL ESTER
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H15 N O4 S
+
+>  <MolecularWeight>
+257.306
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H15NO4S/c1-2-16-11(13)8-5-9-3-6-10(7-4-9)17(12,14)15/h3-4,6-7H,2,5,8H2,1H3,(H2,12,14,15)
+
+>  <InChIKey>
+OJBJALUJMRMNIR-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)CCc1ccc(cc1)S(=O)(=O)N
+
+$$$$

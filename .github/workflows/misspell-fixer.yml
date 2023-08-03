@@ -1,0 +1,16 @@
+name: misspell-fixer
+
+on: [push]
+jobs:
+  spelling-check:
+    name: Spelling Check
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: misspell-fixer check for code and comments
+      uses: sobolevn/misspell-fixer-action@master
+      with:
+        options: '-rsvn include/openbabel src tools'
+    - uses: peter-evans/create-pull-request@v2.4.4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}

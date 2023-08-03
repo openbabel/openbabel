@@ -1,0 +1,105 @@
+1E7B_HLT_A_4001
+  RCSB PDB12061702213D
+Coordinates from PDB:1E7B:A:4001 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   -0.5260  -23.2120   -4.3200   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2740  -21.9130   -4.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4250  -21.2380   -4.0650   F 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4480  -21.7350   -3.0430   F 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5030  -21.4160   -5.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2660  -22.0410   -5.2140  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2240  -22.0750   -6.7810  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+F1
+A    2
+C2
+A    3
+F2
+A    4
+F3
+A    5
+C1
+A    6
+BR
+A    7
+CL
+M  END
+>  <InstanceId>
+1E7B_HLT_A_4001
+
+>  <ChemCompId>
+HLT
+
+>  <PdbId>
+1E7B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 Br F3 Cl
+
+>  <Name>
+2-BROMO-2-CHLORO-1,1,1-TRIFLUOROETHANE
+
+>  <SystematicName>
+(2R)-2-bromo-2-chloro-1,1,1-trifluoro-ethane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H Br Cl F3
+
+>  <MolecularWeight>
+197.382
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2HBrClF3/c3-1(4)2(5,6)7/h1H/t1-/m0/s1
+
+>  <InChIKey>
+BCQZXOMGPXTTIC-SFOWXEAESA-N
+
+>  <SMILES>
+[C@@H](C(F)(F)F)(Cl)Br
+
+$$$$

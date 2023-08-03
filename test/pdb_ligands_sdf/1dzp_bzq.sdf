@@ -1,0 +1,135 @@
+1DZP_BZQ_A_600
+  RCSB PDB12061702193D
+Coordinates from PDB:1DZP:A:600 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    2.7380   27.0930   10.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4580   26.9190   11.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8320   26.4280   13.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4630   26.1010   12.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7320   26.2750   11.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3780   26.7630   10.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.7430   25.9080   11.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0770   25.7090   13.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7460   26.4450   12.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3640   27.6680   12.4550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2970   28.1610   13.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6140   27.4220   14.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0000   26.1910   14.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1860   25.0150   10.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 14  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+O
+M  END
+>  <InstanceId>
+1DZP_BZQ_A_600
+
+>  <ChemCompId>
+BZQ
+
+>  <PdbId>
+1DZP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O
+
+>  <Name>
+DIPHENYLMETHANONE
+
+>  <SystematicName>
+diphenylmethanone
+
+>  <Synonyms>
+BENZENE, BENZOYL-; BENZOPHENONE (8CI); BENZOYLBENZENE; DIPHENYL KETONE; KETONE, DIPHENYL; METHANONE, DIPHENYL- (9CI); PHENYL KETONE; WLN: RVR
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H10 O
+
+>  <MolecularWeight>
+182.218
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H10O/c14-13(11-7-3-1-4-8-11)12-9-5-2-6-10-12/h1-10H
+
+>  <InChIKey>
+RWCCWEUUXYIKHB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C(=O)c2ccccc2
+
+$$$$

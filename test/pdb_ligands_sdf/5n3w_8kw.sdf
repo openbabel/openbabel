@@ -1,0 +1,151 @@
+5N3W_8KW_A_704
+  RCSB PDB12061719083D
+Coordinates from PDB:5N3W:A:704 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+    8.1370   -1.4230   -1.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6460   -0.4310   -1.0440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9910   -0.2840   -1.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7010   -0.2930    0.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6370   -0.1100   -2.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9940    0.0380   -2.3450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5230    0.2110   -3.5940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6950    0.0160   -1.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0810   -0.1510    0.1220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6970   -0.2050    1.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2440   -0.3740    1.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7440   -0.8970    2.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6800   -0.0930    3.7600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1300   -0.5220    5.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6830   -1.7850    5.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7860   -2.6130    4.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3260   -2.1630    2.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4280   -3.0310    1.8660   O 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  8  1  0  0  0  0
+  5  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  8  9  2  0  0  0  0
+  3  2  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 12 17  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 17 16  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 16 15  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAK
+A    6
+CAL
+A    7
+OAQ
+A    8
+CAM
+A    9
+CAE
+A   10
+CAF
+A   11
+CAG
+A   12
+CAH
+A   13
+CAI
+A   14
+CAJ
+A   15
+CAP
+A   16
+CAO
+A   17
+CAN
+A   18
+OAR
+M  END
+>  <InstanceId>
+5N3W_8KW_A_704
+
+>  <ChemCompId>
+8KW
+
+>  <PdbId>
+5N3W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+704
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 O3
+
+>  <Name>
+3-[2-(2-hydroxyphenyl)ethyl]-5-methoxy-phenol
+
+>  <SystematicName>
+3-[2-(2-hydroxyphenyl)ethyl]-5-methoxy-phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H16 O3
+
+>  <MolecularWeight>
+244.286
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H16O3/c1-18-14-9-11(8-13(16)10-14)6-7-12-4-2-3-5-15(12)17/h2-5,8-10,16-17H,6-7H2,1H3
+
+>  <InChIKey>
+IUMFLNFLJUUODE-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(cc(c1)O)CCc2ccccc2O
+
+$$$$

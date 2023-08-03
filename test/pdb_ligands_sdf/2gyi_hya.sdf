@@ -1,0 +1,117 @@
+2GYI_HYA_A_960
+  RCSB PDB12061705443D
+Coordinates from PDB:2GYI:A:960 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   15.8850    5.7280  -12.2640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0010    6.3900  -11.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7440    6.1030   -9.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9580    6.0650   -8.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8850    4.5690  -12.8860   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7680    6.4130  -12.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2780    6.4390  -11.9720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0870    7.2920   -9.6000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6860    4.9010   -9.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7940    4.2980  -13.6690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N
+A    6
+O1
+A    7
+O2
+A    8
+O3
+A    9
+O4
+A   10
+O
+M  END
+>  <InstanceId>
+2GYI_HYA_A_960
+
+>  <ChemCompId>
+HYA
+
+>  <PdbId>
+2GYI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+960
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O5
+
+>  <Name>
+2,3,4,N-TETRAHYDROXY-BUTYRIMIDIC ACID
+
+>  <SystematicName>
+(2S,3R)-N,2,3,4-tetrahydroxybutanimidic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H9 N O5
+
+>  <MolecularWeight>
+151.118
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H9NO5/c6-1-2(7)3(8)4(9)5-10/h2-3,6-8,10H,1H2,(H,5,9)/t2-,3+/m1/s1
+
+>  <InChIKey>
+SJYJPXDRLWCEKB-GBXIJSLDSA-N
+
+>  <SMILES>
+C([C@H]([C@@H](/C(=N/O)/O)O)O)O
+
+$$$$

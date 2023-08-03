@@ -1,0 +1,129 @@
+3Q9C_Q9C_A_401
+  RCSB PDB12061710233D
+Coordinates from PDB:3Q9C:A:401 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   62.0890   33.2050   21.5110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   69.5790   41.1340   24.8090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.7100   41.4200   25.6510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.4210   35.4410   21.3940   N 0  0  0  0  0  0  0  0  0  0  0  0
+   69.2920   40.1470   23.9450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   65.0350   35.5410   20.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.9200   34.3790   21.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.6890   36.2680   22.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.1460   39.3310   23.7950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.3150   34.2010   21.1440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.7190   37.3430   22.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5280   37.8810   23.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.7980   41.9170   24.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  7  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  5  1  0  0  0  0
+  2 13  1  0  0  0  0
+  6  4  1  0  0  0  0
+  4  8  1  0  0  0  0
+  9  5  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 10  1  0  0  0  0
+ 11  8  1  0  0  0  0
+  9 12  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+N
+A    2
+C
+A    3
+O
+A    4
+N01
+A    5
+N02
+A    6
+C01
+A    7
+C02
+A    8
+C03
+A    9
+C04
+A   10
+C05
+A   11
+C06
+A   12
+C07
+A   13
+C08
+M  END
+>  <InstanceId>
+3Q9C_Q9C_A_401
+
+>  <ChemCompId>
+Q9C
+
+>  <PdbId>
+3Q9C
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O
+
+>  <Name>
+N-{4-[(3-aminopropyl)amino]butyl}acetamide
+
+>  <SystematicName>
+N-[4-(3-azanylpropylamino)butyl]ethanamide
+
+>  <Synonyms>
+N8-acetylspermidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H21 N3 O
+
+>  <MolecularWeight>
+187.283
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H21N3O/c1-9(13)12-8-3-2-6-11-7-4-5-10/h11H,2-8,10H2,1H3,(H,12,13)
+
+>  <InChIKey>
+FONIWJIDLJEJTL-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCCCNCCCN
+
+$$$$

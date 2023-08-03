@@ -1,0 +1,113 @@
+2XZ1_PNY_C_1138
+  RCSB PDB12061707313D
+Coordinates from PDB:2XZ1:C:1138 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   33.8880   16.9180  -56.4910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6810   18.7830  -54.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9550   20.3680  -54.0310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7740   18.4140  -56.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2020   19.2040  -57.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0620   21.1560  -56.1440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0970   20.1770  -55.2390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2900   18.7500  -55.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7480   17.8090  -54.8640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+OAD
+A    4
+CAF
+A    5
+CAI
+A    6
+NAN
+A    7
+CAP
+A    8
+CAQ
+A    9
+OAR
+M  END
+>  <InstanceId>
+2XZ1_PNY_C_1138
+
+>  <ChemCompId>
+PNY
+
+>  <PdbId>
+2XZ1
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+1138
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+9
+
+>  <ObservedFormula>
+C6 N O2
+
+>  <Name>
+(2R)-2,4-dihydroxy-3,3-dimethyl-N-{3-oxo-3-[(2-sulfanylethyl)amino]propyl}butanamide
+
+>  <SystematicName>
+(2R)-2,4-dihydroxy-3,3-dimethyl-N-[3-oxo-3-(2-sulfanylethylamino)propyl]butanamide
+
+>  <Synonyms>
+pantetheine, (R)-2,4-Dihydroxy-N-(3-((2-mercaptoethyl)amino)-3-oxopropyl)-3,3-dimethylbutanamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H22 N2 O4 S
+
+>  <MolecularWeight>
+278.368
+
+>  <ModifiedDate>
+2011-06-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H22N2O4S/c1-11(2,7-14)9(16)10(17)13-4-3-8(15)12-5-6-18/h9,14,16,18H,3-7H2,1-2H3,(H,12,15)(H,13,17)/t9-/m0/s1
+
+>  <InChIKey>
+ZNXZGRMVNNHPCA-VIFPVBQESA-N
+
+>  <SMILES>
+CC(C)(CO)[C@H](C(=O)NCCC(=O)NCCS)O
+
+$$$$

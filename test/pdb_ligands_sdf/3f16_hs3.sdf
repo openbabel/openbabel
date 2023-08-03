@@ -1,0 +1,154 @@
+3F16_HS3_A_0
+  RCSB PDB12061708323D
+Coordinates from PDB:3F16:A:0 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+   -4.0330   -3.1390   -4.2650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8350   -3.2600   -4.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1170   -2.5480   -5.2300   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7970   -1.5770   -5.9840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7820   -4.2410   -3.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3610   -4.0100   -2.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5240   -3.6340   -1.6980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3020   -5.6730   -3.6680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9000   -6.4430   -5.0230   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8310   -7.8360   -4.6690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6020   -5.9870   -5.4460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9500   -6.2610   -6.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0980   -7.0610   -6.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0090   -6.9350   -7.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7760   -6.0080   -8.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6300   -5.2120   -8.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7210   -5.3390   -7.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6410   -5.8620   -9.4510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7410   -6.7420   -9.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  2  0  0  0  0
+  9 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 18  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+O3
+A    2
+C8
+A    3
+N1
+A    4
+O6
+A    5
+C9
+A    6
+C7
+A    7
+O4
+A    8
+N2
+A    9
+S1
+A   10
+O1
+A   11
+O2
+A   12
+C3
+A   13
+C6
+A   14
+C5
+A   15
+C4
+A   16
+C2
+A   17
+C1
+A   18
+O5
+A   19
+C10
+M  END
+>  <InstanceId>
+3F16_HS3_A_0
+
+>  <ChemCompId>
+HS3
+
+>  <PdbId>
+3F16
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+0
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O6 S
+
+>  <Name>
+(2R)-3-hydroxy-2-[(4-methoxyphenyl)sulfonylamino]-N-oxo-propanamide
+
+>  <SystematicName>
+(2R)-3-hydroxy-2-[(4-methoxyphenyl)sulfonylamino]-N-oxo-propanamide
+
+>  <Synonyms>
+(R)-N-(3-hydroxy-1-nitroso-1-oxopropan-2-yl)-4-methoxybenzenesulfonamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 N2 O6 S
+
+>  <MolecularWeight>
+288.277
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12N2O6S/c1-18-7-2-4-8(5-3-7)19(16,17)12-9(6-13)10(14)11-15/h2-5,9,12-13H,6H2,1H3/t9-/m1/s1
+
+>  <InChIKey>
+LPGVJAGNVVNWCU-SECBINFHSA-N
+
+>  <SMILES>
+COc1ccc(cc1)S(=O)(=O)N[C@H](CO)C(=O)N=O
+
+$$$$

@@ -1,0 +1,144 @@
+3VBY_0FR_A_1
+  RCSB PDB12061711123D
+Coordinates from PDB:3VBY:A:1 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   23.3150   37.4160   -0.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7980   38.0080    0.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7920   37.2510    1.9390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3160   35.9400    1.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9110   35.3980    0.6860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8760   36.1430   -0.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4340   35.3380   -1.4750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1260   34.1030   -0.9470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4320   34.1500    0.3820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3170   33.1010    1.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5970   33.1890    2.4790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9290   31.9020    0.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4780   30.8270    1.5990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1770   29.8260    0.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4200   30.3130   -0.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8510   31.5640   -0.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  9  2  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 14  2  0  0  0  0
+ 16 12  2  0  0  0  0
+  6  1  2  0  0  0  0
+  6  5  1  0  0  0  0
+  1  2  1  0  0  0  0
+  9  5  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  5  4  2  0  0  0  0
+  2  3  2  0  0  0  0
+ 12 10  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  4  3  1  0  0  0  0
+A    1
+CAI
+A    2
+CAH
+A    3
+CAG
+A    4
+CAF
+A    5
+CAE
+A    6
+CAD
+A    7
+NAC
+A    8
+CAB
+A    9
+CAA
+A   10
+CAJ
+A   11
+OAP
+A   12
+CAK
+A   13
+OAL
+A   14
+CAM
+A   15
+CAN
+A   16
+CAO
+M  END
+>  <InstanceId>
+3VBY_0FR_A_1
+
+>  <ChemCompId>
+0FR
+
+>  <PdbId>
+3VBY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N O2
+
+>  <Name>
+furan-2-yl(1H-indol-3-yl)methanone
+
+>  <SystematicName>
+furan-2-yl(1H-indol-3-yl)methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H9 N O2
+
+>  <MolecularWeight>
+211.216
+
+>  <ModifiedDate>
+2012-03-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H9NO2/c15-13(12-6-3-7-16-12)10-8-14-11-5-2-1-4-9(10)11/h1-8,14H
+
+>  <InChIKey>
+ZGNXEAXRPSISJF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)C(=O)c3ccco3
+
+$$$$

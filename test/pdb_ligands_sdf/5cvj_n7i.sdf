@@ -1,0 +1,130 @@
+3TKY_N7I_A_369
+  RCSB PDB12061710543D
+Coordinates from PDB:3TKY:A:369 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -11.2120    2.2080   35.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9430    0.0610   34.7410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6720    1.9480   32.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6690    2.6190   34.9690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.8270    2.3140   36.0870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.7980    2.7960   32.6010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.0390    2.5180   34.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6370    2.6130   33.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0430    2.5170   33.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8280    2.3100   34.7430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3110    2.2190   34.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0180    1.3450   35.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5140    1.3410   35.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+C2
+A    4
+O2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+C10
+M  END
+>  <InstanceId>
+3TKY_N7I_A_369
+
+>  <ChemCompId>
+N7I
+
+>  <PdbId>
+3TKY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+369
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O3
+
+>  <Name>
+4-[(1E)-3-hydroxyprop-1-en-1-yl]-2-methoxyphenol
+
+>  <SystematicName>
+4-[(E)-3-hydroxyprop-1-enyl]-2-methoxy-phenol
+
+>  <Synonyms>
+Coniferyl alcohol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O3
+
+>  <MolecularWeight>
+180.2
+
+>  <ModifiedDate>
+2012-08-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O3/c1-13-10-7-8(3-2-6-11)4-5-9(10)12/h2-5,7,11-12H,6H2,1H3/b3-2+
+
+>  <InChIKey>
+JMFRWRFFLBVWSI-NSCUHMNNSA-N
+
+>  <SMILES>
+COc1cc(ccc1O)/C=C/CO
+
+$$$$

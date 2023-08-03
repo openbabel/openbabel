@@ -1,0 +1,150 @@
+3RV9_RVD_A_451
+  RCSB PDB12061710383D
+Coordinates from PDB:3RV9:A:451 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   37.2590    4.7980   32.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0250   -0.4870   31.3540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3270    0.0110   25.9770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5760   -0.1140   33.3900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2400   -0.8880   26.2080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2490    1.0310   28.0600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   38.1540    2.6060   32.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.6320    0.3240   30.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5570    0.9350   30.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.5490   -0.0470   28.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.3240    3.8090   31.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.4030    1.7260   30.5140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.5550    0.1970   32.2160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3260   -0.2440   26.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2340    1.4950   31.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3660    0.7770   28.7130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.4410    1.1440   30.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4260    0.1860   28.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 11  1  0  0  0  0
+  2 13  2  0  0  0  0
+  3 14  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5 14  2  0  0  0  0
+  6 16  1  0  0  0  0
+  7 11  1  0  0  0  0
+  7 15  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  9 17  1  0  0  0  0
+ 10 18  2  0  0  0  0
+ 12 15  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 18  1  0  0  0  0
+ 16 17  2  0  0  0  0
+ 16 18  1  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+OAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+OAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+CAP
+A   17
+CAQ
+A   18
+CAR
+M  END
+>  <InstanceId>
+3RV9_RVD_A_451
+
+>  <ChemCompId>
+RVD
+
+>  <PdbId>
+3RV9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+451
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O6
+
+>  <Name>
+3-{[(1Z)-1-carboxybut-1-en-1-yl]oxy}-2-hydroxybenzoic acid
+
+>  <SystematicName>
+2-oxidanyl-3-[(Z)-1-oxidanyl-1-oxidanylidene-pent-2-en-2-yl]oxy-benzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H12 O6
+
+>  <MolecularWeight>
+252.22
+
+>  <ModifiedDate>
+2012-05-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H12O6/c1-2-4-9(12(16)17)18-8-6-3-5-7(10(8)13)11(14)15/h3-6,13H,2H2,1H3,(H,14,15)(H,16,17)/b9-4-
+
+>  <InChIKey>
+NMNSLXCRMLAOLT-WTKPLQERSA-N
+
+>  <SMILES>
+CC/C=C(/C(=O)O)\Oc1cccc(c1O)C(=O)O
+
+$$$$

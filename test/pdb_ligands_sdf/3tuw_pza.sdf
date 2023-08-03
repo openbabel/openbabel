@@ -1,0 +1,114 @@
+1X8A_PZA_?_1
+  RCSB PDB12061704363D
+Coordinates from PDB:1X8A:?:1 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   -6.9460    2.6360    5.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.0460    3.8890    4.4470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3840    2.9470    6.6190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2820    1.6530    4.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3990    0.1570    4.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3430   -0.1280    5.8500   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6630    0.5050    5.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5500    2.0060    5.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6670    2.2260    4.1590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  2  0  0  0  0
+  1  8  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+C
+A    2
+N1
+A    3
+O
+A    4
+C1
+A    5
+C2
+A    6
+N2
+A    7
+C3
+A    8
+C4
+A    9
+N3
+M  END
+>  <InstanceId>
+1X8A_PZA_?_1
+
+>  <ChemCompId>
+PZA
+
+>  <PdbId>
+1X8A
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 O
+
+>  <Name>
+PYRAZINE-2-CARBOXAMIDE
+
+>  <SystematicName>
+pyrazine-2-carboxamide
+
+>  <Synonyms>
+Pyrazinamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H5 N3 O
+
+>  <MolecularWeight>
+123.113
+
+>  <ModifiedDate>
+2016-03-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H5N3O/c6-5(9)4-3-7-1-2-8-4/h1-3H,(H2,6,9)
+
+>  <InChIKey>
+IPEHBUMCGVEMRF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnc(cn1)C(=O)N
+
+$$$$

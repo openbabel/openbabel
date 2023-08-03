@@ -1,0 +1,123 @@
+3KQP_ES5_A_290
+  RCSB PDB12061709293D
+Coordinates from PDB:3KQP:A:290 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   27.9580   43.4180   16.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9310   44.6430   19.9000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1590   44.6320   18.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8320   45.8580   18.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0760   45.8670   16.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6340   44.6440   16.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8880   44.6530   15.1040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4620   43.4610   14.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7840   42.2290   15.1650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5280   42.2220   16.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7250   43.4070   18.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1 10  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C10
+A    2
+N01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+N06
+A    8
+C07
+A    9
+C08
+A   10
+C09
+A   11
+C11
+M  END
+>  <InstanceId>
+3KQP_ES5_A_290
+
+>  <ChemCompId>
+ES5
+
+>  <PdbId>
+3KQP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+290
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2
+
+>  <Name>
+quinolin-6-amine
+
+>  <SystematicName>
+quinolin-6-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 N2
+
+>  <MolecularWeight>
+144.173
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8N2/c10-8-3-4-9-7(6-8)2-1-5-11-9/h1-6H,10H2
+
+>  <InChIKey>
+RJSRSRITMWVIQT-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2cc(ccc2nc1)N
+
+$$$$

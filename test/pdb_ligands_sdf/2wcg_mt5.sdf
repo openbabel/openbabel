@@ -1,0 +1,136 @@
+2WCG_MT5_A_1509
+  RCSB PDB12061707133D
+Coordinates from PDB:2WCG:A:1509 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -24.5140  -17.0110  -38.3320   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -24.3030  -16.5890  -39.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4540  -15.6180  -39.9860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5070  -15.4480  -41.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.5410  -16.5030  -41.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9760  -17.1480  -40.6480   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.9600  -18.1570  -40.6510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.6760  -19.3890  -40.1450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.8270  -18.2540  -41.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9570  -19.5750  -42.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.4850  -17.2570  -43.0140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.7150  -16.8290  -43.5320   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7960  -16.0120  -42.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.4830  -15.0600  -43.4370   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  5 13  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+M  CHG  1   1   1
+A    1
+N9
+A    2
+C10
+A    3
+N11
+A    4
+C12
+A    5
+C13
+A    6
+N14
+A    7
+C15
+A    8
+O16
+A    9
+C17
+A   10
+O18
+A   11
+C19
+A   12
+O20
+A   13
+C21
+A   14
+O22
+M  END
+>  <InstanceId>
+2WCG_MT5_A_1509
+
+>  <ChemCompId>
+MT5
+
+>  <PdbId>
+2WCG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1509
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+8
+
+>  <ObservedFormula>
+C7 N3 O4
+
+>  <Name>
+N-[(3E,5R,6R,7S,8R,8AR)-5,6,7,8-TETRAHYDROXYHEXAHYDROIMIDAZO[1,5-A]PYRIDIN-3(2H)-YLIDENE]OCTAN-1-AMINIUM
+
+>  <SystematicName>
+(E)-[(5R,6R,7S,8R,8aR)-5,6,7,8-tetrahydroxy-2,5,6,7,8,8a-hexahydro-1H-imidazo[5,1-f]pyridin-3-ylidene]-octyl-azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C15 H30 N3 O4
+
+>  <MolecularWeight>
+316.416
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H29N3O4/c1-2-3-4-5-6-7-8-16-15-17-9-10-11(19)12(20)13(21)14(22)18(10)15/h10-14,19-22H,2-9H2,1H3,(H,16,17)/p+1/t10-,11-,12+,13-,14-/m1/s1
+
+>  <InChIKey>
+DGGJYTDCPYQDLL-RKQHYHRCSA-O
+
+>  <SMILES>
+CCCCCCCC\[NH+]=C\1/NC[C@H]2N1[C@@H]([C@@H]([C@H]([C@@H]2O)O)O)O
+
+$$$$

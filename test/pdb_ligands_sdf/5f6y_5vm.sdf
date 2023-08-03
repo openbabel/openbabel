@@ -1,0 +1,123 @@
+5F6X_5VM_A_201
+  RCSB PDB12061717363D
+Coordinates from PDB:5F6X:A:201 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   32.4170   11.1540   57.8610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7440   11.1600   57.6690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6290   10.1870   57.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9570   10.4170   57.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3380   11.6410   57.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.9830   11.9250   56.8320  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   35.3890   12.6290   56.9020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1020   12.3640   57.1730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9910   13.1120   57.0590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9840   12.3530   57.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2880   12.8070   57.5610   S 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  7  5  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  5  4  1  0  0  0  0
+  8  2  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  1  1  0  0  0  0
+  4  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAG
+A    2
+CAK
+A    3
+CAD
+A    4
+CAC
+A    5
+CAH
+A    6
+CLB
+A    7
+CAE
+A    8
+CAJ
+A    9
+NAF
+A   10
+CAI
+A   11
+SAA
+M  END
+>  <InstanceId>
+5F6X_5VM_A_201
+
+>  <ChemCompId>
+5VM
+
+>  <PdbId>
+5F6X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O S Cl
+
+>  <Name>
+5-chloranyl-3~{H}-1,3-benzoxazole-2-thione
+
+>  <SystematicName>
+5-chloranyl-3~{H}-1,3-benzoxazole-2-thione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 Cl N O S
+
+>  <MolecularWeight>
+185.631
+
+>  <ModifiedDate>
+2016-04-22
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4ClNOS/c8-4-1-2-6-5(3-4)9-7(11)10-6/h1-3H,(H,9,11)
+
+>  <InChIKey>
+BOBIZYYFYLLRAH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)NC(=S)O2
+
+$$$$

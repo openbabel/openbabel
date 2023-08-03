@@ -1,0 +1,134 @@
+1ZD2_NC3_P_700
+  RCSB PDB12061704523D
+Coordinates from PDB:1ZD2:P:700 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -18.0030   -9.6450   67.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1280   -9.0860   65.9770   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.3100   -8.1030   65.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6550   -7.7520   64.0600   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9280   -6.7180   63.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5550   -6.6490   61.8440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.1850   -5.5580   61.1550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3860   -7.5550   65.9610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2950   -7.4810   61.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.5360  -11.1100   67.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.4280  -11.7340   68.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9710  -11.6530   69.3890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4270  -10.1930   69.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5360   -9.6100   67.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+A    9
+O9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+1ZD2_NC3_P_700
+
+>  <ChemCompId>
+NC3
+
+>  <PdbId>
+1ZD2
+
+>  <ChainId>
+P
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O3
+
+>  <Name>
+N-[(CYCLOHEXYLAMINO)CARBONYL]GLYCINE
+
+>  <SystematicName>
+2-(cyclohexylcarbamoylamino)ethanoic acid
+
+>  <Synonyms>
+4-(3-CYCLOHEXYLURIEDO)-ETHANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N2 O3
+
+>  <MolecularWeight>
+200.235
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N2O3/c12-8(13)6-10-9(14)11-7-4-2-1-3-5-7/h7H,1-6H2,(H,12,13)(H2,10,11,14)
+
+>  <InChIKey>
+NVORCMBCUHQRDL-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(CC1)NC(=O)NCC(=O)O
+
+$$$$

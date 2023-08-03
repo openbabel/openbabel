@@ -1,0 +1,102 @@
+1TH4_3TR_D_3074
+  RCSB PDB12061704063D
+Coordinates from PDB:1TH4:D:3074 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+    9.8690   19.0360   21.7790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2410   18.0460   22.5900   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1510   18.5880   23.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4610   19.8510   23.1040   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6340   20.1290   22.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8350   17.9250   24.3330   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+A    1
+N1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+N3A
+M  END
+>  <InstanceId>
+1TH4_3TR_D_3074
+
+>  <ChemCompId>
+3TR
+
+>  <PdbId>
+1TH4
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+3074
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 N4
+
+>  <Name>
+3-AMINO-1,2,4-TRIAZOLE
+
+>  <SystematicName>
+1H-1,2,4-triazol-3-amine
+
+>  <Synonyms>
+AMITROLE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H4 N4
+
+>  <MolecularWeight>
+84.08
+
+>  <ModifiedDate>
+2011-08-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H4N4/c3-2-4-1-5-6-2/h1H,(H3,3,4,5,6)
+
+>  <InChIKey>
+KLSJWNVTNUYHDU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1[nH]nc(n1)N
+
+$$$$

@@ -1,0 +1,139 @@
+3ANN_SYE_A_800
+  RCSB PDB12061707543D
+Coordinates from PDB:3ANN:A:800 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -11.1780  -18.0570  -11.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.0800  -17.6250  -12.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7790  -16.5370  -13.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5410  -15.8680  -13.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6270  -16.3150  -12.6070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9290  -17.4100  -11.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.6830  -16.1220  -14.6420   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4080  -15.0620  -15.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.1870  -14.3710  -15.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.2400  -14.7740  -14.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4260  -14.6480  -16.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.2820  -13.1440  -15.9950   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7100  -13.2200  -14.5740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4580  -12.9840  -17.1100   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2180  -11.9600  -16.2560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 11  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N11
+A    8
+C12
+A    9
+C13
+A   10
+C14
+A   11
+C17
+A   12
+P18
+A   13
+O21
+A   14
+O22
+A   15
+O23
+M  END
+>  <InstanceId>
+3ANN_SYE_A_800
+
+>  <ChemCompId>
+SYE
+
+>  <PdbId>
+3ANN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+800
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N O3 P
+
+>  <Name>
+(quinolin-2-ylmethyl)phosphonic acid
+
+>  <SystematicName>
+quinolin-2-ylmethylphosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N O3 P
+
+>  <MolecularWeight>
+223.165
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10NO3P/c12-15(13,14)7-9-6-5-8-3-1-2-4-10(8)11-9/h1-6H,7H2,(H2,12,13,14)
+
+>  <InChIKey>
+SZCYKKWPKXABPU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ccc(n2)CP(=O)(O)O
+
+$$$$

@@ -1,0 +1,131 @@
+5DPX_L3B_A_403
+  RCSB PDB12061717213D
+Coordinates from PDB:5DPX:A:403 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   11.9500   32.0510   33.2380   S 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8070   30.9100   32.1210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9140   31.2470   31.3430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2840   30.1500   30.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4150   29.1080   30.9680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5100   29.5870   31.8870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4540   30.1110   29.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2350   30.3710   28.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3930   30.3530   27.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6100   30.0780   27.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8670   29.7820   29.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8700   29.8000   30.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1560   29.4950   31.6220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  2  0  0  0  0
+ 13 12  1  0  0  0  0
+  3  4  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4  7  1  0  0  0  0
+ 12  7  2  0  0  0  0
+ 12 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+S6
+A    2
+C1
+A    3
+N5
+A    4
+C4
+A    5
+N3
+A    6
+N2
+A    7
+C7
+A    8
+C12
+A    9
+C11
+A   10
+C10
+A   11
+C9
+A   12
+C8
+A   13
+C13
+M  END
+>  <InstanceId>
+5DPX_L3B_A_403
+
+>  <ChemCompId>
+L3B
+
+>  <PdbId>
+5DPX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 S
+
+>  <Name>
+5-(2-methylphenyl)-3H-1,2,4-triazole-3-thione
+
+>  <SystematicName>
+5-(2-methylphenyl)-1,2,4-triazole-3-thione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N3 S
+
+>  <MolecularWeight>
+189.237
+
+>  <ModifiedDate>
+2017-01-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7N3S/c1-6-4-2-3-5-7(6)8-10-9(13)12-11-8/h2-5H,1H3
+
+>  <InChIKey>
+DEADBTNDSDWXDC-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1ccccc1C2=NC(=S)N=N2
+
+$$$$

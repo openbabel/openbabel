@@ -1,0 +1,110 @@
+5FF3_PRS_A_413
+  RCSB PDB12061717403D
+Coordinates from PDB:5FF3:A:413 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   46.2260    6.4440   11.9970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.8490    5.9230   12.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.8210    7.0320   13.2310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4670    5.9890   14.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9590    4.9480   13.8240   S 0  0  0  0  0  0  0  0  0  0  0  0
+   48.2800    7.3310   13.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.9680    6.7920   12.3140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6170    8.2510   13.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+N
+A    2
+CD
+A    3
+CA
+A    4
+CB
+A    5
+SG
+A    6
+C
+A    7
+O
+A    8
+OXT
+M  END
+>  <InstanceId>
+5FF3_PRS_A_413
+
+>  <ChemCompId>
+PRS
+
+>  <PdbId>
+5FF3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+413
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N O2 S
+
+>  <Name>
+THIOPROLINE
+
+>  <SystematicName>
+(4R)-1,3-thiazolidine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C4 H7 N O2 S
+
+>  <MolecularWeight>
+133.169
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+PRO
+
+>  <OneLetterCode>
+P
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H7NO2S/c6-4(7)3-1-8-2-5-3/h3,5H,1-2H2,(H,6,7)/t3-/m0/s1
+
+>  <InChIKey>
+DZLNHFMRPBPULJ-VKHMYHEASA-N
+
+>  <SMILES>
+C1[C@H](NCS1)C(=O)O
+
+$$$$

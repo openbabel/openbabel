@@ -1,0 +1,151 @@
+2BXE_1FL_A_2001
+  RCSB PDB12061705103D
+Coordinates from PDB:2BXE:A:2001 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+    9.8240    2.0360  -15.7790   F 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6330    2.9280  -14.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7620    3.2160  -13.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6250    4.1210  -12.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7130    4.3980  -12.1920   F 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4300    4.7670  -12.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3120    4.4700  -13.4630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3660    3.5530  -14.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1740    3.2530  -15.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1940    3.3810  -16.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0610    3.0990  -17.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1350    3.2490  -19.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2880    3.6640  -19.4990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1650    3.0080  -19.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9660    2.8180  -14.7860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8200    2.5250  -15.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8810    2.6630  -16.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7660    2.3740  -17.6560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 15  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 17  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+ 15 16  2  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+FAT
+A    2
+CAN
+A    3
+CAM
+A    4
+CAF
+A    5
+FAE
+A    6
+CAG
+A    7
+CAH
+A    8
+CAO
+A    9
+CAP
+A   10
+CAI
+A   11
+CAJ
+A   12
+CAC
+A   13
+OAD
+A   14
+OAB
+A   15
+CAQ
+A   16
+CAR
+A   17
+CAK
+A   18
+OAL
+M  END
+>  <InstanceId>
+2BXE_1FL_A_2001
+
+>  <ChemCompId>
+1FL
+
+>  <PdbId>
+2BXE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O3 F2
+
+>  <Name>
+5-(2,4-DIFLUOROPHENYL)-2-HYDROXY-BENZOIC ACID
+
+>  <SystematicName>
+5-(2,4-difluorophenyl)-2-hydroxy-benzoic acid
+
+>  <Synonyms>
+Diflunisal
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H8 F2 O3
+
+>  <MolecularWeight>
+250.198
+
+>  <ModifiedDate>
+2013-07-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H8F2O3/c14-8-2-3-9(11(15)6-8)7-1-4-12(16)10(5-7)13(17)18/h1-6,16H,(H,17,18)
+
+>  <InChIKey>
+HUPFGZXOMWLGNK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1c2ccc(cc2F)F)C(=O)O)O
+
+$$$$

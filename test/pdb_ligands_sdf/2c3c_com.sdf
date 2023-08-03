@@ -1,0 +1,105 @@
+1E6V_COM_A_1555
+  RCSB PDB12061702213D
+Coordinates from PDB:1E6V:A:1555 Model:1 without hydrogens
+  7  6  0  0  0  0            999 V2000
+   46.3590  -39.1090  108.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5290  -38.5280  106.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5130  -37.8920  109.3790   S 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9540  -39.7680  105.7270   S 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1170  -40.6290  105.3040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3730  -39.0510  104.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8900  -40.6190  106.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  6  2  0  0  0  0
+  4  7  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+S1
+A    4
+S2
+A    5
+O1S
+A    6
+O2S
+A    7
+O3S
+M  END
+>  <InstanceId>
+1E6V_COM_A_1555
+
+>  <ChemCompId>
+COM
+
+>  <PdbId>
+1E6V
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1555
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C2 O3 S2
+
+>  <Name>
+1-THIOETHANESULFONIC ACID
+
+>  <SystematicName>
+2-sulfanylethanesulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C2 H6 O3 S2
+
+>  <MolecularWeight>
+142.197
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C2H6O3S2/c3-7(4,5)2-1-6/h6H,1-2H2,(H,3,4,5)
+
+>  <InChIKey>
+ZNEWHQLOPFWXOF-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CS(=O)(=O)O)S
+
+$$$$

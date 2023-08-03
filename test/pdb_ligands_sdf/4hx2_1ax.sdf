@@ -1,0 +1,121 @@
+4HX2_1AX_A_305
+  RCSB PDB12061712553D
+Coordinates from PDB:4HX2:A:305 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -35.2390  -36.4160   -4.0070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.3940  -37.0610   -5.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -35.5410  -36.0250   -6.4090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -34.6940  -36.3950   -7.5120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0050  -35.9520   -6.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.2310  -34.7220   -7.5990   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5900  -34.5210   -8.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1860  -33.3020   -7.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.8700  -33.7440   -6.1050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.1660  -32.5760   -8.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.4760  -31.5730   -8.9780   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  3  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAA
+A    2
+CAE
+A    3
+CAJ
+A    4
+OAC
+A    5
+CAG
+A    6
+OAI
+A    7
+CAH
+A    8
+CAK
+A    9
+OAD
+A   10
+CAF
+A   11
+OAB
+M  END
+>  <InstanceId>
+4HX2_1AX_A_305
+
+>  <ChemCompId>
+1AX
+
+>  <PdbId>
+4HX2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+305
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+(2R,2'R)-3,3'-oxydipropane-1,2-diol
+
+>  <SystematicName>
+(2R)-3-[(2R)-2,3-bis(oxidanyl)propoxy]propane-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O5
+
+>  <MolecularWeight>
+166.172
+
+>  <ModifiedDate>
+2012-11-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O5/c7-1-5(9)3-11-4-6(10)2-8/h5-10H,1-4H2/t5-,6-/m1/s1
+
+>  <InChIKey>
+GPLRAVKSCUXZTP-PHDIDXHHSA-N
+
+>  <SMILES>
+C([C@H](COC[C@@H](CO)O)O)O
+
+$$$$

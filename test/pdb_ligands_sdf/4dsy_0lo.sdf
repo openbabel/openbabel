@@ -1,0 +1,139 @@
+4DSY_0LO_A_503
+  RCSB PDB12061712163D
+Coordinates from PDB:4DSY:A:503 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -73.9090   35.1500  -44.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -74.1900   35.2750  -46.2700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -73.3550   34.6880  -47.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.2340   33.9740  -46.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.9540   33.8540  -45.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.7850   34.4360  -44.4990   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.4940   34.3020  -43.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.4950   33.4550  -42.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -73.2470   35.0350  -42.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -73.0070   34.9320  -40.8090   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -72.0580   34.1310  -40.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -71.2890   33.3590  -41.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.2300   32.4850  -40.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -70.4640   31.5630  -39.7580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -69.0660   32.7180  -41.0170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+  5  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 15 13  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CAF
+A    2
+CAD
+A    3
+CAC
+A    4
+CAE
+A    5
+CAG
+A    6
+CAN
+A    7
+CAO
+A    8
+CAJ
+A    9
+CAI
+A   10
+NAK
+A   11
+CAH
+A   12
+CAM
+A   13
+CAL
+A   14
+OAB
+A   15
+OAA
+M  END
+>  <InstanceId>
+4DSY_0LO_A_503
+
+>  <ChemCompId>
+0LO
+
+>  <PdbId>
+4DSY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2
+
+>  <Name>
+5-phenylpyridine-3-carboxylic acid
+
+>  <SystematicName>
+5-phenylpyridine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H9 N O2
+
+>  <MolecularWeight>
+199.205
+
+>  <ModifiedDate>
+2012-09-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9NO2/c14-12(15)11-6-10(7-13-8-11)9-4-2-1-3-5-9/h1-8H,(H,14,15)
+
+>  <InChIKey>
+VKFXHYRIHRTEIV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2cc(cnc2)C(=O)O
+
+$$$$

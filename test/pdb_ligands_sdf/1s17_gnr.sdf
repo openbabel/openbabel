@@ -1,0 +1,143 @@
+1S17_GNR_A_501
+  RCSB PDB12061703573D
+Coordinates from PDB:1S17:A:501 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   56.2630   52.2270   37.8260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   56.1400   51.3030   37.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.1640   50.9900   36.1660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   57.1510   50.0330   35.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3470   49.7510   34.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.3850   48.7380   33.5020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.2300   47.9950   33.2020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.0280   48.2600   33.8790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.9940   49.2710   34.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.4320   49.7140   35.6280   S 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0030   50.2990   37.2470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.8700   50.8890   38.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.9440   49.7290   38.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.2490   48.9950   39.4450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   51.8630   49.5530   37.7590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   50.9930   48.5650   38.0470   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+OAM
+A    2
+CAH
+A    3
+NAG
+A    4
+CAD
+A    5
+CAC
+A    6
+CAB
+A    7
+CAA
+A    8
+CAF
+A    9
+CAE
+A   10
+SAJ
+A   11
+CAI
+A   12
+CAK
+A   13
+CAL
+A   14
+OAN
+A   15
+NAO
+A   16
+OAP
+M  END
+>  <InstanceId>
+1S17_GNR_A_501
+
+>  <ChemCompId>
+GNR
+
+>  <PdbId>
+1S17
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3 S
+
+>  <Name>
+2-(3,4-DIHYDRO-3-OXO-2H-BENZO[B][1,4]THIAZIN-2-YL)-N-HYDROXYACETAMIDE
+
+>  <SystematicName>
+N-hydroxy-2-[(2R)-3-oxo-4H-1,4-benzothiazin-2-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O3 S
+
+>  <MolecularWeight>
+238.263
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2O3S/c13-9(12-15)5-8-10(14)11-6-3-1-2-4-7(6)16-8/h1-4,8,15H,5H2,(H,11,14)(H,12,13)/t8-/m1/s1
+
+>  <InChIKey>
+UKDWCJNGBPZOBU-MRVPVSSYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)NC(=O)[C@H](S2)CC(=O)NO
+
+$$$$

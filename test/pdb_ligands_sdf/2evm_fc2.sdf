@@ -1,0 +1,143 @@
+2EVM_FC2_A_999
+  RCSB PDB12061705303D
+Coordinates from PDB:2EVM:A:999 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   -1.7070   -0.8130    8.3700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.6130   -0.5690    9.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.7290   -0.4710    8.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8520   -0.6230    7.2880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0000   -0.4430   10.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4190   -0.6300   10.4580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8070   -0.8550    9.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7290   -0.2460    9.2360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1450   -1.1170    8.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3680   -0.5780    9.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5990   -0.9010    8.4890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6170   -1.7440    7.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4070   -2.2650    6.8180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1820   -1.9550    7.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3810    0.4410   10.4970  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4010   -3.2710    5.4330  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+OA
+A    2
+CA
+A    3
+C
+A    4
+OB
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+OXT
+A    9
+C1
+A   10
+C2
+A   11
+C3
+A   12
+C4
+A   13
+C5
+A   14
+C6
+A   15
+CL1
+A   16
+CL2
+M  END
+>  <InstanceId>
+2EVM_FC2_A_999
+
+>  <ChemCompId>
+FC2
+
+>  <PdbId>
+2EVM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O3 Cl2
+
+>  <Name>
+5-(2,5-DICHLOROPHENYL)-2-FUROIC ACID
+
+>  <SystematicName>
+5-(2,5-dichlorophenyl)furan-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H6 Cl2 O3
+
+>  <MolecularWeight>
+257.07
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H6Cl2O3/c12-6-1-2-8(13)7(5-6)9-3-4-10(16-9)11(14)15/h1-5H,(H,14,15)
+
+>  <InChIKey>
+ATAZLMGGQQLRBC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)c2ccc(o2)C(=O)O)Cl
+
+$$$$

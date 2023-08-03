@@ -1,0 +1,447 @@
+//
+// Copyright (C) 2009 by Frank Peters <e.a.j.f.peters@tue.nl>
+//
+// This is a SMARTS template-file for GAFF-atom types
+//
+// It is attempted to obey the typing given in the "ATOMTYPE_GFF.DEF"
+// file included with the antechamber package of amber10.
+// There is no 1-to-1 correspondence between the ATD format and SMARTS.
+// Therefore the current definitions need to be tested and possibly changed
+//
+//
+//
+// GAFF atomtypes defined using SMARTS
+// [SMARTS] [atomtype id number] [description]
+// must be sorted according to the ELEMENT and COMPLEXITY OF THE TYPERULE!
+//
+// Upadted (2016) by Mohammad Mehdi Ghahremanpour <mohammad.ghahremanpour@icm.uu.se>
+//
+// Be careful lines do not exceed the maximum length of 150!
+
+
+// SMARTS rules for hydrogens
+
+atom [*]								    X
+atom [#1]             							    hc "other hydrogen e.g. on aromatic C" 
+atom [#1X1]             						    ha "other hydrogen e.g. on aromatic C"  
+atom [#1X1]O            						    ho "H on oxygen"
+atom [#1X1][Oh1]        						    ho "H on water"
+atom [#1X1]N            						    hn "H on nitrogen"
+atom [#1X1]n            						    hn "H on nitrogen"
+atom [#1X1]S            						    hs "H on sulphur"
+atom [#1X1]P            						    hp "H on phosphor"
+atom [#1X1][CX4]       							    hc "H on aliphatic C"
+atom [#1X1][#6X4]       						    hc "H on aliphatic C"
+atom [#1X1][#6X3]=[#6]  						    ha "H on conjugate carbon"
+atom [#1X1][#6X3](=[#6])[#6]		 				    ha "H on conjugate carbon" 
+atom [#1X1][#6X3](=[#6])[#1]  	      	 				    ha "H on conjugate carbon"   
+atom [#1X1][#6X2]#[#6]        	    	 				    ha "H on carbon with a triple bond"
+atom [#1X1][#6](-[#6]=[#7])(=[#6])  	 				    ha "H on conjugate carbon"
+atom [#1X1][#6X4]([#6])([#6])[#1]        				    hc "H on aliphatic C"
+atom [#1X1][C][#7,#8,#9,#16,#17,#35,#53]				    h1 "H on carbon in a chain with 1 electron-withdrawal group"
+atom [#1X1][C]=[#7,#8,#9,#16]				    		    h1 "H on carbon in a chain with 1 electron-withdrawal group"
+atom [#1X1][C][F,Cl,Br,I]       	       	     	       	  	    h1 "H on carbon in a chain with 1 electron-withdrawal group"
+atom [#1X1][C]([#6])([F,Cl,Br,I])[#1]          	       	  	    	    h1 "H on carbon in a chain with 1 electron-withdrawal group"
+atom [#1X1][C](=[#6])[F,Cl,Br,I]         	               	  	    h1 "H on carbon in a chain with 1 electron-withdrawal group"
+atom [#1X1][C]([#7,#8,#9,#16,#17,#35,#53])[#7,#8,#9,#16,#17,#35,#53]	    h2 "H on carbon in a chain with 2 electron-withdrawal group"
+atom [#1X1][C]([#6])([F,Cl,Br,I])[F,Cl,Br,I]				    h2 "H on carbon in a chain with 2 electron-withdrawal group"
+atom [#1X1][C]([F,Cl,Br,I])[F,Cl,Br,I]				    	    h2 "H on carbon in a chain with 2 electron-withdrawal group"
+atom [#1X1][C](=[#7,#8,#9,#16])([#7,#8,#9,#16])				    h2 "H on carbon in a chain with 2 electron-withdrawal group"
+atom [#1X1][C]([#7,#8,#16,#17,#35,#53])([#7,#8,#16,#17,#35,#53])[#7,#8]     h3 "H on carbon in a chain with 3 electron-withdrawal group"
+atom [#1X1][C]([#7,#8,#16,#17,#35,#53])([#7,#8,#16,#17,#35,#53])[#16,#17]   h3 "H on carbon in a chain with 3 electron-withdrawal group"
+atom [#1X1][C]([#7,#8,#16,#17,#35,#53])([#7,#8,#16,#17,#35,#53])[#35,#53]   h3 "H on carbon in a chain with 3 electron-withdrawal group"
+atom [#1X1][C]([F,Cl,Br,I])([F,Cl,Br,I])[F,Cl,Br,I]       		    h3 "H on carbon in a chain with 3 electron-withdrawal group"
+atom [#1X1][C]([F,Cl,Br,I])([F,Cl,Br,I])[O,F,Cl,Br,I]       		    h3 "H on carbon in a chain with 3 electron-withdrawal group NEW"
+atom [#1X1][c](=[#7,#8,#16]) 					    	    h4 "H on carbon in a ring  with 1 electron-withdrawal group"
+atom [#1X1][c]([#7,#8,#16,#17,#35,#53])(=[#6]) 			    	    h4 "H on carbon in a ring  with 1 electron-withdrawal group"
+atom [#1X1][c]([#7,#8,#16])(=[#6]) 			            	    h4 "H on carbon in a ring  with 1 electron-withdrawal group"
+atom [#1X1][c][#7,#8,#16,#17,#35,#53]      			    	    h4 "H on carbon in a ring  with 1 electron-withdrawal group"
+atom [#1X1][c][#7,#8,#16,#17,#35,#53]      			    	    h4 "H on carbon in a ring  with 1 electron-withdrawal group"
+atom [#1X1][c]-[#15X3]      	        			    	    h4 "H on carbon in a ring  with 1 electron-withdrawal group"
+atom [#1X1][c]([#7,#8,#9,#16,#17,#35,#53])(=[#7,#8,#16])                    h5 "H on carbon in a ring  with 2 electron-withdrawal group"
+atom [#1X1][c](=[#7,#8,#16])([#7,#8,#9,#16,#17,#35,#53])         	    h5 "H on carbon in a ring  with 2 electron-withdrawal group"
+atom [#1X1][c]([#7,#8,#16,#17,#35,#53])[#7,#8,#16,#17,#35,#53]    	    h5 "H on carbon in a ring  with 2 electron-withdrawal group"
+atom [#1X1][Ge]								    DU "H on Ge"
+
+// SMARTS rules for carbons
+
+atom [c]								    ca "sp2 C in aromatic ring"
+atom [#6X1]								    c1 "sp C"
+atom [#6X2]								    c1 "sp C"
+atom [#6X2](=*)-*=*							    cg "sp C in conjugated system"
+atom [#6X2](#*)-*=*           	       					    cg "sp C in conjugated system"
+atom [#6X2](#*)-*#*           	       					    cg "sp C in conjugated system"
+atom [#6X2](#[#7])[#6X3]           					    cg "sp C in conjugated system"
+atom [#6X2](#[#6])[#1]        	       					    c1 "sp C"
+atom [#6X3]								    c2 "sp2 C in aliphatic system"
+atom [#6X3](N)(N)N       						    cz "guanidine carbon"
+atom [#6X3](=[#6X3])([#6X4])[#6X3]					    c2 "sp2 C in aliphatic system"
+atom [#6X3;!R](=[#6])([#1])[#1]						    c2 "sp2 C in aliphatic system"
+atom [#6X3;!R](=[#6])([#6])[#1]						    c2 "sp2 C in aliphatic system"
+atom [#6X3;!R](=[#7])([#7])[#7]       					    cz "guanidine carbon"
+atom [#6X3;!R](=[*&!O,S])-*=*   					    ce "sp2 C conjugated chain"
+atom [#6X3;!R](#*)-*=*   						    ce "sp2 C conjugated chain"
+atom [#6X3;!R](#*)-*#*   						    ce "sp2 C conjugated chain"
+atom [#6X3;!R](=*)-*#*   						    ce "sp2 C conjugated chain"
+atom [#6X3;H&!R](=*)-*~[R;a] 						    ce "sp2 C conjugated chain"
+atom [#6X3;R](=[#6,#7,#8])(-[#6,#7,#8])(-[#1])				    ca "sp2 C in aromatic ring"
+atom [#6X3;R]([#6]=[#6]-[#6])						    cc "sp2 C in conjugated ring NEW"
+atom [#6X3;R](:[#6])[#6] 						    ca "sp2 C in aromatic ring"
+atom [#6X3;R](=[#6])([#6])[#1]						    ca "sp2 C in aromatic ring"
+atom [#6X3;R](=*)-*=*   						    ca "sp2 C in aromatic ring"
+atom [#6X3;R](=[#6X3])([#6])[#1]					    ca "sp2 C in aromatic ring"	
+atom [#6X3;R](=[#6])([#6])[F,Cl,Br,I]   				    c2 "sp2 C in a ring with 1 electron-withdrawal group"
+atom [#6X3;R](=[#6X3])([#6X4])[#6]					    c2 "sp2 C in a ring"		
+atom [#6X3;R](=*)-*#*   						    cc "sp2 C in a conjugated ring"
+atom [#6X3;R](#*)-*#*   						    cc "sp2 C in a conjugated ring"
+atom [#6X3;R]:[#7,#8,#16]     	     	      				    cc "sp2 C in a ring with 1 electron-withdrawal group"
+atom [#6X3;R]([#7,#8,#16])[#1] 						    cc "sp2 C in a ring with 1 electron-withdrawal group"
+atom [#6X3;R](=[#7])(-[#6,#7])[#1]                   			    cc "sp2 C in a ring"
+atom [#6X3;R](=[#6])([#8X2,#16X2])[#6]					    cc "sp2 C in a ring"
+atom [#6X3;R]([#7,#8,#16])[#7,#8,#16]					    cc "sp2 C in a ring with 2 electron-withdrawal group"
+atom [#6X3]=[O,S]							    c  "C=O or C=S"
+atom [#6X3;R]([#7,#8,#16])([#7,#8,#16])[#1]			    	    cc "sp2 C in a ring with 2 electron-withdrawal group"
+atom [#6X3;R](=[#6])([#7,#8,#16])[#1]					    cc "sp2 C in a ring with 1 electron-withdrawal group"
+atom [#6X3;R](=[#6,#7])(@[#7,#8,#16]) 				    	    cc "sp2 C in a ring with 2 electron-withdrawal group"
+atom [#6X3;R](=[#7])(@[#6,#7,#8,#16]) 				    	    cc "sp2 C in a ring with 2 electron-withdrawal group"
+atom [#6X3;R](=[#6,#7])(@[#7,#8,#16])[#1] 			    	    cc "sp2 C in a ring with 2 electron-withdrawal group"
+atom [#6X3;R](=[#7])(@[#6,#7,#8,#16])[#1] 			    	    cc "sp2 C in a ring with 2 electron-withdrawal group"  
+atom [#6X3;R](=[#6X3])(-[#6X3]=[#8X1])[#1]				    cc "sp2 C in a conjugated ring"
+atom [#6X3;R](:[#6][#8X2])[#6]=[#16X1] 					    cc
+atom [#6X3r3]            						    cu "sp2 C 3-membered ring"
+atom [#6X3r3]=O            						    c  "sp2 C 3-membered ring"
+atom [#6X3r4]            						    cv "sp2 C 4-membered ring"
+atom [#6X3r4]=*-*=*							    cc "NEW"
+atom [#6X3r4]-*=*-*							    cc "NEW"
+atom [#6X3r4]=O							    	    c
+atom [#6X3r5](:[#6][#7,#8,#16])[#6]					    cd "CHANGED"
+atom [cr5]o								    cc
+atom [cr5]n								    cc
+atom [cr5]([nX2])							    cd
+atom [cr5]([nX3])							    cc
+atom [cX3r5](=[O])([nX3])[nX3]						    c
+atom [#6X3r5](-[#6]=[#6]-[#6])						    cc "sp2 C fulvene"
+atom [#6X3r5](=[#6])([#6])[#1]						    c2 "sp2 C in aliphatic ring of size 5 with 1 electron-withdrawal group"
+atom [#6X3r5](=[#6X3])(-[#6X3]=[#8X1])[#1] 				    cc "sp2 C in a conjugated ring of size 5"
+atom [#6X3r5](:[#6X3])(-[#16X2])[#1]					    cc "sp2 C in a conjugated ring of size 5" 
+atom [#6X3r5](:[#6X3]-[#16X2])([#6X3])[#1]				    cd "sp2 C in a conjugated ring of size 5" 
+atom [#6X3r5](=[#6X3][#6X3])[#6X3]=[#8X1]				    cc
+atom [#6X3r5](=[#6X3][#6X3]=[#8X1])[#6X3] 				    cc
+atom [#6X3r5](=[#6X3]-[#6X3])[#6X3]=[#8X1] 				    cc
+atom [#6X3r5](-[#6X3])(=[#6X3]-[#6X4])[#1]  				    cc 
+atom [#6X3r5](-[#6X4])(=[#6X3]-[#6X3])[#1]  				    cc
+atom [#6X3r5](=[#6X3][#8X2])([#6X3])[#1]  				    cc
+atom [#6X3r5](=[#6X3])(-[#6X4]-[#8])[#1]				    c2
+atom [#6X3r5](=[#6X3])(-[#6X4]-[#8])[#1]				    c2
+atom [#6X3r5]([#6X4])(=[#6X3]-[#8])[#1]					    c2
+atom [#6X3r5](=[#6])([#7,#8,#16])[#1]				            c2 "sp2 C in aliphatic ring of size 5"
+atom [#6X3r5](-[#6X3]=[#6X3])(=[#6X3]-[#6X4])[#1]  			    cd
+atom [#6X3r5](=[#6X3][#8X2])([#6X4]-[#6X3])[#1]  			    c2
+atom [#6X3r5](=[#6X3]-[#6X4])([#6X4]-[#6X4])[#1] 			    c2
+atom [#6X3r5](=[#6X3]-[#6X3])(@[#8]@[#6X3]([#1]))[#1]			    cc
+atom [#6X3r5](=[#6X3]-[#16X2])(-[#6X4]-[#6X4])[#1] 			    c2
+atom [#6X3r5]=[O,S]							    c
+atom c-c								    cp "bridge aromatic c"
+atom [#6X3r6](=[#6])([#6X4])[#1]					    c2 "sp2 C in aliphatic ring of size 6"
+atom [#6X3r6](=[#6X3])([#6X4])[#6X4]					    c2 "sp2 C in a ring of size 6"
+atom [#6X3r6](=[#6X3])([#6X3])[Br] 					    ca
+atom [#6X3r6](=[#6X3])([#6X3])[Cl] 					    ca
+atom [#6X3r6](=[#6X3])([#6X3])[F] 					    ca
+atom [#6X3r6](:[#6])([#6]@[#7])[#1] 	        			    cc
+atom [#6X3r6](=[#6X3]-[#6X3]=[#8X1])([#6X3])[#1]			    cd "sp2 C in a conjugated ring of size 6"
+atom [#6X3r6](=[#6]@[#7,#8,#16])[#6]				            cd "CHANGED"
+atom [#6X3r6](=[#6]-[#6X4])([#8]-[#6X4])[#1]				    c2
+atom [#6X3r6](=[#6X3]-[#6X4])([#8]-[#6X3])[#1]				    c2
+atom [#6X3r6](=[#6X3]-[#6X4])([#6X3]=[#8])[#1]				    c2
+atom [#6X3r6]([#6X4])(=[#6X3]-[#6X3])[#1]				    c2
+atom [#6X3r6](=[#6X3]@[#6X4])([#6X3])[#1]				    c2
+atom [#6X3r6](=[#6X3]-[F])([#6X4]-[#6X4])[#1]   			    c2
+atom [#6X3r6](-[#6X4]-[#6X4])(=[#6X3]-[#8])[#1]				    c2
+atom [#6X3r6]([#6X4]-[#6X3])(=[#6X3]-[#8])[#1]				    c2
+atom [#6X3r6](=[#6X3][#7])([#6X3]=[#7])[#1] 				    cc
+atom [#6X3r6](=[#6X3])([#6X3](=[O])[O])[#6X3]=[O] 			    cc
+atom [#6X3r6](=[#6X3][#6X3](=[O])[O])([#6X3]=[O])[#1] 			    cc
+atom [cr6]n								    ca
+atom [cr6]([c][n])							    ca
+atom [cX3r6]=O								    c
+atom [cX3r6](:[n][c]=[O])([NX3])[c]					    cd "SP2 carbon in cytosine-like rings"
+atom [cX3r6](:[c][nX3])([c][NX3])					    cd "SP2 carbon in cytosine-like rings"
+atom [cX3r6](:[c][cX3][NX3])([nX3])					    cc "SP2 carbon in cytosine-like rings"
+atom [cX3r6]([cX3]=O)							    cd
+atom [cX3r6]([nX3])([cX3][cX3]=O)					    cc
+atom [#6X3r7](=[#6])([#6])[#1]						    c2
+atom [#6X3r7][#6]=[#6]-[#15]						    cc
+atom [#6X3r7](=[#6][#15])([#6])[#1]					    cc
+atom [#6X3r7](=[#6X3])([#15X3])[#1]					    cc "sp2 C in a conjugated ring of size 7"
+atom [#6X3r7](!:[#6])([#6]=[#6])       					    cc "sp2 C in a non-aromatic conjugated ring of size 7"  
+atom [#6X3r7](=[#6][#15])([#6])[#1]					    cc
+atom [#6X3r7](:[#6X3])([#6X3]=[O])[#1] 					    cc
+atom [#6X3r7](:[#6X3][#6X3]=[O])[#6X3][#1] 				    cc
+atom [#6X3r7]([#6X3]:[#6X3][#6X3]=[O])[#6X3][#1] 			    cc
+atom [#6X3r8](=[#6]-*)(-[#6]=*)[#1]					    cc 
+atom [#6X3r8](=[#6])([#6])[#1]						    c2 "sp2 C in a ring of size 8"
+atom [#6X3r8]=*-*=*						    	    cc "sp2 C in a ring of size 8"
+atom [#6X4]		 	    					    c3 "other sp3 C"
+atom [#6X4](-*)(-*)(-*)-*	    					    c3 "other sp3 C"
+atom [#6X4]([#6])([#6])([#1])[#1]					    c3 "sp3 carbon"
+atom [#6X4]([#6X3])([#6X3])([#1])[#1]   				    c3
+atom [#6X4]([#6X4])([#6X4])([#1])[#1]   				    c3
+atom [#6X4]([#6X3])([#8X2])([#1])[#1]   				    c3
+atom [#6X4]([#6])([#6])([#6])[#6]   					    c3
+atom [#6X4;R]([#6])([#6])([#1])[#1]					    c3 "sp3 carbon in aliphatic ring"
+atom [#6X4;R]([#6])([#6])([#6])[#6] 					    c3
+atom [#6X4;R]([#6])([#6])([#6])[#8]					    c3
+atom [#6X4;R]([#6])([#6])([#6])[F]  					    c3
+atom [#6X4;R]([#6])([#6])([F])[F]   					    c3
+atom [#6X4&H;R] 		    					    cc
+atom [#6X4&H0;R][#7] 							    cc
+atom [#6X4r3]           	    					    cx "3-membered ring atom"
+atom [#6X4r4]           	    					    cy "4-membered ring atom"
+atom [#6X4r5]  			    					    c3
+atom [#6X4r5]([#7])([#6])[#6]  	    					    cc	    					   
+atom [#6X4r5]  			    					    c3
+atom [#6X4r5]([#6X4])([#6X4r5])([#6X3r5])[#1]  				    c3
+atom [#6X4r5]([#6X3]=[#8X1])([#6X3])([#6X4])[#1] 			    c3
+atom [#6X4r5]([#6X4])([#6X3]=[#8])([#7X3])[#1]  			    c3
+atom [#6X4r5]([#6X4])([#6X3])([#6X3])[#1]  				    c3
+atom [#6X4r6]  								    c3
+atom [#6X4r6]([#6X3])([#6X3])[#6X4]  					    cc	
+atom [#6X4r6]([#6X4])([#8X2])([#6X2])[#1]  				    c3
+atom [#6X4r6]([#6X4][#8X2])([#7])([#1])[#1]  				    c3
+atom [#6X4r7]  				    				    c3
+atom [#6X4r8]  				    				    c3
+
+
+// SMARTS rules for halogens
+
+atom [#9]*               						    f    (-*) "general fluorine"
+atom [#17]*                   	  					    cl   (-*) "general chlorine"
+atom [#35]*                   	  					    br   (-*) "general bromine"
+atom [#53]*                    	  					    i    (-*) "general iodine"
+
+// SMARTS rules for phosphorous
+
+atom [#15X1]                 	  					    p2 "other sp2 P"
+atom [#15X2]                  	     					    p2 "other sp2 P"
+atom [#15X2;R](=*)-*=*        	     					    pc "sp2 P of conjugated ring"
+atom [#15X2;R](=*)-*#*        	     					    pc "sp2 P of conjugated ring"
+atom [#15X2;R](=[#6])[#8]     	     					    pc "sp2 P of conjugated ring"
+atom [#15X2;R](#*)-*#*     	 					    pc "sp2 P of conjugated ring"
+atom [#15X2;!R](=*)-*=*       	     					    pe "sp2 P of conjugated chain"
+atom [#15X2;!R](=*)-*#*       	     					    pe "sp2 P of conjugated chain"
+atom [#15X2;!R](#*)-*#*       	     					    pe "sp2 P of conjugated chain"
+atom [#15;a]                  	     					    pb "aromatic P"
+atom [#15X3]                  						    p3 "other sp3 P"
+atom [#15X3](=*)-*=*          	     					    px "sp2 P of conjugated system"
+atom [#15X3](=*)-*#*          	     					    px "sp2 P of conjugated system"
+atom [#15X3](=[#8])(=[#8])[#8] 						    p4 ""
+atom [#15X3]=[O,S]            	     					    p4 "hypervalent P"
+atom [#15X4]                  						    p5 "hypervalent P"
+atom [#15X4](=*)-*=*          						    py "P of conjugated system"
+atom [#15X4](=*)-*#*          	    					    py "P of conjugated system"
+atom [#15X5]                  	    					    p5 "hypervalent P"
+atom [#15X6]								    p5 "hypervalent P"
+
+
+// SMARTS rules for nitrogens
+
+atom [#7X1;!R]                						    n1 "sp1 N"
+atom [#7X1]=[#8]     							    n1 "sp1 N"
+atom [#7X2]								    n2 "sp2 N"
+atom [#7X2](=[#6])[#1]							    n2 "sp2 N"
+atom [#7X2](=[#8])[F,Cl,Br,I]						    n2 "sp2 N"
+atom [#7X2](=[#7X2]=[#7X2])						    n1 "sp1 N"
+atom [#7X2](=[#7X2])(=[#7X2])						    n1 "sp1 N"
+atom [#7X2](#*)-*							    n1 "sp1 N"
+atom [#7X2](=[#7X2])-*						    	    n2 "sp1 N"
+atom [nX2]								    nb "aromatic N"
+atom [#7X2;R](=*)=*           						    nb "aromatic N"
+atom [#7X2;R](=*)(-*)         						    nb "aromatic N"
+atom [#7X2;R](=[#7])[#16]               				    nd "sp2 N of conjugated ring"
+atom [#7X2;R](:[#6])[#7] 						    nd "sp2 N of conjugated ring"
+atom [#7X2;R]=[#6][#7]        						    nd "sp2 N of conjugated ring"
+atom [#7X2;R]=[#6][#8]        						    nd "sp2 N of conjugated ring"
+atom [#7X2;R]=[#6][#16]        						    nd "sp2 N of conjugated ring"
+atom [#7X2r5](:[#6])[#6]						    nb "N in aromatic ring due to lone pairs of size 5"
+atom [nX2r6](:[#6X3][NX3])([#6X3]=[O])					    nd "N in Cytosine"
+atom [nX2r5]([#6])[#8,#16]						    nc "N in aromatic ring due to lone pairs of size 5"
+atom [#7X2;R](-[#7X3]-[#6X3])=[#6X3]    				    nc "sp2 N of conjugated ring"
+atom [#7X2;R](=*)-*=*   						    nc "sp2 N of conjugated ring"
+atom [#7X2;R](=*)-*#*   						    nc "sp2 N of conjugated ring"
+atom [#7X2;R](#*)-*#*   						    nc "sp2 N of conjugated ring"
+atom [#7X2;R](:[#7])[#7] 						    nc "sp2 N of conjugated ring"
+atom [#7X2;R](:[#7])[#16X2] 						    nc "sp2 N of conjugated ring"
+atom [#7X2;R]([#7])[#7] 						    nc "sp2 N of conjugated ring"
+atom [#7X2;R]=[#6]([#7])[#7]  						    nc "sp2 N of conjugated ring"
+atom [#7X2;!R](=*)-*=*  						    ne "sp2 N of conjugated chain"
+atom [#7X2;!R](=*)-*#*  						    ne "sp2 N of conjugated chain"
+atom [#7X2;!R](#*)-*#*  						    ne "sp2 N of conjugated chain"
+atom [#7X3]             						    n3 "sp3 N"
+atom [#7X3&H0]([#7])[F,Cl,Br,I] 					    n2 "sp2 N"
+atom [#7X3]([#7])([F,Cl,Br,I])[F,Cl,Br,I] 				    n3 "sp3 N"
+atom [#7X3;R](-*)=*-*							    na "sp2 N with 3 subst"
+atom [#7X3;R]([#6])([#6])[#6]   					    na "sp2 N with 3 subst"
+atom [#7X3r6]([#6])([#6])[#6]   					    n3 "sp3 N"
+atom [#7X3r6]([#6])([#6])[#1]   					    n3 "sp3 N"
+atom [#7X3r5]([#6])([#6])[#6]   					    n3 "sp3 N"
+atom [#7X3r5]([#6])([#6])[#1]   					    n3 "sp3 N"
+atom [nX3;R]([#6])([#6])[#6]   					    	    na "sp2 N with 3 subst"
+atom [nX3&H;R]         						    	    na "sp2 N with 3 subst"
+atom [nX3]              						    na "sp2 N with 3 subst"
+atom [nX3]([#6])([#6])[#1]      					    na "sp2 N with 3 subst"
+atom [#7X3r6]([#6])([#6])[#1]   					    n3 "sp3 N"
+atom [#7X3H2;H1]							    nh "Amine Nitrogen"
+atom [#7X3H2]-[R;a]							    nh "Amine Nitrogen"
+atom [NX3]-[R;a]							    nh "Amine Nitrogen"
+atom [#7X3H2]-[r6;a]							    nh "Amine Nitrogen"
+atom [#7X3]-[CX3]=[O,S] 						    n  "sp2 N in amides"
+atom [#7X3r5]([#6X3]=[#8])([#6X3])[#1]  				    n  "sp2 N in amides"
+atom [#7X3r5]([#6X3]=[#8])([#6X3])[#6X4]  				    n  "sp2 N in amides"
+atom [#7X3r6]([#6X3]=[#8])([#6X3]=[#8])[#1] 				    n  "sp2 N in amides"
+atom [#7X3r6]([#6X3]=[#8])([#6X3]=[#8])[#6X4] 				    n  "sp2 N in amides"
+atom [#7X3r6]([#6X3]=[#8])([#6X3])[#1]  				    n  "sp2 N in amides"
+atom [#7X3r6]([#6X3]=[#8])([#6X3])[#6X4]  				    n  "sp2 N in amides"
+atom [#7X3&H0](=O)=O    						    no "N in nitro group"
+atom [#7X4]             						    n4 "sp3 N"
+
+// SMARTS rules for oxygens
+
+atom [OX1]              						    o  "sp2 O"
+atom [OX1][#16]              						    o  "sp2 O"
+atom [OX2]([#6,#7])[#6,#7]            					    os "sp2 O"
+atom [OX2]              						    os "sp3 O in esters and ethers"
+atom [#8X2]              						    os "sp3 O in esters and ethers"
+atom [OX2;R]([#6])[#6] 							    os
+atom [OX2&H0]([#6])[#6] 						    os
+atom [OX2]([#6])[#6] 							    os
+atom [OX2r5](-[#6X3]=[#6X3])[#15X3] 					    os
+atom [OX2&H0][#15X4]=[OX1] 						    o
+atom [OX2&H0][#16X4]=[OX1] 						    o
+atom [OX2&H0][#16X4]-[#6X4] 						    o
+atom [OX2&H0]([#15X4])[#6] 						    os
+atom [OX2r5]([#15X3][Cl])[#6] 						    os
+atom [OX2&H0]([#16X4])[#6] 						    os
+atom [OX2H]             						    oh "sp3 O in hydroxyl group"
+atom [OX2]([#1])[#1]							    ow "water"
+atom [OX2&H0;!R][CX3]=[OX1] 						    o  "O in carboxylic group"
+atom [OX2&H0;!R][NX2]=[OX1] 						    o  "O in carboxylic group"
+atom [OX2&H0;!R][NX3]=[OX1] 						    o  "O in carboxylic group"
+atom [OX2&H0;!R]([#6X4])([NX3]=[OX1])					    os "O in carboxylic group"
+atom [OX2&H0;!R]([#6X3])([CX3]=[OX1])            			    os "sp2 O"
+atom [OX2]([#6X3]=[OX1])[#6X4] 						    os
+atom [OX2]([#6X3]=[OX1])[#6X3]=[OX1] 					    os
+atom [OX3]              						    os "sp3 O in esters and ethers"
+atom [OX3H]             						    oh "sp3 O in hydroxyl group"
+
+// SMARTS rules for sulfur
+
+atom [SX1]              						    s  ""
+atom [#16X1]              						    s  ""
+atom [#16X1](=[C,O])              					    s  ""
+atom [SX2]              						    ss "sp3 sulphur"
+atom [#16X2]              						    ss "sp3 sulphur"
+atom [SX2]=*            						    s2 "sp2 sulphur"
+atom [SX2]#*            						    s2 "sp2 sulphur"
+atom [SX2H]             						    sh "sp3 S in thiol"
+atom [SX3]              						    s4 "hypervalent S"
+atom [SX3](=*)-*=*      						    sx "conjugated S"
+atom [SX3](=*)-*#*      						    sx "conjugated S"
+atom [SX4]              						    s6 "hypervalent S"
+atom [SX4](=*)-*=*      						    sy "conjugated S"
+atom [SX4](=*)-*#*      						    sy "conjugated S"
+atom [SX5]              						    s6 "hypervalent S"
+atom [SX6]              						    s6 "hypervalent S"
+
+atom [He]               						    He ""
+atom [Li]               						    Li ""
+atom [Be]               						    Be ""
+atom [B]                						    B  ""
+atom [Ne]               						    Ne ""
+atom [Na]               						    Na ""
+atom [Mg]               						    Mg ""
+atom [Al]               						    Al ""
+atom [Si]               						    Si ""
+atom [Ar]               						    Ar ""
+atom [K]                						    K  ""
+atom [Ca]               						    Ca ""
+atom [Sc]               						    Sc ""
+atom [Ti]               						    Ti ""
+atom [V]                						    V  ""
+atom [Cr]               						    Cr ""
+atom [Mn]               						    Mn ""
+atom [Fe]               						    Fe ""
+atom [Co]               						    Co ""
+atom [Ni]               						    Ni ""
+atom [Cu]               						    Cu ""
+atom [Zn]               						    Zn ""
+atom [Ga]               						    Ga ""
+atom [Ge]               						    Ge ""
+atom [As]               						    As ""
+atom [Se]               						    Se ""
+atom [Kr]               						    Kr ""
+atom [Rb]               						    Rb ""
+atom [Sr]               						    Sr ""
+atom [Y]                						    Y  ""
+atom [Zr]               						    Zr ""
+atom [Nb]               						    Nb ""
+atom [Mo]               						    Mo ""
+atom [Tc]               						    Tc ""
+atom [Ru]               						    Ru ""
+atom [Rh]               						    Rh ""
+atom [Pd]               						    Pd ""
+atom [Ag]               						    Ag ""
+atom [Cd]               						    Cd ""
+atom [In]               						    In ""
+atom [Sn]               						    Sn ""
+atom [Sb]               						    Sb ""
+atom [Te]               						    Te ""
+atom [Xe]               						    Xe ""
+atom [Cs]               						    Cs ""
+atom [Ba]               						    Ba ""
+atom [La]               						    La ""
+atom [Ce]               						    Ce ""
+atom [Pr]               						    Pr ""
+atom [Nd]               						    Nd ""
+atom [Pm]               						    Pm ""
+atom [Sm]               						    Sm ""
+atom [Eu]               						    Eu ""
+atom [Gd]               						    Gd ""
+atom [Tb]               						    Tb ""
+atom [Dy]               						    Dy ""
+atom [Ho]               						    Ho ""
+atom [Er]               						    Er ""
+atom [Tm]               						    Tm ""
+atom [Yb]               						    Yb ""
+atom [Lu]               						    Lu ""
+atom [Hf]               						    Hf ""
+atom [Ta]               						    Ta ""
+atom [W]                						    W  ""
+atom [Re]               						    Re ""
+atom [Os]               						    Os ""
+atom [Ir]               						    Ir ""
+atom [Pt]               						    Pt ""
+atom [Au]               						    Au ""
+atom [Hg]               						    Hg ""
+atom [Tl]               						    Tl ""
+atom [Pb]               						    Pb ""
+atom [Bi]               						    Bi ""
+atom [Po]               						    Po ""
+atom [At]               						    At ""
+atom [Rn]               						    Rn ""
+atom [Fr]               						    Fr ""
+atom [Ra]               						    Ra ""
+atom [Ac]               						    Ac ""
+atom [Th]               						    Th ""
+atom [Pa]               						    Pa ""
+atom [U]                						    U  ""
+atom [Np]               						    Np ""
+atom [Pu]               						    Pu ""
+atom [Am]               						    Am ""
+atom [Cm]               						    Cm ""
+atom [Bk]               						    Bk ""
+atom [Cf]               						    Cf ""
+atom [Es]               						    Es ""
+atom [Fm]               						    Fm ""
+atom [Md]               						    Md ""
+atom [No]               						    No ""
+atom [Lr]               						    Lr ""

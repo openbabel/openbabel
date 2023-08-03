@@ -1,0 +1,125 @@
+2PW0_TRC_A_2001
+  RCSB PDB12061706413D
+Coordinates from PDB:2PW0:A:2001 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   31.2890  -10.3080    1.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6890   -9.1980    1.7070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7920  -11.3860    1.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5790  -10.3250    2.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6110  -11.2530    2.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5250  -12.4180    1.0260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7730  -12.4650    0.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8900  -13.4760   -0.5970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5810  -11.5060    0.1720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.9320  -11.0920    2.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4470  -12.1260    3.2280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4100   -9.9470    2.8540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+O2
+A    4
+C2
+A    5
+C3
+A    6
+C4
+A    7
+C5
+A    8
+O3
+A    9
+O4
+A   10
+C6
+A   11
+O5
+A   12
+O6
+M  END
+>  <InstanceId>
+2PW0_TRC_A_2001
+
+>  <ChemCompId>
+TRC
+
+>  <PdbId>
+2PW0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6
+
+>  <Name>
+TRICARBALLYLIC ACID
+
+>  <SystematicName>
+propane-1,2,3-tricarboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 O6
+
+>  <MolecularWeight>
+176.124
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8O6/c7-4(8)1-3(6(11)12)2-5(9)10/h3H,1-2H2,(H,7,8)(H,9,10)(H,11,12)
+
+>  <InChIKey>
+KQTIIICEAUMSDG-UHFFFAOYSA-N
+
+>  <SMILES>
+C(C(CC(=O)O)C(=O)O)C(=O)O
+
+$$$$

@@ -1,0 +1,126 @@
+4Y3P_46S_A_403
+  RCSB PDB12061716193D
+Coordinates from PDB:4Y3P:A:403 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   -0.2690    2.5460   10.4140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2360    3.7010    9.7440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6140    1.5700   10.7280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4400    5.4570    8.5890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4340    4.1820    9.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3270    1.8100   10.7650   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5050    2.3110   10.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.6060    3.5140    9.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5530    0.1690   11.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6260   -0.8230   10.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8420   -0.6940    9.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9440    2.1810   10.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  2  0  0  0  0
+  5  2  1  0  0  0  0
+  8  7  1  0  0  0  0
+  2  1  2  0  0  0  0
+  7  3  1  0  0  0  0
+  7  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+  3  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12  3  1  0  0  0  0
+A    1
+C4
+A    2
+N1
+A    3
+N2
+A    4
+C
+A    5
+C1
+A    6
+N
+A    7
+C3
+A    8
+C2
+A    9
+C7
+A   10
+C5
+A   11
+C8
+A   12
+C11
+M  END
+>  <InstanceId>
+4Y3P_46S_A_403
+
+>  <ChemCompId>
+46S
+
+>  <PdbId>
+4Y3P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C9 N3
+
+>  <Name>
+1-(6-methylpyrimidin-4-yl)azepane
+
+>  <SystematicName>
+1-(6-methylpyrimidin-4-yl)azepane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H17 N3
+
+>  <MolecularWeight>
+191.273
+
+>  <ModifiedDate>
+2016-02-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H17N3/c1-10-8-11(13-9-12-10)14-6-4-2-3-5-7-14/h8-9H,2-7H2,1H3
+
+>  <InChIKey>
+JCQNRSJJJIDBPG-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(ncn1)N2CCCCCC2
+
+$$$$

@@ -1,0 +1,118 @@
+5CP9_6O5_B_301
+  RCSB PDB12061717083D
+Coordinates from PDB:5CP9:B:301 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   -2.6950   28.4760  -11.0070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2590   27.2280  -10.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3060   26.4200  -10.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4440   27.1790  -10.7590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0200   28.4580  -10.9500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9750   29.6330  -11.0720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6970   29.5940  -12.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6580   30.9710  -13.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.6120   31.7370  -12.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6730   31.2220  -13.8010   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+  1  5  2  0  0  0  0
+  1  2  1  0  0  0  0
+  5  4  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+A    1
+CAE
+A    2
+CAC
+A    3
+CAD
+A    4
+OAH
+A    5
+CAJ
+A    6
+CAG
+A    7
+CAF
+A    8
+CAI
+A    9
+OAB
+A   10
+OAA
+M  END
+>  <InstanceId>
+5CP9_6O5_B_301
+
+>  <ChemCompId>
+6O5
+
+>  <PdbId>
+5CP9
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O3
+
+>  <Name>
+3-(furan-2-yl)propanoic acid
+
+>  <SystematicName>
+3-(furan-2-yl)propanoic acid
+
+>  <Synonyms>
+MB605
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 O3
+
+>  <MolecularWeight>
+140.137
+
+>  <ModifiedDate>
+2015-08-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8O3/c8-7(9)4-3-6-2-1-5-10-6/h1-2,5H,3-4H2,(H,8,9)
+
+>  <InChIKey>
+XLTJXJJMUFDQEZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1)CCC(=O)O
+
+$$$$

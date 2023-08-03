@@ -1,0 +1,150 @@
+4GAE_FOB_A_502
+  RCSB PDB12061712403D
+Coordinates from PDB:4GAE:A:502 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+   10.2210  -15.6220   17.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8060  -14.8900   14.0880   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6210  -15.4340   15.0980   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4150  -15.0900   16.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5270  -14.2810   16.5380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6680  -16.3660   14.6950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5430  -15.3940   13.8800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0070  -15.7350   13.8860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8630  -14.5810   12.9260   P 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1280  -13.3450   13.7160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9730  -14.3190   11.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1080  -15.3430   12.5680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5650  -15.7730   15.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2320  -16.9350   15.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4190  -14.6800   16.2560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7270  -16.9780   17.1020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9400  -14.7970   17.5540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5670  -15.9250   17.9290   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  9  2  0  0  0  0
+ 12  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  6  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 15 17  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  1  1  0  0  0  0
+ 16 18  2  0  0  0  0
+ 17 18  1  0  0  0  0
+A    1
+CH3
+A    2
+O2
+A    3
+N1
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+C3
+A    8
+C4
+A    9
+PA1
+A   10
+OP1
+A   11
+OP2
+A   12
+OP3
+A   13
+CG
+A   14
+CD1
+A   15
+CD2
+A   16
+CE1
+A   17
+CE2
+A   18
+NZ
+M  END
+>  <InstanceId>
+4GAE_FOB_A_502
+
+>  <ChemCompId>
+FOB
+
+>  <PdbId>
+4GAE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O5 P
+
+>  <Name>
+[(1R)-3-[acetyl(hydroxy)amino]-1-(pyridin-4-yl)propyl]phosphonic acid
+
+>  <SystematicName>
+[(1R)-3-[ethanoyl(oxidanyl)amino]-1-pyridin-4-yl-propyl]phosphonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H15 N2 O5 P
+
+>  <MolecularWeight>
+274.21
+
+>  <ModifiedDate>
+2013-02-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N2O5P/c1-8(13)12(14)7-4-10(18(15,16)17)9-2-5-11-6-3-9/h2-3,5-6,10,14H,4,7H2,1H3,(H2,15,16,17)/t10-/m1/s1
+
+>  <InChIKey>
+AMWIPWYKSYZXGB-SNVBAGLBSA-N
+
+>  <SMILES>
+CC(=O)N(CC[C@H](c1ccncc1)P(=O)(O)O)O
+
+$$$$

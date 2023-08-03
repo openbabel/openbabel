@@ -1,0 +1,136 @@
+2VCZ_VC3_B_1200
+  RCSB PDB12061707043D
+Coordinates from PDB:2VCZ:B:1200 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   73.8930   66.7500    0.8870   N 0  3  0  0  0  0  0  0  0  0  0  0
+   79.1200   65.9070    4.7810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   78.6770   65.3520    3.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.3420   65.3070    5.1010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   75.1230   66.4010    1.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.6210   64.3930    3.2590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.8490   66.6590   -0.3280   O 0  5  0  0  0  0  0  0  0  0  0  0
+   72.9130   67.1130    1.4960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4230   65.7070    2.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.6320   64.3940    4.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.1490   65.7530    0.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.2350   66.7080    2.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.3020   65.4070    1.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.3900   66.3690    3.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1  8  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5 11  1  0  0  0  0
+  5 12  2  0  0  0  0
+  6 10  2  0  0  0  0
+  9 13  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 11 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+M  CHG  2   1   1   7  -1
+A    1
+N1
+A    2
+N2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+2VCZ_VC3_B_1200
+
+>  <ChemCompId>
+VC3
+
+>  <PdbId>
+2VCZ
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N3 O2
+
+>  <Name>
+3-(4-nitrophenyl)-1H-pyrazole
+
+>  <SystematicName>
+3-(4-nitrophenyl)-1H-pyrazole
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H7 N3 O2
+
+>  <MolecularWeight>
+189.171
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C9H7N3O2/c13-12(14)8-3-1-7(2-4-8)9-5-6-10-11-9/h1-6H,(H,10,11)
+
+>  <InChIKey>
+IPIYADCDDIUVPS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1c2cc[nH]n2)[N+](=O)[O-]
+
+$$$$

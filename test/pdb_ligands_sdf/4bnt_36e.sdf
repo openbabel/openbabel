@@ -1,0 +1,131 @@
+4BNT_36E_B_1248
+  RCSB PDB12061711523D
+Coordinates from PDB:4BNT:B:1248 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   -4.3890    3.0500  -37.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6680    2.6360  -38.1530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6920    6.1050  -40.7190   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0280    4.3770  -38.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9510    5.2420  -38.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1670    4.8020  -38.9050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5150    3.5160  -38.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5950    4.5360  -39.2900   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5980    4.7620  -40.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1900    4.5350  -39.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2090    5.4380  -39.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.7700    3.3540  -39.1160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.7230    3.8370  -41.1830   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  4  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+FAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+FAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+NAK
+A   12
+NAL
+A   13
+FAM
+M  END
+>  <InstanceId>
+4BNT_36E_B_1248
+
+>  <ChemCompId>
+36E
+
+>  <PdbId>
+4BNT
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1248
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 F3
+
+>  <Name>
+2-(trifluoromethyl)-1H-benzimidazole
+
+>  <SystematicName>
+2-(trifluoromethyl)-1H-benzimidazole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H5 F3 N2
+
+>  <MolecularWeight>
+186.134
+
+>  <ModifiedDate>
+2013-09-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H5F3N2/c9-8(10,11)7-12-5-3-1-2-4-6(5)13-7/h1-4H,(H,12,13)
+
+>  <InChIKey>
+MXFMPTXDHSDMTI-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)[nH]c(n2)C(F)(F)F
+
+$$$$

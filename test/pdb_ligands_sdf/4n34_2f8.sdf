@@ -1,0 +1,142 @@
+4N32_2F8_A_401
+  RCSB PDB12061713503D
+Coordinates from PDB:4N32:A:401 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   33.8490   43.5320    3.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0300   42.5440    3.6620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5630   43.0780    5.0090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6190   44.1340    4.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0540   44.6920    5.9990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9920   45.5480    6.6590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6150   46.4870    5.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5290   43.6200    6.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1430   44.2330    8.2280   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9130   44.1910    8.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0090   43.5240    8.2620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7070   45.0220    9.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5560   42.5240    7.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9850   41.4680    8.0000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9580   41.9680    5.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9120   40.9190    6.0410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+  4  5  1  0  0  0  0
+  3 15  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 15 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  8 13  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 13 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+O6
+A    2
+C6
+A    3
+C5
+A    4
+O5
+A    5
+C1
+A    6
+O1
+A    7
+CM
+A    8
+C2
+A    9
+N2
+A   10
+C7
+A   11
+O7
+A   12
+C8
+A   13
+C3
+A   14
+O3
+A   15
+C4
+A   16
+O4
+M  END
+>  <InstanceId>
+4N32_2F8_A_401
+
+>  <ChemCompId>
+2F8
+
+>  <PdbId>
+4N32
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O6
+
+>  <Name>
+methyl 2-(acetylamino)-2-deoxy-alpha-D-glucopyranoside
+
+>  <SystematicName>
+N-[(2S,3R,4R,5S,6R)-6-(hydroxymethyl)-2-methoxy-4,5-bis(oxidanyl)oxan-3-yl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C9 H17 N O6
+
+>  <MolecularWeight>
+235.234
+
+>  <ModifiedDate>
+2013-11-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17NO6/c1-4(12)10-6-8(14)7(13)5(3-11)16-9(6)15-2/h5-9,11,13-14H,3H2,1-2H3,(H,10,12)/t5-,6-,7-,8-,9+/m1/s1
+
+>  <InChIKey>
+ZEVOCXOZYFLVKN-OKNNCHMLSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H]1[C@H]([C@@H]([C@H](O[C@@H]1OC)CO)O)O
+
+$$$$

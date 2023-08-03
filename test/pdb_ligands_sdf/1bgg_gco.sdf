@@ -1,0 +1,129 @@
+1BGG_GCO_B_500
+  RCSB PDB12061702043D
+Coordinates from PDB:1BGG:B:500 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   65.1970   17.9770   58.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.8600   18.2020   57.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2390   19.4950   58.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.8110   19.6300   59.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.7890   20.4470   60.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.3140   20.8710   61.7220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.3200   16.6520   57.7690   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.3660   17.8770   59.2770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.9240   18.0960   56.5360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.1880   19.5100   57.2320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   61.6280   20.3730   59.6880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.8960   19.5640   60.7080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.7710   19.8080   62.4630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O11
+A    8
+O12
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+O5
+A   13
+O6
+M  END
+>  <InstanceId>
+1BGG_GCO_B_500
+
+>  <ChemCompId>
+GCO
+
+>  <PdbId>
+1BGG
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7
+
+>  <Name>
+GLUCONIC ACID
+
+>  <SystematicName>
+(2R,3S,4R,5R)-2,3,4,5,6-pentahydroxyhexanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+SACCHARIDE
+
+>  <Formula>
+C6 H12 O7
+
+>  <MolecularWeight>
+196.155
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O7/c7-1-2(8)3(9)4(10)5(11)6(12)13/h2-5,7-11H,1H2,(H,12,13)/t2-,3-,4+,5-/m1/s1
+
+>  <InChIKey>
+RGHNJXZEOKUKBD-SQOUGZDYSA-N
+
+>  <SMILES>
+C([C@H]([C@H]([C@@H]([C@H](C(=O)O)O)O)O)O)O
+
+$$$$

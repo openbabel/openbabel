@@ -1,0 +1,118 @@
+5CBI_4ZC_A_802
+  RCSB PDB12061717043D
+Coordinates from PDB:5CBI:A:802 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   55.3760   82.4670   51.5560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0130   83.1240   50.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.5490   84.3700   50.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   55.0910   84.9670   48.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1100   84.3430   48.0610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5490   85.0790   46.6480  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5800   83.1000   48.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.0340   82.4900   49.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5220   81.2410   50.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1230   80.2080   50.3760   N 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  7  1  0  0  0  0
+  3  2  2  0  0  0  0
+  7  8  2  0  0  0  0
+  2  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  3  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+CL06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+N10
+M  END
+>  <InstanceId>
+5CBI_4ZC_A_802
+
+>  <ChemCompId>
+4ZC
+
+>  <PdbId>
+5CBI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O Cl
+
+>  <Name>
+5-chloro-2-hydroxybenzonitrile
+
+>  <SystematicName>
+5-chloranyl-2-oxidanyl-benzenecarbonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H4 Cl N O
+
+>  <MolecularWeight>
+153.566
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H4ClNO/c8-6-1-2-7(10)5(3-6)4-9/h1-3,10H
+
+>  <InChIKey>
+XWQDMIXVAYAZGB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1Cl)C#N)O
+
+$$$$

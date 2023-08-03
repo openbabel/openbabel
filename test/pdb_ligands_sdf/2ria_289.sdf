@@ -1,0 +1,134 @@
+2RIA_289_A_356
+  RCSB PDB12061706563D
+Coordinates from PDB:2RIA:A:356 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   32.9210  -12.6820   11.3820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7340  -13.0710   10.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9270  -11.8220   10.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5040  -11.2820    9.0890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4090  -12.1520   10.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2840  -12.9210    8.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8620  -13.2600    8.4010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1280  -12.0150    8.2470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2230  -14.1380    9.5420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9540  -15.3810    9.6630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3050  -13.3510   10.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7290  -14.1400   11.9200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.7980  -13.0180   11.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8790  -12.2830   12.4490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  4  3  1  0  0  0  0
+  5  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5 13  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+O7
+A    2
+C7
+A    3
+C6
+A    4
+O6
+A    5
+C5
+A    6
+O5
+A    7
+C1
+A    8
+O1
+A    9
+C2
+A   10
+O2
+A   11
+C3
+A   12
+O3
+A   13
+C4
+A   14
+O4
+M  END
+>  <InstanceId>
+2RIA_289_A_356
+
+>  <ChemCompId>
+289
+
+>  <PdbId>
+2RIA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+356
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7
+
+>  <Name>
+D-glycero-alpha-D-manno-heptopyranose
+
+>  <SystematicName>
+(2S,3S,4S,5S,6R)-6-[(1R)-1,2-dihydroxyethyl]oxane-2,3,4,5-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+D-saccharide
+
+>  <Formula>
+C7 H14 O7
+
+>  <MolecularWeight>
+210.182
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O7/c8-1-2(9)6-4(11)3(10)5(12)7(13)14-6/h2-13H,1H2/t2-,3+,4+,5+,6-,7+/m1/s1
+
+>  <InChIKey>
+BGWQRWREUZVRGI-QTNLNCNHSA-N
+
+>  <SMILES>
+C([C@H]([C@@H]1[C@H]([C@@H]([C@@H]([C@H](O1)O)O)O)O)O)O
+
+$$$$

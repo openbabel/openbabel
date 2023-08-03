@@ -1,0 +1,134 @@
+5HH4_60M_A_303
+  RCSB PDB12061718003D
+Coordinates from PDB:5HH4:A:303 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    2.6160   -6.7300  -42.0270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7460   -5.4160  -41.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6070   -3.7140  -38.8050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6840   -3.8950  -39.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9160   -2.9180  -39.9910   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5190   -5.2770  -40.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1150   -6.2910  -39.6970   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0240   -7.5660  -40.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7010   -8.6860  -39.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5640   -9.5210  -38.0750   P 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9930   -8.3010  -37.3620   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4580  -10.3930  -37.1900   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5530  -10.3440  -38.8670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2640   -7.8120  -41.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 14  1  0  0  0  0
+  2  6  1  0  0  0  0
+ 14  8  2  0  0  0  0
+  6  7  2  0  0  0  0
+  6  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  5  4  2  0  0  0  0
+  4  3  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 13 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C13
+A    2
+C14
+A    3
+O01
+A    4
+C02
+A    5
+O03
+A    6
+C04
+A    7
+N05
+A    8
+C06
+A    9
+C07
+A   10
+P08
+A   11
+O09
+A   12
+O10
+A   13
+O11
+A   14
+C12
+M  END
+>  <InstanceId>
+5HH4_60M_A_303
+
+>  <ChemCompId>
+60M
+
+>  <PdbId>
+5HH4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O5 P
+
+>  <Name>
+6-(phosphonomethyl)pyridine-2-carboxylic acid
+
+>  <SystematicName>
+6-(phosphonomethyl)pyridine-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H8 N O5 P
+
+>  <MolecularWeight>
+217.116
+
+>  <ModifiedDate>
+2017-01-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H8NO5P/c9-7(10)6-3-1-2-5(8-6)4-14(11,12)13/h1-3H,4H2,(H,9,10)(H2,11,12,13)
+
+>  <InChIKey>
+HIDJRVUSOKZHOS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(nc(c1)C(=O)O)CP(=O)(O)O
+
+$$$$

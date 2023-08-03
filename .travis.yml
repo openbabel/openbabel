@@ -1,0 +1,25 @@
+language: cpp
+
+matrix:
+  include:
+    - compiler: gcc
+      env: RUN_CTEST='false' FLAGS="-DBUILD_SHARED=OFF -DWITH_INCHI=ON -DWITH_STATIC_INCHI=ON"
+    - compiler: gcc
+      env: RUN_CTEST='true' FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+    - compiler: clang
+      env: RUN_CTEST='true' FLAGS="-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+
+before_install:
+ - sudo apt-get update -qq
+
+install:
+ - sudo apt-get install -qq swig libeigen3-dev libboost-all-dev
+
+before_script:
+ - mkdir build
+ - cd build
+ - cmake ${FLAGS} ..
+
+script:
+ - make -j2
+ - if [ ${RUN_CTEST} = 'true' ]; then ctest -j 2 --output-on-failure; fi

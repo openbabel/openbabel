@@ -1,0 +1,123 @@
+3NUY_JPZ_A_370
+  RCSB PDB12061709583D
+Coordinates from PDB:3NUY:A:370 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+  -40.5750   17.1150   13.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.7140   17.6080   12.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.2130   15.8140   13.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.4780   16.8280   12.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.4270   13.5070   10.7620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.9880   15.0370   12.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.1340   15.5230   11.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -40.6420   13.7340   12.0660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -42.8660   14.7510   10.9660   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -41.3330   12.9220   11.2630   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.5000   13.2310   12.6270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  6  2  0  0  0  0
+  4  7  2  0  0  0  0
+  5  9  1  0  0  0  0
+  5 10  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  2  0  0  0  0
+A    1
+C9
+A    2
+C8
+A    3
+C10
+A    4
+C7
+A    5
+C4
+A    6
+C11
+A    7
+C6
+A    8
+C2
+A    9
+N5
+A   10
+N3
+A   11
+O1
+M  END
+>  <InstanceId>
+3NUY_JPZ_A_370
+
+>  <ChemCompId>
+JPZ
+
+>  <PdbId>
+3NUY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+370
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O
+
+>  <Name>
+quinazolin-4(1H)-one
+
+>  <SystematicName>
+1H-quinazolin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 N2 O
+
+>  <MolecularWeight>
+146.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N2O/c11-8-6-3-1-2-4-7(6)9-5-10-8/h1-5H,(H,9,10,11)
+
+>  <InChIKey>
+QMNUDYFKZYBWQX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)C(=O)N=CN2
+
+$$$$

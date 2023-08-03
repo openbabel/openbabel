@@ -1,0 +1,129 @@
+2OEM_1AE_A_901
+  RCSB PDB12061706303D
+Coordinates from PDB:2OEM:A:901 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+   -8.9020  -24.6060  -33.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5660  -25.8950  -33.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9110  -25.5900  -32.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.5880  -26.8560  -32.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.9140  -27.7950  -31.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.1270  -26.9980  -32.0550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.6950  -28.0890  -31.4830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0600  -25.9440  -32.6450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4280  -25.9350  -32.5500   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3270  -24.8120  -33.3010   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.6790  -24.7730  -32.6970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3820  -25.2070  -34.8610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6050  -23.3850  -33.1780   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+O4
+A    6
+C5
+A    7
+O5
+A    8
+C6
+A    9
+O7
+A   10
+P
+A   11
+O8
+A   12
+O9
+A   13
+O10
+M  END
+>  <InstanceId>
+2OEM_1AE_A_901
+
+>  <ChemCompId>
+1AE
+
+>  <PdbId>
+2OEM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O6 P
+
+>  <Name>
+(1Z)-2-HYDROXY-3-OXOHEX-1-EN-1-YL DIHYDROGEN PHOSPHATE
+
+>  <SystematicName>
+[(Z)-2-hydroxy-3-oxo-hex-1-enyl] dihydrogen phosphate
+
+>  <Synonyms>
+2,3-DIKETOHEXANE 1-PHOSPHATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 O6 P
+
+>  <MolecularWeight>
+210.122
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H11O6P/c1-2-3-5(7)6(8)4-12-13(9,10)11/h4,8H,2-3H2,1H3,(H2,9,10,11)/b6-4-
+
+>  <InChIKey>
+HEBDCWKDNSCZMW-XQRVVYSFSA-N
+
+>  <SMILES>
+CCCC(=O)/C(=C/OP(=O)(O)O)/O
+
+$$$$

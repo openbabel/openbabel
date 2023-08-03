@@ -1,0 +1,121 @@
+3CXO_3LR_A_501
+  RCSB PDB12061708143D
+Coordinates from PDB:3CXO:A:501 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   15.9700   26.3590   86.7010   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0970   25.2730   86.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1640   24.5240   85.7230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5480   24.8510   85.7830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5880   23.5290   85.1960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3690   24.9120   87.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6660   24.1120   87.0100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7630   25.0200   86.8930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.8800   23.2190   88.2440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0710   23.9330   89.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0020   22.3930   87.9950   O 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  3  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+O1A
+A    2
+C1
+A    3
+O1B
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+C4
+A    8
+O4
+A    9
+C5
+A   10
+C6
+A   11
+O5
+M  END
+>  <InstanceId>
+3CXO_3LR_A_501
+
+>  <ChemCompId>
+3LR
+
+>  <PdbId>
+3CXO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+3,6-dideoxy-L-arabino-hexonic acid
+
+>  <SystematicName>
+(2R,4R,5S)-2,4,5-trihydroxyhexanoic acid
+
+>  <Synonyms>
+3-deoxy-L-rhamnonic acid
+
+>  <Type>
+L-saccharide
+
+>  <Formula>
+C6 H12 O5
+
+>  <MolecularWeight>
+164.156
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H12O5/c1-3(7)4(8)2-5(9)6(10)11/h3-5,7-9H,2H2,1H3,(H,10,11)/t3-,4+,5+/m0/s1
+
+>  <InChIKey>
+RJZYGPZBSUBNEJ-VPENINKCSA-N
+
+>  <SMILES>
+C[C@@H]([C@@H](C[C@H](C(=O)O)O)O)O
+
+$$$$

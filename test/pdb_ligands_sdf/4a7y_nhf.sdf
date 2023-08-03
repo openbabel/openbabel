@@ -1,0 +1,122 @@
+3FRO_NHF_B_438
+  RCSB PDB12061708383D
+Coordinates from PDB:3FRO:B:438 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   36.7400   47.0050  -62.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.4660   49.3610  -60.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4420   48.6070  -61.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.0510   48.2520  -62.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7240   47.8860  -64.9210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0240   48.1380  -63.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2240   49.4100  -63.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8600   49.9920  -62.6200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.8770   49.9710  -64.9260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1280   49.2470  -58.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2540   49.3930  -61.3520   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+O4
+A    2
+C6
+A    3
+C5
+A    4
+C4
+A    5
+O3
+A    6
+C3
+A    7
+C2
+A    8
+C1
+A    9
+O2
+A   10
+O6
+A   11
+O5
+M  END
+>  <InstanceId>
+3FRO_NHF_B_438
+
+>  <ChemCompId>
+NHF
+
+>  <PdbId>
+3FRO
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+438
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O5
+
+>  <Name>
+1,5-anhydro-D-fructose
+
+>  <SystematicName>
+(4S,5S,6R)-4,5-dihydroxy-6-(hydroxymethyl)oxan-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+D-saccharide
+
+>  <Formula>
+C6 H10 O5
+
+>  <MolecularWeight>
+162.141
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H10O5/c7-1-4-6(10)5(9)3(8)2-11-4/h4-7,9-10H,1-2H2/t4-,5-,6-/m1/s1
+
+>  <InChIKey>
+OCLOLUFOLJIQDC-HSUXUTPPSA-N
+
+>  <SMILES>
+C1C(=O)[C@H]([C@@H]([C@H](O1)CO)O)O
+
+$$$$

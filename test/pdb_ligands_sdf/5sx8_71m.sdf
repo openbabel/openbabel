@@ -1,0 +1,110 @@
+5SX8_71M_A_1101
+  RCSB PDB12061719283D
+Coordinates from PDB:5SX8:A:1101 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   58.3930   43.2200   72.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.6460   44.2110   71.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.5560   45.5550   72.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.7770   42.5220   74.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.0530   43.5840   73.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.2110   45.8840   73.3520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.9710   44.9020   74.2640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   58.1090   47.3080   73.7700   N 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+  1  5  1  0  0  0  0
+  3  6  2  0  0  0  0
+  5  4  1  0  0  0  0
+  5  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+C5
+A    4
+C1
+A    5
+C2
+A    6
+C4
+A    7
+N3
+A    8
+N8
+M  END
+>  <InstanceId>
+5SX8_71M_A_1101
+
+>  <ChemCompId>
+71M
+
+>  <PdbId>
+5SX8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2
+
+>  <Name>
+6-methylpyridin-2-amine
+
+>  <SystematicName>
+6-methylpyridin-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 N2
+
+>  <MolecularWeight>
+108.141
+
+>  <ModifiedDate>
+2017-02-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8N2/c1-5-3-2-4-6(7)8-5/h2-4H,1H3,(H2,7,8)
+
+>  <InChIKey>
+QUXLCYFNVNNRBE-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(n1)N
+
+$$$$

@@ -1,0 +1,136 @@
+2HMM_AN3_A_801
+  RCSB PDB12061705493D
+Coordinates from PDB:2HMM:A:801 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+   13.6430   51.7630   80.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2550   53.0680   80.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7580   50.9040   81.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9610   53.5210   81.5570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4430   51.3590   82.4270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0710   52.6600   82.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1100   47.4280   78.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0040   48.3090   77.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8340   47.8730   79.4810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6140   49.6050   77.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4630   49.1730   79.7160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3490   50.0320   78.6680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9230   51.3060   78.8670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1600   49.6100   80.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1 13  2  0  0  0  0
+  2  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3 14  2  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+M  END
+>  <InstanceId>
+2HMM_AN3_A_801
+
+>  <ChemCompId>
+AN3
+
+>  <PdbId>
+2HMM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14
+
+>  <Name>
+ANTHRACENE
+
+>  <SystematicName>
+anthracene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H10
+
+>  <MolecularWeight>
+178.229
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H10/c1-2-6-12-10-14-8-4-3-7-13(14)9-11(12)5-1/h1-10H
+
+>  <InChIKey>
+MWPLVEDNUUSJAV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2cc3ccccc3cc2c1
+
+$$$$

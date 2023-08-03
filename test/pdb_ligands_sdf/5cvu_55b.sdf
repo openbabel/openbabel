@@ -1,0 +1,138 @@
+5CVU_55B_A_401
+  RCSB PDB12061717103D
+Coordinates from PDB:5CVU:A:401 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   88.0770   41.6780   85.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.4430   41.1690   85.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   89.5300   40.2050   86.3080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.6030   40.3500   87.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.4860   39.1410   86.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.4980   39.0110   85.1110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   90.3950   38.2330   87.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.1910   37.1220   87.4100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   90.4240   36.1380   88.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.4440   38.3810   88.4110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.5400   39.4440   88.3950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.6070   39.6160   89.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.1420   39.4460   90.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.0410   39.5800   91.8280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.9800   38.3120   92.4830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  5  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5  3  2  0  0  0  0
+  5  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  2  0  0  0  0
+  4 11  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CAA
+A    2
+OAJ
+A    3
+CAN
+A    4
+CAG
+A    5
+CAM
+A    6
+OAD
+A    7
+CAO
+A    8
+OAK
+A    9
+CAB
+A   10
+CAH
+A   11
+CAL
+A   12
+CAF
+A   13
+CAE
+A   14
+CAI
+A   15
+OAC
+M  END
+>  <InstanceId>
+5CVU_55B_A_401
+
+>  <ChemCompId>
+55B
+
+>  <PdbId>
+5CVU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O4
+
+>  <Name>
+4-[(1E)-3-hydroxyprop-1-en-1-yl]-2,6-dimethoxyphenol
+
+>  <SystematicName>
+2,6-dimethoxy-4-[(E)-3-oxidanylprop-1-enyl]phenol
+
+>  <Synonyms>
+Sinapyl alcohol, sinapoyl alcohol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H14 O4
+
+>  <MolecularWeight>
+210.226
+
+>  <ModifiedDate>
+2015-09-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H14O4/c1-14-9-6-8(4-3-5-12)7-10(15-2)11(9)13/h3-4,6-7,12-13H,5H2,1-2H3/b4-3+
+
+>  <InChIKey>
+LZFOPEXOUVTGJS-ONEGZZNKSA-N
+
+>  <SMILES>
+COc1cc(cc(c1O)OC)/C=C/CO
+
+$$$$

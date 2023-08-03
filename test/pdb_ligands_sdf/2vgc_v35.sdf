@@ -1,0 +1,139 @@
+2VGC_V35_C_358
+  RCSB PDB12061707053D
+Coordinates from PDB:2VGC:C:358 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   27.4960    2.9610   39.9210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9050    2.3540   41.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6380    2.9430   42.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9580    4.1490   42.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.5560    4.7720   41.2110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8250    4.1790   39.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7010    2.2850   38.5910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0930    2.4580   37.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3350    0.4890   38.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3960    1.6830   38.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0900    1.4540   38.3230   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8630    2.8300   38.3330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8750    1.0330   35.9220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8960    2.4400   36.3550   B 0  5  0  0  0  0  0  0  0  0  0  0
+   26.5290    4.9630   43.8510  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 15  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8 11  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  2  0  0  0  0
+ 13 14  1  0  0  0  0
+M  CHG  1  14  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C
+A   11
+N
+A   12
+O
+A   13
+O1B
+A   14
+B
+A   15
+CL4
+M  END
+>  <InstanceId>
+2VGC_V35_C_358
+
+>  <ChemCompId>
+V35
+
+>  <PdbId>
+2VGC
+
+>  <ChainId>
+C
+
+>  <ResidueNumber>
+358
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+2
+
+>  <ObservedFormula>
+C10 N O2 B Cl
+
+>  <Name>
+D-1-(4-CHLOROPHENYL)-2-(ACETAMIDO)ETHANE BORONIC ACID
+
+>  <SystematicName>
+[(1S)-1-acetamido-2-(4-chlorophenyl)ethyl]-trihydroxy-boron
+
+>  <Synonyms>
+D-PARA-CHLORO-1-ACETAMIDO BORONIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 B Cl N O4
+
+>  <MolecularWeight>
+258.486
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14BClNO4/c1-7(14)13-10(11(15,16)17)6-8-2-4-9(12)5-3-8/h2-5,10,15-17H,6H2,1H3,(H,13,14)/q-1/t10-/m1/s1
+
+>  <InChIKey>
+FPCXTDQHLFRWCJ-SNVBAGLBSA-N
+
+>  <SMILES>
+[B-]([C@@H](Cc1ccc(cc1)Cl)NC(=O)C)(O)(O)O
+
+$$$$

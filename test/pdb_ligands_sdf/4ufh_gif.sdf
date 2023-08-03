@@ -1,0 +1,118 @@
+4CU7_GIF_A_1985
+  RCSB PDB12061712063D
+Coordinates from PDB:4CU7:A:1985 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   97.7760   12.9180    8.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.1620   11.5050    8.2510   N 0  0  0  0  0  0  0  0  0  0  0  0
+   99.1260    9.2300    4.6450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   97.1350   13.2520    6.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   99.2670   13.4340    5.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   97.9920   12.7470    5.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   96.9120   14.6650    6.7860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   98.1890   11.2460    5.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.9110   10.9610    7.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   98.9400   10.6710    4.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+O2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+M  END
+>  <InstanceId>
+4CU7_GIF_A_1985
+
+>  <ChemCompId>
+GIF
+
+>  <PdbId>
+4CU7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1985
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3
+
+>  <Name>
+D-galacto-isofagomine
+
+>  <SystematicName>
+(3R,4S,5R)-5-(hydroxymethyl)piperidine-3,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O3
+
+>  <MolecularWeight>
+147.172
+
+>  <ModifiedDate>
+2014-08-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO3/c8-3-4-1-7-2-5(9)6(4)10/h4-10H,1-3H2/t4-,5-,6+/m1/s1
+
+>  <InChIKey>
+QPYJXFZUIJOGNX-PBXRRBTRSA-N
+
+>  <SMILES>
+C1[C@@H]([C@@H]([C@@H](CN1)O)O)CO
+
+$$$$

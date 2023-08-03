@@ -1,0 +1,126 @@
+3MQ8_IMW_A_1
+  RCSB PDB12061709473D
+Coordinates from PDB:3MQ8:A:1 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   -2.8450  -12.9710   -2.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1650  -12.7720   -2.6370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4510  -12.2090   -3.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4270  -11.8370   -4.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1010  -12.0390   -4.3460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8090  -12.6050   -3.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5750  -13.5850   -0.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7710  -11.2360   -6.0490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5910  -12.2690   -7.1510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5030  -12.7890   -2.7500   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7490  -12.0280   -4.2360   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9550   -9.9760   -6.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  2  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 12  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+OAJ
+A   11
+OAK
+A   12
+CAL
+M  END
+>  <InstanceId>
+3MQ8_IMW_A_1
+
+>  <ChemCompId>
+IMW
+
+>  <PdbId>
+3MQ8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+2-methyl-5-(1-methylethyl)cyclohexa-2,5-diene-1,4-dione
+
+>  <SystematicName>
+2-methyl-5-propan-2-yl-cyclohexa-2,5-diene-1,4-dione
+
+>  <Synonyms>
+Thymoquinone, 2-isopropyl-5-methylbenzo-1,4-quinone
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O2
+
+>  <MolecularWeight>
+164.201
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O2/c1-6(2)8-5-9(11)7(3)4-10(8)12/h4-6H,1-3H3
+
+>  <InChIKey>
+KEQHJBNSCLWCAE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CC(=O)C(=CC1=O)C(C)C
+
+$$$$

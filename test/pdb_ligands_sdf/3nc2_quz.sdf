@@ -1,0 +1,119 @@
+3NC2_QUZ_A_299
+  RCSB PDB12061709533D
+Coordinates from PDB:3NC2:A:299 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   -3.9760    0.6280   18.9430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7800    0.3060   18.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2000   -0.9310   18.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7990   -1.9420   19.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2260   -3.2090   19.2960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8990   -4.0440   20.0940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0860   -3.8070   20.8120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6150   -2.6010   20.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.0100   -1.5910   19.8590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5860   -0.3080   19.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+N05
+A    6
+C06
+A    7
+N07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+M  END
+>  <InstanceId>
+3NC2_QUZ_A_299
+
+>  <ChemCompId>
+QUZ
+
+>  <PdbId>
+3NC2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+299
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2
+
+>  <Name>
+quinazoline
+
+>  <SystematicName>
+quinazoline
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H6 N2
+
+>  <MolecularWeight>
+130.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H6N2/c1-2-4-8-7(3-1)5-9-6-10-8/h1-6H
+
+>  <InChIKey>
+JWVCLYRUEFBMGU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)cncn2
+
+$$$$

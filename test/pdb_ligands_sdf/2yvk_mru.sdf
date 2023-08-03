@@ -1,0 +1,137 @@
+2YVK_MRU_A_501
+  RCSB PDB12061707403D
+Coordinates from PDB:2YVK:A:501 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   43.9190    3.9890  -15.0520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7050    3.8150  -14.6210   P 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7890    4.6800  -14.8750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2860    2.5850  -14.9420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8890    3.8440  -13.1440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9980    2.7950  -12.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.8630    2.7130  -10.6760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0430    3.1970  -10.2140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6700    1.9840   -9.6190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5380    0.6460   -9.7230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1840    2.2310   -9.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8110    3.1140  -10.3490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.9650    0.9690   -9.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6910    0.0780  -10.4000   S 0  0  0  0  0  0  0  0  0  0  0  0
+   47.9530   -0.9220  -10.0670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O3P
+A    2
+P1
+A    3
+O1P
+A    4
+O2P
+A    5
+O1
+A    6
+C1
+A    7
+C2
+A    8
+O2
+A    9
+C3
+A   10
+O3
+A   11
+C4
+A   12
+O4
+A   13
+C5
+A   14
+S1
+A   15
+C6
+M  END
+>  <InstanceId>
+2YVK_MRU_A_501
+
+>  <ChemCompId>
+MRU
+
+>  <PdbId>
+2YVK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7 P S
+
+>  <Name>
+5-S-METHYL-1-O-PHOSPHONO-5-THIO-D-RIBULOSE
+
+>  <SystematicName>
+[(3R,4S)-3,4-dihydroxy-5-methylsulfanyl-2-oxo-pentyl] dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 O7 P S
+
+>  <MolecularWeight>
+260.202
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H13O7PS/c1-15-3-5(8)6(9)4(7)2-13-14(10,11)12/h5-6,8-9H,2-3H2,1H3,(H2,10,11,12)/t5-,6+/m1/s1
+
+>  <InChIKey>
+CNSJRYUMVMWNMC-RITPCOANSA-N
+
+>  <SMILES>
+CSC[C@H]([C@H](C(=O)COP(=O)(O)O)O)O
+
+$$$$

@@ -1,0 +1,125 @@
+2VEK_ASF_B_1253
+  RCSB PDB12061707053D
+Coordinates from PDB:2VEK:B:1253 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   31.5840  -16.9340   14.2490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0150  -18.0420   15.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2400  -17.4550   16.2930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3820  -18.5140   16.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2940  -17.3820   19.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.9520  -16.1310   20.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1690  -15.2610   20.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9440  -16.9070   18.3340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4210  -19.0430   19.3130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.7600  -15.1510   21.1930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5280  -14.6790   19.0430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9290  -17.9700   18.5150   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 10  1  0  0  0  0
+  7 11  2  0  0  0  0
+  8 12  2  0  0  0  0
+  9 12  2  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+C4
+A    4
+C5
+A    5
+C7
+A    6
+C8
+A    7
+C9
+A    8
+O1
+A    9
+O2
+A   10
+O3
+A   11
+O4
+A   12
+S5
+M  END
+>  <InstanceId>
+2VEK_ASF_B_1253
+
+>  <ChemCompId>
+ASF
+
+>  <PdbId>
+2VEK
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+1253
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O4 S
+
+>  <Name>
+3-(BUTYLSULPHONYL)-PROPANOIC ACID
+
+>  <SystematicName>
+3-butylsulfonylpropanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C7 H14 O4 S
+
+>  <MolecularWeight>
+194.249
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C7H14O4S/c1-2-3-5-12(10,11)6-4-7(8)9/h2-6H2,1H3,(H,8,9)
+
+>  <InChIKey>
+GSHVAQAKBLEIEY-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCS(=O)(=O)CCC(=O)O
+
+$$$$

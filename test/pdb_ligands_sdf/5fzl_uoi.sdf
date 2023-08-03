@@ -1,0 +1,139 @@
+5FZL_UOI_A_1767
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZL:A:1767 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   90.8840   60.3340   12.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.2920   61.3880   13.5500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.2010   62.1840   13.2480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9860   63.0210   14.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8830   64.0310   14.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.0070   63.8050   13.2710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   85.8690   64.5150   12.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.9340   63.8230   12.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.8370   64.4980   11.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   83.6950   65.8150   11.7930   N 0  0  0  0  0  0  0  0  0  0  0  0
+   84.6040   66.5180   12.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.7230   65.8790   13.0280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.7680   64.9260   15.1660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   89.9210   62.7610   15.2810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   90.7110   61.7290   14.7870   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 15  2  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4 14  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 13  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+N06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+N10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+A   14
+O14
+A   15
+N15
+M  END
+>  <InstanceId>
+5FZL_UOI_A_1767
+
+>  <ChemCompId>
+UOI
+
+>  <PdbId>
+5FZL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1767
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O2
+
+>  <Name>
+3-methyl-N-(pyridin-4-yl)-1,2-oxazole-5-carboxamide
+
+>  <SystematicName>
+3-methyl-N-pyridin-4-yl-1,2-oxazole-5-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 N3 O2
+
+>  <MolecularWeight>
+203.197
+
+>  <ModifiedDate>
+2016-04-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9N3O2/c1-7-6-9(15-13-7)10(14)12-8-2-4-11-5-3-8/h2-6H,1H3,(H,11,12,14)
+
+>  <InChIKey>
+HPNYMQLDUOKPSU-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cc(on1)C(=O)Nc2ccncc2
+
+$$$$

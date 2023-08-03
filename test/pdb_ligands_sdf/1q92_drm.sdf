@@ -1,0 +1,155 @@
+1Q92_DRM_A_1001
+  RCSB PDB12061703453D
+Coordinates from PDB:1Q92:A:1001 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+   17.3620   37.7030   27.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4570   39.1700   27.1400   P 0  0  0  0  0  0  0  0  0  0  0  0
+   17.9300   39.9880   28.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3030   39.5460   25.8970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7280   39.6520   26.8000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6240   41.0650   26.8280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3150   41.5840   26.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6750   43.0220   26.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1170   43.7960   27.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0450   42.9690   28.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3160   41.5210   27.7260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1250   40.6910   27.4660   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3120   40.9940   26.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2360   40.1790   26.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9670   39.0450   26.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0040   38.3140   26.6760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7700   38.7440   27.9880   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8330   39.5610   28.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5830   39.3580   29.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 18  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 15 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  2  0  0  0  0
+A    1
+OP2
+A    2
+P
+A    3
+OP1
+A    4
+OP3
+A    5
+C6'
+A    6
+O5'
+A    7
+C5'
+A    8
+C4'
+A    9
+C3'
+A   10
+C2'
+A   11
+C1'
+A   12
+N1
+A   13
+C6
+A   14
+C5
+A   15
+C4
+A   16
+O4
+A   17
+N3
+A   18
+C2
+A   19
+O2
+M  END
+>  <InstanceId>
+1Q92_DRM_A_1001
+
+>  <ChemCompId>
+DRM
+
+>  <PdbId>
+1Q92
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O6 P
+
+>  <Name>
+{[(1R,2S)-2-(2,4-DIOXO-3,4-DIHYDROPYRIMIDIN-1(2H)-YL)CYCLOPENTYL]OXY}METHYLPHOSPHONIC ACID
+
+>  <SystematicName>
+[(1R,2R)-2-(2,4-dioxopyrimidin-1-yl)cyclopentyl]oxymethylphosphonic acid
+
+>  <Synonyms>
+1-TRANS-(2-PHOSPHONOMETHOXYCYCLOPENTYL)URACIL, PMCP-U
+
+>  <Type>
+DNA LINKING
+
+>  <Formula>
+C10 H15 N2 O6 P
+
+>  <MolecularWeight>
+290.21
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+DU
+
+>  <OneLetterCode>
+U
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H15N2O6P/c13-9-4-5-12(10(14)11-9)7-2-1-3-8(7)18-6-19(15,16)17/h4-5,7-8H,1-3,6H2,(H,11,13,14)(H2,15,16,17)/t7-,8-/m1/s1
+
+>  <InChIKey>
+KKXMDNJBVSYDQL-HTQZYQBOSA-N
+
+>  <SMILES>
+C1C[C@H]([C@@H](C1)OCP(=O)(O)O)N2C=CC(=O)NC2=O
+
+$$$$

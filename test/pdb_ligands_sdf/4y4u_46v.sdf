@@ -1,0 +1,130 @@
+4Y4U_46V_A_404
+  RCSB PDB12061716203D
+Coordinates from PDB:4Y4U:A:404 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   20.2370   -0.3580   54.7580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.5430   -1.3930   55.6100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7170   -1.4110   56.3380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2240    1.8070   55.2720   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5920   -0.3490   56.1980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0670   -0.3610   57.1130  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3220   -2.8410   55.7830  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1220    0.6970   54.6290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3120    0.7210   55.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4690    2.9790   55.9100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7430    3.8830   55.2930   S 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7580    3.4000   56.9550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6570    2.6780   57.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  1  2  0  0  0  0
+  8  9  1  0  0  0  0
+  1  2  1  0  0  0  0
+  4  9  1  0  0  0  0
+  4 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  9  5  2  0  0  0  0
+  2  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+ 10 12  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+CL
+A    7
+BR
+A    8
+C3
+A    9
+C2
+A   10
+C1
+A   11
+S
+A   12
+N
+A   13
+C
+M  END
+>  <InstanceId>
+4Y4U_46V_A_404
+
+>  <ChemCompId>
+46V
+
+>  <PdbId>
+4Y4U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 Br S Cl
+
+>  <Name>
+1-(4-bromo-2-chlorophenyl)-3-methylthiourea
+
+>  <SystematicName>
+1-(4-bromanyl-2-chloranyl-phenyl)-3-methyl-thiourea
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 Br Cl N2 S
+
+>  <MolecularWeight>
+279.585
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8BrClN2S/c1-11-8(13)12-7-3-2-5(9)4-6(7)10/h2-4H,1H3,(H2,11,12,13)
+
+>  <InChIKey>
+LXSVLJOSFCRPPA-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC(=S)Nc1ccc(cc1Cl)Br
+
+$$$$

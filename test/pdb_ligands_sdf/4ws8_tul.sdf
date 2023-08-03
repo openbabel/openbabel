@@ -1,0 +1,110 @@
+4WS8_TUL_A_301
+  RCSB PDB12061716033D
+Coordinates from PDB:4WS8:A:301 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+  -15.1410   -6.0330   20.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0880   -6.7370   20.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3880   -6.8860   21.7110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.4620   -7.6800   22.0740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.1760   -8.2780   21.1580   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9000   -8.1510   19.8080   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.9480   -9.0170   18.6570   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8340   -7.3660   19.4190   N 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  2  0  0  0  0
+  8  6  1  0  0  0  0
+  8  2  1  0  0  0  0
+  6  5  1  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  5  4  1  0  0  0  0
+  3  4  2  0  0  0  0
+A    1
+O4
+A    2
+C4
+A    3
+C5
+A    4
+C6
+A    5
+N1
+A    6
+C2
+A    7
+S2
+A    8
+N3
+M  END
+>  <InstanceId>
+4WS8_TUL_A_301
+
+>  <ChemCompId>
+TUL
+
+>  <PdbId>
+4WS8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O S
+
+>  <Name>
+2-thioxo-2,3-dihydropyrimidin-4(1H)-one
+
+>  <SystematicName>
+2-sulfanylidene-1H-pyrimidin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H4 N2 O S
+
+>  <MolecularWeight>
+128.152
+
+>  <ModifiedDate>
+2015-07-10
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H4N2OS/c7-3-1-2-5-4(8)6-3/h1-2H,(H2,5,6,7,8)
+
+>  <InChIKey>
+ZEMGGZBWXRYJHK-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=CNC(=S)NC1=O
+
+$$$$

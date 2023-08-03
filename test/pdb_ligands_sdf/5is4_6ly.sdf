@@ -1,0 +1,122 @@
+5IS4_6LY_A_401
+  RCSB PDB12061718133D
+Coordinates from PDB:5IS4:A:401 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    2.9640    8.8950    9.1430   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0780    9.5200    8.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8300    8.9980    8.0510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4510    7.8350    8.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5880   11.1300    7.4300  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5700    7.7310    9.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.3090    7.1910    9.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8350    5.9860   10.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5160    6.3810   11.6900   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9110    4.9110   10.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0110    4.0770    9.1750   N 0  0  0  0  0  0  0  0  0  0  0  0
+  5  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  7  2  0  0  0  0
+  1  6  2  0  0  0  0
+ 11 10  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+BR
+A    6
+C3
+A    7
+C2
+A    8
+C1
+A    9
+O
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+5IS4_6LY_A_401
+
+>  <ChemCompId>
+6LY
+
+>  <PdbId>
+5IS4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O Br
+
+>  <Name>
+(1S)-2-amino-1-(4-bromophenyl)ethan-1-ol
+
+>  <SystematicName>
+(1~{S})-2-azanyl-1-(4-bromophenyl)ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 Br N O
+
+>  <MolecularWeight>
+216.075
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10BrNO/c9-7-3-1-6(2-4-7)8(11)5-10/h1-4,8,11H,5,10H2/t8-/m1/s1
+
+>  <InChIKey>
+RETMUAMXYIIWAQ-MRVPVSSYSA-N
+
+>  <SMILES>
+c1cc(ccc1[C@@H](CN)O)Br
+
+$$$$

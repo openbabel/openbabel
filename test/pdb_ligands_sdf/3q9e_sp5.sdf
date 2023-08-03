@@ -1,0 +1,78 @@
+2GXN_SP5_?_25
+  RCSB PDB12061705443D
+Coordinates from PDB:2GXN:?:25 Model:1 without hydrogens
+  0  0  0  0  0  0            999 V2000
+M  END
+>  <InstanceId>
+2GXN_SP5_?_25
+
+>  <ChemCompId>
+SP5
+
+>  <PdbId>
+2GXN
+
+>  <ChainId>
+?
+
+>  <ResidueNumber>
+25
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+17
+
+>  <ObservedFormula>
+
+
+>  <Name>
+N-[3-({4-[(3-aminopropyl)amino]butyl}amino)propyl]acetamide
+
+>  <SystematicName>
+N-[3-[4-(3-aminopropylamino)butylamino]propyl]ethanamide
+
+>  <Synonyms>
+N1-AcSpermine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H28 N4 O
+
+>  <MolecularWeight>
+244.377
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H28N4O/c1-12(17)16-11-5-10-15-8-3-2-7-14-9-4-6-13/h14-15H,2-11,13H2,1H3,(H,16,17)
+
+>  <InChIKey>
+GUNURVWAJRRUAV-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)NCCCNCCCCNCCCN
+
+$$$$

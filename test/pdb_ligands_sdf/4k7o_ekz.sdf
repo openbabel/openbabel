@@ -1,0 +1,126 @@
+4K7O_EKZ_A_201
+  RCSB PDB12061713173D
+Coordinates from PDB:4K7O:A:201 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   12.4430    4.8860   41.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5040    5.9720   42.1700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8580    5.9640   42.7880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3430    5.9320   43.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4530    7.0870   41.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9740    8.2160   42.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9280    9.3870   41.4840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4160   10.5190   42.0210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3810    9.4020   40.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3330   10.5620   39.5250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8770    8.2700   39.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9080    7.0870   40.2790   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11  9  2  0  0  0  0
+ 11 12  1  0  0  0  0
+  9  7  1  0  0  0  0
+ 12  5  2  0  0  0  0
+  1  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  6  2  0  0  0  0
+  5  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+A    1
+CAA
+A    2
+CAL
+A    3
+CAB
+A    4
+CAC
+A    5
+CAK
+A    6
+CAH
+A    7
+CAJ
+A    8
+OAE
+A    9
+CAI
+A   10
+OAD
+A   11
+CAF
+A   12
+CAG
+M  END
+>  <InstanceId>
+4K7O_EKZ_A_201
+
+>  <ChemCompId>
+EKZ
+
+>  <PdbId>
+4K7O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+4-tert-butylbenzene-1,2-diol
+
+>  <SystematicName>
+4-tert-butylbenzene-1,2-diol
+
+>  <Synonyms>
+4-tert-Butylcatechol (CAS 98-29-3)
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O2
+
+>  <MolecularWeight>
+166.217
+
+>  <ModifiedDate>
+2014-04-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O2/c1-10(2,3)7-4-5-8(11)9(12)6-7/h4-6,11-12H,1-3H3
+
+>  <InChIKey>
+XESZUVZBAMCAEJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)c1ccc(c(c1)O)O
+
+$$$$

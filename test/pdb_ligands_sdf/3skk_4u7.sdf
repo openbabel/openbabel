@@ -1,0 +1,142 @@
+3SKK_4U7_A_551
+  RCSB PDB12061710443D
+Coordinates from PDB:3SKK:A:551 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   24.3160  -16.2090   -5.4080   B 0  5  0  0  0  0  0  0  0  0  0  0
+   25.3160  -10.2220   -5.3570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4950   -8.4390   -6.3400   F 0  0  0  0  0  0  0  0  0  0  0  0
+   25.6390   -9.6780   -4.0730   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6070   -9.6880   -6.9480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9910   -9.6760   -5.7470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.4950  -10.3830   -6.1430   F 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0700  -16.2500   -4.2550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2880  -11.7140   -5.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.1270  -16.8710   -5.1610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.1780  -12.5310   -6.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9490  -16.9380   -6.3970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2670  -14.0190   -6.3840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.2720   -9.1770   -4.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1050  -14.7900   -5.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3400   -9.7630   -6.3330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  9  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3 16  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  2  1  0  0  0  0
+  6 14  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 11  9  1  0  0  0  0
+ 12  1  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 15  1  1  0  0  0  0
+ 16  7  1  0  0  0  0
+ 16  2  1  0  0  0  0
+M  CHG  1   1  -1
+A    1
+B1
+A    2
+C1
+A    3
+F1
+A    4
+N1
+A    5
+O1
+A    6
+C2
+A    7
+F2
+A    8
+O2
+A    9
+C3
+A   10
+O3
+A   11
+C4
+A   12
+O4
+A   13
+C5
+A   14
+O5
+A   15
+C6
+A   16
+C9
+M  END
+>  <InstanceId>
+3SKK_4U7_A_551
+
+>  <ChemCompId>
+4U7
+
+>  <PdbId>
+3SKK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+551
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O5 B F2
+
+>  <Name>
+[(5S)-5-amino-5-carboxy-6,6-difluorohexyl](trihydroxy)borate(1-)
+
+>  <SystematicName>
+[(5S)-5-azanyl-5-[bis(fluoranyl)methyl]-6-oxidanyl-6-oxidanylidene-hexyl]-tris(oxidanyl)boranuide
+
+>  <Synonyms>
+
+
+>  <Type>
+L-peptide linking
+
+>  <Formula>
+C7 H15 B F2 N O5
+
+>  <MolecularWeight>
+242.006
+
+>  <ModifiedDate>
+2011-07-15
+
+>  <Parent>
+ALA
+
+>  <OneLetterCode>
+A
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15BF2NO5/c9-5(10)7(11,6(12)13)3-1-2-4-8(14,15)16/h5,14-16H,1-4,11H2,(H,12,13)/q-1/t7-/m1/s1
+
+>  <InChIKey>
+MBESMFYYLXWNTB-SSDOTTSWSA-N
+
+>  <SMILES>
+[B-](CCCC[C@@](C(F)F)(C(=O)O)N)(O)(O)O
+
+$$$$

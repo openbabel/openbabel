@@ -1,0 +1,130 @@
+5MGF_7MW_A_2001
+  RCSB PDB12061719023D
+Coordinates from PDB:5MGF:A:2001 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+  -31.7190   -4.3140    1.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.4240   -4.8940    1.7480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.8730   -6.0290    0.8470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.5450   -6.4820   -0.0760   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4850   -6.5550    1.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.6180   -6.0120    2.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5050   -6.7360    2.0000   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6130   -7.7160    1.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.8670   -7.6180    0.5280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.5130   -8.7400    0.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3630   -8.5140    1.1770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.8440  -10.0240    0.2260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8420  -11.0130    0.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  9  8  2  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+O04
+A    5
+C05
+A    6
+C06
+A    7
+N07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+O11
+A   12
+O12
+A   13
+C13
+M  END
+>  <InstanceId>
+5MGF_7MW_A_2001
+
+>  <ChemCompId>
+7MW
+
+>  <PdbId>
+5MGF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+methyl 4-propanoyl-1~{H}-pyrrole-2-carboxylate
+
+>  <SystematicName>
+methyl 4-propanoyl-1~{H}-pyrrole-2-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H11 N O3
+
+>  <MolecularWeight>
+181.189
+
+>  <ModifiedDate>
+2017-04-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11NO3/c1-3-8(11)6-4-7(10-5-6)9(12)13-2/h4-5,10H,3H2,1-2H3
+
+>  <InChIKey>
+GMDIDIYLWBUNEW-UHFFFAOYSA-N
+
+>  <SMILES>
+CCC(=O)c1cc([nH]c1)C(=O)OC
+
+$$$$

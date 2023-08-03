@@ -1,0 +1,149 @@
+3LVV_LBP_A_693
+  RCSB PDB12061709393D
+Coordinates from PDB:3LVV:A:693 Model:1 without hydrogens
+ 18 17  0  0  0  0            999 V2000
+   35.4990    1.7060   18.5250   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7030   -4.2190   17.7420   P 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3430   -1.5410   18.4230   S 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8950    1.3070   20.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.5830    0.8140   22.0460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8980    1.2360   19.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3390   -0.2000   19.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0940   -1.2720   17.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4190    0.1240   17.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.3760    0.3090   16.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1810   -0.0990   18.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3310   -2.6740   17.9970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6230   -1.6320   19.8170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6820    1.6610   16.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9840    1.9110   20.7150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2470   -4.0430   17.6400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0680   -5.0090   18.9650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4830   -4.5770   16.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2 12  1  0  0  0  0
+  2 17  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3 13  2  0  0  0  0
+  4  5  1  0  0  0  0
+  6  4  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  3  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11  7  1  0  0  0  0
+ 12  3  2  0  0  0  0
+ 15  4  2  0  0  0  0
+ 16  2  1  0  0  0  0
+ 18  2  2  0  0  0  0
+A    1
+N
+A    2
+P
+A    3
+S
+A    4
+C1
+A    5
+O1
+A    6
+CA
+A    7
+CB
+A    8
+CD
+A    9
+CE
+A   10
+CF
+A   11
+CG
+A   12
+NS
+A   13
+OS
+A   14
+C18
+A   15
+O1T
+A   16
+OP1
+A   17
+OP2
+A   18
+OP3
+M  END
+>  <InstanceId>
+3LVV_LBP_A_693
+
+>  <ChemCompId>
+LBP
+
+>  <PdbId>
+3LVV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+693
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O6 P S
+
+>  <Name>
+(2S)-2-amino-4-(S-butyl-N-phosphonosulfonimidoyl)butanoic acid
+
+>  <SystematicName>
+(2S)-2-azanyl-4-(S-butyl-N-phosphono-sulfonimidoyl)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H19 N2 O6 P S
+
+>  <MolecularWeight>
+302.285
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H19N2O6PS/c1-2-3-5-18(16,10-17(13,14)15)6-4-7(9)8(11)12/h7H,2-6,9H2,1H3,(H,11,12)(H2,13,14,15)/t7-,18-/m0/s1
+
+>  <InChIKey>
+ZUVPFRZYYQZWPS-VIIUKITBSA-N
+
+>  <SMILES>
+CCCC[S@](=NP(=O)(O)O)(=O)CC[C@@H](C(=O)O)N
+
+$$$$

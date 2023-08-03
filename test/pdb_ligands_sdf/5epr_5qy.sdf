@@ -1,0 +1,127 @@
+5EPR_5QY_A_801
+  RCSB PDB12061717313D
+Coordinates from PDB:5EPR:A:801 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   14.6070    0.6400   -8.7550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3640    1.1240   -7.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1270    0.8360   -7.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7970    1.3300   -5.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5160    1.1640   -5.2840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2030    1.6460   -4.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1770    2.2870   -3.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4610    2.4420   -3.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7710    1.9600   -5.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0580    2.1140   -5.5690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2700    2.0020   -7.0360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7100    1.6000   -7.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9  8  2  0  0  0  0
+  6  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+NAG
+A    4
+CAJ
+A    5
+CAE
+A    6
+CAC
+A    7
+CAD
+A    8
+CAF
+A    9
+CAK
+A   10
+N
+A   11
+CA
+A   12
+CB
+M  END
+>  <InstanceId>
+5EPR_5QY_A_801
+
+>  <ChemCompId>
+5QY
+
+>  <PdbId>
+5EPR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+(3~{S})-3-methyl-3,4-dihydro-1~{H}-quinoxalin-2-one
+
+>  <SystematicName>
+(3~{S})-3-methyl-3,4-dihydro-1~{H}-quinoxalin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 N2 O
+
+>  <MolecularWeight>
+162.188
+
+>  <ModifiedDate>
+2016-05-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N2O/c1-6-9(12)11-8-5-3-2-4-7(8)10-6/h2-6,10H,1H3,(H,11,12)/t6-/m0/s1
+
+>  <InChIKey>
+BEAJCHFCYQOFGS-LURJTMIESA-N
+
+>  <SMILES>
+C[C@H]1C(=O)Nc2ccccc2N1
+
+$$$$

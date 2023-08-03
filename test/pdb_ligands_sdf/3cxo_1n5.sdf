@@ -1,0 +1,125 @@
+3CXO_1N5_B_502
+  RCSB PDB12061708143D
+Coordinates from PDB:3CXO:B:502 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   26.0980   14.6960   50.1390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.7380   16.1680   50.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.8360   16.9880   49.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.3510   19.2560   49.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5470   18.2980   47.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3130   18.4220   49.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8650   18.9490   47.9570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4130   19.3870   47.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4230   16.2760   51.0030   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1850   18.6920   47.4130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2710   13.8200   50.4970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1970   14.4650   49.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12  1  2  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  6  1  0  0  0  0
+  6  4  1  0  0  0  0
+  5 10  1  0  0  0  0
+  5  8  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+O4
+A    5
+C7
+A    6
+C4
+A    7
+C5
+A    8
+C6
+A    9
+O2
+A   10
+O7
+A   11
+O1A
+A   12
+O1B
+M  END
+>  <InstanceId>
+3CXO_1N5_B_502
+
+>  <ChemCompId>
+1N5
+
+>  <PdbId>
+3CXO
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O5
+
+>  <Name>
+(2R,4S)-2,4,7-trihydroxyheptanoic acid
+
+>  <SystematicName>
+(2R,4S)-2,4,7-trihydroxyheptanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H14 O5
+
+>  <MolecularWeight>
+178.183
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H14O5/c8-3-1-2-5(9)4-6(10)7(11)12/h5-6,8-10H,1-4H2,(H,11,12)/t5-,6+/m0/s1
+
+>  <InChIKey>
+UZWBQTOHZVUOKI-NTSWFWBYSA-N
+
+>  <SMILES>
+C(C[C@@H](C[C@H](C(=O)O)O)O)CO
+
+$$$$

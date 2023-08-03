@@ -1,0 +1,134 @@
+5DR0_5GC_A_411
+  RCSB PDB12061717213D
+Coordinates from PDB:5DR0:A:411 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+  -12.7570    0.9990   -0.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8740    1.6550    0.2040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1910    1.7040    0.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.5160    0.9520   -0.8310   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.0090    0.7580   -1.2130   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.4850    2.5880    2.7120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2680    2.5070    1.5070   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.5320    1.8230    1.5530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5520    4.1670    0.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2860    4.9960    1.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1270    4.1290   -0.4900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2970    1.7380    0.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6990    2.3180    1.3100   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.6620    0.5520   -1.4540   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  4  1  0  0  0  0
+ 14  1  2  0  0  0  0
+  5  1  1  0  0  0  0
+  4  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+ 11  9  1  0  0  0  0
+  2 12  2  0  0  0  0
+  2 13  1  0  0  0  0
+ 12  7  1  0  0  0  0
+  3 13  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  2  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+N2
+A    6
+O1
+A    7
+S
+A    8
+O
+A    9
+C1
+A   10
+C2
+A   11
+C
+A   12
+C3
+A   13
+S1
+A   14
+N
+M  END
+>  <InstanceId>
+5DR0_5GC_A_411
+
+>  <ChemCompId>
+5GC
+
+>  <PdbId>
+5DR0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+411
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 O2 S2
+
+>  <Name>
+5-(methylsulfanyl)-4-(propan-2-ylsulfonyl)-1H-pyrazol-3-amine
+
+>  <SystematicName>
+5-methylsulfanyl-4-propan-2-ylsulfonyl-1H-pyrazol-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H13 N3 O2 S2
+
+>  <MolecularWeight>
+235.327
+
+>  <ModifiedDate>
+2016-09-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H13N3O2S2/c1-4(2)14(11,12)5-6(8)9-10-7(5)13-3/h4H,1-3H3,(H3,8,9,10)
+
+>  <InChIKey>
+SEBINQGTUBTFET-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)S(=O)(=O)c1c(n[nH]c1SC)N
+
+$$$$

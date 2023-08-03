@@ -1,0 +1,122 @@
+2Q89_6CS_A_501
+  RCSB PDB12061706453D
+Coordinates from PDB:2Q89:A:501 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   15.6550   24.2200   32.7830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3760   23.6530   31.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.5880   24.0770   30.7810   O 0  0  0  0  0  0  0  0  0  0  0  0
+   17.0450   22.3110   32.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1960   22.0150   31.4680   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2850   21.2470   31.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4450   20.9610   30.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.3380   20.7470   33.2290   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2350   20.9940   34.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4710   22.2800   33.8380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3180   22.2720   34.6690   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O
+A    2
+C
+A    3
+OXT
+A    4
+CA
+A    5
+N
+A    6
+CAI
+A    7
+CAA
+A    8
+NAG
+A    9
+CG2
+A   10
+CB
+A   11
+OG1
+M  END
+>  <InstanceId>
+2Q89_6CS_A_501
+
+>  <ChemCompId>
+6CS
+
+>  <PdbId>
+2Q89
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O3
+
+>  <Name>
+(4S,5S)-5-HYDROXY-2-METHYL-1,4,5,6-TETRAHYDROPYRIMIDINE-4-CARBOXYLIC ACID
+
+>  <SystematicName>
+(4S,5S)-5-hydroxy-2-methyl-1,4,5,6-tetrahydropyrimidine-4-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N2 O3
+
+>  <MolecularWeight>
+158.155
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H10N2O3/c1-3-7-2-4(9)5(8-3)6(10)11/h4-5,9H,2H2,1H3,(H,7,8)(H,10,11)/t4-,5-/m0/s1
+
+>  <InChIKey>
+KIIBBJKLKFTNQO-WHFBIAKZSA-N
+
+>  <SMILES>
+CC1=N[C@@H]([C@H](CN1)O)C(=O)O
+
+$$$$

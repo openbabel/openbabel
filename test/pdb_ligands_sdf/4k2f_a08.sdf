@@ -1,0 +1,147 @@
+4K2F_A08_B_805
+  RCSB PDB12061713163D
+Coordinates from PDB:4K2F:B:805 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   35.4930   44.6440   58.9170  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   35.8740   46.1090   57.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2790   47.3460   58.2010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.7250   48.3990   57.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7300   48.1600   56.3670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3210   46.9120   56.2050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9040   45.8980   57.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2380   49.2120   55.4420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2120   50.2810   55.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2510   50.1140   54.4080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2500   50.9890   54.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2470   52.0470   54.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.2350   52.1150   55.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2490   51.3160   56.2110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0070   53.4860   56.8460  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5690   49.7650   55.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.6170   50.1720   56.1420   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 11 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 12 13  2  0  0  0  0
+  9  8  1  0  0  0  0
+  9 14  2  0  0  0  0
+  8 16  1  0  0  0  0
+  8  5  1  0  0  0  0
+ 16 17  3  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  1  0  0  0  0
+  6  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  5  4  1  0  0  0  0
+  7  2  2  0  0  0  0
+  4  3  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CL1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C9
+A   11
+C10
+A   12
+C11
+A   13
+C12
+A   14
+N14
+A   15
+CL2
+A   16
+C16
+A   17
+N17
+M  END
+>  <InstanceId>
+4K2F_A08_B_805
+
+>  <ChemCompId>
+A08
+
+>  <PdbId>
+4K2F
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+805
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 Cl2
+
+>  <Name>
+(2S)-(4-chlorophenyl)(6-chloropyridin-2-yl)ethanenitrile
+
+>  <SystematicName>
+(2S)-2-(6-chloranylpyridin-2-yl)-2-(4-chlorophenyl)ethanenitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H8 Cl2 N2
+
+>  <MolecularWeight>
+263.122
+
+>  <ModifiedDate>
+2014-06-13
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H8Cl2N2/c14-10-6-4-9(5-7-10)11(8-16)12-2-1-3-13(15)17-12/h1-7,11H/t11-/m0/s1
+
+>  <InChIKey>
+KFUYTJBERFHHIL-NSHDSACASA-N
+
+>  <SMILES>
+c1cc(nc(c1)Cl)[C@@H](C#N)c2ccc(cc2)Cl
+
+$$$$

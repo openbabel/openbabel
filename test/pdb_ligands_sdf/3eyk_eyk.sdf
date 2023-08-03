@@ -1,0 +1,126 @@
+3EYK_EYK_B_173
+  RCSB PDB12061708313D
+Coordinates from PDB:3EYK:B:173 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   20.2460    6.9600   19.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6500    8.3860   18.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5690    9.2850   19.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7920    8.5750   17.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0170    8.6980   19.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8400    7.6760   20.0290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.0650    8.0110   20.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8860    7.0620   21.1150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4940    9.3280   20.7080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.6880   10.3400   20.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4620   10.0280   19.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7000   11.0540   19.1240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CAA
+A    2
+CAL
+A    3
+CAB
+A    4
+CAC
+A    5
+CAK
+A    6
+CAH
+A    7
+CAI
+A    8
+OAD
+A    9
+CAF
+A   10
+CAG
+A   11
+CAJ
+A   12
+OAE
+M  END
+>  <InstanceId>
+3EYK_EYK_B_173
+
+>  <ChemCompId>
+EYK
+
+>  <PdbId>
+3EYK
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+173
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2
+
+>  <Name>
+2-tert-butylbenzene-1,4-diol
+
+>  <SystematicName>
+2-tert-butylbenzene-1,4-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O2
+
+>  <MolecularWeight>
+166.217
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O2/c1-10(2,3)8-6-7(11)4-5-9(8)12/h4-6,11-12H,1-3H3
+
+>  <InChIKey>
+BGNXCDMCOKJUMV-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)c1cc(ccc1O)O
+
+$$$$

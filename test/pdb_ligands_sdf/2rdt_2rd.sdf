@@ -1,0 +1,162 @@
+2RDT_2RD_A_365
+  RCSB PDB12061706553D
+Coordinates from PDB:2RDT:A:365 Model:1 without hydrogens
+ 21 21  0  0  0  0            999 V2000
+   41.0870   11.6610    6.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.7460   10.3720    6.8780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7200    9.4210    7.5170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.7150    9.5230    9.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.3590    8.1880    9.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.8700    7.8250    9.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.6830    6.3090    9.7750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2600    5.9330   10.2380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9610    4.4460    9.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3640    3.7520   11.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8320    3.7940   11.1750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2730    4.6600   12.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4460    4.6350   12.3260   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0860    5.1140   14.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9550    5.2910   15.0180   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.2810    5.6270   16.0110   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.0470    5.6850   15.8120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8420    5.3740   14.5450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5070    5.2850   13.8830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.4430    4.9710   12.6670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5230    5.4700   14.6280   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 20 19  2  0  0  0  0
+ 19 18  1  0  0  0  0
+ 19 21  1  0  0  0  0
+ 14 18  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 17 16  2  0  0  0  0
+A    1
+CAA
+A    2
+CAD
+A    3
+CAE
+A    4
+CAF
+A    5
+CAG
+A    6
+CAH
+A    7
+CAI
+A    8
+CAJ
+A    9
+CAK
+A   10
+CAL
+A   11
+CAM
+A   12
+CAN
+A   13
+SAR
+A   14
+CAU
+A   15
+NAQ
+A   16
+NAO
+A   17
+NAP
+A   18
+CAT
+A   19
+CAS
+A   20
+OAC
+A   21
+OAB
+M  END
+>  <InstanceId>
+2RDT_2RD_A_365
+
+>  <ChemCompId>
+2RD
+
+>  <PdbId>
+2RDT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+365
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N3 O2 S
+
+>  <Name>
+5-(dodecylthio)-1H-1,2,3-triazole-4-carboxylic acid
+
+>  <SystematicName>
+5-dodecylsulfanyl-1H-1,2,3-triazole-4-carboxylic acid
+
+>  <Synonyms>
+4-carboxy-5-dodecylsulfanyl-1,2,3-triazole
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H27 N3 O2 S
+
+>  <MolecularWeight>
+313.459
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C15H27N3O2S/c1-2-3-4-5-6-7-8-9-10-11-12-21-14-13(15(19)20)16-18-17-14/h2-12H2,1H3,(H,19,20)(H,16,17,18)
+
+>  <InChIKey>
+IEZPFPQAXAREGM-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCCCCCCCCSc1c(nn[nH]1)C(=O)O
+
+$$$$

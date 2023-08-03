@@ -1,0 +1,154 @@
+3CNT_SP9_B_518
+  RCSB PDB12061708123D
+Coordinates from PDB:3CNT:B:518 Model:1 without hydrogens
+ 19 19  0  0  0  0            999 V2000
+   42.9740   11.0560   32.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.6800   10.6480   31.2910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.7670    9.3040   30.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1450    8.3700   31.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4390    8.7790   33.2060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3550   10.1230   33.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7040   10.5760   34.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.1770   10.0400   35.9430   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5920   11.5640   35.0440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3070   12.8660   35.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6130   13.5810   36.0180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4560   12.6710   36.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3940   13.7650   37.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.9760   14.9680   37.6790   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9190   15.7220   38.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3000   17.2030   38.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.4300   18.0200   37.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.1570   18.5130   38.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0530   19.9740   37.9960   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+A    1
+CAE
+A    2
+CAD
+A    3
+CAC
+A    4
+CAR
+A    5
+CAS
+A    6
+CAF
+A    7
+CAG
+A    8
+OAA
+A    9
+NAH
+A   10
+CAI
+A   11
+CAB
+A   12
+CAJ
+A   13
+CAK
+A   14
+NAL
+A   15
+CAM
+A   16
+CAN
+A   17
+CAO
+A   18
+CAP
+A   19
+NAQ
+M  END
+>  <InstanceId>
+3CNT_SP9_B_518
+
+>  <ChemCompId>
+SP9
+
+>  <PdbId>
+3CNT
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+518
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 N3 O
+
+>  <Name>
+N-{(1R)-3-[(4-aminobutyl)amino]-1-methylpropyl}benzamide
+
+>  <SystematicName>
+N-[(2R)-4-(4-aminobutylamino)butan-2-yl]benzamide
+
+>  <Synonyms>
+R-Bz-MeSpermidine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C15 H25 N3 O
+
+>  <MolecularWeight>
+263.378
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H25N3O/c1-13(9-12-17-11-6-5-10-16)18-15(19)14-7-3-2-4-8-14/h2-4,7-8,13,17H,5-6,9-12,16H2,1H3,(H,18,19)/t13-/m1/s1
+
+>  <InChIKey>
+UWDXTOVSVLCTLF-CYBMUJFWSA-N
+
+>  <SMILES>
+C[C@H](CCNCCCCN)NC(=O)c1ccccc1
+
+$$$$

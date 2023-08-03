@@ -1,0 +1,147 @@
+5FZE_H0X_A_1757
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZE:A:1757 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   84.8150   66.1400   14.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.4460   66.3010   13.1330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.1690   66.4330   11.9990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6610   66.0230   14.8310   S 0  0  0  0  0  0  0  0  0  0  0  0
+   87.3430   64.4560   14.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.6460   64.2190   14.7570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.2630   62.9870   14.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.4210   62.0890   13.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.1460   62.4160   13.1500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.2620   61.5010   12.3130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.4890   60.1110   12.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.6730   59.2500   11.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.5690   59.7100   10.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   84.2990   61.0710   10.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.1210   61.9420   11.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.6150   63.6580   13.5830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.4100   62.7790   14.7790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  2  3  3  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 16  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 17  2  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 16  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+N03
+A    4
+S04
+A    5
+C05
+A    6
+N06
+A    7
+C07
+A    8
+C08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+N16
+A   17
+O17
+M  END
+>  <InstanceId>
+5FZE_H0X_A_1757
+
+>  <ChemCompId>
+H0X
+
+>  <PdbId>
+5FZE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1757
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O S
+
+>  <Name>
+[(6-oxo-4-phenyl-1,6-dihydropyrimidin-2-yl)sulfanyl]acetonitrile
+
+>  <SystematicName>
+2-[(6-oxidanylidene-4-phenyl-1H-pyrimidin-2-yl)sulfanyl]ethanenitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H9 N3 O S
+
+>  <MolecularWeight>
+243.284
+
+>  <ModifiedDate>
+2017-03-24
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9N3OS/c13-6-7-17-12-14-10(8-11(16)15-12)9-4-2-1-3-5-9/h1-5,8H,7H2,(H,14,15,16)
+
+>  <InChIKey>
+LOXMFYYAURQRNF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)C2=CC(=O)NC(=N2)SCC#N
+
+$$$$

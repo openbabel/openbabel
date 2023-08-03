@@ -1,0 +1,122 @@
+1MDL_SMN_A_399
+  RCSB PDB12061703173D
+Coordinates from PDB:1MDL:A:399 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   30.9900    4.4120   17.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1080    5.0460   17.7140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3790    4.9040   17.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.5240    4.1960   16.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4330    3.5570   15.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.1570    3.6340   16.0460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5990    4.4870   17.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0730    5.9340   18.0330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6710    3.6850   17.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9450    6.1880   17.6550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7570    6.8030   18.5550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C10
+A    9
+O8
+A   10
+O11
+A   11
+O12
+M  END
+>  <InstanceId>
+1MDL_SMN_A_399
+
+>  <ChemCompId>
+SMN
+
+>  <PdbId>
+1MDL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+399
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+(S)-MANDELIC ACID
+
+>  <SystematicName>
+(2S)-2-hydroxy-2-phenyl-ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8O3/c9-7(8(10)11)6-4-2-1-3-5-6/h1-5,7,9H,(H,10,11)/t7-/m0/s1
+
+>  <InChIKey>
+IWYDHOAUDWTVEP-ZETCQYMHSA-N
+
+>  <SMILES>
+c1ccc(cc1)[C@@H](C(=O)O)O
+
+$$$$

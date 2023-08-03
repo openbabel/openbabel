@@ -1,0 +1,130 @@
+1H9X_NHE_B_611
+  RCSB PDB12061702423D
+Coordinates from PDB:1H9X:B:611 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   75.0890   34.2340  243.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.1450   32.7230  243.3290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6350   32.3300  241.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.5140   32.9730  240.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.7630   30.8250  241.8010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   73.9870   30.1180  242.8840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   74.1940   28.5980  242.6410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.3780   27.6290  243.8800   S 0  0  0  0  0  0  0  0  0  0  0  0
+   74.0370   26.3400  243.9120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   72.9270   28.3120  245.0920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   71.9740   27.2470  242.9970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   75.6080   34.4950  241.0050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.9800   34.8980  242.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  2  0  0  0  0
+  8 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C3'
+A    2
+C2'
+A    3
+C1'
+A    4
+C6'
+A    5
+N
+A    6
+C1
+A    7
+C2
+A    8
+S
+A    9
+O1
+A   10
+O2
+A   11
+O3
+A   12
+C5'
+A   13
+C4'
+M  END
+>  <InstanceId>
+1H9X_NHE_B_611
+
+>  <ChemCompId>
+NHE
+
+>  <PdbId>
+1H9X
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+611
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O3 S
+
+>  <Name>
+2-[N-CYCLOHEXYLAMINO]ETHANE SULFONIC ACID
+
+>  <SystematicName>
+2-(cyclohexylamino)ethanesulfonic acid
+
+>  <Synonyms>
+N-CYCLOHEXYLTAURINE; CHES
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O3 S
+
+>  <MolecularWeight>
+207.29
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO3S/c10-13(11,12)7-6-9-8-4-2-1-3-5-8/h8-9H,1-7H2,(H,10,11,12)
+
+>  <InChIKey>
+MKWKNSIESPFAQN-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CCC(CC1)NCCS(=O)(=O)O
+
+$$$$

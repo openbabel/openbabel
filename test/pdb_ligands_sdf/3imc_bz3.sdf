@@ -1,0 +1,123 @@
+3IMC_BZ3_A_702
+  RCSB PDB12061709053D
+Coordinates from PDB:3IMC:A:702 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+   10.8110    9.4790   -4.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0230   10.6810   -0.2970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4980    9.8200   -4.7700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7050   10.4860   -0.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5050   10.0790   -3.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8240    9.9860   -3.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8520   10.5520   -1.3710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1910    9.5130   -5.2970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1670    9.7640   -4.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8330   10.2430   -2.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1500   10.2940   -2.4980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  1  1  0  0  0  0
+  7  2  1  0  0  0  0
+  4  2  2  0  0  0  0
+  3  9  2  0  0  0  0
+  3  5  1  0  0  0  0
+ 10  4  1  0  0  0  0
+  5 11  2  0  0  0  0
+  9  6  1  0  0  0  0
+  6 10  2  0  0  0  0
+ 11  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+NAG
+A    8
+OAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+M  END
+>  <InstanceId>
+3IMC_BZ3_A_702
+
+>  <ChemCompId>
+BZ3
+
+>  <PdbId>
+3IMC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+702
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O
+
+>  <Name>
+5-methoxy-1H-indole
+
+>  <SystematicName>
+5-methoxy-1H-indole
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 N O
+
+>  <MolecularWeight>
+147.174
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9NO/c1-11-8-2-3-9-7(6-8)4-5-10-9/h2-6,10H,1H3
+
+>  <InChIKey>
+DWAQDRSOVMLGRQ-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1ccc2c(c1)cc[nH]2
+
+$$$$

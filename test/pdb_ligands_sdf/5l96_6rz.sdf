@@ -1,0 +1,138 @@
+5L96_6RZ_A_2001
+  RCSB PDB12061718453D
+Coordinates from PDB:5L96:A:2001 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+  -25.1800   -7.3310    0.7380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.5280   -7.9530    0.5160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.2450  -11.2980    0.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -31.1200   -7.7860   -0.6880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.0540  -10.3940    0.4810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1160   -9.3030    0.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.3720  -10.1700    0.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -29.4600  -10.0680   -1.4390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.8850   -9.0450   -1.8710   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -30.7240   -8.4790   -3.2270   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -32.1110   -9.8900   -2.0240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.7290   -9.5640    0.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2540  -11.0070    0.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8340   -8.6030    0.7860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.5320   -6.9490    0.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+ 11  9  2  0  0  0  0
+  9  8  1  0  0  0  0
+  9  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  5  1  0  0  0  0
+  7  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  6  2  0  0  0  0
+  2 15  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 15  1  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  2  0  0  0  0
+  1 14  1  0  0  0  0
+A    1
+C13
+A    2
+C15
+A    3
+C01
+A    4
+C05
+A    5
+N08
+A    6
+C09
+A    7
+C02
+A    8
+C03
+A    9
+S04
+A   10
+O06
+A   11
+O07
+A   12
+C10
+A   13
+C11
+A   14
+N12
+A   15
+C14
+M  END
+>  <InstanceId>
+5L96_6RZ_A_2001
+
+>  <ChemCompId>
+6RZ
+
+>  <PdbId>
+5L96
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O2 S
+
+>  <Name>
+2-methyl-~{N}-[(2~{R})-1-methylsulfonylpropan-2-yl]pyridin-3-amine
+
+>  <SystematicName>
+2-methyl-~{N}-[(2~{R})-1-methylsulfonylpropan-2-yl]pyridin-3-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N2 O2 S
+
+>  <MolecularWeight>
+228.311
+
+>  <ModifiedDate>
+2016-10-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N2O2S/c1-8(7-15(3,13)14)12-10-5-4-6-11-9(10)2/h4-6,8,12H,7H2,1-3H3/t8-/m1/s1
+
+>  <InChIKey>
+HXYSCWJADZACTE-MRVPVSSYSA-N
+
+>  <SMILES>
+Cc1c(cccn1)N[C@H](C)CS(=O)(=O)C
+
+$$$$

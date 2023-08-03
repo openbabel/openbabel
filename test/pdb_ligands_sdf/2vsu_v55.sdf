@@ -1,0 +1,122 @@
+2VSS_V55_D_1250
+  RCSB PDB12061707093D
+Coordinates from PDB:2VSS:D:1250 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   15.7500  -36.2440  -15.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4930  -35.6480  -15.7410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4360  -36.2570  -16.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6440  -37.3900  -17.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9040  -37.9830  -17.3730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.0030  -36.2120  -15.1680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9490  -37.4060  -16.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9260  -35.6490  -15.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0240  -34.5440  -15.6080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1570  -35.7170  -16.4210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5830  -37.9070  -17.9380   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  2  1  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  7  2  0  0  0  0
+  8  6  2  0  0  0  0
+  5  4  2  0  0  0  0
+  5  7  1  0  0  0  0
+  4 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+CAI
+A    2
+CAG
+A    3
+CAK
+A    4
+CAJ
+A    5
+CAF
+A    6
+OAB
+A    7
+CAE
+A    8
+CAD
+A    9
+CAA
+A   10
+OAH
+A   11
+OAC
+M  END
+>  <InstanceId>
+2VSS_V55_D_1250
+
+>  <ChemCompId>
+V55
+
+>  <PdbId>
+2VSS
+
+>  <ChainId>
+D
+
+>  <ResidueNumber>
+1250
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+4-hydroxy-3-methoxybenzaldehyde
+
+>  <SystematicName>
+4-hydroxy-3-methoxy-benzaldehyde
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H8O3/c1-11-8-4-6(5-9)2-3-7(8)10/h2-5,10H,1H3
+
+>  <InChIKey>
+MWOOGOJBHIARFG-UHFFFAOYSA-N
+
+>  <SMILES>
+COc1cc(ccc1O)C=O
+
+$$$$

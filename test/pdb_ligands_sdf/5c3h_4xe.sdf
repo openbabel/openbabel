@@ -1,0 +1,140 @@
+5C3H_4XE_A_402
+  RCSB PDB12061717023D
+Coordinates from PDB:5C3H:A:402 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  -15.2870  -18.9790   -4.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5630  -18.9590   -4.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.4290  -19.2820   -2.6800   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7510  -18.2300   -1.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8000  -18.5420   -0.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8740  -20.9430   -0.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1920  -19.0080   -7.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4660  -19.5760   -8.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5780  -18.8090   -9.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8210  -18.7640   -8.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5020  -18.1900   -6.9320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.1800  -19.0190   -4.4140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.1990  -19.8780   -0.1610   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -15.8370  -20.6040   -2.4250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4220  -18.9470   -6.2870   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  7 15  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 15  1  1  0  0  0  0
+  1 12  2  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+ 14  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6 13  1  0  0  0  0
+  5 13  1  0  0  0  0
+M  CHG  1  13   1
+A    1
+C2
+A    2
+C3
+A    3
+N4
+A    4
+C5
+A    5
+C6
+A    6
+C8
+A    7
+C11
+A    8
+C12
+A    9
+C13
+A   10
+C14
+A   11
+C15
+A   12
+O1
+A   13
+N7
+A   14
+C9
+A   15
+N10
+M  END
+>  <InstanceId>
+5C3H_4XE_A_402
+
+>  <ChemCompId>
+4XE
+
+>  <PdbId>
+5C3H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N3 O
+
+>  <Name>
+4-[2-oxo-2-(piperidin-1-yl)ethyl]piperazin-1-ium
+
+>  <SystematicName>
+2-piperazin-4-ium-1-yl-1-piperidin-1-yl-ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H22 N3 O
+
+>  <MolecularWeight>
+212.312
+
+>  <ModifiedDate>
+2015-08-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H21N3O/c15-11(14-6-2-1-3-7-14)10-13-8-4-12-5-9-13/h12H,1-10H2/p+1
+
+>  <InChIKey>
+PCHXUJGLAFXWIW-UHFFFAOYSA-O
+
+>  <SMILES>
+C1CCN(CC1)C(=O)CN2CC[NH2+]CC2
+
+$$$$

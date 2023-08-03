@@ -1,0 +1,139 @@
+5MXK_ZHA_A_301
+  RCSB PDB12061719063D
+Coordinates from PDB:5MXK:A:301 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+  127.5610   26.5350    5.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.2520   26.7200    2.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  129.6400   26.8260    3.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.4200   27.2510    4.5320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.7810   27.5620    4.3790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.3970   27.4430    3.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.6140   27.0280    2.0200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  133.8090   27.8070    3.0180   N 0  0  0  0  0  0  0  0  0  0  0  0
+  134.6530   27.8430    1.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  136.0960   28.3030    2.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  134.2660   27.5250    0.7480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  129.7340   27.3600    5.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  128.5790   26.3550    6.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+  128.1550   26.5040    3.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  127.4490   26.2460    2.7440   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  7  2  2  0  0  0  0
+  7  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 15 14  2  0  0  0  0
+  8  6  1  0  0  0  0
+  6  5  2  0  0  0  0
+  3 14  1  0  0  0  0
+  3  4  2  0  0  0  0
+ 14  1  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4 12  1  0  0  0  0
+  1 13  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C13
+A    2
+C01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+N07
+A    9
+C08
+A   10
+C09
+A   11
+O10
+A   12
+C11
+A   13
+C12
+A   14
+C14
+A   15
+O15
+M  END
+>  <InstanceId>
+5MXK_ZHA_A_301
+
+>  <ChemCompId>
+ZHA
+
+>  <PdbId>
+5MXK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2
+
+>  <Name>
+~{N}-(5-oxidanylidene-7,8-dihydro-6~{H}-naphthalen-2-yl)ethanamide
+
+>  <SystematicName>
+~{N}-(5-oxidanylidene-7,8-dihydro-6~{H}-naphthalen-2-yl)ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 N O2
+
+>  <MolecularWeight>
+203.237
+
+>  <ModifiedDate>
+2017-05-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13NO2/c1-8(14)13-10-5-6-11-9(7-10)3-2-4-12(11)15/h5-7H,2-4H2,1H3,(H,13,14)
+
+>  <InChIKey>
+WEBCZGJWXXPNHB-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Nc1ccc2c(c1)CCCC2=O
+
+$$$$

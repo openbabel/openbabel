@@ -1,0 +1,114 @@
+1I80_IMR_A_351
+  RCSB PDB12061702493D
+Coordinates from PDB:1I80:A:351 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    5.5240    9.8710    8.3760   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7090   11.1490    7.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5490   11.4070    6.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2920   11.3880    7.6010   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6360   12.7490    6.2270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0600   12.5540    4.9210   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7950   13.6010    7.0950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1780   14.6360    6.3320   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7460   12.7020    7.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+O5'
+A    2
+C5'
+A    3
+C4'
+A    4
+N4'
+A    5
+C3'
+A    6
+O3'
+A    7
+C2'
+A    8
+O2'
+A    9
+C1'
+M  END
+>  <InstanceId>
+1I80_IMR_A_351
+
+>  <ChemCompId>
+IMR
+
+>  <PdbId>
+1I80
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+351
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O3
+
+>  <Name>
+IMINORIBITOL
+
+>  <SystematicName>
+(2R,3R,4S)-2-(hydroxymethyl)pyrrolidine-3,4-diol
+
+>  <Synonyms>
+2-HYDROXYMETHYL-PYRROLIDINE-3,4-DIOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H11 N O3
+
+>  <MolecularWeight>
+133.146
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11NO3/c7-2-3-5(9)4(8)1-6-3/h3-9H,1-2H2/t3-,4+,5-/m1/s1
+
+>  <InChIKey>
+OQEBIHBLFRADNM-MROZADKFSA-N
+
+>  <SMILES>
+C1[C@@H]([C@@H]([C@H](N1)CO)O)O
+
+$$$$

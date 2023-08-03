@@ -1,0 +1,137 @@
+1RM0_D6P_A_1520
+  RCSB PDB12061703543D
+Coordinates from PDB:1RM0:A:1520 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -10.0320   41.3980    5.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4450   41.1420    6.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.4540   41.0880    7.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.0880   39.6290    7.9980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.8520   39.5200    9.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.9410   38.4380    9.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.2010   40.2740    5.7110   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7130   41.4490    8.1260   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1580   38.8130    7.6020   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.3150   40.7380    9.9750   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0690   37.6460   10.6980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1140   36.5270   10.8170   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.3010   35.8800   12.2860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.4470   35.4760    9.6440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.6310   37.1100   10.6310   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 10  1  0  0  0  0
+  6 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O3
+A    9
+O4
+A   10
+O5
+A   11
+C7
+A   12
+P
+A   13
+O1P
+A   14
+O2P
+A   15
+O3P
+M  END
+>  <InstanceId>
+1RM0_D6P_A_1520
+
+>  <ChemCompId>
+D6P
+
+>  <PdbId>
+1RM0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1520
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O7 P
+
+>  <Name>
+(3,4,5,7-TETRAHYDROXY-HEPT-1-ENYL)-PHOSPHONIC ACID
+
+>  <SystematicName>
+[(E,3R,4S,5R)-3,4,5,7-tetrahydroxyhept-1-enyl]phosphonic acid
+
+>  <Synonyms>
+2-DEOXY-D-GLUCITOL 6-(E)-VINYLHOMOPHOSPHONATE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 O7 P
+
+>  <MolecularWeight>
+242.164
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15O7P/c8-3-1-5(9)7(11)6(10)2-4-15(12,13)14/h2,4-11H,1,3H2,(H2,12,13,14)/b4-2+/t5-,6-,7+/m1/s1
+
+>  <InChIKey>
+CZQSGBWQBMZTMQ-AEVYZNAZSA-N
+
+>  <SMILES>
+C(CO)[C@H]([C@@H]([C@@H](\C=C\P(=O)(O)O)O)O)O
+
+$$$$

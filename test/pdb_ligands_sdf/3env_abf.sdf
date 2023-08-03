@@ -1,0 +1,134 @@
+1O8B_ABF_A_1269
+  RCSB PDB12061703313D
+Coordinates from PDB:1O8B:A:1269 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    0.6630   -4.9800    1.2720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4110   -6.4130    1.3660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4150   -4.4570    2.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4240   -3.1760    2.7380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4830   -5.2770    3.1150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5770   -5.3040    4.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5590   -6.4580    2.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8990   -6.9600    1.9000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7400   -8.3360    1.4750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8900   -9.2380    0.8040   P 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1190   -9.2330    1.6790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2350   -8.6880   -0.5730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2090  -10.5880    0.7990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    0.0510   -4.4870    0.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 13  1  0  0  0  0
+A    1
+C1'
+A    2
+O1'
+A    3
+C2'
+A    4
+O2'
+A    5
+C3'
+A    6
+O3'
+A    7
+C4'
+A    8
+C5'
+A    9
+O5'
+A   10
+P'
+A   11
+O1X
+A   12
+O2X
+A   13
+O3X
+A   14
+O1
+M  END
+>  <InstanceId>
+1O8B_ABF_A_1269
+
+>  <ChemCompId>
+ABF
+
+>  <PdbId>
+1O8B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1269
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O8 P
+
+>  <Name>
+BETA-D-ARABINOFURANOSE-5'-PHOSPHATE
+
+>  <SystematicName>
+[(2R,3S,4S,5R)-3,4,5-trihydroxyoxolan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+D-SACCHARIDE
+
+>  <Formula>
+C5 H11 O8 P
+
+>  <MolecularWeight>
+230.11
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H11O8P/c6-3-2(1-12-14(9,10)11)13-5(8)4(3)7/h2-8H,1H2,(H2,9,10,11)/t2-,3-,4+,5-/m1/s1
+
+>  <InChIKey>
+KTVPXOYAKDPRHY-SQOUGZDYSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@@H](O1)O)O)O)OP(=O)(O)O
+
+$$$$

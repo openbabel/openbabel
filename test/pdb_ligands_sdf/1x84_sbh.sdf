@@ -1,0 +1,137 @@
+1X83_SBH_A_301
+  RCSB PDB12061704363D
+Coordinates from PDB:1X83:A:301 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   11.2580    2.5840    9.9640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0580    2.1070   10.6260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9050    1.8800   12.1600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3910    2.6850   11.0070   P 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1140    4.1270   11.4520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5830    6.0060   11.4280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8080    4.3540   13.1330   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9140    5.1650   12.2300   P 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9720    5.8630   13.2030   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1560    6.9360   12.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4080    7.6870   13.8530   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3560    8.6740   14.5880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4700    9.8530   15.0930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8570    8.0220   15.9240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5250    9.1750   13.5970   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  4  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+A    1
+O1
+A    2
+O2
+A    3
+O3
+A    4
+P1
+A    5
+O4
+A    6
+O5
+A    7
+O6
+A    8
+P2
+A    9
+O7
+A   10
+C1
+A   11
+C2
+A   12
+C3
+A   13
+C4
+A   14
+C5
+A   15
+O8
+M  END
+>  <InstanceId>
+1X83_SBH_A_301
+
+>  <ChemCompId>
+SBH
+
+>  <PdbId>
+1X83
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 O8 P2
+
+>  <Name>
+(S)-4-BROMO-3-HYDROXY-3-METHYLBUTYL DIPHOSPHATE
+
+>  <SystematicName>
+[(3S)-4-bromo-3-hydroxy-3-methyl-butyl] phosphono hydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H13 Br O8 P2
+
+>  <MolecularWeight>
+343.003
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H13BrO8P2/c1-5(7,4-6)2-3-13-16(11,12)14-15(8,9)10/h7H,2-4H2,1H3,(H,11,12)(H2,8,9,10)/t5-/m0/s1
+
+>  <InChIKey>
+YKAYCWPQDPILSA-YFKPBYRVSA-N
+
+>  <SMILES>
+C[C@](CCO[P@@](=O)(O)OP(=O)(O)O)(CBr)O
+
+$$$$

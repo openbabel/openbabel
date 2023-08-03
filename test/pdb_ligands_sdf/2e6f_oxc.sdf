@@ -1,0 +1,122 @@
+1R4U_OXC_A_999
+  RCSB PDB12061703513D
+Coordinates from PDB:1R4U:A:999 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   30.2650   27.5840   36.6050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5660   27.4060   37.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3910   27.7770   37.8600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.1870   26.7680   38.8080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4490   26.3910   38.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1650   26.5870   37.5440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5580   27.2120   36.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1080   27.4350   35.3230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1630   25.7700   39.8340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.4010   25.6320   39.6900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5310   25.4880   40.8560   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+N5
+A    7
+C6
+A    8
+O6
+A    9
+CG
+A   10
+OD1
+A   11
+OD2
+M  END
+>  <InstanceId>
+1R4U_OXC_A_999
+
+>  <ChemCompId>
+OXC
+
+>  <PdbId>
+1R4U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+999
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N3 O4
+
+>  <Name>
+OXONIC ACID
+
+>  <SystematicName>
+4,6-dioxo-1,3,5-triazinane-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H5 N3 O4
+
+>  <MolecularWeight>
+159.1
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H5N3O4/c8-2(9)1-5-3(10)7-4(11)6-1/h1H,(H,8,9)(H3,5,6,7,10,11)
+
+>  <InChIKey>
+IRFZLMWJJPULRF-UHFFFAOYSA-N
+
+>  <SMILES>
+C1(NC(=O)NC(=O)N1)C(=O)O
+
+$$$$

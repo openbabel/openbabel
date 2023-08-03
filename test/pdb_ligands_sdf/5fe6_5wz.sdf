@@ -1,0 +1,127 @@
+5FE6_5WZ_A_909
+  RCSB PDB12061717403D
+Coordinates from PDB:5FE6:A:909 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    0.6790    7.6270   32.9760   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6710   11.4090   32.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.4020   11.7260   33.7730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0710   10.1100   32.8090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1430   12.9890   33.4860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2040   12.9380   34.6350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1230   12.2880   32.1500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1440    9.6130   31.9480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5950    8.6770   30.8650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.4380    9.0170   33.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6270    7.6690   31.4590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8250    6.3280   30.9020   N 0  0  0  0  0  0  0  0  0  0  0  0
+  9 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 11  1  1  0  0  0  0
+  8  4  1  0  0  0  0
+  7  2  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  1 10  1  0  0  0  0
+  5  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  6  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+N1
+A    5
+C7
+A    6
+C8
+A    7
+O
+A    8
+C2
+A    9
+C1
+A   10
+C3
+A   11
+C
+A   12
+N
+M  END
+>  <InstanceId>
+5FE6_5WZ_A_909
+
+>  <ChemCompId>
+5WZ
+
+>  <PdbId>
+5FE6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+909
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O
+
+>  <Name>
+(4-azanylpiperidin-1-yl)-cyclopropyl-methanone
+
+>  <SystematicName>
+(4-azanylpiperidin-1-yl)-cyclopropyl-methanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N2 O
+
+>  <MolecularWeight>
+168.236
+
+>  <ModifiedDate>
+2016-01-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N2O/c10-8-3-5-11(6-4-8)9(12)7-1-2-7/h7-8H,1-6,10H2
+
+>  <InChIKey>
+GCYSQXZPDQBVCH-UHFFFAOYSA-N
+
+>  <SMILES>
+C1CC1C(=O)N2CCC(CC2)N
+
+$$$$

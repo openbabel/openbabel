@@ -1,0 +1,134 @@
+3L4W_MIG_A_1001
+  RCSB PDB12061709333D
+Coordinates from PDB:3L4W:A:1001 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   42.5010   89.4750   34.0700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5400   94.0540   36.2930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3420   92.1970   32.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.4860   93.7590   34.4000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2460   93.4380   36.8280   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2230   90.2150   35.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2640   92.9360   36.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2040   91.6700   34.5750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3800   91.6950   33.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.5700   92.6560   33.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3930   92.8210   34.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.4630   93.3330   35.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2510   92.3900   35.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.5500   92.2830   34.5170   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4 11  1  0  0  0  0
+  5 12  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7 13  1  0  0  0  0
+  8 14  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+NAN
+M  END
+>  <InstanceId>
+3L4W_MIG_A_1001
+
+>  <ChemCompId>
+MIG
+
+>  <PdbId>
+3L4W
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O5
+
+>  <Name>
+(2R,3R,4R,5S)-1-(2-hydroxyethyl)-2-(hydroxymethyl)piperidine-3,4,5-triol
+
+>  <SystematicName>
+(1R,2R,3R,4R,5S)-1-(2-hydroxyethyl)-2-(hydroxymethyl)piperidine-3,4,5-triol
+
+>  <Synonyms>
+Miglitol
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O5
+
+>  <MolecularWeight>
+207.224
+
+>  <ModifiedDate>
+2016-04-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO5/c10-2-1-9-3-6(12)8(14)7(13)5(9)4-11/h5-8,10-14H,1-4H2/t5-,6+,7-,8-/m1/s1
+
+>  <InChIKey>
+IBAQFPQHRJAVAV-ULAWRXDQSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H]([N@@]1CCO)CO)O)O)O
+
+$$$$

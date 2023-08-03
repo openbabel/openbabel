@@ -1,0 +1,130 @@
+5C0K_4WK_A_404
+  RCSB PDB12061717013D
+Coordinates from PDB:5C0K:A:404 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  -16.2450  -16.0970   -3.1380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4860  -16.8460   -4.2280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.9760  -16.6390   -4.0710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3400  -19.3000   -2.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7340  -20.0450   -0.8680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2750  -19.0550   -5.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8860  -18.3360   -4.2580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4870  -19.0210   -3.0400   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5330  -18.9900   -2.0740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4760  -21.5100   -1.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6680  -19.9360    0.2850   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -14.1680  -19.5940   -5.3460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9910  -19.0550   -6.5650   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  6  1  0  0  0  0
+  6 12  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  2  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  1  1  0  0  0  0
+  8  4  1  0  0  0  0
+  9  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  5 11  1  0  0  0  0
+M  CHG  1  11   1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C6
+A    5
+C8
+A    6
+C11
+A    7
+C4
+A    8
+N5
+A    9
+O7
+A   10
+C9
+A   11
+N10
+A   12
+O12
+A   13
+N13
+M  END
+>  <InstanceId>
+5C0K_4WK_A_404
+
+>  <ChemCompId>
+4WK
+
+>  <PdbId>
+5C0K
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O2
+
+>  <Name>
+(2S)-1-{[(2S)-1-amino-3-methyl-1-oxobutan-2-yl]amino}-1-oxopropan-2-aminium
+
+>  <SystematicName>
+[(2S)-1-[[(2S)-1-azanyl-3-methyl-1-oxidanylidene-butan-2-yl]amino]-1-oxidanylidene-propan-2-yl]azanium
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H18 N3 O2
+
+>  <MolecularWeight>
+188.247
+
+>  <ModifiedDate>
+2015-08-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17N3O2/c1-4(2)6(7(10)12)11-8(13)5(3)9/h4-6H,9H2,1-3H3,(H2,10,12)(H,11,13)/p+1/t5-,6-/m0/s1
+
+>  <InChIKey>
+XIMNOSWWKHYSER-WDSKDSINSA-O
+
+>  <SMILES>
+C[C@@H](C(=O)N[C@@H](C(C)C)C(=O)N)[NH3+]
+
+$$$$

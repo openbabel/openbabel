@@ -1,0 +1,106 @@
+1F9O_PIH_A_2097
+  RCSB PDB12061702283D
+Coordinates from PDB:1F9O:A:2097 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   63.3770   83.4430   53.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.7380   82.3670   54.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.0040   81.8070   54.2250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.9100   82.3920   53.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.5470   83.4940   52.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.2730   83.9980   52.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.6480   85.5620   51.7270   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+I6
+M  END
+>  <InstanceId>
+1F9O_PIH_A_2097
+
+>  <ChemCompId>
+PIH
+
+>  <PdbId>
+1F9O
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2097
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 I
+
+>  <Name>
+IODOPHENYL
+
+>  <SystematicName>
+iodobenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 I
+
+>  <MolecularWeight>
+204.008
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5I/c7-6-4-2-1-3-5-6/h1-5H
+
+>  <InChIKey>
+SNHMUERNLJLMHN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)I
+
+$$$$

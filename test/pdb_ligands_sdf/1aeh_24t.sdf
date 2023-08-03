@@ -1,0 +1,106 @@
+1AEH_24T_A_296
+  RCSB PDB12061701583D
+Coordinates from PDB:1AEH:A:296 Model:1 without hydrogens
+  7  7  0  0  0  0            999 V2000
+   31.2440   94.6900   49.3390   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8350   93.9470   47.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8040   93.1030   47.4380   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9120   92.9990   48.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7570   93.7980   49.3780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7120   94.1800   47.1440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0390   92.0830   47.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+A    1
+S1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+N
+A    7
+CM
+M  END
+>  <InstanceId>
+1AEH_24T_A_296
+
+>  <ChemCompId>
+24T
+
+>  <PdbId>
+1AEH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+296
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 S
+
+>  <Name>
+2-AMINO-4-METHYLTHIAZOLE
+
+>  <SystematicName>
+4-methyl-1,3-thiazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 N2 S
+
+>  <MolecularWeight>
+114.169
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6N2S/c1-3-2-7-4(5)6-3/h2H,1H3,(H2,5,6)
+
+>  <InChIKey>
+OUQMXTJYCAJLGO-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1csc(n1)N
+
+$$$$

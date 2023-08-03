@@ -1,0 +1,101 @@
+1ZND_PE9_A_202
+  RCSB PDB12061704533D
+Coordinates from PDB:1ZND:A:202 Model:1 without hydrogens
+  6  5  0  0  0  0            999 V2000
+   46.2210   27.7080   41.5710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4430   26.8380   41.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.0200   25.4080   40.9330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.2340   24.5610   40.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8300   23.1230   40.2150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2400   22.5060   41.3630   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+A    1
+CAA
+A    2
+CAC
+A    3
+CAE
+A    4
+CAF
+A    5
+CAD
+A    6
+OAB
+M  END
+>  <InstanceId>
+1ZND_PE9_A_202
+
+>  <ChemCompId>
+PE9
+
+>  <PdbId>
+1ZND
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+202
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O
+
+>  <Name>
+PENTAN-1-OL
+
+>  <SystematicName>
+pentan-1-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O
+
+>  <MolecularWeight>
+88.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O/c1-2-3-4-5-6/h6H,2-5H2,1H3
+
+>  <InChIKey>
+AMQJEAYHLZJPGS-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCCCO
+
+$$$$

@@ -1,0 +1,80 @@
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.1
+.Dt obminimize 1 URM
+.Sh NAME
+.Nm obminimize
+.Nd "optimize the geometry, minimize the energy for a molecule"
+.Sh SYNOPSIS
+.Nm
+.Op Ar OPTIONS
+.Ar filename
+.Sh DESCRIPTION
+The obminimize tool can be used to minimize the energy for molecules
+inside (multi-)molecule files (e.g., MOL2, etc.)
+.Sh OPTIONS
+If no filename is given, obminimize will give all options including the
+available forcefields.
+.Bl -tag -width flag
+.It Fl n Ar steps
+Specify the maximum number of steps (default=2500)
+.It Fl cg
+Use conjugate gradients algorithm (default)
+.It Fl sd
+Use steepest descent algorithm
+.It Fl c Ar criteria
+Set convergence criteria (default=1e-6)
+.It Fl ff Ar forcefield
+Select the forcefield
+.El
+.Sh EXAMPLES
+.Pp
+View the possible options, including available forcefields:
+.Dl "obminimize"
+.Pp
+Minimize the energy for the molecule(s) in file test.mol2:
+.Dl "obminimize test.mol2"
+.Pp
+Minimize the energy for the molecule(s) in file test.mol2 using the
+Ghemical forcefield:
+.Dl "obminimize -ff Ghemical test.mol2"
+.Pp
+Minimize the energy for the molecule(s) in file test.mol2 by taking
+at most 300 geometry optimization steps
+.Dl "obminimize -n 300 test.mol2"
+.Pp
+Minimize the energy for the molecule(s) in file test.mol2 using the
+steepest descent algorithm and convergence criteria 1e-5:
+.Dl "obminimize -sd -c 1e-5 test.mol2"
+.Sh SEE ALSO
+.Xr obabel 1 ,
+.Xr obenergy 1 ,
+.Xr obrotamer 1 .
+.Pp
+The web pages for Open Babel can be found at:
+\%<\fBhttp://openbabel.org/\fR>
+.Pp
+The web pages for Open Babel Molecular Mechanics can be found at:
+\%<\fBhttp://openbabel.org/wiki/Molecular_mechanics\fR>
+.Sh AUTHORS
+The minimize program was contributed by
+.An Tim Vandermeersch.
+.Pp
+.An -nosplit
+Open Babel is developed by a cast of many, including currrent maintainers
+.An Geoff Hutchison ,
+.An Chris Morley ,
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
+\%<\fBhttp://openbabel.org/wiki/THANKS\fR>
+.Sh COPYRIGHT
+Copyright (C) 2007 by Tim Vandermeersch.
+.Pp
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+.Pp
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.

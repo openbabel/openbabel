@@ -1,0 +1,142 @@
+4JBY_FSK_A_601
+  RCSB PDB12061713083D
+Coordinates from PDB:4JBY:A:601 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   46.5190   25.1720   54.5990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   47.6180   25.5430   55.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2220   26.7980   55.6080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.2350   24.4580   52.2960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2420   25.6190   53.9390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.3260   25.9150   54.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2650   24.6170   52.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5210   23.8930   52.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.5150   22.8460   51.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6050   24.1630   53.6170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.8690   23.3930   53.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.0040   23.8180   52.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.2370   25.2700   52.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.2320   22.9760   52.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   50.1260   25.7400   53.5000   F 0  0  0  0  0  0  0  0  0  0  0  0
+   49.8490   21.6340   52.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  8  1  0  0  0  0
+  4  7  2  0  0  0  0
+ 13 12  1  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 16  1  0  0  0  0
+ 14 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 12 11  2  0  0  0  0
+  7  5  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  2  1  0  0  0  0
+  6  3  2  0  0  0  0
+A    1
+N1
+A    2
+C6
+A    3
+O1
+A    4
+O2
+A    5
+N2
+A    6
+C1
+A    7
+C2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C11
+A   12
+C12
+A   13
+C14
+A   14
+C13
+A   15
+F
+A   16
+O3
+M  END
+>  <InstanceId>
+4JBY_FSK_A_601
+
+>  <ChemCompId>
+FSK
+
+>  <PdbId>
+4JBY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3 F
+
+>  <Name>
+6-[(1Z)-3-fluoro-2-(hydroxymethyl)prop-1-en-1-yl]-1,5-dimethylpyrimidine-2,4(1H,3H)-dione
+
+>  <SystematicName>
+6-[(Z)-2-(fluoranylmethyl)-3-oxidanyl-prop-1-enyl]-1,5-dimethyl-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H13 F N2 O3
+
+>  <MolecularWeight>
+228.22
+
+>  <ModifiedDate>
+2013-03-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H13FN2O3/c1-6-8(3-7(4-11)5-14)13(2)10(16)12-9(6)15/h3,14H,4-5H2,1-2H3,(H,12,15,16)/b7-3+
+
+>  <InChIKey>
+NEZZLCCSEJKABY-XVNBXDOJSA-N
+
+>  <SMILES>
+CC1=C(N(C(=O)NC1=O)C)/C=C(/CO)\CF
+
+$$$$

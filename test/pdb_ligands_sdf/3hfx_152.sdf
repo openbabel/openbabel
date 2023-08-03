@@ -1,0 +1,122 @@
+1NDF_152_A_5001
+  RCSB PDB12061703243D
+Coordinates from PDB:1NDF:A:5001 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   25.3080   32.3040   91.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2110   32.4520   92.9490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.5820   31.5210   91.0650   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4060   33.0540   90.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9760   32.2610   89.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7940   33.1440   88.9970   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8460   31.1040   90.3140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.2260   30.1870   89.2230   N 0  3  0  0  0  0  0  0  0  0  0  0
+   27.0310   29.7240   88.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1160   30.8680   88.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9250   29.0360   89.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+  8 11  1  0  0  0  0
+M  CHG  1   8   1
+A    1
+C1
+A    2
+O1A
+A    3
+O1B
+A    4
+C2
+A    5
+C3
+A    6
+O3
+A    7
+C4
+A    8
+N5
+A    9
+C5A
+A   10
+C5B
+A   11
+C5C
+M  END
+>  <InstanceId>
+1NDF_152_A_5001
+
+>  <ChemCompId>
+152
+
+>  <PdbId>
+1NDF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+CARNITINE
+
+>  <SystematicName>
+[(2R)-2,4-dihydroxy-4-oxo-butyl]-trimethyl-azanium
+
+>  <Synonyms>
+(3-CARBOXY-2-(R)-HYDROXY-PROPYL)-TRIMETHYL-AMMONIUM
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H16 N O3
+
+>  <MolecularWeight>
+162.207
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO3/c1-8(2,3)5-6(9)4-7(10)11/h6,9H,4-5H2,1-3H3/p+1/t6-/m1/s1
+
+>  <InChIKey>
+PHIQHXFUZVPYII-ZCFIWIBFSA-O
+
+>  <SMILES>
+C[N+](C)(C)C[C@@H](CC(=O)O)O
+
+$$$$

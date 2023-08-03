@@ -1,0 +1,131 @@
+5AKJ_6N4_A_1555
+  RCSB PDB12061716513D
+Coordinates from PDB:5AKJ:A:1555 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   19.6820   10.3050   12.3430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5540    8.8900   12.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5640    8.3970   13.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7530    9.4050   14.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.8670   10.7910   13.9520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8090   11.2930   12.9960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8960   11.4190   14.7910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2820   10.4410   15.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.7820    9.2380   15.1640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0480   10.6480   16.6600   S 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7030   11.8740   17.9700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6240   13.0010   18.4150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7030   12.2540   19.3070   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+N7
+A    8
+C8
+A    9
+N9
+A   10
+S10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+M  END
+>  <InstanceId>
+5AKJ_6N4_A_1555
+
+>  <ChemCompId>
+6N4
+
+>  <PdbId>
+5AKJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1555
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O S
+
+>  <Name>
+2-(1H-BENZIMIDAZOL-2-YLSULFANYL)ETHANOL
+
+>  <SystematicName>
+2-(1H-benzimidazol-2-ylsulfanyl)ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H10 N2 O S
+
+>  <MolecularWeight>
+194.253
+
+>  <ModifiedDate>
+2015-05-08
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10N2OS/c12-5-6-13-9-10-7-3-1-2-4-8(7)11-9/h1-4,12H,5-6H2,(H,10,11)
+
+>  <InChIKey>
+HFDPECWVRWDXHN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)[nH]c(n2)SCCO
+
+$$$$

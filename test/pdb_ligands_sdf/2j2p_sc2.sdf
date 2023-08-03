@@ -1,0 +1,117 @@
+207L_SC2_A_200
+  RCSB PDB12061704563D
+Coordinates from PDB:207L:A:200 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+    8.6530   15.7750   41.7290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3990   15.2450   39.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6160   13.2020   42.1860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7060   15.0830   40.8820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8710   13.7110   41.2100   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0170   15.0800   42.5640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5070   17.0010   41.5590   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2740   13.9520   42.9310   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6250   11.7130   42.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8390   14.7180   38.4370   S 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  2  0  0  0  0
+  1  4  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  8  2  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+C
+A    2
+CB
+A    3
+CT
+A    4
+CA
+A    5
+N
+A    6
+OXT
+A    7
+O
+A    8
+OT
+A    9
+CM
+A   10
+SG
+M  END
+>  <InstanceId>
+207L_SC2_A_200
+
+>  <ChemCompId>
+SC2
+
+>  <PdbId>
+207L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O3 S
+
+>  <Name>
+N-ACETYL-L-CYSTEINE
+
+>  <SystematicName>
+(2R)-2-acetamido-3-sulfanyl-propanoic acid
+
+>  <Synonyms>
+(2R)-2-acetamido-3-sulfanyl-propanoic acid
+
+>  <Type>
+peptide-like
+
+>  <Formula>
+C5 H9 N O3 S
+
+>  <MolecularWeight>
+163.195
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+ACE CYS
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO3S/c1-3(7)6-4(2-10)5(8)9/h4,10H,2H2,1H3,(H,6,7)(H,8,9)/t4-/m0/s1
+
+>  <InChIKey>
+PWKSKIMOESPYIA-BYPYZUCNSA-N
+
+>  <SMILES>
+CC(=O)N[C@@H](CS)C(=O)O
+
+$$$$

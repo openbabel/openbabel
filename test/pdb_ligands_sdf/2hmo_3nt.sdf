@@ -1,0 +1,119 @@
+2BMR_3NT_A_1442
+  RCSB PDB12061705083D
+Coordinates from PDB:2BMR:A:1442 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   53.5540   66.6440    2.8110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3170   66.6100    1.4370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1030   65.3910    0.7920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.1270   64.2040    1.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.3640   64.2370    2.9090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.5800   65.4600    3.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.7910   67.9650    3.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.8690   65.4020   -0.5480   N 0  3  0  0  0  0  0  0  0  0  0  0
+   52.5070   66.4700   -1.0820   O 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0140   64.3860   -1.2570   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+M  CHG  2   8   1  10  -1
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+N3
+A    9
+O1N
+A   10
+O2N
+M  END
+>  <InstanceId>
+2BMR_3NT_A_1442
+
+>  <ChemCompId>
+3NT
+
+>  <PdbId>
+2BMR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1442
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O2
+
+>  <Name>
+3-NITROTOLUENE
+
+>  <SystematicName>
+1-methyl-3-nitro-benzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N O2
+
+>  <MolecularWeight>
+137.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7NO2/c1-6-3-2-4-7(5-6)8(9)10/h2-5H,1H3
+
+>  <InChIKey>
+QZYHIOPPLUPUJF-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1)[N+](=O)[O-]
+
+$$$$

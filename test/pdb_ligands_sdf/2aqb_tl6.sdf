@@ -1,0 +1,130 @@
+2AQB_TL6_A_600
+  RCSB PDB12061705023D
+Coordinates from PDB:2AQB:A:600 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   22.2660   88.0160    1.1160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.0760   88.9270    1.1820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8050   89.5290   -0.1930   S 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6930   90.7300    0.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.1800   92.1180    0.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3800   90.4160    2.1900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.0050   91.0010    3.2170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4360   89.4940    2.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8240   89.1300    3.6500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1890   90.6170    0.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.7320   90.4520   -0.6830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1870   90.3500   -0.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8330   90.9270   -1.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+S1
+A    4
+C4
+A    5
+C10
+A    6
+C3
+A    7
+O2
+A    8
+C2
+A    9
+C9
+A   10
+C5
+A   11
+C6
+A   12
+C7
+A   13
+C8
+M  END
+>  <InstanceId>
+2AQB_TL6_A_600
+
+>  <ChemCompId>
+TL6
+
+>  <PdbId>
+2AQB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2 S
+
+>  <Name>
+(5R)-5-[(1E)-BUTA-1,3-DIENYL]-4-HYDROXY-3,5-DIMETHYLTHIOPHEN-2(5H)-ONE
+
+>  <SystematicName>
+(5R)-5-[(1E)-buta-1,3-dienyl]-4-hydroxy-3,5-dimethyl-thiophen-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H12 O2 S
+
+>  <MolecularWeight>
+196.266
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H12O2S/c1-4-5-6-10(3)8(11)7(2)9(12)13-10/h4-6,11H,1H2,2-3H3/b6-5+/t10-/m1/s1
+
+>  <InChIKey>
+TXGVAQMIEXZDPM-BRAIEQGRSA-N
+
+>  <SMILES>
+CC1=C([C@@](SC1=O)(C)\C=C\C=C)O
+
+$$$$

@@ -1,0 +1,144 @@
+3GEV_SAQ_A_400
+  RCSB PDB12061708443D
+Coordinates from PDB:3GEV:A:400 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   17.5070   17.1630   23.7950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9960   16.7440   22.0370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   16.9850   17.0410   21.0850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2590   17.4410   21.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.5590   17.4360   22.9420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2830   17.7360   20.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8980   17.6780   19.2260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6260   16.9810   19.7180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5990   17.8720   18.0630   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.7350   17.7340   17.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2410   16.9070   23.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6230   17.3290   18.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5440   17.3810   17.4190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2480   17.9250   15.7580   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6170   17.8100   23.4420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4880   17.8420   14.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5 15  2  0  0  0  0
+  6  7  2  0  0  0  0
+  7  9  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8 12  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+N1
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+C10
+A    9
+N12
+A   10
+C13
+A   11
+C2
+A   12
+C9
+A   13
+N14
+A   14
+N15
+A   15
+O16
+A   16
+C25
+M  END
+>  <InstanceId>
+3GEV_SAQ_A_400
+
+>  <ChemCompId>
+SAQ
+
+>  <PdbId>
+3GEV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+5
+
+>  <ObservedFormula>
+C10 N5 O
+
+>  <Name>
+2-[(thiophen-2-ylmethyl)amino]-1,7-dihydro-8H-imidazo[4,5-g]quinazolin-8-one
+
+>  <SystematicName>
+2-(thiophen-2-ylmethylamino)-1,7-dihydropyrimido[6,5-f]benzimidazol-8-one
+
+>  <Synonyms>
+2-[(2-Thienylmethyl)amino]-1,7-dihydro-8H-imidazo[4,5-g]quinazolin-8-one
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H11 N5 O S
+
+>  <MolecularWeight>
+297.335
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H11N5OS/c20-13-9-4-11-12(5-10(9)16-7-17-13)19-14(18-11)15-6-8-2-1-3-21-8/h1-5,7H,6H2,(H2,15,18,19)(H,16,17,20)
+
+>  <InChIKey>
+FVWYYSMTACIDCC-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1)CNc2[nH]c3cc4c(cc3n2)N=CNC4=O
+
+$$$$

@@ -1,0 +1,138 @@
+1M5E_AM1_A_1700
+  RCSB PDB12061703153D
+Coordinates from PDB:1M5E:A:1700 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   77.7270   24.5350   38.3730   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.7000   25.1890   39.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.9240   24.6760   40.6170   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.3690   26.6660   39.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1010   27.3070   38.2390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   76.8430   28.6200   38.5750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.9500   28.7850   39.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.2850   27.5860   40.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.4970   27.3260   41.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.2700   26.7670   42.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.1100   27.7140   42.5760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   76.5800   26.4710   44.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.8020   27.0650   44.9980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.5300   25.6930   44.4260   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.6920   30.1500   40.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 15  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+O2
+A    4
+C2
+A    5
+N1
+A    6
+O3
+A    7
+C3
+A    8
+C4
+A    9
+C5
+A   10
+C6
+A   11
+N2
+A   12
+C7
+A   13
+O4
+A   14
+O5
+A   15
+C8
+M  END
+>  <InstanceId>
+1M5E_AM1_A_1700
+
+>  <ChemCompId>
+AM1
+
+>  <PdbId>
+1M5E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O5
+
+>  <Name>
+(S)-2-AMINO-3-(3-CARBOXY-5-METHYLISOXAZOL-4-YL)PROPIONIC ACID
+
+>  <SystematicName>
+4-(2-amino-3-hydroxy-3-oxo-propyl)-5-methyl-1,2-oxazole-3-carboxylic acid
+
+>  <Synonyms>
+ACPA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 N2 O5
+
+>  <MolecularWeight>
+214.175
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10N2O5/c1-3-4(2-5(9)7(11)12)6(8(13)14)10-15-3/h5H,2,9H2,1H3,(H,11,12)(H,13,14)
+
+>  <InChIKey>
+JDNMYUBSFDGCSX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(no1)C(=O)O)CC(C(=O)O)N
+
+$$$$

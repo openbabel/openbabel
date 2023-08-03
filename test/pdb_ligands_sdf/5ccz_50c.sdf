@@ -1,0 +1,135 @@
+5CCZ_50C_A_801
+  RCSB PDB12061717043D
+Coordinates from PDB:5CCZ:A:801 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   30.1050   78.8690   59.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.8910   78.2840   61.6940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9420   81.7840   61.8980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.1490   80.5340   62.6160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1850   80.3310   63.5670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1390   81.2110   64.0190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0140   79.0100   64.0370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9830   78.4010   63.4550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4220   79.2820   62.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2360   78.9690   61.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2490   79.1210   60.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9280   78.4410   60.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8310   78.1620   59.5620   F 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0500   78.5580   62.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 13 12  1  0  0  0  0
+  1 12  2  0  0  0  0
+  1 11  1  0  0  0  0
+ 12  2  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  2 14  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  9  8  2  0  0  0  0
+  8  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+A    1
+C10
+A    2
+C13
+A    3
+C01
+A    4
+C02
+A    5
+C03
+A    6
+N04
+A    7
+N05
+A    8
+N06
+A    9
+C07
+A   10
+C08
+A   11
+C09
+A   12
+C11
+A   13
+F12
+A   14
+C14
+M  END
+>  <InstanceId>
+5CCZ_50C_A_801
+
+>  <ChemCompId>
+50C
+
+>  <PdbId>
+5CCZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 F
+
+>  <Name>
+3-(4-fluorophenyl)-4-methyl-1H-pyrazol-5-amine
+
+>  <SystematicName>
+3-(4-fluorophenyl)-4-methyl-1H-pyrazol-5-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 F N3
+
+>  <MolecularWeight>
+191.205
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10FN3/c1-6-9(13-14-10(6)12)7-2-4-8(11)5-3-7/h2-5H,1H3,(H3,12,13,14)
+
+>  <InChIKey>
+SNBMBGHZPHKNIS-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(n[nH]c1N)c2ccc(cc2)F
+
+$$$$

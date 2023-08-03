@@ -1,0 +1,142 @@
+1H48_CDI_A_201
+  RCSB PDB12061702413D
+Coordinates from PDB:1H48:A:201 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   65.1830   -3.1900   44.7440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   64.6360   -4.6120   44.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.2900   -5.4180   43.9300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.4100   -7.0340   43.7260   P 0  0  0  0  0  0  0  0  0  0  0  0
+   64.5500   -7.4250   42.5380   O 0  0  0  0  0  0  0  0  0  0  0  0
+   66.8980   -7.2790   43.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.2740   -8.1920   45.4170   P 0  0  0  0  0  0  0  0  0  0  0  0
+   62.4190   -7.0010   44.7200   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.9640   -9.5170   44.7400   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.0160   -8.0930   46.9140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   62.2900   -5.7310   45.3760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.1020   -4.6160   44.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.5170   -3.3780   45.0960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   65.0050   -4.9940   46.3680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   65.5480   -2.9140   43.3940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.8290   -7.7560   45.0830   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 15  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4 16  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7 10  2  0  0  0  0
+  7 16  1  0  0  0  0
+  8 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C4
+A    2
+C3
+A    3
+OB4
+A    4
+PB
+A    5
+OB2
+A    6
+OB3
+A    7
+PA
+A    8
+OA3
+A    9
+OA1
+A   10
+OA2
+A   11
+C1
+A   12
+C2
+A   13
+O1
+A   14
+C5
+A   15
+O2
+A   16
+OB1
+M  END
+>  <InstanceId>
+1H48_CDI_A_201
+
+>  <ChemCompId>
+CDI
+
+>  <PdbId>
+1H48
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O9 P2
+
+>  <Name>
+2C-METHYL-D-ERYTHRITOL 2,4-CYCLODIPHOSPHATE
+
+>  <SystematicName>
+(2R,4S,6S,7R)-2,4-dihydroxy-6-(hydroxymethyl)-6-methyl-2,4-dioxo-1,3,5-trioxa-2$l^{5},4$l^{5}-diphosphacyclooctan-7-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 O9 P2
+
+>  <MolecularWeight>
+278.091
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12O9P2/c1-5(3-6)4(7)2-12-15(8,9)14-16(10,11)13-5/h4,6-7H,2-3H2,1H3,(H,8,9)(H,10,11)/t4-,5+/m1/s1
+
+>  <InChIKey>
+SFRQRNJMIIUYDI-UHNVWZDZSA-N
+
+>  <SMILES>
+C[C@@]1([C@@H](CO[P@](=O)(O[P@](=O)(O1)O)O)O)CO
+
+$$$$

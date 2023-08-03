@@ -1,0 +1,123 @@
+3VGN_FNN_A_140
+  RCSB PDB12061711133D
+Coordinates from PDB:3VGN:A:140 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+    1.7890  -11.8950  -10.5920   F 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8900   -9.9700  -12.3770   N 0  3  0  0  0  0  0  0  0  0  0  0
+    4.4710  -15.1750  -12.5670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0920  -13.9060  -12.4780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7130   -8.9960  -12.9650   O 0  5  0  0  0  0  0  0  0  0  0  0
+    3.1370  -13.5610  -11.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7200   -9.6020  -11.8100   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7160  -12.2310  -11.5060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2580  -11.2760  -12.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2040  -11.6620  -13.3300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5990  -12.9770  -13.3900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  8  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  2  0  0  0  0
+  4 11  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+M  CHG  2   2   1   5  -1
+A    1
+F
+A    2
+N
+A    3
+O
+A    4
+C1
+A    5
+O1
+A    6
+C2
+A    7
+O2
+A    8
+C3
+A    9
+C4
+A   10
+C5
+A   11
+C6
+M  END
+>  <InstanceId>
+3VGN_FNN_A_140
+
+>  <ChemCompId>
+FNN
+
+>  <PdbId>
+3VGN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+140
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O3 F
+
+>  <Name>
+3-fluoro-4-nitrophenol
+
+>  <SystematicName>
+3-fluoranyl-4-nitro-phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H4 F N O3
+
+>  <MolecularWeight>
+157.099
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H4FNO3/c7-5-3-4(9)1-2-6(5)8(10)11/h1-3,9H
+
+>  <InChIKey>
+CSSGKHVRDGATJL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1O)F)[N+](=O)[O-]
+
+$$$$

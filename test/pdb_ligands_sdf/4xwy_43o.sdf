@@ -1,0 +1,155 @@
+4XWY_43O_A_802
+  RCSB PDB12061716183D
+Coordinates from PDB:4XWY:A:802 Model:1 without hydrogens
+ 19 20  0  0  0  0            999 V2000
+  -48.8320   10.9760   13.0600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.1550   10.0550   12.0690   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.8500    9.8800   11.9390   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.6810    9.0110   10.9340   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.5720    8.5100   10.4020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -45.6540    7.5700    9.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.9070    7.1810    8.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.0270    6.2770    7.8870   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.0370    7.7630    9.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.8980    8.6460   10.4570   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -48.7920    9.2580   11.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.2980    9.2230   11.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -50.9650    8.5380   12.2220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -51.5550    7.3190   11.7120   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -52.8030    7.2220   11.2880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.1940    6.2570   10.6530   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -53.6380    8.4240   11.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.0140    8.1370   11.3170   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -55.5800    9.3710   10.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+  9 10  2  0  0  0  0
+  5  4  2  0  0  0  0
+ 10  4  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 16 15  2  0  0  0  0
+ 19 18  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11  2  2  0  0  0  0
+ 15 17  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 14 13  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAN
+A    2
+CAH
+A    3
+NAG
+A    4
+CAC
+A    5
+CAD
+A    6
+CAE
+A    7
+CAF
+A    8
+OAM
+A    9
+CAA
+A   10
+CAB
+A   11
+CAI
+A   12
+CAJ
+A   13
+CAK
+A   14
+NAL
+A   15
+CAO
+A   16
+OAP
+A   17
+CAQ
+A   18
+OAR
+A   19
+CAS
+M  END
+>  <InstanceId>
+4XWY_43O_A_802
+
+>  <ChemCompId>
+43O
+
+>  <PdbId>
+4XWY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N2 O3
+
+>  <Name>
+N-[2-(5-hydroxy-2-methyl-1H-indol-3-yl)ethyl]-2-methoxyacetamide
+
+>  <SystematicName>
+2-methoxy-N-[2-(2-methyl-5-oxidanyl-1H-indol-3-yl)ethyl]ethanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H18 N2 O3
+
+>  <MolecularWeight>
+262.304
+
+>  <ModifiedDate>
+2015-06-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H18N2O3/c1-9-11(5-6-15-14(18)8-19-2)12-7-10(17)3-4-13(12)16-9/h3-4,7,16-17H,5-6,8H2,1-2H3,(H,15,18)
+
+>  <InChIKey>
+YBXBWBBVLXZQBJ-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c2cc(ccc2[nH]1)O)CCNC(=O)COC
+
+$$$$

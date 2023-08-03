@@ -1,0 +1,153 @@
+4B0I_KBP_A_1170
+  RCSB PDB12061711453D
+Coordinates from PDB:4B0I:A:1170 Model:1 without hydrogens
+ 19 18  0  0  0  0            999 V2000
+  -23.0280   20.9270  -19.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1920   21.9600  -20.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.0390   23.2330  -20.7450   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1580   24.4210  -20.3850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9420   24.4210  -18.8730   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2500   24.7320  -18.1400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9440   25.5640  -16.8950   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6240   25.1280  -16.2240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.4800   26.1320  -16.4430   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.9750   26.6930  -15.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.7460   21.2720  -19.0210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.6110   23.3740  -22.0480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2460   19.4010  -20.7490   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.7070   18.7370  -19.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.0290   19.0010  -20.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.1090   18.5960  -19.6860   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.3670   17.3090  -19.4200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -28.4860   17.0590  -18.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7060   16.3860  -19.9180   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 17 18  1  0  0  0  0
+ 17 19  2  0  0  0  0
+A    1
+CAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+OAM
+A   12
+OAN
+A   13
+SAO
+A   14
+CAP
+A   15
+CAQ
+A   16
+NAR
+A   17
+CAS
+A   18
+CAT
+A   19
+OAY
+M  END
+>  <InstanceId>
+4B0I_KBP_A_1170
+
+>  <ChemCompId>
+KBP
+
+>  <PdbId>
+4B0I
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1170
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N O3 S
+
+>  <Name>
+S-[2-(acetylamino)ethyl] (3R)-3-hydroxydecanethioate
+
+>  <SystematicName>
+S-(2-acetamidoethyl) (3R)-3-oxidanyldecanethioate
+
+>  <Synonyms>
+3-hydroxydecanoyl-N-acetylcysteamine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H27 N O3 S
+
+>  <MolecularWeight>
+289.434
+
+>  <ModifiedDate>
+2012-11-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H27NO3S/c1-3-4-5-6-7-8-13(17)11-14(18)19-10-9-15-12(2)16/h13,17H,3-11H2,1-2H3,(H,15,16)/t13-/m1/s1
+
+>  <InChIKey>
+AKKZYNFGIOAWKB-CYBMUJFWSA-N
+
+>  <SMILES>
+CCCCCCC[C@H](CC(=O)SCCNC(=O)C)O
+
+$$$$

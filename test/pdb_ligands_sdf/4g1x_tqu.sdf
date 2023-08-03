@@ -1,0 +1,144 @@
+4G1X_TQU_A_409
+  RCSB PDB12061712383D
+Coordinates from PDB:4G1X:A:409 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   -6.6480   20.8520    4.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2520   21.8160    5.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7630   22.0610    6.4120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3380   22.9840    7.1780   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6730   21.3420    6.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.0710   20.3780    6.0880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5590   20.1310    4.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9750   19.1990    4.0400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.4120   18.9400    2.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.4980   19.6270    2.2900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.1260   20.5980    3.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.1670   21.2720    2.5780   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3360   21.7450    1.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.5190   22.3460    1.3230   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0270   22.2170    2.5430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1450   21.5420    3.2780   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 14 13  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 15 16  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 16  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 11  1  2  0  0  0  0
+  8  7  2  0  0  0  0
+  1  7  1  0  0  0  0
+  1  2  1  0  0  0  0
+  7  6  1  0  0  0  0
+  2  3  2  0  0  0  0
+  6  5  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+CAO
+A    2
+CAH
+A    3
+CAL
+A    4
+NAA
+A    5
+CAD
+A    6
+CAF
+A    7
+CAN
+A    8
+NAJ
+A    9
+CAB
+A   10
+CAC
+A   11
+CAM
+A   12
+NAP
+A   13
+CAG
+A   14
+NAI
+A   15
+CAE
+A   16
+NAK
+M  END
+>  <InstanceId>
+4G1X_TQU_A_409
+
+>  <ChemCompId>
+TQU
+
+>  <PdbId>
+4G1X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N5
+
+>  <Name>
+4-(1H-1,2,4-triazol-1-yl)quinolin-6-amine
+
+>  <SystematicName>
+4-(1,2,4-triazol-1-yl)quinolin-6-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 N5
+
+>  <MolecularWeight>
+211.223
+
+>  <ModifiedDate>
+2012-08-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9N5/c12-8-1-2-10-9(5-8)11(3-4-14-10)16-7-13-6-15-16/h1-7H,12H2
+
+>  <InChIKey>
+GXRXDACPFFYIDQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1N)c(ccn2)n3cncn3
+
+$$$$

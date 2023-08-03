@@ -1,0 +1,135 @@
+4LV9_20J_A_601
+  RCSB PDB12061713383D
+Coordinates from PDB:4LV9:A:601 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   17.5750    9.1210    1.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4340    9.6410    2.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.6530    9.7890    3.9770   N 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8190   10.2160    4.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1680   10.0550    6.3150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3140   10.4870    7.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1020   11.0750    6.9810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7420   11.2340    5.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5910   10.8050    4.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2010   10.9830    2.9430   S 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9120   10.4340    2.7560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5580   12.3140    2.5980   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2350    9.9460    2.1150   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0340   11.6080    8.2410  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+ 13  2  1  0  0  0  0
+ 13 10  1  0  0  0  0
+ 12 10  2  0  0  0  0
+  2  3  2  0  0  0  0
+ 11 10  2  0  0  0  0
+ 10  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  9  4  2  0  0  0  0
+  9  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  8  7  2  0  0  0  0
+  5  6  2  0  0  0  0
+  7  6  1  0  0  0  0
+  7 14  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+S10
+A   11
+O11
+A   12
+O12
+A   13
+N13
+A   14
+CL1
+M  END
+>  <InstanceId>
+4LV9_20J_A_601
+
+>  <ChemCompId>
+20J
+
+>  <PdbId>
+4LV9
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 S Cl
+
+>  <Name>
+7-chloro-3-methyl-2H-1,2,4-benzothiadiazine 1,1-dioxide
+
+>  <SystematicName>
+7-chloranyl-3-methyl-2H-1$l^{6},2,4-benzothiadiazine 1,1-dioxide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 Cl N2 O2 S
+
+>  <MolecularWeight>
+230.671
+
+>  <ModifiedDate>
+2013-09-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7ClN2O2S/c1-5-10-7-3-2-6(9)4-8(7)14(12,13)11-5/h2-4H,1H3,(H,10,11)
+
+>  <InChIKey>
+GDLBFKVLRPITMI-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=Nc2ccc(cc2S(=O)(=O)N1)Cl
+
+$$$$

@@ -1,0 +1,127 @@
+5C28_4XV_A_803
+  RCSB PDB12061717013D
+Coordinates from PDB:5C28:A:803 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    4.3910   11.6160   43.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9510   13.1040   41.3420   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2290   13.9100   42.1270   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1320   13.4590   39.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4490   14.8690   39.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1100   13.5230   43.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5250   11.9650   41.7660   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6650   12.3890   43.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0070   10.4160   43.4630   N 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4580   12.0800   45.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0920   14.2910   39.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1860   14.5780   44.3610  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  5  1  0  0  0  0
+ 11  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  2  1  0  0  0  0
+  2  7  2  0  0  0  0
+  2  3  1  0  0  0  0
+  7  1  1  0  0  0  0
+  3  6  2  0  0  0  0
+  1  9  1  0  0  0  0
+  1  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6 12  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+C2
+A    2
+C3
+A    3
+N4
+A    4
+C7
+A    5
+C9
+A    6
+C
+A    7
+N
+A    8
+C1
+A    9
+N5
+A   10
+C6
+A   11
+C8
+A   12
+CL
+M  END
+>  <InstanceId>
+5C28_4XV_A_803
+
+>  <ChemCompId>
+4XV
+
+>  <PdbId>
+5C28
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 Cl
+
+>  <Name>
+6-chloro-2-cyclopropyl-5-methylpyrimidin-4-amine
+
+>  <SystematicName>
+6-chloranyl-2-cyclopropyl-5-methyl-pyrimidin-4-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 Cl N3
+
+>  <MolecularWeight>
+183.638
+
+>  <ModifiedDate>
+2015-09-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10ClN3/c1-4-6(9)11-8(5-2-3-5)12-7(4)10/h5H,2-3H2,1H3,(H2,10,11,12)
+
+>  <InChIKey>
+YAXGQELQDGLZKV-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(nc(nc1Cl)C2CC2)N
+
+$$$$

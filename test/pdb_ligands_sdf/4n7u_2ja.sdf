@@ -1,0 +1,137 @@
+4N7U_2JA_A_501
+  RCSB PDB12061713513D
+Coordinates from PDB:4N7U:A:501 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   21.8930    1.9230  145.2130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.0250    0.5720  145.0120   P 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2170    0.1880  143.4530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5990    0.7820  145.3620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.7750   -0.6010  145.8190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4760   -0.9740  147.3720   P 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0110   -2.4830  147.6070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0520   -0.8360  147.7750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.4830    0.0120  148.3160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8940   -0.5490  148.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.6310    0.3370  149.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7480   -0.3910  150.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2450   -1.8270  150.7100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.4380    0.2500  151.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.7260    1.4530  152.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+OAE
+A    2
+PAN
+A    3
+OAF
+A    4
+OAB
+A    5
+OAL
+A    6
+PAO
+A    7
+OAG
+A    8
+OAC
+A    9
+CAK
+A   10
+CAI
+A   11
+CAH
+A   12
+CAM
+A   13
+CAA
+A   14
+CAJ
+A   15
+OAD
+M  END
+>  <InstanceId>
+4N7U_2JA_A_501
+
+>  <ChemCompId>
+2JA
+
+>  <PdbId>
+4N7U
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O7 P2
+
+>  <Name>
+[(E)-4-methyl-5-oxidanyl-pent-3-enyl]-phosphonooxy-phosphinic acid
+
+>  <SystematicName>
+[(E)-4-methyl-5-oxidanyl-pent-3-enyl]-phosphonooxy-phosphinic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O7 P2
+
+>  <MolecularWeight>
+260.119
+
+>  <ModifiedDate>
+2014-04-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O7P2/c1-6(5-7)3-2-4-14(8,9)13-15(10,11)12/h3,7H,2,4-5H2,1H3,(H,8,9)(H2,10,11,12)/b6-3+
+
+>  <InChIKey>
+YYYUHBYKZCBOPY-ZZXKWVIFSA-N
+
+>  <SMILES>
+C/C(=C\CCP(=O)(O)OP(=O)(O)O)/CO
+
+$$$$

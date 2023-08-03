@@ -1,0 +1,124 @@
+5CPP_ADO_A_422
+  RCSB PDB12061717083D
+Coordinates from PDB:5CPP:A:422 Model:1 without hydrogens
+ 11 13  0  0  0  0            999 V2000
+   46.4610   44.9700   15.3710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0150   44.7760   14.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.0250   44.2900   13.3020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8530   45.3610   12.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2870   45.5450   12.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0410   44.1310   12.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2400   43.0910   13.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2190   43.5230   15.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.2030   45.9790   14.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.7160   42.9290   13.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.9840   44.8270   15.4210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+O2
+M  END
+>  <InstanceId>
+5CPP_ADO_A_422
+
+>  <ChemCompId>
+ADO
+
+>  <PdbId>
+5CPP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+422
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O
+
+>  <Name>
+ADAMANTANONE
+
+>  <SystematicName>
+adamantan-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H14 O
+
+>  <MolecularWeight>
+150.218
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H14O/c11-10-8-2-6-1-7(4-8)5-9(10)3-6/h6-9H,1-5H2/t6-,7+,8-,9+
+
+>  <InChIKey>
+IYKFYARMMIESOX-SPJNRGJMSA-N
+
+>  <SMILES>
+C1C2CC3CC1CC(C2)C3=O
+
+$$$$

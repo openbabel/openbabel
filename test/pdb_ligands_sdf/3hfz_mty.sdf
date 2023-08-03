@@ -1,0 +1,130 @@
+3HFV_MTY_A_416
+  RCSB PDB12061708533D
+Coordinates from PDB:3HFV:A:416 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    5.0510   18.9500   13.1590   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7980   19.2920   11.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5820   18.5390   11.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7320   17.0590   11.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3090   16.3090   10.3800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4680   14.9300   10.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3220   16.4120   12.5560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.4770   15.0270   12.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0500   14.2920   11.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0790   14.3510   13.7870   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5290   20.7530   11.5860   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.2520   21.4720   12.5250   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5710   21.2960   10.5190   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD1
+A    6
+CE1
+A    7
+CD2
+A    8
+CE2
+A    9
+CZ
+A   10
+OH
+A   11
+C
+A   12
+O
+A   13
+OXT
+M  END
+>  <InstanceId>
+3HFV_MTY_A_416
+
+>  <ChemCompId>
+MTY
+
+>  <PdbId>
+3HFV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+416
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+META-TYROSINE
+
+>  <SystematicName>
+(2S)-2-amino-3-(3-hydroxyphenyl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C9 H11 N O3
+
+>  <MolecularWeight>
+181.189
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+TYR
+
+>  <OneLetterCode>
+Y
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H11NO3/c10-8(9(12)13)5-6-2-1-3-7(11)4-6/h1-4,8,11H,5,10H2,(H,12,13)/t8-/m0/s1
+
+>  <InChIKey>
+JZKXXXDKRQWDET-QMMMGPOBSA-N
+
+>  <SMILES>
+c1cc(cc(c1)O)C[C@@H](C(=O)O)N
+
+$$$$

@@ -1,0 +1,113 @@
+2JB8_HKV_A_1310
+  RCSB PDB12061706013D
+Coordinates from PDB:2JB8:A:1310 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+    7.1580   18.1620   59.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6250   17.0760   59.3280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7120   16.7390   60.0680   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0430   16.2700   58.3210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0570   15.7410   57.2990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6770   14.7840   56.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7790   14.2420   56.4990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9380   14.5430   55.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2740   13.7420   54.2790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+A    1
+O4
+A    2
+C5
+A    3
+O3
+A    4
+C4
+A    5
+C3
+A    6
+C2
+A    7
+O5
+A    8
+C1
+A    9
+O2
+M  END
+>  <InstanceId>
+2JB8_HKV_A_1310
+
+>  <ChemCompId>
+HKV
+
+>  <PdbId>
+2JB8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1310
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O4
+
+>  <Name>
+4,5-DIOXOPENTANOIC ACID
+
+>  <SystematicName>
+4,5-dioxopentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H6 O4
+
+>  <MolecularWeight>
+130.099
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C5H6O4/c6-3-4(7)1-2-5(8)9/h3H,1-2H2,(H,8,9)
+
+>  <InChIKey>
+YHUFRVYVNKGICT-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CC(=O)O)C(=O)C=O
+
+$$$$

@@ -1,0 +1,129 @@
+1F06_2NP_B_950
+  RCSB PDB12061702263D
+Coordinates from PDB:1F06:B:950 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+    9.8330   34.5190   41.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.7300   33.8240   41.2950   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5830   34.6220   42.3120   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2450   35.2170   39.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0260   36.3790   40.4010   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1340   34.3160   39.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3370   33.1800   38.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0360   32.6890   37.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3020   31.9830   37.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4790   32.5820   37.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2370   30.5910   38.3690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2620   30.0340   38.7530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1010   29.9880   38.5000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C1
+A    2
+O11
+A    3
+O12
+A    4
+C2
+A    5
+N2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C8
+A   11
+C7
+A   12
+O71
+A   13
+O72
+M  END
+>  <InstanceId>
+1F06_2NP_B_950
+
+>  <ChemCompId>
+2NP
+
+>  <PdbId>
+1F06
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+950
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O4
+
+>  <Name>
+L-2-AMINO-6-METHYLENE-PIMELIC ACID
+
+>  <SystematicName>
+(2S)-2-amino-6-methylidene-heptanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N O4
+
+>  <MolecularWeight>
+187.193
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13NO4/c1-5(7(10)11)3-2-4-6(9)8(12)13/h6H,1-4,9H2,(H,10,11)(H,12,13)/t6-/m0/s1
+
+>  <InChIKey>
+SGAIRWMSXVAPOO-LURJTMIESA-N
+
+>  <SMILES>
+C=C(CCC[C@@H](C(=O)O)N)C(=O)O
+
+$$$$

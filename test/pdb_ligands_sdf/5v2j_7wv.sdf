@@ -1,0 +1,118 @@
+5U6S_7WV_A_504
+  RCSB PDB12061719493D
+Coordinates from PDB:5U6S:A:504 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+  -15.3560   11.9710   -1.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2540   13.2840   -0.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.3820   13.5510    0.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.6060   12.4780    1.6110   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7170   11.1540    1.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.5840   10.9170   -0.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.9720    9.9380    2.1310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4720    8.8660    1.7220   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.6360   10.1090    3.1810   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7760   12.9280    3.5340  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  8  7  2  0  0  0  0
+ 10  4  1  0  0  0  0
+  7  9  1  0  0  0  0
+  7  5  1  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  6  1  2  0  0  0  0
+  3  2  2  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C01
+A    2
+C02
+A    3
+C03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+O08
+A    9
+O09
+A   10
+BR1
+M  END
+>  <InstanceId>
+5U6S_7WV_A_504
+
+>  <ChemCompId>
+7WV
+
+>  <PdbId>
+5U6S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+504
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O2 Br
+
+>  <Name>
+2-bromobenzoic acid
+
+>  <SystematicName>
+2-bromanylbenzoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H5 Br O2
+
+>  <MolecularWeight>
+201.017
+
+>  <ModifiedDate>
+2017-04-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H5BrO2/c8-6-4-2-1-3-5(6)7(9)10/h1-4H,(H,9,10)
+
+>  <InChIKey>
+XRXMNWGCKISMOH-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C(=O)O)Br
+
+$$$$

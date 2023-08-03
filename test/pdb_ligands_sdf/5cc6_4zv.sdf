@@ -1,0 +1,127 @@
+5CC6_4ZV_A_802
+  RCSB PDB12061717043D
+Coordinates from PDB:5CC6:A:802 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+   34.0740   77.4820   59.8540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7850   76.7560   60.9730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1540   77.3190   62.0220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7420   75.6870   60.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8200   74.5690   61.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8840   73.5420   61.7320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8040   73.6010   60.8350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7200   72.7420   60.6100   N 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9420   73.2960   59.5870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5020   74.4960   59.1490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.7010   74.7380   59.9290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6690   75.7600   59.9560   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+  1  2  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11  7  1  0  0  0  0
+ 12  4  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  6  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4  5  2  0  0  0  0
+  2  3  1  0  0  0  0
+  6  5  1  0  0  0  0
+A    1
+O01
+A    2
+C02
+A    3
+O03
+A    4
+C04
+A    5
+C05
+A    6
+C06
+A    7
+C07
+A    8
+N08
+A    9
+C09
+A   10
+C10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+5CC6_4ZV_A_802
+
+>  <ChemCompId>
+4ZV
+
+>  <PdbId>
+5CC6
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+802
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2
+
+>  <Name>
+1H-indole-5-carboxylic acid
+
+>  <SystematicName>
+1H-indole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H7 N O2
+
+>  <MolecularWeight>
+161.157
+
+>  <ModifiedDate>
+2016-08-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H7NO2/c11-9(12)7-1-2-8-6(5-7)3-4-10-8/h1-5,10H,(H,11,12)
+
+>  <InChIKey>
+IENZCGNHSIMFJE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc[nH]2)cc1C(=O)O
+
+$$$$

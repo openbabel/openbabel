@@ -1,0 +1,130 @@
+1E7A_PFL_A_4001
+  RCSB PDB12061702213D
+Coordinates from PDB:1E7A:A:4001 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    9.4980    3.6520  -12.7540   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9850    2.4950  -13.4070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2170    1.9120  -12.9580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2380    1.9590  -14.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6710    0.7480  -13.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9960    2.5250  -11.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9540    0.2030  -14.7060   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7690    0.7870  -15.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9110    2.6080  -14.9590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.7930    3.7070  -12.2540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9680    1.5720  -11.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9910    1.6030  -15.5780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1790    3.7100  -15.9380   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  8  2  0  0  0  0
+  4  9  1  0  0  0  0
+  5  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  9 12  1  0  0  0  0
+  9 13  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+C2
+A    4
+C6
+A    5
+C3
+A    6
+C7
+A    7
+C4
+A    8
+C5
+A    9
+C10
+A   10
+C8
+A   11
+C9
+A   12
+C11
+A   13
+C12
+M  END
+>  <InstanceId>
+1E7A_PFL_A_4001
+
+>  <ChemCompId>
+PFL
+
+>  <PdbId>
+1E7A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+4001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O
+
+>  <Name>
+2,6-BIS(1-METHYLETHYL)PHENOL
+
+>  <SystematicName>
+2,6-di(propan-2-yl)phenol
+
+>  <Synonyms>
+2,6-DIISOPROPYLPHENOL; PROPOFOL
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H18 O
+
+>  <MolecularWeight>
+178.271
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H18O/c1-8(2)10-6-5-7-11(9(3)4)12(10)13/h5-9,13H,1-4H3
+
+>  <InChIKey>
+OLBCVFGFOZPWHH-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)c1cccc(c1O)C(C)C
+
+$$$$

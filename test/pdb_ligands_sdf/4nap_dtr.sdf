@@ -1,0 +1,139 @@
+1DDO_DTR_E_350
+  RCSB PDB12061702153D
+Coordinates from PDB:1DDO:E:350 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   89.2300   56.2220   20.7910   N 0  0  0  0  0  0  0  0  0  0  0  0
+   89.9240   56.7060   19.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.0650   56.3790   18.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.6870   54.9730   18.3830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.5050   53.9150   18.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.8530   52.7430   18.4920   N 0  0  0  0  0  0  0  0  0  0  0  0
+   87.5860   53.0460   18.9060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.5420   52.2190   19.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.3980   52.8280   19.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   85.2760   54.2350   19.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.2920   55.0360   19.3700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.4830   54.4490   18.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.3290   56.1350   19.3600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.1400   56.9180   18.7840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   91.5340   54.9540   19.7040   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 13  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CB
+A    4
+CG
+A    5
+CD1
+A    6
+NE1
+A    7
+CE2
+A    8
+CZ2
+A    9
+CH2
+A   10
+CZ3
+A   11
+CE3
+A   12
+CD2
+A   13
+C
+A   14
+O
+A   15
+OXT
+M  END
+>  <InstanceId>
+1DDO_DTR_E_350
+
+>  <ChemCompId>
+DTR
+
+>  <PdbId>
+1DDO
+
+>  <ChainId>
+E
+
+>  <ResidueNumber>
+350
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2 O2
+
+>  <Name>
+D-TRYPTOPHAN
+
+>  <SystematicName>
+(2R)-2-amino-3-(1H-indol-3-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+D-PEPTIDE LINKING
+
+>  <Formula>
+C11 H12 N2 O2
+
+>  <MolecularWeight>
+204.225
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+W
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H12N2O2/c12-9(11(14)15)5-7-6-13-10-4-2-1-3-8(7)10/h1-4,6,9,13H,5,12H2,(H,14,15)/t9-/m1/s1
+
+>  <InChIKey>
+QIVBCDIJIAJPQS-SECBINFHSA-N
+
+>  <SMILES>
+c1ccc2c(c1)c(c[nH]2)C[C@H](C(=O)O)N
+
+$$$$

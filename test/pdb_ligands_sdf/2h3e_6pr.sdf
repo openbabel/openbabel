@@ -1,0 +1,141 @@
+2H3E_6PR_A_331
+  RCSB PDB12061705453D
+Coordinates from PDB:2H3E:A:331 Model:1 without hydrogens
+ 16 15  0  0  0  0            999 V2000
+   46.3650   27.5090   15.7100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2990   28.7120   15.6080   P 0  0  0  0  0  0  0  0  0  0  0  0
+   45.2170   29.3690   17.0750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.6720   29.7000   14.5710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   43.7010   27.9190   15.3050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5240   28.8330   15.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2610   29.8150   14.9610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8510   28.4790   16.7460   N 0  0  0  0  0  0  0  0  0  0  0  0
+   40.6770   29.2100   17.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.9900   28.3940   18.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.8730   28.1250   19.5740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.8860   28.8400   19.7340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.5010   27.2120   20.3410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0600   30.5980   17.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.2270   30.9840   17.7450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   40.0510   31.3230   18.2460   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  2  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+OAH
+A    2
+PAP
+A    3
+OAG
+A    4
+OAE
+A    5
+CAJ
+A    6
+CAN
+A    7
+OAD
+A    8
+N
+A    9
+CA
+A   10
+CB
+A   11
+CG
+A   12
+OD2
+A   13
+OD1
+A   14
+C
+A   15
+O
+A   16
+NAA
+M  END
+>  <InstanceId>
+2H3E_6PR_A_331
+
+>  <ChemCompId>
+6PR
+
+>  <PdbId>
+2H3E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+331
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N2 O7 P
+
+>  <Name>
+(S)-4-AMINO-4-OXO-3-(2-PHOSPHONOACETAMIDO)BUTANOIC ACID
+
+>  <SystematicName>
+(3S)-4-amino-4-oxo-3-(2-phosphonoethanoylamino)butanoic acid
+
+>  <Synonyms>
+(PHOSPHONOACETYL)-L-ALPHA-ASPARAGINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H11 N2 O7 P
+
+>  <MolecularWeight>
+254.135
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11N2O7P/c7-6(12)3(1-5(10)11)8-4(9)2-16(13,14)15/h3H,1-2H2,(H2,7,12)(H,8,9)(H,10,11)(H2,13,14,15)/t3-/m0/s1
+
+>  <InChIKey>
+HCFYWDYKLQITSR-VKHMYHEASA-N
+
+>  <SMILES>
+C([C@@H](C(=O)N)NC(=O)CP(=O)(O)O)C(=O)O
+
+$$$$

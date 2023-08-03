@@ -1,0 +1,117 @@
+5FDQ_60A_A_703
+  RCSB PDB12061717393D
+Coordinates from PDB:5FDQ:A:703 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   18.8820   13.4740   68.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.0850   14.1810   69.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5380   17.3430   68.6360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4480   15.2280   68.6460   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8610   17.0850   68.0650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5840   16.5340   68.1550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7810   16.3330   69.4470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8840   18.5480   69.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9640   17.7970   66.9100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   18.9400   13.5090   67.5550   O 0  0  0  0  0  0  0  0  0  0  0  0
+  9  5  1  0  0  0  0
+ 10  1  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  3  1  0  0  0  0
+  3  7  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4  7  1  0  0  0  0
+  4  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+A    1
+C8
+A    2
+C7
+A    3
+C1
+A    4
+O5
+A    5
+C6
+A    6
+O4
+A    7
+C3
+A    8
+C2
+A    9
+O9
+A   10
+O10
+M  END
+>  <InstanceId>
+5FDQ_60A_A_703
+
+>  <ChemCompId>
+60A
+
+>  <PdbId>
+5FDQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+703
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O4
+
+>  <Name>
+2-[(2~{R})-2-(hydroxymethyloxy)propoxy]ethanol
+
+>  <SystematicName>
+2-[(2~{R})-2-(hydroxymethyloxy)propoxy]ethanol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H14 O4
+
+>  <MolecularWeight>
+150.173
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14O4/c1-6(10-5-8)4-9-3-2-7/h6-8H,2-5H2,1H3/t6-/m1/s1
+
+>  <InChIKey>
+DTSSVYVAVAHLGJ-ZCFIWIBFSA-N
+
+>  <SMILES>
+C[C@H](COCCO)OCO
+
+$$$$

@@ -1,0 +1,97 @@
+4OXK_2NV_B_303
+  RCSB PDB12061714073D
+Coordinates from PDB:4OXK:B:303 Model:1 without hydrogens
+  5  4  0  0  0  0            999 V2000
+  -46.8120   24.8110   -1.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.6050   24.8070   -2.4510   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.2460   25.9430   -3.2390   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -47.5210   25.7520   -4.6280   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -46.8870   26.8820   -5.4330   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C18
+A    2
+C17
+A    3
+O16
+A    4
+C15
+A    5
+C14
+M  END
+>  <InstanceId>
+4OXK_2NV_B_303
+
+>  <ChemCompId>
+2NV
+
+>  <PdbId>
+4OXK
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+14
+
+>  <ObservedFormula>
+C4 O
+
+>  <Name>
+3,6,9,12,15-pentaoxaoctadecan-17-amine
+
+>  <SystematicName>
+1-[2-[2-[2-(2-ethoxyethoxy)ethoxy]ethoxy]ethoxy]propan-2-amine
+
+>  <Synonyms>
+Jeffamine ED-2001
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H29 N O5
+
+>  <MolecularWeight>
+279.373
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H29NO5/c1-3-15-4-5-16-6-7-17-8-9-18-10-11-19-12-13(2)14/h13H,3-12,14H2,1-2H3
+
+>  <InChIKey>
+LPPZTQZWMYYVLK-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOCCOCCOCCOCCOCC(C)N
+
+$$$$

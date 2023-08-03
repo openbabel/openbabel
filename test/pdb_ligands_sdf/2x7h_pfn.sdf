@@ -1,0 +1,151 @@
+2X7H_PFN_A_1372
+  RCSB PDB12061707233D
+Coordinates from PDB:2X7H:A:1372 Model:1 without hydrogens
+ 18 19  0  0  0  0            999 V2000
+   -7.8390  -10.8910   16.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.1690  -11.0530   16.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -10.0570  -10.0000   16.4190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -9.6620   -8.7420   15.9870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -8.3260   -8.5500   15.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.4320   -9.6270   15.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1480   -9.4450   15.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8730  -10.0100   20.1060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5720  -11.0120   20.3790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2030   -8.7960   20.3000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5520   -9.1750   19.6340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2860  -10.9450   15.1940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1910  -11.5730   15.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1220  -10.1260   15.9510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9410  -11.3860   17.1450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5190  -10.3320   19.4120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7790  -10.5590   17.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8680   -9.9240   17.3070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  5  4  2  0  0  0  0
+  5  6  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+  1  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7 14  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+  8 16  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 18 14  2  0  0  0  0
+ 17 15  2  0  0  0  0
+ 17 16  1  0  0  0  0
+ 15 13  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+CAL
+A    2
+CAJ
+A    3
+CAP
+A    4
+CAI
+A    5
+CAK
+A    6
+CAR
+A    7
+OAN
+A    8
+CAO
+A    9
+OAB
+A   10
+OAA
+A   11
+CAM
+A   12
+CAH
+A   13
+CAF
+A   14
+C2
+A   15
+CAD
+A   16
+C13
+A   17
+CAE
+A   18
+CAG
+M  END
+>  <InstanceId>
+2X7H_PFN_A_1372
+
+>  <ChemCompId>
+PFN
+
+>  <PdbId>
+2X7H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1372
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C15 O3
+
+>  <Name>
+FENOPROFEN
+
+>  <SystematicName>
+(2R)-2-(3-phenoxyphenyl)propanoic acid
+
+>  <Synonyms>
+(2R)-2-(3-PHENOXYPHENYL)PROPANOIC ACID
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C15 H14 O3
+
+>  <MolecularWeight>
+242.27
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C15H14O3/c1-11(15(16)17)12-6-5-9-14(10-12)18-13-7-3-2-4-8-13/h2-11H,1H3,(H,16,17)/t11-/m1/s1
+
+>  <InChIKey>
+RDJGLLICXDHJDY-LLVKDONJSA-N
+
+>  <SMILES>
+C[C@H](c1cccc(c1)Oc2ccccc2)C(=O)O
+
+$$$$

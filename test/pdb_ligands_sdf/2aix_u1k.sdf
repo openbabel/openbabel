@@ -1,0 +1,143 @@
+2AIX_U1K_A_261
+  RCSB PDB12061705003D
+Coordinates from PDB:2AIX:A:261 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   -0.6430   42.0240   14.4250   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4150   41.3490   15.1640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2340   41.8350   15.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3780   39.8350   15.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0400   39.1540   16.4300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.1110   37.6250   16.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1890   36.6050   16.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0610   35.0670   16.3420   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5920   35.7710   16.3740   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.4810   37.1050   16.4000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.5010   37.8620   16.4300   O 0  5  0  0  0  0  0  0  0  0  0  0
+    1.3540   36.5160   16.3650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8600   35.1440   15.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.8410   36.7830   17.7840   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9720   37.5480   15.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3470   39.4280   14.0710   N 0  3  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 16  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 15  1  0  0  0  0
+M  CHG  2  11  -1  16   1
+A    1
+O1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+S8
+A    9
+N9
+A   10
+C10
+A   11
+O11
+A   12
+C12
+A   13
+C13
+A   14
+C14
+A   15
+C15
+A   16
+N16
+M  END
+>  <InstanceId>
+2AIX_U1K_A_261
+
+>  <ChemCompId>
+U1K
+
+>  <PdbId>
+2AIX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+261
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3 S
+
+>  <Name>
+(S)-2-AMINO-3-(3-HYDROXY-5-TERT-BUTYLISOTHIAZOL-4-YL) PROPRIONIC ACID
+
+>  <SystematicName>
+4-[(2S)-2-azaniumyl-3-hydroxy-3-oxo-propyl]-5-tert-butyl-1,2-thiazol-3-olate
+
+>  <Synonyms>
+THIO-ATPA
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16 N2 O3 S
+
+>  <MolecularWeight>
+244.311
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N2O3S/c1-10(2,3)7-5(8(13)12-16-7)4-6(11)9(14)15/h6H,4,11H2,1-3H3,(H,12,13)(H,14,15)/t6-/m0/s1
+
+>  <InChIKey>
+FHWOAQCPEFTDOQ-LURJTMIESA-N
+
+>  <SMILES>
+CC(C)(C)c1c(c(ns1)[O-])C[C@@H](C(=O)O)[NH3+]
+
+$$$$

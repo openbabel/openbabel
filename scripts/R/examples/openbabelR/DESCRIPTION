@@ -1,0 +1,10 @@
+Package: openbabelR
+Type: Package
+Title: R interface to OpenBabel
+Version: 0.99.0
+Date: 2013-10-21
+Author:  your name
+Maintainer: name@example.com
+Description:  example package
+License: file LICENSE
+Depends: R (>= 2.15.1)

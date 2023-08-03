@@ -1,0 +1,125 @@
+3U4S_08P_A_503
+  RCSB PDB12061710593D
+Coordinates from PDB:3U4S:A:503 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   20.0410  -54.3920   -3.5840   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1520  -54.0470   -4.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1590  -54.0120   -5.5800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5130  -53.7610   -5.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.6770  -53.2650   -6.4020   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6080  -54.0980   -4.4450   N 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9470  -53.9040   -4.8760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.8230  -53.4430   -3.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.0090  -53.1580   -4.0490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4000  -53.3460   -2.5830   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4430  -55.2450   -5.3480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2300  -55.3800   -7.1010   S 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+  5  4  2  0  0  0  0
+  3  2  2  0  0  0  0
+ 11  7  1  0  0  0  0
+  4  2  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+  9  8  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+OAY
+A    2
+CAS
+A    3
+OAX
+A    4
+CAR
+A    5
+OAW
+A    6
+N
+A    7
+CA
+A    8
+C
+A    9
+O
+A   10
+OXT
+A   11
+CB
+A   12
+S
+M  END
+>  <InstanceId>
+3U4S_08P_A_503
+
+>  <ChemCompId>
+08P
+
+>  <PdbId>
+3U4S
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+503
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O5 S
+
+>  <Name>
+N-(carboxycarbonyl)-D-cysteine
+
+>  <SystematicName>
+(2S)-2-(carboxycarbonylamino)-3-sulfanyl-propanoic acid
+
+>  <Synonyms>
+N-oxalyl-D-cysteine
+
+>  <Type>
+D-PEPTIDE LINKING
+
+>  <Formula>
+C5 H7 N O5 S
+
+>  <MolecularWeight>
+193.178
+
+>  <ModifiedDate>
+2012-02-03
+
+>  <Parent>
+DCY
+
+>  <OneLetterCode>
+C
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7NO5S/c7-3(5(10)11)6-2(1-12)4(8)9/h2,12H,1H2,(H,6,7)(H,8,9)(H,10,11)/t2-/m1/s1
+
+>  <InChIKey>
+JOFZGZRXVKSFKN-UWTATZPHSA-N
+
+>  <SMILES>
+C([C@H](C(=O)O)NC(=O)C(=O)O)S
+
+$$$$

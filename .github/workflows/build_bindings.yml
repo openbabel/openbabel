@@ -1,0 +1,52 @@
+name: Build SWIG bindings
+
+on: [push, pull_request]
+
+env:
+  BUILD_TYPE: Release
+
+jobs:
+  build:
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            name: "Linux SWIG All Bindings",
+            os: ubuntu-latest,
+            cc: "gcc", cxx: "g++",
+            cmake_flags: "-DPYTHON_BINDINGS=ON -DPERL_BINDINGS=ON -DRUBY_BINDINGS=ON -DJAVA_BINDINGS=ON -DCSHARP_BINDINGS=ON -DRUN_SWIG=ON"
+          }
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install Dependencies (Linux)
+      if: runner.os == 'Linux'
+      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev r-base-core r-base-dev mono-devel
+
+    - name: Configure
+      run: |
+        mkdir "${{ runner.workspace }}/../build"
+        cd "${{ runner.workspace }}/../build"
+        cmake $GITHUB_WORKSPACE -GNinja -DCSHARP_EXECUTABLE=mcs -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} ${{matrix.config.cmake_flags}}
+      shell: bash
+      working-directory: ${{ runner.workspace }}/openbabel
+
+    - name: Build
+      run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build .
+      shell: bash
+      working-directory: ${{ runner.workspace }}/../build
+
+    - name: Packing
+      run: |
+        tar cvjf openbabel-latest.tar.bz2 openbabel --exclude-vcs --exclude-backups --exclude='.github*'
+      working-directory: ${{ runner.workspace }}
+
+    - name: Upload
+      uses: actions/upload-artifact@v2-preview
+      with:
+        path: ${{ runner.workspace }}/openbabel-latest.tar.bz2
+        name: openbabel.tar.bz2

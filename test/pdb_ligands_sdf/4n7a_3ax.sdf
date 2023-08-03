@@ -1,0 +1,102 @@
+4N7A_3AX_A_622
+  RCSB PDB12061713513D
+Coordinates from PDB:4N7A:A:622 Model:1 without hydrogens
+  6  6  0  0  0  0            999 V2000
+    4.5000    4.6520   29.6530   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1660    3.9230   28.7390   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6780    4.3520   27.6640   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3030    3.4940   26.9600   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1220    2.4540   27.6540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3940    2.6550   28.8240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  5  6  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  6  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+N2
+A    2
+C1
+A    3
+N1
+A    4
+N3
+A    5
+C3
+A    6
+C2
+M  END
+>  <InstanceId>
+4N7A_3AX_A_622
+
+>  <ChemCompId>
+3AX
+
+>  <PdbId>
+4N7A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+622
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 N3
+
+>  <Name>
+1H-pyrazol-5-amine
+
+>  <SystematicName>
+1H-pyrazol-5-amine
+
+>  <Synonyms>
+3-Aminopyrazole
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H5 N3
+
+>  <MolecularWeight>
+83.092
+
+>  <ModifiedDate>
+2013-11-01
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H5N3/c4-3-1-2-5-6-3/h1-2H,(H3,4,5,6)
+
+>  <InChIKey>
+JVVRJMXHNUAPHW-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cn[nH]c1N
+
+$$$$

@@ -1,0 +1,130 @@
+4M74_M74_A_402
+  RCSB PDB12061713413D
+Coordinates from PDB:4M74:A:402 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+    9.1360  -14.7400  -21.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3830  -13.7640  -21.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9350  -12.6400  -21.7000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1910  -13.8980  -23.1880   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7340  -14.0980  -23.0500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9470  -15.4440  -22.5660   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5330  -13.0810  -22.2340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6130  -12.3810  -22.8060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.3740  -11.4560  -22.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0660  -11.1870  -20.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0200  -11.8790  -20.1550   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2780  -12.8050  -20.8890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8580  -12.7200  -23.9330   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  8  7  2  0  0  0  0
+  8  9  1  0  0  0  0
+  7 12  1  0  0  0  0
+  9 10  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2  1  1  0  0  0  0
+ 12 11  2  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O3
+A    2
+C
+A    3
+O
+A    4
+CA
+A    5
+CB
+A    6
+O1
+A    7
+CG
+A    8
+CD2
+A    9
+CE2
+A   10
+CZ
+A   11
+CE1
+A   12
+CD1
+A   13
+O2
+M  END
+>  <InstanceId>
+4M74_M74_A_402
+
+>  <ChemCompId>
+M74
+
+>  <PdbId>
+4M74
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+402
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+(2S,3R)-2,3-dihydroxy-3-phenylpropanoic acid
+
+>  <SystematicName>
+(2S,3R)-2,3-bis(oxidanyl)-3-phenyl-propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H10 O4
+
+>  <MolecularWeight>
+182.173
+
+>  <ModifiedDate>
+2014-06-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H10O4/c10-7(8(11)9(12)13)6-4-2-1-3-5-6/h1-5,7-8,10-11H,(H,12,13)/t7-,8+/m1/s1
+
+>  <InChIKey>
+BNOUUNAFHCJIJD-SFYZADRCSA-N
+
+>  <SMILES>
+c1ccc(cc1)[C@H]([C@@H](C(=O)O)O)O
+
+$$$$

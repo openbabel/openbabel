@@ -1,0 +1,75 @@
+# Data file for OBDefinable class.
+# A # in the first column or a # followed by whitespace introduces a comment and
+#   the rest of the characters on a line are ignored.
+# White space is trimmed from the front and back of the line.
+#   
+# There can be any number of lines containing only whitespace and 
+#   comment between objects, but none within an object.
+# Lines which have "\n" at the end have this replaced by a new line
+#   character and the next line is concatenated.
+
+#SmartsDescriptor
+#nHal             # name of descriptor. Use for example --filter "nHal<3" 
+#[F,Cl,Br,I,At]   # SMARTS defining the descriptor
+#Number of halogen atoms\n      #This comment has two lines because of \n at the end.
+#count fluorine, chlorine, etc. #When listing plugins, use verbose option to see lines after the first
+
+#OpTransform      # Description() for the class includes a line "OpTransform is definable"
+#tautomers        # ID. Commandline option to invoke is --tautomers
+#tautomers.txt    # Datafile containing transforms. If filename is * the data follows later in the entry.
+#Replace tautomers with their standard forms. Not reliable at present. # An explanatory description.
+
+#OpTransform
+#nodative        # ID. Commandline option to invoke is --nodative
+#*               # There is no datafile; the transforms are at the end of the entry
+#Replace [N+]([O-])=O by N(=O)=O
+#TRANSFORM [N+:1](=O)[O-:2] >> [N:1](=O)=[O:2]
+
+CompoundFilter
+L5                           # ID
+HBD<5 HBA1<10 MW<500 logP<5  # definition in terms of other descriptors or properties
+Lipinski Rule of Five        # description
+
+PatternFP
+MACCS          # ID of this fingerprint type
+MACCS.txt      # File containing the SMARTS patterns
+
+SmartsDescriptor
+sbonds
+*-*
+Number of single bonds
+
+SmartsDescriptor
+dbonds
+*=*
+Number of double bonds
+
+SmartsDescriptor
+tbonds
+*#*
+Number of triple bonds
+
+SmartsDescriptor
+abonds
+*:*
+Number of aromatic bonds
+
+SmartsDescriptor
+bonds
+*~*
+Number of bonds\n
+Add or remove hydrogens to count total or bonds between heavy atoms
+
+SmartsDescriptor
+atoms
+*
+Number of atoms\n
+Add or remove hydrogens to count total or heavy atoms
+
+OBGroupContrib
+MP        # name of descriptor
+mpC.txt   # data file
+Melting point\n    # brief description
+This is a melting point descriptor developed\n   # longer description
+by Andy Lang. For details see:\n
+ http://onschallenge.wikispaces.com/MeltingPointModel011

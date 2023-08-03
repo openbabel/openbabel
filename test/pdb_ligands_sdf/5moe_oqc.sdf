@@ -1,0 +1,135 @@
+5MOE_OQC_A_409
+  RCSB PDB12061719043D
+Coordinates from PDB:5MOE:A:409 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   33.6930  149.8330  368.3620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5220  150.3750  365.4440  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0810  148.8270  366.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1150  147.7410  365.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7470  146.4800  365.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.7860  145.3000  364.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8020  144.3100  365.0810   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6910  148.6950  367.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3200  147.4280  367.8560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3500  146.3420  367.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5320  150.2350  369.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8800  151.2630  369.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6730  150.6660  368.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2000  151.5550  369.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  3  1  0  0  0  0
+  2  3  1  0  0  0  0
+  5 10  1  0  0  0  0
+  3  8  2  0  0  0  0
+ 10  9  2  0  0  0  0
+  8  9  1  0  0  0  0
+  8  1  1  0  0  0  0
+  1 13  2  0  0  0  0
+  1 11  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 14 12  1  0  0  0  0
+A    1
+C7
+A    2
+CL
+A    3
+C5
+A    4
+C6
+A    5
+C1
+A    6
+C
+A    7
+N
+A    8
+C4
+A    9
+C3
+A   10
+C2
+A   11
+C10
+A   12
+C9
+A   13
+C8
+A   14
+O
+M  END
+>  <InstanceId>
+5MOE_OQC_A_409
+
+>  <ChemCompId>
+OQC
+
+>  <PdbId>
+5MOE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+409
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O Cl
+
+>  <Name>
+[3-chloranyl-4-(furan-3-yl)phenyl]methanamine
+
+>  <SystematicName>
+[3-chloranyl-4-(furan-3-yl)phenyl]methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 Cl N O
+
+>  <MolecularWeight>
+207.656
+
+>  <ModifiedDate>
+2017-05-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10ClNO/c12-11-5-8(6-13)1-2-10(11)9-3-4-14-7-9/h1-5,7H,6,13H2
+
+>  <InChIKey>
+QCBBLYZCXYKKFL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(c(cc1CN)Cl)c2ccoc2
+
+$$$$

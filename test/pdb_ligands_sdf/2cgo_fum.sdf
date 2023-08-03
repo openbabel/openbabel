@@ -1,0 +1,109 @@
+1D4E_FUM_A_700
+  RCSB PDB12061702143D
+Coordinates from PDB:1D4E:A:700 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   16.5800   42.5690   14.0320   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5520   43.2410   14.3590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.6040   44.1030   15.3160   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1880   43.0560   13.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5260   44.1420   13.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1140   43.9770   12.3340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6000   42.7660   12.2680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6730   45.0630   11.8450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+O3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+O8
+M  END
+>  <InstanceId>
+1D4E_FUM_A_700
+
+>  <ChemCompId>
+FUM
+
+>  <PdbId>
+1D4E
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O4
+
+>  <Name>
+FUMARIC ACID
+
+>  <SystematicName>
+(E)-but-2-enedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H4 O4
+
+>  <MolecularWeight>
+116.072
+
+>  <ModifiedDate>
+2012-09-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H4O4/c5-3(6)1-2-4(7)8/h1-2H,(H,5,6)(H,7,8)/b2-1+
+
+>  <InChIKey>
+VZCYOOQTPOCHFL-OWOJBTEDSA-N
+
+>  <SMILES>
+C(=C/C(=O)O)\C(=O)O
+
+$$$$

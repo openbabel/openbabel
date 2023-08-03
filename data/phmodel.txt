@@ -1,0 +1,180 @@
+##############################################################################
+#                                                                            #
+#                   Open Babel file: phmodel.txt                             #
+#                                                                            #
+#  Copyright (c) 1998-2001 by OpenEye Scientific Software, Inc.              #
+#  Some portions Copyright (c) 2001-2003 by Geoffrey R. Hutchison            #
+#  Part of the Open Babel package, under the GNU General Public License (GPL)#
+#                                                                            #
+#  pH model data (used by phmodel.cpp:OBPhModel)                             #
+#                                                                            #
+# TRANSFORM: chemical transforms can be used to modify formal charges, bond  #
+#            orders, and to delete atoms (i.e hydrogens). Changes are applied#
+#        to vector bound atoms (use the [:#] SMARTS notation) and bonds      #
+#            between vector bound atoms.                                     #
+# SEEDCHARGE: used to seed partial charges.  Seed partial charges            #
+#             are used as initial values in Gasteiger charge calculation     #
+#                                                                            #
+##############################################################################
+
+#carboxylic acid							# pKa
+#TRANSFORM O=CO[#1:1] >> O=CO						4.0 # pKa from acid (AH)
+TRANSFORM O=C[OD1-0:1] >> O=C[O-:1]					4.0 # pKa from acid (AH)
+
+#uncomment for vinylogous carboxylic acids (e.g. ascorbic acid)
+TRANSFORM [O:1]=[C:2][C:3]=[C:4][O:5] >> [O:1]=[C:2][C:3]=[C:4][O-:5]   4.0 # pKa from acid (AH)
+
+#charged amine
+TRANSFORM [N^3;!$(N~[!#6;!#1]):1] >> [N+:1]				10.0 # pKa from conjugated acid (BH+)
+
+#imidazole: note pKa=7.0
+#if you uncomment this, also uncomment the seedcharge statement below
+TRANSFORM [nD2:1]1c[nH]cc1 >> [n+:1]1c[nH]cc1				7.0
+
+#imine
+TRANSFORM [ND3+0:1]=[#6] >> [ND3+:1]=[#6]				4.0 # pKa from conjugated acid (BH+)
+
+#tetrazole
+TRANSFORM [nD2:1]([#1:2])1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1	4.89 #pKa from acid (AH)
+TRANSFORM [nD2-0]1[nD2:1]([#1:2])[nD2-0][nD2-0]c1 >> n1[n-:1]nnc1	4.89 #pKa from acid (AH)
+TRANSFORM [nD2-0:1]1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1		4.89 #pKa from acid (AH)
+
+#azide (always apply these transformations)
+TRANSFORM [ND1:1]~[ND2:2]~[ND1:3] >> [N-:1]=[N+:2]=[N-:3] 1E+10	    # azide ion
+TRANSFORM [ND1:1]~[ND2:2]~[ND1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10   # azide group
+TRANSFORM [NH2:1]~[NH1:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
+TRANSFORM [NH1:1]~[ND2:2]~[NH1:3]~* >> [N-:1]=[N+:2]=[N:3]-* 1E+10	# azide group
+
+#nitro group (-NO2)
+TRANSFORM [O:1]=[N:2]-[O:3] >> [O:1]=[N+:2]-[O-:3]  1E+10
+TRANSFORM [O:1]-[N:2]-[O:3] >> [O:1]=[N+:2]-[O-:3]  1E+10
+
+#hydroxamic acid
+#TRANSFORM O=CN[OD1-0:1][#1:2] >> O=CN[O-:1]				8.0
+TRANSFORM O=CN[OD1-0:1]     >> O=CN[O-:1]				8.0
+
+#sulfinic acid
+TRANSFORM [SD3](=O)[OD1:1]   >> [SD3](=O)[O-:1]				2.0
+TRANSFORM [SD3](=O)[O:1][#1:2] >> [SD3](=O)[O-:1]			2.0
+
+#sulfonic acid
+TRANSFORM [SD4]([!D1])(=O)(=O)[OD1:1] >> [SD4]([!D1])(=O)(=O)[O-:1]	-2.6
+TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]	-2.6
+#sulfuric acid (same as sulfonic acid...)
+#TRANSFORM [SD4]([!D1])(=O)(=O)[OD1:1] >> [SD4]([!D1])(=O)(=O)[O-:1]
+#TRANSFORM [SD4]([!D1])(=O)(=O)[O:1][#1:2] >> [SD4]([!D1])(=O)(=O)[O-:1]
+
+#guanidine or amidine
+TRANSFORM [#6^2+0:1](=[N^2+0:2])(~[N^2:3])* >> [#6:1](=[N+1:2])(~[N:3])*		12.5
+
+#phosphate ester
+TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
+#TRANSFORM [PD4](=O)([OD2])([OD2])[OD1:1][#1:2] >> [PD4](=O)([OD2])([OD2])[O-:1]	2.0
+
+# phosphonate
+TRANSFORM [PD4](=O)([OD2])([!#8])[OD1:1] >> [PD4](=O)([OD2])([!#8])[O-:1]	2.2
+# http://research.chem.psu.edu/brpgroup/pKa_compilation.pdf
+
+#phosphoric acid
+#TRANSFORM O=P([!D1])([O:1][#1:2])[O:3][#1:4] >> O=P([*D2,*D3])([O:1])[O:3]	2.12
+TRANSFORM O=P([!D1])([O:1][#1:2])[OD1]       >> O=P([!D1])([O:1])O		2.12
+TRANSFORM O=P([*D2,*D3])([OD1:1])[OD1:2] >> O=P([*D2,*D3])([O-:1])[O-:2]	2.12
+#phosphate
+
+#
+#	Amino acids
+#									pKa sidechain
+# aspartic acid
+#TRANSFORM O=CC(N)CC(=O)O[#1:1] >> O=CC(N)CC(=O)O			3.8
+TRANSFORM O=C(O)C(N)CC(=O)[OD1:1] >> O=C(O)C(N)CC(=O)[O-:1]		3.8 
+TRANSFORM O=C(NCC=O)C(N)CC(=O)[OD1:1] >> O=C(NCC=O)C(N)CC(=O)[O-:1]     3.8 
+
+# glutamic acid
+#TRANSFORM O=CC(N)CCC(=O)O[#1:1] >> O=CC(N)CCC(=O)O		        4.3
+TRANSFORM O=C(O)C(N)CCC(=O)[OD1:1] >> O=C(O)C(N)CCC(=O)[O-:1]		5.0
+TRANSFORM O=C(NCC=O)C(N)CCC(=O)[OD1:1] >> O=C(NCC=O)C(N)CCC(=O)[O-:1]	5.0
+
+# arginine
+TRANSFORM O=C(O)C(N)CCCNC(N)=[N:1] >> O=C(O)C(N)CCCNC(N)=[N+:1] 	12.0
+TRANSFORM O=C(NCC=O)C(N)CCCNC(N)=[N:1] >> O=C(NCC=O)C(N)CCCNC(N)=[N+:1] 12.0
+
+# lysine
+TRANSFORM O=C(O)C(N)CCCC[N:1] >> O=C(O)C(N)CCCC[N+:1] 			10.5
+TRANSFORM O=C(NCC=O)C(N)CCCC[N:1] >> O=C(NCC=O)C(N)CCCC[N+:1] 	        10.5
+
+# histidine
+TRANSFORM O=C(O)C(N)Cc1[nH0:1]c[nH]c1  >> O=C(O)C(N)Cc1[n+:1]c[nH]c1            6.08
+TRANSFORM O=C(O)C(N)Cc1[nH]c[nH0:1]c1  >> O=C(O)C(N)Cc1[nH]c[n+:1]c1            6.08
+TRANSFORM O=C(NCC=O)C(N)Cc1[nH0:1]c[nH]c1  >> O=C(NCC=O)C(N)Cc1[n+:1]c[nH]c1    6.08
+
+# cysteine
+TRANSFORM O=C(O)C(N)C[S:1]  >> O=C(O)C(N)C[S-:1]			 8.28
+TRANSFORM O=C(NCC=O)C(N)C[S:1]  >> O=C(NCC=O)C(N)C[S-:1]		 8.28
+
+# tyrosine
+TRANSFORM O=C(O)C(N)Cc1ccc([O:1])cc1  >> O=C(O)C(N)Cc1ccc([O-:1])cc1	        10.1
+TRANSFORM O=C(NCC=O)C(N)Cc1ccc([O:1])cc1  >> O=C(NCC=O)C(N)Cc1ccc([O-:1])cc1    10.1
+
+# old:
+# histidine
+#TRANSFORM [nD2:1]1c[nD2]cc1 >> [n+:1]1c[nD2]cc1
+# uncomment for tryptophan
+# TRANSFORM [nD2:1]1cccc1 >> [n+:1]1cccc1
+#, histidine pKa=6.0
+
+
+#
+#	Seeding partial charges for gasteiger calculation
+#
+#default charges
+SEEDCHARGE [#6+]	1.0
+SEEDCHARGE [#6-]	-1.0
+SEEDCHARGE [#7+]	1.0
+SEEDCHARGE [#7-]	-1.0
+SEEDCHARGE [#8+]	1.0
+SEEDCHARGE [#8-]	-1.0
+SEEDCHARGE [#15+]	1.0
+SEEDCHARGE [#15-]	-1.0
+SEEDCHARGE [#16+]	1.0
+SEEDCHARGE [#16-]	-1.0
+
+#charges spread over multiple atoms
+#carboxylic acid
+SEEDCHARGE	C(=O)[O-]		0.0	-0.5	-0.5
+
+#amines
+SEEDCHARGE	[N+]		1.0
+#tetrazole
+SEEDCHARGE	[nD2]1[nD2][nD2][nD2]c1	-0.2	-0.2	-0.2   -0.2    -0.2
+
+#sulfinic
+SEEDCHARGE	[SD3](=O)[O-]		0.0	-0.5	-0.5
+#sulfuric acid
+SEEDCHARGE	[SD4](=O)(=O)([O-])[OH1]	0.0	-0.33	-0.33	-0.33	0.0
+#sulfonic acid
+SEEDCHARGE	[SD4]([D2])(~[OD1])(~[OD1])~[OD1]	0.0	0.0	-0.33	-0.33	-0.33
+
+#guanidine
+SEEDCHARGE	[#7^2]~[C^2](~[N^2])~[N^2]	0.33	0.0	0.33	0.33
+
+#amidine
+SEEDCHARGE	[#6]~[C^2](~[N^2])~[N^2]	0.0	0.0	0.5	0.5
+
+#phosphoate ester
+SEEDCHARGE	[PD4](=O)([OD2])([OD2])[OD1]	0.0	-0.5	0.0	0.0	-0.5
+#phosphoric acid
+SEEDCHARGE	O=P([!D1])([O-])[O-]	-0.66	0.0	0.0	-0.66	-0.66
+
+
+#phosphuric acid
+SEEDCHARGE	P(=O)(=O)([O-])[O-]	0.0	0.0	0.0     -0.5	-0.5
+#phosphonic acid
+SEEDCHARGE	[#6]P(~[OD1])(~[OD1])~[OD1]	0.0	0.0	-0.33  -0.33 -0.33
+
+#hydroxamic acid
+SEEDCHARGE	O=C[N;!$(N(C=O)C=O)][OD1]	-0.5	0.0	0.0	-0.5
+SEEDCHARGE	O=CN([OD1])NC=O		-0.33	0.0	0.0	-0.33	0.0 0.0	-0.33
+
+#imidazole: note pKa=7.0, histidine pKa=6.0
+#if you uncomment this, also uncomment the transform statement above
+SEEDCHARGE	[n+H]1c[nH]cc1		0.5	0.0	0.5	0.0	0.0

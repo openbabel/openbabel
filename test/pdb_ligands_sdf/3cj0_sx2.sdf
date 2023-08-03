@@ -1,0 +1,138 @@
+3CJ0_SX2_A_571
+  RCSB PDB12061708113D
+Coordinates from PDB:3CJ0:A:571 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+    8.8950   39.6270   71.6200  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0800   38.3560   72.7510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8100   37.2730   73.2200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2940   36.3180   74.0320   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7430   38.4880   73.1270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2000   37.5200   73.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0070   36.4480   74.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4320   35.4910   75.2350   N 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4050   34.6520   74.8580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5640   34.8640   73.9990   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.3960   33.3710   75.6700   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4760   33.4870   76.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.1750   34.1810   76.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7940   35.2180   77.0850   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4590   33.5300   75.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  5  2  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 10  9  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 13 12  1  0  0  0  0
+ 15 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+BR1
+A    2
+C8
+A    3
+C9
+A    4
+N2
+A    5
+C7
+A    6
+C6
+A    7
+C5
+A    8
+N1
+A    9
+C4
+A   10
+O3
+A   11
+C3
+A   12
+C2
+A   13
+C1
+A   14
+O2
+A   15
+O1
+M  END
+>  <InstanceId>
+3CJ0_SX2_A_571
+
+>  <ChemCompId>
+SX2
+
+>  <PdbId>
+3CJ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+571
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O3 Br
+
+>  <Name>
+4-[(5-bromopyridin-2-yl)amino]-4-oxobutanoic acid
+
+>  <SystematicName>
+4-[(5-bromopyridin-2-yl)amino]-4-oxo-butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H9 Br N2 O3
+
+>  <MolecularWeight>
+273.083
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H9BrN2O3/c10-6-1-2-7(11-5-6)12-8(13)3-4-9(14)15/h1-2,5H,3-4H2,(H,14,15)(H,11,12,13)
+
+>  <InChIKey>
+XFYYQDHEDOXWGA-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ncc1Br)NC(=O)CCC(=O)O
+
+$$$$

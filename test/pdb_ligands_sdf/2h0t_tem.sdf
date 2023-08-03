@@ -1,0 +1,121 @@
+1BLC_TEM_A_626
+  RCSB PDB12061702053D
+Coordinates from PDB:1BLC:A:626 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+    1.7810   -9.6680   -8.1830   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2610   -8.5360   -8.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1280   -7.6360   -9.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4500   -8.3970  -10.4550   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2770   -9.1610  -11.3370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5230   -9.6390  -11.1990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0780  -10.4610  -12.3110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2180  -10.8990  -12.2720   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.9020   -7.9320   -6.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7840   -8.9580   -6.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.0810  -10.1220   -5.7930   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+N4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+O8
+A    9
+C9
+A   10
+C10
+A   11
+O11
+M  END
+>  <InstanceId>
+1BLC_TEM_A_626
+
+>  <ChemCompId>
+TEM
+
+>  <PdbId>
+1BLC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+626
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O3
+
+>  <Name>
+N-(2-HYDROXY-4-OXO-BUTYL)-N-(3-OXO-TRANSPROPENYL)AMINE
+
+>  <SystematicName>
+3-hydroxy-4-[[(E)-3-oxoprop-1-enyl]amino]butanal
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H11 N O3
+
+>  <MolecularWeight>
+157.167
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H11NO3/c9-4-1-3-8-6-7(11)2-5-10/h1,3-5,7-8,11H,2,6H2/b3-1+/t7-/m1/s1
+
+>  <InChIKey>
+FXITUJNZFYVSNC-RCYFRSRISA-N
+
+>  <SMILES>
+C(C=O)C(CN\C=C\C=O)O
+
+$$$$

@@ -1,0 +1,123 @@
+2WD7_VGD_A_1269
+  RCSB PDB12061707133D
+Coordinates from PDB:2WD7:A:1269 Model:1 without hydrogens
+ 11 12  0  0  0  0            999 V2000
+    6.1950  -13.4710   13.6130  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9170  -11.9450   14.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2080  -11.0070   14.9780   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8570   -9.8340   15.3870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1940   -9.6190   15.0220   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8890  -10.5810   14.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2440  -11.7350   13.8490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0670   -8.6120   15.2830   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2180   -8.9940   14.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1680  -10.1810   14.0440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3540   -8.2510   14.6940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 10  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+CLA
+A    2
+CAH
+A    3
+CAC
+A    4
+CAD
+A    5
+CAK
+A    6
+CAJ
+A    7
+CAE
+A    8
+NAG
+A    9
+CAI
+A   10
+NAF
+A   11
+NAA
+M  END
+>  <InstanceId>
+2WD7_VGD_A_1269
+
+>  <ChemCompId>
+VGD
+
+>  <PdbId>
+2WD7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1269
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N3 Cl
+
+>  <Name>
+6-chloro-1H-benzimidazol-2-amine
+
+>  <SystematicName>
+6-chloro-1H-benzimidazol-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H6 Cl N3
+
+>  <MolecularWeight>
+167.596
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H6ClN3/c8-4-1-2-5-6(3-4)11-7(9)10-5/h1-3H,(H3,9,10,11)
+
+>  <InChIKey>
+PDOCNPCPPLPXRV-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)[nH]c(n2)N
+
+$$$$

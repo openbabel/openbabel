@@ -1,0 +1,130 @@
+2HKK_ALE_A_300
+  RCSB PDB12061705483D
+Coordinates from PDB:2HKK:A:300 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   -4.6580    5.4770   10.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4210    6.1100   10.5150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2790    5.3600   10.7890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3730    3.9710   10.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6070    3.3420   10.8220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7440    4.0950   10.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.0820    6.0000   10.9000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2740    3.2130   11.2110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8310    6.8590    8.7880   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8460    9.7040   10.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7710    8.5630   10.5610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.1640    7.3690   11.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.9330    6.2840   10.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  9 13  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+C9
+A   11
+N1
+A   12
+C8
+A   13
+C7
+M  END
+>  <InstanceId>
+2HKK_ALE_A_300
+
+>  <ChemCompId>
+ALE
+
+>  <PdbId>
+2HKK
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O3
+
+>  <Name>
+L-EPINEPHRINE
+
+>  <SystematicName>
+4-[(1R)-2-(methylamino)-1-oxidanyl-ethyl]benzene-1,2-diol
+
+>  <Synonyms>
+ADRENALINE
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C9 H13 N O3
+
+>  <MolecularWeight>
+183.204
+
+>  <ModifiedDate>
+2014-04-14
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H13NO3/c1-10-5-9(13)6-2-3-7(11)8(12)4-6/h2-4,9-13H,5H2,1H3/t9-/m0/s1
+
+>  <InChIKey>
+UCTWMZQNUQWSLP-VIFPVBQESA-N
+
+>  <SMILES>
+CNC[C@@H](c1ccc(c(c1)O)O)O
+
+$$$$

@@ -1,0 +1,139 @@
+3N1V_3N1_F_1
+  RCSB PDB12061709503D
+Coordinates from PDB:3N1V:F:1 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   -0.1650   77.9230   28.9120  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5040   78.0890   28.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3460   76.9620   28.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6950   77.1810   28.4450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1810   78.4370   28.1120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9200   78.5420   27.8050   S 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9750   76.7620   28.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8010   76.1820   28.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5890   74.7150   28.8210   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2460   75.9870   28.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5280   75.6680   26.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6580   75.7440   26.1730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4840   75.3040   25.8640   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3370   79.5540   28.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9810   79.3660   28.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+ 15  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  4  3  2  0  0  0  0
+  5  4  1  0  0  0  0
+  4  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 14  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+ 10  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13 11  2  0  0  0  0
+ 12 11  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+CL1
+A    2
+C2
+A    3
+C3
+A    4
+C5
+A    5
+C6
+A    6
+S7
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+C14
+A   11
+C17
+A   12
+O18
+A   13
+O19
+A   14
+C21
+A   15
+C23
+M  END
+>  <InstanceId>
+3N1V_3N1_F_1
+
+>  <ChemCompId>
+3N1
+
+>  <PdbId>
+3N1V
+
+>  <ChainId>
+F
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 O2 S Cl
+
+>  <Name>
+(5-chloro-3-methyl-1-benzothiophen-2-yl)acetic acid
+
+>  <SystematicName>
+2-(5-chloro-3-methyl-1-benzothiophen-2-yl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 Cl O2 S
+
+>  <MolecularWeight>
+240.706
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9ClO2S/c1-6-8-4-7(12)2-3-9(8)15-10(6)5-11(13)14/h2-4H,5H2,1H3,(H,13,14)
+
+>  <InChIKey>
+QNJIHQOPIPJYLU-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c2cc(ccc2sc1CC(=O)O)Cl
+
+$$$$

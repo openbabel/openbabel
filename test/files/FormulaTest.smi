@@ -1,0 +1,69 @@
+C		CH4
+[C]                           C atom
+[CH0]		C atom
+C[2H]		CH3D
+C[1H]		CH4 
+[C]([H])[H]	CH2  carbene
+[C][H]	CH    
+[CH]	CH
+[CH][2H]  CHD
+C[2H]      CH3D
+[H][H]	H2
+C[O]        methoxy radical CH3O 
+[2H][H]		HD
+C([2H])[2H]	CH2D2
+[CH0]([2H])[2H]	CD2
+[S].[O].[Cl].[Cl]       SOCl2
+[Na+].[Br-]               NaBr
+[Na+].[At-]               NaAt
+NC(N)=[NH2+].[Cl-] guanidine hydrochloride CN3H6Cl
+ON=O           HNO2 nitrous acid
+ON(=O)=O   HNO3 nitric acid
+O[N+]([O-])=O HNO3 nitric acid
+[N][O]            NO
+[N]=O            NO
+[N](=O)=O    NO2
+[O-][O+]=O O3
+C[N+]#[C-]  CH3NC
+CC(=O)O          acetic acid
+[Na+].CC(=O)[O-]          sodium acetate NaC2H3O2
+[K+].N(=O)(=O)[O-] KNO3
+C[N+]([O-])=O nitromethane CH3NO2
+COOC          dimethyl peroxide C2H6O2
+COO            methyl hydroperoxide CH4O2
+CO[O]         methly peroxy radical CH3O2
+[OH3+].Cl(=O)(=O)(=O)[O-]  hydrated perchloric acid H3ClO5
+S		hydrogen sulphide   H2S
+CS		methyl mercaptan    CH4S
+C=S		thioformaldehyde    H2CS
+CSC		dimethyl sulphide   C2H6S
+CS(=O)C		dimethyl sulphoxide C2H6SO
+CS(=O)(=O)C	dimethyl sulphone   C2H6SO2
+O=S=O		sulphur dioxide     SO2
+O=S(=O)=O	sulphur trioxide    SO3
+OS(=O)(=O)O	sulphuric acid      H2SO4
+OS(=O)O		sulphurous acid     H2SO3
+O[S](=O)=O	radical bug#1938652 HSO3
+OS(=O)=O	H added on S        H2SO3
+O[S]=O	 	radical             HSO2
+S=O		SO molecule         SO
+Using the --append formula option
+allows a quick comparison of the expected formula, given above, and the one calculated by OpenBabel.
+The formula should be independent of whether the 
+-h option "Add hydrogens (make explicit)"  is used or not.  
+The following lines test an extension to SMILES.
+The -e option "Continue with next option after error, if possible"
+ is needed to input these - otherwise these
+comments are seen as invalid SMILES and the conversion stops. 
+Cc                          ethyl radical  C2H5 
+c1ccccc1c               benzyl radical C7H7 
+c1c(cccc1)c             benzyl radical C7H7
+ccc    allyl radical C3H5
+Oo    HO2 radical
+o      OH radical
+[O]   O atom
+n=O               NO
+n(=O)(=O)    NO2
+cccc     C4H6
+Cc(C)cCCc(C)cccc(C)cccc(C)ccccc(C)cccc(C)cccc(C)CCcc(C)C lycopene
+Os(=O)=O	radical HSO3

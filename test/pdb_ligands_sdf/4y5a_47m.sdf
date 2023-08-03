@@ -1,0 +1,122 @@
+4Y5A_47M_A_416
+  RCSB PDB12061716213D
+Coordinates from PDB:4Y5A:A:416 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -3.0760    0.2190   10.7370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.8680    1.0840   10.7070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.4810    1.4400   11.9190   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0780    2.2000   10.0510   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8420    0.4790   10.1300   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3700   -1.0340   10.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7270   -1.2660   10.6970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1900    0.7960   11.3040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.1910   -0.1480   11.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5100    0.2530   11.8260   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2150    1.2290   11.0140   N 0  0  0  0  0  0  0  0  0  0  0  0
+  4  2  1  0  0  0  0
+  5  2  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  1  2  0  0  0  0
+  7  9  2  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  1  0  0  0  0
+  1  8  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+F2
+A    4
+F
+A    5
+F1
+A    6
+C3
+A    7
+C2
+A    8
+O
+A    9
+C1
+A   10
+C
+A   11
+N
+M  END
+>  <InstanceId>
+4Y5A_47M_A_416
+
+>  <ChemCompId>
+47M
+
+>  <PdbId>
+4Y5A
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+416
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O F3
+
+>  <Name>
+1-[5-(trifluoromethyl)furan-2-yl]methanamine
+
+>  <SystematicName>
+[5-(trifluoromethyl)furan-2-yl]methanamine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H6 F3 N O
+
+>  <MolecularWeight>
+165.113
+
+>  <ModifiedDate>
+2016-02-26
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H6F3NO/c7-6(8,9)5-2-1-4(3-10)11-5/h1-2H,3,10H2
+
+>  <InChIKey>
+MMOMFJIMQXUJMQ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(oc1CN)C(F)(F)F
+
+$$$$

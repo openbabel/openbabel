@@ -1,0 +1,130 @@
+2VIN_505_A_1247
+  RCSB PDB12061707063D
+Coordinates from PDB:2VIN:A:1247 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   31.5240    3.8010   28.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.6170    4.7730   27.8010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0070    4.3980   26.4000   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1320    6.2200   27.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9340    6.3530   27.0450   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0970    7.4110   27.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9130    7.1980   28.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5620    5.8270   28.5530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.0790    8.2770   28.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.3930    9.5360   27.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5500    9.7460   27.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.4180    8.6960   26.8250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.6810    8.9340   26.0370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 12  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+O5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+C11
+A   12
+C12
+A   13
+C13
+M  END
+>  <InstanceId>
+2VIN_505_A_1247
+
+>  <ChemCompId>
+505
+
+>  <PdbId>
+2VIN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1247
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O
+
+>  <Name>
+(2R)-1-(2,6-dimethylphenoxy)propan-2-amine
+
+>  <SystematicName>
+(2R)-1-(2,6-dimethylphenoxy)propan-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H17 N O
+
+>  <MolecularWeight>
+179.259
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C11H17NO/c1-8-5-4-6-9(2)11(8)13-7-10(3)12/h4-6,10H,7,12H2,1-3H3/t10-/m1/s1
+
+>  <InChIKey>
+VLPIATFUUWWMKC-SNVBAGLBSA-N
+
+>  <SMILES>
+Cc1cccc(c1OC[C@@H](C)N)C
+
+$$$$

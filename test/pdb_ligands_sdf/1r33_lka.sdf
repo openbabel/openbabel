@@ -1,0 +1,126 @@
+1R33_LKA_A_1162
+  RCSB PDB12061703503D
+Coordinates from PDB:1R33:A:1162 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+   29.8720   67.2410    7.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.5560   66.4970    8.8510   S 0  0  0  0  0  0  0  0  0  0  0  0
+   30.9170   65.3190    9.1590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8810   64.7100   10.2600   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.3640   66.0640    9.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.3870   65.4630    9.4720   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4740   66.8460    7.6670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6500   66.2430    6.9700   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.3920   66.7610    6.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.4730   67.4720    5.5180   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.9020   66.8430    6.5840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6370   67.1240    6.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+C5
+A    2
+S0
+A    3
+C1
+A    4
+N1
+A    5
+C2
+A    6
+O2
+A    7
+C3
+A    8
+O3
+A    9
+C4
+A   10
+O4
+A   11
+C6
+A   12
+O6
+M  END
+>  <InstanceId>
+1R33_LKA_A_1162
+
+>  <ChemCompId>
+LKA
+
+>  <PdbId>
+1R33
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1162
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4 S
+
+>  <Name>
+5-THIO-A/B-D-MANNOPYRANOSYLAMINE
+
+>  <SystematicName>
+(2S,3S,4S,5S,6R)-2-amino-6-(hydroxymethyl)thiane-3,4,5-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H13 N O4 S
+
+>  <MolecularWeight>
+195.237
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H13NO4S/c7-6-5(11)4(10)3(9)2(1-8)12-6/h2-6,8-11H,1,7H2/t2-,3-,4+,5+,6+/m1/s1
+
+>  <InChIKey>
+FGVRMLQUWLZGLJ-PQMKYFCFSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@@H]([C@H](S1)N)O)O)O)O
+
+$$$$

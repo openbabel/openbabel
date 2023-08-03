@@ -1,0 +1,134 @@
+5IL3_6BX_A_603
+  RCSB PDB12061718113D
+Coordinates from PDB:5IL3:A:603 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   24.4230   82.6110   11.0110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   25.3750   82.1710   12.0610   S 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2030   80.4570   12.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.9430   80.2360   13.2610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.8230   80.6420   12.5580   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.7550   78.7410   13.6400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.5060   78.5390   14.3170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1240   77.1830   14.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4950   76.4630   15.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2050   76.7320   16.4540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1230   78.1040   16.7640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.7380   78.9510   15.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2020   82.9710   13.3550   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.6990   82.4660   11.4240   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 14  2  2  0  0  0  0
+  1  2  2  0  0  0  0
+  2 13  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  7 12  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+A    1
+O01
+A    2
+S02
+A    3
+C03
+A    4
+C04
+A    5
+O05
+A    6
+C06
+A    7
+N07
+A    8
+C08
+A    9
+C09
+A   10
+O10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+A   14
+O14
+M  END
+>  <InstanceId>
+5IL3_6BX_A_603
+
+>  <ChemCompId>
+6BX
+
+>  <PdbId>
+5IL3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+603
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N O5 S
+
+>  <Name>
+(2S)-2-hydroxy-3-(morpholin-4-yl)propane-1-sulfonic acid
+
+>  <SystematicName>
+(2~{S})-3-morpholin-4-yl-2-oxidanyl-propane-1-sulfonic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H15 N O5 S
+
+>  <MolecularWeight>
+225.263
+
+>  <ModifiedDate>
+2017-03-03
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H15NO5S/c9-7(6-14(10,11)12)5-8-1-3-13-4-2-8/h7,9H,1-6H2,(H,10,11,12)/t7-/m0/s1
+
+>  <InChIKey>
+NUFBIAUZAMHTSP-ZETCQYMHSA-N
+
+>  <SMILES>
+C1COCCN1C[C@@H](CS(=O)(=O)O)O
+
+$$$$

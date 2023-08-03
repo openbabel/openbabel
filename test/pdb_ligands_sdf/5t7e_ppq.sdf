@@ -1,0 +1,121 @@
+1FPY_PPQ_A_5900
+  RCSB PDB12061702313D
+Coordinates from PDB:1FPY:A:5900 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+  -85.0290   13.5780  -69.1520   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -86.4020   14.0170  -68.9550   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -86.8950   14.6630  -70.2360   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -85.9400   15.7050  -70.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -86.0740   16.8540  -72.1520   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -87.4140   16.7310  -73.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -84.8220   16.7920  -72.9030   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -86.1560   18.2900  -71.5720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -87.2820   12.8230  -68.5270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -88.3250   12.5610  -69.1330   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -86.9770   12.2510  -67.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  2  0  0  0  0
+  5  8  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+A    1
+NP
+A    2
+CAP
+A    3
+CBP
+A    4
+CGP
+A    5
+PDP
+A    6
+CEP
+A    7
+OEA
+A    8
+OEB
+A    9
+CP
+A   10
+OP
+A   11
+OTP
+M  END
+>  <InstanceId>
+1FPY_PPQ_A_5900
+
+>  <ChemCompId>
+PPQ
+
+>  <PdbId>
+1FPY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+5900
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N O4 P
+
+>  <Name>
+PHOSPHINOTHRICIN
+
+>  <SystematicName>
+(2S)-2-amino-4-(hydroxy-methyl-phosphoryl)butanoic acid
+
+>  <Synonyms>
+2-AMINO-4-(HYDROXYMETHYL-PHOSPHINYL)BUTANOIC ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H12 N O4 P
+
+>  <MolecularWeight>
+181.127
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12NO4P/c1-11(9,10)3-2-4(6)5(7)8/h4H,2-3,6H2,1H3,(H,7,8)(H,9,10)/t4-/m0/s1
+
+>  <InChIKey>
+IAJOBQBIJHVGMQ-BYPYZUCNSA-N
+
+>  <SMILES>
+C[P@](=O)(CC[C@@H](C(=O)O)N)O
+
+$$$$

@@ -1,0 +1,137 @@
+1Z6L_DRE_A_804
+  RCSB PDB12061704503D
+Coordinates from PDB:1Z6L:A:804 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+   63.9690  -22.1520   -1.6060   N 0  0  0  0  0  0  0  0  0  0  0  0
+   65.2870  -21.9680   -2.2290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.3530  -22.7130   -1.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.0610  -24.2140   -1.3720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.1280  -24.9500   -0.5600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.7710  -26.4290   -0.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.8250  -27.1520    0.4380   C 0  0  0  0  0  0  0  0  0  0  0  0
+   67.4490  -28.5650    0.5950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   68.5060  -29.3190    1.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   69.5700  -29.8030    0.2980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   70.3540  -28.6380   -0.3100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   71.4250  -29.1320   -1.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   72.2900  -27.9800   -1.8030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.1130  -27.3440   -0.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.8830  -26.2120   -1.2140   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+NAA
+A    2
+CAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+CAG
+A    8
+NAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+NAO
+M  END
+>  <InstanceId>
+1Z6L_DRE_A_804
+
+>  <ChemCompId>
+DRE
+
+>  <PdbId>
+1Z6L
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+804
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3
+
+>  <Name>
+N-(6-AMINOHEXYL)HEXANE-1,6-DIAMINE
+
+>  <SystematicName>
+N-(6-aminohexyl)hexane-1,6-diamine
+
+>  <Synonyms>
+BIS(HEXAMETHYLENE)TRIAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H29 N3
+
+>  <MolecularWeight>
+215.379
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H29N3/c13-9-5-1-3-7-11-15-12-8-4-2-6-10-14/h15H,1-14H2
+
+>  <InChIKey>
+MRNZSTMRDWRNNR-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCCNCCCCCCN)CCN
+
+$$$$

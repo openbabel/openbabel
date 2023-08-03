@@ -1,0 +1,143 @@
+4WQ2_3SU_A_301
+  RCSB PDB12061716013D
+Coordinates from PDB:4WQ2:A:301 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+    4.4870    9.1370   35.2340   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1840    8.6020   34.3580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6600    8.2460   33.2860   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6660    8.3430   34.6330   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2580    8.9170   36.1150   S 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5650    7.7910   33.5050   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8520    7.4140   33.6480   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4770    6.6760   32.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1060    6.2270   31.4970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0050    5.5130   30.6660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.2430    5.3180   31.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4400    4.2430   30.3440  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5730    5.7730   32.4340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7270    6.4930   33.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.8500    7.0480   34.3730   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6740    7.6110   34.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10  9  1  0  0  0  0
+ 11 13  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 13 14  2  0  0  0  0
+  8 14  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 14 15  1  0  0  0  0
+  3  2  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  4  2  0  0  0  0
+  7 16  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 15 16  1  0  0  0  0
+  4  5  1  0  0  0  0
+A    1
+OAM
+A    2
+CAL
+A    3
+OAN
+A    4
+CAJ
+A    5
+SAP
+A    6
+CAI
+A    7
+CAH
+A    8
+CAE
+A    9
+CAD
+A   10
+CAC
+A   11
+CAB
+A   12
+BR
+A   13
+CAG
+A   14
+CAF
+A   15
+NAA
+A   16
+CAK
+M  END
+>  <InstanceId>
+4WQ2_3SU_A_301
+
+>  <ChemCompId>
+3SU
+
+>  <PdbId>
+4WQ2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 Br S
+
+>  <Name>
+(2Z)-3-(6-bromo-1H-indol-3-yl)-2-sulfanylprop-2-enoic acid
+
+>  <SystematicName>
+(Z)-3-(6-bromanyl-1H-indol-3-yl)-2-sulfanyl-prop-2-enoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H8 Br N O2 S
+
+>  <MolecularWeight>
+298.156
+
+>  <ModifiedDate>
+2015-08-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H8BrNO2S/c12-7-1-2-8-6(3-10(16)11(14)15)5-13-9(8)4-7/h1-5,13,16H,(H,14,15)/b10-3-
+
+>  <InChIKey>
+BTHAZQKLFQMXOX-KMKOMSMNSA-N
+
+>  <SMILES>
+c1cc2c(cc1Br)[nH]cc2/C=C(/C(=O)O)\S
+
+$$$$

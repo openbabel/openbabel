@@ -1,0 +1,114 @@
+4HM2_16M_A_1006
+  RCSB PDB12061712533D
+Coordinates from PDB:4HM2:A:1006 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   13.2650   53.4260   81.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1250   52.4040   82.7760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5470   50.8150   82.2110   S 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0350   50.8540   80.6600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8030   51.9950   79.9770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6420   49.7620   80.1180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.9550   49.8440   78.7800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7130   50.9950   78.0980   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1340   52.0470   78.6420   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9  5  1  0  0  0  0
+  7  6  2  0  0  0  0
+  5  4  2  0  0  0  0
+  6  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  1  2  1  0  0  0  0
+  3  2  1  0  0  0  0
+A    1
+C9
+A    2
+C8
+A    3
+S7
+A    4
+C4
+A    5
+C3
+A    6
+C5
+A    7
+C6
+A    8
+C1
+A    9
+C2
+M  END
+>  <InstanceId>
+4HM2_16M_A_1006
+
+>  <ChemCompId>
+16M
+
+>  <PdbId>
+4HM2
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1006
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 S
+
+>  <Name>
+(ethylsulfanyl)benzene
+
+>  <SystematicName>
+ethylsulfanylbenzene
+
+>  <Synonyms>
+"ethy lphenyl sulfide"
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H10 S
+
+>  <MolecularWeight>
+138.23
+
+>  <ModifiedDate>
+2013-10-25
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H10S/c1-2-9-8-6-4-3-5-7-8/h3-7H,2H2,1H3
+
+>  <InChIKey>
+AEHWKBXBXYNPCX-UHFFFAOYSA-N
+
+>  <SMILES>
+CCSc1ccccc1
+
+$$$$

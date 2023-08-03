@@ -1,0 +1,117 @@
+5VN1_NWH_A_404
+  RCSB PDB12061720023D
+Coordinates from PDB:5VN1:A:404 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   19.9840   -0.8340   17.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.4570    0.2090   16.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.1450    0.1490   15.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5110    0.8230   14.1080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.4420    0.8190   12.8870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.9730    1.4630   11.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.1410    2.7000   11.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.2310    0.4520   10.8750   N 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6420   -0.2020    9.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7460   -0.0340    9.2300   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+  9  8  1  0  0  0  0
+  8  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C7
+A    2
+C6
+A    3
+C5
+A    4
+C4
+A    5
+C3
+A    6
+C2
+A    7
+C1
+A    8
+N
+A    9
+C
+A   10
+O
+M  END
+>  <InstanceId>
+5VN1_NWH_A_404
+
+>  <ChemCompId>
+NWH
+
+>  <PdbId>
+5VN1
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+404
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O
+
+>  <Name>
+N-[(2S)-heptan-2-yl]formamide
+
+>  <SystematicName>
+~{N}-[(2~{S})-heptan-2-yl]methanamide
+
+>  <Synonyms>
+(S)-N-1-methylhexylformamide
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O
+
+>  <MolecularWeight>
+143.227
+
+>  <ModifiedDate>
+2017-05-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO/c1-3-4-5-6-8(2)9-7-10/h7-8H,3-6H2,1-2H3,(H,9,10)/t8-/m0/s1
+
+>  <InChIKey>
+GFVRKPKAQHTAQK-QMMMGPOBSA-N
+
+>  <SMILES>
+CCCCC[C@H](C)NC=O
+
+$$$$

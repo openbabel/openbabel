@@ -1,0 +1,143 @@
+4GVC_ANS_B_101
+  RCSB PDB12061712463D
+Coordinates from PDB:4GVC:B:101 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   13.0610   -0.3120    5.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1470    0.2850    7.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8430   -0.4140    8.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4260   -1.7430    8.3240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.3030   -2.4340    7.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8630   -3.8600    7.0750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7800   -4.4760    5.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0920   -3.7770    4.6440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4960   -2.4330    4.6460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6170   -1.7340    5.8460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5640   -4.5370    8.2870   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.7380   -6.0050    8.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.2150   -4.2160    8.7900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4340    0.5760    4.6380   S 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2400   -0.1810    3.6620   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0750    1.8310    5.0770   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 10  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5 10  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 14 15  2  0  0  0  0
+ 14 16  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C4A
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+C8A
+A   11
+N
+A   12
+CM1
+A   13
+CM2
+A   14
+S
+A   15
+O1S
+A   16
+O2S
+M  END
+>  <InstanceId>
+4GVC_ANS_B_101
+
+>  <ChemCompId>
+ANS
+
+>  <PdbId>
+4GVC
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+101
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C12 N O2 S
+
+>  <Name>
+5-(DIMETHYLAMINO)-1-NAPHTHALENESULFONIC ACID(DANSYL ACID)
+
+>  <SystematicName>
+5-dimethylaminonaphthalene-1-sulfonic acid
+
+>  <Synonyms>
+DANSYL ACID
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H13 N O3 S
+
+>  <MolecularWeight>
+251.302
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H13NO3S/c1-13(2)11-7-3-6-10-9(11)5-4-8-12(10)17(14,15)16/h3-8H,1-2H3,(H,14,15,16)
+
+>  <InChIKey>
+BBEQQKBWUHCIOU-UHFFFAOYSA-N
+
+>  <SMILES>
+CN(C)c1cccc2c1cccc2S(=O)(=O)O
+
+$$$$

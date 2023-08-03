@@ -1,0 +1,134 @@
+4CIV_48P_A_201
+  RCSB PDB12061712033D
+Coordinates from PDB:4CIV:A:201 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   13.7080    3.6830   41.9960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3790    2.7040   40.9930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8730    2.3980   41.0860   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5900    1.6990   42.3090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4380    1.5330   39.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6700    2.2910   38.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6590    1.3950   37.5240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7410    1.5240   36.6910   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5850    0.5510   37.4390   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6400    3.2770   38.4630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8920    2.9680   38.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.7230    3.1660   39.7010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8950    3.8680   39.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.7140    3.0310   38.6430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6 10  1  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+OAE
+A    2
+CAM
+A    3
+CAL
+A    4
+OAD
+A    5
+CAI
+A    6
+CAN
+A    7
+CAJ
+A    8
+OAC
+A    9
+OAA
+A   10
+OAF
+A   11
+CAG
+A   12
+CAK
+A   13
+CAH
+A   14
+OAB
+M  END
+>  <InstanceId>
+4CIV_48P_A_201
+
+>  <ChemCompId>
+48P
+
+>  <PdbId>
+4CIV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O6
+
+>  <Name>
+(1R,4R,5R)-1,4,5-trihydroxy-3-hydroxymethylcyclohex-2-ene-1-carboxylic acid
+
+>  <SystematicName>
+(1R,4R,5R)-3-(hydroxymethyl)-1,4,5-tris(oxidanyl)cyclohex-2-ene-1-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H12 O6
+
+>  <MolecularWeight>
+204.177
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12O6/c9-3-4-1-8(14,7(12)13)2-5(10)6(4)11/h1,5-6,9-11,14H,2-3H2,(H,12,13)/t5-,6-,8+/m1/s1
+
+>  <InChIKey>
+QZOLOUIVSUKSKM-JKMUOGBPSA-N
+
+>  <SMILES>
+C1[C@H]([C@@H](C(=C[C@]1(C(=O)O)O)CO)O)O
+
+$$$$

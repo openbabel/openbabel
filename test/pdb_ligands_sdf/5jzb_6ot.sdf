@@ -1,0 +1,126 @@
+5JZB_6OT_A_301
+  RCSB PDB12061718323D
+Coordinates from PDB:5JZB:A:301 Model:1 without hydrogens
+ 12 12  0  0  0  0            999 V2000
+    2.8780   -2.5190   16.1880   N 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5680    1.6570   14.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7160    1.2020   13.7030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.8680   -0.1470   13.4160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8670   -1.0380   13.7630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.7260   -0.5780   14.3980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5660    0.7660   14.6870   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3970    3.3410   14.6820  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2960   -0.7110   12.6260  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4660   -1.7210   14.8290   S 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1930   -1.0530   14.9660   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2220   -2.6120   13.7210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1 10  1  0  0  0  0
+ 12 10  2  0  0  0  0
+ 10  6  1  0  0  0  0
+ 10 11  2  0  0  0  0
+  8  2  1  0  0  0  0
+  7  6  2  0  0  0  0
+  7  2  1  0  0  0  0
+  6  5  1  0  0  0  0
+  2  3  2  0  0  0  0
+  5  4  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  9  1  0  0  0  0
+A    1
+N12
+A    2
+C01
+A    3
+C02
+A    4
+C03
+A    5
+C04
+A    6
+C05
+A    7
+C06
+A    8
+CL7
+A    9
+CL8
+A   10
+S09
+A   11
+O10
+A   12
+O11
+M  END
+>  <InstanceId>
+5JZB_6OT_A_301
+
+>  <ChemCompId>
+6OT
+
+>  <PdbId>
+5JZB
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O2 S Cl2
+
+>  <Name>
+3,5-dichlorobenzene-1-sulfonamide
+
+>  <SystematicName>
+3,5-bis(chloranyl)benzenesulfonamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H5 Cl2 N O2 S
+
+>  <MolecularWeight>
+226.08
+
+>  <ModifiedDate>
+2017-03-31
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H5Cl2NO2S/c7-4-1-5(8)3-6(2-4)12(9,10)11/h1-3H,(H2,9,10,11)
+
+>  <InChIKey>
+AHNOVNYOUPQVRX-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(cc(cc1Cl)Cl)S(=O)(=O)N
+
+$$$$

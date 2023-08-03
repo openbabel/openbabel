@@ -1,0 +1,127 @@
+1ULJ_BNL_A_601
+  RCSB PDB12061704133D
+Coordinates from PDB:1ULJ:A:601 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+    8.2910   12.3090   96.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9110   12.3460   96.5010   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3680   11.8600   97.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2020   11.3260   98.6590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5770   11.2880   98.4540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1260   11.7770   97.2660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3330   12.5860   93.8880   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5440   13.8820   93.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5430   14.6600   93.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.3270   14.1510   95.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1080   12.8620   95.4920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1150   12.0740   94.9200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  6  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 11  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C12
+A    8
+C13
+A    9
+C14
+A   10
+C15
+A   11
+C16
+A   12
+C17
+M  END
+>  <InstanceId>
+1ULJ_BNL_A_601
+
+>  <ChemCompId>
+BNL
+
+>  <PdbId>
+1ULJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12
+
+>  <Name>
+BIPHENYL
+
+>  <SystematicName>
+1,1'-biphenyl
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H10
+
+>  <MolecularWeight>
+154.208
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H10/c1-3-7-11(8-4-1)12-9-5-2-6-10-12/h1-10H
+
+>  <InChIKey>
+ZUOUZKKEUPVFJK-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2ccccc2
+
+$$$$

@@ -1,0 +1,117 @@
+1N97_SRT_A_601
+  RCSB PDB12061703233D
+Coordinates from PDB:1N97:A:601 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   11.5540    3.4510   40.5240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5780    2.0640   42.0860   O 0  0  0  0  0  0  0  0  0  0  0  0
+   10.4710    2.8540   41.1540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0700    3.1770   40.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0800    3.5540   39.3810   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5600    4.4930   41.3500   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3130    4.9220   42.4900   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.0610    4.4360   41.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4570    3.3910   41.4460   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.4070    5.5620   41.4790   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  3  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+O1
+A    2
+O11
+A    3
+C1
+A    4
+C2
+A    5
+O2
+A    6
+C3
+A    7
+O3
+A    8
+C4
+A    9
+O4
+A   10
+O41
+M  END
+>  <InstanceId>
+1N97_SRT_A_601
+
+>  <ChemCompId>
+SRT
+
+>  <PdbId>
+1N97
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 O6
+
+>  <Name>
+S,R MESO-TARTARIC ACID
+
+>  <SystematicName>
+(2S,3R)-2,3-dihydroxybutanedioic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H6 O6
+
+>  <MolecularWeight>
+150.087
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H6O6/c5-1(3(7)8)2(6)4(9)10/h1-2,5-6H,(H,7,8)(H,9,10)/t1-,2+
+
+>  <InChIKey>
+FEWJPZIEWOKRBE-XIXRPRMCSA-N
+
+>  <SMILES>
+[C@H]([C@H](C(=O)O)O)(C(=O)O)O
+
+$$$$

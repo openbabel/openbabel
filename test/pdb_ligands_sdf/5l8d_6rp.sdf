@@ -1,0 +1,135 @@
+5L8D_6RP_B_608
+  RCSB PDB12061718453D
+Coordinates from PDB:5L8D:B:608 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   35.7940   22.7820   23.8620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1270   23.9030   23.2430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.9820   23.7020   21.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.6160   22.4370   21.8210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.4410   21.9220   22.9390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0660   20.5550   23.2520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.3540   19.7110   22.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.7400   19.9270   21.6930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   37.0240   18.9800   23.6760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9000   20.1620   22.4990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6280   20.0670   21.1640   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.4690   19.5570   20.9280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.9630   19.2860   22.1190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8250   19.6330   23.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 11  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+  8  7  2  0  0  0  0
+  4  3  2  0  0  0  0
+  4  5  1  0  0  0  0
+  3  2  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 10  6  1  0  0  0  0
+  7  6  1  0  0  0  0
+  7  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  1  1  0  0  0  0
+  2  1  2  0  0  0  0
+A    1
+CAD
+A    2
+CAI
+A    3
+CAK
+A    4
+NAL
+A    5
+NAE
+A    6
+CA
+A    7
+C
+A    8
+OXT
+A    9
+O
+A   10
+N
+A   11
+NAM
+A   12
+CAN
+A   13
+CAJ
+A   14
+CAH
+M  END
+>  <InstanceId>
+5L8D_6RP_B_608
+
+>  <ChemCompId>
+6RP
+
+>  <PdbId>
+5L8D
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+608
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N4 O2
+
+>  <Name>
+bis(pyrzol-1-yl)acetate scorpionate
+
+>  <SystematicName>
+2,2-di(pyrazol-1-yl)ethanoic acid
+
+>  <Synonyms>
+BPZ
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N4 O2
+
+>  <MolecularWeight>
+192.175
+
+>  <ModifiedDate>
+2017-02-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N4O2/c13-8(14)7(11-5-1-3-9-11)12-6-2-4-10-12/h1-7H,(H,13,14)
+
+>  <InChIKey>
+NJDSSVBTTVUKHM-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnn(c1)C(C(=O)O)n2cccn2
+
+$$$$

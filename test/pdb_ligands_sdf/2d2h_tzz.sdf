@@ -1,0 +1,109 @@
+2D2H_TZZ_A_901
+  RCSB PDB12061705183D
+Coordinates from PDB:2D2H:A:901 Model:1 without hydrogens
+  8  7  0  0  0  0            999 V2000
+   27.5650   20.9970    1.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4760   20.7420    0.3890   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.6720   21.7540    0.0390   P 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2180   21.5960   -1.4470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.0540   23.2110    0.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   28.4030   23.8230   -0.8190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.8040   21.5180    1.1540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.1220   21.1560    0.7500   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  3  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+A    1
+C
+A    2
+O1
+A    3
+P
+A    4
+O
+A    5
+O2
+A    6
+C1
+A    7
+O3
+A    8
+C2
+M  END
+>  <InstanceId>
+2D2H_TZZ_A_901
+
+>  <ChemCompId>
+TZZ
+
+>  <PdbId>
+2D2H
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O4 P
+
+>  <Name>
+TRIMETHYL PHOSPHATE
+
+>  <SystematicName>
+trimethyl phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H9 O4 P
+
+>  <MolecularWeight>
+140.075
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H9O4P/c1-5-8(4,6-2)7-3/h1-3H3
+
+>  <InChIKey>
+WVLBCYQITXONBZ-UHFFFAOYSA-N
+
+>  <SMILES>
+COP(=O)(OC)OC
+
+$$$$

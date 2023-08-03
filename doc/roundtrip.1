@@ -1,0 +1,50 @@
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.1
+.Dt roundtrip 1 URM
+.Sh NAME
+.Nm roundtrip
+.Nd a comparison program for testing roundtrip conversion
+.Sh SYNOPSIS
+.Nm
+.Ar filename
+.Ar filename
+.Sh DESCRIPTION
+The roundtrip program is essentially a "chemical diff." That is,
+it will return with an error if two files do not have the same
+number of atoms, the same number of molecules, and where appropriate,
+the same element and coordinates for each atom.
+.Sh OPTIONS
+If given two filenames, roundtrip will guess the file format
+from the extension.
+.Sh EXAMPLES
+.Pp
+Compare two files created via a roundtrip test
+.Dl "roundtrip 3d.sdf 3d.xyz"
+.Sh SEE ALSO
+.Xr obabel 1 .
+.Pp
+The web pages for Open Babel can be found at:
+\%<\fBhttp://openbabel.org/\fR>
+.Sh AUTHORS
+.An -nosplit
+Open Babel is developed by a cast of many, including currrent maintainers
+.An Geoff Hutchison ,
+.An Chris Morley ,
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
+\%<\fBhttp://openbabel.org/wiki/THANKS\fR>
+.Sh COPYRIGHT
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+.br
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and
+other contributors.
+.Pp
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+.Pp
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.

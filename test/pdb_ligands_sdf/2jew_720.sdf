@@ -1,0 +1,146 @@
+2JEW_720_A_1310
+  RCSB PDB12061706023D
+Coordinates from PDB:2JEW:A:1310 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+   79.4660   16.3410   -0.6950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   80.3290   17.2560   -1.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.1640   24.3510    3.2950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.9680   27.6400    2.1870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.2210   25.2580    2.5410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   82.0740   26.4970    1.6750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.9250   18.3120   -0.4950   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.8310   19.3380   -0.0960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.3960   20.3740    0.8910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.2870   21.4050    1.2370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.9220   22.5910    1.9040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.0240   23.2840    1.6310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   79.4760   23.3650    2.9890   N 0  0  0  0  0  0  0  0  0  0  0  0
+   80.9750   19.8280    2.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.1310   24.3080    2.4560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   82.2020   19.9810    2.3710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   80.2260   19.2290    2.9540   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3 13  2  0  0  0  0
+  3 15  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 15  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 12 15  1  0  0  0  0
+ 14 16  2  0  0  0  0
+ 14 17  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+CG
+A    4
+CE1
+A    5
+CE2
+A    6
+CZ
+A    7
+CH
+A    8
+CM
+A    9
+CA2
+A   10
+CB2
+A   11
+CG2
+A   12
+CD3
+A   13
+N2
+A   14
+C
+A   15
+N1
+A   16
+O
+A   17
+OXT
+M  END
+>  <InstanceId>
+2JEW_720_A_1310
+
+>  <ChemCompId>
+720
+
+>  <PdbId>
+2JEW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1310
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N3 O2
+
+>  <Name>
+(2S)-5-AMINO-2-[(1-PROPYL-1H-IMIDAZOL-4-YL)METHYL]PENTANOIC ACID
+
+>  <SystematicName>
+(2S)-5-amino-2-[(1-propylimidazol-4-yl)methyl]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H21 N3 O2
+
+>  <MolecularWeight>
+239.314
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C12H21N3O2/c1-2-6-15-8-11(14-9-15)7-10(12(16)17)4-3-5-13/h8-10H,2-7,13H2,1H3,(H,16,17)/t10-/m0/s1
+
+>  <InChIKey>
+OTDGPKRCQXSTPV-JTQLQIEISA-N
+
+>  <SMILES>
+CCCn1cc(nc1)C[C@H](CCCN)C(=O)O
+
+$$$$

@@ -1,0 +1,113 @@
+2DBW_GGL_B_601
+  RCSB PDB12061705203D
+Coordinates from PDB:2DBW:B:601 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   13.7900  -35.9780  -24.7050   N 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8280  -35.0890  -24.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2590  -34.0800  -23.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.0660  -33.3070  -22.6340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.5430  -34.3590  -25.3250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6910  -34.1300  -26.5580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.4500  -33.5290  -27.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4070  -32.6240  -27.6190   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0280  -33.8830  -23.2120   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  9  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+OE1
+A    9
+OXT
+M  END
+>  <InstanceId>
+2DBW_GGL_B_601
+
+>  <ChemCompId>
+GGL
+
+>  <PdbId>
+2DBW
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+1
+
+>  <ObservedFormula>
+C5 N O3
+
+>  <Name>
+GAMMA-L-GLUTAMIC ACID
+
+>  <SystematicName>
+(2S)-2-azanylpentanedioic acid
+
+>  <Synonyms>
+L-GLUTAMIC ACID
+
+>  <Type>
+L-gamma-peptide, C-delta linking
+
+>  <Formula>
+C5 H9 N O4
+
+>  <MolecularWeight>
+147.129
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+E
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H9NO4/c6-3(5(9)10)1-2-4(7)8/h3H,1-2,6H2,(H,7,8)(H,9,10)/t3-/m0/s1
+
+>  <InChIKey>
+WHUUTDBJXJRKMK-VKHMYHEASA-N
+
+>  <SMILES>
+C(CC(=O)O)[C@@H](C(=O)O)N
+
+$$$$

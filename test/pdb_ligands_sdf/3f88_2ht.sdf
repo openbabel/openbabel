@@ -1,0 +1,114 @@
+3F88_2HT_A_998
+  RCSB PDB12061708333D
+Coordinates from PDB:3F88:A:998 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   10.6530  -11.4330   32.9600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2600  -11.5010   32.6470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4390  -13.5210   33.1160   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3330  -15.9010   33.5570   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3950  -14.7730   33.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2550  -12.8670   32.8540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4530  -10.8010   32.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6390  -12.8140   33.1770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9390  -10.6160   32.9970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  1  2  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  6  2  0  0  0  0
+  2  7  1  0  0  0  0
+  6  3  1  0  0  0  0
+  5  3  1  0  0  0  0
+  3  8  2  0  0  0  0
+  4  5  3  0  0  0  0
+A    1
+C24
+A    2
+C26
+A    3
+C28
+A    4
+N30
+A    5
+C29
+A    6
+C27
+A    7
+C25
+A    8
+C31
+A    9
+C23
+M  END
+>  <InstanceId>
+3F88_2HT_A_998
+
+>  <ChemCompId>
+2HT
+
+>  <PdbId>
+3F88
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+998
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N
+
+>  <Name>
+3-methylbenzonitrile
+
+>  <SystematicName>
+3-methylbenzonitrile
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H7 N
+
+>  <MolecularWeight>
+117.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H7N/c1-7-3-2-4-8(5-7)6-9/h2-5H,1H3
+
+>  <InChIKey>
+BOHCMQZJWOGWTA-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1cccc(c1)C#N
+
+$$$$

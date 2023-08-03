@@ -1,0 +1,125 @@
+3WC5_DDK_A_403
+  RCSB PDB12061711203D
+Coordinates from PDB:3WC5:A:403 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+    4.8260  -17.6990    3.7800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.8990  -18.4820    3.3930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.7440  -18.5410    3.9530   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.1950  -19.3060    2.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.4710  -20.1220    2.4030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2450  -21.3380    3.9530  Se 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4410  -18.3750    0.9640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2070  -17.5470    0.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.3800  -16.9540   -0.9110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.6710  -16.0860   -1.0910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7060  -15.2310    0.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2450  -13.9350   -0.1300   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  1  0  0  0  0
+  8  7  1  0  0  0  0
+  7  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  2  1  0  0  0  0
+  5  6  1  0  0  0  0
+  2  1  2  0  0  0  0
+  2  3  1  0  0  0  0
+A    1
+OAB
+A    2
+CAK
+A    3
+OAC
+A    4
+CAL
+A    5
+CAF
+A    6
+SED
+A    7
+CAJ
+A    8
+CAI
+A    9
+CAH
+A   10
+CAG
+A   11
+CAE
+A   12
+NAA
+M  END
+>  <InstanceId>
+3WC5_DDK_A_403
+
+>  <ChemCompId>
+DDK
+
+>  <PdbId>
+3WC5
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O2 Se
+
+>  <Name>
+(2R)-7-amino-2-(selanylmethyl)heptanoic acid
+
+>  <SystematicName>
+(2R)-7-azanyl-2-(selanylmethyl)heptanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O2 Se
+
+>  <MolecularWeight>
+238.186
+
+>  <ModifiedDate>
+2013-09-27
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO2Se/c9-5-3-1-2-4-7(6-12)8(10)11/h7,12H,1-6,9H2,(H,10,11)/t7-/m0/s1
+
+>  <InChIKey>
+PKYDFIWWGOFUJY-ZETCQYMHSA-N
+
+>  <SMILES>
+C(CC[C@@H](C[SeH])C(=O)O)CCN
+
+$$$$

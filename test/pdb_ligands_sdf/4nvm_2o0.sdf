@@ -1,0 +1,135 @@
+4NVM_2O0_B_303
+  RCSB PDB12061713573D
+Coordinates from PDB:4NVM:B:303 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+  -15.8080    1.8390    3.3880   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.0310    1.3170    2.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.2790    1.4640    1.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2560    2.1310    2.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9850    2.6070    3.4770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7820    2.4680    4.0350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.8130    3.0510    5.2330   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0370    3.5400    5.4130   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7510    3.2640    4.3260   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.1540    3.5760    4.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6040    4.8480    4.7020   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.0800    4.5120    6.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.5570    3.4070    6.3650   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9010    5.4820    6.9930   N 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  2  0  0  0  0
+  3  4  1  0  0  0  0
+  2  1  1  0  0  0  0
+  4  5  2  0  0  0  0
+  1  6  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+ 10  9  1  0  0  0  0
+ 10 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+  9  8  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  7  8  2  0  0  0  0
+ 12 13  2  0  0  0  0
+ 12 14  1  0  0  0  0
+A    1
+CAE
+A    2
+CAC
+A    3
+CAD
+A    4
+CAF
+A    5
+CAM
+A    6
+CAL
+A    7
+NAJ
+A    8
+CAG
+A    9
+NAN
+A   10
+CAI
+A   11
+CAH
+A   12
+CAK
+A   13
+OAB
+A   14
+NAA
+M  END
+>  <InstanceId>
+4NVM_2O0_B_303
+
+>  <ChemCompId>
+2O0
+
+>  <PdbId>
+4NVM
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+303
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O
+
+>  <Name>
+3-(1H-benzimidazol-1-yl)propanamide
+
+>  <SystematicName>
+3-(benzimidazol-1-yl)propanamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H11 N3 O
+
+>  <MolecularWeight>
+189.214
+
+>  <ModifiedDate>
+2013-12-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H11N3O/c11-10(14)5-6-13-7-12-8-3-1-2-4-9(8)13/h1-4,7H,5-6H2,(H2,11,14)
+
+>  <InChIKey>
+UTOCMNYFMMLILL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)ncn2CCC(=O)N
+
+$$$$

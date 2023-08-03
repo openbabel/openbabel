@@ -1,0 +1,143 @@
+5NPC_94E_A_922
+  RCSB PDB12061719123D
+Coordinates from PDB:5NPC:A:922 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   29.9860   80.4010   34.9690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6220   80.3310   35.9740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.6330   79.8630   36.2320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.5350   79.9020   34.8320   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1940   79.6510   37.2130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   29.7040   79.9430   37.4650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2860   79.0110   38.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.8410   80.6440   36.4410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.2080   81.8080   35.1270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.0560   77.6320   38.2150   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3580   80.0840   38.2680   O 0  0  0  0  0  0  0  0  0  0  0  0
+   26.2240   79.9700   35.7760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.8990   80.1930   33.5960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5880   82.0580   35.8210   S 0  0  0  0  0  0  0  0  0  0  0  0
+   32.5470   82.4660   34.8300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   31.5420   83.0790   36.8680   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 13  4  1  0  0  0  0
+ 15 14  2  0  0  0  0
+  4  1  1  0  0  0  0
+  4  2  1  0  0  0  0
+  1  9  1  0  0  0  0
+  1  3  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 12  2  1  0  0  0  0
+ 14  8  1  0  0  0  0
+ 14 16  2  0  0  0  0
+  2  5  1  0  0  0  0
+  3  8  1  0  0  0  0
+  3  6  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6  7  1  0  0  0  0
+ 10  7  1  0  0  0  0
+A    1
+C1
+A    2
+C3
+A    3
+C6
+A    4
+C2
+A    5
+C4
+A    6
+C5
+A    7
+C7
+A    8
+O6
+A    9
+O1
+A   10
+O7
+A   11
+O4
+A   12
+O3
+A   13
+O2
+A   14
+S14
+A   15
+O15
+A   16
+O16
+M  END
+>  <InstanceId>
+5NPC_94E_A_922
+
+>  <ChemCompId>
+94E
+
+>  <PdbId>
+5NPC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+922
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 O8 S
+
+>  <Name>
+(3~{a}~{R},4~{R},5~{S},6~{R},7~{R},7~{a}~{S})-7-(hydroxymethyl)-2,2-bis(oxidanylidene)-3~{a},4,5,6,7,7~{a}-hexahydrobenzo[d][1,3,2]dioxathiole-4,5,6-triol
+
+>  <SystematicName>
+(3~{a}~{R},4~{R},5~{S},6~{R},7~{R},7~{a}~{S})-7-(hydroxymethyl)-2,2-bis(oxidanylidene)-3~{a},4,5,6,7,7~{a}-hexahydrobenzo[d][1,3,2]dioxathiole-4,5,6-triol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H12 O8 S
+
+>  <MolecularWeight>
+256.23
+
+>  <ModifiedDate>
+2017-08-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H12O8S/c8-1-2-3(9)4(10)5(11)7-6(2)14-16(12,13)15-7/h2-11H,1H2/t2-,3-,4+,5-,6+,7-/m1/s1
+
+>  <InChIKey>
+ZCXRKCCKXOHKLN-XQCVOTFFSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@@H]([C@H]([C@@H]2[C@H]1OS(=O)(=O)O2)O)O)O)O
+
+$$$$

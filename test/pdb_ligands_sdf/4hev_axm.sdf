@@ -1,0 +1,140 @@
+4HEV_AXM_A_502
+  RCSB PDB12061712513D
+Coordinates from PDB:4HEV:A:502 Model:1 without hydrogens
+ 15 17  0  0  0  0            999 V2000
+   -4.7640   -4.4020   21.8480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5100   -5.1650   22.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9400   -4.7570   23.8960   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8220   -3.3930   24.1520   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8460   -6.6350   22.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9580   -7.3250   21.6240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5790   -6.6760   21.5820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.7140   -7.3700   20.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8030   -8.7920   22.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9420   -9.5080   20.9630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.6020   -9.3930   19.5940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5700   -8.8430   20.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.6320   -7.2370   20.2620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.7680   -7.9250   19.2120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3980   -7.2530   19.1780   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 15 14  1  0  0  0  0
+ 15  8  1  0  0  0  0
+ 14 11  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 11 10  1  0  0  0  0
+ 13  6  1  0  0  0  0
+  8 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 12 10  1  0  0  0  0
+ 10  9  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6  5  1  0  0  0  0
+  1  2  2  0  0  0  0
+  5  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+A    1
+O28
+A    2
+C27
+A    3
+N29
+A    4
+O30
+A    5
+C26
+A    6
+C5
+A    7
+C4
+A    8
+C3
+A    9
+C9
+A   10
+C1
+A   11
+C8
+A   12
+C2
+A   13
+C6
+A   14
+C7
+A   15
+C10
+M  END
+>  <InstanceId>
+4HEV_AXM_A_502
+
+>  <ChemCompId>
+AXM
+
+>  <PdbId>
+4HEV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 N O2
+
+>  <Name>
+N-hydroxy-2-[(3S,5S,7S)-tricyclo[3.3.1.1~3,7~]dec-1-yl]acetamide
+
+>  <SystematicName>
+2-(1-adamantyl)-N-oxidanyl-ethanamide
+
+>  <Synonyms>
+Adamantane acetic acid hydroxamate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H19 N O2
+
+>  <MolecularWeight>
+209.285
+
+>  <ModifiedDate>
+2013-01-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H19NO2/c14-11(13-15)7-12-4-8-1-9(5-12)3-10(2-8)6-12/h8-10,15H,1-7H2,(H,13,14)/t8-,9+,10-,12-
+
+>  <InChIKey>
+JKZCKUGJZBWOQO-GOCCLTDMSA-N
+
+>  <SMILES>
+C1C2CC3CC1CC(C2)(C3)CC(=O)NO
+
+$$$$

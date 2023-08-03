@@ -1,0 +1,135 @@
+5UQ0_WP1_A_801
+  RCSB PDB12061719543D
+Coordinates from PDB:5UQ0:A:801 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+    6.7920   -1.4840   20.6740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7800   -0.3730   20.8170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.3690   -0.9580   20.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9440    0.3120   22.1950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9830    0.5990   19.7430   O 0  0  0  0  0  0  0  0  0  0  0  0
+    7.2050    0.1930   19.0970   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.6800   -0.9700   19.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8130   -1.5110   19.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5280   -0.8590   18.1260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0460    0.3410   17.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8510    0.8370   18.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3330    2.1270   17.5660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9930    2.8190   16.7650   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1110    2.4900   18.0130   N 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 13 12  2  0  0  0  0
+  9  8  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 11  6  2  0  0  0  0
+  8  7  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  5  1  0  0  0  0
+  7  1  1  0  0  0  0
+  3  2  1  0  0  0  0
+  5  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+A    1
+CAG
+A    2
+CAH
+A    3
+CAJ
+A    4
+CAK
+A    5
+OAI
+A    6
+CAC
+A    7
+CAB
+A    8
+CAA
+A    9
+CAF
+A   10
+CAE
+A   11
+CAD
+A   12
+CAL
+A   13
+OAN
+A   14
+NAM
+M  END
+>  <InstanceId>
+5UQ0_WP1_A_801
+
+>  <ChemCompId>
+WP1
+
+>  <PdbId>
+5UQ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+2,2-dimethyl-2,3-dihydro-1-benzofuran-7-carboxamide
+
+>  <SystematicName>
+2,2-dimethyl-3~{H}-1-benzofuran-7-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H13 N O2
+
+>  <MolecularWeight>
+191.226
+
+>  <ModifiedDate>
+2017-02-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H13NO2/c1-11(2)6-7-4-3-5-8(10(12)13)9(7)14-11/h3-5H,6H2,1-2H3,(H2,12,13)
+
+>  <InChIKey>
+XEJUYZUPHDEACN-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1(Cc2cccc(c2O1)C(=O)N)C
+
+$$$$

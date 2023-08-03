@@ -1,0 +1,115 @@
+3MCT_3MC_A_600
+  RCSB PDB12061709443D
+Coordinates from PDB:3MCT:A:600 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   16.7470   14.5230   21.6720   N 0  3  0  0  0  0  0  0  0  0  0  0
+   15.7990   15.2070   22.5510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.3400   14.6020   19.8470   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.4520   15.1290   20.7050   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2440   16.4950   20.5610   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.8810   13.2020   21.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2020   12.6210   22.8990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.7830   12.5170   21.0840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4620   13.2880   20.0830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  6  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  2  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+M  CHG  1   1   1
+A    1
+N3
+A    2
+CN3
+A    3
+N1
+A    4
+C2
+A    5
+O2
+A    6
+C4
+A    7
+N4
+A    8
+C5
+A    9
+C6
+M  END
+>  <InstanceId>
+3MCT_3MC_A_600
+
+>  <ChemCompId>
+3MC
+
+>  <PdbId>
+3MCT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N3 O
+
+>  <Name>
+3-METHYLCYTOSINE
+
+>  <SystematicName>
+6-amino-1-methyl-3H-pyrimidin-1-ium-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H8 N3 O
+
+>  <MolecularWeight>
+126.137
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H7N3O/c1-8-4(6)2-3-7-5(8)9/h2-3H,1H3,(H2,6,7,9)/p+1
+
+>  <InChIKey>
+UPHQQDZIRIHPHU-UHFFFAOYSA-O
+
+>  <SMILES>
+C[N+]1=C(C=CNC1=O)N
+
+$$$$

@@ -1,0 +1,144 @@
+2Z5X_HRM_A_700
+  RCSB PDB12061707423D
+Coordinates from PDB:2Z5X:A:700 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   37.9770   27.0500  -17.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.2180   27.4840  -16.3270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   37.3130   28.3190  -15.7820   N 0  0  0  0  0  0  0  0  0  0  0  0
+   37.4270   28.8250  -14.5370   C 0  0  0  0  0  0  0  0  0  0  0  0
+   38.5280   28.4870  -13.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.5060   27.6500  -14.3040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   39.3440   27.1250  -15.6030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.4290   26.3750  -15.8550   N 0  0  0  0  0  0  0  0  0  0  0  0
+   41.2340   26.3960  -14.7790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.4500   25.7810  -14.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   40.6940   27.1720  -13.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.3130   27.3740  -12.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.5570   26.7670  -12.2850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.0880   25.9660  -13.3350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.3000   25.3650  -13.1470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9390   24.7660  -14.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  2  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  1  0  0  0  0
+A    1
+CAB
+A    2
+CAL
+A    3
+NAH
+A    4
+CAC
+A    5
+CAE
+A    6
+CAO
+A    7
+CAP
+A    8
+NAI
+A    9
+CAM
+A   10
+CAG
+A   11
+CAN
+A   12
+CAF
+A   13
+CAD
+A   14
+CAK
+A   15
+OAJ
+A   16
+CAA
+M  END
+>  <InstanceId>
+2Z5X_HRM_A_700
+
+>  <ChemCompId>
+HRM
+
+>  <PdbId>
+2Z5X
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+700
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 N2 O
+
+>  <Name>
+7-METHOXY-1-METHYL-9H-BETA-CARBOLINE
+
+>  <SystematicName>
+7-methoxy-1-methyl-9H-pyrido[3,4-b]indole
+
+>  <Synonyms>
+7-METHOXY-1-METHYL-9H-PYRIDO[3,4-B]INDOL, HARMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H12 N2 O
+
+>  <MolecularWeight>
+212.247
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C13H12N2O/c1-8-13-11(5-6-14-8)10-4-3-9(16-2)7-12(10)15-13/h3-7,15H,1-2H3
+
+>  <InChIKey>
+BXNJHAXVSOCGBA-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c2c(ccn1)c3ccc(cc3[nH]2)OC
+
+$$$$

@@ -1,0 +1,131 @@
+4A9P_A9P_A_1190
+  RCSB PDB12061711383D
+Coordinates from PDB:4A9P:A:1190 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   18.6590    9.0620   -6.9010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   19.6400    8.9640   -8.0240   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7870    8.3800   -7.8090   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4900    8.4420   -9.0480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   19.5360    9.4170   -9.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.7010    9.0690   -9.9410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2690    9.2400  -11.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4030   10.1260  -10.0010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.6180   11.2890  -10.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5600   11.9070  -11.3910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2780   11.3800  -11.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0520   10.2240  -10.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1130    9.6000   -9.9270   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  6  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 13  2  0  0  0  0
+  9 10  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+C5
+A    2
+C4
+A    3
+N
+A    4
+O
+A    5
+C6
+A    6
+C3
+A    7
+C2
+A    8
+C7
+A    9
+C12
+A   10
+C11
+A   11
+C10
+A   12
+C9
+A   13
+C8
+M  END
+>  <InstanceId>
+4A9P_A9P_A_1190
+
+>  <ChemCompId>
+A9P
+
+>  <PdbId>
+4A9P
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1190
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O
+
+>  <Name>
+3,5 DIMETHYL-4-PHENYL-1,2-OXAZOLE
+
+>  <SystematicName>
+3,5-dimethyl-4-phenyl-1,2-oxazole
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C11 H11 N O
+
+>  <MolecularWeight>
+173.211
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO/c1-8-11(9(2)13-12-8)10-6-4-3-5-7-10/h3-7H,1-2H3
+
+>  <InChIKey>
+BHAXDAUULXCVEK-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c(on1)C)c2ccccc2
+
+$$$$

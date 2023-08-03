@@ -1,0 +1,135 @@
+1F9Y_HHR_A_181
+  RCSB PDB12061702283D
+Coordinates from PDB:1F9Y:A:181 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   -5.0830    7.3260    5.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2930    8.1660    6.6540   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.1790    7.8980    7.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.3730    8.7280    8.6980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2780    8.4810    9.9680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5260    9.2360   10.7570   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.8700    6.8070    8.5030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7610    6.5790    9.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9460    7.4380   10.5970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.3560    5.6530   10.5420   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6350    5.9630    7.7530   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.5830    5.3880    5.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7340    6.2610    6.4530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2390    4.4090    6.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1 12  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  7  2  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C7
+A    2
+N8
+A    3
+C9
+A    4
+N1
+A    5
+C2
+A    6
+N2
+A    7
+C10
+A    8
+C4
+A    9
+N3
+A   10
+O4
+A   11
+N5
+A   12
+C6
+A   13
+C6A
+A   14
+O6A
+M  END
+>  <InstanceId>
+1F9Y_HHR_A_181
+
+>  <ChemCompId>
+HHR
+
+>  <PdbId>
+1F9Y
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+181
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C7 N5 O2
+
+>  <Name>
+6-HYDROXYMETHYLPTERIN
+
+>  <SystematicName>
+2-amino-6-(hydroxymethyl)-3H-pteridin-4-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C7 H7 N5 O2
+
+>  <MolecularWeight>
+193.163
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C7H7N5O2/c8-7-11-5-4(6(14)12-7)10-3(2-13)1-9-5/h1,13H,2H2,(H3,8,9,11,12,14)
+
+>  <InChIKey>
+XGWIBNWDLMIPNF-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(nc2c(n1)N=C(NC2=O)N)CO
+
+$$$$

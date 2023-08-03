@@ -1,0 +1,136 @@
+3SMJ_FDR_A_1
+  RCSB PDB12061710453D
+Coordinates from PDB:3SMJ:A:1 Model:1 without hydrogens
+ 14 16  0  0  0  0            999 V2000
+   20.2350  -10.1850  -16.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.4200   -6.3190  -13.7050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   22.3520   -7.2590   -9.0150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.6300   -8.7710   -9.1090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2970   -6.8330  -10.5120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.9410  -10.3960  -13.8760   N 0  0  0  0  0  0  0  0  0  0  0  0
+   20.8370   -8.2170  -14.8400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   21.8300  -10.6180  -11.2930   S 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6730   -9.5880  -14.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.1750   -9.1980  -10.4620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.9870   -8.0680  -11.3000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.2640   -7.5760  -13.7340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3620   -9.7930  -12.7660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.5480   -8.4050  -12.6050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  9  1  0  0  0  0
+ 12  2  2  0  0  0  0
+  5  3  1  0  0  0  0
+  4  3  1  0  0  0  0
+ 10  4  1  0  0  0  0
+ 11  5  1  0  0  0  0
+  9  6  2  0  0  0  0
+  6 13  1  0  0  0  0
+  9  7  1  0  0  0  0
+  7 12  1  0  0  0  0
+ 13  8  1  0  0  0  0
+  8 10  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 14 11  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+CAA
+A    2
+OAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+NAF
+A    7
+NAG
+A    8
+SAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+M  END
+>  <InstanceId>
+3SMJ_FDR_A_1
+
+>  <ChemCompId>
+FDR
+
+>  <PdbId>
+3SMJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O S
+
+>  <Name>
+2-methyl-3,5,6,7-tetrahydro-4H-cyclopenta[4,5]thieno[2,3-d]pyrimidin-4-one
+
+>  <SystematicName>
+
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 N2 O S
+
+>  <MolecularWeight>
+206.264
+
+>  <ModifiedDate>
+2011-07-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10N2OS/c1-5-11-9(13)8-6-3-2-4-7(6)14-10(8)12-5/h2-4H2,1H3,(H,11,12,13)
+
+>  <InChIKey>
+SSAMSKJKRMKXFV-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=Nc2c(c3c(s2)CCC3)C(=O)N1
+
+$$$$

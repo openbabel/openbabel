@@ -1,0 +1,122 @@
+2INZ_OHP_A_317
+  RCSB PDB12061705563D
+Coordinates from PDB:2INZ:A:317 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   16.6510   27.0660   63.6560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6160   25.9070   63.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1970   24.7190   62.9450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.5670   24.6630   61.6010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2160   23.5550   60.8300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4950   22.4940   61.3920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1280   22.5470   62.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4850   23.6660   63.5130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.2890   25.6990   61.0340   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.0940   27.4580   64.6940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   16.4720   27.6040   62.5410   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 10  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  8  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+C8
+A    2
+C7
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C1
+A    8
+C2
+A    9
+O2
+A   10
+O9
+A   11
+O10
+M  END
+>  <InstanceId>
+2INZ_OHP_A_317
+
+>  <ChemCompId>
+OHP
+
+>  <PdbId>
+2INZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+317
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 O3
+
+>  <Name>
+(2-HYDROXYPHENYL)ACETIC ACID
+
+>  <SystematicName>
+2-(2-hydroxyphenyl)ethanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 O3
+
+>  <MolecularWeight>
+152.147
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H8O3/c9-7-4-2-1-3-6(7)5-8(10)11/h1-4,9H,5H2,(H,10,11)
+
+>  <InChIKey>
+CCVYRRGZDBSHFU-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)CC(=O)O)O
+
+$$$$

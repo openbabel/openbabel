@@ -1,0 +1,143 @@
+5FZ7_WGT_A_1770
+  RCSB PDB12061717473D
+Coordinates from PDB:5FZ7:A:1770 Model:1 without hydrogens
+ 16 17  0  0  0  0            999 V2000
+   92.2770   61.2910   13.4790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   89.0240   65.7960   15.6390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   90.2520   61.9430   14.6270   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.8930   65.5150   14.0630   S 0  0  0  0  0  0  0  0  0  0  0  0
+   91.5750   61.3510   14.8330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.0950   63.9790   14.9630   O 0  0  0  0  0  0  0  0  0  0  0  0
+   86.5050   61.3750   11.7180   S 0  0  0  0  0  0  0  0  0  0  0  0
+   90.1770   63.2750   14.6270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.8300   63.7980   14.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8030   63.2310   13.2750   C 0  0  0  0  0  0  0  0  0  0  0  0
+   86.7440   64.0940   13.1290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.4180   65.0300   14.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.8810   61.9420   12.5830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.9000   61.0160   12.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   88.5450   59.8850   11.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   87.2950   59.9310   11.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2 12  1  0  0  0  0
+  3  5  1  0  0  0  0
+  3  8  1  0  0  0  0
+  4 11  1  0  0  0  0
+  4 12  1  0  0  0  0
+  6  8  2  0  0  0  0
+  7 13  1  0  0  0  0
+  7 16  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 12  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 16  2  0  0  0  0
+A    1
+C
+A    2
+N
+A    3
+O
+A    4
+S
+A    5
+C1
+A    6
+O1
+A    7
+S1
+A    8
+C2
+A    9
+C3
+A   10
+C4
+A   11
+C5
+A   12
+C6
+A   13
+C7
+A   14
+C8
+A   15
+C9
+A   16
+C10
+M  END
+>  <InstanceId>
+5FZ7_WGT_A_1770
+
+>  <ChemCompId>
+WGT
+
+>  <PdbId>
+5FZ7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1770
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 S2
+
+>  <Name>
+ethyl 5'-amino[2,3'-bithiophene]-4'-carboxylate
+
+>  <SystematicName>
+ethyl 2-azanyl-4-thiophen-2-yl-thiophene-3-carboxylate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O2 S2
+
+>  <MolecularWeight>
+253.341
+
+>  <ModifiedDate>
+2016-03-18
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO2S2/c1-2-14-11(13)9-7(6-16-10(9)12)8-4-3-5-15-8/h3-6H,2,12H2,1H3
+
+>  <InChIKey>
+AKFDBWIUWIWHRK-UHFFFAOYSA-N
+
+>  <SMILES>
+CCOC(=O)c1c(csc1N)c2cccs2
+
+$$$$

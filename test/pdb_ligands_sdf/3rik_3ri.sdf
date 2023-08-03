@@ -1,0 +1,134 @@
+3RIK_3RI_B_501
+  RCSB PDB12061710343D
+Coordinates from PDB:3RIK:B:501 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   10.0930   -5.8000   37.6670   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7280  -11.8710   38.3290   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1520   -8.4060   41.2000   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8580  -12.7500   39.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3330  -11.4830   41.3050   O 0  0  0  0  0  0  0  0  0  0  0  0
+    9.2950   -6.9430   38.0300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4740   -7.3710   39.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6280   -9.7830   39.2170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.7700   -8.7080   41.0580   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.5970  -10.8560   38.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1300   -9.3910   41.3230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3570  -11.4830   39.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5210  -10.6330   40.4870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3560   -8.5680   39.6450   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  1  0  0  0  0
+  2 10  1  0  0  0  0
+ 11  3  1  0  0  0  0
+  4 12  1  0  0  0  0
+ 13  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7 14  1  0  0  0  0
+ 10  8  1  0  0  0  0
+  8 14  1  0  0  0  0
+ 14  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 11  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+OAC
+A    4
+OAD
+A    5
+OAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+NAN
+M  END
+>  <InstanceId>
+3RIK_3RI_B_501
+
+>  <ChemCompId>
+3RI
+
+>  <PdbId>
+3RIK
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N O5
+
+>  <Name>
+(3S,4R,5R,6S)-1-(2-hydroxyethyl)azepane-3,4,5,6-tetrol
+
+>  <SystematicName>
+(3S,4R,5R,6S)-1-(2-hydroxyethyl)azepane-3,4,5,6-tetrol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H17 N O5
+
+>  <MolecularWeight>
+207.224
+
+>  <ModifiedDate>
+2012-03-09
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H17NO5/c10-2-1-9-3-5(11)7(13)8(14)6(12)4-9/h5-8,10-14H,1-4H2/t5-,6-,7+,8+/m0/s1
+
+>  <InChIKey>
+VWGJHYNWDXVPIU-RULNZFCNSA-N
+
+>  <SMILES>
+C1[C@@H]([C@H]([C@@H]([C@H](CN1CCO)O)O)O)O
+
+$$$$

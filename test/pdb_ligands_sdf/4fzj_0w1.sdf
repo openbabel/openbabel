@@ -1,0 +1,131 @@
+4FZJ_0W1_A_405
+  RCSB PDB12061712383D
+Coordinates from PDB:4FZJ:A:405 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   11.8720    4.2050  -15.5300   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5200    3.3810  -14.8140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.9180    2.3900  -14.3240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8560    3.5350  -14.6120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6450    4.3700  -15.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8420    2.6860  -13.3780   S 0  0  0  0  0  0  0  0  0  0  0  0
+   16.3050    3.5390  -13.9710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.9570    4.3910  -14.9900   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.1050    5.0100  -15.3640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   17.2600    6.0600  -16.4800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.1290    4.6010  -14.6160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   17.6290    3.6810  -13.7440   N 0  0  0  0  0  0  0  0  0  0  0  0
+   18.4680    2.9260  -12.7040   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 10  9  1  0  0  0  0
+  1  2  2  0  0  0  0
+  9  8  1  0  0  0  0
+  9 11  2  0  0  0  0
+  5  8  1  0  0  0  0
+  5  4  2  0  0  0  0
+  8  7  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  3  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  4  6  1  0  0  0  0
+  7 12  1  0  0  0  0
+  7  6  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+OAC
+A    2
+CAH
+A    3
+OAD
+A    4
+CAJ
+A    5
+CAE
+A    6
+SAG
+A    7
+CAL
+A    8
+CAK
+A    9
+CAI
+A   10
+CAA
+A   11
+NAF
+A   12
+NAM
+A   13
+CAB
+M  END
+>  <InstanceId>
+4FZJ_0W1_A_405
+
+>  <ChemCompId>
+0W1
+
+>  <PdbId>
+4FZJ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+405
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O2 S
+
+>  <Name>
+1,3-dimethyl-1H-thieno[2,3-c]pyrazole-5-carboxylic acid
+
+>  <SystematicName>
+1,3-dimethylthieno[2,3-c]pyrazole-5-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H8 N2 O2 S
+
+>  <MolecularWeight>
+196.226
+
+>  <ModifiedDate>
+2013-06-21
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H8N2O2S/c1-4-5-3-6(8(11)12)13-7(5)10(2)9-4/h3H,1-2H3,(H,11,12)
+
+>  <InChIKey>
+QRANSYHQSVJLHX-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c2cc(sc2n(n1)C)C(=O)O
+
+$$$$

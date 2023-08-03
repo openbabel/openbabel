@@ -1,0 +1,139 @@
+2NOA_3TC_A_302
+  RCSB PDB12061706243D
+Coordinates from PDB:2NOA:A:302 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   48.4810   67.8830   99.8770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   47.4010   67.3540   99.7870   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.2880   68.0460  100.0980   N 0  0  0  0  0  0  0  0  0  0  0  0
+   45.1040   67.4350   99.9890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.0180   68.1670  100.3080   N 0  0  0  0  0  0  0  0  0  0  0  0
+   44.9890   66.1050   99.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.1690   65.4230   99.1610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   47.3480   66.0480   99.2990   N 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6470   65.4300   98.9660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   49.1780   66.0350   97.6490   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.3860   64.0570   98.7770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   48.8510   63.5350   97.5250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.6330   64.9100   96.4300   S 0  0  0  0  0  0  0  0  0  0  0  0
+   48.0440   62.3370   97.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   48.1670   61.4150   98.1920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  2  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 13  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+O1
+A    2
+C1
+A    3
+N2
+A    4
+C3
+A    5
+N3
+A    6
+C5
+A    7
+C7
+A    8
+N1
+A    9
+C4
+A   10
+C6
+A   11
+O2
+A   12
+C2
+A   13
+S1
+A   14
+C8
+A   15
+O3
+M  END
+>  <InstanceId>
+2NOA_3TC_A_302
+
+>  <ChemCompId>
+3TC
+
+>  <PdbId>
+2NOA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O3 S
+
+>  <Name>
+4-AMINO-1-[(2R,5S)-2-(HYDROXYMETHYL)-1,3-OXATHIOLAN-5-YL]PYRIMIDIN-2(1H)-ONE
+
+>  <SystematicName>
+4-amino-1-[(2R,5S)-2-(hydroxymethyl)-1,3-oxathiolan-5-yl]pyrimidin-2-one
+
+>  <Synonyms>
+(-)-L-2',3'-DIDEOXY-3'-THIACYTIDINE; LAMIVUDINE; EPIVIR
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H11 N3 O3 S
+
+>  <MolecularWeight>
+229.256
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C8H11N3O3S/c9-5-1-2-11(8(13)10-5)6-4-15-7(3-12)14-6/h1-2,6-7,12H,3-4H2,(H2,9,10,13)/t6-,7+/m0/s1
+
+>  <InChIKey>
+JTEGQNOMFQHVDC-NKWVEPMBSA-N
+
+>  <SMILES>
+C1[C@H](O[C@H](S1)CO)N2C=CC(=NC2=O)N
+
+$$$$

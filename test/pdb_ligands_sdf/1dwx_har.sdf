@@ -1,0 +1,129 @@
+1DWV_HAR_A_909
+  RCSB PDB12061702193D
+Coordinates from PDB:1DWV:A:909 Model:1 without hydrogens
+ 13 12  0  0  0  0            999 V2000
+  120.4230  115.1360   35.1940   N 0  0  0  0  0  0  0  0  0  0  0  0
+  121.6350  115.3650   35.9720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  121.7670  116.8370   36.3610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  121.1600  117.6750   35.6730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  122.8570  114.9240   35.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+  122.7130  113.5490   34.5760   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.7070  113.3040   33.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+  123.5810  114.3240   32.3970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  124.1230  114.2170   31.1830   C 0  0  0  0  0  0  0  0  0  0  0  0
+  124.8070  113.1100   30.8430   N 0  0  0  0  0  0  0  0  0  0  0  0
+  123.9700  115.1960   30.2780   N 0  0  0  0  0  0  0  0  0  0  0  0
+  125.6700  113.1610   29.8230   O 0  0  0  0  0  0  0  0  0  0  0  0
+  122.4730  117.1370   37.3450   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  5  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 13  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+N
+A    2
+CA
+A    3
+C
+A    4
+O
+A    5
+CB
+A    6
+CG
+A    7
+CD
+A    8
+NE
+A    9
+CZ
+A   10
+NH1
+A   11
+NH2
+A   12
+OH1
+A   13
+OXT
+M  END
+>  <InstanceId>
+1DWV_HAR_A_909
+
+>  <ChemCompId>
+HAR
+
+>  <PdbId>
+1DWV
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+909
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N4 O3
+
+>  <Name>
+N-OMEGA-HYDROXY-L-ARGININE
+
+>  <SystematicName>
+(2S)-2-amino-5-[(N-hydroxycarbamimidoyl)amino]pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+L-PEPTIDE LINKING
+
+>  <Formula>
+C6 H14 N4 O3
+
+>  <MolecularWeight>
+190.2
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+ARG
+
+>  <OneLetterCode>
+R
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H14N4O3/c7-4(5(11)12)2-1-3-9-6(8)10-13/h4,13H,1-3,7H2,(H,11,12)(H3,8,9,10)/t4-/m0/s1
+
+>  <InChIKey>
+FQWRAVYMZULPNK-BYPYZUCNSA-N
+
+>  <SMILES>
+C(C[C@@H](C(=O)O)N)CNC(=N)NO
+
+$$$$

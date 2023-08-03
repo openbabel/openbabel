@@ -1,0 +1,146 @@
+2BXA_C1F_A_2001
+  RCSB PDB12061705103D
+Coordinates from PDB:2BXA:A:2001 Model:1 without hydrogens
+ 17 17  0  0  0  0            999 V2000
+    4.7150  -11.6440    9.0540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0440  -10.8020    8.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.7360  -10.9780    6.9620   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5010  -10.3450    5.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.4380  -11.9080   10.5470   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.6550  -11.7840    7.1290   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2610  -15.2680    8.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5820   -9.3250    5.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.7900  -13.2440    8.7200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7230  -12.2190    8.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.5170  -14.6270    8.1250   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5890   -9.0490    3.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1430   -9.4520    7.5020   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.8090   -9.8840    8.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.4680   -9.5680    9.5690   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.6220   -9.1430    3.0780   O 0  0  0  0  0  0  0  0  0  0  0  0
+    4.5520   -8.7230    3.1580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  5  1  0  0  0  0
+  1 10  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2 14  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  6  1  0  0  0  0
+  4  8  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7 11  1  0  0  0  0
+  8 12  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 12 16  2  0  0  0  0
+ 12 17  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C6
+A    6
+O
+A    7
+C7
+A    8
+C9
+A    9
+C11
+A   10
+C40
+A   11
+C12
+A   12
+C70
+A   13
+O1
+A   14
+C13
+A   15
+O2
+A   16
+O3
+A   17
+O4
+M  END
+>  <InstanceId>
+2BXA_C1F_A_2001
+
+>  <ChemCompId>
+C1F
+
+>  <PdbId>
+2BXA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+2001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O5
+
+>  <Name>
+3-CARBOXY-4-METHYL-5-PROPYL-2-FURANPROPIONIC
+
+>  <SystematicName>
+2-(2-carboxyethyl)-4-methyl-5-propyl-furan-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H16 O5
+
+>  <MolecularWeight>
+240.252
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H16O5/c1-3-4-8-7(2)11(12(15)16)9(17-8)5-6-10(13)14/h3-6H2,1-2H3,(H,13,14)(H,15,16)
+
+>  <InChIKey>
+WMCQWXZMVIETAO-UHFFFAOYSA-N
+
+>  <SMILES>
+CCCc1c(c(c(o1)CCC(=O)O)C(=O)O)C
+
+$$$$

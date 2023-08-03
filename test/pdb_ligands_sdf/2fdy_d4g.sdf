@@ -1,0 +1,135 @@
+2FDY_D4G_A_501
+  RCSB PDB12061705333D
+Coordinates from PDB:2FDY:A:501 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   53.1580   78.9970   59.5700   C 0  0  0  0  0  0  0  0  0  0  0  0
+   52.7720   80.3120   59.2420   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.0480   80.8100   57.9950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   53.6860   80.1270   57.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.1110   78.7820   57.2630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   53.8300   78.2460   58.5650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   54.3310   76.6300   58.9380   S 0  0  0  0  0  0  0  0  0  0  0  0
+   54.8440   76.7410   60.9500   S 0  0  0  0  0  0  0  0  0  0  0  0
+   56.3920   77.5580   61.1130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   56.5330   78.9640   60.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.8240   79.5430   60.9830   C 0  0  0  0  0  0  0  0  0  0  0  0
+   58.8600   78.7500   61.3970   N 0  0  0  0  0  0  0  0  0  0  0  0
+   58.7680   77.4120   61.6800   C 0  0  0  0  0  0  0  0  0  0  0  0
+   57.5100   76.7700   61.5440   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  2  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+C3
+A    2
+C2
+A    3
+N_1
+A    4
+C1
+A    5
+C5
+A    6
+C4
+A    7
+S_1
+A    8
+S_2
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+N_2
+A   13
+C9
+A   14
+C10
+M  END
+>  <InstanceId>
+2FDY_D4G_A_501
+
+>  <ChemCompId>
+D4G
+
+>  <PdbId>
+2FDY
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 S2
+
+>  <Name>
+4,4'-DIPYRIDYL DISULFIDE
+
+>  <SystematicName>
+4-pyridin-4-yldisulfanylpyridine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H8 N2 S2
+
+>  <MolecularWeight>
+220.314
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H8N2S2/c1-5-11-6-2-9(1)13-14-10-3-7-12-8-4-10/h1-8H
+
+>  <InChIKey>
+UHBAPGWWRFVTFS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cnccc1SSc2ccncc2
+
+$$$$

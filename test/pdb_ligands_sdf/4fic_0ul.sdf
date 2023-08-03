@@ -1,0 +1,144 @@
+4FIC_0UL_A_601
+  RCSB PDB12061712323D
+Coordinates from PDB:4FIC:A:601 Model:1 without hydrogens
+ 16 18  0  0  0  0            999 V2000
+   13.5420  -38.9770   -0.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5390  -39.6870   -0.2190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.8680  -39.2490   -0.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.2000  -38.0890   -0.9440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   15.2090  -37.3680   -1.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8750  -37.8120   -1.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8810  -37.0830   -2.2740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.6090  -37.5390   -2.3400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6040  -36.8140   -3.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.9060  -35.6420   -3.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1700  -34.7640   -4.2580   N 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0050  -33.7770   -4.5730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.6340  -32.6910   -5.2560   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2370  -34.0360   -4.1130   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.1630  -35.1730   -3.5190   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.1950  -35.8610   -2.8700   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2  1  2  0  0  0  0
+  5  6  2  0  0  0  0
+  1  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 16  2  0  0  0  0
+  8  9  2  0  0  0  0
+ 16 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 15 10  1  0  0  0  0
+ 15 14  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 14 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+A    1
+CAE
+A    2
+CAC
+A    3
+CAB
+A    4
+CAD
+A    5
+CAF
+A    6
+CAM
+A    7
+CAN
+A    8
+NAI
+A    9
+CAG
+A   10
+CAO
+A   11
+NAJ
+A   12
+CAL
+A   13
+NAA
+A   14
+NAK
+A   15
+NAP
+A   16
+CAH
+M  END
+>  <InstanceId>
+4FIC_0UL_A_601
+
+>  <ChemCompId>
+0UL
+
+>  <PdbId>
+4FIC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+601
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N5
+
+>  <Name>
+6-phenyl[1,2,4]triazolo[1,5-a]pyrazin-2-amine
+
+>  <SystematicName>
+6-phenyl-[1,2,4]triazolo[1,5-a]pyrazin-2-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H9 N5
+
+>  <MolecularWeight>
+211.223
+
+>  <ModifiedDate>
+2013-04-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H9N5/c12-11-14-10-6-13-9(7-16(10)15-11)8-4-2-1-3-5-8/h1-7H,(H2,12,15)
+
+>  <InChIKey>
+NKIXJKQWFAULJD-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(cc1)c2cn3c(cn2)nc(n3)N
+
+$$$$

@@ -1,0 +1,125 @@
+1JP3_EGC_A_701
+  RCSB PDB12061702593D
+Coordinates from PDB:1JP3:A:701 Model:1 without hydrogens
+ 12 11  0  0  0  0            999 V2000
+   45.7240   29.5000   55.1440   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8650   30.3780   56.2450   C 0  0  0  0  0  0  0  0  0  0  0  0
+   45.8620   31.8170   55.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6050   32.4250   56.0790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.4960   33.7430   55.5360   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.5310   33.7470   54.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.3720   35.0860   53.8530   O 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6160   35.6530   53.3960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6510   35.6840   51.8740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.6790   37.0410   51.4140   O 0  0  0  0  0  0  0  0  0  0  0  0
+   45.4640   37.1930   50.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   46.6150   38.1630   50.4750   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+O1
+A    2
+C2
+A    3
+C3
+A    4
+O4
+A    5
+C5
+A    6
+C6
+A    7
+O7
+A    8
+C8
+A    9
+C9
+A   10
+O10
+A   11
+C11
+A   12
+C12
+M  END
+>  <InstanceId>
+1JP3_EGC_A_701
+
+>  <ChemCompId>
+EGC
+
+>  <PdbId>
+1JP3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+701
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+30
+
+>  <ObservedFormula>
+C8 O4
+
+>  <Name>
+2-(2-{2-[2-(2-{2-[2-(2-{2-[4-(1,1,3,3-TETRAMETHYL-BUTYL)-PHENOXY]-ETHOXY}-ETHOXY)-ETHOXY]-ETHOXY}-ETHOXY)-ETHOXY]-ETHOXY}-ETHOXY)-ETHANOL
+
+>  <SystematicName>
+2-[2-[2-[2-[2-[2-[2-[2-[2-[4-(2,4,4-trimethylpentan-2-yl)phenoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethoxy]ethanol
+
+>  <Synonyms>
+TRITON X-100
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C32 H58 O10
+
+>  <MolecularWeight>
+602.797
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C32H58O10/c1-31(2,3)28-32(4,5)29-6-8-30(9-7-29)42-27-26-41-25-24-40-23-22-39-21-20-38-19-18-37-17-16-36-15-14-35-13-12-34-11-10-33/h6-9,33H,10-28H2,1-5H3
+
+>  <InChIKey>
+VJYAJQFKKLYARJ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)(C)CC(C)(C)c1ccc(cc1)OCCOCCOCCOCCOCCOCCOCCOCCOCCO
+
+$$$$

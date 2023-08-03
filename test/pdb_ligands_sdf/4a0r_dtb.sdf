@@ -1,0 +1,138 @@
+1DAM_DTB_A_803
+  RCSB PDB12061702153D
+Coordinates from PDB:1DAM:A:803 Model:1 without hydrogens
+ 15 15  0  0  0  0            999 V2000
+   -3.1450   22.4880   13.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2720   21.7590   13.4940   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.1290   23.0530   11.7590   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3800   23.7430   11.5100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7770   24.0400   13.0080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2750   22.8450   13.6390   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.3150   25.3550   13.6960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2170   25.0700   10.6790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.5780   25.6920   10.3170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.6410   26.7840    9.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9020   27.6040    9.4220   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9640   28.6890    8.3180   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.7120   28.1880    6.8290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.3650   27.2190    6.3800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.7990   28.7430    6.2050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  6  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 13 15  1  0  0  0  0
+A    1
+CN
+A    2
+O
+A    3
+N2
+A    4
+CR
+A    5
+CS
+A    6
+N1
+A    7
+CT
+A    8
+CE
+A    9
+CD
+A   10
+CG
+A   11
+CB
+A   12
+CA
+A   13
+C
+A   14
+OI1
+A   15
+OI2
+M  END
+>  <InstanceId>
+1DAM_DTB_A_803
+
+>  <ChemCompId>
+DTB
+
+>  <PdbId>
+1DAM
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+803
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N2 O3
+
+>  <Name>
+6-(5-METHYL-2-OXO-IMIDAZOLIDIN-4-YL)-HEXANOIC ACID
+
+>  <SystematicName>
+6-[(4R,5S)-5-methyl-2-oxidanylidene-imidazolidin-4-yl]hexanoic acid
+
+>  <Synonyms>
+D-DESTHIOBIOTIN
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H18 N2 O3
+
+>  <MolecularWeight>
+214.262
+
+>  <ModifiedDate>
+2016-03-30
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H18N2O3/c1-7-8(12-10(15)11-7)5-3-2-4-6-9(13)14/h7-8H,2-6H2,1H3,(H,13,14)(H2,11,12,15)/t7-,8+/m0/s1
+
+>  <InChIKey>
+AUTOLBMXDDTRRT-JGVFFNPUSA-N
+
+>  <SMILES>
+C[C@H]1[C@H](NC(=O)N1)CCCCCC(=O)O
+
+$$$$

@@ -1,0 +1,135 @@
+2VMF_MVL_A_1865
+  RCSB PDB12061707073D
+Coordinates from PDB:2VMF:A:1865 Model:1 without hydrogens
+ 14 15  0  0  0  0            999 V2000
+   27.3100   45.7400   -1.8390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.8680   46.8430   -2.4160   N 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7980   46.8180    0.3060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.5200   48.1230   -0.4960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.4450   47.9680   -1.5690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.1240   49.2410   -2.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.6120   45.5840   -4.0000   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1560   46.8310   -3.7520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.7460   44.9390   -2.8210   N 0  0  0  0  0  0  0  0  0  0  0  0
+   29.2060   46.6590    0.4770   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.9790   44.3630    0.0130   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1230   49.2020    0.3640   O 0  0  0  0  0  0  0  0  0  0  0  0
+   27.2640   45.5360   -0.3630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.1890   49.5940   -3.2240   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  9  2  0  0  0  0
+  1 13  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  3 13  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 12  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 14  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+C1
+A    2
+N10
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+N1
+A   10
+O3
+A   11
+O2
+A   12
+O4
+A   13
+C2
+A   14
+O6
+M  END
+>  <InstanceId>
+2VMF_MVL_A_1865
+
+>  <ChemCompId>
+MVL
+
+>  <PdbId>
+2VMF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1865
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2 O4
+
+>  <Name>
+(5R,6R,7S,8R)-5-(HYDROXYMETHYL)-5,6,7,8-TETRAHYDROIMIDAZO[1,2-A]PYRIDINE-6,7,8-TRIOL
+
+>  <SystematicName>
+(5R,6R,7S,8R)-5-(hydroxymethyl)-5,6,7,8-tetrahydroimidazo[1,2-a]pyridine-6,7,8-triol
+
+>  <Synonyms>
+Mannoimidazole
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H12 N2 O4
+
+>  <MolecularWeight>
+200.192
+
+>  <ModifiedDate>
+2014-05-16
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H12N2O4/c11-3-4-5(12)6(13)7(14)8-9-1-2-10(4)8/h1-2,4-7,11-14H,3H2/t4-,5-,6+,7+/m1/s1
+
+>  <InChIKey>
+RZRDQZQPTISYKY-JWXFUTCRSA-N
+
+>  <SMILES>
+c1cn2c(n1)[C@H]([C@H]([C@@H]([C@H]2CO)O)O)O
+
+$$$$

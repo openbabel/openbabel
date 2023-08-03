@@ -1,0 +1,95 @@
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.1
+.Dt obprop 1 URM
+.Sh NAME
+.Nm obprop
+.Nd "print standard molecular properties"
+.Sh SYNOPSIS
+.Nm
+.Ar filename
+.Sh DESCRIPTION
+The obprop program is a tool to print a set of standard molecular
+properties for all molecules in a file. It also serves as example code
+for using the Open Babel library (libopenbabel).
+.Pp
+Output format includes:
+.br
+name
+.Op Ar Name
+.br
+formula
+.Op Ar Formula
+.br
+mol_weight
+.Op Ar Molecular Weight
+.br
+exact_mass
+.Op Ar Isotopic Mass
+.br
+canonical_SMILES
+.Op Ar String
+.br
+num_atoms
+.Op Ar Number
+.br
+num_bonds
+.Op Ar Number
+.br
+num_residues
+.Op Ar Number
+.br
+sequence
+.Op Ar Residue Sequence
+.br
+num_rings
+.Op Ar Number of Rings (by SSSR)
+.br
+logP
+.Op Ar Number (octanol-water partition)
+.br
+PSA
+.Op Ar Number (topological polar surface area)
+.br
+MR
+.Op Ar Number (molar refractivity)
+.br
+$$$
+.Pp
+The "$$$" is the separator between multiple molecular entries in a file
+.Sh EXAMPLES
+.Dl "obprop pyridines.sdf"
+.Sh SEE ALSO
+.Xr obabel 1 ,
+.Xr obchiral 1 ,
+.Xr obfit 1 ,
+.Xr obgrep 1 ,
+.Xr obrotate 1 .
+.Pp
+The web pages for Open Babel can be found at:
+\%<\fBhttp://openbabel.org/\fR>
+.Sh AUTHORS
+The obprop program was contributed by
+.An Fabien Fontaine
+.Pp
+.An -nosplit
+Open Babel is developed by a cast of many, including currrent maintainers
+.An Geoff Hutchison ,
+.An Chris Morley ,
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
+\%<\fBhttp://openbabel.org/wiki/THANKS\fR>
+.Sh COPYRIGHT
+Copyright (C) 2003 by Fabien Fontaine
+.br
+Some portions Copyright (C) 2004-2007 by Geoffrey R. Hutchison and
+other contributors.
+.Pp
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+.Pp
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.

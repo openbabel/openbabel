@@ -1,0 +1,142 @@
+2VVO_A6P_A_200
+  RCSB PDB12061707093D
+Coordinates from PDB:2VVO:A:200 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+   34.3060    8.8460  -11.5080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.5980    7.7670  -10.4350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.2450    8.2370   -9.0250   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.6870    9.6760   -8.7300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.3040   10.6310   -9.8570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8870   12.0200   -9.6230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9150    8.9630  -11.7790   O 0  0  0  0  0  0  0  0  0  0  0  0
+   33.9020    6.5220  -10.6710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.8200    8.0640   -8.7710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.0630   10.1200   -7.5230   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7980   10.1330  -11.1040   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4890   12.8740  -10.7090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8060   14.4640  -10.7060   P 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1440   15.0030   -9.4560   O 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2760   14.5590  -10.6470   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.1940   15.0100  -11.9740   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  8  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  9  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 10  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5 11  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 13 16  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+O1
+A    8
+O2
+A    9
+O3
+A   10
+O4
+A   11
+O5
+A   12
+O6
+A   13
+P
+A   14
+O1P
+A   15
+O2P
+A   16
+O3P
+M  END
+>  <InstanceId>
+2VVO_A6P_A_200
+
+>  <ChemCompId>
+A6P
+
+>  <PdbId>
+2VVO
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+200
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 O9 P
+
+>  <Name>
+6-O-phosphono-alpha-D-allopyranose
+
+>  <SystematicName>
+[(2R,3S,4R,5R,6S)-3,4,5,6-tetrahydroxyoxan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C6 H13 O9 P
+
+>  <MolecularWeight>
+260.136
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6H13O9P/c7-3-2(1-14-16(11,12)13)15-6(10)5(9)4(3)8/h2-10H,1H2,(H2,11,12,13)/t2-,3-,4-,5-,6+/m1/s1
+
+>  <InChIKey>
+NBSCHQHZLSJFNQ-UKFBFLRUSA-N
+
+>  <SMILES>
+C([C@@H]1[C@H]([C@H]([C@H]([C@H](O1)O)O)O)O)OP(=O)(O)O
+
+$$$$

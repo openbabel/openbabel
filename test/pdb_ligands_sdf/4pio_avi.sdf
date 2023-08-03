@@ -1,0 +1,130 @@
+4PIN_AVI_A_401
+  RCSB PDB12061714143D
+Coordinates from PDB:4PIN:A:401 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   10.0050   15.9850   16.6630   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0150   15.9010   15.5910   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4050   16.9010   14.5930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0970   14.5950   14.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0840   14.5050   13.7930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9070   14.6720   14.1200   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4640   14.2560   12.6500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8390   13.4460   15.9150   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9040   12.0910   15.2830   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.0920   11.1030   15.6230   N 0  0  0  0  0  0  0  0  0  0  0  0
+    8.3580   10.0210   14.9170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.3540   10.2990   14.1020   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7210   11.6050   14.3120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  7  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 11  1  0  0  0  0
+ 13  9  2  0  0  0  0
+  3  2  1  0  0  0  0
+ 11 10  2  0  0  0  0
+  4  2  1  0  0  0  0
+  4  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9  8  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+CAL
+A    2
+N
+A    3
+CAM
+A    4
+CA
+A    5
+C
+A    6
+OXT
+A    7
+O
+A    8
+CB
+A    9
+CG
+A   10
+ND1
+A   11
+CE1
+A   12
+NE2
+A   13
+CD2
+M  END
+>  <InstanceId>
+4PIN_AVI_A_401
+
+>  <ChemCompId>
+AVI
+
+>  <PdbId>
+4PIN
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+401
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 O2
+
+>  <Name>
+N,N-dimethyl-L-histidine
+
+>  <SystematicName>
+(2S)-2-(dimethylamino)-3-(1H-imidazol-4-yl)propanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H13 N3 O2
+
+>  <MolecularWeight>
+183.208
+
+>  <ModifiedDate>
+2014-11-28
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H13N3O2/c1-11(2)7(8(12)13)3-6-4-9-5-10-6/h4-5,7H,3H2,1-2H3,(H,9,10)(H,12,13)/t7-/m0/s1
+
+>  <InChIKey>
+IMOBSLOLPCWZKQ-ZETCQYMHSA-N
+
+>  <SMILES>
+CN(C)[C@@H](Cc1c[nH]cn1)C(=O)O
+
+$$$$

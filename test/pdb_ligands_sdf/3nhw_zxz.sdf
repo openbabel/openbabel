@@ -1,0 +1,131 @@
+3NHW_ZXZ_A_233
+  RCSB PDB12061709553D
+Coordinates from PDB:3NHW:A:233 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   -1.8220   -7.1160  -17.3200   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7030   -7.9600  -16.5970   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.8080   -7.3790  -15.8660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.9460   -5.9710  -15.8430   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0610   -5.1280  -16.5480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0020   -5.7340  -17.2890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.5470   -9.4350  -16.6570   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.4560  -10.2520  -16.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.4740   -9.6890  -15.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.7230   -8.3100  -15.2030   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.3800   -9.9920  -17.4440   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8400   -7.7760  -14.4290   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.2400  -10.4410  -14.6510   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  6  2  0  0  0  0
+  1  2  1  0  0  0  0
+  7  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  5  4  2  0  0  0  0
+  6  5  1  0  0  0  0
+ 11  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 13  2  0  0  0  0
+ 10 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+N10
+A   11
+C11
+A   12
+C12
+A   13
+O13
+M  END
+>  <InstanceId>
+3NHW_ZXZ_A_233
+
+>  <ChemCompId>
+ZXZ
+
+>  <PdbId>
+3NHW
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+233
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O
+
+>  <Name>
+1,4-dimethylquinolin-2(1H)-one
+
+>  <SystematicName>
+1,4-dimethylquinolin-2-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H11 N O
+
+>  <MolecularWeight>
+173.211
+
+>  <ModifiedDate>
+2012-01-06
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H11NO/c1-8-7-11(13)12(2)10-6-4-3-5-9(8)10/h3-7H,1-2H3
+
+>  <InChIKey>
+CEONKCOBRZOYJS-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=CC(=O)N(c2c1cccc2)C
+
+$$$$

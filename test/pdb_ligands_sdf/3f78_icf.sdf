@@ -1,0 +1,117 @@
+1XZ3_ICF_A_201
+  RCSB PDB12061704423D
+Coordinates from PDB:1XZ3:A:201 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+   38.0010    0.3850   33.9420   F 0  0  0  0  0  0  0  0  0  0  0  0
+   36.9030    0.9320   34.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1460    1.3990   33.4450   F 0  0  0  0  0  0  0  0  0  0  0  0
+   37.2620    1.9100   35.2530   F 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1430   -0.0950   35.2760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.2860   -1.7210   34.5020  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   34.7610    0.2640   35.3740   O 0  0  0  0  0  0  0  0  0  0  0  0
+   34.4120    0.1270   36.7540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8600    1.2090   37.4270   F 0  0  0  0  0  0  0  0  0  0  0  0
+   33.0720   -0.0060   36.8780   F 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  8 10  1  0  0  0  0
+A    1
+FAC
+A    2
+CAJ
+A    3
+FAD
+A    4
+FAE
+A    5
+CAI
+A    6
+CLAF
+A    7
+OAG
+A    8
+CAH
+A    9
+FAB
+A   10
+FAA
+M  END
+>  <InstanceId>
+1XZ3_ICF_A_201
+
+>  <ChemCompId>
+ICF
+
+>  <PdbId>
+1XZ3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+201
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C3 O F5 Cl
+
+>  <Name>
+1-CHLORO-2,2,2-TRIFLUOROETHYL DIFLUOROMETHYL ETHER
+
+>  <SystematicName>
+(2S)-2-chloro-2-(difluoromethoxy)-1,1,1-trifluoro-ethane
+
+>  <Synonyms>
+ISOFLURANE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C3 H2 Cl F5 O
+
+>  <MolecularWeight>
+184.492
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C3H2ClF5O/c4-1(3(7,8)9)10-2(5)6/h1-2H/t1-/m1/s1
+
+>  <InChIKey>
+PIWKPBJCKXDKJR-PVQJCKRUSA-N
+
+>  <SMILES>
+[C@H](C(F)(F)F)(OC(F)F)Cl
+
+$$$$

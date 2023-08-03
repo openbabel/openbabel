@@ -1,0 +1,114 @@
+5IKA_DPO_A_604
+  RCSB PDB12061718113D
+Coordinates from PDB:5IKA:A:604 Model:1 without hydrogens
+  9  8  0  0  0  0            999 V2000
+   22.8230   80.7160   10.7110   P 0  0  0  0  0  0  0  0  0  0  0  0
+   23.5550   80.2440    9.4760   O 0  0  0  0  0  0  0  0  0  0  0  0
+   21.3100   80.7410   10.5930   O 0  5  0  0  0  0  0  0  0  0  0  0
+   23.3310   80.1700   12.0280   O 0  5  0  0  0  0  0  0  0  0  0  0
+   23.1740   82.2880   10.6210   O 0  0  0  0  0  0  0  0  0  0  0  0
+   23.8850   83.3130   11.6510   P 0  0  0  0  0  0  0  0  0  0  0  0
+   24.9250   83.8750   10.7080   O 0  0  0  0  0  0  0  0  0  0  0  0
+   24.4870   82.6170   12.8410   O 0  5  0  0  0  0  0  0  0  0  0  0
+   22.7280   84.2020   12.0550   O 0  5  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+M  CHG  4   3  -1   4  -1   8  -1   9  -1
+A    1
+P1
+A    2
+O1
+A    3
+O2
+A    4
+O3
+A    5
+O4
+A    6
+P2
+A    7
+O5
+A    8
+O6
+A    9
+O7
+M  END
+>  <InstanceId>
+5IKA_DPO_A_604
+
+>  <ChemCompId>
+DPO
+
+>  <PdbId>
+5IKA
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+604
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+O7 P2
+
+>  <Name>
+DIPHOSPHATE
+
+>  <SystematicName>
+phosphonato phosphate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+O7 P2
+
+>  <MolecularWeight>
+173.943
+
+>  <ModifiedDate>
+2014-03-19
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/H4O7P2/c1-8(2,3)7-9(4,5)6/h(H2,1,2,3)(H2,4,5,6)/p-4
+
+>  <InChIKey>
+XPPKVPWEQAFLFU-UHFFFAOYSA-J
+
+>  <SMILES>
+[O-]P(=O)([O-])OP(=O)([O-])[O-]
+
+$$$$

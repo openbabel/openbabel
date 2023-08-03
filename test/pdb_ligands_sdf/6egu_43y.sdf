@@ -1,0 +1,158 @@
+4XCF_43Y_L_301
+  RCSB PDB12061716113D
+Coordinates from PDB:4XCF:L:301 Model:1 without hydrogens
+ 20 19  0  0  0  0            999 V2000
+  -12.4490  -37.9210   -6.6840   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.7820  -38.5150   -7.5140   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -11.8970  -37.5880   -5.4890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.7630  -37.2900   -4.3530   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.3920  -35.9510   -3.6910   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.0150  -35.8940   -2.2860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.4450  -35.8190   -2.4200   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.4730  -36.3090   -1.2930   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.7450  -36.6660   -1.9940   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.7890  -37.3670   -0.3250   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.7630  -35.0090   -0.3920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.3480  -33.7850   -0.8600   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5140  -33.3200    0.0320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.0600  -32.8310    1.3320   N 0  3  0  0  0  0  0  0  0  0  0  0
+  -18.2190  -32.4630    2.1850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2160  -31.6270    1.1660   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.2990  -33.8340    2.0820   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.9270  -34.8440   -4.4730   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.2240  -34.4080   -5.5300   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.8790  -37.5440   -7.0110   C 0  0  0  0  0  0  0  0  0  0  0  0
+ 17 14  1  0  0  0  0
+ 16 14  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 13  1  0  0  0  0
+ 10  8  1  0  0  0  0
+ 11  8  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  8  7  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  7  6  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 18  5  1  0  0  0  0
+ 18 19  1  0  0  0  0
+  5  4  1  0  0  0  0
+  4  3  1  0  0  0  0
+  3  1  1  0  0  0  0
+  1  2  2  0  0  0  0
+  1 20  1  0  0  0  0
+M  CHG  1  14   1
+A    1
+C11
+A    2
+O11
+A    3
+O3
+A    4
+C3
+A    5
+C2
+A    6
+C1
+A    7
+O3P
+A    8
+P
+A    9
+O1P
+A   10
+O2P
+A   11
+O4P
+A   12
+C4
+A   13
+C5
+A   14
+N
+A   15
+C7
+A   16
+C8
+A   17
+C6
+A   18
+O2
+A   19
+C31
+A   20
+C9
+M  END
+>  <InstanceId>
+4XCF_43Y_L_301
+
+>  <ChemCompId>
+43Y
+
+>  <PdbId>
+4XCF
+
+>  <ChainId>
+L
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+4
+
+>  <ObservedFormula>
+C11 N O7 P
+
+>  <Name>
+[(2R)-3-[oxidanyl-[2-(trimethyl-$l^{4}-azanyl)ethoxy]phosphoryl]oxy-2-propanoyloxy-propyl] propanoate
+
+>  <SystematicName>
+2-[[(2R)-2,3-di(propanoyloxy)propoxy]-oxidanyl-phosphoryl]oxyethyl-trimethyl-azanium
+
+>  <Synonyms>
+1,2-dipropionyl-sn-glycero-3-phosphocholine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H29 N O8 P
+
+>  <MolecularWeight>
+370.356
+
+>  <ModifiedDate>
+2016-01-29
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H28NO8P/c1-6-13(16)20-10-12(23-14(17)7-2)11-22-24(18,19)21-9-8-15(3,4)5/h12H,6-11H2,1-5H3/p+1/t12-/m1/s1
+
+>  <InChIKey>
+LMBVWVMURYPSQM-GFCCVEGCSA-O
+
+>  <SMILES>
+CCC(=O)OC[C@H](COP(=O)(O)OCC[N+](C)(C)C)OC(=O)CC
+
+$$$$

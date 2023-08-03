@@ -1,0 +1,118 @@
+4UFI_AGK_A_1001
+  RCSB PDB12061715063D
+Coordinates from PDB:4UFI:A:1001 Model:1 without hydrogens
+ 10 10  0  0  0  0            999 V2000
+   78.7550   88.0510   20.4930   O 0  0  0  0  0  0  0  0  0  0  0  0
+   79.0740   89.3880   20.1560   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.8830   90.2730   20.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.5330   90.1400   21.8600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   76.6990   89.8930   19.6150   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1600   90.1390   18.2260   N 0  0  0  0  0  0  0  0  0  0  0  0
+   79.4170   89.4670   18.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   80.3380   88.3390   18.2920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   81.1250   88.6920   17.1750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   78.1950   89.2320   17.8900   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  7  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6 10  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7 10  1  0  0  0  0
+  8  9  1  0  0  0  0
+A    1
+O2
+A    2
+C4
+A    3
+C3
+A    4
+O1
+A    5
+C2
+A    6
+N1
+A    7
+C5
+A    8
+C6
+A    9
+O
+A   10
+N
+M  END
+>  <InstanceId>
+4UFI_AGK_A_1001
+
+>  <ChemCompId>
+AGK
+
+>  <PdbId>
+4UFI
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1001
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O3
+
+>  <Name>
+(3R,4S,5R)-3-(hydroxymethyl)-1,2-diazinane-4,5-diol
+
+>  <SystematicName>
+(3R,4S,5R)-3-(hydroxymethyl)-1,2-diazinane-4,5-diol
+
+>  <Synonyms>
+AZA-GALACTO-FAGOMINE
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C5 H12 N2 O3
+
+>  <MolecularWeight>
+148.16
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H12N2O3/c8-2-3-5(10)4(9)1-6-7-3/h3-10H,1-2H2/t3-,4-,5+/m1/s1
+
+>  <InChIKey>
+PPPMSBCQTLJPKM-WDCZJNDASA-N
+
+>  <SMILES>
+C1[C@H]([C@H]([C@H](NN1)CO)O)O
+
+$$$$

@@ -1,0 +1,147 @@
+4YQ0_4FM_A_301
+  RCSB PDB12061716293D
+Coordinates from PDB:4YQ0:A:301 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+  -16.7160   40.1370  -11.2400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1340   40.1340  -11.4310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5970   39.8340  -12.5900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.0220   39.8260  -12.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9620   40.2930  -10.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.7530   39.7000  -13.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.2870   41.5230   -7.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.0650   42.4010   -6.6900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.8690   41.6640   -7.9140   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.0150   40.6600   -9.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.1170   40.5430   -7.9980   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.3170   41.8720   -6.6370   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.6110   43.5090   -6.0610   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.4030   40.6820   -8.7500   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1650   42.5750   -7.4640   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2970   40.7570   -7.4430   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.5370   39.3960  -15.0360  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 17  6  1  0  0  0  0
+  6  4  2  0  0  0  0
+  6  3  1  0  0  0  0
+  4  2  1  0  0  0  0
+  3  1  2  0  0  0  0
+  2  5  2  0  0  0  0
+  1  5  1  0  0  0  0
+  5 10  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 14  9  1  0  0  0  0
+ 11  7  2  0  0  0  0
+ 11 16  1  0  0  0  0
+  9  7  1  0  0  0  0
+  9 15  2  0  0  0  0
+  7  8  1  0  0  0  0
+ 16 12  1  0  0  0  0
+  8 12  2  0  0  0  0
+  8 13  1  0  0  0  0
+A    1
+C5
+A    2
+C9
+A    3
+C6
+A    4
+C8
+A    5
+C4
+A    6
+C7
+A    7
+C1
+A    8
+C
+A    9
+C2
+A   10
+C3
+A   11
+N2
+A   12
+N1
+A   13
+N
+A   14
+N3
+A   15
+O1
+A   16
+O
+A   17
+CL
+M  END
+>  <InstanceId>
+4YQ0_4FM_A_301
+
+>  <ChemCompId>
+4FM
+
+>  <PdbId>
+4YQ0
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N4 O2 Cl
+
+>  <Name>
+4-amino-N-(4-chlorobenzyl)-1,2,5-oxadiazole-3-carboxamide
+
+>  <SystematicName>
+4-azanyl-N-[(4-chlorophenyl)methyl]-1,2,5-oxadiazole-3-carboxamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H9 Cl N4 O2
+
+>  <MolecularWeight>
+252.657
+
+>  <ModifiedDate>
+2016-03-11
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H9ClN4O2/c11-7-3-1-6(2-4-7)5-13-10(16)8-9(12)15-17-14-8/h1-4H,5H2,(H2,12,15)(H,13,16)
+
+>  <InChIKey>
+WIWIWZDRJHCWJZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(ccc1CNC(=O)c2c(non2)N)Cl
+
+$$$$

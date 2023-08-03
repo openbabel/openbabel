@@ -1,0 +1,131 @@
+4FU8_2UP_A_301
+  RCSB PDB12061712363D
+Coordinates from PDB:4FU8:A:301 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+  -20.4570  -18.7150   -6.6060   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.3590  -17.6860   -6.8940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.6210  -17.6730   -6.2870   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5190  -16.6420   -6.5770   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.1590  -15.6290   -7.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9020  -15.6430   -8.0900   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.9970  -16.6690   -7.7970   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.7360  -16.6880   -8.4050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.8440  -17.7260   -8.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -19.1960  -18.7470   -7.2180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.2950  -19.7790   -6.9160   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.9850  -19.5540   -6.9030   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -18.7240  -21.0030   -6.6050   N 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  5  1  0  0  0  0
+  7  2  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  1  2  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+  2  1  1  0  0  0  0
+  2  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+A    1
+CAI
+A    2
+CAM
+A    3
+CAG
+A    4
+CAD
+A    5
+CAC
+A    6
+CAF
+A    7
+CAL
+A    8
+CAH
+A    9
+CAE
+A   10
+CAK
+A   11
+CAJ
+A   12
+NAB
+A   13
+NAA
+M  END
+>  <InstanceId>
+4FU8_2UP_A_301
+
+>  <ChemCompId>
+2UP
+
+>  <PdbId>
+4FU8
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N2
+
+>  <Name>
+naphthalene-2-carboximidamide
+
+>  <SystematicName>
+naphthalene-2-carboximidamide
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 N2
+
+>  <MolecularWeight>
+170.21
+
+>  <ModifiedDate>
+2012-08-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10N2/c12-11(13)10-6-5-8-3-1-2-4-9(8)7-10/h1-7H,(H3,12,13)
+
+>  <InChIKey>
+URXJHZXEUUFNKM-UHFFFAOYSA-N
+
+>  <SMILES>
+[H]/N=C(\c1ccc2ccccc2c1)/N
+
+$$$$

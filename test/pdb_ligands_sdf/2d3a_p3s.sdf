@@ -1,0 +1,137 @@
+2BVC_P3S_A_500
+  RCSB PDB12061705103D
+Coordinates from PDB:2BVC:A:500 Model:1 without hydrogens
+ 15 14  0  0  0  0            999 V2000
+  -22.5380   84.1620   22.0620   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.4500   82.9670   21.9820   P 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.9310   81.8260   21.1490   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.8810   83.3480   21.6580   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5070   82.2620   23.5100   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.2510   83.0150   24.8280   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.9890   84.2390   25.1210   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.5220   83.3580   24.8960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -23.5290   81.8890   26.1960   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.9770   81.4160   26.3090   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2060   80.5410   27.5400   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.3280   79.3830   27.4840   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.6310   80.0520   27.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -27.4790   80.4810   26.7840   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.9200   79.2110   28.4720   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  2  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  1  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+A    1
+O3A
+A    2
+PA
+A    3
+O1A
+A    4
+O2A
+A    5
+NE
+A    6
+SD
+A    7
+OE
+A    8
+CE
+A    9
+CG
+A   10
+CB
+A   11
+CA
+A   12
+N
+A   13
+C
+A   14
+OT
+A   15
+O
+M  END
+>  <InstanceId>
+2BVC_P3S_A_500
+
+>  <ChemCompId>
+P3S
+
+>  <PdbId>
+2BVC
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+500
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 N2 O6 P S
+
+>  <Name>
+L-METHIONINE-S-SULFOXIMINE PHOSPHATE
+
+>  <SystematicName>
+(2S)-2-amino-4-(S-methyl-N-phosphono-sulfonimidoyl)butanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H13 N2 O6 P S
+
+>  <MolecularWeight>
+260.205
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H13N2O6PS/c1-15(13,7-14(10,11)12)3-2-4(6)5(8)9/h4H,2-3,6H2,1H3,(H,8,9)(H2,10,11,12)/t4-,15-/m0/s1
+
+>  <InChIKey>
+QQFOFBSCSWFFPB-NMAPHRJESA-N
+
+>  <SMILES>
+C[S@](=NP(=O)(O)O)(=O)CC[C@@H](C(=O)O)N
+
+$$$$

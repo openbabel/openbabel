@@ -1,0 +1,119 @@
+4RRT_3V4_A_502
+  RCSB PDB12061714413D
+Coordinates from PDB:4RRT:A:502 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+    4.4650   -7.1310  -20.8810   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.2310   -6.0030  -20.1690   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.5710   -4.7760  -21.0380   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1090   -6.3760  -18.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9850   -7.8140  -18.3770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8330   -5.5320  -18.7650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5470   -6.1890  -18.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6200   -7.6270  -17.6820   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.0050   -7.9670  -17.2090   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.9450   -9.3330  -16.5220   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  2  6  1  0  0  0  0
+  4  6  1  0  0  0  0
+  4  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  5  9  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+C10
+A    2
+C7
+A    3
+C9
+A    4
+C6
+A    5
+C1
+A    6
+C5
+A    7
+C4
+A    8
+C3
+A    9
+C2
+A   10
+C8
+M  END
+>  <InstanceId>
+4RRT_3V4_A_502
+
+>  <ChemCompId>
+3V4
+
+>  <PdbId>
+4RRT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10
+
+>  <Name>
+(+)-3-carene
+
+>  <SystematicName>
+(1S,6R)-4,7,7-trimethylbicyclo[4.1.0]hept-3-ene
+
+>  <Synonyms>
+(1R,6S)-3,7,7-trimethylbicyclo[4.1.0]hept-3-ene
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H16
+
+>  <MolecularWeight>
+136.234
+
+>  <ModifiedDate>
+2015-01-23
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16/c1-7-4-5-8-9(6-7)10(8,2)3/h4,8-9H,5-6H2,1-3H3/t8-,9+/m0/s1
+
+>  <InChIKey>
+BQOFWKZOCNGFEC-DTWKUNHWSA-N
+
+>  <SMILES>
+CC1=CC[C@H]2[C@@H](C1)C2(C)C
+
+$$$$

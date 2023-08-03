@@ -1,0 +1,139 @@
+1LGT_BP3_A_300
+  RCSB PDB12061703113D
+Coordinates from PDB:1LGT:A:300 Model:1 without hydrogens
+ 15 16  0  0  0  0            999 V2000
+   22.4900   21.7710   16.5330   C 0  0  0  0  0  0  0  0  0  0  0  0
+   21.1240   22.0060   16.2810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6090   23.2810   16.2370   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.2170   20.9380   16.0630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   18.8840   21.2250   15.8220   O 0  0  0  0  0  0  0  0  0  0  0  0
+   20.6740   19.6030   16.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.0460   19.3510   16.3410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.9460   20.4330   16.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.4290   22.9220   16.7670   C 0  0  0  0  0  0  0  0  0  0  0  0
+   23.3790   23.7050   17.9610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.2730   24.7930   18.1600   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2340   25.1130   17.1680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   25.2930   24.3410   15.9820   C 0  0  0  0  0  0  0  0  0  0  0  0
+   24.3940   23.2580   15.7910   C 0  0  0  0  0  0  0  0  0  0  0  0
+   22.2520   23.4230   19.2720  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  1  8  1  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  9 10  2  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  2  0  0  0  0
+A    1
+CA1
+A    2
+CA2
+A    3
+OA2
+A    4
+CA3
+A    5
+OA3
+A    6
+CA4
+A    7
+CA5
+A    8
+CA6
+A    9
+CB1
+A   10
+CB2
+A   11
+CB3
+A   12
+CB4
+A   13
+CB5
+A   14
+CB6
+A   15
+CL1
+M  END
+>  <InstanceId>
+1LGT_BP3_A_300
+
+>  <ChemCompId>
+BP3
+
+>  <PdbId>
+1LGT
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+300
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C12 O2 Cl
+
+>  <Name>
+2'-CHLORO-BIPHENYL-2,3-DIOL
+
+>  <SystematicName>
+3-(2-chlorophenyl)benzene-1,2-diol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C12 H9 Cl O2
+
+>  <MolecularWeight>
+220.652
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C12H9ClO2/c13-10-6-2-1-4-8(10)9-5-3-7-11(14)12(9)15/h1-7,14-15H
+
+>  <InChIKey>
+SNGROCQMAKYWRE-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)c2cccc(c2O)O)Cl
+
+$$$$

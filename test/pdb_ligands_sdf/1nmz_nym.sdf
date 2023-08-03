@@ -1,0 +1,163 @@
+1NMZ_NYM_A_301
+  RCSB PDB12061703263D
+Coordinates from PDB:1NMZ:A:301 Model:1 without hydrogens
+ 21 22  0  0  0  0            999 V2000
+   13.4110   77.7090   24.0690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6960   76.8300   23.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8080   79.0040   23.6300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4840   79.7270   24.3670   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3360   79.3770   22.4170   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.5750   78.5360   21.5920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2400   79.0430   20.3990   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.2410   77.1750   22.1070   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.3950   76.3400   21.1340   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.6420   76.0690   25.0480   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.2200   76.1330   28.3610   N 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9690   77.2010   25.3740   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.9160   76.6980   26.3810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.5940   75.5400   27.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.7870   75.2460   26.1920   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4980   73.2640   25.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.8880   73.7030   25.9350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.0180   71.7410   26.1060   P 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6270   71.0470   27.2800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.5870   71.8140   25.8090   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.0390   71.0770   24.9860   O 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  3  1  0  0  0  0
+  1 12  1  0  0  0  0
+  2  8  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 15  1  0  0  0  0
+ 11 14  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 16 17  1  0  0  0  0
+ 16 18  1  0  0  0  0
+ 18 19  1  0  0  0  0
+ 18 20  2  0  0  0  0
+ 18 21  1  0  0  0  0
+A    1
+N1
+A    2
+C6
+A    3
+C2
+A    4
+O2
+A    5
+N3
+A    6
+C4
+A    7
+O4
+A    8
+C5
+A    9
+C7
+A   10
+O4'
+A   11
+N3'
+A   12
+C1'
+A   13
+C2'
+A   14
+C3'
+A   15
+C4'
+A   16
+O5'
+A   17
+C5'
+A   18
+P1
+A   19
+OP2
+A   20
+OP1
+A   21
+OP3
+M  END
+>  <InstanceId>
+1NMZ_NYM_A_301
+
+>  <ChemCompId>
+NYM
+
+>  <PdbId>
+1NMZ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 N3 O7 P
+
+>  <Name>
+3'-DEOXY-3'-AMINOTHYMIDINE MONOPHOSPHATE
+
+>  <SystematicName>
+[(2S,3S,5R)-3-amino-5-(5-methyl-2,4-dioxo-pyrimidin-1-yl)oxolan-2-yl]methyl dihydrogen phosphate
+
+>  <Synonyms>
+PHOSPHORIC ACID MONO-[3-AMINO-5-(5-METHYL-2,4-DIOXO-3,4-DIHYDRO-2H-PYRIMIDIN-1-YL)-TETRAHYDRO-FURAN-2-YLMETHYL] ESTER
+
+>  <Type>
+DNA LINKING
+
+>  <Formula>
+C10 H16 N3 O7 P
+
+>  <MolecularWeight>
+321.224
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+N
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H16N3O7P/c1-5-3-13(10(15)12-9(5)14)8-2-6(11)7(20-8)4-19-21(16,17)18/h3,6-8H,2,4,11H2,1H3,(H,12,14,15)(H2,16,17,18)/t6-,7+,8+/m0/s1
+
+>  <InChIKey>
+BQZMHQZNZNBJNF-XLPZGREQSA-N
+
+>  <SMILES>
+CC1=CN(C(=O)NC1=O)[C@H]2C[C@@H]([C@H](O2)COP(=O)(O)O)N
+
+$$$$

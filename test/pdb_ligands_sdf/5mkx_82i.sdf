@@ -1,0 +1,122 @@
+5MKX_82I_A_901
+  RCSB PDB12191704023D
+Coordinates from PDB:5MKX:A:901 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+   -1.6330    8.5740   35.1470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.2660    9.7580   34.3710   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.5270    9.7230   33.2500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.0040    8.4910   32.7360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.6950    8.3790   31.6470   N 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9580    9.5170   30.9390   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7470    9.3150   29.7270   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.5300   10.7810   31.2600   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8090   11.7450   30.5540   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2540   10.8410   32.4660   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.8360   12.3950   32.9420  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  7  6  1  0  0  0  0
+  9  8  2  0  0  0  0
+  6  8  1  0  0  0  0
+  6  5  1  0  0  0  0
+  8 10  1  0  0  0  0
+  5  4  2  0  0  0  0
+ 10 11  1  0  0  0  0
+ 10  3  2  0  0  0  0
+  4  3  1  0  0  0  0
+  3  2  1  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+C01
+A    2
+N05
+A    3
+C07
+A    4
+C08
+A    5
+N10
+A    6
+N11
+A    7
+C12
+A    8
+C16
+A    9
+O17
+A   10
+C18
+A   11
+CL1
+M  END
+>  <InstanceId>
+5MKX_82I_A_901
+
+>  <ChemCompId>
+82I
+
+>  <PdbId>
+5MKX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+901
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N3 O Cl
+
+>  <Name>
+4-chloranyl-2-methyl-5-(methylamino)pyridazin-3-one
+
+>  <SystematicName>
+4-chloranyl-2-methyl-5-(methylamino)pyridazin-3-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H8 Cl N3 O
+
+>  <MolecularWeight>
+173.6
+
+>  <ModifiedDate>
+2017-12-15
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H8ClN3O/c1-8-4-3-9-10(2)6(11)5(4)7/h3,8H,1-2H3
+
+>  <InChIKey>
+ACZYSEPOODWZET-UHFFFAOYSA-N
+
+>  <SMILES>
+CNC1=C(C(=O)N(N=C1)C)Cl
+
+$$$$

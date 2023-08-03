@@ -1,0 +1,114 @@
+1GTE_IUR_A_1034
+  RCSB PDB12061702383D
+Coordinates from PDB:1GTE:A:1034 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+   64.9620   40.9540   50.4240   N 0  0  0  0  0  0  0  0  0  0  0  0
+   65.4980   42.1190   49.8710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   66.3740   42.8430   50.3600   O 0  0  0  0  0  0  0  0  0  0  0  0
+   64.9600   42.4630   48.6430   N 0  0  0  0  0  0  0  0  0  0  0  0
+   63.9910   41.8350   47.8990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.6200   42.2870   46.8070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   63.4960   40.6660   48.5140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   63.9820   40.2580   49.7400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   62.0120   39.5910   47.5040   I 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  8  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+N1
+A    2
+C2
+A    3
+O2
+A    4
+N3
+A    5
+C4
+A    6
+O4
+A    7
+C5
+A    8
+C6
+A    9
+I5
+M  END
+>  <InstanceId>
+1GTE_IUR_A_1034
+
+>  <ChemCompId>
+IUR
+
+>  <PdbId>
+1GTE
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1034
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C4 N2 O2 I
+
+>  <Name>
+5-IODOURACIL
+
+>  <SystematicName>
+5-iodo-1H-pyrimidine-2,4-dione
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C4 H3 I N2 O2
+
+>  <MolecularWeight>
+237.983
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C4H3IN2O2/c5-2-1-6-4(9)7-3(2)8/h1H,(H2,6,7,8,9)
+
+>  <InChIKey>
+KSNXJLQDQOIRIP-UHFFFAOYSA-N
+
+>  <SMILES>
+C1=C(C(=O)NC(=O)N1)I
+
+$$$$

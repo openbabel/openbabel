@@ -1,0 +1,131 @@
+5PA7_7JX_A_302
+  RCSB PDB12061719203D
+Coordinates from PDB:5PA7:A:302 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    8.8960  -10.1770    3.7680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.9910  -11.2020    4.0730   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2890  -12.5200    3.7240   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4110  -13.5360    4.0030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.2250  -13.2540    4.6390   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.0870  -10.4690    3.1300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.3720  -11.7820    2.7850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4830  -12.8070    3.0770   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9160  -11.9420    4.9910   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8040  -10.9490    4.6950   N 0  0  0  0  0  0  0  0  0  0  0  0
+   12.0390  -12.1750    1.8770  Br 0  0  0  0  0  0  0  0  0  0  0  0
+    8.6690   -8.8560    4.0730   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1120  -14.5290    4.9970  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+ 11  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7  6  1  0  0  0  0
+  8  3  1  0  0  0  0
+  6  1  2  0  0  0  0
+  3  4  2  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  1 12  1  0  0  0  0
+  4  5  1  0  0  0  0
+  2 10  2  0  0  0  0
+  5  9  2  0  0  0  0
+  5 13  1  0  0  0  0
+ 10  9  1  0  0  0  0
+A    1
+C4
+A    2
+C5
+A    3
+C6
+A    4
+C7
+A    5
+C8
+A    6
+C1
+A    7
+C2
+A    8
+C3
+A    9
+C9
+A   10
+N10
+A   11
+BR1
+A   12
+O12
+A   13
+CL3
+M  END
+>  <InstanceId>
+5PA7_7JX_A_302
+
+>  <ChemCompId>
+7JX
+
+>  <PdbId>
+5PA7
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+302
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O Br Cl
+
+>  <Name>
+6-bromanyl-3-chloranyl-quinolin-8-ol
+
+>  <SystematicName>
+6-bromanyl-3-chloranyl-quinolin-8-ol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H5 Br Cl N O
+
+>  <MolecularWeight>
+258.499
+
+>  <ModifiedDate>
+2017-11-17
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H5BrClNO/c10-6-1-5-2-7(11)4-12-9(5)8(13)3-6/h1-4,13H
+
+>  <InChIKey>
+IYXNDLZQIYAJTB-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c2cc(cnc2c(cc1Br)O)Cl
+
+$$$$

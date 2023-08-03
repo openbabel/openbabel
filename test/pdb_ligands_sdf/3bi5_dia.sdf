@@ -1,0 +1,117 @@
+1H83_DIA_A_590
+  RCSB PDB12061702423D
+Coordinates from PDB:1H83:A:590 Model:1 without hydrogens
+ 10  9  0  0  0  0            999 V2000
+  127.3900   57.9590   -5.4590   N 0  0  0  0  0  0  0  0  0  0  0  0
+  128.8170   57.8910   -5.8050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  129.2960   59.1910   -6.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+  130.8040   59.1470   -6.7810   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.2980   60.2210   -7.7710   C 0  0  0  0  0  0  0  0  0  0  0  0
+  132.0100   61.4400   -7.1620   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.2810   62.7560   -7.4850   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.2540   63.7730   -6.3320   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.8470   65.1390   -6.7250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  131.0020   65.9510   -7.6100   N 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C7
+A    9
+C8
+A   10
+N8
+M  END
+>  <InstanceId>
+1H83_DIA_A_590
+
+>  <ChemCompId>
+DIA
+
+>  <PdbId>
+1H83
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+590
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N2
+
+>  <Name>
+OCTANE 1,8-DIAMINE
+
+>  <SystematicName>
+octane-1,8-diamine
+
+>  <Synonyms>
+1,8-DIAMINOOCTANE; OCTAMETHYLENEDIAMINE; 1,8-OCTANEDIAMINE
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C8 H20 N2
+
+>  <MolecularWeight>
+144.258
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H20N2/c9-7-5-3-1-2-4-6-8-10/h1-10H2
+
+>  <InChIKey>
+PWGJDPKCLMLPJW-UHFFFAOYSA-N
+
+>  <SMILES>
+C(CCCCN)CCCN
+
+$$$$

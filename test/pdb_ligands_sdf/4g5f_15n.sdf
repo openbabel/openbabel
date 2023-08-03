@@ -1,0 +1,131 @@
+4G5F_15N_A_403
+  RCSB PDB12061712393D
+Coordinates from PDB:4G5F:A:403 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+   15.3440   12.9460    3.6900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.3860   11.8080    3.4610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   16.1050   11.3080    2.5920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5630   10.7490    4.1720   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.4780   11.1940    5.5100   O 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1930   10.2330    6.4280   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.8540   10.6430    7.6780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.4310    9.7200    8.5990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.3450    8.4070    8.2650   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.6800    7.9830    7.0040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.1070    8.8960    6.0890   C 0  0  0  0  0  0  0  0  0  0  0  0
+   14.5100    8.4300    4.8750   O 0  0  0  0  0  0  0  0  0  0  0  0
+   15.1390    9.3760    4.0410   C 0  0  0  0  0  0  0  0  0  0  0  0
+  8  9  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9 10  1  0  0  0  0
+  7  6  2  0  0  0  0
+ 10 11  2  0  0  0  0
+  6 11  1  0  0  0  0
+  6  5  1  0  0  0  0
+ 11 12  1  0  0  0  0
+  5  4  1  0  0  0  0
+ 12 13  1  0  0  0  0
+  4 13  1  0  0  0  0
+  4  2  1  0  0  0  0
+  3  2  2  0  0  0  0
+  2  1  1  0  0  0  0
+A    1
+OAA
+A    2
+CAJ
+A    3
+OAB
+A    4
+CAM
+A    5
+OAI
+A    6
+CAL
+A    7
+CAF
+A    8
+CAD
+A    9
+CAC
+A   10
+CAE
+A   11
+CAK
+A   12
+OAH
+A   13
+CAG
+M  END
+>  <InstanceId>
+4G5F_15N_A_403
+
+>  <ChemCompId>
+15N
+
+>  <PdbId>
+4G5F
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+403
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+(2R)-2,3-dihydro-1,4-benzodioxine-2-carboxylic acid
+
+>  <SystematicName>
+(3R)-2,3-dihydro-1,4-benzodioxine-3-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O4
+
+>  <MolecularWeight>
+180.157
+
+>  <ModifiedDate>
+2013-07-12
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O4/c10-9(11)8-5-12-6-3-1-2-4-7(6)13-8/h1-4,8H,5H2,(H,10,11)/t8-/m1/s1
+
+>  <InChIKey>
+HMBHAQMOBKLWRX-MRVPVSSYSA-N
+
+>  <SMILES>
+c1ccc2c(c1)OC[C@@H](O2)C(=O)O
+
+$$$$

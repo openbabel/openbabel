@@ -1,0 +1,134 @@
+2D2C_BNT_B_309
+  RCSB PDB12061705183D
+Coordinates from PDB:2D2C:B:309 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+   78.4020  -18.3550   75.3470   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.4140  -19.3020   74.1460   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.9370  -18.5730   72.9080   C 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1920  -19.9870   74.0810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.0680  -19.3370   73.5790   C 0  0  0  0  0  0  0  0  0  0  0  0
+   76.1780  -18.1580   73.2240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   74.8270  -19.9640   73.4410   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.3600  -18.9740   72.8100  Br 0  0  0  0  0  0  0  0  0  0  0  0
+   74.6730  -21.3030   73.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   73.4440  -21.9450   73.6810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.7520  -22.0300   74.3010   C 0  0  0  0  0  0  0  0  0  0  0  0
+   75.6150  -23.2170   74.5710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   77.1080  -21.3210   74.4730   C 0  0  0  0  0  0  0  0  0  0  0  0
+   78.5240  -22.2390   75.3040  Br 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4 13  2  0  0  0  0
+  5  6  2  0  0  0  0
+  5  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  9 10  1  0  0  0  0
+  9 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CAA
+A    2
+CAD
+A    3
+CAC
+A    4
+CAE
+A    5
+CAF
+A    6
+OAB
+A    7
+CAG
+A    8
+BRAH
+A    9
+CAL
+A   10
+CAM
+A   11
+CAK
+A   12
+OAN
+A   13
+CAJ
+A   14
+BRAI
+M  END
+>  <InstanceId>
+2D2C_BNT_B_309
+
+>  <ChemCompId>
+BNT
+
+>  <PdbId>
+2D2C
+
+>  <ChainId>
+B
+
+>  <ResidueNumber>
+309
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C10 O2 Br2
+
+>  <Name>
+2,5-DIBROMO-3-ISOPROPYL-6-METHYLBENZO-1,4-QUINONE
+
+>  <SystematicName>
+2,5-dibromo-3-methyl-6-propan-2-yl-cyclohexa-2,5-diene-1,4-dione
+
+>  <Synonyms>
+2,5-DIBROMO-3-METHYL-6-ISOPROPYLBENZOQUINONE, DBMIB
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C10 H10 Br2 O2
+
+>  <MolecularWeight>
+321.993
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C10H10Br2O2/c1-4(2)6-8(12)9(13)5(3)7(11)10(6)14/h4H,1-3H3
+
+>  <InChIKey>
+GHHZELQYJPWSMG-UHFFFAOYSA-N
+
+>  <SMILES>
+CC1=C(C(=O)C(=C(C1=O)Br)C(C)C)Br
+
+$$$$

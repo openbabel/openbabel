@@ -1,0 +1,119 @@
+1N23_2BN_A_801
+  RCSB PDB12061703213D
+Coordinates from PDB:1N23:A:801 Model:1 without hydrogens
+ 10 11  0  0  0  0            999 V2000
+   42.9210   46.7230   48.6770   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.4320   47.9680   48.0370   N 0  0  0  0  0  0  0  0  0  0  0  0
+   43.8920   47.6540   46.8120   C 0  0  0  0  0  0  0  0  0  0  0  0
+   43.6300   46.1290   46.7350   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.7390   45.5150   47.6530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   44.2270   45.9410   49.0680   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.3170   45.9150   47.5090   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.0500   46.4950   46.8500   C 0  0  0  0  0  0  0  0  0  0  0  0
+   41.9800   44.4390   47.8480   C 0  0  0  0  0  0  0  0  0  0  0  0
+   42.0300   46.9630   49.8640   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  1  7  1  0  0  0  0
+  1 10  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  1  0  0  0  0
+A    1
+C2
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+C7
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+C11
+M  END
+>  <InstanceId>
+1N23_2BN_A_801
+
+>  <ChemCompId>
+2BN
+
+>  <PdbId>
+1N23
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N
+
+>  <Name>
+(1R,4S)-2-AZABORNANE
+
+>  <SystematicName>
+(1R,4S)-1,7,7-trimethyl-6-azabicyclo[2.2.1]heptane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H17 N
+
+>  <MolecularWeight>
+139.238
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H17N/c1-8(2)7-4-5-9(8,3)10-6-7/h7,10H,4-6H2,1-3H3/t7-,9-/m1/s1
+
+>  <InChIKey>
+OLTRGBMOWPXXIG-VXNVDRBHSA-N
+
+>  <SMILES>
+CC1([C@@H]2CC[C@]1(NC2)C)C
+
+$$$$

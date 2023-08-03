@@ -1,0 +1,133 @@
+2AFU_BGT_A_381
+  RCSB PDB12061705003D
+Coordinates from PDB:2AFU:A:381 Model:1 without hydrogens
+ 14 13  0  0  0  0            999 V2000
+  -15.7790    2.7260   21.0920   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3250    2.2430   21.1580   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.2910    3.3460   21.2940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.4770    4.4550   20.8050   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -12.1970    3.0500   21.9810   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -14.3490    3.8810   25.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.3590    4.9000   24.7210   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.2970    4.5790   26.3390   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -13.5680    2.7970   26.1050   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.8750    3.7170   23.4260   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.1570    4.9350   23.2920   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -15.0910    3.1410   24.2890   O 0  0  0  0  0  0  0  0  0  0  0  0
+  -17.9420    3.2290   22.1910   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -16.5480    2.7680   22.4290   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 14  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3  5  1  0  0  0  0
+  6  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+  6 12  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 10 14  1  0  0  0  0
+ 13 14  1  0  0  0  0
+A    1
+CB
+A    2
+CG
+A    3
+CD
+A    4
+OE1
+A    5
+NE2
+A    6
+CT
+A    7
+C1
+A    8
+C2
+A    9
+C3
+A   10
+C
+A   11
+O
+A   12
+OXT
+A   13
+N
+A   14
+CA
+M  END
+>  <InstanceId>
+2AFU_BGT_A_381
+
+>  <ChemCompId>
+BGT
+
+>  <PdbId>
+2AFU
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+381
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N2 O3
+
+>  <Name>
+TERT-BUTYL D-ALPHA-GLUTAMINATE
+
+>  <SystematicName>
+tert-butyl (2S)-2,5-diamino-5-oxo-pentanoate
+
+>  <Synonyms>
+GLUTAMINE T-BUTYL ESTER
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H18 N2 O3
+
+>  <MolecularWeight>
+202.251
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H18N2O3/c1-9(2,3)14-8(13)6(10)4-5-7(11)12/h6H,4-5,10H2,1-3H3,(H2,11,12)/t6-/m0/s1
+
+>  <InChIKey>
+VVOPSEUXHSUTJS-LURJTMIESA-N
+
+>  <SMILES>
+CC(C)(C)OC(=O)[C@H](CCC(=O)N)N
+
+$$$$

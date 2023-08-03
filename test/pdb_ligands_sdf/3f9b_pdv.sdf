@@ -1,0 +1,115 @@
+3F9B_PDV_A_502
+  RCSB PDB12061708343D
+Coordinates from PDB:3F9B:A:502 Model:1 without hydrogens
+  9  9  0  0  0  0            999 V2000
+    9.5500   -4.6020   10.4250   O 0  5  0  0  0  0  0  0  0  0  0  0
+    9.8600   -2.8010    9.8600   V 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1430   -1.6790    8.1440   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5890   -1.8560   10.9050   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.4360   -1.7380   10.0050   O 0  5  0  0  0  0  0  0  0  0  0  0
+    8.6160   -3.8470    8.5650   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9420   -2.7340    6.8700   V 0  0  0  0  0  0  0  0  0  0  0  0
+    9.5870   -4.3200    6.0620   O 0  5  0  0  0  0  0  0  0  0  0  0
+    7.1230   -2.2570    6.7220   O 0  5  0  0  0  0  0  0  0  0  0  0
+  2  1  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  4  1  0  0  0  0
+  3  2  1  0  0  0  0
+  6  2  1  0  0  0  0
+  7  3  1  0  0  0  0
+  7  6  1  0  0  0  0
+  8  7  1  0  0  0  0
+  9  7  1  0  0  0  0
+M  CHG  4   1  -1   5  -1   8  -1   9  -1
+A    1
+O7
+A    2
+V2
+A    3
+O3
+A    4
+O6
+A    5
+O5
+A    6
+O4
+A    7
+V1
+A    8
+O1
+A    9
+O2
+M  END
+>  <InstanceId>
+3F9B_PDV_A_502
+
+>  <ChemCompId>
+PDV
+
+>  <PdbId>
+3F9B
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+502
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+O7 V2
+
+>  <Name>
+Divanadate ion
+
+>  <SystematicName>
+2,2,4,4-tetrakis(oxidanidyl)-2-oxidanyl-1,3-dioxa-2$l^{5},4$l^{4}-divanadacyclobutane
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+H O7 V2
+
+>  <MolecularWeight>
+214.887
+
+>  <ModifiedDate>
+2011-06-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/H2O.6O.2V/h1H2;;;;;;;;/q;;;4*-1;;+1/p-1
+
+>  <InChIKey>
+YWFXIPDXSJHXJM-UHFFFAOYSA-M
+
+>  <SMILES>
+O[V]1(O[V](O1)([O-])[O-])([O-])[O-]
+
+$$$$

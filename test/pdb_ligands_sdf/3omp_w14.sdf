@@ -1,0 +1,147 @@
+3OMP_W14_A_1
+  RCSB PDB12061710083D
+Coordinates from PDB:3OMP:A:1 Model:1 without hydrogens
+ 17 18  0  0  0  0            999 V2000
+   -3.7690   28.3850   10.8800   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1110   33.2420   13.0410   O 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.9240   26.0940    9.3950   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.8180   25.2940   11.0570   F 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.2340   26.2280    9.5680   F 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2620   31.2890   12.2570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.1480   29.9500   11.7960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.1690   31.3350   12.4930   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8950   27.9970   11.2300   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.3980   27.1430   11.4400   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.5180   29.4070   12.0060   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7960   27.6320   10.9400   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0650   31.9510   12.5850   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.9130   29.3300   11.6930   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -0.2350   30.0120   12.0620   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -1.6000   28.0220   11.4690   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9180   26.2470   10.2670   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1 12  2  0  0  0  0
+  2 13  1  0  0  0  0
+  3 17  1  0  0  0  0
+  4 17  1  0  0  0  0
+  5 17  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6 13  1  0  0  0  0
+  7 14  1  0  0  0  0
+  8 13  2  0  0  0  0
+  8 15  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 14  1  0  0  0  0
+ 10 16  1  0  0  0  0
+ 11 15  1  0  0  0  0
+ 11 16  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 12 17  1  0  0  0  0
+ 14 15  2  0  0  0  0
+A    1
+OAA
+A    2
+OAB
+A    3
+FAC
+A    4
+FAD
+A    5
+FAE
+A    6
+CAF
+A    7
+CAG
+A    8
+CAH
+A    9
+CAI
+A   10
+CAJ
+A   11
+CAK
+A   12
+CAL
+A   13
+CAM
+A   14
+CAN
+A   15
+CAO
+A   16
+NAP
+A   17
+CAQ
+M  END
+>  <InstanceId>
+3OMP_W14_A_1
+
+>  <ChemCompId>
+W14
+
+>  <PdbId>
+3OMP
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2 F3
+
+>  <Name>
+2-(trifluoroacetyl)-1,2,3,4-tetrahydroisoquinolin-7-ol
+
+>  <SystematicName>
+2,2,2-trifluoro-1-(7-hydroxy-3,4-dihydro-1H-isoquinolin-2-yl)ethanone
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H10 F3 N O2
+
+>  <MolecularWeight>
+245.198
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H10F3NO2/c12-11(13,14)10(17)15-4-3-7-1-2-9(16)5-8(7)6-15/h1-2,5,16H,3-4,6H2
+
+>  <InChIKey>
+OZASZYYBDFCSHO-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1O)CN(CC2)C(=O)C(F)(F)F
+
+$$$$

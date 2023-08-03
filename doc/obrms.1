@@ -1,0 +1,68 @@
+.Dd Oct 10, 2019
+.Os "Open Babel" 3.1
+.Dt obrms 1 URM
+.Sh NAME
+.Nm obrms
+.Nd "Calculate the heavy-atom RMSD between two chemically identical structures"
+.Sh SYNOPSIS
+.Nm
+.Op -fmxso
+.Ar filename1
+.Ar filename2
+.Sh DESCRIPTION
+Computes the heavy-atom RMSD of identical compound structures.
+Structures in multi-structure files are compared one-by-one unless -firstonly
+is passed, in which case only the first structure in the reference file is used.
+.Sh OPTIONS
+.Bl -tag -width flag
+.It Fl f, -firstonly
+use only the first structure in the reference file (otherwise the nth molecule
+in the reference file is compared to the nth molecule in the test file)
+.It Fl m,  -minimize
+Compute the minimum RMSD achievable by applying a rigid-body transformation to 
+the test molecule
+.It Fl x, -cross
+Compute all n^2 RMSDs between molecules of the reference file.  Test file is ignored.
+.It Fl s, -separate 
+Separate reference file into constituent molecules (disconnected fragments)
+and report best RMSD
+.It Fl o, -out 
+Re-oriented test structure output (used with -m) 
+.Sh EXAMPLES
+.Dl "obrms ref.sdf test.sdf"
+.Pp
+Calculate the RMSD between ref.sdf and test.sdf.  Both files should have the
+same number of molecules.
+
+.Dl "obrms -f ref.sdf test.sdf"
+.Pp
+Calculate the RMSD between the first molecule in ref.sdf and each molecule in
+test.sdf.
+.Sh SEE ALSO
+.Xr obfit 1 .
+.Pp
+The web pages for Open Babel can be found at:
+\%<\fBhttp://openbabel.org/\fR>
+.Sh AUTHORS
+.An -nosplit
+Open Babel is developed by a cast of many, including currrent maintainers
+.An Geoff Hutchison ,
+.An Chris Morley ,
+.An Michael Banck ,
+and innumerable others who have contributed fixes and additions.
+For more contributors to Open Babel, see
+\%<\fBhttp://openbabel.org/wiki/THANKS\fR>
+.Sh COPYRIGHT
+Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+.br
+Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and
+other contributors.
+.Pp
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation version 2 of the License.
+.Pp
+This program is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+General Public License for more details.

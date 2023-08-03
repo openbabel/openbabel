@@ -1,0 +1,127 @@
+4BDH_WVI_A_1514
+  RCSB PDB12061711493D
+Coordinates from PDB:4BDH:A:1514 Model:1 without hydrogens
+ 12 13  0  0  0  0            999 V2000
+  -36.2360   35.6300    9.1240   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.5520   32.6990    5.7840   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.8690   33.6750    6.3860   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5210   33.7750    7.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.8250   34.9700    7.9180   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -36.7460   35.5230    6.6970   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.0140   32.4990    9.9650   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.7900   32.7530    8.8040   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -39.1280   31.6710    8.7210   S 0  0  0  0  0  0  0  0  0  0  0  0
+  -38.6740   30.9080   10.1890   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.3690   34.7690    5.7450   N 0  0  0  0  0  0  0  0  0  0  0  0
+  -37.5550   31.4350   10.7310   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  5  1  0  0  0  0
+  2  3  1  0  0  0  0
+  3  4  2  0  0  0  0
+  3 11  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  8  1  0  0  0  0
+  5  6  2  0  0  0  0
+  6 11  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 12  1  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 12  2  0  0  0  0
+A    1
+C1
+A    2
+N3
+A    3
+C4
+A    4
+C5
+A    5
+C6
+A    6
+N7
+A    7
+C9
+A    8
+C10
+A    9
+S11
+A   10
+C12
+A   11
+N
+A   12
+C13
+M  END
+>  <InstanceId>
+4BDH_WVI_A_1514
+
+>  <ChemCompId>
+WVI
+
+>  <PdbId>
+4BDH
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1514
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C8 N3 S
+
+>  <Name>
+3-METHYL-4-(THIOPHEN-2-YL)-1H-PYRAZOL-5-AMINE
+
+>  <SystematicName>
+3-methyl-4-thiophen-2-yl-1H-pyrazol-5-amine
+
+>  <Synonyms>
+
+
+>  <Type>
+non-polymer
+
+>  <Formula>
+C8 H9 N3 S
+
+>  <MolecularWeight>
+179.242
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C8H9N3S/c1-5-7(8(9)11-10-5)6-3-2-4-12-6/h2-4H,1H3,(H3,9,10,11)
+
+>  <InChIKey>
+LTNSHOVGLDMJRU-UHFFFAOYSA-N
+
+>  <SMILES>
+Cc1c(c([nH]n1)N)c2cccs2
+
+$$$$

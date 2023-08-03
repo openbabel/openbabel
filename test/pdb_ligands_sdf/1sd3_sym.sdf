@@ -1,0 +1,122 @@
+1SD3_SYM_A_998
+  RCSB PDB12061703593D
+Coordinates from PDB:1SD3:A:998 Model:1 without hydrogens
+ 11 10  0  0  0  0            999 V2000
+   34.4170   15.3090   38.9310   C 0  0  0  0  0  0  0  0  0  0  0  0
+   34.8770   15.9210   37.5960   C 0  0  0  0  0  0  0  0  0  0  0  0
+   36.1680   16.7280   37.7610   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0080   14.8380   36.5040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   35.1010   13.6290   36.8510   O 0  0  0  0  0  0  0  0  0  0  0  0
+   35.0270   15.1940   35.2960   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.7490   13.8130   40.1140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   33.6090   12.9130   40.3290   O 0  5  0  0  0  0  0  0  0  0  0  0
+   31.7170   13.9610   40.8110   O 0  0  0  0  0  0  0  0  0  0  0  0
+   32.0280   15.9410   39.0120   N 0  0  0  0  0  0  0  0  0  0  0  0
+   32.9690   14.7820   38.9370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+  7 11  1  0  0  0  0
+ 10 11  1  0  0  0  0
+M  CHG  1   8  -1
+A    1
+CB
+A    2
+CG1
+A    3
+CG2
+A    4
+CD
+A    5
+OE1
+A    6
+OE2
+A    7
+C
+A    8
+OT1
+A    9
+OT2
+A   10
+N
+A   11
+CA
+M  END
+>  <InstanceId>
+1SD3_SYM_A_998
+
+>  <ChemCompId>
+SYM
+
+>  <PdbId>
+1SD3
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+998
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 N O4
+
+>  <Name>
+2S,4R-4-METHYLGLUTAMATE
+
+>  <SystematicName>
+(2S,4R)-2-amino-5-hydroxy-4-methyl-5-oxo-pentanoate
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H10 N O4
+
+>  <MolecularWeight>
+160.148
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C6H11NO4/c1-3(5(8)9)2-4(7)6(10)11/h3-4H,2,7H2,1H3,(H,8,9)(H,10,11)/p-1/t3-,4+/m1/s1
+
+>  <InChIKey>
+KRKRAOXTGDJWNI-DMTCNVIQSA-M
+
+>  <SMILES>
+C[C@H](C[C@@H](C(=O)[O-])N)C(=O)O
+
+$$$$

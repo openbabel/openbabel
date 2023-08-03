@@ -1,0 +1,131 @@
+4X8U_3ZB_H_301
+  RCSB PDB12061716103D
+Coordinates from PDB:4X8U:H:301 Model:1 without hydrogens
+ 13 14  0  0  0  0            999 V2000
+    9.5280   34.7820   29.1230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.4010   34.4110   27.7720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1780   36.1130   29.2330   N 0  0  0  0  0  0  0  0  0  0  0  0
+    9.8970   33.8630   30.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.9740   35.5840   27.0640   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.6220   33.0850   27.4180   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.8310   36.5880   27.9840   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1030   32.5360   29.7280   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.9520   32.1670   28.3990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4150   38.0030   27.8630   C 0  0  0  0  0  0  0  0  0  0  0  0
+   10.1280   30.4900   27.9580  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2460   38.4230   26.6330   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1910   38.6930   28.8590   O 0  0  0  0  0  0  0  0  0  0  0  0
+ 12 10  1  0  0  0  0
+  5  2  1  0  0  0  0
+  5  7  2  0  0  0  0
+  6  2  2  0  0  0  0
+  6  9  1  0  0  0  0
+  2  1  1  0  0  0  0
+ 10  7  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 11  9  1  0  0  0  0
+  7  3  1  0  0  0  0
+  9  8  2  0  0  0  0
+  1  3  1  0  0  0  0
+  1  4  2  0  0  0  0
+  8  4  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+N3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+C7
+A    8
+C8
+A    9
+C9
+A   10
+C10
+A   11
+CL
+A   12
+O12
+A   13
+O13
+M  END
+>  <InstanceId>
+4X8U_3ZB_H_301
+
+>  <ChemCompId>
+3ZB
+
+>  <PdbId>
+4X8U
+
+>  <ChainId>
+H
+
+>  <ResidueNumber>
+301
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N O2 Cl
+
+>  <Name>
+5-chloro-1H-indole-2-carboxylic acid
+
+>  <SystematicName>
+5-chloranyl-1H-indole-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H6 Cl N O2
+
+>  <MolecularWeight>
+195.602
+
+>  <ModifiedDate>
+2015-03-20
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H6ClNO2/c10-6-1-2-7-5(3-6)4-8(11-7)9(12)13/h1-4,11H,(H,12,13)
+
+>  <InChIKey>
+FUQOTYRCMBZFOL-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc2c(cc1Cl)cc([nH]2)C(=O)O
+
+$$$$

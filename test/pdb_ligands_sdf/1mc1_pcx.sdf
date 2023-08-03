@@ -1,0 +1,142 @@
+1GVG_PCX_A_331
+  RCSB PDB12061702393D
+Coordinates from PDB:1GVG:A:331 Model:1 without hydrogens
+ 16 16  0  0  0  0            999 V2000
+    2.7550    6.4030    4.8470   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.0350    7.4460    4.1570   C 0  0  0  0  0  0  0  0  0  0  0  0
+    0.8000    7.0360    3.3490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.1550    6.1400    2.1170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9270    6.9490    1.0170   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.7560    6.2770   -0.2940   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.5800    5.3100   -0.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.6430    4.8890   -0.0720   N 0  0  0  0  0  0  0  0  0  0  0  0
+    2.3050    4.8000   -1.9420   N 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5870    8.3340    5.3030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.2780    7.8860    6.4120   O 0  0  0  0  0  0  0  0  0  0  0  0
+    1.5370    9.6290    5.0260   O 0  0  0  0  0  0  0  0  0  0  0  0
+    3.9550    6.2140    5.4670   C 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5910    4.8050    5.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.8890    6.9460    5.6450   O 0  0  0  0  0  0  0  0  0  0  0  0
+    2.2970    5.0710    5.1000   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1 13  1  0  0  0  0
+  1 16  1  0  0  0  0
+  2  3  1  0  0  0  0
+  2 10  1  0  0  0  0
+  3  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  1  0  0  0  0
+  7  9  2  0  0  0  0
+ 10 11  2  0  0  0  0
+ 10 12  1  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 15  2  0  0  0  0
+ 14 16  1  0  0  0  0
+A    1
+N1
+A    2
+C1
+A    3
+C2
+A    4
+C4
+A    5
+C5
+A    6
+N2
+A    7
+C6
+A    8
+N3
+A    9
+N4
+A   10
+C3
+A   11
+O1
+A   12
+O2
+A   13
+C8
+A   14
+C9
+A   15
+O4
+A   16
+C7
+M  END
+>  <InstanceId>
+1GVG_PCX_A_331
+
+>  <ChemCompId>
+PCX
+
+>  <PdbId>
+1GVG
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+331
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 N4 O3
+
+>  <Name>
+DEOXYGUANIDINOPROCLAVAMINIC ACID
+
+>  <SystematicName>
+(2S)-5-carbamimidamido-2-(2-oxoazetidin-1-yl)pentanoic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H16 N4 O3
+
+>  <MolecularWeight>
+228.248
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H16N4O3/c10-9(11)12-4-1-2-6(8(15)16)13-5-3-7(13)14/h6H,1-5H2,(H,15,16)(H4,10,11,12)/t6-/m0/s1
+
+>  <InChIKey>
+UYADDEKIZFRINK-LURJTMIESA-N
+
+>  <SMILES>
+[H]/N=C(/N)\NCCC[C@@H](C(=O)O)N1CCC1=O
+
+$$$$

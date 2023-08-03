@@ -1,0 +1,37 @@
+#many.sdf.gz contains concatenated gzip files
+[O-][N+](=O)[O-].[O-][N+](=O)[O-].[Co+2]
+ClCCCCCC(=O)OCC
+# c3.cml.gz
+CC(Cn1cnc2c1c(=O)n(C)c(=O)n2C)O
+CN(CCc1c[nH]c2c1c(O)ccc2)C
+COc1c2oc(=O)ccc2c(c2c1occ2)CC(C(O)(C)C)O
+#1ubq.pdb.gz
+CC(C[C@@H](C(=O)N[C@H](C(=O)NCC(=O)NCC(=O)[O-])CCC/N=C(\[NH3+])/N)NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@H](C(C)C)NC(=O)[C@H](CC(C)C)N)CC(C)C)CCC/N=C(\[NH3+])/N)C.[NH3+]CCCC[C@@H](C(=O)N[C@H](C(=O)NCC(=O)N[C@H](C(=O)N1CCC[C@H]1C(=O)N1CCC[C@H]1C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)NCC(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)NCC(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@H](C(=O)N[C@@H](CC(C)C)CO)[C@H](O)C)CO)CCC(=[O-])O)CCCC[NH3+])CCC(=O)N)[C@H](CC)C)CC(=O)N)Cc1ccc(cc1)O)CC(=[O-])O)CO)CC(C)C)[C@H](O)C)CCC/N=C(\[NH3+])/N)CC(=[O-])O)CCC(=[O-])O)CC(C)C)CCC(=O)N)CCCC[NH3+])C)Cc1ccccc1)[C@H](CC)C)CC(C)C)CCC/N=C(\[NH3+])/N)CCC(=O)N)CCC(=O)N)CC(=O)[O-])[C@H](CC)C)CCC(=[O-])O)NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@H]([C@H](CC)C)NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@H](C(C)C)NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@H]([C@H](CC)C)NC(=O)[C@H]([C@H](O)C)NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@@H]1CCCN1C(=O)[C@@H](NC(=O)[C@H](C(C)C)NC(=O)[C@@H](NC(=O)[C@@H](NC(=O)[C@H]([C@H](O)C)NC(=O)[C@H]([C@H](CC)C)NC(=O)[C@H]([C@H](O)C)NC(=O)[C@@H](NC(=O)CNC(=O)[C@H]([C@H](O)C)NC(=O)[C@@H](NC(=O)[C@H]([C@H](O)C)NC(=O)[C@@H](NC(=O)[C@H](C(C)C)NC(=O)[C@@H](NC(=O)[C@H]([C@H](CC)C)NC(=O)[C@@H](NC(=O)[C@H](CCSC)N)CCC(=O)N)Cc1ccccc1)CCCC[NH3+])CC(C)C)CCCC[NH3+])CC(C)C)CCC(=O)[O-])CCC(=[O-])O)CO)CC(=[O-])O)CCC(=O)[O-])CC(=O)N)CCCC[NH3+])C)CCCC[NH3+])CCC(=O)N)CC(=[O-])O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O.O
+# tencmpds.sdf.gz
+[O-]C(=O)CC(C[N+](C)(C)C)OC(=O)C
+OC(=O)CC(C[N+](C)(C)C)OC(=O)C
+OC1C=CC=C(C1O)C(=O)O
+CC(CN)O
+NCC(=O)COP(=O)(O)O
+[O-][N+](=O)c1ccc(c(c1)[N+](=O)[O-])Cl
+CCn1cnc2c1ncnc2N
+CCC(C(C(=O)O)O)(O)C
+OC1C(OP(=O)(O)O)C(O)C(C(C1O)O)O
+O=CN(c1ccc(cc1)C(=O)NC(C(=O)O)CCC(=O)O)CC1CNc2c(N1)c(=O)nc([nH]2)N
+#c4.mol2.gz
+O=C/C=C/c1ccc(o1)[N](=O)[O-]
+COC(=O)/C=C/c1ccc(o1)[N](=O)[O-]
+C[NH+](Cc1ccccc1)C.[Cl-]
+CCCCCCCC[C@H]1O[C@@H]1CCCCCCCC(=O)[O-].CCCCCCCCCC[C@H]1O[C@@H]1CCCCCC(=O)[O-].[Mg]
+#c5.smi.gz
+COc1ccc2c(c1)c1c([nH]2)ccc2c1c[n+](CCN1CCC(CC1)C1CCN(CC1)CC[n+]1ccc3c(c1)c1c(cc3)[nH]c3c1cc(OC)cc3)cc2
+O=C(N(C)C)Nc1ccc(c(c1)Cl)Cl
+CCCC(C(=O)O)CCC
+NC(C(=O)O)CCCCCP(=O)(O)O
+NC(C(=O)O)CCCCCCP(=O)(O)O
+#five_obabel.sdf.gz is the output of older babel versions
+Clc1cccc(c1)Cn1c(C)nc2c(c1=O)cc(cc2)NC(=O)c1cccc(c1)Cl
+O=C(C1CCCCC1)Nc1ccc2c(c1)c(=O)n(c(n2)C)Cc1ccc(cc1)F
+Fc1ccc(cc1)Cn1c(C)nc2c(c1=O)cc(cc2)NC(=O)c1ccccc1
+O=C(C1CCCCC1)Nc1ccc2c(c1)c(=O)n(c(n2)C)Cc1ccc(cc1)Cl
+Clc1ccc(cc1)Cn1c(C)nc2c(c1=O)cc(cc2)NC(=O)c1ccccc1

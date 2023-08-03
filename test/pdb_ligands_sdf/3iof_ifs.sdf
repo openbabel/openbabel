@@ -1,0 +1,150 @@
+3IOF_IFS_A_308
+  RCSB PDB12061709063D
+Coordinates from PDB:3IOF:A:308 Model:1 without hydrogens
+ 18 18  0  0  0  0            999 V2000
+    3.5910   48.7810   48.7590   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1610   50.8020   47.7220   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.1510   49.2880   48.2010   P 0  0  0  0  0  0  0  0  0  0  0  0
+    3.5750   45.3880   46.8610   S 0  0  0  0  0  0  0  0  0  0  0  0
+    3.2080   47.3310   48.8720   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.9250   47.0810   49.3540   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.0520   48.1170   49.7120   C 0  0  0  0  0  0  0  0  0  0  0  0
+    1.4290   49.4490   49.5980   C 0  0  0  0  0  0  0  0  0  0  0  0
+    2.6950   49.7780   49.1200   C 0  0  0  0  0  0  0  0  0  0  0  0
+    4.0700   46.1180   48.4740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.8870   51.3010   50.3660   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4760   46.6310   46.7740   C 0  0  0  0  0  0  0  0  0  0  0  0
+    5.7420   48.2740   47.1100   O 0  0  0  0  0  0  0  0  0  0  0  0
+    6.1360   49.1910   49.4500   O 0  0  0  0  0  0  0  0  0  0  0  0
+    5.9190   50.1240   50.5190   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1470   48.1170   46.8510   C 0  0  0  0  0  0  0  0  0  0  0  0
+    6.0580   49.3830   51.8450   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.4310   48.8370   45.5490   C 0  0  0  0  0  0  0  0  0  0  0  0
+  3  1  1  0  0  0  0
+  1  5  2  0  0  0  0
+  1  9  1  0  0  0  0
+  2  3  2  0  0  0  0
+ 13  3  1  0  0  0  0
+  3 14  1  0  0  0  0
+  4 10  1  0  0  0  0
+ 10  5  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  8  7  1  0  0  0  0
+  9  8  2  0  0  0  0
+ 11 15  1  0  0  0  0
+ 12 16  1  0  0  0  0
+ 16 13  1  0  0  0  0
+ 14 15  1  0  0  0  0
+ 15 17  1  0  0  0  0
+ 18 16  1  0  0  0  0
+A    1
+C1
+A    2
+O1
+A    3
+P1
+A    4
+S1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C101
+A   12
+C102
+A   13
+O21
+A   14
+O22
+A   15
+C81
+A   16
+C82
+A   17
+C91
+A   18
+C92
+M  END
+>  <InstanceId>
+3IOF_IFS_A_308
+
+>  <ChemCompId>
+IFS
+
+>  <PdbId>
+3IOF
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+308
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C13 O3 P S
+
+>  <Name>
+bis(1-methylethyl) [2-(sulfanylmethyl)phenyl]phosphonate
+
+>  <SystematicName>
+[2-di(propan-2-yloxy)phosphorylphenyl]methanethiol
+
+>  <Synonyms>
+Diisopropyl 2-(sulfanylmethyl)phenylphosphonate
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C13 H21 O3 P S
+
+>  <MolecularWeight>
+288.343
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C13H21O3PS/c1-10(2)15-17(14,16-11(3)4)13-8-6-5-7-12(13)9-18/h5-8,10-11,18H,9H2,1-4H3
+
+>  <InChIKey>
+JFZVPWMZPZJUTE-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(C)OP(=O)(c1ccccc1CS)OC(C)C
+
+$$$$

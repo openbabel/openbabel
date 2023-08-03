@@ -1,0 +1,130 @@
+4AGL_P84_A_400
+  RCSB PDB12061711403D
+Coordinates from PDB:4AGL:A:400 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   91.1500   95.7340  -44.9530   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.5110   95.5430  -43.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.8830   94.2830  -43.1520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   90.7150   97.0950  -45.4760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.3970   98.2310  -44.8270   N 0  0  0  0  0  0  0  0  0  0  0  0
+   91.8960   93.1760  -44.0130   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.1670   94.6180  -45.8160   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.7910   98.4320  -45.2710   C 0  0  0  0  0  0  0  0  0  0  0  0
+   91.5360   93.3480  -45.3510   C 0  0  0  0  0  0  0  0  0  0  0  0
+   92.3850   94.0740  -41.1170   I 0  0  0  0  0  0  0  0  0  0  0  0
+   91.5240   96.6270  -42.7800   O 0  0  0  0  0  0  0  0  0  0  0  0
+   91.5360   91.7340  -46.6820   I 0  0  0  0  0  0  0  0  0  0  0  0
+   90.6140   99.4730  -44.9250   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  4  1  0  0  0  0
+  1  7  2  0  0  0  0
+  2  3  2  0  0  0  0
+  2 11  1  0  0  0  0
+  3  6  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  1  0  0  0  0
+  5  8  1  0  0  0  0
+  5 13  1  0  0  0  0
+  6  9  2  0  0  0  0
+  7  9  1  0  0  0  0
+  9 12  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+N5
+A    6
+C6
+A    7
+C8
+A    8
+C9
+A    9
+C10
+A   10
+I15
+A   11
+O16
+A   12
+I17
+A   13
+C14
+M  END
+>  <InstanceId>
+4AGL_P84_A_400
+
+>  <ChemCompId>
+P84
+
+>  <PdbId>
+4AGL
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+400
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+6
+
+>  <ObservedFormula>
+C9 N O I2
+
+>  <Name>
+2,4-BIS(IODANYL)-6-[[METHYL-(1-METHYLPIPERIDIN-4-YL)AMINO]METHYL]PHENOL
+
+>  <SystematicName>
+2,4-bis(iodanyl)-6-[[methyl-(1-methylpiperidin-4-yl)amino]methyl]phenol
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H20 I2 N2 O
+
+>  <MolecularWeight>
+486.13
+
+>  <ModifiedDate>
+2014-09-05
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H20I2N2O/c1-17-5-3-12(4-6-17)18(2)9-10-7-11(15)8-13(16)14(10)19/h7-8,12,19H,3-6,9H2,1-2H3
+
+>  <InChIKey>
+IAJFTEUXEMKNJL-UHFFFAOYSA-N
+
+>  <SMILES>
+CN1CCC(CC1)N(C)Cc2cc(cc(c2O)I)I
+
+$$$$

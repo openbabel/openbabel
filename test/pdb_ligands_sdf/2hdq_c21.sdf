@@ -1,0 +1,110 @@
+2HDQ_C21_A_501
+  RCSB PDB12061705473D
+Coordinates from PDB:2HDQ:A:501 Model:1 without hydrogens
+  8  8  0  0  0  0            999 V2000
+   30.8320   11.4570   22.1070   O 0  0  0  0  0  0  0  0  0  0  0  0
+   30.5120   10.2720   21.8270   C 0  0  0  0  0  0  0  0  0  0  0  0
+   31.2790    9.3350   22.0920   O 0  0  0  0  0  0  0  0  0  0  0  0
+   29.1990    9.9330   21.1810   C 0  0  0  0  0  0  0  0  0  0  0  0
+   28.1280   11.2510   20.8230   S 0  0  0  0  0  0  0  0  0  0  0  0
+   28.6190    8.7280   20.7780   C 0  0  0  0  0  0  0  0  0  0  0  0
+   27.3500    8.8930   20.2100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   26.9380   10.2120   20.1370   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  2  0  0  0  0
+  2  3  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  6  2  0  0  0  0
+  5  8  1  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+A    1
+O8
+A    2
+C6
+A    3
+O7
+A    4
+C4
+A    5
+S5
+A    6
+C3
+A    7
+C2
+A    8
+C1
+M  END
+>  <InstanceId>
+2HDQ_C21_A_501
+
+>  <ChemCompId>
+C21
+
+>  <PdbId>
+2HDQ
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+501
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C5 O2 S
+
+>  <Name>
+THIOPHENE-2-CARBOXYLIC ACID
+
+>  <SystematicName>
+thiophene-2-carboxylic acid
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C5 H4 O2 S
+
+>  <MolecularWeight>
+128.149
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C5H4O2S/c6-5(7)4-2-1-3-8-4/h1-3H,(H,6,7)
+
+>  <InChIKey>
+QERYCTSHXKAMIS-UHFFFAOYSA-N
+
+>  <SMILES>
+c1cc(sc1)C(=O)O
+
+$$$$

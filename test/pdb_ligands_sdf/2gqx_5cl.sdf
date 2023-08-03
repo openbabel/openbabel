@@ -1,0 +1,122 @@
+2GQX_5CL_A_1450
+  RCSB PDB12061705433D
+Coordinates from PDB:2GQX:A:1450 Model:1 without hydrogens
+ 11 11  0  0  0  0            999 V2000
+  -23.1070   14.2180   -0.1010   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.6310   14.3990    0.0190   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.2860   14.6070    1.3940   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -24.4030   14.6340    2.6720   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.8620   14.4500    2.5610   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.2160   14.2420    1.1630   C 0  0  0  0  0  0  0  0  0  0  0  0
+  -25.0490   14.8430    4.0380  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -21.9700   14.4750    3.8520  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -20.6710   14.0660    1.1030  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -26.7860   14.7790    1.4400  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  -22.4750   14.0150   -1.4820  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  2  0  0  0  0
+  1 11  1  0  0  0  0
+  2  3  2  0  0  0  0
+  3  4  1  0  0  0  0
+  3 10  1  0  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  5  8  1  0  0  0  0
+  6  9  1  0  0  0  0
+A    1
+C1
+A    2
+C2
+A    3
+C3
+A    4
+C4
+A    5
+C5
+A    6
+C6
+A    7
+CL1
+A    8
+CL2
+A    9
+CL3
+A   10
+CL4
+A   11
+CL5
+M  END
+>  <InstanceId>
+2GQX_5CL_A_1450
+
+>  <ChemCompId>
+5CL
+
+>  <PdbId>
+2GQX
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+1450
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C6 Cl5
+
+>  <Name>
+1,2,3,4,5-PENTACHLOROBENZENE
+
+>  <SystematicName>
+1,2,3,4,5-pentachlorobenzene
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C6 H Cl5
+
+>  <MolecularWeight>
+250.337
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+
+
+>  <InChI>
+InChI=1S/C6HCl5/c7-2-1-3(8)5(10)6(11)4(2)9/h1H
+
+>  <InChIKey>
+CEOCDNVZRAIOQZ-UHFFFAOYSA-N
+
+>  <SMILES>
+c1c(c(c(c(c1Cl)Cl)Cl)Cl)Cl
+
+$$$$

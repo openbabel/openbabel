@@ -1,0 +1,130 @@
+1OXR_AIN_A_141
+  RCSB PDB12061703363D
+Coordinates from PDB:1OXR:A:141 Model:1 without hydrogens
+ 13 13  0  0  0  0            999 V2000
+   13.9070   16.1300    0.6240   O 0  0  0  0  0  0  0  0  0  0  0  0
+   13.2540   15.7780    1.7230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   13.9110   15.7590    2.7490   O 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8300   15.3160    1.6640   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.1140   15.3810    0.4560   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7740   15.0010    0.4290   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1200   14.6010    1.5800   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.7520   14.5680    2.8020   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.0880   14.9220    2.9230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   11.8230   14.9060    4.0900   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.4770   13.7700    4.7690   C 0  0  0  0  0  0  0  0  0  0  0  0
+   12.6860   13.8700    5.9710   O 0  0  0  0  0  0  0  0  0  0  0  0
+   12.8900   12.5090    4.0560   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  2  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  1  0  0  0  0
+  4  9  2  0  0  0  0
+  5  6  2  0  0  0  0
+  6  7  1  0  0  0  0
+  7  8  2  0  0  0  0
+  8  9  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 11  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 11 13  1  0  0  0  0
+A    1
+O1
+A    2
+C7
+A    3
+O2
+A    4
+C3
+A    5
+C4
+A    6
+C5
+A    7
+C6
+A    8
+C1
+A    9
+C2
+A   10
+O3
+A   11
+C8
+A   12
+O4
+A   13
+C9
+M  END
+>  <InstanceId>
+1OXR_AIN_A_141
+
+>  <ChemCompId>
+AIN
+
+>  <PdbId>
+1OXR
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+141
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C9 O4
+
+>  <Name>
+2-(ACETYLOXY)BENZOIC ACID
+
+>  <SystematicName>
+2-acetyloxybenzoic acid
+
+>  <Synonyms>
+ACETYLSALICYLIC ACID, ASPIRIN
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C9 H8 O4
+
+>  <MolecularWeight>
+180.157
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)
+
+>  <InChIKey>
+BSYNRYMUTXBXSQ-UHFFFAOYSA-N
+
+>  <SMILES>
+CC(=O)Oc1ccccc1C(=O)O
+
+$$$$

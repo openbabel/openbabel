@@ -1,0 +1,134 @@
+5E7D_5KL_A_801
+  RCSB PDB12061717253D
+Coordinates from PDB:5E7D:A:801 Model:1 without hydrogens
+ 14 14  0  0  0  0            999 V2000
+    7.9000   31.9650    9.9030   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.1710   30.7950    9.3410   N 0  0  0  0  0  0  0  0  0  0  0  0
+    6.9940   29.7130   10.3360   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.7950   30.3910    8.2230   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5900   29.1590    7.6260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.2830   28.8790    6.4680   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.0380   29.7630    6.0570   O 0  0  0  0  0  0  0  0  0  0  0  0
+    8.1080   27.5470    5.6650   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.5320   26.3780    6.2070   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.3660   25.1930    5.4490   C 0  0  0  0  0  0  0  0  0  0  0  0
+    7.8170   25.1550    4.1110   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.4190   26.3290    3.5950   C 0  0  0  0  0  0  0  0  0  0  0  0
+    8.5660   27.5230    4.3260   C 0  0  0  0  0  0  0  0  0  0  0  0
+    9.1250   28.6860    3.7460   O 0  0  0  0  0  0  0  0  0  0  0  0
+  3  2  1  0  0  0  0
+  1  2  1  0  0  0  0
+  2  4  1  0  0  0  0
+  4  5  2  0  0  0  0
+  5  6  1  0  0  0  0
+  6  7  2  0  0  0  0
+  6  8  1  0  0  0  0
+  9  8  2  0  0  0  0
+  9 10  1  0  0  0  0
+  8 13  1  0  0  0  0
+ 10 11  2  0  0  0  0
+ 13 14  1  0  0  0  0
+ 13 12  2  0  0  0  0
+ 11 12  1  0  0  0  0
+A    1
+CAA
+A    2
+NAB
+A    3
+CAC
+A    4
+CAD
+A    5
+CAE
+A    6
+CAF
+A    7
+OAN
+A    8
+CAG
+A    9
+CAH
+A   10
+CAI
+A   11
+CAJ
+A   12
+CAK
+A   13
+CAL
+A   14
+OAM
+M  END
+>  <InstanceId>
+5E7D_5KL_A_801
+
+>  <ChemCompId>
+5KL
+
+>  <PdbId>
+5E7D
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+801
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C11 N O2
+
+>  <Name>
+(2E)-3-(dimethylamino)-1-(2-hydroxyphenyl)prop-2-en-1-one
+
+>  <SystematicName>
+(E)-3-(dimethylamino)-1-(2-hydroxyphenyl)prop-2-en-1-one
+
+>  <Synonyms>
+
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C11 H13 N O2
+
+>  <MolecularWeight>
+191.226
+
+>  <ModifiedDate>
+2016-10-07
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C11H13NO2/c1-12(2)8-7-11(14)9-5-3-4-6-10(9)13/h3-8,13H,1-2H3/b8-7+
+
+>  <InChIKey>
+SVBCOAAIOJDZNC-BQYQJAHWSA-N
+
+>  <SMILES>
+CN(C)/C=C/C(=O)c1ccccc1O
+
+$$$$

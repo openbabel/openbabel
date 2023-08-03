@@ -1,0 +1,148 @@
+3KW4_TIC_A_600
+  RCSB PDB12061709313D
+Coordinates from PDB:3KW4:A:600 Model:1 without hydrogens
+ 17 19  0  0  0  0            999 V2000
+   -5.6610   31.1370   21.9540   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.5740   32.1490   21.8400   N 0  0  0  0  0  0  0  0  0  0  0  0
+   -7.2040   32.2500   25.4850   S 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.1550   31.6710   19.4560  Cl 0  0  0  0  0  0  0  0  0  0  0  0
+   -4.9970   33.4660   22.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.0310   30.8250   23.4170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -5.8330   33.3100   23.6140   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2900   32.1080   24.0760   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.2580   31.6260   22.3190   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.9090   30.2950   21.7170   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.2430   34.3950   24.4520   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -6.9900   33.9410   25.4940   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.3970   30.2390   20.4230   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -3.0780   29.0870   22.4040   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.0530   29.0420   19.8100   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.7400   27.8820   21.7990   C 0  0  0  0  0  0  0  0  0  0  0  0
+   -2.2280   27.8530   20.5070   C 0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  1  6  1  0  0  0  0
+  2  5  1  0  0  0  0
+  2  9  1  0  0  0  0
+  3  8  1  0  0  0  0
+  3 12  1  0  0  0  0
+  4 13  1  0  0  0  0
+  5  7  1  0  0  0  0
+  6  8  1  0  0  0  0
+  7  8  2  0  0  0  0
+  7 11  1  0  0  0  0
+  9 10  1  0  0  0  0
+ 10 13  2  0  0  0  0
+ 10 14  1  0  0  0  0
+ 11 12  2  0  0  0  0
+ 13 15  1  0  0  0  0
+ 14 16  2  0  0  0  0
+ 15 17  2  0  0  0  0
+ 16 17  1  0  0  0  0
+A    1
+C1
+A    2
+N1
+A    3
+S1
+A    4
+CL1
+A    5
+C2
+A    6
+C3
+A    7
+C4
+A    8
+C5
+A    9
+C6
+A   10
+C7
+A   11
+C8
+A   12
+C9
+A   13
+C10
+A   14
+C11
+A   15
+C12
+A   16
+C13
+A   17
+C14
+M  END
+>  <InstanceId>
+3KW4_TIC_A_600
+
+>  <ChemCompId>
+TIC
+
+>  <PdbId>
+3KW4
+
+>  <ChainId>
+A
+
+>  <ResidueNumber>
+600
+
+>  <InsertionCode>
+
+
+>  <Model>
+1
+
+>  <AltIds>
+
+
+>  <MissingHeavyAtoms>
+0
+
+>  <ObservedFormula>
+C14 N S Cl
+
+>  <Name>
+ticlopidine
+
+>  <SystematicName>
+(5S)-5-[(2-chlorophenyl)methyl]-6,7-dihydro-4H-thieno[3,2-c]pyridine
+
+>  <Synonyms>
+5-(2-chlorobenzyl)-4,5,6,7-tetrahydrothieno[3,2-c]pyridine
+
+>  <Type>
+NON-POLYMER
+
+>  <Formula>
+C14 H14 Cl N S
+
+>  <MolecularWeight>
+263.786
+
+>  <ModifiedDate>
+2011-06-04
+
+>  <Parent>
+
+
+>  <OneLetterCode>
+
+
+>  <SubcomponentList>
+
+
+>  <AmbiguousFlag>
+N
+
+>  <InChI>
+InChI=1S/C14H14ClNS/c15-13-4-2-1-3-11(13)9-16-7-5-14-12(10-16)6-8-17-14/h1-4,6,8H,5,7,9-10H2
+
+>  <InChIKey>
+PHWBOXQYWZNQIN-UHFFFAOYSA-N
+
+>  <SMILES>
+c1ccc(c(c1)C[N@]2CCc3c(ccs3)C2)Cl
+
+$$$$
