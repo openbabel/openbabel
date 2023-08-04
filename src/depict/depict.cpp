@@ -432,7 +432,7 @@ namespace OpenBabel
           atom->SetVector(atom->GetX() * f, -atom->GetY() * f, atom->GetZ());
       
 
-      //New: se aplica tambien el escalado a cada uno de los circulos cp
+      //New: the scaling is also applied to each of the circles cp
       std::vector<CpComplex*> cps;
       cps = d->mol->GetCps();
       if (!cps.empty()) {
@@ -475,7 +475,7 @@ namespace OpenBabel
           atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, atom->GetZ());
       
 
-      //New: se aplican escalados a los circulos de los Cp
+      //New: scales are applied to the circles of the Cp
       for (std::vector<CpComplex*>::iterator it = cps.begin(); it != cps.end(); ++it) {
           CpComplex* cp = *it;
           for (int i = 0; i < cp->GetCirclePathSize(); i++) {

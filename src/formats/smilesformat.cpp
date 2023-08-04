@@ -2501,7 +2501,6 @@ namespace OpenBabel {
     void WriteTree(OBCanSmiNode* node, int level = 0);
     void IdentifyBranches(OBMol& mol,OBCanSmiNode* node, BranchBlock* branch = nullptr);
     void RearrangeTree(OBCanSmiNode* node);
-    bool BuildCanonTreeOgm(OBMol& mol, OBBitVec& frag_atoms, vector<unsigned int>& canonical_order, OBCanSmiNode* node);
 
 
 
@@ -4301,7 +4300,7 @@ namespace OpenBabel {
 
           root = new OBCanSmiNode(root_atom);
 
-          BuildCanonTreeOgm(mol, frag_atoms, canonical_order, root);
+          BuildCanonTree(mol, frag_atoms, canonical_order, root);
 
           
           //cout << "Debug tree writing: \n"; 
@@ -4509,7 +4508,7 @@ namespace OpenBabel {
 
           root = new OBCanSmiNode(root_atom);
           
-          BuildCanonTreeOgm(mol, frag_atoms, canonical_order, root);
+          BuildCanonTree(mol, frag_atoms, canonical_order, root);
           //WriteTree(root);
 
           //RearrangeTree(root);
@@ -4840,124 +4839,6 @@ namespace OpenBabel {
       }
   }
 
-  /***************************************************************************
-   * FUNCTION: BuildCanonTreeOgm
-   *
-   * DESCRIPTION:
-   *       Builds the SMILES tree, in canonical order, for the specified
-   *       molecular fragment. Based on the BuildCanonTree method. Shares 
-   *       much of the code, with some changes in the neighbour selection 
-   *       algorithm.
-   ***************************************************************************/
-  bool OBMol2Cansmi::BuildCanonTreeOgm(OBMol& mol, OBBitVec& frag_atoms, vector<unsigned int>& canonical_order, OBCanSmiNode* node)
-  {
-      vector<OBBond*>::iterator i;
-      OBAtom* nbr, * atom;
-      vector<OBAtom*> sort_nbrs;
-      vector<OBAtom*>::iterator ai;
-      OBBond* bond;
-      OBCanSmiNode* next;
-      int idx;
-
-      atom = node->GetAtom();
-
-      //cout << "BuildCanonTreeOgm: " << OBElements::GetSymbol(atom->GetAtomicNum()) << ", " << atom->GetIdx() << ", canorder " << canonical_order[atom->GetIdx() - 1] << "\n";
-
-
-      // Create a vector of neighbors sorted by canonical order, but favor
-      // double and triple bonds over single and aromatic.  This causes
-      // ring-closure digits to avoid double and triple bonds.
-      //
-      // Since there are typically just one to three neighbors, we just do a
-      // ordered insertion rather than sorting.
-
-      bool favor_multiple = true; // Visit 'multiple' bonds first
-      if (options.ordering)
-          favor_multiple = false; // Visit in strict canonical order (if using user-specified order)
-
-      for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
-
-          idx = nbr->GetIdx();
-          //if (nbr->GetAtomicNum() == OBElements::Hydrogen && IsSuppressedHydrogen(nbr)) {
-          //  _uatoms.SetBitOn(nbr->GetIdx());        // mark suppressed hydrogen, so it won't be considered
-          //  continue;                               // later when looking for more fragments.
-          //}
-          if (_uatoms[idx] || !frag_atoms.BitIsSet(idx))
-              continue;
-
-
-          OBBond* nbr_bond = atom->GetBond(nbr);
-          unsigned int nbr_bond_order = nbr_bond->GetBondOrder();
-          int new_needs_bsymbol = NeedsBondSymbol(nbr_bond);
-
-
-          for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) { //Este bucle es para detectar los casos en los que es necesario insertar un nbr antes que otro ai. Si no se cumple nada y llegamos al final de los ai, lo añade al final por defecto
-              bond = atom->GetBond(*ai);
-              unsigned int bond_order = bond->GetBondOrder();
-              int sorted_needs_bsymbol = NeedsBondSymbol(bond);
-
-              
-
-              //Varias reglas de prioridad: enlaces multiples sobre sencillos
-              if (favor_multiple && new_needs_bsymbol && !sorted_needs_bsymbol) {
-                  sort_nbrs.insert(ai, nbr);
-                  ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
-                  break;
-              }
-
-              if ((!favor_multiple || new_needs_bsymbol == sorted_needs_bsymbol)
-                  && canonical_order[idx - 1] < canonical_order[(*ai)->GetIdx() - 1]) {
-                  sort_nbrs.insert(ai, nbr);
-                  ai = sort_nbrs.begin();//insert invalidated ai; set it to fail next test
-                  break;
-              }
-          }
-          if (ai == sort_nbrs.end())
-              sort_nbrs.push_back(nbr);
-      }
-
-      _uatoms.SetBitOn(atom->GetIdx());     //mark the atom as visited
-
-      if (_endatom && !_uatoms.BitIsSet(_endatom->GetIdx()) && sort_nbrs.size() > 1) {
-          // If you have specified an _endatom, the following section rearranges
-          // sort_nbrs as follows:
-          //   - if a branch does not lead to the end atom, move it to the front
-          //     (i.e. visit it first)
-          //   - otherwise move it to the end
-          // This section is skipped if sort_nbrs has only a single member, or if
-          // we have already visited _endatom.
-
-          vector<OBAtom*> children;
-          MyFindChildren(mol, children, _uatoms, _endatom);
-
-          vector<OBAtom*> front, end;
-          for (vector<OBAtom*>::iterator it = sort_nbrs.begin(); it != sort_nbrs.end(); ++it)
-              if (std::find(children.begin(), children.end(), *it) == children.end() && *it != _endatom)
-                  front.push_back(*it);
-              else
-                  end.push_back(*it);
-          sort_nbrs = front;
-          sort_nbrs.insert(sort_nbrs.end(), end.begin(), end.end());
-      }
-
-      // Build the next layer of nodes, in canonical order
-      for (ai = sort_nbrs.begin(); ai != sort_nbrs.end(); ++ai) {
-          nbr = *ai;
-          idx = nbr->GetIdx();
-          if (_uatoms[idx])   // depth-first search may have used this atom since
-              continue;         // we sorted the bonds above
-          bond = atom->GetBond(nbr);
-          _ubonds.SetBitOn(bond->GetIdx());
-          next = new OBCanSmiNode(nbr);
-          next->SetParent(atom);
-          //if(node) //If node==null, is root, so no parentNode
-          //  next->SetParentNode(node);
-          node->AddChildNode(next, bond);
-          BuildCanonTreeOgm(mol, frag_atoms, canonical_order, next);
-      }
-
-      return(true);
-  }
 
   void OBMol2Cansmi::GetOutputOrder(std::string &outorder)
   {
