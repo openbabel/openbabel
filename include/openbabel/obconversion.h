@@ -417,6 +417,10 @@ protected:
       std::vector<std::string> SupportedInputFormat; ///< list of supported input format
       std::vector<std::string> SupportedOutputFormat; ///< list of supported output format
 
+      public:
+        //New
+        bool externOptionc;
+
     };
 
 } //namespace OpenBabel

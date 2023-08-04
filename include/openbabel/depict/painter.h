@@ -180,6 +180,7 @@ namespace OpenBabel
        */
       virtual void DrawLine(double x1, double y1, double x2, double y2, const std::vector<double> & dashes=std::vector<double>()) = 0;
       virtual void DrawCircle(double x, double y, double r) = 0;
+      virtual void DrawPolygonLine(const std::vector<std::pair<double, double> >& points) = 0;
       /**
        * Draw a polygon by connecting consecutive points. The last point will be
        * connected to the first one. The lines are drawn using the current pen

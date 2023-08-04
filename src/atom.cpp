@@ -795,6 +795,37 @@ namespace OpenBabel
     return false;
   }
 
+  bool OBAtom::IsInCp() const
+  {
+      if (((OBAtom*)this)->HasFlag(OB_CP_ATOM))
+          return true;
+
+      return false;
+  }
+
+  void OBAtom::Show()
+  {
+      std::cout << OBElements::GetSymbol(GetAtomicNum()) << "[" << GetIdx() << "]\n";
+  }
+
+  std::pair<bool, int> OBAtom::HasOgmMetalBond()
+  {
+      bool test = false;
+      int idx = 0;
+      FOR_NBORS_OF_ATOM(nbr, this) {
+          if (nbr->IsOgmMetal()) {
+              test = true;
+              idx = nbr->GetIdx();
+          }
+      }
+      return pair<bool, int>(test,idx);
+  }
+
+  bool OBAtom::IsCarbon()
+  {
+      return (GetAtomicNum() == 6);
+  }
+
   //! @todo
   bool OBAtom::IsChiral()
   {
@@ -1878,6 +1909,17 @@ namespace OpenBabel
     64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,87,88,89,90,91,
     92,93,94,95,96,97,98,99,100,101,102,103};
     return std::find(metals, metals+78, GetAtomicNum())!=metals+78;
+  }
+
+  bool OBAtom::IsOgmMetal()
+  {
+      const unsigned NMETALS = 40;
+      int metals[NMETALS] = {
+      21,22,23,24,25,26,27,28,29,30,
+      39,40,41,42,43,44,45,46,47,48,
+      71,72,73,74,75,76,77,78,79,80,
+      103,104,105,106,107,108,109,110,111,112 };
+      return std::find(metals, metals + 40, GetAtomicNum()) != metals + 40;
   }
 
 } // end namespace OpenBabel

@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/ring.h>
 #include <openbabel/alias.h>
+#include <openbabel/cpcomplex.h>
 #include <openbabel/generic.h>
 #include <openbabel/depict/depict.h>
 #include <openbabel/depict/painter.h>
@@ -53,8 +54,8 @@ namespace OpenBabel
   class OBDepictPrivate
   {
     public:
-      OBDepictPrivate() : mol(nullptr), painter(nullptr), bondLength(40.0), penWidth(2.0),
-          bondSpacing(6.0), bondWidth(8.0), fontSize(16), subscriptSize(13),
+      OBDepictPrivate() : mol(nullptr), painter(nullptr), bondLength(100.0), penWidth(2.0),
+          bondSpacing(8.0), bondWidth(8.0), fontSize(16), subscriptSize(13),
           aliasMode(false), bondColor("black"), options(0){}
       virtual ~OBDepictPrivate(){};
 
@@ -381,7 +382,7 @@ namespace OpenBabel
     if (!d->painter)
       return false;
 
-    delete d->mol;
+      delete d->mol;
     d->mol = new OBMol(*mol); // Copy it
 
     double width=0.0, height=0.0;
@@ -428,8 +429,23 @@ namespace OpenBabel
       } else
         f = 1.0;
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
-        atom->SetVector(atom->GetX() * f, - atom->GetY() * f, atom->GetZ());
+          atom->SetVector(atom->GetX() * f, -atom->GetY() * f, atom->GetZ());
+      
 
+      //New: se aplica tambien el escalado a cada uno de los circulos cp
+      std::vector<CpComplex*> cps;
+      cps = d->mol->GetCps();
+      if (!cps.empty()) {
+        for (std::vector<CpComplex*>::iterator it = cps.begin(); it != cps.end(); ++it) {
+            CpComplex* cp = *it;
+            for (int i = 0; i < cp->GetCirclePathSize(); i++) {
+                cp->SetCircleCoord(i, cp->GetCircleCoord(i).GetX() * f, -cp->GetCircleCoord(i).GetY() * f, cp->GetCircleCoord(i).GetZ());
+            }
+        }
+      }
+      
+
+      
       // find min/max values
       double min_x, max_x;
       double min_y, max_y;
@@ -454,9 +470,18 @@ namespace OpenBabel
         margin = 5.0;
       else
         margin = 40.0;
-      // translate all atoms so the bottom-left atom is at margin,margin
+      // translate all atoms so the leftmost atom is at margin,margin
       for (atom = d->mol->BeginAtom(i); atom; atom = d->mol->NextAtom(i))
-        atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, atom->GetZ());
+          atom->SetVector(atom->GetX() - min_x + margin, atom->GetY() - min_y + margin, atom->GetZ());
+      
+
+      //New: se aplican escalados a los circulos de los Cp
+      for (std::vector<CpComplex*>::iterator it = cps.begin(); it != cps.end(); ++it) {
+          CpComplex* cp = *it;
+          for (int i = 0; i < cp->GetCirclePathSize(); i++) {
+              cp->SetCircleCoord(i, cp->GetCircleCoord(i).GetX() - min_x + margin, cp->GetCircleCoord(i).GetY() - min_y + margin, cp->GetCircleCoord(i).GetZ());
+          }
+      }
 
       width  = max_x - min_x + 2*margin;
       height = max_y - min_y + 2*margin;
@@ -475,7 +500,7 @@ namespace OpenBabel
 
     // Identify and remember the ring bonds according to the SSSR
     // - note that OBBond->IsInRing() includes bonds not included in the SSSR as the SSSR excludes very large rings
-    std::vector<OBRing*> rings(mol->GetSSSR());
+    std::vector<OBRing*> rings(mol->GetSSSR()); 
     OBBitVec ringBonds;
     for (std::vector<OBRing*>::iterator k = rings.begin(); k != rings.end(); ++k) {
       OBRing *ring = *k;
@@ -543,6 +568,20 @@ namespace OpenBabel
         d->DrawRing(ring, drawnBonds);
     }
 
+
+    //New: Draw Cp circles
+    std::vector<CpComplex*> cps; 
+    cps = d->mol->GetCps();
+    if (!cps.empty()) {
+        for (std::vector<CpComplex*>::iterator it = cps.begin(); it != cps.end(); ++it) {
+            CpComplex* cp = *it;
+            vector<pair<double, double>> _coordsXY; //(x,y)
+            for (vector3 _v : cp->GetCircleCoords()) //Relleno vector de pairs con las coordenadas XY del path del circulo para dibujar el recorrido
+                _coordsXY.push_back(std::make_pair(_v.GetX(), _v.GetY()));
+            d->painter->DrawPolygonLine(_coordsXY);
+        }
+    }
+    
     vector<pair<OBAtom*,double> > zsortedAtoms;
     vector<int> zsorted;
     unsigned int a;
@@ -558,7 +597,7 @@ namespace OpenBabel
       double x = atom->GetX();
       double y = atom->GetY();
 
-      d->DrawAtom(atom);
+      d->DrawAtom(atom); //This method do nothing...
 
       // draw atom labels
       int alignment = GetLabelAlignment(atom);
@@ -607,8 +646,8 @@ namespace OpenBabel
             yoffset -= 0.5 * metrics.height;
           }
         }
-        d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str());
-        if (radical != NOT_RADICAL) {
+        d->painter->DrawText(x + 0.4*metrics.width, y+yoffset, ss.str()); //New: this should surely go inside the above 'if(charge)'. Otherwise, it output an element without text "" in the .svg which is useless.
+        if (radical != NOT_RADICAL && !atom->IsInCp()) {
           string radchars;
           radchars = radical == ONE_DOT ? "." : "..";
           d->painter->SetFontSize(2 * metrics.fontSize);
@@ -660,6 +699,9 @@ namespace OpenBabel
           }
         }
       }
+
+      //New: if it is a dummy atom, we act as if it has already been drawn. (check if there is no alias data, because alias use dummy atoms to work).
+      if (atom->GetAtomicNum() == OBElements::Dummy && !ad) continue; 
 
       if (!written) {
         const char* atomSymbol;
@@ -863,6 +905,12 @@ namespace OpenBabel
 
   void OBDepictPrivate::DrawRingBond(OBAtom *beginAtom, OBAtom *endAtom, const vector3 &center, int order)
   {
+    //New: If both atoms in current bond belongs to a Cp structure, draw them as single bonds (don't want double bonds or spacing for labels to be drawn)
+    if (beginAtom->IsInCp() && endAtom->IsInCp()) {
+        DrawSimpleBond(beginAtom, endAtom, 1);
+        return;
+    }
+      
     if (order != 2) {
       DrawSimpleBond(beginAtom, endAtom, order);
       return;
@@ -1036,6 +1084,10 @@ namespace OpenBabel
 
   bool OBDepictPrivate::HasLabel(OBAtom *atom)
   {
+    //New: If its dummy atom, we dont want label spacing to be left. Cp depiction is better
+    if (atom->GetAtomicNum() == OBElements::Dummy) 
+        return false;
+
     if (atom->GetAtomicNum() != OBElements::Carbon)
       return true;
     if ((options & OBDepict::drawAllC) || ((options & OBDepict::drawTermC) && (atom->GetExplicitDegree() == 1)))
