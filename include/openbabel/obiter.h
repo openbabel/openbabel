@@ -406,70 +406,11 @@ namespace OpenBabel
     inline auto MolGetBonds(const OpenBabel::OBMol &mol) { return mol.GetBonds(); }
     inline auto MolGetBonds(const OpenBabel::OBMol *mol) { return mol->GetBonds(); }
 
-    inline auto& AtomGetBonds(const OpenBabel::OBAtom &atom) { return atom.GetBonds(); }
-    inline auto& AtomGetBonds(const OpenBabel::OBAtom *atom) { return atom->GetBonds(); }
+    inline auto AtomGetBonds(const OpenBabel::OBAtom &atom) { return atom.GetBonds(); }
+    inline auto AtomGetBonds(const OpenBabel::OBAtom *atom) { return atom->GetBonds(); }
 
-    class AtomAtomIterAdaptor
-    {
-      public:
-        using Iter = std::vector<OBBond*>::const_iterator;
-
-        using value_type = OBAtom*;
-        using difference_type = std::ptrdiff_t;
-        using pointer = OBAtom**;
-        using reference = OBAtom*&;
-        using iterator_category = std::forward_iterator_tag;
-
-        AtomAtomIterAdaptor() = default;
-
-        AtomAtomIterAdaptor(Iter iter, OBAtom *atom = nullptr)
-          : m_iter(iter), m_atom(atom)
-        {
-        }
-
-        OBAtom* operator*() const
-        {
-          auto bond = *m_iter;
-          return bond->GetNbrAtom(m_atom);
-        }
-
-        AtomAtomIterAdaptor& operator++()
-        {
-          ++m_iter;
-          return *this;
-        }
-
-        AtomAtomIterAdaptor operator++(int)
-        {
-          auto tmp = *this;
-          ++m_iter;
-          return tmp;
-        }
-
-        bool operator==(const AtomAtomIterAdaptor &other) const
-        {
-          return m_iter == other.m_iter;
-        }
-
-      private:
-        Iter m_iter;
-        OBAtom *m_atom = nullptr;
-    };
-
-    using OBAtomAtomRange = OBRange<OBAtom*, AtomAtomIterAdaptor>;
-
-#if __cplusplus >= 202002L
-    static_assert(std::forward_iterator<AtomAtomIterAdaptor>);
-    static_assert(std::ranges::range<OBAtomAtomRange>);
-#endif
-
-    inline OBAtomAtomRange AtomGetNbrs(OpenBabel::OBAtom &atom)
-    {
-      auto begin = atom.GetBonds().begin();
-      auto end = atom.GetBonds().end();
-      return { {begin, &atom}, {end} };
-    }
-    inline auto AtomGetNbrs(OpenBabel::OBAtom *atom) { return AtomGetNbrs(*atom); }
+    inline auto AtomGetNbrs(const OpenBabel::OBAtom &atom) { return atom.GetNbrs(); }
+    inline auto AtomGetNbrs(const OpenBabel::OBAtom *atom) { return atom->GetNbrs(); }
 
   }
 

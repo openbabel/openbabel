@@ -117,22 +117,6 @@ namespace OpenBabel
 
 enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
 
-  template<typename T, typename Iter = std::vector<T>::const_iterator>
-  class OBRange
-  {
-    public:
-      OBRange(Iter begin, Iter end) : m_begin{begin}, m_end{end}
-      {
-      }
-
-      auto begin() const { return m_begin; }
-      auto end() const { return m_end; }
-
-    private:
-      Iter m_begin;
-      Iter m_end;
-  };
-
   using OBMolAtomRange = OBRange<OBAtom*>;
   using OBMolBondRange = OBRange<OBBond*>;
 
