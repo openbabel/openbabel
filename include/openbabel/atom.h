@@ -269,6 +269,8 @@ namespace OpenBabel
       //! \return An iterator to the end of the bonds to this atom
       OBBondIterator EndBonds()
         { return(_vbond.end());   }
+      //! \return A range over the bonds to this atom. This range can be used in a range-based for loop.
+      const std::vector<OBBond*>& GetBonds() const { return _vbond; }
       //! Set the iterator @p i to the beginning of the bonds
       //! \return The first bond to this atom (or NULL if none exist)
       OBBond *BeginBond(OBBondIterator &i);
