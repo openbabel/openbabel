@@ -21,6 +21,8 @@ import unittest
 
 from subprocess import CalledProcessError, Popen, PIPE, check_output, STDOUT
 
+INF = float("inf")
+
 def run_exec(*args):
     """Run one of OpenBabel's executables
 
@@ -520,6 +522,23 @@ charge 1
         self.maxDiff = None
         # mol2 displays element twice
         self.assertEqual(output.count('H'), 12)
+
+    def testOBRMS(self):
+        '''Sanity checks for obrms'''
+        sdffile = self.getTestFile('testsym_2Dtests.sdf')
+        output, err = run_exec( "obrms -t 10 %s %s"%(sdffile,sdffile))
+        # all rmsds should be zero
+        rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
+        for rmsd in rmsds:
+            self.assertEqual(rmsd, 0, "RMSD not zero between identical structures")
+        output, err = run_exec( "obrms -t 10 -f %s %s" % (sdffile,sdffile))
+        #first zero, second nonzero, last inf
+        rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
+        self.assertEqual(rmsds[0],0)
+        self.assertEqual(rmsds[1],2.73807)
+        self.assertEqual(rmsds[-1],INF)
+
+
 
 if __name__ == "__main__":
     unittest.main()
