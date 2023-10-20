@@ -400,17 +400,17 @@ namespace OpenBabel
 
   namespace impl {
 
-    inline auto MolGetAtoms(const OpenBabel::OBMol &mol) { return mol.GetAtoms(); }
-    inline auto MolGetAtoms(const OpenBabel::OBMol *mol) { return mol->GetAtoms(); }
+    inline OBMolAtomRange MolGetAtoms(const OpenBabel::OBMol &mol) { return mol.GetAtoms(); }
+    inline OBMolAtomRange MolGetAtoms(const OpenBabel::OBMol *mol) { return mol->GetAtoms(); }
 
-    inline auto MolGetBonds(const OpenBabel::OBMol &mol) { return mol.GetBonds(); }
-    inline auto MolGetBonds(const OpenBabel::OBMol *mol) { return mol->GetBonds(); }
+    inline OBMolBondRange MolGetBonds(const OpenBabel::OBMol &mol) { return mol.GetBonds(); }
+    inline OBMolBondRange MolGetBonds(const OpenBabel::OBMol *mol) { return mol->GetBonds(); }
 
-    inline auto AtomGetBonds(const OpenBabel::OBAtom &atom) { return atom.GetBonds(); }
-    inline auto AtomGetBonds(const OpenBabel::OBAtom *atom) { return atom->GetBonds(); }
+    inline OBAtomBondRange AtomGetBonds(const OpenBabel::OBAtom &atom) { return atom.GetBonds(); }
+    inline OBAtomBondRange AtomGetBonds(const OpenBabel::OBAtom *atom) { return atom->GetBonds(); }
 
-    inline auto AtomGetNbrs(const OpenBabel::OBAtom &atom) { return atom.GetNbrs(); }
-    inline auto AtomGetNbrs(const OpenBabel::OBAtom *atom) { return atom->GetNbrs(); }
+    inline OBAtomAtomRange AtomGetNbrs(const OpenBabel::OBAtom &atom) { return atom.GetNbrs(); }
+    inline OBAtomAtomRange AtomGetNbrs(const OpenBabel::OBAtom *atom) { return atom->GetNbrs(); }
 
   }
 

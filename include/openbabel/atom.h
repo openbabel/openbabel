@@ -103,6 +103,11 @@ namespace OpenBabel
         return m_iter == other.m_iter;
       }
 
+      bool operator!=(const OBAtomAtomIterAdaptor &other) const
+      {
+        return m_iter != other.m_iter;
+      }
+
     private:
       Iter m_iter;
       const OBAtom *m_atom = nullptr;
