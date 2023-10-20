@@ -340,7 +340,7 @@ class OBConversion; //used only as pointer
 
     };
 
-  template<typename T, typename Iter = std::vector<T>::const_iterator>
+  template<typename T, typename Iter = typename std::vector<T>::const_iterator>
   class OBAPI OBRange
   {
     public:
@@ -348,8 +348,8 @@ class OBConversion; //used only as pointer
       {
       }
 
-      auto begin() const { return m_begin; }
-      auto end() const { return m_end; }
+      Iter begin() const { return m_begin; }
+      Iter end() const { return m_end; }
 
     private:
       Iter m_begin;
