@@ -260,6 +260,12 @@ namespace OpenBabel
 
     }; // class OBBond
 
+  inline OBAtom* OBAtomAtomIterAdaptor::operator*() const
+  {
+    auto bond = *m_iter;
+    return m_atom != bond->GetBeginAtom() ? bond->GetBeginAtom() : bond->GetEndAtom();
+  }
+
   //! A standard iterator over a vector of bonds
   typedef std::vector<OBBond*>::iterator OBBondIterator;
 
