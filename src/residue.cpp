@@ -961,6 +961,11 @@ namespace OpenBabel
     SetResidueKeys(_resname.c_str(), _reskey, _aakey);
   }
 
+  void OBResidue::SetSegName(const string &name)
+  {
+    _segname = name;
+  }  
+
   void OBResidue::SetNum(const unsigned int resnum)
   {
     stringstream temp;
@@ -1035,6 +1040,11 @@ namespace OpenBabel
   string OBResidue::GetName(void) const
   {
     return _resname;
+  }
+
+  string OBResidue::GetSegName(void) const
+  {
+    return _segname;
   }
 
   std::string OBResidue::GetNumString(void)
