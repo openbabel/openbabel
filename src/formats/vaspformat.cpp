@@ -90,20 +90,20 @@ namespace OpenBabel {
 
         "Both VASP 4.x and 5.x POSCAR formats are supported.\n\n"
 
-	"By default, atoms are written out in the order they are present in the input\n"
-	"molecule. To sort by atomic number specify ``-xw``. To specify the sort\n"
-	"order, use the ``-xz`` option.\n\n"
+        "By default, atoms are written out in the order they are present in the input\n"
+        "molecule. To sort by atomic number specify ``-xw``. To specify the sort\n"
+        "order, use the ``-xz`` option.\n\n"
 
         "Read Options e.g. -as\n"
         "  s Output single bonds only\n"
         "  b Disable bonding entirely\n\n"
 
         "Write Options e.g. -x4\n"
-        " w  Sort atoms by atomic number\n"
-        " z <list of atoms>  Specify the order to write out atoms\n"
-	"       'atom1 atom2 ...': atom1 first, atom2 second, etc. The remaining\n"
-	"       atoms are written in the default order or (if ``-xw`` is specified)\n"
-	"       in order of atomic number.\n"
+        "  w  Sort atoms by atomic number\n"
+        "  z <list of atoms>  Specify the order to write out atoms\n"
+        "       'atom1 atom2 ...': atom1 first, atom2 second, etc. The remaining\n"
+        "       atoms are written in the default order or (if ``-xw`` is specified)\n"
+        "       in order of atomic number.\n"
         "  4 Write a POSCAR using the VASP 4.x specification.\n"
         "    The default is to use the VASP 5.x specification.\n\n"
         ;
@@ -120,7 +120,7 @@ namespace OpenBabel {
        READBINARY  WRITEBINARY  READXML  ZEROATOMSOK */
     unsigned int Flags() override
     {
-      return READONEONLY;
+      return READONEONLY | WRITEONEONLY;
     }
 
     int SkipObjects(int n, OBConversion* pConv) override
@@ -534,7 +534,7 @@ namespace OpenBabel {
             for (size_t natom = 0; natom < pmol->NumAtoms(); ++natom) {
               const vector3 dxyz = currXyz[natom] - prevXyz[natom];
               vector3::const_iterator iter = std::find_if(dxyz.begin(), dxyz.end(),
-                      std::bind2nd(std::not_equal_to<double>(), 0.0));
+                  [](double v) { return v != 0.0; });
               if (iter != dxyz.end()) dipGrad[natom].SetRow(iter - dxyz.begin(),
                                                             (currDm - prevDm) / *iter);
             }
@@ -588,7 +588,7 @@ namespace OpenBabel {
       if (max != 0.0) {
         // Normalize
         std::transform(Intensities.begin(), Intensities.end(), Intensities.begin(),
-                       std::bind2nd(std::divides<double>(), max / 100.0));
+                       [=](double v) { return v / (max / 100.0); });
       } else {
         Intensities.clear();
       }

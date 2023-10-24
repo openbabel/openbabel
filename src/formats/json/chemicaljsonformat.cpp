@@ -43,6 +43,7 @@ namespace OpenBabel
 
              "Write Options, e.g. -xv\n"
              " m  minified output formatting, with no line breaks or indents\n"
+             " s  single geometry only, ignoring conformers, etc.\n"
              " v  verbose output (include default values)\n\n";
     };
 
@@ -229,7 +230,7 @@ namespace OpenBabel
       if (properties.HasMember("totalSpinMultiplicity") &&
           properties["totalSpinMultiplicity"].IsInt())
       {
-        pmol->SetTotalSpinMultiplicity(inRoot["totalSpinMultiplicity"].GetInt());
+        pmol->SetTotalSpinMultiplicity(properties["totalSpinMultiplicity"].GetInt());
       }
     }
 
@@ -303,7 +304,9 @@ namespace OpenBabel
     // conformers / multiple coordinates
     rapidjson::Value coords(rapidjson::kObjectType);
     coords.AddMember("3d", coords3d, al); // default coords
-    if (pmol->NumConformers() > 1)
+
+    // -xs option gives only one geometry
+    if (pmol->NumConformers() > 1 && !pConv->IsOption("s", pConv->OUTOPTIONS))
     {
       rapidjson::Value conformers(rapidjson::kArrayType);
 
@@ -370,6 +373,7 @@ namespace OpenBabel
     if (pmol->HasData(OBGenericDataType::UnitCell))
     {
       OBUnitCell *uc = (OBUnitCell *)pmol->GetData(OBGenericDataType::UnitCell);
+      if (uc != nullptr) {
       rapidjson::Value unitCell(rapidjson::kObjectType);
       unitCell.AddMember("a", uc->GetA(), al);
       unitCell.AddMember("b", uc->GetB(), al);
@@ -390,6 +394,7 @@ namespace OpenBabel
       }
 
       doc.AddMember("unitCell", unitCell, al);
+      }
     }
 
     // vibrations
@@ -397,58 +402,61 @@ namespace OpenBabel
     {
       OBVibrationData *vib =
           (OBVibrationData *)pmol->GetData(OBGenericDataType::VibrationData);
-      rapidjson::Value vibrations(rapidjson::kObjectType);
-
-      rapidjson::Value frequencies(rapidjson::kArrayType);
-      rapidjson::Value modes(rapidjson::kArrayType);
-      vector<double> wavenumbers = vib->GetFrequencies();
-      unsigned int mode = 1;
-      unsigned int modeCount = vib->GetNumberOfFrequencies();
-      for (unsigned int i = 0; i < modeCount; i++)
+      if (vib != nullptr)
       {
-        frequencies.PushBack(wavenumbers[i], al);
-        modes.PushBack(mode++, al);
-      }
-      vibrations.AddMember("frequencies", frequencies, al);
-      vibrations.AddMember("modes", modes, al);
+        rapidjson::Value vibrations(rapidjson::kObjectType);
 
-      rapidjson::Value intensities(rapidjson::kArrayType);
-      vector<double> intensitiesVec = vib->GetIntensities();
-      for (unsigned int i = 0; i < modeCount; i++)
-      {
-        intensities.PushBack(intensitiesVec[i], al);
-      }
-      vibrations.AddMember("intensities", intensities, al);
-
-      rapidjson::Value raman(rapidjson::kArrayType);
-      vector<double> ramanVec = vib->GetRamanActivities();
-      if (ramanVec.size() > 0)
-      {
+        rapidjson::Value frequencies(rapidjson::kArrayType);
+        rapidjson::Value modes(rapidjson::kArrayType);
+        vector<double> wavenumbers = vib->GetFrequencies();
+        unsigned int mode = 1;
+        unsigned int modeCount = vib->GetNumberOfFrequencies();
         for (unsigned int i = 0; i < modeCount; i++)
         {
-          raman.PushBack(ramanVec[i], al);
+          frequencies.PushBack(wavenumbers[i], al);
+          modes.PushBack(mode++, al);
         }
-        vibrations.AddMember("ramanIntensities", raman, al);
-      }
+        vibrations.AddMember("frequencies", frequencies, al);
+        vibrations.AddMember("modes", modes, al);
 
-      rapidjson::Value displacements(rapidjson::kArrayType);
-      auto lx = vib->GetLx();
-      for (unsigned int i = 0; i < modeCount; i++)
-      {
-        rapidjson::Value displacement(rapidjson::kArrayType);
-        auto obDisp = lx[i]; // this is a vector<vector3>
-        for (auto j = obDisp.begin(); j != obDisp.end(); ++j)
+        rapidjson::Value intensities(rapidjson::kArrayType);
+        vector<double> intensitiesVec = vib->GetIntensities();
+        for (unsigned int i = 0; i < modeCount; i++)
         {
-          displacement.PushBack(j->x(), al);
-          displacement.PushBack(j->y(), al);
-          displacement.PushBack(j->z(), al);
+          intensities.PushBack(intensitiesVec[i], al);
+        }
+        vibrations.AddMember("intensities", intensities, al);
+
+        rapidjson::Value raman(rapidjson::kArrayType);
+        vector<double> ramanVec = vib->GetRamanActivities();
+        if (ramanVec.size() > 0)
+        {
+          for (unsigned int i = 0; i < modeCount; i++)
+          {
+            raman.PushBack(ramanVec[i], al);
+          }
+          vibrations.AddMember("ramanIntensities", raman, al);
         }
 
-        displacements.PushBack(displacement, al);
-      }
-      vibrations.AddMember("eigenVectors", displacements, al);
+        rapidjson::Value displacements(rapidjson::kArrayType);
+        auto lx = vib->GetLx();
+        for (unsigned int i = 0; i < modeCount; i++)
+        {
+          rapidjson::Value displacement(rapidjson::kArrayType);
+          auto obDisp = lx[i]; // this is a vector<vector3>
+          for (auto j = obDisp.begin(); j != obDisp.end(); ++j)
+          {
+            displacement.PushBack(j->x(), al);
+            displacement.PushBack(j->y(), al);
+            displacement.PushBack(j->z(), al);
+          }
 
-      doc.AddMember("vibrations", vibrations, al);
+          displacements.PushBack(displacement, al);
+        }
+        vibrations.AddMember("eigenVectors", displacements, al);
+
+        doc.AddMember("vibrations", vibrations, al);
+      }
     }
 
     // check for electronic spectra (UV/Vis, CD)
@@ -457,35 +465,39 @@ namespace OpenBabel
       OBElectronicTransitionData *edata =
           (OBElectronicTransitionData *)pmol->GetData(
               OBGenericDataType::ElectronicTransitionData);
-      rapidjson::Value electronic(rapidjson::kObjectType);
-      rapidjson::Value energies(rapidjson::kArrayType);
-      rapidjson::Value intensities(rapidjson::kArrayType);
-      // get the energies and intensities
-      std::vector<double> wavelengths = edata->GetWavelengths();
-      std::vector<double> forces = edata->GetForces();
 
-      // we need to convert the wavelengths to eV
-      const double hc = 1239.841984332; // in eV*nm
-      for (unsigned int i = 0; i < wavelengths.size(); i++)
+      if (edata != nullptr)
       {
-        energies.PushBack(hc / wavelengths[i], al);
-        intensities.PushBack(forces[i], al);
-      }
-      electronic.AddMember("energies", energies, al);
-      electronic.AddMember("intensities", intensities, al);
+        rapidjson::Value electronic(rapidjson::kObjectType);
+        rapidjson::Value energies(rapidjson::kArrayType);
+        rapidjson::Value intensities(rapidjson::kArrayType);
+        // get the energies and intensities
+        std::vector<double> wavelengths = edata->GetWavelengths();
+        std::vector<double> forces = edata->GetForces();
 
-      std::vector<double> rotatoryStrengthsVec =
-          edata->GetRotatoryStrengthsLength();
-      if (rotatoryStrengthsVec.size() > 0)
-      {
-        rapidjson::Value rotatoryStrengths(rapidjson::kArrayType);
-        for (unsigned int i = 0; i < rotatoryStrengthsVec.size(); i++)
+        // we need to convert the wavelengths to eV
+        const double hc = 1239.841984332; // in eV*nm
+        for (unsigned int i = 0; i < wavelengths.size(); i++)
         {
-          rotatoryStrengths.PushBack(rotatoryStrengthsVec[i], al);
+          energies.PushBack(hc / wavelengths[i], al);
+          intensities.PushBack(forces[i], al);
         }
-        electronic.AddMember("rotation", rotatoryStrengths, al);
+        electronic.AddMember("energies", energies, al);
+        electronic.AddMember("intensities", intensities, al);
+
+        std::vector<double> rotatoryStrengthsVec =
+            edata->GetRotatoryStrengthsLength();
+        if (rotatoryStrengthsVec.size() > 0)
+        {
+          rapidjson::Value rotatoryStrengths(rapidjson::kArrayType);
+          for (unsigned int i = 0; i < rotatoryStrengthsVec.size(); i++)
+          {
+            rotatoryStrengths.PushBack(rotatoryStrengthsVec[i], al);
+          }
+          electronic.AddMember("rotation", rotatoryStrengths, al);
+        }
+        spectra.AddMember("electronic", electronic, al);
       }
-      spectra.AddMember("electronic", electronic, al);
     }
 
     if (spectra.MemberCount() > 0)
