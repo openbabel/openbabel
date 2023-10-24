@@ -18,10 +18,33 @@ and so you can quickly develop the tests and try them out.
 import unittest
 
 from testbabel import run_exec, executable, BaseTest
+from testbindings import pybel
 
 class TestPDBFormat(BaseTest):
     """A series of tests relating to PDB"""
 
+    def testSegname(self):
+      """Test that different segments are put in different residues"""
+      mol = pybel.readstring('pdb','''ATOM    102  N   CYS A  16      59.916  27.715  54.719  1.00 30.93         A N
+ATOM    104  C   CYS A  16      61.349  29.663  54.116  1.00 31.27         A C
+ATOM    105  O   CYS A  16      62.398  30.296  54.175  1.00 31.42         A O
+ATOM    106  CB  CYS A  16      62.233  27.349  54.045  1.00 30.95         A C
+ATOM    107  SG  CYS A  16      62.584  25.823  54.921  1.00 31.06         A S
+ATOM   2492  N   CYS A  16      46.752  17.445  54.719  1.00 30.93         B N
+ATOM   2493  CA  CYS A  16      45.412  16.879  54.750  1.00 31.03         B C
+ATOM   2494  C   CYS A  16      45.319  15.497  54.116  1.00 31.27         B C
+ATOM   2495  O   CYS A  16      44.270  14.864  54.175  1.00 31.42         B O
+ATOM   2496  CB  CYS A  16      44.435  17.811  54.045  1.00 30.95         B C
+ATOM   2497  SG  CYS A  16      44.084  19.337  54.921  1.00 31.06         B S
+''')
+      self.assertTrue(len(mol.residues) == 2)
+      cnts = {'A':0,'B':0}
+      for a in mol.atoms:
+          r = a.OBAtom.GetResidue()
+          cnts[r.GetSegName().strip()] += 1
+      self.assertEqual(cnts['A'],5)
+      self.assertEqual(cnts['B'],6)
+    
     def testInsertionCodes(self):
         """
         Testing a PDB entry with insertion codes to distinguish residues

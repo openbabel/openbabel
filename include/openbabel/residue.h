@@ -107,7 +107,7 @@ namespace OpenBabel {
     //! \return The residue name
     std::string    GetName(void)                  const;
     //! \return The residue segment name
-    std::string    GetSegName(void)                  const;    
+    std::string    GetSegName(void)               const;    
     //! \return The residue number (in the sequence)
     int    GetNum(void);
     std::string     GetNumString(void);
