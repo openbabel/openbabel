@@ -117,6 +117,14 @@ namespace OpenBabel
 
 enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
 
+  using OBMolAtomRange = OBRange<OBAtom*>;
+  using OBMolBondRange = OBRange<OBBond*>;
+
+#if __cplusplus >= 202002L
+  static_assert(std::ranges::range<OBMolAtomRange>);
+  static_assert(std::ranges::range<OBMolBondRange>);
+#endif
+
   // class introduction in mol.cpp
  class OBAPI OBMol: public OBBase
   {
@@ -652,10 +660,14 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
     OBAtomIterator EndAtoms() { return _vatom.begin() + NumAtoms() ; }
     //! \return A constant atom iterator pointing to the end of the atom list
     OBAtomConstIterator CEndAtoms() const { return _vatom.cbegin() + NumAtoms(); }
+    //! \return A range over the atoms. This range can be used in a range-based for loop.
+    OBMolAtomRange GetAtoms() const { return {_vatom.begin(), _vatom.begin() + NumAtoms()}; }
     //! \return A bond iterator pointing to the beginning of the bond list
     OBBondIterator BeginBonds()   { return _vbond.begin(); }
     //! \return A bond iterator pointing to the end of the bond list
     OBBondIterator EndBonds()     { return _vbond.begin() + NumBonds() ; }
+    //! \return A range over the bonds. This range can be used in a range-based for loop.
+    OBMolBondRange GetBonds() const { return {_vbond.begin(), _vbond.begin() + NumBonds()}; }
     //! \return A residue iterator pointing to the beginning of the residue list
     OBResidueIterator BeginResidues() { return _residue.begin(); }
     //! \return A residue iterator pointing to the end of the residue list
