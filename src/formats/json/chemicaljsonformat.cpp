@@ -240,6 +240,51 @@ namespace OpenBabel
       StereoFrom3D(pmol);
     }
 
+    // add the unit cell if present
+    if (inRoot.HasMember("unitCell") && inRoot["unitCell"].IsObject())
+    {
+      const rapidjson::Value &unitCell = inRoot["unitCell"];
+      if (unitCell.HasMember("a") && unitCell["a"].IsDouble())
+      {
+        OBUnitCell *uc = new OBUnitCell();
+        double a, b, c, alpha, beta, gamma;
+        a = unitCell["a"].GetDouble();
+        b = unitCell["b"].GetDouble();
+        c = unitCell["c"].GetDouble();
+        alpha = unitCell["alpha"].GetDouble();
+        beta = unitCell["beta"].GetDouble();
+        gamma = unitCell["gamma"].GetDouble();
+        uc->SetData(a, b, c, alpha, beta, gamma);
+
+        // also read the cell vectors if present
+        if (unitCell.HasMember("cellVectors") &&
+            unitCell["cellVectors"].IsArray())
+        {
+          const rapidjson::Value &cellVectors = unitCell["cellVectors"];
+          if (cellVectors.Size() == 9)
+          {
+            vector<vector3> obVectors;
+            for (rapidjson::SizeType i = 0; i < cellVectors.Size(); i += 3)
+            {
+              vector3 v(cellVectors[i].GetDouble(), cellVectors[i + 1].GetDouble(),
+                        cellVectors[i + 2].GetDouble());
+              obVectors.push_back(v);
+            }
+            uc->SetData(obVectors[0], obVectors[1], obVectors[2]);
+          }
+        }
+
+        // and the space group
+        if (unitCell.HasMember("spaceGroup") &&
+            unitCell["spaceGroup"].IsString())
+        {
+          uc->SetSpaceGroup(unitCell["spaceGroup"].GetString());
+        }
+
+        pmol->SetData(uc);
+      }
+    }
+
     return true;
   }
 
@@ -392,6 +437,10 @@ namespace OpenBabel
         cellVectors.PushBack(i->y(), al);
         cellVectors.PushBack(i->z(), al);
       }
+      unitCell.AddMember("cellVectors", cellVectors, al);
+
+      // and the space group
+      unitCell.AddMember("spaceGroup", rapidjson::StringRef(uc->GetSpaceGroupName().c_str()), al);
 
       doc.AddMember("unitCell", unitCell, al);
       }
