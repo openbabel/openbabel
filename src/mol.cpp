@@ -32,6 +32,7 @@ GNU General Public License for more details.
 #include <openbabel/math/matrix3x3.h>
 #include <openbabel/obfunctions.h>
 #include <openbabel/elements.h>
+#include <openbabel/cpcomplex.h>
 
 #include <openbabel/stereo/tetrahedral.h>
 #include <openbabel/stereo/cistrans.h>
@@ -825,6 +826,92 @@ namespace OpenBabel
     return rl.Size();
   }
 
+  void OBMol::AddCpComplex(CpComplex& cp)
+  {
+      CpComplex* _cp = new CpComplex;
+      *_cp = cp;
+      _ncps++;
+      _cp->SetIdx(_ncps);
+      _cps.push_back(_cp);
+  }
+
+  CpComplex* OBMol::GetCpComplex(int idx) 
+  {
+    if ((unsigned)idx < 1 || (unsigned)idx > _ncps)
+      {
+        obErrorLog.ThrowError(__FUNCTION__, "Requested Cp Out of Range", obWarning);
+        return nullptr;
+      }
+
+    return((CpComplex*)_cps[idx-1]);
+  }
+
+  std::vector<CpComplex*> OBMol::GetCps()
+  {
+      return _cps;
+  }
+
+  BranchBlock* OBMol::AddBranchBlock(BranchBlock& branch)
+  {
+      BranchBlock* _branch = new BranchBlock();
+      *_branch = branch;
+      _nblocks++;
+      _branch->SetIdx(_nblocks);
+      _blocks.push_back(_branch);
+      return _branch;               //Lo hago asi, para que el branch del metodo de IdentifyBranches apunte al objeto que debe
+
+      //CpComplex* _cp = new CpComplex;
+      //*_cp = cp;
+      //_ncps++;
+      //_cp->SetIdx(_ncps);
+      //_cps.push_back(_cp);
+  }
+
+  //Debug method 
+  void OBMol::ShowBranches()
+  {
+      if (!_blocks.empty()) {
+          std::cout << "BranchesBlocks: \n";
+          BranchBlock* bb;
+          vector<BranchBlock*>::iterator b;
+          for (bb = BeginBranchBlock(b); bb; bb = NextBranchBlock(b)) {
+              std::cout << "[" << bb->GetIdx() << "]: ";
+              for (int i = 0; i < bb->Size(); i++) {
+                  std::cout << OBElements::GetSymbol(GetAtom(bb->GetAtomIdx(i))->GetAtomicNum()) << "[" << bb->GetAtomIdx(i) << "]" << ",";
+              }
+              std::cout << "\n";
+          }
+      }
+      else{
+          obErrorLog.ThrowError(__FUNCTION__, "Trying to show branchesBlock, but no data found...", obWarning);
+      }
+      
+  }
+
+  bool OBMol::HasOgmMetal()
+  {
+      FOR_ATOMS_OF_MOL(a,this) {
+          if (a->IsOgmMetal()) {
+              return true;
+          }
+      }
+      return false;
+  }
+
+  BranchBlock* OBMol::FindBranch(int carbon_idx)
+  {
+      BranchBlock* bb;
+      vector<BranchBlock*>::iterator b;
+      for (bb = BeginBranchBlock(b); bb; bb = NextBranchBlock(b)) {
+          if (bb->HasAtom(carbon_idx)) {
+              return *b;
+          }
+      }
+
+      return nullptr;
+  }
+
+
   //! Returns a pointer to the atom after a safety check
   //! 0 < idx <= NumAtoms
   OBAtom *OBMol::GetAtom(int idx) const
@@ -1230,6 +1317,7 @@ namespace OpenBabel
   //Conformers are now copied also, MM 2/7/01
   //Residue information are copied, MM 4-27-01
   //All OBGenericData incl OBRotameterList is copied, CM 2006
+  //Cp_complexes related information is also copied now 2023
   //Zeros all flags except OB_TCHARGE_MOL, OB_PCHARGE_MOL, OB_HYBRID_MOL
   //OB_TSPIN_MOL, OB_AROMATIC_MOL, OB_PERIODIC_MOL, OB_CHAINS_MOL and OB_PATTERN_STRUCTURE which are copied
   {
@@ -1280,6 +1368,23 @@ namespace OpenBabel
     if (src.HasFlag(OB_CHAINS_MOL))
       this->SetFlag(OB_CHAINS_MOL);
     //this->_flags = src.GetFlags(); //Copy all flags. Perhaps too drastic a change
+
+    //Copy Cp information
+    vector<CpComplex*>::iterator c;
+    CpComplex* cp;
+    for (cp = src.BeginCp(c); cp; cp = src.NextCp(c))
+        AddCpComplex(*cp);
+
+    this->_smiles = src.GetSmiles();
+    this->_ncps = src.GetCpSize();
+
+    //Copy Canonical and Block information
+    this->_canSmiles = src.GetCanSmiles();
+    this->_nblocks = src.GetBlockSize();
+    vector<BranchBlock*>::iterator b;
+    BranchBlock* bb;
+    for (bb = src.BeginBranchBlock(b); bb; bb = src.NextBranchBlock(b))
+        AddBranchBlock(*bb);
 
 
     //Copy Residue information
@@ -2731,6 +2836,12 @@ namespace OpenBabel
     _autoPartialCharge = true;
     _autoFormalCharge = true;
     _energy = 0.0;
+    _smiles = "";
+    _cps.clear();
+    _ncps = 0;
+    _canSmiles = "";
+    _blocks.clear();
+    _nblocks = 0;
   }
 
   OBMol::OBMol(const OBMol &mol) : OBBase(mol)
@@ -2752,6 +2863,12 @@ namespace OpenBabel
     _autoFormalCharge = true;
     //NF  _compressed = false;
     _energy = 0.0;
+    _smiles = "";
+    _cps.clear();
+    _ncps = 0;
+    _canSmiles = "";
+    _blocks.clear();
+    _nblocks = 0;
     *this = mol;
   }
 
@@ -3168,7 +3285,7 @@ namespace OpenBabel
           delete [] _c;
 
           // Note that the above delete doesn't set _c value to nullptr
-          _c = nullptr;
+        _c = nullptr;
         }
 
         for (atom = BeginAtom(i);atom;atom = NextAtom(i))

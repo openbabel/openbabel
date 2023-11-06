@@ -233,7 +233,7 @@ namespace OpenBabel {
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
     MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
     inFormatGzip(false), outFormatGzip(false),
-    pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr)
+    pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr), externOptionc(true)
   {
    	SetInStream(is);
    	SetOutStream(os);
@@ -251,7 +251,7 @@ namespace OpenBabel {
         EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
         MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
         inFormatGzip(false), outFormatGzip(false),
-        pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr)
+        pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr), externOptionc(true)
   {
     //These options take a parameter
     RegisterOptionParam("f", nullptr, 1,GENOPTIONS);
@@ -303,6 +303,7 @@ namespace OpenBabel {
     m_IsFirstInput = o.m_IsFirstInput;
     SkippedMolecules = o.SkippedMolecules;
     pAuxConv       = o.pAuxConv;
+    externOptionc    = o.externOptionc;
 
      return *this;
   }
@@ -311,7 +312,7 @@ namespace OpenBabel {
   OBConversion::~OBConversion()
   {
     if(pAuxConv!=this)
-      delete pAuxConv;
+        delete pAuxConv;
     // Free any remaining streams from convenience functions
     SetInStream(nullptr);
     SetOutStream(nullptr);

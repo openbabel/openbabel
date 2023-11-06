@@ -379,6 +379,13 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
     return false;
   }
 
+  OBOp* pOpCp = OBOp::FindType("CpDraw");
+  if (!pOpCp)
+  {
+      obErrorLog.ThrowError("SVGFormat", "CpDraw not found", obError, onceOnly);
+      return false;
+  }
+
   vector<OBBase*>::iterator iter;
   int indx = 0;
   for(iter=_objects.begin(); ret && iter!=_objects.end(); ++iter,++indx)
@@ -387,6 +394,10 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
 
     if (!pmol)
       continue;
+    
+    //Debug
+    //cout << "\nMolecula to draw: " << pmol->GetSmiles() << "\n";
+
     //*** Coordinate generation ***
     //Generate coordinates only if no existing 2D coordinates and we're not doing ball-and-stick style
     if( (pConv->IsOption("y") || !pmol->Has2D(true)) && (!pConv->IsOption("n") && !balldepict))
@@ -396,7 +407,20 @@ bool SVGFormat::WriteSVG(OBConversion* pConv, vector<OBBase*>& molecules)
         obErrorLog.ThrowError("SVGFormat", string(pmol->GetTitle()) + "- Coordinate generation unsuccessful", obError);
         return false;
       }
+
+      //New: Cp detection and generation plugin function
+      vector<vector<int> > fragList;
+      pmol->ContigFragList(fragList);
+      if (pmol->HasOgmMetal() || fragList.size() == 0) {
+          if (!pOpCp->Do(pmol, nullptr, nullptr, pConv))
+          {
+              obErrorLog.ThrowError("SVGFormat", string(pmol->GetTitle()) + "- Cp detection unsuccessful", obError);
+              return false;
+          }
+      }
     }
+
+
     if(!pmol->Has2D() && pmol->NumAtoms()>1)//allows 3D coordinates (if passed by -xn above)
     {
       string mes("Molecule ");

@@ -60,6 +60,8 @@ namespace OpenBabel
 #define OB_DONOR_ATOM     (1<<7)
   //! Atom is an electron acceptor
 #define OB_ACCEPTOR_ATOM  (1<<8)
+  //! Atom is part of a Cp ring
+#define OB_CP_ATOM        (1<<5)
 
 #define SET_OR_UNSET_FLAG(X) \
   if (value) SetFlag(X); \
@@ -222,6 +224,8 @@ namespace OpenBabel
       void SetInRing(bool value=true)         { SET_OR_UNSET_FLAG(OB_RING_ATOM); }
       //! Clear the internal coordinate pointer
       void ClearCoordPtr()     { _c = nullptr; _cidx=0; }
+      //! Mark an atom as part of a Cp ring
+      void SetInCp(bool value = true) { SET_OR_UNSET_FLAG(OB_CP_ATOM); }
       //@}
 
       //! \name Methods to retrieve atomic information
@@ -511,6 +515,17 @@ namespace OpenBabel
       bool HasAromaticBond()  {        return(HasBondOfOrder(5));    }
       //! \return Whether this atom matches the first atom in a given SMARTS pattern
       bool MatchesSMARTS(const char *);
+
+      //! \return Is this a metal commonnly present in organometallic compounds?
+      bool IsOgmMetal();
+      //! \return Is atom part of a Cp ring?
+      bool IsInCp() const;
+      //! \return Is this atom a Carbon (atomic number == 6)?
+      bool IsCarbon();
+      //! Debug method. Displays on basic output simple data to identify the atom
+      void Show();
+      //! \return Pair <bool, idx> whether this atom has a bond with a metal atom. If true, also returns metal idx
+      std::pair<bool, int> HasOgmMetalBond();
       //@}
 
     }; // class OBAtom

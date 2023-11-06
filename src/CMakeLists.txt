@@ -71,6 +71,7 @@ set(ops
   ops/addnonpolarh.cpp
   ops/canonical.cpp
   ops/changecell.cpp
+  ops/cpdraw.cpp
   ops/delpolarh.cpp
   ops/delnonpolarh.cpp
   ops/gen2D.cpp
@@ -120,6 +121,7 @@ set(openbabel_srcs
   canon.cpp
   chains.cpp
   chargemodel.cpp
+  cpcomplex.cpp
   data.cpp
   data_utilities.cpp
   descriptor.cpp

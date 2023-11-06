@@ -53,6 +53,10 @@ namespace OpenBabel
       void DrawText(double x, double y, const std::string &text);
       OBFontMetrics GetFontMetrics(const std::string &text);
       void WriteDefs();
+
+      //New
+      //! Inserts the necessary xml code in the .svg output file to draw a polygon according to the vector of points specified by @p points
+      void DrawPolygonLine(const std::vector<std::pair<double, double> >& points);
       //@}
 
       //! @name CairoPainter specific

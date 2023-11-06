@@ -107,6 +107,10 @@ namespace OpenBabel
   {
   }
 
+  void ASCIIPainter::DrawPolygonLine(const std::vector<std::pair<double, double>>& points)
+  {
+  }
+
   void ASCIIPainter::DrawBall(double x, double y, double r, double opacity)
   {
   }

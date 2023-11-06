@@ -37,6 +37,9 @@ NMe      MeN      NC
 SMe      MeS      SC
 OMe      MeO      OC
 COO-     -OOC     C(=O)[O-]
+Ph       Ph       c1ccccc1
+CO	 CO	  C#O
+CO	 CO	  O#C
 ## Only entries above this line are used to *generate* aliases.
 Ph       Ph       c1ccccc1
 OR       RO       O*

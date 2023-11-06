@@ -207,6 +207,16 @@ namespace OpenBabel
     }
   }
 
+  void SVGPainter::DrawPolygonLine(const std::vector<std::pair<double, double>>& points)
+  {
+      m_ofs << "<polygon points=\"";
+      std::vector<std::pair<double, double> >::const_iterator i;
+      for (i = points.begin(); i != points.end(); ++i)
+          m_ofs << i->first << ',' << i->second << ' ';
+      m_ofs << "\"";
+      m_ofs << " style=\"stroke:black; fill:none\"/>\n";
+  }
+
   string SVGPainter::MakeRGB(OBColor color)
   {
     stringstream ss;
