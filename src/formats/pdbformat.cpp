@@ -689,7 +689,7 @@ namespace OpenBabel
             snprintf(type_name,5,"%s",(char*)res->GetAtomID(atom).c_str());
             the_chain = res->GetChain();
 
-            snprintf(segname,4,"%s", (char*)res->GetSegName().c_str());
+            snprintf(segname,5,"%s", (char*)res->GetSegName().c_str());
 
             //two char. elements are on position 13 and 14 one char. start at 14
             if (strlen(OBElements::GetSymbol(atom->GetAtomicNum())) == 1)
