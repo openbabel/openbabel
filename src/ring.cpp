@@ -348,10 +348,24 @@ namespace OpenBabel
     if (_rlist.size() == (unsigned)frj)
       return;
 
-    //make sure tmp is the same size as the rings
+    // create bondsets
+    std::vector<OBBitVec> _bslist;
+    std::vector<unsigned int> bonds;
+    OBBitVec bondset;
+    OBMol *mol = _rlist[0]->GetParent();
+    for (j = 0; j < (signed)_rlist.size(); ++j)
+    {
+      bondset.Clear();
+      bonds = atomRingToBondRing(mol, (_rlist[j])->_path);
+      for (unsigned int i = 0; i < bonds.size(); ++i)
+        bondset.SetBitOn(bonds[i]);
+      _bslist.push_back(bondset);
+    }
+
+    // make sure tmp is the same size as the rings
     OBBitVec tmp;
-    for (j = 0;j < (signed)_rlist.size();++j)
-      tmp = (_rlist[j])->_pathset;
+    for (j = 0; j < (signed)_bslist.size(); ++j)
+      tmp = _bslist[j];
 
     //remove larger rings that cover the same atoms as smaller rings
     for (i = _rlist.size()-1;i >= 0;i--)
@@ -359,11 +373,11 @@ namespace OpenBabel
         tmp.Clear();
         for (j = 0;j < (signed)_rlist.size();++j)
           if ((_rlist[j])->_path.size() <= (_rlist[i])->_path.size() && i != j)
-            tmp |= (_rlist[j])->_pathset;
+          tmp |= _bslist[j];
 
-        tmp = tmp & (_rlist[i])->_pathset;
+      tmp = tmp & _bslist[i];
 
-        if (tmp == (_rlist[i])->_pathset)
+      if (tmp == _bslist[i])
           {
             delete _rlist[i];
             _rlist.erase(_rlist.begin()+i);
