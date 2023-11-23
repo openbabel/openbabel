@@ -7,75 +7,76 @@ if(BINDINGS_ONLY)
 else()
   set(FORMATDIR "${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/")
 endif()
+
 add_definitions(-DFORMATDIR="${FORMATDIR}/")
 
-###########################################################
-#  new tests using obtest.h
-############################################################
+# ##########################################################
+# new tests using obtest.h
+# ###########################################################
 
-################ Add new tests here
-set (cpptests
-     alias automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
-     cistrans conversion graphsym gzip addh
-     implicitH lssr isomorphism multicml periodic regressions rotor shuffle smiles spectrophore
-     squareplanar stereo stereoperception tautomer tetrahedral
-     tetranonplanar tetraplanar uniqueid
-    )
-set (alias_parts 1)
-set (automorphism_parts 1 2 3 4 5 6 7 8 9 10)
-set (builder_parts 1 2 3 4 5 6)
-set (canonconsistent_parts  1 2 3)
-set (canonfragment_parts 1)
-set (canonstable_parts 1)
-set (carspacegroup_parts 1 2 3 4)
-set (cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12 13)
-set (cistrans_parts 1 2 3 4 5 6 7 8 9)
-set (conversion_parts 1)
-set (graphsym_parts 1 2 3 4 5)
-set (gzip_parts 1)
-set (addh_parts 1)
-set (implicitH_parts 1)
-set (lssr_parts 1 2 3 4 5)
-set (isomorphism_parts 1 2 3 4 5 6 7 8 9)
-set (multicml_parts 1)
-set (periodic_parts 1 2 3 4)
-set (regressions_parts 1 2 221 222 223 224 225 226 227 228 229 240 241 242 1794 2111 2428)
-set (rotor_parts 1 2 3 4)
-set (shuffle_parts 1 2 3 4 5)
-set (smiles_parts 1 2 3)
-set (spectrophore_parts 1 2 3 4 5)
-set (squareplanar_parts 1 2 3 4 5)
-set (stereo_parts 1 2 3 4 5 6)
-set (stereoperception_parts 1 2 3 4)
-set (tautomer_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29)
-set (tetrahedral_parts 1 2 3 4 5)
-set (tetranonplanar_parts 1)
-set (tetraplanar_parts 1)
-set (uniqueid_parts 1 2)
+# ############### Add new tests here
+set(cpptests
+  alias automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
+  cistrans conversion graphsym gzip addh
+  implicitH lssr isomorphism multicml periodic regressions rotor shuffle smiles spectrophore
+  squareplanar stereo stereoperception tautomer tetrahedral
+  tetranonplanar tetraplanar uniqueid
+)
+set(alias_parts 1)
+set(automorphism_parts 1 2 3 4 5 6 7 8 9 10)
+set(builder_parts 1 2 3 4 5 6)
+set(canonconsistent_parts 1 2 3)
+set(canonfragment_parts 1)
+set(canonstable_parts 1)
+set(carspacegroup_parts 1 2 3 4)
+set(cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12 13)
+set(cistrans_parts 1 2 3 4 5 6 7 8 9)
+set(conversion_parts 1)
+set(graphsym_parts 1 2 3 4 5)
+set(gzip_parts 1)
+set(addh_parts 1)
+set(implicitH_parts 1)
+set(lssr_parts 1 2 3 4 5)
+set(isomorphism_parts 1 2 3 4 5 6 7 8 9)
+set(multicml_parts 1)
+set(periodic_parts 1 2 3 4)
+set(regressions_parts 1 2 221 222 223 224 225 226 227 228 229 240 241 242 1794 2111 2428 2646)
+set(rotor_parts 1 2 3 4)
+set(shuffle_parts 1 2 3 4 5)
+set(smiles_parts 1 2 3)
+set(spectrophore_parts 1 2 3 4 5)
+set(squareplanar_parts 1 2 3 4 5)
+set(stereo_parts 1 2 3 4 5 6)
+set(stereoperception_parts 1 2 3 4)
+set(tautomer_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29)
+set(tetrahedral_parts 1 2 3 4 5)
+set(tetranonplanar_parts 1)
+set(tetraplanar_parts 1)
+set(uniqueid_parts 1 2)
 
-if (EIGEN2_FOUND OR EIGEN3_FOUND)
+if(EIGEN2_FOUND OR EIGEN3_FOUND)
   set(cpptests
-      align ${cpptests})
-  set (align_parts 1 2 3 4 5)
-endif ()
+    align ${cpptests})
+  set(align_parts 1 2 3 4 5)
+endif()
 
-if (WITH_MAEPARSER)
-    set(cpptests ${cpptests}
-        maereader)
-    set (maereader_parts 1 2)
-endif ()
+if(WITH_MAEPARSER)
+  set(cpptests ${cpptests}
+    maereader)
+  set(maereader_parts 1 2)
+endif()
 
 set(origtests
-    aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
-    datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
-    internalcoord invalidsmarts invalidsmiles iterators logp_psa math mol
-    pdbreadfile phmodel residue ringtest smartstest smartsparse smilesmatch
-    unitcell
-    )
-set (atom_parts 1 2 3 4)
-set (ffmmff94_parts 1 2 3 4 5 6)
-set (math_parts 1 2 3 4)
-set (pdbreadfile_parts 1 2 3 4)
+  aromatest atom bond cansmi charge_mmff94 charge_gasteiger conversion
+  datatest ffgaff ffghemical ffmmff94 ffuff formalcharge format formula
+  internalcoord invalidsmarts invalidsmiles iterators logp_psa math mol
+  pdbreadfile phmodel residue ringtest smartstest smartsparse smilesmatch
+  unitcell
+)
+set(atom_parts 1 2 3 4)
+set(ffmmff94_parts 1 2 3 4 5 6)
+set(math_parts 1 2 3 4)
+set(pdbreadfile_parts 1 2 3 4)
 
 if(BUILD_SHARED)
   if(LIBXML2_FOUND)
@@ -87,11 +88,11 @@ else()
   endif()
 endif()
 
-##################################
-
+# #################################
 foreach(cpptest ${cpptests})
   set(cpptestsrc ${cpptestsrc} ${cpptest}test.cpp)
 endforeach()
+
 foreach(origtest ${origtests})
   set(cpptestsrc ${cpptestsrc} ${origtest}.cpp)
 endforeach()
@@ -104,37 +105,39 @@ endforeach()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 create_test_sourcelist(srclist test_runner.cpp
-                       ${cpptestsrc})
+  ${cpptestsrc})
 
 set(TEST_PATH ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 
 if(NOT BUILD_SHARED)
   set(libs openbabel)
+
   if(WITH_STATIC_LIBXML)
     set(libs ${libs} ${LIBXML2_LIBRARIES})
   endif()
+
   if(WITH_STATIC_INCHI)
     set(libs ${libs} ${INCHI_LIBRARY})
   endif()
+
   if(NOT MSVC)
     if(BUILD_MIXED)
       if(CMAKE_COMPILER_IS_GNUCXX)
         if(CMAKE_SYSTEM_NAME MATCHES Linux)
-
           #
           # Relocatable binaries on linux using -static-libgcc. (GCC only)
           #
           set(CMAKE_CXX_FLAGS "-static-libgcc ${CMAKE_CXX_FLAGS}")
+
           # make sure the linker will find the static libstdc++
           file(REMOVE "${CMAKE_BINARY_DIR}/libstdc++.a")
           execute_process(COMMAND "g++" "-print-file-name=libstdc++.a"
-                          OUTPUT_VARIABLE libstdcpp
-                          OUTPUT_STRIP_TRAILING_WHITESPACE)
+            OUTPUT_VARIABLE libstdcpp
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
           execute_process(COMMAND "ln" "-s" "${libstdcpp}"
-                          WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
+            WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
           link_directories(${CMAKE_BINARY_DIR})
-
         endif(CMAKE_SYSTEM_NAME MATCHES Linux)
       endif(CMAKE_COMPILER_IS_GNUCXX)
     else(BUILD_MIXED)
@@ -149,6 +152,7 @@ endif()
 
 add_executable(test_runner ${srclist} obtest.cpp)
 target_link_libraries(test_runner ${libs})
+
 if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
   set_target_properties(test_runner PROPERTIES LINK_SEARCH_END_STATIC TRUE)
 endif()
@@ -156,7 +160,7 @@ endif()
 foreach(cpptest ${cpptests})
   foreach(part ${${cpptest}_parts})
     add_test(test_${cpptest}_${part}
-             ${TEST_PATH}/test_runner ${cpptest}test ${part})
+      ${TEST_PATH}/test_runner ${cpptest}test ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
       ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
@@ -166,17 +170,16 @@ endforeach()
 foreach(cpptest ${origtests})
   foreach(part ${${cpptest}_parts})
     add_test(test_${cpptest}_${part}
-             ${TEST_PATH}/test_runner ${cpptest} ${part})
+      ${TEST_PATH}/test_runner ${cpptest} ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "not ok"
       ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
   endforeach()
 endforeach()
 
-############################################################
-#  old-style tests using "not ok"
-############################################################
-
+# ###########################################################
+# old-style tests using "not ok"
+# ###########################################################
 if(NOT BUILD_SHARED)
   set(WITH_INCHI ${WITH_STATIC_INCHI})
 endif()
@@ -184,123 +187,133 @@ endif()
 if(WITH_INCHI)
   add_executable(test_inchiwrite inchiwrite.cpp ../src/formats/getinchi.cpp)
   target_link_libraries(test_inchiwrite ${libs})
+
   if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
     set_target_properties(test_inchiwrite PROPERTIES LINK_SEARCH_END_STATIC TRUE)
   endif()
+
   # files in test/inchi -- both .sdf and .txt
   set(inchitests Samples.sdf SamplesTechMan.sdf Steffen_PubChem.smi)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
+
   foreach(test ${inchitests})
     add_test(inchi${test}_Test
-             ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
+      ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
-                         FAIL_REGULAR_EXPRESSION "Not ok"
-                         ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
+      FAIL_REGULAR_EXPRESSION "Not ok"
+      ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
   endforeach(test ${inchitests})
 endif(WITH_INCHI)
 
-############################################################
-#  roundtrip
-############################################################
-
+# ###########################################################
+# roundtrip
+# ###########################################################
 add_executable(roundtrip roundtrip.cpp)
 target_link_libraries(roundtrip ${libs})
+
 if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
   set_target_properties(roundtrip PROPERTIES LINK_SEARCH_END_STATIC TRUE)
 endif()
+
 install(TARGETS roundtrip
-                RUNTIME DESTINATION bin
-                LIBRARY DESTINATION lib${LIB_SUFFIX}
-                ARCHIVE DESTINATION lib${LIB_SUFFIX}
+  RUNTIME DESTINATION bin
+  LIBRARY DESTINATION lib${LIB_SUFFIX}
+  ARCHIVE DESTINATION lib${LIB_SUFFIX}
 )
 
-###########################
+# ##########################
 # Tests wrapped in Python #
-###########################
+# ##########################
 
 # The following tests should work okay in MinGW, it's just that the calling
 # script needs some work. On Cygwin, there's some weird DLL problems when
 # calling from Python.
 if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
+
   if(PYTHON_EXECUTABLE)
     set(pytests
-        babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+      babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+
     foreach(pytest ${pytests})
-    SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
-      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-      BABEL_LIBDIR "${FORMATDIR}"
-      BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
-    )
+      SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
+        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+        BABEL_LIBDIR "${FORMATDIR}"
+        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
+      )
       ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
       set_tests_properties(pytest_${pytest} PROPERTIES
-           FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+        FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
       )
     endforeach(pytest ${pytests})
   endif(PYTHON_EXECUTABLE)
 endif(NOT MINGW AND NOT CYGWIN)
 
-###############################
+# ##############################
 # Tests using Python bindings #
-###############################
-
-if (PYTHON_BINDINGS)
+# ##############################
+if(PYTHON_BINDINGS)
   include(UsePythonTest)
   set(pybindtests
-      bindings
-      _pybel
-      example 
-      obconv_writers
-      cdjsonformat
-      pcjsonformat
-      roundtrip
-      )
+    bindings
+    _pybel
+    example
+    obconv_writers
+    cdjsonformat
+    pcjsonformat
+    roundtrip
+  )
+
   foreach(pybindtest ${pybindtests})
     SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-        BABEL_LIBDIR "${FORMATDIR}"
-        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
+      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
+      BABEL_LIBDIR "${FORMATDIR}"
+      BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
+      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
+
     if(MSVC)
       SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
         PYTHONPATH "\"${CMAKE_SOURCE_DIR}/scripts/python;${CMAKE_BINARY_DIR}/bin/Release\""
       )
     endif()
+
     ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
-         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+      FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
     )
   endforeach(pybindtest ${pybindtests})
-endif (PYTHON_BINDINGS)
+endif(PYTHON_BINDINGS)
 
-############################################################
+# ###########################################################
 # Test 2D depiction using ImageMagick utilities
-############################################################
+# ###########################################################
 
 # Example: add_depict_test(${CMAKE_SOURCE_DIR}/test/files/aromatics.smi aromatics ${CMAKE_SOURCE_DIR}/test/files/alias.png)
 function(add_depict_test testname obfile image_file ref_image)
   set(depict_dir ${CMAKE_BINARY_DIR}/depict_test)
   add_test(NAME test_${testname} COMMAND ${CMAKE_SOURCE_DIR}/test/test_depiction.sh
-      ${CMAKE_BINARY_DIR}/bin/obabel ${ImageMagick_convert_EXECUTABLE}
-      ${ImageMagick_compare_EXECUTABLE} ${obfile} ${depict_dir}
-      ${image_file} ${ref_image})
+    ${CMAKE_BINARY_DIR}/bin/obabel ${ImageMagick_convert_EXECUTABLE}
+    ${ImageMagick_compare_EXECUTABLE} ${obfile} ${depict_dir}
+    ${image_file} ${ref_image})
   set_tests_properties(test_${testname} PROPERTIES
-      PASS_REGULAR_EXPRESSION "0 @ 0,0")
+    PASS_REGULAR_EXPRESSION "0 @ 0,0")
 endfunction()
 
 option(TEST_DEPICTION "Test depiction using ImageMagick utilities" OFF)
+
 if(TEST_DEPICTION AND UNIX)
   find_package(ImageMagick COMPONENTS convert compare)
+
   if(ImageMagick_convert_FOUND AND ImageMagick_compare_FOUND)
     set(depict_dir ${CMAKE_BINARY_DIR}/depict_test)
     file(MAKE_DIRECTORY ${depict_dir})
     add_depict_test(depict_aromatics ${CMAKE_SOURCE_DIR}/test/files/aromatics.smi
-        aromatics ${CMAKE_SOURCE_DIR}/test/files/aromatics.png)
+      aromatics ${CMAKE_SOURCE_DIR}/test/files/aromatics.png)
     add_depict_test(depict_alias ${CMAKE_SOURCE_DIR}/test/files/alias.mol
-        alias ${CMAKE_SOURCE_DIR}/test/files/alias.png)
+      alias ${CMAKE_SOURCE_DIR}/test/files/alias.png)
   endif()
 endif()
 
