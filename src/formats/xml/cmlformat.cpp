@@ -29,7 +29,7 @@ GNU General Public License for more details.
 #include <openbabel/xml.h>
 #include <cfloat>
 #include <openbabel/reaction.h>
-
+#include <openbabel/kekulize.h>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -835,9 +835,11 @@ namespace OpenBabel
     vector<pair<string,string> >::iterator AttributeIter;
     cmlArray::iterator BondIter;
     bool HaveWarned = false;
+    bool needs_kekulization = false; // Have we have found an aromatic bond?
     for(BondIter=BondArray.begin();BondIter!=BondArray.end();++BondIter)
       {
         int indx1=0,indx2=0, ord=0;
+        unsigned int flag=0;
         string bondstereo, BondStereoRefs;
         string colour;
         string label;
@@ -894,9 +896,11 @@ namespace OpenBabel
                   ord=2;
                 else if(bo=='T')
                   ord=3;
-                else if(bo=='A')
-                  ord=5;
-                else {
+                else if(bo=='A') {
+                  ord=1;
+                  flag |= OBBond::Aromatic;
+                  needs_kekulization = true;
+                } else {
                   char* endptr;
                   ord = strtol(value.c_str(), &endptr, 10);
                 }
@@ -922,7 +926,7 @@ namespace OpenBabel
                 //But unspecied bond order means cannot assign spinmultiplicity
                 _pmol->SetIsPatternStructure();
               }
-            _pmol->AddBond(indx1,indx2,ord,0);
+            _pmol->AddBond(indx1,indx2,ord,flag);
 
             if(!colour.empty())
               {
@@ -939,6 +943,35 @@ namespace OpenBabel
                 _pmol->GetBond(_pmol->NumBonds()-1)->SetData(dp);
               }
           }
+      }
+
+      // Kekulization is necessary if an aromatic bond is present
+      if (needs_kekulization)
+      {
+        _pmol->SetAromaticPerceived();
+        // First of all, set the atoms at the ends of the aromatic bonds to also
+        // be aromatic. This information is required for OBKekulize.
+        FOR_BONDS_OF_MOL(bond, _pmol)
+        {
+          if (bond->IsAromatic())
+          {
+            bond->GetBeginAtom()->SetAromatic();
+            bond->GetEndAtom()->SetAromatic();
+          }
+        }
+        bool ok = OBKekulize(_pmol);
+        if (!ok)
+        {
+          stringstream errorMsg;
+          errorMsg << "Failed to kekulize aromatic bonds in MOL file";
+          std::string title = _pmol->GetTitle();
+          if (!title.empty())
+            errorMsg << " (title is " << title << ")";
+          errorMsg << endl;
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          // return false; Should we return false for a kekulization failure?
+        }
+        _pmol->SetAromaticPerceived(false);
       }
 
     return true;
