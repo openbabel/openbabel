@@ -978,9 +978,10 @@ namespace OpenBabel
 
           ifs.getline(buffer, BUFF_SIZE); // column labels or Raman intensity
           if(strstr(buffer, "Raman Activ")) {
-            ifs.getline(buffer, BUFF_SIZE); // Depolar (P)
+            tokenize(vs, buffer);
             for(unsigned int i=3; i<vs.size(); ++i)
               RamanActivities.push_back(atof(vs[i].c_str()));
+            ifs.getline(buffer, BUFF_SIZE); // Depolar (P)
 
             while (strstr(buffer, "Atom") == nullptr)
               ifs.getline(buffer, BUFF_SIZE); // eventually column labels
@@ -1329,8 +1330,20 @@ namespace OpenBabel
     {
       OBVibrationData* vd = new OBVibrationData;
       if (RamanActivities.size() != 0) {
-        vd->SetData(Lx, Frequencies, Intensities, RamanActivities);
-      } else
+        // check to see if they're all zero
+        bool allZero = true;
+        for (auto &i : RamanActivities) {
+          if (i != 0.0) {
+            allZero = false;
+            break;
+          }
+        }
+        if (!allZero) {
+          vd->SetData(Lx, Frequencies, Intensities, RamanActivities);
+        } else { // zero Raman
+          vd->SetData(Lx, Frequencies, Intensities);
+        }
+      } else // no Raman
         vd->SetData(Lx, Frequencies, Intensities);
       vd->SetOrigin(fileformatInput);
       mol.SetData(vd);
