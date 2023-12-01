@@ -475,7 +475,7 @@ namespace OpenBabel
 
     //Vibrational data
     std::vector< std::vector< vector3 > > Lx;
-    std::vector<double> Frequencies, Intensities;
+    std::vector<double> Frequencies, Intensities, RamanActivities;
     //Rotational data
     std::vector<double> RotConsts(3);
     int RotSymNum=1;
@@ -979,8 +979,11 @@ namespace OpenBabel
           ifs.getline(buffer, BUFF_SIZE); // column labels or Raman intensity
           if(strstr(buffer, "Raman Activ")) {
             ifs.getline(buffer, BUFF_SIZE); // Depolar (P)
-            ifs.getline(buffer, BUFF_SIZE); // Depolar (U)
-            ifs.getline(buffer, BUFF_SIZE); // column labels
+            for(unsigned int i=3; i<vs.size(); ++i)
+              RamanActivities.push_back(atof(vs[i].c_str()));
+
+            while (strstr(buffer, "Atom") == nullptr)
+              ifs.getline(buffer, BUFF_SIZE); // eventually column labels
           }
           ifs.getline(buffer, BUFF_SIZE); // actual displacement data
           tokenize(vs, buffer);
@@ -1325,7 +1328,10 @@ namespace OpenBabel
     if(Frequencies.size()>0)
     {
       OBVibrationData* vd = new OBVibrationData;
-      vd->SetData(Lx, Frequencies, Intensities);
+      if (RamanActivities.size() != 0) {
+        vd->SetData(Lx, Frequencies, Intensities, RamanActivities);
+      } else
+        vd->SetData(Lx, Frequencies, Intensities);
       vd->SetOrigin(fileformatInput);
       mol.SetData(vd);
     }
