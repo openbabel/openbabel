@@ -82,6 +82,8 @@ namespace OpenBabel
   class OBForceFieldGaff: public OBForceField
   {
     protected:
+      //!  Name of the parameter file
+      std::string _prmfile;
       //!  Parses the parameter file
       bool ParseParamFile() override;
       //!  Sets atomtypes to Gaff types in _mol
@@ -130,11 +132,17 @@ namespace OpenBabel
         _pairfreq = 10;
         _cutoff = false;
         _linesearch = LineSearchType::Newton2Num;
+        _prmfile = "gaff.prm";
       }
 
       //! Destructor
       virtual ~OBForceFieldGaff();
 
+      //! Set the new parameter file name
+      void SetPrmFile(const std::string &prm)
+      {
+          _prmfile = prm;
+      }
       //! Assignment
       OBForceFieldGaff &operator = (OBForceFieldGaff &);
 
