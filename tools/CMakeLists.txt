@@ -51,7 +51,7 @@ if(BUILD_SHARED)
 
   if(NOT MINIMAL_BUILD)
     # obgrep, obrms, obspectrophore -- require getopt
-    set(toolnames obgrep obspectrophore)
+    set(toolnames obgrep obrms obspectrophore)
     if(EIGEN3_FOUND)
       set(toolnames ${toolnames} obrms)
     endif()
