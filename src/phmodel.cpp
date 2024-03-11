@@ -154,6 +154,8 @@ namespace OpenBabel
     if (mol.GetDimension() > 0 && !mol.AutomaticFormalCharge())
       return;
 
+    bool hasChainsPerceived = mol.HasChainsPerceived();
+
     mol.SetCorrectedForPH();
 
     obErrorLog.ThrowError(__FUNCTION__,
@@ -197,6 +199,10 @@ namespace OpenBabel
       }
     }
 
+    if (hasChainsPerceived)
+    {
+      mol.SetChainsPerceived();
+    }
   }
 
 
