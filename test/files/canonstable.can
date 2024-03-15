@@ -225,7 +225,7 @@ C1Oc2c(O1)cc(cc2)/C=C\c1nc2ccccc2nc1/C=C/c1ccc2c(c1)OCO2
 C1[C@@H]2C[C@@H]3[C@@]4([C@H]1C[C@H](C2)C3)OO[C@@]14[C@@H]2C[C@@H]3C[C@H]1C[C@H](C2)C3
 C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)/N=C/[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3
 C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)C#C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3
-C1[C@H]2C[C@@H]3C[C@H]1C[C@@](C2)(C3)Nc1nc(nc(n1)N[C@]12C[C@@H]3C[C@@H](C2)C[C@@H](C1)C3)NC12C[C@@H]3C[C@@H](C2)C[C@H](C1)C3
+C1[C@@H]2C[C@@H]3C[C@@H]1CC(C2)(C3)Nc1nc(N[C@]23C[C@@H]4C[C@@H](C3)C[C@H](C2)C4)nc(n1)N[C@]12C[C@@H]3C[C@@H](C2)C[C@@H](C1)C3
 C1[C@@H]2C[C@@H]3[C@H]1[C@@H]3C2
 C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)c1sc2n(n1)c(nn2)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3
 O1[C@@H]2O[C@@H]3O[C@H]1CN(C2)C3
@@ -1814,7 +1814,7 @@ CN(CCNC(=O)c1cccc2c1nc1c3ccccc3c3c(c1n2)cccc3)C.Cl
 CN(C[C@@H]1CCC[C@H](/C/1=N\OC(=O)c1ccccc1)CN(C)C)C.Cl
 CN1CC[C@@H]([C@@H](C1)CN[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)O.Cl
 CO[C@@H]1CCN(CC1)[C@H]1C[C@H](O[C@H]([C@H]1O)C)O[C@@H]1C[C@@](O)(Cc2c1c(O)c1c(c2O)C(=O)c2c(C1=O)c(OC)ccc2)C(=O)CO.Cl
-COc1ccc(cc1)CN(C[C@]12C[C@@H]3C[C@H](C1)C[C@H](C2)C3)CCCCCCN(C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccc(cc1)OC.Cl
+COc1ccc(cc1)CN(C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)CCCCCCN(C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccc(cc1)OC.Cl
 C[C@H]([C-]12C3=C4[Fe+2]5678923(C1=C45)[c-]1c6c8c9c71)N.Cl
 C[C@H]([C-]12C3=C4[Fe+2]5678923(C1=C45)[c-]1c6c8c9c71)N.Cl
 C[C@@H]1CCN(CC1)CCC(=O)C[C@@H](c1c(=O)oc2c(c1O)cccc2)c1ccccc1.Cl
@@ -1838,7 +1838,7 @@ O[C@H](Cc1ccc(cc1)Br)CN1CC[C@H](CC1)c1ccccc1.Cl
 CN1CCC[C@H]([C@H]1CN[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)O.Cl
 [O-]C(=O)[C-]12C3=C4[Fe+2]5678923(C1=C45)[C-]1(C(=[OH+])O)C6=C8C9=C71.Cl
 [O-]C(=O)[C-]12C3=C4[Fe+2]5678923(C1=C45)[C-]1(C(=[OH+])O)C6=C8C9=C71.Cl
-c1ccc(cc1)CN(C[C@]12C[C@@H]3C[C@H](C1)C[C@H](C2)C3)CCCCCCN(C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccccc1.Cl
+C(CCN(C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccccc1)CCCN(C[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccccc1.Cl
 N(=C\[C-]12C3=C4[Fe+2]5678923(C1=C45)[c-]1c6c8c9c71)/Nc1ccc2c(n1)cccc2.Cl
 N(=C\[C-]12C3=C4[Fe+2]5678923(C1=C45)[c-]1c6c8c9c71)/Nc1ccc2c(n1)cccc2.Cl
 Cl/C=C/C[N@+]12CN3CN(C2)CN(C1)C3
