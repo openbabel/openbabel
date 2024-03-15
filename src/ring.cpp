@@ -378,10 +378,11 @@ namespace OpenBabel
       tmp = tmp & _bslist[i];
 
       if (tmp == _bslist[i])
-          {
-            delete _rlist[i];
-            _rlist.erase(_rlist.begin()+i);
-          }
+      {
+        delete _rlist[i];
+        _rlist.erase(_rlist.begin() + i);
+        _bslist.erase(_bslist.begin() + i);
+      }
 
         if (_rlist.size() == (unsigned)frj)
           break;
