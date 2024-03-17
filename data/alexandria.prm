@@ -64,6 +64,10 @@ atom [#1X1][c]-[#15X3]      	        			    	    h4 "H on carbon in a ring  with
 atom [#1X1][c]([#7,#8,#9,#16,#17,#35,#53])(=[#7,#8,#16])                    h5 "H on carbon in a ring  with 2 electron-withdrawal group"
 atom [#1X1][c](=[#7,#8,#16])([#7,#8,#9,#16,#17,#35,#53])         	    h5 "H on carbon in a ring  with 2 electron-withdrawal group"
 atom [#1X1][c]([#7,#8,#16,#17,#35,#53])[#7,#8,#16,#17,#35,#53]              h5 "H on carbon in a ring  with 2 electron-withdrawal group"
+atom [#1X1][#9]                                                             hf "H in hydrogen fluoride"
+atom [#1X1][#17]                                                            hcl "H in hydrogen chloride"
+atom [#1X1][#35]                                                            hbr "H in hydrogen bromide"
+atom [#1X1][#53]                                                            hi "H in hydrogen iodide"
 atom [#1X1][Ge]								    DU "H on Ge"
 
 // SMARTS rules for carbons
