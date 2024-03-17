@@ -27,7 +27,7 @@ atom [*]								    X
 atom [#1]             							    hc "other hydrogen e.g. on aromatic C" 
 atom [#1X1]             						    ha "other hydrogen e.g. on aromatic C"  
 atom [#1X1]O            						    ho "H on oxygen"
-atom [#1X1][#9,#17,#35,#53]                                                 ho "H on halogen"  
+//atom [#1X1][#9,#17,#35,#53]                                                 ho "H on halogen"  
 atom [#1X1][OD2]-[#1X1]    						    hw "H on water"
 atom [#1X1]N            						    hn "H on nitrogen"
 atom [#1X1]n            						    hn "H on nitrogen"
