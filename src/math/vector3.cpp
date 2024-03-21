@@ -67,20 +67,19 @@ namespace OpenBabel
   */
   double vector3::operator[] ( unsigned int i) const
   {
-#ifdef OB_OLD_MATH_CHECKS
-    if (i > 2)
-      {
-        cerr << "ERROR in OpenBabel::vector3::operator[]" << endl
-             << "The method has been called with an illegal index i=" << i << "." << endl
+    switch (i) {
+      case 0u:
+        return _vx;
+      case 1u:
+        return _vy;
+      case 2u:
+        return _vz;
+      default:
+        cerr << "ERROR in OpenBabel::vector3::operator[]\n"
+             << "The method has been called with an illegal index i=" << i << ".\n"
              << "Please contact the author of the offending program immediately." << endl;
         return 0.0;
-      }
-#endif
-    if (i == 0)
-      return _vx;
-    if (i == 1)
-      return _vy;
-    else return _vz;
+    }
   }
 
   /*! Replaces *this with a random unit vector, which is (supposed
@@ -222,24 +221,17 @@ namespace OpenBabel
   OBAPI double CalcTorsionAngle(const vector3 &a, const vector3 &b,
                                 const vector3 &c, const vector3 &d)
   {
-
-    double torsion;
-    vector3 b1,b2,b3,c1,c2,c3;
-
-    b1 = a - b;
-    b2 = b - c;
-    b3 = c - d;
+    vector3 b1 = a - b;
+    vector3 b2 = b - c;
+    vector3 b3 = c - d;
 
 #ifdef OB_OLD_MATH_CHECKS
-    c1 = cross(b1,b2);
-    c2 = cross(b2,b3);
-    c3 = cross(c1,c2);
-
+    vector3 c1 = cross(b1, b2);
+    vector3 c2 = cross(b2, b3);
 
     if (c1.length() * c2.length() < 0.001)
     {
-      torsion = 0.0;
-      return torsion;
+      return 0.0;
     }
 #endif
 
@@ -247,7 +239,7 @@ namespace OpenBabel
 
     vector3 b2xb3 = cross(b2, b3);
     vector3 b1xb2 = cross(b1, b2);
-    torsion = - atan2(dot(rb2 * b1, b2xb3), dot(b1xb2, b2xb3));
+    double torsion = - atan2(dot(rb2 * b1, b2xb3), dot(b1xb2, b2xb3));
 
     return(torsion * RAD_TO_DEG);
   }
