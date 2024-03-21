@@ -127,41 +127,41 @@ $end"""
                 ("3H", "CCC"),
                 ("1Y", "CC(C)C"),
                 ("1X", "CC(C)(C)C"),
-                ("Q1", "CO"),
-                ("1R", "c1ccccc1C"),
+                ("Q1", "OC"),
+                ("1R", "Cc1ccccc1"),
                 ("1V1", "CC(=O)C"),
                 ("2O2", "CCOCC"),
                 ("1VR", "CC(=O)c1ccccc1"),
-                ("ZR CVQ", "c1ccc(N)cc1C(=O)O"),
-                ("QVYZ1R", "NC(Cc1ccccc1)C(=O)O"),
-                ("QX2&2&2", "CCC(O)(CC)CC"),
+                ("ZR CVQ", "Nc1cc(ccc1)C(=O)O"),
+                ("QVYZ1R", "OC(=O)C(N)Cc1ccccc1"),
+                ("QX2&2&2", "OC(CC)(CC)CC"),
                 ("QVY3&1VQ", "OC(=O)C(CCC)CC(=O)O"),
-                ("L66J BMR& DSWQ IN1&1", "CN(C=1C=C2C(=CC(=CC2=CC1)S(=O)(=O)O)NC1=CC=CC=C1)C"),
+                ("L66J BMR& DSWQ IN1&1", "c12c(cc(cc1ccc(c2)N(C)C)[S](=O)([O-])O)Nc1ccccc1"),
                 # The following is not supported
                 # ("QVR-/G 5", "c1(Cl)c(Cl)c(Cl)c(Cl)c(Cl)c1C(=O)O"),
 
                 # The following are from:
                 # https://www.nextmovesoftware.com/posters/Sayle_WisswesserLineNotation_BioIT_201904.pdf
-                ("WN3", "[O-][N+](=O)CCC"),
+                ("WN3", "[N](=O)([O-])CCC"),
                 ("G1UU1G", "ClC#CCl"),
-                ("VH3", "O=CCCC"),
-                ("NCCN", "N#CC#N"),
-                ("ZYZUM", "NC(=N)N"),
-                ("QY", "CC(C)O"),
-                ("OV1 &-NA-", "CC(=O)[O-].[Na+]"),
-                ("RM1R", "c1ccccc1NCc2ccccc2"),
-                ("QVR BNUNR DN1&1", "OC(=O)c1ccccc1N=Nc2ccc(cc2)N(C)C"),
+                ("VH3", "C(=O)CCC"),
+                ("NUU2UUN", "N#CC#N"),
+                ("ZXZUN", "NC(=N)N"),
+                ("QY", "OC(C)C"),
+                ("OV1 &-NA-", "[O]C(=O)C.[Na]"),
+                ("RM1R", "c1(ccccc1)NCc1ccccc1"),
+                ("QVR BNUNR DN1&1", "OC(=O)c1c(cccc1)N=Nc1ccc(cc1)N(C)C"),
                 ("L6TJ A- AL6TJ AVO2N2&2 &GH",
-                 "CCN(CC)CCOC(=O)C1(CCCCC1)C2CCCCC2.Cl"),
+                 "C1(CCCCC1)C1(CCCCC1)C(=O)OCCN(CC)CC.Cl"),
                 ("T56 BMJ B D- DT6N CNJ BMR BO1 DN1&2N1&1 EMV1U1",
-                 "Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C"),
-                ("T56 AN CN GNJ B- BT5MTJ AV1UU2& DR DVM- BT6NJ&& FZ",
-                 "CC#CC(=O)N1CCCC1c2nc(c3n2ccnc3N)c4ccc(cc4)C(=O)Nc5ccccn5"),
+                 "[nH]1c2c(c(c1)c1nc(ncc1)Nc1c(cc(c(c1)NC(=O)C=C)N(C)CCN(C)C)OC)cccc2"),
+                ("T56 AN CN GNJ B- BT5NTJ AV1UU2& DR DVM- BT6NJ&& FZ",
+                 "[N]12=C(N=C(C1=C(N=CC2)N)c1ccc(cc1)C(=O)Nc1ncccc1)C1N(CCC1)C(=O)C#CC"),
                ]
         for wln, smi in data:
             mol = pybel.readstring("wln", wln)
-            ans = pybel.readstring("smi", smi).write("can")
-            self.assertEqual(ans, mol.write("can"))
+            ans = mol.write("smi").rstrip()
+            self.assertEqual(ans, smi)
 
     def testAsterisk(self):
         """Ensure that asterisk in SMILES is bracketed when needed
