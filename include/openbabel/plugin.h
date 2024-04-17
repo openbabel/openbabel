@@ -38,7 +38,7 @@ namespace OpenBabel
 ///@{
 
 /// @brief Case insensitive string comparison for PluginMapType key.
-struct OBERROR CharPtrLess : public std::binary_function<const char*,const char*, bool>
+struct OBERROR CharPtrLess
 {
   bool operator()(const char* p1,const char* p2) const
   { return strcasecmp(p1,p2)<0; }
@@ -198,7 +198,7 @@ protected:\
     static PluginMapType m;\
     return m;\
   }\
-  virtual PluginMapType& GetMap() const {\
+  PluginMapType& GetMap() const override {\
     return Map();\
   }\
 public:\
@@ -543,7 +543,6 @@ public:
   OB_STATIC_PLUGIN(fingerprintECFP, theECFP10)
 
   // forcefields
-  OB_STATIC_PLUGIN(OBForceFieldAlexandria, theForceFieldAlexandria)
   OB_STATIC_PLUGIN(OBForceFieldGaff, theForceFieldGaff)
   OB_STATIC_PLUGIN(OBForceFieldGhemical, theForceFieldGhemical)
   OB_STATIC_PLUGIN(OBForceFieldMMFF94, theForceFieldMMFF94)
