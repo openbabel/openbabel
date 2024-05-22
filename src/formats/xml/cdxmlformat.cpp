@@ -121,6 +121,7 @@ bool ChemDrawXMLFormat::DoElement(const string& name)
     //initialise everything
     _tempAtom.Clear();
     atoms.clear();
+    _handleImplicitHydrogens.clear();
 
     _pmol->SetDimension(2);
     _pmol->BeginModify();
