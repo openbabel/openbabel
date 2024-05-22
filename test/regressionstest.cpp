@@ -86,7 +86,13 @@ void test_ChemDraw_Basic()
 void test_ChemDraw_XML_Basic()
 {
   static const CdxData cdxmlData[] = {
-      {"methanol.cdxml", "CO\t8\n"}};
+      {"methanol.cdxml", "CO\t8\n"},
+      {"gh2696_mols.cdxml", "[C@H]1(C2C=CC(C1)C2)C\t840\n"
+                            "c1ccccc1\t5\n"
+                            "c1cc(cs1)[C@H](CC)C\t23\n"
+                            "NC(C(=O)O)Cc1c[nH]c2c1cccc2\t523\n"
+                            "NC(C(=O)O)Cc1nc[nH]c1\t263\n"
+                            "C12CC3CC(C1)C1CC3CC2C1\t527\n"}};
 
   ios_base::openmode imode = ios_base::in;
   unsigned int size = sizeof(cdxmlData) / sizeof(CdxData);
