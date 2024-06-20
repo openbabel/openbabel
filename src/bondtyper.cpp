@@ -115,8 +115,8 @@ namespace OpenBabel
 
     OBSmartsPattern *currentPattern;
     OBBond *b1, *b2;
-    OBAtom *a1,*a2, *a3;
-    double angle, dist1, dist2;
+    OBAtom *a1,*a2, *a3, *a4;
+    double angle, angle1, angle2, dist1, dist2;
     vector<int> assignments;
     vector<vector<int> > mlist;
     vector<vector<int> >::iterator matches, l;
@@ -206,6 +206,50 @@ namespace OpenBabel
             }
           }
       } // thione
+
+    // Imidazole [nD3]1c=[nD3]c=c1
+    OBSmartsPattern imidazolium; imidazolium.Init("[#7D3][#6][#7D3][#6][#6]");
+
+    if (imidazolium.Match(mol))
+      {
+        mlist = imidazolium.GetUMapList();
+        for (l = mlist.begin(); l != mlist.end(); ++l)
+          {
+            a1 = mol.GetAtom((*l)[1]);
+            a2 = mol.GetAtom((*l)[2]);
+            a2->SetFormalCharge(1);
+
+            angle1 = a2->AverageBondAngle();
+            dist1  = a1->GetDistance(a2);
+
+            if (angle1 > 115 && angle < 150 && dist1 < 1.72) {
+
+              if ( !a1->HasDoubleBond() ) {// no double bond already assigned
+                b1 = a1->GetBond(a2);
+
+                if (!b1 ) continue;
+                b1->SetBondOrder(2);
+              }
+            }
+
+            a3 = mol.GetAtom((*l)[3]);
+            a4 = mol.GetAtom((*l)[4]);
+
+            angle2 = a3->AverageBondAngle();
+            dist2 = a3->GetDistance(a4);
+
+            // imidazolium geometries ?
+            if (angle2 > 115 && angle2 < 150 && dist2 < 1.72) {
+
+              if ( !a3->HasDoubleBond() ) {// no double bond already assigned
+                b2 = a3->GetBond(a4);
+
+                if (!b2 ) continue;
+                b2->SetBondOrder(2);
+              }
+            }
+          }
+      } // imidazolium
 
     // Isocyanate N=C=O or Isothiocyanate
     bool dist1OK;
