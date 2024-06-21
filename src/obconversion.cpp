@@ -231,7 +231,7 @@ namespace OpenBabel {
     pInput(nullptr), pOutput(nullptr),
     pInFormat(nullptr),pOutFormat(nullptr), Index(0), StartNumber(1),
     EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
-    MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
+    MoreFilesToCome(false), OneObjectOnly(false), ReadyToInput(false), SkippedMolecules(false),
     inFormatGzip(false), outFormatGzip(false),
     pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr)
   {
@@ -249,7 +249,7 @@ namespace OpenBabel {
         pInput(nullptr), pOutput(nullptr),
         pInFormat(nullptr), pOutFormat(nullptr), Index(0), StartNumber(1),
         EndNumber(0), Count(-1), m_IsFirstInput(true), m_IsLast(true),
-        MoreFilesToCome(false), OneObjectOnly(false), SkippedMolecules(false),
+        MoreFilesToCome(false), OneObjectOnly(false), ReadyToInput(false), SkippedMolecules(false),
         inFormatGzip(false), outFormatGzip(false),
         pOb1(nullptr), wInpos(0), wInlen(0), pAuxConv(nullptr)
   {
