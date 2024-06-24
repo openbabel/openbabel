@@ -64,7 +64,7 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-int main(int argc,char **argv)
+int main()
 {
   OBForceField* pFF = OBForceField::FindForceField("MMFF94");
   pFF->SetLogFile(&cout);

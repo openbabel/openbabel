@@ -2163,7 +2163,7 @@ namespace OpenBabel {
   };
 
   void TSimpleMolecule::redraw(const std::vector<int>listAtomClean, const std::vector<int>listBondClean,
-                               int atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool iOPT7) {
+                               int atomClean, int & bondClean, int spn, int sCHA1, int sCHB1, bool /*iOPT7*/) {
     /*
       the arrays are the priority list for clean. Minimal element of record has
       the maximal priority. Each element of record contains:
@@ -3677,7 +3677,7 @@ namespace OpenBabel {
 
   static int determineBondsOrder(const std::vector<int> iA1, const std::vector<int> iA2,
                                  const std::vector<int> nH, const std::vector<int> maxValency,std::vector<int>& bondOrder,
-                                 std::vector<int>& hydrogenValency, int nAtoms, int nBonds, bool oddEvenViolate) {
+                                 std::vector<int>& hydrogenValency, int nAtoms, int nBonds, bool /*oddEvenViolate*/) {
     //On input BortOrder has to be initialized. Real bond orders have to be putted. 0 means this order should be determined
     //MaxValency and HydrogenValency and NH are required only for those atoms, which are included in BondOrder=0
 
@@ -7260,7 +7260,7 @@ namespace OpenBabel {
   };
 
 
-  int canonizeMCDL(const std::string atomBlock, std::vector<std::string> & structureList) {
+  int canonizeMCDL(const std::string /*atomBlock*/, std::vector<std::string>& /*structureList*/) {
     return 0;
   };
 
