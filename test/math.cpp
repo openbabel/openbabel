@@ -51,7 +51,11 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
+#if !OB_USE_OBRANDOMMT
 OBRandom randomizer;
+#else
+OBRandomMT randomizer{};
+#endif
 int testCount = 0;
 int failedCount = 0;
 char currentFunc [256];
@@ -72,7 +76,7 @@ void verify_not_ok( const char *expr, int line )
 
 void pickRandom( double & d )
 {
-  d = randomizer.NextFloat() * 2.0 - 1.0;
+  d = randomizer.UniformReal(-1.0, 1.0);
 }
 
 void pickRandom( vector3 & v )
@@ -323,9 +327,9 @@ void testEigenvalues()
   for(int i=0; i<3; i++)
     for(int j=0; j<3; j++)
       Diagonal.Set(i, j, 0.0);
-  Diagonal.Set(0, 0, randomizer.NextFloat());
-  Diagonal.Set(1, 1, Diagonal.Get(0,0)+fabs(randomizer.NextFloat()));
-  Diagonal.Set(2, 2, Diagonal.Get(1,1)+fabs(randomizer.NextFloat()));
+  Diagonal.Set(0, 0, randomizer.UniformReal(0.0, 1.0));
+  Diagonal.Set(1, 1, Diagonal.Get(0,0) + randomizer.UniformReal(0.0, 1.0));
+  Diagonal.Set(2, 2, Diagonal.Get(1,1) + randomizer.UniformReal(0.0, 1.0));
 
   // test the isDiagonal() method
   VERIFY( Diagonal.isDiagonal() );
@@ -397,7 +401,7 @@ int math(int argc, char* argv[])
   
   cout << "# math: repeating each test " << REPEAT << " times" << endl;
   
-  randomizer.TimeSeed();
+  randomizer.Reset();
 
   cout << "# Testing MMFF94 Force Field..." << endl;
   switch(choice) {
