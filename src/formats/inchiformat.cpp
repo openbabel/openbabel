@@ -220,23 +220,23 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
     case INCHI_StereoType_Tetrahedral:
     {
-      OBTetrahedralStereo::Config *ts = new OBTetrahedralStereo::Config;
-      ts->center = stereo.central_atom;
-      ts->from = stereo.neighbor[0];
-      if (ts->from == ts->center) // Handle the case where there are only three neighbours
-        ts->from = OBStereo::ImplicitRef;
-      ts->refs = OBStereo::MakeRefs(stereo.neighbor[1], stereo.neighbor[2],
-                                    stereo.neighbor[3]);
+      OBTetrahedralStereo::Config ts;
+      ts.center = stereo.central_atom;
+      ts.from = stereo.neighbor[0];
+      if (ts.from == ts.center) // Handle the case where there are only three neighbours
+        ts.from = OBStereo::ImplicitRef;
+      ts.refs = OBStereo::MakeRefs(stereo.neighbor[1], stereo.neighbor[2],
+                                   stereo.neighbor[3]);
 
       if(stereo.parity==INCHI_PARITY_EVEN)
-        ts->winding = OBStereo::Clockwise;
+        ts.winding = OBStereo::Clockwise;
       else if(stereo.parity==INCHI_PARITY_ODD)
-        ts->winding = OBStereo::AntiClockwise;
+        ts.winding = OBStereo::AntiClockwise;
       else
-        ts->specified = false;
+        ts.specified = false;
 
       OBTetrahedralStereo *obts = new OBTetrahedralStereo(pmol);
-      obts->SetConfig(*ts);
+      obts->SetConfig(ts);
       pmol->SetData(obts);
 
       break;
