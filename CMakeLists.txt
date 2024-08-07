@@ -347,8 +347,13 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
     endif()
   endif()
 
-  set(CMAKE_C_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
+  if(POLICY CMP0069)
+    cmake_policy(SET CMP0069 NEW)
+    if("${CMAKE_BUILD_TYPE}" STREQUAL Release)
+      set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+    endif()
+  endif()
+  set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,-s")
 
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
