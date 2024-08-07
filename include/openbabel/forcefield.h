@@ -912,56 +912,56 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      *    OBFF_LOGLVL_MEDIUM: energy for individual energy terms \n
      *    OBFF_LOGLVL_HIGH:   energy for individual energy interactions \n
      */
-    virtual double Energy(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double Energy(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Bond stretching energy.
      *   \par Output to log:
      *    see Energy()
      */
-    virtual double E_Bond(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_Bond(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Angle bending energy.
      *  \par Output to log:
      *   see Energy()
      */
-    virtual double E_Angle(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_Angle(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Stretch bending energy.
      *   \par Output to log:
      *    see Energy()
      */
-    virtual double E_StrBnd(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_StrBnd(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Torsional energy.
      *    \par Output to log:
      *	  see Energy()
      */
-    virtual double E_Torsion(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_Torsion(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Out-Of-Plane bending energy.
      *   \par Output to log:
      *	  see Energy()
      */
-    virtual double E_OOP(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_OOP(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Van der Waals energy.
      *   \par Output to log:
      *	  see Energy()
      */
-    virtual double E_VDW(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_VDW(bool /*gradients*/ = true) { return 0.0f; }
     /*! \param gradients Set to true when the gradients need to be calculated
      *  (needs to be done before calling GetGradient()).
      *  \return Electrostatic energy.
      *   \par Output to log:
      *	  see Energy()
      */
-    virtual double E_Electrostatic(bool UNUSED(gradients) = true) { return 0.0f; }
+    virtual double E_Electrostatic(bool /*gradients*/ = true) { return 0.0f; }
     //@}
 
     /////////////////////////////////////////////////////////////////////////

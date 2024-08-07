@@ -32,7 +32,7 @@ class MWFilter : public OBDescriptor {
 public:
   MWFilter(const char *ID) : OBDescriptor(ID){};
   const char *Description() override { return "Molecular Weight filter"; }
-  double Predict(OBBase *pOb, string *param = nullptr) override {
+  double Predict(OBBase *pOb, string * /*param*/ = nullptr) override {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -46,7 +46,7 @@ class RotatableBondsFilter : public OBDescriptor {
 public:
   RotatableBondsFilter(const char *ID) : OBDescriptor(ID){};
   const char *Description() override { return "Rotatable bonds filter"; }
-  double Predict(OBBase *pOb, string *param = nullptr) override {
+  double Predict(OBBase *pOb, string * /*param*/ = nullptr) override {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (!pmol)
       return 0;
@@ -152,7 +152,7 @@ public:
   const char *Description() override { return "Chemical formula"; }
 
   double GetStringValue(OBBase *pOb, std::string &svalue,
-                        std::string *param = nullptr) override {
+                        std::string * /*param*/ = nullptr) override {
     OBMol *pmol = dynamic_cast<OBMol *>(pOb);
     if (pmol)
       svalue = pmol->GetSpacedFormula(1, ""); // actually unspaced

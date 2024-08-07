@@ -312,7 +312,7 @@ namespace OpenBabel
     return true;
   }
 
-  bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &tokens, double factor, int *zmatLineCount)
+  bool GAMESSUKFormat::ReadLineZmatrix(OBMol &mol, OBAtom *atom, vector<string> &tokens, double /*factor*/, int *zmatLineCount)
   {
     /*
      * Read a line from a GAMESS-UK input defining an atom in Inernal Coordinates.

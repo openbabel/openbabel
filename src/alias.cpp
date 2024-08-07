@@ -29,8 +29,6 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 
-#define MARK_UNUSED(x) (void)(x)
-
 using namespace std;
 namespace OpenBabel
 {
@@ -399,12 +397,8 @@ public:
 OpGenAlias theOpGenAlias("genalias"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpGenAlias::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
+bool OpGenAlias::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* /*pmap*/, OBConversion*)
 {
-  // Mark variables as unused to avoid warnings
-  MARK_UNUSED(OptionText);
-  MARK_UNUSED(pmap);
-
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)
     return false;
