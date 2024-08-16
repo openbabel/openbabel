@@ -97,7 +97,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   if (ret!=inchi_Ret_OKAY)
   {
-    string mes = out.szMessage;
+    string mes = out.szMessage ? out.szMessage : "";
     if (!mes.empty()) {
       Trim(mes);
       obErrorLog.ThrowError("InChI code", "For " + inchi + "\n  " + mes, obWarning);
