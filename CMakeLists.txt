@@ -571,7 +571,7 @@ if(WITH_JSON)
   endif()
   # Otherwise download rapidjson to openbabel source directory
   if (NOT RAPIDJSON_FOUND OR RAPIDJSON_VERSION VERSION_LESS ${RAPIDJSON_VERSION_MIN})
-    set(RAPIDJSON_VERSION 1.1.0-dev)
+    set(RAPIDJSON_VERSION master)
     if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}")
       file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/refs/heads/master.zip"
         "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz" STATUS status)
