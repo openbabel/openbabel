@@ -571,9 +571,9 @@ if(WITH_JSON)
   endif()
   # Otherwise download rapidjson to openbabel source directory
   if (NOT RAPIDJSON_FOUND OR RAPIDJSON_VERSION VERSION_LESS ${RAPIDJSON_VERSION_MIN})
-    set(RAPIDJSON_VERSION master)
+    set(RAPIDJSON_VERSION "7c73dd7de7c4f14379b781418c6e947ad464c818")
     if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}")
-      file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/refs/heads/master.zip"
+      file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/${RAPIDJSON_VERSION}.tar.gz"
         "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz" STATUS status)
       execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
         ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz
