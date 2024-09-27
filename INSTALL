@@ -12,7 +12,8 @@ Requirements
  -- libxml2 (optional)
  -- zlib (optional)
  -- wxWidgets 2.8 (optional, needed to build GUI)
-
+ -- maeparser (optional, will download and auto-build if not present)
+ -- CoordgenLibs (optional, will download and auto-build if not present)
 
 Basic Installation
 ==================
