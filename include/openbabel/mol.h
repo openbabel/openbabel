@@ -128,6 +128,9 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
   // class introduction in mol.cpp
  class OBAPI OBMol: public OBBase
   {
+
+    friend class OBMolManip;
+
   protected:
     int                           _flags;	//!< bitfield of flags
     bool                          _autoPartialCharge;//!< Assign partial charges automatically
