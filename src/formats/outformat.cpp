@@ -134,6 +134,11 @@ namespace OpenBabel
             // Hopefully, "DFTB Engine" will work fine...
             formatName = "adfdftb";
             break;
+          } else if (strstr(buffer, "Force field identifier:") != NULL) {
+            // Unfortunately, the ReaxFF output (at least for adf 2018)
+            // doesn't say "ReaxFF" anywhere...
+            formatName = "adfreaxff";
+            break;
           }
         }
         break;
