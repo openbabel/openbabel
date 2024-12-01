@@ -544,7 +544,6 @@ namespace OpenBabel
       default:
         break;
       }
-    pmol->SetChainsPerceived();
     return (pmol->NumAtoms() > 0 ? true : false);
   }
 
@@ -561,6 +560,7 @@ namespace OpenBabel
                                 pConv->IsOption("1",OBConversion::INOPTIONS),
                                 pConv->IsOption("t",OBConversion::INOPTIONS));
     pmol->EndModify();
+    pmol->SetChainsPerceived();
     return rv;
   }
 
