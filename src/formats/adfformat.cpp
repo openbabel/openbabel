@@ -868,7 +868,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
 
       string buf;
       // nuuc
-      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      while( buf != "Geometry" && ifs ) ifs >> buf; cout << buf << endl;
       ifs >> buf; cout << buf << endl;
       if( buf != "nnuc" )
       {

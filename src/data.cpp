@@ -704,7 +704,7 @@ namespace OpenBabel
                 strncpy(charBuffer, p1, (p2 - p1));
                 charBuffer[(p2 - p1)] = '\0';
                 ParseLine(charBuffer);
-                p1 = ++p2;
+                p1 = p2 + 1;
               }
         }
       else

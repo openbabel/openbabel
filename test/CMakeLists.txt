@@ -325,4 +325,7 @@ if(DEFINED ENV{LIB_FUZZING_ENGINE})
   add_executable(fuzz_obconversion_sdf fuzz/fuzz_obconversion.cpp)
   target_compile_definitions(fuzz_obconversion_sdf PRIVATE -DFUZZ_INPUT_FORMAT="SDF")
   target_link_libraries(fuzz_obconversion_sdf ${libs} $ENV{LIB_FUZZING_ENGINE})
+
+  add_executable(fuzz_convert fuzz/fuzz_convert.cpp)
+  target_link_libraries(fuzz_convert ${libs} $ENV{LIB_FUZZING_ENGINE})
 endif()
