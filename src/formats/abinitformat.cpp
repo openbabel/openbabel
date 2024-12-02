@@ -220,6 +220,9 @@ namespace OpenBabel
 
     mol.EndModify();
 
+    if (natom == 0)
+      return false;
+
     int numConformers = atomPositions.size() / natom;
     for (int i = 0; i < numConformers; ++i) {
       double *coordinates = new double[natom * 3];

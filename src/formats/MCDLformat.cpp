@@ -239,7 +239,7 @@ private:
     char strg[MAXFRAGS+1];
     char * strngs[MAXFRAGS+1];
     char tstr[MAXFRAGS+1];
-    int  numdups, dupfrag, jump;
+    int  numdups = 0, dupfrag, jump;
     bool jflag;
     int  ix[MAXFRAGS],conntab[MAXBONDS][4],cx[MAXFRAGS];
     int  mx[MAXFRAGS];

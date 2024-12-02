@@ -332,7 +332,8 @@ namespace OpenBabel {
             enthalpy_eV = atof(vs[4].c_str());
           }
 
-          ifs.getline(buffer,BUFF_SIZE);
+          if (!ifs.getline(buffer,BUFF_SIZE))
+            break;
         }
         if (hasPV)
           pmol->SetEnergy((enthalpy_eV - pv_eV) * EV_TO_KCAL_PER_MOL);
