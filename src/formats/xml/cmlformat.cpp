@@ -1113,7 +1113,7 @@ namespace OpenBabel
                     pbond2 = _pmol->GetBond(AtomRefIdx[2],AtomRefIdx[3]);
                   }
 
-                if(!pbond1 || !pbond2)
+                if(!pbond1 || !pbond2 || AtomRefIdx.empty())
                   continue;
 
                 // Create the list of 4 atomrefs
