@@ -21,7 +21,7 @@ jobs:
           }
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
@@ -46,7 +46,7 @@ jobs:
       working-directory: ${{ runner.workspace }}
 
     - name: Upload
-      uses: actions/upload-artifact@v2-preview
+      uses: actions/upload-artifact@v4
       with:
         path: ${{ runner.workspace }}/openbabel-latest.tar.bz2
         name: openbabel.tar.bz2

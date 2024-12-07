@@ -6,11 +6,11 @@ jobs:
     name: Spelling Check
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: misspell-fixer check for code and comments
       uses: sobolevn/misspell-fixer-action@master
       with:
         options: '-rsvn include/openbabel src tools'
-    - uses: peter-evans/create-pull-request@v3.8.0
+    - uses: peter-evans/create-pull-request@v7.0.5
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
