@@ -161,7 +161,7 @@ namespace OpenBabel
             ifs.getline(buffer,BUFF_SIZE);	// column headings
             ifs.getline(buffer,BUFF_SIZE);
             tokenize(vs,buffer);
-            while (vs.size() == 5)
+            while (vs.size() == 5 && numTranslationVectors < 3)
               {
                 x = atof((char*)vs[2].c_str());
                 y = atof((char*)vs[3].c_str());
@@ -385,6 +385,9 @@ namespace OpenBabel
             }
             ifs.getline(buffer, BUFF_SIZE); // blank
 
+            if (frequencies.size() < displacements.size())
+              break;
+
             // now real work
             unsigned int prevModeCount = displacements.size();
             unsigned int newModes = frequencies.size() - displacements.size();
@@ -433,7 +436,7 @@ namespace OpenBabel
           {
             unsigned int currentIntensity = intensities.size();
             tokenize(vs, buffer);
-            if (vs.size() < 2)
+            if (vs.size() < 2 || frequencies.size() <= currentIntensity)
               break;
 
             double transDipole = atof(vs[1].c_str());
@@ -442,6 +445,7 @@ namespace OpenBabel
       }
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
+      delete dipoleMoment;
       mol.EndModify();
       return false;
     }
@@ -456,6 +460,11 @@ namespace OpenBabel
 
     if (hasPartialCharges)
       {
+        if (mol.NumAtoms() >= charges.size()) {
+          delete dipoleMoment;
+          return false;
+        }
+
         mol.SetPartialChargesPerceived();
         FOR_ATOMS_OF_MOL(atom, mol) {
           atom->SetPartialCharge(charges[atom->GetIdx()-1]); // atom index issue
