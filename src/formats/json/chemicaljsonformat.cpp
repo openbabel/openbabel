@@ -1,5 +1,5 @@
 /**********************************************************************
-Copyright (C) 2022 by Geoffrey R. Hutchison
+Copyright (C) 2022-2024 by Geoffrey R. Hutchison
 
 This file is part of the Open Babel project.
 For more information, see <http://openbabel.org/>
@@ -519,12 +519,14 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
   if (pmol->HasData("Dipole Moment")) {
     auto *data = pmol->GetData("Dipole Moment");
     OBVectorData *dipoleData = dynamic_cast<OBVectorData *>(data);
-    vector3 dipole = dipoleData->GetData();
-    if (dipole != nullptr) {
+    if (dipoleData != nullptr) {
+      vector3 dipole = dipoleData->GetData();
       rapidjson::Value dipoleMoment(rapidjson::kArrayType);
       dipoleMoment.PushBack(dipole.x(), al);
       dipoleMoment.PushBack(dipole.y(), al);
       dipoleMoment.PushBack(dipole.z(), al);
+      std::cout << "dipole moment: " << dipole.x() << " " << dipole.y() << " "
+                << dipole.z() << std::endl;
       properties.AddMember("dipoleMoment", dipoleMoment, al);
     }
   }
