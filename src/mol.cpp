@@ -1714,7 +1714,7 @@ namespace OpenBabel
   //! \brief Add an atom to a molecule
   //!
   //! Also checks bond_queue for any bonds that should be made to the new atom
-  bool OBMol::AddAtom(OBAtom &atom, bool forceNewId)
+  bool OBMol::AddAtom(const OBAtom &atom, bool forceNewId)
   {
     //    BeginModify();
 
@@ -1787,7 +1787,7 @@ namespace OpenBabel
     return(true);
   }
 
-  bool OBMol::InsertAtom(OBAtom &atom)
+  bool OBMol::InsertAtom(const OBAtom &atom)
   {
     BeginModify();
     AddAtom(atom);
