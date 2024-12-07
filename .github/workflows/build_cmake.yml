@@ -41,7 +41,7 @@ jobs:
     - name: Check variables
       run: echo "${{runner.os}} ${{matrix.config.os}} ${{matrix.config.cc}}"
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - name: Install MSVC Command Prompt
       if: runner.os == 'Windows'
