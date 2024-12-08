@@ -67,6 +67,8 @@ bool AoforceFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
       // x y z atom shells charge pseudo isotop
       while (std::getline(ifs, line) && line.length()) {
         tokenize(vs, line);
+        if (vs.size() < 8)
+            continue;
         OBAtom *atom = mol.NewAtom();
         vector3 coords(atof(vs[0].c_str()),
                        atof(vs[1].c_str()),
@@ -84,7 +86,7 @@ bool AoforceFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
       tokenize(vs, line);
       // for each frequency
       for (std::vector<std::string>::const_iterator
-          iter = vs.begin() + 1; iter != vs.end(); ++iter) {
+          iter = vs.begin() + 1; iter < vs.end(); ++iter) {
         Frequencies.push_back(atof(iter->c_str()));
       }
       std::getline(ifs, line);  // empty line
@@ -96,7 +98,7 @@ bool AoforceFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
       tokenize(vs, line);
       // for each intensity
       for (std::vector<std::string>::const_iterator
-          iter = vs.begin() + 2; iter != vs.end(); ++iter) {
+          iter = vs.begin() + 2; iter < vs.end(); ++iter) {
         Intensities.push_back(atof(iter->c_str()));
       }
       std::getline(ifs, line);  // intensity (%)
@@ -110,23 +112,25 @@ bool AoforceFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv) {
         std::getline(ifs, line);  // idx, element, "x", [list]
         tokenize(vs, line);
         for (std::vector<std::string>::const_iterator
-            iter = vs.begin() + 3; iter != vs.end(); ++iter) {
+            iter = vs.begin() + 3; iter < vs.end(); ++iter) {
           xs.push_back(atof(iter->c_str()));
         }
         std::vector<double> ys;
         std::getline(ifs, line);  // "y", [list]
         tokenize(vs, line);
         for (std::vector<std::string>::const_iterator
-            iter = vs.begin() + 1; iter != vs.end(); ++iter) {
+            iter = vs.begin() + 1; iter < vs.end(); ++iter) {
           ys.push_back(atof(iter->c_str()));
         }
         std::vector<double> zs;
         std::getline(ifs, line);  // "z", [list]
         tokenize(vs, line);
         for (std::vector<std::string>::const_iterator
-            iter = vs.begin() + 1; iter != vs.end(); ++iter) {
+            iter = vs.begin() + 1; iter < vs.end(); ++iter) {
           zs.push_back(atof(iter->c_str()));
         }
+        if (Lx.size() < xs.size())
+          continue;
         // for each new frequency
         std::vector< std::vector<vector3> >::iterator
         lxIter = Lx.end() - xs.size();
