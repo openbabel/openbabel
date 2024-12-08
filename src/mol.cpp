@@ -2267,7 +2267,9 @@ namespace OpenBabel
 
                 int bondFlags = 0;
                 AddBond(atom->GetIdx(),h->GetIdx(),1, bondFlags);
-                h->SetCoordPtr(&_c);
+                if (_c) {
+                  h->SetCoordPtr(&_c);
+                }
                 OpenBabel::ImplicitRefToStereo(*this, atom->GetId(), h->GetId());
               }
           }
