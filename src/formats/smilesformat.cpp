@@ -394,17 +394,21 @@ namespace OpenBabel {
     if (!ParseSmiles(mol, s) || (!mol.IsReaction() && mol.NumAtoms() == 0))
       {
         mol.Clear();
+        for (auto i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); ++i)
+          delete i->second;
+        _tetrahedralMap.clear();
+
+        for (auto j = _squarePlanarMap.begin(); j != _squarePlanarMap.end(); ++j)
+          delete j->second;
+        _squarePlanarMap.clear();
         return(false);
       }
 
-    // TODO: Is the following a memory leak? - there are return statements above
-    map<OBAtom*, OBTetrahedralStereo::Config*>::iterator i;
-    for (i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); ++i)
+    for (auto i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); ++i)
       delete i->second;
     _tetrahedralMap.clear();
 
-    map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator j;
-    for (j = _squarePlanarMap.begin(); j != _squarePlanarMap.end(); ++j)
+    for (auto j = _tetrahedralMap.begin(); j != _tetrahedralMap.end(); ++j)
       delete j->second;
     _squarePlanarMap.clear();
 
