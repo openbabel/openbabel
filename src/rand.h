@@ -20,6 +20,8 @@ GNU General Public License for more details.
 #ifndef RAND_H
 #define RAND_H
 
+#include <memory>
+#include <random>
 #include <openbabel/babelconfig.h>
 
 namespace OpenBabel
@@ -62,7 +64,7 @@ namespace OpenBabel
      generator.Seed(10246);// Use a specific initial seed value for reproducing sequence
      \endcode
    **/
-  class OBRandom
+  class OB_DEPRECATED_MSG("use OBRandomMT instead") OBRandom
   {
     DoubleType d;
     unsigned int m,a,c;
@@ -83,10 +85,78 @@ namespace OpenBabel
     //! If sranddev is available (e.g., Mac OS X, BSD...) use this instead
     //! for more random seeds
     void TimeSeed();
+    void Reset() { TimeSeed(); }
     //! \return a random integer
     int NextInt();
     //! \return a random floating-point number between 0.0 and 1.0
     double NextFloat();
+    //! \param a lower bound
+    //! \param b upper bound
+    //! \warning this implementation has mudulo bias
+    int UniformInt(int a, int b) { return a + NextInt() % (b - a + 1); }
+    //! \param a lower bound
+    //! \param b upper bound
+    double UniformReal(double a, double b) { return a + (b - a) * NextFloat(); }
+    //! \param mu mean
+    //! \param sigma standard deviation
+    //! \warning normal distribution is approximated by Irwin–Hall distribution
+    double Normal(double mu, double sigma);
+    //! \param p probability of true
+    bool Bernoulli(double p = 0.5);
+  };
+
+  //! @class PRNG based on Mersenne Twister
+  class OBRandomMT {
+   public:
+    //! initialize by a random seed
+    OBRandomMT() : OBRandomMT{randomSeed()} {}
+    OB_DEPRECATED explicit OBRandomMT(bool) : OBRandomMT{} {}
+    //! @param seed initializes pseudo random number generator
+    explicit OBRandomMT(uint_fast64_t seed) {
+      prng.reset(new std::mt19937_64{seed});
+    }
+    ~OBRandomMT() = default;
+
+    //! @param seed reinitializes pseudo random number generator
+    OB_DEPRECATED_MSG("use Reset instead") void Seed(uint_fast64_t seed) { Reset(seed); }
+    OB_DEPRECATED_MSG("use Reset instead") void TimeSeed() { Reset(); }
+    //! reset underlying pseudo random number generator by random seed
+    void Reset() { Reset(randomSeed()); }
+    //! @param seed reinitializes pseudo random number generator
+    void Reset(uint_fast64_t seed) { prng.reset(new std::mt19937_64{seed}); }
+    //! @return a random integer in [0, 2^31 - 1]
+    OB_DEPRECATED_MSG("use UniformInt instead") int NextInt() const;
+    //! @return a random floating-point number in [0.0, 1.0)
+    OB_DEPRECATED_MSG("use UniformReal instead") double NextFloat() const;
+    //! @param a lower bound
+    //! @param b upper bound
+    //! @return a random integer in [a, b]
+    template<typename T = int>
+    T UniformInt(T a, T b) const {
+      std::uniform_int_distribution<T> u{a, b};
+      return u(*prng);
+    }
+    //! @param a lower bound
+    //! @param b upper bound
+    //! @return a random floating-point number in [a, b)
+    template<typename T = double>
+    T UniformReal(T a, T b) const {
+      std::uniform_real_distribution<T> u{a, b};
+      return u(*prng);
+    }
+    //! @param mu mean
+    //! @param sigma standard deviation
+    double Normal(double mu, double sigma) const;
+    //! @param p probability of true
+    bool Bernoulli(double p = 0.5) const;
+
+   private:
+    //! @return (i) OB_RANDOM_SEED environment variable if set and non-null,
+    //! (ii) random number obtained by std::random_device if available,
+    //! (iii) otherwise the current time
+    uint_fast64_t randomSeed() const;
+
+    std::unique_ptr<std::mt19937_64> prng;
   };
 
 } // end namespace OpenBabel

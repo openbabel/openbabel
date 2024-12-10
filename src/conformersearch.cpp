@@ -310,11 +310,12 @@ namespace OpenBabel {
     p_crossover = 0.7;
     niche_mating = 0.7;
     local_opt_rate = 3;
-    // For the moment 'd' is an opaque pointer to an instance of OBRandom*.
-    // In future, it could be a pointer to a structure storing all of the
-    // private variables.
-    d = (void*)new OBRandom();
-    ((OBRandom*)d)->TimeSeed();
+#if !OB_USE_OBRANDOMMT
+    d.reset(new OBRandom());
+    d->Reset();
+#else
+    d.reset(new OBRandomMT());
+#endif
     m_logstream = &std::cout; 	// Default logging send to standard output
     // m_logstream = NULL;
     m_printrotors = false;  // By default, do not print rotors but perform the conformer search
@@ -323,7 +324,6 @@ namespace OpenBabel {
 
   OBConformerSearch::~OBConformerSearch()
   {
-    delete (OBRandom*)d;
   }
 
 
@@ -389,8 +389,12 @@ namespace OpenBabel {
     }
 
     // create initial population
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
 
     RotorKey rotorKey(m_rotorList.Size() + 1, 0); // indexed from 1
     if (IsGood(rotorKey))
@@ -407,8 +411,13 @@ namespace OpenBabel {
       OBRotorIterator ri;
       OBRotor *rotor = m_rotorList.BeginRotor(ri);
       for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
-        if (generator.NextInt() % m_mutability == 0)
-          rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
+        if (generator.UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
+          rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
+        }
       }
       // duplicates are always rejected
       if (!IsUniqueKey(m_rotorKeys, rotorKey))
@@ -455,8 +464,12 @@ namespace OpenBabel {
   void OBConformerSearch::NextGeneration()
   {
     // create next generation population
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
 
     // generate the children
     int numConformers = m_rotorKeys.size();
@@ -473,8 +486,13 @@ namespace OpenBabel {
           OBRotorIterator ri;
           OBRotor *rotor = m_rotorList.BeginRotor(ri);
           for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
-            if (generator.NextInt() % m_mutability == 0)
-              rotorKey[i] = generator.NextInt() % rotor->GetResolution().size(); // permutate gene
+            if (generator.UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
+              rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u); // permutate gene
+#else
+              rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u); // permutate gene
+#endif
+            }
           }
           // duplicates are always rejected
           if (!IsUniqueKey(m_rotorKeys, rotorKey))
@@ -792,9 +810,13 @@ namespace OpenBabel {
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
         neighbor = best;
-        new_val = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
-        while (new_val == best[i])
-          new_val = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
+        do {
+#if !OB_USE_OBRANDOMMT
+          new_val = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          new_val = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
+        } while (new_val == best[i]);
         neighbor[i] = new_val;
         if (IsUniqueKey(backup_population, neighbor) && IsGood(neighbor))
           m_rotorKeys.push_back (neighbor);
@@ -846,30 +868,30 @@ namespace OpenBabel {
       return 0;
 
     // Make a 2-tournament selection to choose first parent
-    i = ((OBRandom*)d)->NextInt() % pop_size;
-    j = ((OBRandom*)d)->NextInt() % pop_size;
+    i = d->UniformInt(0u, pop_size - 1u);
+    j = d->UniformInt(0u, pop_size - 1u);
     parent1 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
     iniche = niche_map[parent1];
     if (iniche > -1)
       nsize = dynamic_niches[iniche].size (); // Belongs to a specific niche
 
     // Do we apply crossover here?
-    flag_crossover = (((OBRandom*)d)->NextFloat () <= p_crossover);
-    if (flag_crossover && (((OBRandom*)d)->NextFloat () <= niche_mating)  &&  nsize > 1)
+    flag_crossover = d->Bernoulli(p_crossover);
+    if (flag_crossover && d->Bernoulli(niche_mating) && nsize > 1)
       {
         // Apply niche mating: draw second parent in the same niche, if its has
         // at least 2 members. Make a 2-tournament selection whithin this niche
-        rnd1 = ((OBRandom*)d)->NextInt() % nsize;
+        rnd1 = d->UniformInt(0u, nsize - 1u);
         i =  dynamic_niches[iniche][rnd1];
-        rnd2 = ((OBRandom*)d)->NextInt() % nsize;
+        rnd2 = d->UniformInt(0u, nsize - 1u);
         j = dynamic_niches[iniche][rnd2];
         parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
       }
     else
       {
         // Draw second in the whole population
-        i = ((OBRandom*)d)->NextInt() % pop_size;
-        j = ((OBRandom*)d)->NextInt() % pop_size;
+        i = d->UniformInt(0u, pop_size - 1u);
+        j = d->UniformInt(0u, pop_size - 1u);
         parent2 = vshared_fitnes[i] > vshared_fitnes[j] ? i : j;
       }
 
@@ -878,7 +900,7 @@ namespace OpenBabel {
         // Cross the 2 vectors: toss a coin for each position (i.e. uniform crossover)
         for (i = 1; i < key1.size(); i++)
           {
-            if (((OBRandom*)d)->NextInt() % 2)
+            if (d->UniformInt(0, 1) == 0)
               { // Copy parent1 to offspring 1
                 key1[i] = m_rotorKeys[parent1][i];
                 key2[i] = m_rotorKeys[parent2][i];
@@ -900,10 +922,20 @@ namespace OpenBabel {
     rotor = m_rotorList.BeginRotor(ri);
     for (i = 1; i <= m_rotorList.Size(); ++i, rotor = m_rotorList.NextRotor(ri))
       {
-        if (((OBRandom*)d)->NextInt() % m_mutability == 0)
-          key1[i] = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
-        if (((OBRandom*)d)->NextInt() % m_mutability == 0)
-          key2[i] = ((OBRandom*)d)->NextInt() % rotor->GetResolution().size();
+        if (d->UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
+          key1[i] = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          key1[i] = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
+        }
+        if (d->UniformInt(0, m_mutability - 1) == 0) {
+#if !OB_USE_OBRANDOMMT
+          key2[i] = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+#else
+          key2[i] = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+#endif
+        }
       }
     if (IsUniqueKey(m_rotorKeys, key1) && IsGood(key1))
       ret_code += 1;
