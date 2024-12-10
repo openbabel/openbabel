@@ -26,16 +26,15 @@ if(POLICY CMP0053)
 endif()
 
 # Need python interpreter:
-FIND_PACKAGE(PythonInterp)
-MARK_AS_ADVANCED(PYTHON_EXECUTABLE)
+FIND_PACKAGE(Python COMPONENTS Interpreter)
 
 # Make sure we handle systems w/o python (e.g. chroot)
-if(NOT PYTHON_EXECUTABLE)
+if(NOT Python_EXECUTABLE)
   if(POLICY CMP0053)
     cmake_policy(POP)
   endif()
   return()
-endif(NOT PYTHON_EXECUTABLE)
+endif(NOT Python_EXECUTABLE)
 
 MACRO(ADD_PYTHON_TEST TESTNAME FILENAME)
   GET_SOURCE_FILE_PROPERTY(loc ${FILENAME} LOCATION)
@@ -51,7 +50,7 @@ MACRO(ADD_PYTHON_TEST TESTNAME FILENAME)
   SET(ENV{BABEL_DATADIR} ${ob_datadir})
   MESSAGE(\"${pyenv}\")
   EXECUTE_PROCESS(
-  	COMMAND ${PYTHON_EXECUTABLE} ${loc} ${wo_semicolumn}
+  	COMMAND ${Python_EXECUTABLE} ${loc} ${wo_semicolumn}
   	#WORKING_DIRECTORY @LIBRARY_OUTPUT_PATH@
   	RESULT_VARIABLE import_res
   	OUTPUT_VARIABLE import_output
@@ -73,11 +72,11 @@ ENDMACRO(ADD_PYTHON_TEST)
 # Byte compile recursively a directory (DIRNAME)
 MACRO(ADD_PYTHON_COMPILEALL_TEST DIRNAME)
   # First get the path:
-  GET_FILENAME_COMPONENT(temp_path "${PYTHON_LIBRARIES}" PATH)
+  GET_FILENAME_COMPONENT(temp_path "${Python_LIBRARIES}" PATH)
   # Find the python script:
   GET_FILENAME_COMPONENT(PYTHON_COMPILE_ALL_PY "${temp_path}/../compileall.py" ABSOLUTE)
   # add test, use DIRNAME to create uniq name for the test:
-  ADD_TEST(COMPILE_ALL-${DIRNAME} ${PYTHON_EXECUTABLE} "${PYTHON_COMPILE_ALL_PY}" -q ${DIRNAME})
+  ADD_TEST(COMPILE_ALL-${DIRNAME} ${Python_EXECUTABLE} "${PYTHON_COMPILE_ALL_PY}" -q ${DIRNAME})
 ENDMACRO(ADD_PYTHON_COMPILEALL_TEST)
 
 if(POLICY CMP0053)
