@@ -280,7 +280,7 @@ namespace OpenBabel {
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
     /// The "API" interface functions
-    bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override
+    bool ReadMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/) override
       { return false; }
     bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
 
@@ -685,7 +685,7 @@ public:
     }
 
     /// Skip to object: used for multi-object file formats.
-    int SkipObjects(int n, OBConversion* pConv) override { return 0; }
+    int SkipObjects(int /*n*/, OBConversion* /*pConv*/) override { return 0; }
 
     /// Read.
     bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
@@ -726,7 +726,7 @@ private:
 
 
     /// Add grids from SCF
-    void AddSCFGrids( istream& is, OBGridData& t41 ) {}
+    void AddSCFGrids( istream& /*is*/, OBGridData& /*t41*/ ) {}
 
     ///Inner class used to hold atomic number, coordinate, charge data
     struct AtomData
@@ -811,7 +811,7 @@ bool OBT41Format::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     return ReadASCII(pOb, pConv);
 }
 
-bool OBT41Format::ReadBinary( OBBase* pOb, OBConversion* pConv )
+bool OBT41Format::ReadBinary(OBBase* /*pOb*/, OBConversion* /*pConv*/)
 {
   obErrorLog.ThrowError( __FUNCTION__, "OpenBabel does not currently support the TAPE41 binary format. Please use dmpkf to convert to ASCII.", obError );
   return false;
