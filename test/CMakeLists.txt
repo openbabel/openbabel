@@ -237,15 +237,10 @@ if(NOT MINGW AND NOT CYGWIN)
       babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
 
     foreach(pytest ${pytests})
-      SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
-        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-        BABEL_LIBDIR "${FORMATDIR}"
-        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
-      )
-      ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
+      ADD_TEST(NAME pytest_${pytest} COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/test${pytest}.py")
       set_tests_properties(pytest_${pytest} PROPERTIES
         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+        ENVIRONMENT "PYTHONPATH=${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX};BABEL_LIBDIR=${FORMATDIR};BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
       )
     endforeach(pytest ${pytests})
   endif(PYTHON_EXECUTABLE)
@@ -267,22 +262,16 @@ if(PYTHON_BINDINGS)
   )
 
   foreach(pybindtest ${pybindtests})
-    SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-      BABEL_LIBDIR "${FORMATDIR}"
-      BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
-    )
-
-    if(MSVC)
-      SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-        PYTHONPATH "\"${CMAKE_SOURCE_DIR}/scripts/python;${CMAKE_BINARY_DIR}/bin/Release\""
-      )
+    if(NOT MSVC)
+      set(PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+    else()
+      set(PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python\;${CMAKE_BINARY_DIR}/bin/Release")
     endif()
 
-    ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
+    ADD_TEST(NAME pybindtest_${pybindtest} COMMAND ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/test${pybindtest}.py")
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+      ENVIRONMENT "PYTHONPATH=${PYTHONPATH};BABEL_LIBDIR=${FORMATDIR};BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
   endforeach(pybindtest ${pybindtests})
 endif(PYTHON_BINDINGS)
