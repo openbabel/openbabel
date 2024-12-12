@@ -1,4 +1,4 @@
-"""Test the ability of openbabel to roundtrip various properties
+r"""Test the ability of openbabel to roundtrip various properties
 (protonation, hybridization, aromaticity...) through various file formats
 (sdf,pdb,mol2).
 
