@@ -1,4 +1,4 @@
-"""Test OpenBabel Python bindings
+r"""Test OpenBabel Python bindings
 
 On Windows or Linux, you can run these tests at the commandline
 in the build folder with:

@@ -1,4 +1,4 @@
-"""Test ChemDoodle JSON format using the OpenBabel Python bindings
+r"""Test ChemDoodle JSON format using the OpenBabel Python bindings
 
 On Windows or Linux, you can run these tests at the commandline
 in the build folder with:
