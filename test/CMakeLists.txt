@@ -159,8 +159,8 @@ endif()
 
 foreach(cpptest ${cpptests})
   foreach(part ${${cpptest}_parts})
-    add_test(test_${cpptest}_${part}
-      ${TEST_PATH}/test_runner ${cpptest}test ${part})
+    add_test(NAME test_${cpptest}_${part}
+      COMMAND ${TEST_PATH}/test_runner ${cpptest}test ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
       ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
@@ -169,8 +169,8 @@ endforeach()
 
 foreach(cpptest ${origtests})
   foreach(part ${${cpptest}_parts})
-    add_test(test_${cpptest}_${part}
-      ${TEST_PATH}/test_runner ${cpptest} ${part})
+    add_test(NAME test_${cpptest}_${part}
+      COMMAND ${TEST_PATH}/test_runner ${cpptest} ${part})
     set_tests_properties(test_${cpptest}_${part} PROPERTIES
       FAIL_REGULAR_EXPRESSION "not ok"
       ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
@@ -197,8 +197,8 @@ if(WITH_INCHI)
   set(inchidata ${CMAKE_SOURCE_DIR}/test/inchi)
 
   foreach(test ${inchitests})
-    add_test(inchi${test}_Test
-      ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
+    add_test(NAME inchi${test}_Test
+      COMMAND ${TEST_PATH}/test_inchiwrite ${inchidata}/${test} ${inchidata}/${test}.txt)
     set_tests_properties(inchi${test}_Test PROPERTIES
       FAIL_REGULAR_EXPRESSION "Not ok"
       ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
