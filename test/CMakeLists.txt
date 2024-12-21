@@ -232,7 +232,7 @@ install(TARGETS roundtrip
 if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
 
-  if(PYTHON_EXECUTABLE)
+  if(Python_EXECUTABLE)
     set(pytests
       babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
 
@@ -248,7 +248,7 @@ if(NOT MINGW AND NOT CYGWIN)
         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
       )
     endforeach(pytest ${pytests})
-  endif(PYTHON_EXECUTABLE)
+  endif(Python_EXECUTABLE)
 endif(NOT MINGW AND NOT CYGWIN)
 
 # ##############################
