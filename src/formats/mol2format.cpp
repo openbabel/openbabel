@@ -458,6 +458,10 @@ namespace OpenBabel
         mol.AddBond(start, end, order, flags);
       }
 
+    // Suggestion by Liu Zhiguo 2008-01-26
+    // Mol2 files define atom types -- there is no need to re-perceive
+    mol.SetAtomTypesPerceived();
+
     // TODO: Add a test case for the statement below of Paolo Tosco
     //       - I am currently assuming that is not a problem for the
     //         the current kekulization code, but it needs to be
@@ -549,10 +553,6 @@ namespace OpenBabel
     }
 
     mol.EndModify();
-
-    // Suggestion by Liu Zhiguo 2008-01-26
-    // Mol2 files define atom types -- there is no need to re-perceive
-    mol.SetAtomTypesPerceived();
 
     if (has_residue_information)
       mol.SetChainsPerceived();
