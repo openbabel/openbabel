@@ -129,6 +129,8 @@ namespace OpenBabel
 
 	  //          ifs.getline(buffer,BUFF_SIZE);
           tokenize(vs, buffer);
+          if (vs.size() != 4)
+            continue;
 
           // first line, rprim takes up a token
           x = atof((char*)vs[1].c_str()) * unit;
@@ -179,8 +181,10 @@ namespace OpenBabel
         }
         else if (strstr(buffer, "Symmetries")) {
           tokenize(vs, buffer, "()");
-          // Should be something like (#160)
-          symmetryCode = atoi(vs[1].substr(1).c_str());
+          if (vs.size() == 2) {
+            // Should be something like (#160)
+            symmetryCode = atoi(vs[1].substr(1).c_str());
+          }
         }
         else if (strstr(buffer, "typat")) {
           atomTypes.clear();
@@ -191,13 +195,14 @@ namespace OpenBabel
 		atomTypes.push_back(atoi(vs[i].c_str()));
 	      }
 	      n+=vs.size();
-	      ifs.getline(buffer,BUFF_SIZE);
+	      if (!ifs.getline(buffer,BUFF_SIZE))
+	        break;
 	    }
         }
         else if (strstr(buffer, "znucl")) {
           tokenize(vs, buffer);
           // make sure znucl is first token
-          if (vs[0] != "znucl")
+          if (vs.empty() || vs[0] != "znucl")
             continue;
           // push back the remaining tokens into atomicNumbers
           atomicNumbers.clear();
@@ -209,6 +214,11 @@ namespace OpenBabel
         // forces
       }
 
+    if (natom == 0 || natom > atomTypes.size()) {
+      mol.EndModify();
+      return false;
+    }
+
     for (int i = 0; i < natom; ++i) {
       atom = mol.NewAtom();
       //set atomic number
@@ -219,9 +229,6 @@ namespace OpenBabel
     }
 
     mol.EndModify();
-
-    if (natom == 0)
-      return false;
 
     int numConformers = atomPositions.size() / natom;
     for (int i = 0; i < numConformers; ++i) {
