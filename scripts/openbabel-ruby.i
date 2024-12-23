@@ -31,6 +31,7 @@
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/reaction.h>
+#include <openbabel/reactionfacade.h>
 #include <openbabel/residue.h>
 #include <openbabel/internalcoord.h>
 
@@ -78,6 +79,7 @@
 %include "std_vector.i"
 %include "std_list.i"
 %include "std_pair.i"
+%include "std_shared_ptr.i"
 
 namespace std {
 
@@ -143,7 +145,7 @@ VECTORTEMPLATE_WRAP(OBResidue, OpenBabel::OBResidue)
 VECTORTEMPLATE_WRAP(OBRing, OpenBabel::OBRing)
 VECTORTEMPLATE_WRAP(pOBRing, OpenBabel::OBRing*)
 VECTORTEMPLATE_WRAP(pOBGenericData, OpenBabel::OBGenericData*)
-
+VECTORTEMPLATE_WRAP(pOBTetrahedralStereo, OpenBabel::OBTetrahedralStereo*)
 }
 
 %define CAST_GENERICDATA_TO(subclass)
@@ -229,6 +231,8 @@ namespace std { class stringbuf {}; }
 %include <openbabel/atom.h>
 %include <openbabel/bond.h>
 %include <openbabel/mol.h>
+%include <openbabel/reaction.h>
+%include <openbabel/reactionfacade.h>
 %include <openbabel/ring.h>
 %include <openbabel/parsmart.h>
 %include <openbabel/alias.h>
