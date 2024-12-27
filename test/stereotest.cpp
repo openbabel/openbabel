@@ -174,7 +174,7 @@ std::vector< std::vector<OpenBabel::OBStereoUnit> > DepUnits(const OBStereoUnitS
 
 
 bool doStereoPerception3(OBMol &mol, const OBStereoUnitSet &refUnits = OBStereoUnitSet(),
-    const OBStereoUnitSetOfSets refInterdependent =
+    const OBStereoUnitSetOfSets /*refInterdependent*/ =
     OBStereoUnitSetOfSets())
 {
   std::vector<OBAtom*> atoms;

@@ -148,7 +148,7 @@ QTPIECharges theQTPIECharges("qtpie"); //Global instance
     }
   }
 
-  Eigen::Vector3d QTPIECharges::GetParameters(unsigned int Z, int Q)
+  Eigen::Vector3d QTPIECharges::GetParameters(unsigned int Z, int /*Q*/)
   {
     //Returns a triple of numbers: electronegativity (in eV), hardness (in eV), and Gaussian exponent (in bohr^-2)
 

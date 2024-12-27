@@ -157,7 +157,7 @@ namespace OpenBabel
   }
 
   //!Returns a triple of numbers: electronegativity (in eV), hardness (in eV), and Gaussian exponent (in bohr^-2)
-  Eigen::Vector3d QEqCharges::GetParameters(unsigned int Z, int Q)
+  Eigen::Vector3d QEqCharges::GetParameters(unsigned int Z, int /*Q*/)
   {
     Eigen::Vector3d P;
     //For now, completely ignore the formal charge

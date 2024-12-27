@@ -112,7 +112,7 @@ bool areDuplicateAtoms2(vector3 v1, vector3 v2)
 
 
 /////////////////////////////////////////////////////////////////
-bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpFillUC::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* /*pConv*/)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

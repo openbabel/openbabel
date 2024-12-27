@@ -74,7 +74,7 @@ namespace OpenBabel
   OpEnergy theOpEnergy("energy"); //Global instance
 
   //////////////////////////////////////////////////////////
-  bool OpEnergy::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
+  bool OpEnergy::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* pmap, OBConversion*)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)
@@ -171,7 +171,7 @@ namespace OpenBabel
   OpMinimize theOpMinimize("minimize"); //Global instance
 
   //////////////////////////////////////////////////////////
-  bool OpMinimize::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion*)
+  bool OpMinimize::Do(OBBase* pOb, const char* /*OptionText*/, OpMap* pmap, OBConversion*)
   {
     OBMol* pmol = dynamic_cast<OBMol*>(pOb);
     if(!pmol)

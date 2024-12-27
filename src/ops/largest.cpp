@@ -76,7 +76,7 @@ private:
 OpLargest theOpLargest("largest"); //Global instances
 OpLargest theOpSmallest("smallest"); 
 /////////////////////////////////////////////////////////////////
-bool OpLargest::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpLargest::Do(OBBase* pOb, const char* OptionText, OpMap* /*pOptions*/, OBConversion* pConv)
 {
   if(!strcmp(OptionText, "inactive"))
     return true;

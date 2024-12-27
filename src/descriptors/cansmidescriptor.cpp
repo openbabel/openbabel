@@ -39,7 +39,7 @@ private:
   bool _noStereo;
 };
 
-bool CanSmiles::Compare(OBBase* pOb, istream& optionText, bool noEval, string* param)
+bool CanSmiles::Compare(OBBase* pOb, istream& optionText, bool noEval, string* /*param*/)
 {
   string can;
   GetStringValue(pOb, can);

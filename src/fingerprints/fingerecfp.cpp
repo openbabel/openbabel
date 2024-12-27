@@ -50,7 +50,7 @@ public:
 	bool GetFingerprint(OBBase* pOb, vector<unsigned int>&fp, int nbits=0) override;
 
   /// \returns fragment info unless SetFlags(OBFingerprint::FPT_NOINFO) has been called before GetFingerprint() called.
-  std::string DescribeBits(const std::vector<unsigned int> fp, bool bSet=true) override
+  std::string DescribeBits(const std::vector<unsigned int> /*fp*/, bool /*bSet*/ =true) override
   { return _ss.str(); }
 
   unsigned int Flags() override { return _flags; }

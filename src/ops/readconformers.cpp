@@ -46,7 +46,7 @@ public:
 OpReadConformers theOpReadConformers("readconformer"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpReadConformers::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpReadConformers::Do(OBBase* /*pOb*/, const char* /*OptionText*/, OpMap* /*pOptions*/, OBConversion* pConv)
 {
   //Make a deferred format and divert the output to it
   if(pConv && pConv->IsFirstInput())
