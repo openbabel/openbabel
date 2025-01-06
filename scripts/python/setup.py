@@ -42,16 +42,18 @@ def pkgconfig(package, option):
 def locate_ob():
     """Try to located Open Babel if installed in a conda env, then use pkgconfig, 
     otherwise guess default location."""
-    CONDA_PREFIX = os.environ.get("CONDA_PREFIX", False)
-    if CONDA_PREFIX is not False:
-        include_dirs = f"{CONDA_PREFIX}/include/openbabel3"
-        library_dirs = f"{CONDA_PREFIX}/include/lib"
-        print('Open Babel found in current conda environment:')
-        return include_dirs, library_dirs
     try:
         # Warn if the (major, minor) version of the installed OB doesn't match these python bindings
         py_ver = StrictVersion(find_version())
         py_major_ver, py_minor_ver = py_ver.version[:2]
+
+        CONDA_PREFIX = os.environ.get("CONDA_PREFIX", False)
+        if CONDA_PREFIX is not False:
+            include_dirs = f"{CONDA_PREFIX}/include/openbabel{py_major_ver}"
+            library_dirs = f"{CONDA_PREFIX}/include/lib"
+            print('Open Babel found in current conda environment:')
+            return include_dirs, library_dirs
+
         pcfile = 'openbabel-{}'.format(py_major_ver)
         ob_ver = StrictVersion(pkgconfig(pcfile, '--modversion'))
         if not ob_ver.version[:2] == py_ver.version[:2]:
