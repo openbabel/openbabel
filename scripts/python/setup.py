@@ -44,8 +44,8 @@ def locate_ob():
     otherwise guess default location."""
     CONDA_PREFIX = os.environ.get("CONDA_PREFIX", False)
     if CONDA_PREFIX is not False:
-        include_dirs = "${CONDA_PREFIX}/include/openbabel3/"
-        library_dirs = "${CONDA_PREFIX}/include/lib/"
+        include_dirs = f"{CONDA_PREFIX}/include/openbabel3/"
+        library_dirs = f"{CONDA_PREFIX}/include/lib/"
         print('Open Babel found in current conda environment:')
         return include_dirs, library_dirs
     try:
