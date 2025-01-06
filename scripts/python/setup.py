@@ -40,12 +40,12 @@ def pkgconfig(package, option):
 
 
 def locate_ob():
-    """Try to located openbable if installed in a conda env, then use pkgconfig to locate Open Babel, 
+    """Try to located Open Babel if installed in a conda env, then use pkgconfig, 
     otherwise guess default location."""
     CONDA_PREFIX = os.environ.get("CONDA_PREFIX", False)
     if CONDA_PREFIX is not False:
-        include_dirs = f"{CONDA_PREFIX}/include/openbabel3/"
-        library_dirs = f"{CONDA_PREFIX}/include/lib/"
+        include_dirs = f"{CONDA_PREFIX}/include/openbabel3"
+        library_dirs = f"{CONDA_PREFIX}/include/lib"
         print('Open Babel found in current conda environment:')
         return include_dirs, library_dirs
     try:
