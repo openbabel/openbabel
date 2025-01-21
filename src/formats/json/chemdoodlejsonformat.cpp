@@ -415,7 +415,9 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
       // Element
       if (patom->GetAtomicNum()) {
         if (patom->GetAtomicNum() != 6 || verbose) {
-          atom.AddMember("l", rapidjson::Value(patom->GetAtomicNum()).Move(), al);
+          rapidjson::Value symbolValue(rapidjson::kStringType);
+          symbolValue.SetString(OBElements::GetSymbol(patom->GetAtomicNum()), al);
+          atom.AddMember("l", symbolValue, al);
         }
       } else {
         // No atomic number, is a query atom
