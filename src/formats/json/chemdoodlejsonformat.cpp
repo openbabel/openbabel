@@ -332,9 +332,11 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         updown[&*pbond] = bd;
     } 
 
-    // SetImplicitValence for each atom
+    // SetImplicitValence for each atom if not already set via "h" field in cdjson
     FOR_ATOMS_OF_MOL(atom, pmol)
-      OBAtomAssignTypicalImplicitHydrogens(&*atom);
+      if (atom->GetImplicitHCount()==0)
+        OBAtomAssignTypicalImplicitHydrogens(&*atom);
+      
 
     // Automatically determine spin multiplicity for atoms with hydrogens specified
     pmol->AssignSpinMultiplicity();
