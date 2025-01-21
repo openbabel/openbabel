@@ -27,6 +27,7 @@ GNU General Public License for more details.
 #include <openbabel/stereo/stereo.h>
 #include <openbabel/stereo/cistrans.h>
 #include <openbabel/stereo/tetrahedral.h>
+#include <openbabel/obfunctions.h>
 
 using namespace std;
 namespace OpenBabel
@@ -329,15 +330,17 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
         bd = OBStereo::UnknownDir;
       if (bd != OBStereo::NotStereo)
         updown[&*pbond] = bd;
-    }
+    } 
 
-    // TODO: Do we need to do SetImplicitValence for each atom?
+    // SetImplicitValence for each atom
+    FOR_ATOMS_OF_MOL(atom, pmol)
+      OBAtomAssignTypicalImplicitHydrogens(&*atom);
 
     // Automatically determine spin multiplicity for atoms with hydrogens specified
     pmol->AssignSpinMultiplicity();
     pmol->EndModify();
 
-    if (pmol->Has3D()) {
+     if (pmol->Has3D()) {
       // Use 3D coordinates to determine stereochemistry
       StereoFrom3D(pmol);
 
@@ -358,7 +361,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     } else if (pmol->Has2D()) {
       // Use 2D coordinates + hash/wedge to determine stereochemistry
       StereoFrom2D(pmol, &updown);
-    }
+    } 
     
     return true;
   }
