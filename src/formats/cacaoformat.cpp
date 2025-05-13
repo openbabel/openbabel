@@ -251,14 +251,35 @@ namespace OpenBabel
       }
 
     for (i = 3;i <= mol.NumAtoms();i++)
-      vit[i]->_b = vit[vit[i]->_a->GetIdx()]->_a;
+      {
+        if (vit[i]->_a == nullptr)
+          {
+            vit[i]->_b = &dummy1;
+            continue;
+          }
+        unsigned int idx = vit[i]->_a->GetIdx();
+        if (idx >= vit.size() || vit[idx] == nullptr || vit[idx]->_a == nullptr)
+          {
+            vit[i]->_b = &dummy1;
+            continue;
+          }
+        vit[i]->_b = vit[idx]->_a;
+      }
 
     for (i = 4;i <= mol.NumAtoms();i++)
       {
-        if (vit[i]->_b && vit[i]->_b->GetIdx())
-          vit[i]->_c = vit[vit[i]->_b->GetIdx()]->_b;
-        else
-          vit[i]->_c = &dummy1;
+        if (vit[i]->_b == nullptr)
+          {
+            vit[i]->_c = &dummy1;
+            continue;
+          }
+        unsigned int idx = vit[i]->_b->GetIdx();
+        if (idx >= vit.size() || vit[idx] == nullptr || vit[idx]->_b == nullptr)
+          {
+            vit[i]->_c = &dummy1;
+            continue;
+          }
+        vit[i]->_c = vit[idx]->_b;
       }
 
     OBAtom *a,*b,*c;
@@ -269,6 +290,14 @@ namespace OpenBabel
         a = vit[i]->_a;
         b = vit[i]->_b;
         c = vit[i]->_c;
+        // Check for null pointers before dereferencing
+        if (!atom || !a || !b || !c)
+          {
+            vit[i]->_ang = 0.0;
+            vit[i]->_tor = 0.0;
+            vit[i]->_dst = 0.0;
+            continue;
+          }
         // TODO: fix explicit calculations for PBC?
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector() - a->GetVector();
@@ -353,6 +382,10 @@ namespace OpenBabel
       {
         strncpy(tmptype,OBElements::GetSymbol(mol.GetAtom(i)->GetAtomicNum()), sizeof(tmptype));
         tmptype[sizeof(tmptype) - 1] = '\0';
+
+        // Check for null pointer before dereferencing
+        if (!vit[i] || !vit[i]->_a)
+          continue;
 
         if (vit[i]->_tor < 0.0)
           vit[i]->_tor += 360.0;
