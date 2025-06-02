@@ -1,54 +1,58 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
+ * info@inchi-trust.org
+ *
+*/
 
 
-#ifndef __INCHIDRP_H__
-#define __INCHIDRP_H__
+#ifndef _ICHIDRP_H_
+#define _ICHIDRP_H_
 
-#ifndef COMPILE_ANSI_ONLY /* { */
+
+#include "incomdef.h"
+
 /********************************************
  * Parameters for the structure drawing
  ********************************************/
 #define TDP_LEN_LBL      16  /* length of a label (label: Req., Shown, Found) */
 /* #define TDP_NUM_LBL 3  */ /* number of labels */
 /* #define TDP_NUM_PAR 3  */ /* number of types per label (types: B/T, I/N, S) */
-typedef enum tagTblTypes {itBASIC, itISOTOPIC, itSTEREO, TDP_NUM_PAR} TBL_TYPES; /*  types */
-typedef enum tagTblLabels{ ilSHOWN,  TDP_NUM_LBL} TBL_LABELS; /*  labels */
+typedef enum tagTblTypes { itBASIC, itISOTOPIC, itSTEREO, TDP_NUM_PAR } TBL_TYPES; /*  types */
+typedef enum tagTblLabels { ilSHOWN, TDP_NUM_LBL } TBL_LABELS; /*  labels */
 typedef struct tagTblDrawPatms {
     char   ReqShownFoundTxt[TDP_NUM_LBL][TDP_LEN_LBL];
     char   ReqShownFound[TDP_NUM_LBL][TDP_NUM_PAR];
@@ -84,35 +88,52 @@ typedef struct tagDrawParms {
 #endif
 } DRAW_PARMS; /* Settings: How to draw the structure */
 
-#endif /* } COMPILE_ANSI_ONLY */
+/* @@@ #endif */ /* } COMPILE_ANSI_ONLY */
 
 #define MAX_NUM_PATHS 4
 
 
-typedef enum tagInputType { INPUT_NONE=0, INPUT_MOLFILE=1, INPUT_SDFILE=2, INPUT_INCHI_XML=3, INPUT_INCHI_PLAIN=4, INPUT_CMLFILE=5, INPUT_INCHI=6, INPUT_MAX } INPUT_TYPE;
+typedef enum tagInputType
+{
+    INPUT_NONE = 0,
+    INPUT_MOLFILE = 1,
+    INPUT_SDFILE = 2,
+    INPUT_INCHI_XML = 3, /* obsolete */
+    INPUT_INCHI_PLAIN = 4,
+    INPUT_CMLFILE = 5, /* obsolete */
+    INPUT_INCHI = 6,
+    INPUT_MAX
+}
+INPUT_TYPE;
 
 /* bCalcInChIHash values */
-typedef enum tagInChIHashCalc 
-{   
-    INCHIHASH_NONE=0, 
-    INCHIHASH_KEY=1, 
-    INCHIHASH_KEY_XTRA1=2, 
-    INCHIHASH_KEY_XTRA2=3, 
-    INCHIHASH_KEY_XTRA1_XTRA2=4 
-} 
+typedef enum tagInChIHashCalc
+{
+    INCHIHASH_NONE = 0,
+    INCHIHASH_KEY = 1,
+    INCHIHASH_KEY_XTRA1 = 2,
+    INCHIHASH_KEY_XTRA2 = 3,
+    INCHIHASH_KEY_XTRA1_XTRA2 = 4
+}
 INCHI_HASH_CALC;
 
 typedef struct tagInputParms {
-    char            szSdfDataHeader[MAX_SDF_HEADER+1];
+    char            szSdfDataHeader[MAX_SDF_HEADER + 1];
     char           *pSdfLabel;
     char           *pSdfValue;
-    long            lSdfId;
+    unsigned long   lSdfId;
     long            lMolfileNumber;
-#ifndef COMPILE_ANSI_ONLY
+
+
+#if ( defined( TARGET_LIB_FOR_WINCHI ) || defined(TARGET_EXE_STANDALONE) )
+/* djb-rwth: #ifndef COMPILE_ANSI_ONLY -- this has been removed so it can work on Windows 10/11 with MinGW */
     DRAW_PARMS      dp;
     PER_DRAW_PARMS  pdp;
     TBL_DRAW_PARMS  tdp;
+/* djb-rwth: #endif -- COMPILE_ANSI_ONLY removed */
 #endif
+
+
 /*
   -- Files --
   ip->path[0] => Input
@@ -129,33 +150,45 @@ typedef struct tagInputParms {
     INPUT_TYPE      nInputType;
     INCHI_MODE      nMode;
     int             bAbcNumbers;
-    /*int             bXml;*/
-    int             bINChIOutputOptions; /* !(ip->bINChIOutputOptions & INCHI_OUT_PLAIN_TEXT) */
+    int             bINChIOutputOptions;    /* !(ip->bINChIOutputOptions & INCHI_OUT_PLAIN_TEXT) */
+    int             bINChIOutputOptions2;   /* v. 1.05 */
     int             bCtPredecessors;
-    int             bXmlStarted;
     int             bDisplayEachComponentINChI;
-
-    long            msec_MaxTime;   /* was ulMaxTime; max time to run ProsessOneStructure */
+    long            msec_MaxTime;           /* was ulMaxTime; max time to run ProsessOneStructure */
     long            msec_LeftTime;
-
-    long            ulDisplTime; /* not used: max structure or question display time */
+    long            ulDisplTime;            /* not used: max structure or question display time */
     int             bDisplay;
     int             bDisplayIfRestoreWarnings; /* InChI->Struct debug */
     int             bMergeAllInputStructures;
     int             bSaveWarningStructsAsProblem;
     int             bSaveAllGoodStructsAsProblem;
     int             bGetSdfileId;
-    int             bGetMolfileNumber;  /* read molfile number from the name line like "Structure #22" */
-    int             bCompareComponents; /* see flags CMP_COMPONENTS, etc. */
+    int             bGetMolfileNumber;      /* read molfile number from the name line like "Structure #22"          */
+    int             bCompareComponents;     /* see flags CMP_COMPONENTS, etc.                                       */
     int             bDisplayCompositeResults;
     int             bDoNotAddH;
     int             bNoStructLabels;
-    int             bChiralFlag;
-    int             bAllowEmptyStructure;
-    /*^^^ */
+
+    int             bFixNonUniformDraw;     /* correct non-uniformly drawn oxoanions and amidinium cations.         */
+
     int             bCalcInChIHash;
-    int             bFixNonUniformDraw; /* correct non-uniformly drawn oxoanions and amidinium cations. */
-    /*^^^ */
+
+    int             bChiralFlag;            /* used only with "SUCF" switch                                         */
+    int             bAllowEmptyStructure;   /* Issue warning on empty structure                                     */
+    int             bLargeMolecules;        /* v. 1.05 */
+    int             bLooseTSACheck;         /* v. 1.06 Relax criteria of ambiguous drawing for in-ring stereocenter */
+    int             bPolymers;              /* v. 1.05+  allow treatment of polymers                                 */
+    int             bFoldPolymerSRU;        /* v. 1.06 consider possible CRU folding in case of inner repeat(s)     */
+    int             bFrameShiftScheme;      /* v. 1.06 polymer CRU frame shift scheme to check for                  */
+    int             bNPZz;					/* v. 1.06 enable non-polymer Zz ('star') atoms							*/
+    int             bStereoAtZz;            /* v. 1.06+ enable stereo centers having Zz neighbors (v. 1.06:always 0)*/
+
+    int             bMergeHash;             /* v. 1.06+ Combine InChIKey with extra hash(es) if present             */
+    int             bNoWarnings;            /* v. 1.06+ suppress warning messages                                   */
+    int             bHideInChI;             /* v. 1.06+ Do not print InChI itself                                   */
+
+
+    /* */
     INCHI_MODE      bTautFlags;
     INCHI_MODE      bTautFlagsDone;
 
@@ -164,6 +197,9 @@ typedef struct tagInputParms {
 #endif
 
 /* post v.1 features */
+#if ( RENUMBER_ATOMS_AND_RECALC_V106 == 1 )
+    int             bRenumber;
+#endif
 #if ( UNDERIVATIZE == 1 )
     int             bUnderivatize;
 #endif
@@ -171,9 +207,21 @@ typedef struct tagInputParms {
     int             bRing2Chain;
 #endif
 #if ( RING2CHAIN == 1 || UNDERIVATIZE == 1 )
-    int             bIngnoreUnchanged;
+    int             bIgnoreUnchanged;
 #endif
-
+#if ( ALLOW_SUBSTRUCTURE_FILTERING== 1 )
+    int             bFilterSS;
+#endif
 } INPUT_PARMS;
 
-#endif /* __INCHIDRP_H__ */
+typedef enum tagFrameShifScheme
+{
+    FSS_STARS_CYCLED,       /* 0 bis-starred CRU - cycle, capped-ends - no frame shift (v.1.05) */
+    FSS_NONE,               /* 1 no frame shift at all                                          */
+    FSS_STARS_CYCLED_SORTED,/* 2 bis-starred CRU - cycle w sorted links , capped-ends - nothing */
+    FSS_STARS_OPENED,       /* 2 bis-starred CRU - opened cycle, capped-ends - no frame shift   */
+    FSS_STARS_ENDS_OPENED   /* 3 bis-starred CRU - opened cycle, capped-ends - no frame shift   */
+} FRAME_SHIFT_SCHEME;
+
+
+#endif /* _ICHIDRP_H_ */
