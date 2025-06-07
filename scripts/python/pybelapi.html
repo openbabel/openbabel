@@ -57,7 +57,7 @@ Global&nbsp;variables:<br>
 <tr bgcolor="#ffc8d8">
 <td colspan=3 valign=bottom>&nbsp;<br>
 <font color="#000000" face="helvetica, arial"><a name="Atom">class <strong>Atom</strong></a>(<a href="__builtin__.html#object">__builtin__.object</a>)</font></td></tr>
-    
+
 <tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
 <td colspan=2><tt>Represent&nbsp;a&nbsp;Pybel&nbsp;atom.<br>
 &nbsp;<br>
@@ -231,7 +231,7 @@ The&nbsp;underlying&nbsp;Open&nbsp;Babel&nbsp;molecule&nbsp;can&nbsp;be&nbsp;acc
 &nbsp;<br>
 This&nbsp;allows&nbsp;constructions&nbsp;such&nbsp;as&nbsp;the&nbsp;following:<br>
 &nbsp;&nbsp;&nbsp;for&nbsp;atom&nbsp;in&nbsp;mymol:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;atom</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print(atom)</tt></dd></dl>
 
 <dl><dt><a name="Molecule-__str__"><strong>__str__</strong></a>(self)</dt></dl>
 
@@ -387,19 +387,19 @@ that&nbsp;the&nbsp;data&nbsp;is&nbsp;retrieved&nbsp;on-the-fly&nbsp;from&nbsp;th
 Example:<br>
 &gt;&gt;&gt;&nbsp;mol&nbsp;=&nbsp;<a href="#-readfile">readfile</a>("sdf",&nbsp;'head.sdf').next()<br>
 &gt;&gt;&gt;&nbsp;data&nbsp;=&nbsp;mol.data<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;data<br>
+&gt;&gt;&gt;&nbsp;print(data)<br>
 {'Comment':&nbsp;'CORINA&nbsp;2.61&nbsp;0041&nbsp;&nbsp;25.10.2001',&nbsp;'NSC':&nbsp;'1'}<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("NSC")<br>
+&gt;&gt;&gt;&nbsp;print(len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("NSC"))<br>
 2&nbsp;['Comment',&nbsp;'NSC']&nbsp;True<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;data['Comment']<br>
+&gt;&gt;&gt;&nbsp;print(data['Comment'])<br>
 CORINA&nbsp;2.61&nbsp;0041&nbsp;&nbsp;25.10.2001<br>
 &gt;&gt;&gt;&nbsp;data['Comment']&nbsp;=&nbsp;'This&nbsp;is&nbsp;a&nbsp;new&nbsp;comment'<br>
 &gt;&gt;&gt;&nbsp;for&nbsp;k,v&nbsp;in&nbsp;data.<a href="#MoleculeData-iteritems">iteritems</a>():<br>
-...&nbsp;&nbsp;&nbsp;&nbsp;print&nbsp;k,&nbsp;"--&gt;",&nbsp;v<br>
+...&nbsp;&nbsp;&nbsp;&nbsp;print(k,&nbsp;"--&gt;",&nbsp;v)<br>
 Comment&nbsp;--&gt;&nbsp;This&nbsp;is&nbsp;a&nbsp;new&nbsp;comment<br>
 NSC&nbsp;--&gt;&nbsp;1<br>
 &gt;&gt;&gt;&nbsp;del&nbsp;data['NSC']<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("NSC")<br>
+&gt;&gt;&gt;&nbsp;print(len(data),&nbsp;data.<a href="#MoleculeData-keys">keys</a>(),&nbsp;data.<a href="#MoleculeData-has_key">has_key</a>("NSC"))<br>
 1&nbsp;['Comment']&nbsp;False<br>&nbsp;</tt></td></tr>
 <tr><td>&nbsp;</td>
 <td width="100%">Methods defined here:<br>
@@ -500,7 +500,7 @@ Methods:<br>
 Example:<br>
 &gt;&gt;&gt;&nbsp;mol&nbsp;=&nbsp;<a href="#-readstring">readstring</a>("smi","CCN(CC)CC")&nbsp;#&nbsp;triethylamine<br>
 &gt;&gt;&gt;&nbsp;smarts&nbsp;=&nbsp;<a href="#Smarts">Smarts</a>("[#6][#6]")&nbsp;#&nbsp;Matches&nbsp;an&nbsp;ethyl&nbsp;group<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;smarts.<a href="#Smarts-findall">findall</a>(mol)&nbsp;<br>
+&gt;&gt;&gt;&nbsp;print(smarts.<a href="#Smarts-findall">findall</a>(mol))<br>
 [(1,&nbsp;2),&nbsp;(4,&nbsp;5),&nbsp;(6,&nbsp;7)]<br>
 &nbsp;<br>
 The&nbsp;numbers&nbsp;returned&nbsp;are&nbsp;the&nbsp;indices&nbsp;(starting&nbsp;from&nbsp;1)&nbsp;of&nbsp;the&nbsp;atoms<br>
@@ -548,7 +548,7 @@ following&nbsp;code&nbsp;snippet:<br>
 &gt;&gt;&gt;&nbsp;for&nbsp;mol&nbsp;in&nbsp;<a href="#-readfile">readfile</a>("sdf","head.sdf"):<br>
 ...&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;atomtotal&nbsp;+=&nbsp;len(mol.atoms)<br>
 ...<br>
-&gt;&gt;&gt;&nbsp;print&nbsp;atomtotal<br>
+&gt;&gt;&gt;&nbsp;print(atomtotal)<br>
 43</tt></dd></dl>
  <dl><dt><a name="-readstring"><strong>readstring</strong></a>(format, string)</dt><dd><tt>Read&nbsp;in&nbsp;a&nbsp;molecule&nbsp;from&nbsp;a&nbsp;string.<br>
 &nbsp;<br>

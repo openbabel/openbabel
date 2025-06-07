@@ -4,13 +4,6 @@ import unittest
 
 here = os.path.split(__file__)[0]
 
-## In Python 3.x, generators have a __next__() method
-## instead of a next() method
-nextmethod = "next"
-ispy2 = True
-if sys.version_info[0] >= 3:
-    nextmethod = "__next__"
-    ispy2 = False
 try:
     test = os.write
     try:
@@ -25,33 +18,9 @@ try:
 except AttributeError:
     from cinfony import cdk
     pybel = rdkit = None
-try:
-    set
-except NameError:
-    from sets import Set as set
 
-class myTestCase(unittest.TestCase):
-    """Additional methods not present in Jython 2.2"""
-    # Taken from unittest.py in Python 2.5 distribution
-    def assertFalse(self, expr, msg=None):
-        "Fail the test if the expression is true."
-        if expr: raise self.failureException(msg)
-    def assertTrue(self, expr, msg=None):
-        """Fail the test unless the expression is true."""
-        if not expr: raise self.failureException(msg)
-    def assertAlmostEqual(self, first, second, places=7, msg=None):
-        """Fail if the two objects are unequal as determined by their
-           difference rounded to the given number of decimal places
-           (default 7) and comparing to zero.
 
-           Note that decimal places (from zero) are usually not the same
-           as significant digits (measured from the most signficant digit).
-        """
-        if round(second-first, places) != 0:
-            raise self.failureException(
-                  (msg or '%r != %r within %r places' % (first, second, places)))
-
-class TestToolkit(myTestCase):
+class TestToolkit(unittest.TestCase):
 
     def setUp(self):
         self.mols = [self.toolkit.readstring("smi", "CCCC"),
@@ -185,14 +154,14 @@ M  END
         self.assertEqual(len(self.mols), 2)
 
     def RFreaderror(self):
-        mol = getattr(self.toolkit.readfile("sdf", "nosuchfile.sdf"), nextmethod)()
+        mol = next(self.toolkit.readfile("sdf", "nosuchfile.sdf"))
 
     def testRFmissingfile(self):
         """Test that reading from a non-existent file raises an error."""
         self.assertRaises(OSError, self.RFreaderror)
 
     def RFformaterror(self):
-        mol = getattr(self.toolkit.readfile("noel", os.path.join(here,"head.sdf")), nextmethod)()
+        mol = next(self.toolkit.readfile("noel", os.path.join(here,"head.sdf")))
 
     def testRFformaterror(self):
         """Test that invalid formats raise an error"""
@@ -352,7 +321,7 @@ class TestPybel(TestToolkit):
 
     def testunitcell(self):
         """Testing unit cell access"""
-        mol = getattr(self.toolkit.readfile("cif", os.path.join(here, "hashizume.cif")), nextmethod)()
+        mol = next(self.toolkit.readfile("cif", os.path.join(here, "hashizume.cif")))
         cell = mol.unitcell
         self.assertAlmostEqual(cell.GetAlpha(), 93.0, 1)
 
