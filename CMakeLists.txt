@@ -454,7 +454,7 @@ if(WITH_MAEPARSER)
 
     else()
 
-      set(MAEPARSER_VERSION "v1.2.3" CACHE STRING "Maeparser fallback version to download")
+      set(MAEPARSER_VERSION "v1.3.3" CACHE STRING "Maeparser fallback version to download")
 
       set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
 
