@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.0)
+cmake_minimum_required(VERSION 2.6.0)
 # Library versioning (used in Mac Python bindings)x
 set(SOVERSION 4)
 
@@ -111,7 +111,7 @@ if (DO_PYTHON_BINDINGS)
       if( "${PYTHON_INSTDIR}" STREQUAL "" )
         execute_process(
           COMMAND
-          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+	  ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('purelib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
@@ -119,7 +119,7 @@ if (DO_PYTHON_BINDINGS)
 	if(NOT ${PYTHON_INSTDIR} MATCHES "python[0-9].[0-9]")
 	  execute_process(
            COMMAND
-           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,1,prefix='${CMAKE_INSTALL_PREFIX}'))"
+	   ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
            OUTPUT_VARIABLE PYTHON_INSTDIR
            OUTPUT_STRIP_TRAILING_WHITESPACE
           )
@@ -149,7 +149,7 @@ if (DO_PYTHON_BINDINGS)
             SUFFIX .pyd )
         execute_process(
           COMMAND
-          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+	  ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
