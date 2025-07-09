@@ -40,6 +40,7 @@ def pkgconfig(package, option):
 def locate_ob():
     """Try use pkgconfig to locate Open Babel, otherwise guess default location."""
     try:
+        # Warn if the (major, minor) version of the installed OB doesn't match these python bindings
         py_ver = Version(find_version())
         py_major_ver, py_minor_ver = py_ver.release[:2]
         pcfile = f'openbabel-{py_major_ver}'
@@ -84,6 +85,8 @@ class CustomSdist(sdist):
 class CustomBuildExt(build_ext):
     """Custom build_ext to set SWIG options and print a better error message."""
     def finalize_options(self):
+        # Setting include_dirs, library_dirs, swig_opts here instead of in Extension constructor allows them to be
+        # overridden using -I and -L command line options to python setup.py build_ext.
         super().finalize_options()
         self.ob_include_dir, self.ob_library_dir = locate_ob()
         self.include_dirs.append(self.ob_include_dir)
@@ -149,4 +152,3 @@ setup(
         'Topic :: Software Development :: Libraries'
     ]
 )
-
