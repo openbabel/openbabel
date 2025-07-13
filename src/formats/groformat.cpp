@@ -100,7 +100,7 @@ public:
   //Optional URL where the file format is specified
   const char* SpecificationURL() override
   {
-    return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#gro";
+    return "https://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#gro";
   }
 
   /* This optional function is for formats which can contain more than one

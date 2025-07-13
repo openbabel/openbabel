@@ -88,7 +88,7 @@ namespace OpenBabel {
     const char* TargetClassDescription() override { return OBMol::ClassDescription(); }
 
     const char* SpecificationURL() override
-    { return "http://www.daylight.com/smiles/"; }
+    { return "https://www.daylight.com/smiles/"; }
 
     int SkipObjects(int n, OBConversion* pConv) override
     {

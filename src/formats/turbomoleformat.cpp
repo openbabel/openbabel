@@ -51,8 +51,9 @@ public:
       " a  Input in Angstroms\n\n" ;
   }
 
-  const char* SpecificationURL() override
-  { return "http://www.cosmologic.de/QuantumChemistry/main_qChemistry.html"; }
+  const char* SpecificationURL() override {
+    return "http://www.cosmologic.de/QuantumChemistry/main_qChemistry.html"; // XXX dead
+  }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

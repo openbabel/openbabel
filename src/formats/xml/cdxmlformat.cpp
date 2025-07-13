@@ -69,9 +69,9 @@ public:
   const char* GetMIMEType() override
   { return "chemical/x-cdxml"; };
 
-  const char* SpecificationURL() override
-  {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/";}
-
+  const char* SpecificationURL() override {
+    return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/"; // XXX dead
+  }
 
   unsigned int Flags() override
   {

@@ -55,7 +55,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/"; }
+    { return "https://gaussian.com/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-log"; }
@@ -103,7 +103,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/input/"; }
+    { return "https://gaussian.com/input/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-input"; }

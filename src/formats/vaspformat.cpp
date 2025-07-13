@@ -111,7 +111,7 @@ namespace OpenBabel {
     }
 
     const char* SpecificationURL() override {
-      return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";
+      return "https://www.vasp.at/wiki/index.php/POSCAR";
     }
 
     /* Flags() can return be any of the following combined by |

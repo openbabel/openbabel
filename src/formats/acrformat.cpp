@@ -56,8 +56,9 @@ namespace OpenBabel
         "  s  Consider single bonds only\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://pros.orange.fr/carine.crystallography/books/31/carine_31_us.pdf"; }
+    const char* SpecificationURL() override {
+      return "http://pros.orange.fr/carine.crystallography/books/31/carine_31_us.pdf"; // XXX dead
+    }
 
     const char* GetMIMEType() override { return "chemical/x-acr"; }
 

@@ -46,7 +46,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.pqs-chem.com/"; }
+    { return "https://www.pqs-chem.com/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
