@@ -29,6 +29,10 @@ set(BABEL_PATCH_VER 1)
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
 
+if(CMAKE_CXX_BYTE_ORDER STREQUAL "BIG_ENDIAN")
+  add_compile_definitions(WORDS_BIGENDIAN=1)
+endif()
+
 # This would be better handled with external projects...
 if(EMBED_OPENBABEL)
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}" PARENT_SCOPE)

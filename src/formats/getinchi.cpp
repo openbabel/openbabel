@@ -159,7 +159,7 @@ string GetInChI(istream& is)
   string result;
   enum statetype {before_inchi, match_inchi, unquoted, quoted};
   statetype state = before_inchi;
-  char ch, lastch=0, qch=0;
+  signed char ch, lastch=0, qch=0;
   size_t split_pos = 0;
   bool inelement=false, afterelement=false;
 
