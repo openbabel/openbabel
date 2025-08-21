@@ -1,6 +1,6 @@
-# Please ensure that any changes remain compliant with 3.1.
+# Please ensure that any changes remain compliant with 3.5. Compatibility with versions of CMake older than 3.5 is removed.
 if(NOT EMBED_OPENBABEL)
-  cmake_minimum_required(VERSION 3.1)
+  cmake_minimum_required(VERSION 3.5) 
 endif()
 
 project(openbabel)
@@ -10,9 +10,9 @@ set (CMAKE_CXX_STANDARD 11)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  if(POLICY CMP0042)
-    cmake_policy(SET CMP0042 OLD)
-  endif()
+  #if(POLICY CMP0042)      This part needs to be commented out.
+  #  cmake_policy(SET CMP0042 OLD)
+  #endif()
 endif()
 
 include (CheckCXXCompilerFlag)
