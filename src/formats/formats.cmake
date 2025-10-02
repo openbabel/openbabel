@@ -246,13 +246,6 @@ if(LIBXML2_FOUND AND (BUILD_SHARED OR WITH_STATIC_LIBXML))
   endif(MSVC OR SHARED_POINTER)
 endif(LIBXML2_FOUND AND (BUILD_SHARED OR WITH_STATIC_LIBXML))
 
-if(HAVE_RPC_XDR_H)
-  set(formats_misc
-    ${formats_misc}
-    xtcformat
-  )
-endif(HAVE_RPC_XDR_H)
-
 if(MINIMAL_BUILD)
   set(formats
     ${formats_common}
