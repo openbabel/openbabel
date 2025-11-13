@@ -22,7 +22,7 @@ if (RUN_SWIG)
 endif (RUN_SWIG)
 
 # The following needs to be kept in synch with ..\CMakeLists.txt
-if(EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set (eigen_define "-DHAVE_EIGEN3")
 endif()
 

@@ -15,7 +15,7 @@ set(charges
   charges/fromfile.cpp
 )
 
-if (EIGEN3_FOUND)
+if (TARGET Eigen3::Eigen)
 # if eigen is available, compile QEq, EQeq, and QTPIE charge models
 set(charges ${charges}
   charges/eqeq.cpp
@@ -58,7 +58,7 @@ set(math_srcs
   math/vector3.cpp
 )
 
-if(EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(math_srcs ${math_srcs}
     math/align.cpp
   )
@@ -89,7 +89,7 @@ set(ops
   ops/ophighlight.cpp
   ops/xout.cpp
 )
-if(EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(ops ${ops}
     ops/conformer.cpp
     ops/opalign.cpp
@@ -163,7 +163,7 @@ set(openbabel_srcs
   typer.cpp
   obmolecformat.cpp
 )
-if(EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(openbabel_srcs ${openbabel_srcs}
     conformersearch.cpp
     confsearch.cpp
