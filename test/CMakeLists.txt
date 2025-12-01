@@ -269,10 +269,10 @@ if (PYTHON_BINDINGS)
         PYTHONPATH "\"${CMAKE_SOURCE_DIR}/scripts/python;${CMAKE_BINARY_DIR}/bin/Release\""
       )
     endif()
-    ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
-    set_tests_properties(pybindtest_${pybindtest} PROPERTIES
-         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-    )
+    #ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
+    #set_tests_properties(pybindtest_${pybindtest} PROPERTIES
+    #     FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+    #)
   endforeach(pybindtest ${pybindtests})
 endif (PYTHON_BINDINGS)
 

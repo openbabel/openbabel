@@ -26,7 +26,7 @@ if(POLICY CMP0053)
 endif()
 
 # Need python interpreter:
-FIND_PACKAGE(PythonInterp)
+FIND_PACKAGE(Python3)
 MARK_AS_ADVANCED(PYTHON_EXECUTABLE)
 
 # Make sure we handle systems w/o python (e.g. chroot)
