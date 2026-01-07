@@ -743,6 +743,8 @@ namespace OpenBabel
 
   bool GAMESSUKOutputFormat::ReadInputZmatrix( OBMol &mol, std::istream &ifs )
   {
+    bool ok = false;
+
     /* The zmatrix entered by the user
      * REM:  need to add stuff for "automatic z-matrix generation" as we currently
      * ignore the zmatrix & just read the cartesian coordinates
@@ -750,7 +752,8 @@ namespace OpenBabel
     geomList.clear();
     
     // skip 2 lines
-    ifs.getline(buffer, BUFF_SIZE) && ifs.getline(buffer, BUFF_SIZE);
+    ok = ifs.getline(buffer, BUFF_SIZE) && ifs.getline(buffer, BUFF_SIZE);
+    if (!ok) return false;
     
     // Stick a header line first
     geomList.push_back("zmatrix bohr");
@@ -766,8 +769,8 @@ namespace OpenBabel
       }
       
     // Skip 2 lines
-    ifs.getline(buffer, BUFF_SIZE);
-    ifs.getline(buffer, BUFF_SIZE);
+    ok = ifs.getline(buffer, BUFF_SIZE) && ifs.getline(buffer, BUFF_SIZE);
+    if (!ok) return false;
       
     // Check if line is variables line
     if (strstr(buffer,"name            input  type     hessian         minima") != nullptr)
@@ -789,9 +792,10 @@ namespace OpenBabel
     int n;
 
     // Skip 3 lines
-    ifs.getline(buffer, BUFF_SIZE) &&
-      ifs.getline(buffer, BUFF_SIZE) &&
-      ifs.getline(buffer, BUFF_SIZE);
+    ok = ifs.getline(buffer, BUFF_SIZE) &&
+         ifs.getline(buffer, BUFF_SIZE) &&
+         ifs.getline(buffer, BUFF_SIZE);
+    if (!ok) return false;
 
     // Create regex for the coords
     //                     ------label--------   -------charge-------- < seems enough for a match
@@ -865,8 +869,9 @@ namespace OpenBabel
       }
 
       // Skip 2 lines - should then be at the coordinates
-      ifs.getline(buffer, BUFF_SIZE) &&
-        ifs.getline(buffer, BUFF_SIZE);
+      ok = ifs.getline(buffer, BUFF_SIZE) &&
+           ifs.getline(buffer, BUFF_SIZE);
+      if (!ok) return false;
 
       // Read in the coordinates - we process them directly rather
       // then use ReadGeometry as we probably should do...
