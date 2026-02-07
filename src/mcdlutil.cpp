@@ -2300,7 +2300,7 @@ namespace OpenBabel {
         r1=0;
         for (i=0; i<nBonds(); i++) if (tempBondArray[i] == 0) {
             r=this->bondLength(i);
-            if (r < bondLengthOld) bondLengthOld=n;
+            if (r < bondLengthOld) bondLengthOld=r;
             r1=r1+r;
             n++;
           };
