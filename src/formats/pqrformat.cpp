@@ -164,7 +164,7 @@ namespace OpenBabel
       // WARNING: Atom index issue here
       a->SetPartialCharge(charges[a->GetIdx() - 1]);
 
-      cerr << " charge : " << charges[a->GetIdx() - 1] << endl;
+      // cerr << " charge : " << charges[a->GetIdx() - 1] << endl;
 
       if (!a->HasData("Radius")) {
         std::ostringstream s;
@@ -175,7 +175,7 @@ namespace OpenBabel
         a->SetData(p);
       }
 
-      cerr << " radius : " << radii[a->GetIdx() - 1] << endl;
+      // cerr << " radius : " << radii[a->GetIdx() - 1] << endl;
 
     }
     mol.SetPartialChargesPerceived();
