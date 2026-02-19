@@ -422,7 +422,6 @@ include_directories(${openbabel_BINARY_DIR}/include
 find_package(Eigen3)
 if(EIGEN3_FOUND)
   add_definitions(-DHAVE_EIGEN3)
-  include_directories(${EIGEN3_INCLUDE_DIR})
 endif()
 #cjh
 
