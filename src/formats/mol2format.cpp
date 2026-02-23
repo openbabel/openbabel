@@ -418,10 +418,11 @@ namespace OpenBabel
             {
               int charge = 0;
               sscanf(buffer,"%*s %d",&charge);
-              if(aid <= mol.NumAtoms()) 
+              if(aid >= 1 && aid <= (int)mol.NumAtoms())
               {
                 OBAtom *atom = mol.GetAtom(aid);
-                atom->SetFormalCharge(charge);
+                if (atom != nullptr)
+                  atom->SetFormalCharge(charge);
               }
             }
           }
