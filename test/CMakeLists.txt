@@ -326,6 +326,15 @@ if(DEFINED ENV{LIB_FUZZING_ENGINE})
   target_compile_definitions(fuzz_obconversion_sdf PRIVATE -DFUZZ_INPUT_FORMAT="SDF")
   target_link_libraries(fuzz_obconversion_sdf ${libs} $ENV{LIB_FUZZING_ENGINE})
 
+  add_executable(fuzz_molecule fuzz/fuzz_molecule.cpp)
+  target_link_libraries(fuzz_molecule ${libs} $ENV{LIB_FUZZING_ENGINE})
+
   add_executable(fuzz_convert fuzz/fuzz_convert.cpp)
   target_link_libraries(fuzz_convert ${libs} $ENV{LIB_FUZZING_ENGINE})
+
+  add_executable(fuzz_smart fuzz/fuzz_smart.cpp)
+  target_link_libraries(fuzz_smart ${libs} $ENV{LIB_FUZZING_ENGINE})
+
+  add_executable(fuzz_depict fuzz/fuzz_depict.cpp)
+  target_link_libraries(fuzz_depict ${libs} $ENV{LIB_FUZZING_ENGINE})
 endif()
