@@ -88,7 +88,7 @@ if sys.platform.find("linux") != -1:
 %ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
 %ignore OpenBabel::OBResidue::GetAtoms;
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %{
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
@@ -356,7 +356,7 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #endif

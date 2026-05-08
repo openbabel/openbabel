@@ -54,7 +54,7 @@ set(tetranonplanar_parts 1)
 set(tetraplanar_parts 1)
 set(uniqueid_parts 1 2)
 
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(cpptests
     align ${cpptests})
   set(align_parts 1 2 3 4 5)

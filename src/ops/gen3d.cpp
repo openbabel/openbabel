@@ -114,7 +114,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
       useDistGeom = true;
     }
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
     OBDistanceGeometry dg;
     if (useDistGeom) {
       // use the bond lengths and angles if we ran the builder
