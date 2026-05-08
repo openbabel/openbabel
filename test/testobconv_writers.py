@@ -2754,6 +2754,15 @@ DrawText 40.0 81.9 "HO"
 """)
 
 # pcjson -- PubChem JSON
+# Coordinates that come from --gen2D etc. are computed in double precision and
+# the last digit or two can differ across platforms / math libraries. Round any
+# long decimals down to a precision that compares reliably.
+_pcjson_float_pat = re.compile(r"-?\d+\.\d{8,}")
+def _round_pcjson_match(m):
+    return "%.10g" % float(m.group(0))
+def normalize_pcjson_floats(content):
+    return _pcjson_float_pat.sub(_round_pcjson_match, content)
+
 class TestPCJSON(unittest.TestCase, WriteMixin):
     fmt = "pcjson"
     maxDiff = None
@@ -2926,7 +2935,7 @@ class TestPCJSON(unittest.TestCase, WriteMixin):
       "charge": 0
     }
   ]
-}""")
+}""", normalize=normalize_pcjson_floats)
 
 # pcm -- PCModel Format
 class TestPCM(unittest.TestCase, WriteMixin):
