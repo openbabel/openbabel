@@ -64,9 +64,9 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override {
-      return "http://www.ebi.ac.uk/help/formats_frame.html";
+      // return "http://www.ebi.ac.uk/help/formats_frame.html";  // XXX dead
+      return "https://blast.ncbi.nlm.nih.gov/doc/blast-topics/";
     }
-    // Additionally http://www.ncbi.nlm.nih.gov/blast/fasta.shtml
 
     const char* GetMIMEType() override
     { return "chemical/x-fasta"; }

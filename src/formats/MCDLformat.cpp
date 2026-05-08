@@ -59,7 +59,7 @@ public:
   }
 
   const char* SpecificationURL() override { return
-     "http://pubs.acs.org/cgi-bin/abstract.cgi/jcisd8/2001/41/i06/abs/ci000108y.html";}
+     "https://pubs.acs.org/doi/10.1021/ci000108y"; }
 
   const char* GetMIMEType() override
   { return "chemical/x-MCDL"; }

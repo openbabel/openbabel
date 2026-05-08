@@ -56,7 +56,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    {return "http://www.cec.mpg.de/forum/portal.php";} //optional
+    { return "https://orcaforum.kofo.mpg.de/app.php/portal"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -94,7 +94,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    {return"http://www.cec.mpg.de/forum/portal.php";} //optional
+    { return "https://orcaforum.kofo.mpg.de/app.php/portal"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

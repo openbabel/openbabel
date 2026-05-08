@@ -87,7 +87,7 @@ namespace OpenBabel
 
       const char* SpecificationURL() override
       {
-        return "http://www.ennex.com/~fabbers/StL.asp";
+        return "https://www.fabbers.com/tech/STL_Format";
       }
 
       /// Return MIME type, NULL in this case.

@@ -58,7 +58,7 @@ namespace OpenBabel
       " t <text> Use <text> as source in header\n\n";
     }
   const char* SpecificationURL() override
-  { return "http://code.google.com/p/chem-fingerprints/wiki/FPS"; }
+  { return "https://code.google.com/archive/p/chem-fingerprints/wikis/FPS.wiki"; }
 
     unsigned int Flags() override { return NOTREADABLE; }
     bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;

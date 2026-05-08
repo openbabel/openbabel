@@ -513,8 +513,9 @@ namespace OpenBabel
         "GAMESS-UK Input\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.cfs.dl.ac.uk"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.cfs.dl.ac.uk"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-gamessuk-input"; }
@@ -716,8 +717,9 @@ namespace OpenBabel
     const char* Description() override  // required
     { return "GAMESS-UK Output\n"; }
 
-    const char* SpecificationURL() override
-    { return "http://www.cfs.dl.ac.uk"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.cfs.dl.ac.uk"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-gamessuk-output"; }

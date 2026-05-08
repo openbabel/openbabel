@@ -62,7 +62,7 @@ namespace OpenBabel
    }
 
    const char* SpecificationURL() override
-   { return "http://mmcif.pdb.org/"; }  // optional
+   { return "https://mmcif.wwpdb.org/"; }
    // CIF itself is at http://www.iucr.org/iucr-top/cif/index.html
 
    const char* GetMIMEType() override

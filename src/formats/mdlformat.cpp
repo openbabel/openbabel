@@ -107,7 +107,7 @@ namespace OpenBabel
 
       const char* SpecificationURL() override
       {
-        return "https://www.3dsbiovia.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html";
+        return "https://www.3ds.com/products/biovia/draw";
       }
 
       const char* GetMIMEType() override

@@ -62,8 +62,8 @@ namespace OpenBabel
 
     const char* SpecificationURL() override
     {
-      return "http://www.tripos.com/data/support/mol2.pdf";
-    } //optional
+      return "http://www.tripos.com/data/support/mol2.pdf"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-mol2"; }
