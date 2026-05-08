@@ -1,6 +1,6 @@
 # Please ensure that any changes remain compliant with 3.1.
 if(NOT EMBED_OPENBABEL)
-  cmake_minimum_required(VERSION 3.1)
+  cmake_minimum_required(VERSION 3.5)
 endif()
 
 project(openbabel)
