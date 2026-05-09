@@ -154,7 +154,8 @@ namespace OpenBabel
               y = atof((char*)vs[4].c_str());
               z = atof((char*)vs[5].c_str());
 
-              translationVectors[numTranslationVectors++].Set(x, y, z);
+              if (numTranslationVectors < 3)
+                translationVectors[numTranslationVectors++].Set(x, y, z);
               if (!ifs.getline(buffer,BUFF_SIZE))
                 break;
               tokenize(vs,buffer);
