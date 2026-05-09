@@ -414,8 +414,11 @@ namespace OpenBabel
           }
         else
           {
+            // strchr will "find" a NUL byte in the sequence by matching the
+            // codes string's own terminator, returning a past-the-end index
+            // into Residues[]. Reject that case explicitly.
             const char * idx = strchr(IUPAC_codes, (* sx)); // e.g. "01NACGURYKMSWBDHV"
-            size_t unit_code = (size_t)( idx ? (idx - IUPAC_codes) : IUPAC_Unknown );
+            size_t unit_code = (size_t)( (idx && *idx != '\0') ? (idx - IUPAC_codes) : IUPAC_Unknown );
             ResidueRecord * res_rec = & Residues[unit_code];
             if (res_rec->IUPACcode)
               {

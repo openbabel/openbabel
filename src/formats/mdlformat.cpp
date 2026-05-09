@@ -1424,9 +1424,13 @@ namespace OpenBabel
       {
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[1]=="END") return true;
+        // ReadV3000Line only guarantees vs.size() >= 2. Block-level
+        // directives use vs[2] and vs[3]; bail out on truncated lines.
+        if(vs.size() < 3) return false;
         if(vs[2]=="LINKNODE"){continue;} //not implemented
         if(vs[2]!="BEGIN") return false;
 
+        if(vs.size() < 4) return false;
         if(vs[3]=="CTAB")
           {
             if(!ReadV3000Line(ifs,vs) || vs[2]!="COUNTS") return false;
