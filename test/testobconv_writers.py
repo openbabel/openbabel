@@ -669,6 +669,15 @@ Oc1ccccc1\tphenol
 """)
 
 # cdjson -- ChemDoodle JSON
+# Coordinates that come from --gen2D etc. are computed in double precision and
+# the last digit or two can differ across platforms / math libraries. Round any
+# long decimals down to a precision that compares reliably.
+_json_float_pat = re.compile(r"-?\d+\.\d{8,}")
+def _round_json_match(m):
+    return "%.10g" % float(m.group(0))
+def normalize_json_floats(content):
+    return _json_float_pat.sub(_round_json_match, content)
+
 class TestCDJSON(unittest.TestCase, WriteMixin):
     fmt = "cdjson"
     maxDiff = None
@@ -743,7 +752,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
       ]
     }
   ]
-}""")
+}""", normalize=normalize_json_floats)
 
 ## # cdxml -- ChemDraw CDXML format
 ## XXX fails on an unpatched system
@@ -2754,14 +2763,9 @@ DrawText 40.0 81.9 "HO"
 """)
 
 # pcjson -- PubChem JSON
-# Coordinates that come from --gen2D etc. are computed in double precision and
-# the last digit or two can differ across platforms / math libraries. Round any
-# long decimals down to a precision that compares reliably.
-_pcjson_float_pat = re.compile(r"-?\d+\.\d{8,}")
-def _round_pcjson_match(m):
-    return "%.10g" % float(m.group(0))
-def normalize_pcjson_floats(content):
-    return _pcjson_float_pat.sub(_round_pcjson_match, content)
+# Uses normalize_json_floats (see TestCDJSON) to round long double-precision
+# decimals to a stable representation across platforms / math libraries.
+normalize_pcjson_floats = normalize_json_floats
 
 class TestPCJSON(unittest.TestCase, WriteMixin):
     fmt = "pcjson"
