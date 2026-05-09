@@ -357,7 +357,7 @@ if(NOT DEFINED ENV{LIB_FUZZING_ENGINE})
       add_test(NAME ${_target}_${_corpus_name}
         COMMAND ${TEST_PATH}/${_target} "${_corpus_file}")
       set_tests_properties(${_target}_${_corpus_name} PROPERTIES
-        ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
+        ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;BABEL_LIBDIR=${FORMATDIR};LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
     endforeach()
   endforeach()
 endif()
