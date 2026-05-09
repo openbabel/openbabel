@@ -290,7 +290,9 @@ namespace OpenBabel
 
   bool OBAlign::Align()
   {
-    const Eigen::Index N = _mtarget.cols();
+    // Use auto to stay portable across Eigen versions (older builds
+    // shipped via msvc-dependencies don't expose Eigen::Index).
+    const auto N = _mtarget.cols();
 
     if (_mref.cols() != N) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot align the reference and target as they are of different size" , obError);
