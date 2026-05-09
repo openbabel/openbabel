@@ -251,15 +251,26 @@ namespace OpenBabel
 
                     //New framework mods
                     OBConversion coordconv(&coordFileStream);
-                    OBFormat* pFormat;
+                    // CVE-2022-46280: pFormat must be initialized so the
+                    // dispatch below does not call into a garbage pointer
+                    // when no recognized "=car/=hin/=pdb/=mop" suffix is
+                    // present, and FindFormat may also return nullptr if
+                    // the requested format is not registered in this build.
+                    OBFormat* pFormat = nullptr;
                     if (strstr(buffer, "=car" ) != nullptr)
-                      pFormat =OBConversion::FindFormat("BIOSYM");
-                    if (strstr(buffer, "=hin" ) != nullptr)
+                      pFormat = OBConversion::FindFormat("BIOSYM");
+                    else if (strstr(buffer, "=hin" ) != nullptr)
                       pFormat = OBConversion::FindFormat("HIN");
-                    if (strstr(buffer, "=pdb" ) != nullptr)
+                    else if (strstr(buffer, "=pdb" ) != nullptr)
                       pFormat = OBConversion::FindFormat("PDB");
-                    if (strstr(buffer, "=mop" ) != nullptr)
+                    else if (strstr(buffer, "=mop" ) != nullptr)
                       pFormat = OBConversion::FindFormat("MOPAC");
+                    if (pFormat == nullptr) {
+                      obErrorLog.ThrowError(__FUNCTION__,
+                        "PQS external geometry: unsupported or unregistered "
+                        "coordinate format", obError);
+                      return false;
+                    }
                     return pFormat->ReadMolecule(&mol,&coordconv);
 
                     /*         if (strstr(buffer,"=car" )!=NULL)
