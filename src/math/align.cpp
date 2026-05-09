@@ -91,16 +91,14 @@ namespace OpenBabel
   }
 
   void OBAlign::SetRef(const vector<vector3> &ref) {
-    _pref = &ref;
-    VectorsToMatrix(_pref, _mref);
+    VectorsToMatrix(&ref, _mref);
     _ref_centr = MoveToOrigin(_mref);
 
     _ready = false;
   }
 
   void OBAlign::SetTarget(const vector<vector3> &target) {
-    _ptarget = &target;
-    VectorsToMatrix(_ptarget, _mtarget);
+    VectorsToMatrix(&target, _mtarget);
     _target_centr = MoveToOrigin(_mtarget);
 
     _ready = false;
@@ -292,9 +290,11 @@ namespace OpenBabel
 
   bool OBAlign::Align()
   {
-    vector<vector3>::size_type N = _ptarget->size();
+    // Use auto to stay portable across Eigen versions (older builds
+    // shipped via msvc-dependencies don't expose Eigen::Index).
+    const auto N = _mtarget.cols();
 
-    if (_pref->size() != N) {
+    if (_mref.cols() != N) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot align the reference and target as they are of different size" , obError);
       return false;
     }
