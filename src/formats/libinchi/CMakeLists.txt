@@ -1,7 +1,7 @@
 project(inchi)
-set(INCHI_MAJ_VER   0)
-set(INCHI_MIN_VER   4)
-set(INCHI_PATCH_VER 1)
+set(INCHI_MAJ_VER   1)
+set(INCHI_MIN_VER   07)
+set(INCHI_PATCH_VER 4)
 
 file(GLOB inchi_srcs "*.c")
 
@@ -14,6 +14,7 @@ endif(NOT WIN32)
 
 include_directories(${openbabel_SOURCE_DIR}/include/inchi)
 add_library(inchi ${BUILD_TYPE} ${inchi_srcs})
+target_compile_definitions(inchi PUBLIC -DTARGET_API_LIB)
 target_link_libraries(inchi ${libs})
 set_target_properties(inchi PROPERTIES
                             VERSION ${INCHI_MAJ_VER}.${INCHI_MIN_VER}.${INCHI_PATCH_VER}

@@ -6,7 +6,7 @@ file(GLOB depict_headers      openbabel/depict/*.h)
 file(GLOB lbfgs_headers       LBFGS/*.h)
 
 if(NOT OPENBABEL_USE_SYSTEM_INCHI)
-install(FILES inchi_api.h          DESTINATION include/inchi)
+install(FILES inchi/inchi_api.h          DESTINATION include/inchi)
 endif(NOT OPENBABEL_USE_SYSTEM_INCHI)
 install(FILES chemdrawcdx.h        DESTINATION ${OB_INCLUDE_DIRS}/openbabel)
 install(FILES ${openbabel_headers} DESTINATION ${OB_INCLUDE_DIRS}/openbabel)

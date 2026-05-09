@@ -1,46 +1,47 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
- 
- 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    InChIKey: procedures for base-26 encoding
+ * info@inchi-trust.org
+ *
+*/
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+
+ /*
+     InChIKey: procedures for base-26 encoding
+ */
 
 
 #ifdef _MSC_VER
@@ -49,25 +50,28 @@
 #endif
 #endif
 
-#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "ikey_base26.h"
 
+#include "mode.h"
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    As the 2^14 (16384) is very close to 26^3 (17576), a triplet of uppercase 
-    letters A..Z encodes 14 bits with good efficiency.
-    For speed, we just tabulate triplets below.
+#include "bcf_s.h"
 
-    We should throw away 17576-16384= 1192 triplets.
-    These are 676 triplets starting from 'E', the most frequent letter in English 
-    texts (the other 516 are those started at 'T' , "TAA" to "TTV").
+ /*
+     Triplets
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+     As the 2^14 (16384) is very close to 26^3 (17576), a triplet of uppercase
+     letters A..Z encodes 14 bits with good efficiency.
+     For speed, we just tabulate triplets below.
 
-static char t26[][4] = 
-{ 
+     We should throw away 17576-16384= 1192 triplets.
+     These are 676 triplets starting from 'E', the most frequent letter in English
+     texts (the other 516 are those started at 'T' , "TAA" to "TTV").
+ */
+
+static const char t26[][4] =
+{
 "AAA","AAB","AAC","AAD","AAE","AAF","AAG","AAH","AAI","AAJ","AAK","AAL","AAM","AAN","AAO","AAP",
 "AAQ","AAR","AAS","AAT","AAU","AAV","AAW","AAX","AAY","AAZ","ABA","ABB","ABC","ABD","ABE","ABF",
 "ABG","ABH","ABI","ABJ","ABK","ABL","ABM","ABN","ABO","ABP","ABQ","ABR","ABS","ABT","ABU","ABV",
@@ -237,10 +241,9 @@ static char t26[][4] =
 "DYE","DYF","DYG","DYH","DYI","DYJ","DYK","DYL","DYM","DYN","DYO","DYP","DYQ","DYR","DYS","DYT",
 "DYU","DYV","DYW","DYX","DYY","DYZ","DZA","DZB","DZC","DZD","DZE","DZF","DZG","DZH","DZI","DZJ",
 "DZK","DZL","DZM","DZN","DZO","DZP","DZQ","DZR","DZS","DZT","DZU","DZV","DZW","DZX","DZY","DZZ",
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- E-starteds are intentionally omitted 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+/*
+    E-started's intentionally omitted
+*/
 "FAA","FAB","FAC","FAD","FAE","FAF","FAG","FAH","FAI","FAJ","FAK","FAL",
 "FAM","FAN","FAO","FAP","FAQ","FAR","FAS","FAT","FAU","FAV","FAW","FAX","FAY","FAZ","FBA","FBB",
 "FBC","FBD","FBE","FBF","FBG","FBH","FBI","FBJ","FBK","FBL","FBM","FBN","FBO","FBP","FBQ","FBR",
@@ -833,9 +836,9 @@ static char t26[][4] =
 "SYI","SYJ","SYK","SYL","SYM","SYN","SYO","SYP","SYQ","SYR","SYS","SYT","SYU","SYV","SYW","SYX",
 "SYY","SYZ","SZA","SZB","SZC","SZD","SZE","SZF","SZG","SZH","SZI","SZJ","SZK","SZL","SZM","SZN",
 "SZO","SZP","SZQ","SZR","SZS","SZT","SZU","SZV","SZW","SZX","SZY","SZZ",
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- TAA to TTV - 516 triplets - intentionally omitted 
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+/*
+    TAA to TTV - 516 triplets - intentionally omitted
+*/
 "TTW","TTX","TTY","TTZ","TUA","TUB","TUC","TUD","TUE","TUF","TUG","TUH","TUI","TUJ","TUK","TUL",
 "TUM","TUN","TUO","TUP","TUQ","TUR","TUS","TUT","TUU","TUV","TUW","TUX","TUY","TUZ","TVA","TVB",
 "TVC","TVD","TVE","TVF","TVG","TVH","TVI","TVJ","TVK","TVL","TVM","TVN","TVO","TVP","TVQ","TVR",
@@ -1105,9 +1108,12 @@ static char t26[][4] =
 "ZZK","ZZL","ZZM","ZZN","ZZO","ZZP","ZZQ","ZZR","ZZS","ZZT","ZZU","ZZV","ZZW","ZZX","ZZY","ZZZ"
 };
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-static char d26[][3] = 
-{ 
+/*
+    Doublets
+*/
+
+static const char d26[][3] =
+{
 "AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP",
 "AQ","AR","AS","AT","AU","AV","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF",
 "BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BV",
@@ -1153,213 +1159,184 @@ static char d26[][3] =
 "ZW","ZX","ZY","ZZ"
 };
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Also tabulate 26 base-26 chars.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-static const char *c26 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";     /* added const 2007-09-26 DT */
+/*
+    Also tabulate 26 base-26 chars.
+*/
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Weight scheme for check character .
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-#define N_UNIQUE_WEIGHTS 12
-static int weights_for_checksum[N_UNIQUE_WEIGHTS] = { 1,3,5,7,9,11,15,17,19,21,23,25 }; 
-                                         /*^^^ co-primes with 26 which are < 26 */
+/* djb-rwth: removing redundant variables */
 
 
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get a character representing 1st 14-bit triplet (bits 0..13 of contiguous array of octets)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-const char* base26_triplet_1(const unsigned char *a)
+/****************************************************************************
+ Get a character representing 1st 14-bit triplet
+ (bits 0..13 of contiguous array of octets)
+****************************************************************************/
+const char* base26_triplet_1( const unsigned char *a )
 {
-UINT32 b0, b1,h;
-    b0 = (UINT32) a[0];             /* 1111 1111  */ 
+    UINT32 b0, b1, h;
+    b0 = (UINT32) a[0];             /* 1111 1111  */
 #ifndef FIX_BASE26_ENC_BUG
-    b1 = (UINT32) ( a[1] & 0x3f );  /* 0011 1111  */ 
-    h =  (UINT32) ( b0 | b1 << 8 );
+    b1 = (UINT32) ( a[1] & 0x3f );  /* 0011 1111  */
+    h = (UINT32) ( b0 | b1 << 8 );
 #else
-    b1 = (UINT32) ( a[1] & 0xfc );  /* 1111 1100  */ 
-    h =  (UINT32) ( b0 << 8 | b1 ) >> 2;
+    b1 = (UINT32) ( a[1] & 0xfc );  /* 1111 1100  */
+    h = (UINT32) ( b0 << 8 | b1 ) >> 2;
 #endif
     return t26[h];
 }
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get a character representing 2nd 14-bit triplet (bits 14..27)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-const char* base26_triplet_2(const unsigned char *a)
+
+/****************************************************************************
+ Get a character representing 2nd 14-bit triplet (bits 14..27)
+****************************************************************************/
+const char* base26_triplet_2( const unsigned char *a )
 {
-UINT32 b0, b1, b2, h;
+    UINT32 b0, b1, b2, h;
 #ifndef FIX_BASE26_ENC_BUG
-    b0 = (UINT32) ( a[1] & 0xc0);   /* 1100 0000  */ 
-    b1 = (UINT32) ( a[2] );         /* 1111 1111  */ 
+    b0 = (UINT32) ( a[1] & 0xc0 );   /* 1100 0000  */
+    b1 = (UINT32) ( a[2] );         /* 1111 1111  */
     b2 = (UINT32) ( a[3] & 0x0f );  /* 0000 1111  */
-    h =  (UINT32)( b0 | b1 << 8  | b2 << 16 ) >> 6 ;
+    h = (UINT32) ( b0 | b1 << 8 | b2 << 16 ) >> 6;
 #else
-    b0 = (UINT32) ( a[1] & 0x03);   /* 0000 0011 */ 
-    b1 = (UINT32) ( a[2] );         /* 1111 1111 */ 
-    b2 = (UINT32) ( a[3] & 0xf0 );  /* 1111 0000 */  
-    h =  (UINT32)( b0 << 16 | b1 << 8 | b2 ) >> 4 ;
-#endif
-    return t26[h];
-}
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get a character representing 3rd 14-bit triplet (bits 28..41)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-const char* base26_triplet_3(const unsigned char *a)
-{
-UINT32 b0, b1, b2, h;
-#ifndef FIX_BASE26_ENC_BUG
-    b0 = (UINT32) ( a[3] & 0xf0);   /* 1111 0000  */ 
-    b1 = (UINT32) ( a[4] );         /* 1111 1111  */ 
-    b2 = (UINT32) ( a[5] & 0x03 );  /* 0000 0011  */  
-    h =  (UINT32) ( b0 | b1 << 8  | b2 << 16 ) >> 4 ;
-#else
-    b0 = (UINT32) ( a[3] & 0x0f);   /* 0000 1111 */ 
-    b1 = (UINT32) ( a[4] );         /* 1111 1111  */ 
-    b2 = (UINT32) ( a[5] & 0xc0 );  /* 1100 0000  */ 
-    h =  (UINT32) ( b0 << 16 | b1 << 8 | b2 ) >> 6 ;
-#endif
-    return t26[h];
-}
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get a character representing 4th 14-bit triplet (bits 42..55)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-const char* base26_triplet_4(const unsigned char *a)
-{
-UINT32 b0, b1, h;
-#ifndef FIX_BASE26_ENC_BUG
-    b0 = (UINT32) ( a[5] & 0xfc);   /* 1111 1100  */ 
-    b1 = (UINT32) ( a[6] );         /* 1111 1111  */ 
-    h =  (UINT32) ( b0 | b1 << 8 ) >> 2 ;
-#else
-    b0 = (UINT32) ( a[5] & 0x3f);   /* 0011 1111  */ 
-    b1 = (UINT32) ( a[6] );         /* 1111 1111  */ 
-    h =  (UINT32) ( b0 << 8 | b1  ) ;
+    b0 = (UINT32) ( a[1] & 0x03 );   /* 0000 0011 */
+    b1 = (UINT32) ( a[2] );         /* 1111 1111 */
+    b2 = (UINT32) ( a[3] & 0xf0 );  /* 1111 0000 */
+    h = (UINT32) ( b0 << 16 | b1 << 8 | b2 ) >> 4;
 #endif
     return t26[h];
 }
 
 
-
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Tail dublets
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                a4        a3	    a2         a1	     a0
-      28-36:	0001 1111 1111 0000 0000  0000 0000	0000 0000 0000
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get dublet (bits 28..36)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-const char* base26_dublet_for_bits_28_to_36(unsigned char *a)
+/****************************************************************************
+ Get a character representing 3rd 14-bit triplet (bits 28..41)
+****************************************************************************/
+const char* base26_triplet_3( const unsigned char *a )
 {
-UINT32 b0, b1, h;
+    UINT32 b0, b1, b2, h;
 #ifndef FIX_BASE26_ENC_BUG
-    b0 = (UINT32) ( a[3] & 0xf0);	/* 1111 0000  */ 
-    b1 = (UINT32) ( a[4] & 0x1f );	/* 0001 1111  */ 
-    h =  (UINT32)( b0 | b1 << 8 ) >> 4 ;
+    b0 = (UINT32) ( a[3] & 0xf0 );   /* 1111 0000  */
+    b1 = (UINT32) ( a[4] );         /* 1111 1111  */
+    b2 = (UINT32) ( a[5] & 0x03 );  /* 0000 0011  */
+    h = (UINT32) ( b0 | b1 << 8 | b2 << 16 ) >> 4;
 #else
-    b0 = (UINT32) ( a[3] & 0x0f);	/* 0000 1111  */ 
-    b1 = (UINT32) ( a[4] & 0xf8 );	/* 1111 1000  */ 
-    h =  (UINT32)( b0 << 8 | b1 ) >> 3 ;
+    b0 = (UINT32) ( a[3] & 0x0f );   /* 0000 1111 */
+    b1 = (UINT32) ( a[4] );         /* 1111 1111  */
+    b2 = (UINT32) ( a[5] & 0xc0 );  /* 1100 0000  */
+    h = (UINT32) ( b0 << 16 | b1 << 8 | b2 ) >> 6;
+#endif
+    return t26[h];
+}
+
+
+/****************************************************************************
+ Get a character representing 4th 14-bit triplet (bits 42..55)
+****************************************************************************/
+const char* base26_triplet_4( const unsigned char *a )
+{
+    UINT32 b0, b1, h;
+#ifndef FIX_BASE26_ENC_BUG
+    b0 = (UINT32) ( a[5] & 0xfc );   /* 1111 1100  */
+    b1 = (UINT32) ( a[6] );         /* 1111 1111  */
+    h = (UINT32) ( b0 | b1 << 8 ) >> 2;
+#else
+    b0 = (UINT32) ( a[5] & 0x3f );   /* 0011 1111  */
+    b1 = (UINT32) ( a[6] );         /* 1111 1111  */
+    h = (UINT32) ( b0 << 8 | b1 );
+#endif
+    return t26[h];
+}
+
+
+/*
+    Tail dublets
+*/
+
+/*
+                a4        a3        a2         a1         a0
+      28-36:    0001 1111 1111 0000 0000  0000 0000    0000 0000 0000
+*/
+
+
+/****************************************************************************
+ Get dublet (bits 28..36)
+****************************************************************************/
+const char* base26_dublet_for_bits_28_to_36( unsigned char *a )
+{
+    UINT32 b0, b1, h;
+#ifndef FIX_BASE26_ENC_BUG
+    b0 = (UINT32) ( a[3] & 0xf0 );    /* 1111 0000  */
+    b1 = (UINT32) ( a[4] & 0x1f );    /* 0001 1111  */
+    h = (UINT32) ( b0 | b1 << 8 ) >> 4;
+#else
+    b0 = (UINT32) ( a[3] & 0x0f );    /* 0000 1111  */
+    b1 = (UINT32) ( a[4] & 0xf8 );    /* 1111 1000  */
+    h = (UINT32) ( b0 << 8 | b1 ) >> 3;
 #endif
     return d26[h];
 }
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-                a9        a8        a7        
-      56-64:	0000 0000 0000 0001 1111 1111 
+/*
+                a9        a8        a7
+      56-64:    0000 0000 0000 0001 1111 1111
+*/
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get dublet (bits 56..64)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-const char* base26_dublet_for_bits_56_to_64(unsigned char *a)
+/****************************************************************************
+ Get dublet (bits 56..64)
+****************************************************************************/
+const char* base26_dublet_for_bits_56_to_64( unsigned char *a )
 {
-UINT32 b0, b1, h;
+    UINT32 b0, b1, h;
 #ifndef FIX_BASE26_ENC_BUG
-    b0 = (UINT32) ( a[7] );	        /* 1111 1111  */ 
-    b1 = (UINT32) ( a[8] & 0x01 );	/* 0000 0001  */ 
-    h =  (UINT32)( b0 | b1 << 8 );
+    b0 = (UINT32) ( a[7] );            /* 1111 1111  */
+    b1 = (UINT32) ( a[8] & 0x01 );    /* 0000 0001  */
+    h = (UINT32) ( b0 | b1 << 8 );
 #else
-    b0 = (UINT32) ( a[7] );	        /* 1111 1111  */ 
-    b1 = (UINT32) ( a[8] & 0x80 );	/* 1000 0000  */ 
-    h =  (UINT32)( b0 << 8 | b1 ) >> 7;
+    b0 = (UINT32) ( a[7] );            /* 1111 1111  */
+    b1 = (UINT32) ( a[8] & 0x80 );    /* 1000 0000  */
+    h = (UINT32) ( b0 << 8 | b1 ) >> 7;
 #endif
     return d26[h];
 }
 
 
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Calculate check character A..Z for the string.
-NB: ignore delimiter dashes.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-char base26_checksum(const char *str)
+/****************************************************************************
+ Get hash extension in hexadecimal representation for the major block.
+ Len(extension) = 256 - 65 = 191 bit.
+****************************************************************************/
+void get_xtra_hash_major_hex( const unsigned char *a, char* szXtra )
 {
-size_t slen, j, jj=0, checksum = 0;
-char c;
-
-    slen = strlen(str);
-
-    for (j=0; j < slen; j++) 
-    { 
-        c = str[j];
-        if (c=='-') 
-            continue;
-        
-        checksum+= weights_for_checksum[jj]*c; 
-        
-        jj++;
-        if (jj > N_UNIQUE_WEIGHTS - 1) 
-            jj = 0;
-
+    unsigned char c;
+    int i, j, start_byte = 8;
+#ifndef FIX_BASE26_ENC_BUG
+    c = a[start_byte] & 0xfe;  /* 1111 1110  */
+#else
+    c = a[start_byte] & 0x7f;  /* 0111 1111  */
+#endif
+    j = sprintf(szXtra, "%02x", c);
+    for (i = start_byte + 1; i < 32; i++)
+    {
+        j += sprintf(szXtra + j, "%02x", a[i]);
     }
-    return c26[checksum%26];
 }
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get hash extension in hexadecimal representation for the major block.
-Len(extension) = 256 - 65 = 191 bit.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-void get_xtra_hash_major_hex(const unsigned char *a, char* szXtra)
-{
-unsigned char c;
-int i, j, start_byte=8;
-#ifndef FIX_BASE26_ENC_BUG
-    c =  a[start_byte] & 0xfe ;  /* 1111 1110  */ 
-#else
-    c =  a[start_byte] & 0x7f ;  /* 0111 1111  */ 
-#endif
-    j = sprintf(szXtra,"%02x", c);
-    for( i = start_byte+1; i < 32; i++ )
-        j+= sprintf(szXtra+j,"%02x", a[i]);
-}
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Get hash extension in hexadecimal representation for the minor block.
-Len(extension) = 256 - 37 = 219 bit.
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-void get_xtra_hash_minor_hex(const unsigned char *a, char* szXtra)
+/****************************************************************************
+ Get hash extension in hexadecimal representation for the minor block.
+ Len(extension) = 256 - 37 = 219 bit.
+****************************************************************************/
+void get_xtra_hash_minor_hex( const unsigned char *a, char* szXtra )
 {
-unsigned char c;
-int i, j, start_byte=4;
+    unsigned char c;
+    int i, j, start_byte = 4;
 #ifndef FIX_BASE26_ENC_BUG
-    c = a[start_byte] & 0xe0 ;  /* 1110 0000  */
+    c = a[start_byte] & 0xe0;  /* 1110 0000  */
 #else
-    c = a[start_byte] & 0x07 ;  /* 0000 0111  */ 
+    c = a[start_byte] & 0x07;  /* 0000 0111  */
 #endif
-    j = sprintf(szXtra,"%02x", c);
-    for( i = start_byte+1; i < 32; i++ )
-        j+= sprintf(szXtra+j,"%02x", a[i]);
+    j = sprintf(szXtra, "%02x", c);
+    for (i = start_byte + 1; i < 32; i++)
+    {
+        j += sprintf(szXtra + j, "%02x", a[i]);
+    }
 }
