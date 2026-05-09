@@ -34,6 +34,7 @@ GNU General Public License for more details.
 #include <openbabel/obconversion.h>
 
 #include <fstream>
+#include <sstream>
 #include <string>
 
 using namespace std;
@@ -73,6 +74,41 @@ static bool RunRepro(const string &cveId, const string &inFormat,
   return true;
 }
 
+// Read a reproducer in one format and round-trip it through a writer
+// in another format. As with RunRepro, success or failure of the read
+// or write is irrelevant -- the goal is to ensure neither path crashes
+// or trips a sanitizer.
+static bool RunReproConvert(const string &caseId, const string &inFormat,
+                            const string &outFormat, const string &filename)
+{
+  string path = GetFuzzFile(filename);
+  ifstream probe(path.c_str());
+  if (!probe.good()) {
+    cout << "# skip " << caseId << ": corpus file missing (" << path << ")\n";
+    return true;
+  }
+
+  OBConversion conv;
+  if (!conv.SetInFormat(inFormat.c_str())) {
+    cout << "# skip " << caseId << ": input format " << inFormat
+         << " not registered in this build\n";
+    return true;
+  }
+  if (!conv.SetOutFormat(outFormat.c_str())) {
+    cout << "# skip " << caseId << ": output format " << outFormat
+         << " not registered in this build\n";
+    return true;
+  }
+
+  OBMol mol;
+  if (!conv.ReadFile(&mol, path))
+    return true;
+
+  ostringstream out;
+  conv.Write(&mol, &out);
+  return true;
+}
+
 // CVE-2026-2704: heap-buffer-overflow in transform3d::DescribeAsString
 // when parsing a CIF with an all-zero row in a space-group transform.
 // Fixed in PR #2862.
@@ -95,6 +131,15 @@ void caseCVE_2026_2705()
 void caseCVE_2026_3408()
 {
   OB_ASSERT(RunRepro("CVE-2026-3408", "cdxml", "cve-2026-3408.cdxml"));
+}
+
+// ANT-2026-00770: crash when writing a star-shaped molecule (one
+// central atom bonded to seven peripheral atoms) as MCDL. Read the
+// MOL/SDF reproducer and exercise the MCDL writer.
+void caseANT_2026_00770()
+{
+  OB_ASSERT(RunReproConvert("ANT-2026-00770", "sdf", "mcdl",
+                            "ant-2026-00770.sdf"));
 }
 
 int fuzzregresstest(int argc, char *argv[])
@@ -124,6 +169,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 3:
     caseCVE_2026_3408();
+    break;
+  case 4:
+    caseANT_2026_00770();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
