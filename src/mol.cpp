@@ -1441,6 +1441,18 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__,
                             "Ran OpenBabel::Clear Molecule", obAuditMsg);
 
+    // Destroy residues first: ~OBResidue() walks its atom list to clear
+    // back-pointers via SetResidue(nullptr). If atoms were destroyed
+    // first, those calls would dereference dead pointers (UBSAN trips
+    // in residue.cpp:853). The symmetric path in ~OBAtom() already
+    // handles the reverse direction by checking _residue != nullptr.
+    unsigned int ii;
+    for (ii=0 ; ii<_residue.size() ; ++ii)
+      {
+        DestroyResidue(_residue[ii]);
+      }
+    _residue.clear();
+
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
     for (i = _vatom.begin();i != _vatom.end();++i)
@@ -1457,14 +1469,6 @@ namespace OpenBabel
     _atomIds.clear();
     _bondIds.clear();
     _natoms = _nbonds = 0;
-
-    //Delete residues
-    unsigned int ii;
-    for (ii=0 ; ii<_residue.size() ; ++ii)
-      {
-        DestroyResidue(_residue[ii]);
-      }
-    _residue.clear();
 
     //clear out the multiconformer data
     vector<double*>::iterator k;
