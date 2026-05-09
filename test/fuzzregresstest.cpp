@@ -142,6 +142,46 @@ void caseANT_2026_00770()
                             "ant-2026-00770.sdf"));
 }
 
+// CVE-2022-46291: out-of-bounds write into a fixed 3-element
+// translationVectors[] in GaussianOutputFormat when the orientation
+// block contains more than three atomicNum=-2 (Tv) rows.
+void caseCVE_2022_46291()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46291", "g09", "cve-2022-46291.g09"));
+}
+
+// CVE-2022-46292: out-of-bounds write into translationVectors[] in
+// MOPACFormat when the "UNIT CELL TRANSLATION" block contains more
+// than three lattice-vector rows.
+void caseCVE_2022_46292()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46292", "mopout", "cve-2022-46292.out"));
+}
+
+// CVE-2022-46293: out-of-bounds write into translationVectors[] in
+// MOPACFormat when the "FINAL POINT AND DERIVATIVES" block contains
+// more than three Tv-atom Z-component rows.
+void caseCVE_2022_46293()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46293", "mopout", "cve-2022-46293.out"));
+}
+
+// CVE-2022-46294: out-of-bounds write into translationVectors[] in
+// MOPACCARTFormat when the input contains more than three Tv-element
+// atom rows.
+void caseCVE_2022_46294()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46294", "mop", "cve-2022-46294.mop"));
+}
+
+// CVE-2022-46295: out-of-bounds write into translationVectors[] in
+// MSIFormat when a PeriodicType record is followed by more than
+// three lattice-vector lines.
+void caseCVE_2022_46295()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46295", "msi", "cve-2022-46295.msi"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -172,6 +212,21 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 4:
     caseANT_2026_00770();
+    break;
+  case 5:
+    caseCVE_2022_46291();
+    break;
+  case 6:
+    caseCVE_2022_46292();
+    break;
+  case 7:
+    caseCVE_2022_46293();
+    break;
+  case 8:
+    caseCVE_2022_46294();
+    break;
+  case 9:
+    caseCVE_2022_46295();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

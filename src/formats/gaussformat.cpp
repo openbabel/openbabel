@@ -621,7 +621,7 @@ namespace OpenBabel
                     coordinates.push_back(y);
                     coordinates.push_back(z);
                   }
-                else {
+                else if (numTranslationVectors < 3) {
                   translationVectors[numTranslationVectors++].Set(x, y, z);
                 }
 
