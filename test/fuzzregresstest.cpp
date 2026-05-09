@@ -199,6 +199,32 @@ void caseCVE_2022_46290()
   OB_ASSERT(RunRepro("CVE-2022-46290", "orca", "cve-2022-46290.out"));
 }
 
+// CVE-2022-42885: uninitialized OBResidue* in GROFormat::WriteMolecule
+// when the molecule has no residue information (e.g. read from XYZ).
+// The write path dereferenced `res` without a null check.
+void caseCVE_2022_42885()
+{
+  OB_ASSERT(RunReproConvert("CVE-2022-42885", "xyz", "gro",
+                            "cve-2022-42885.xyz"));
+}
+
+// CVE-2022-44451: uninitialized OBAtom* in MSIFormat::ReadMolecule
+// when an atom record contains an XYZ line before the ACL line that
+// allocates the atom object.
+void caseCVE_2022_44451()
+{
+  OB_ASSERT(RunRepro("CVE-2022-44451", "msi", "cve-2022-44451.msi"));
+}
+
+// CVE-2022-46280: uninitialized OBFormat* in PQSFormat::ReadMolecule
+// when a "geom file=" line references an external file whose suffix
+// does not match any of the recognized =car/=hin/=pdb/=mop patterns,
+// leaving pFormat garbage before the dispatch call.
+void caseCVE_2022_46280()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46280", "pqs", "cve-2022-46280.pqs"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -250,6 +276,15 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 11:
     caseCVE_2022_46290();
+    break;
+  case 12:
+    caseCVE_2022_42885();
+    break;
+  case 13:
+    caseCVE_2022_44451();
+    break;
+  case 14:
+    caseCVE_2022_46280();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
