@@ -55,7 +55,9 @@ jobs:
 
     - name: Install Dependencies (Linux)
       if: runner.os == 'Linux'
-      run: sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev libcairo2-dev
+      run: |
+        sudo apt-get -qq update
+        sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev libcairo2-dev
 
     - name: Install Dependencies (Windows)
       if: runner.os == 'Windows'
