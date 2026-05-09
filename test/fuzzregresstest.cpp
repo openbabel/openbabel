@@ -182,6 +182,23 @@ void caseCVE_2022_46295()
   OB_ASSERT(RunRepro("CVE-2022-46295", "msi", "cve-2022-46295.msi"));
 }
 
+// CVE-2022-46289: out-of-bounds write into the confCoords[] heap
+// buffer in OrcaOutputFormat when the "Number of atoms" header
+// understates the row count of the following CARTESIAN COORDINATES
+// (ANGSTROEM) block.
+void caseCVE_2022_46289()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46289", "orca", "cve-2022-46289.out"));
+}
+
+// CVE-2022-46290: out-of-bounds write in OrcaOutputFormat reachable
+// via a malformed "Number of atoms" value (e.g. negative) that
+// previously skipped the confCoords[] bounds check.
+void caseCVE_2022_46290()
+{
+  OB_ASSERT(RunRepro("CVE-2022-46290", "orca", "cve-2022-46290.out"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -227,6 +244,12 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 9:
     caseCVE_2022_46295();
+    break;
+  case 10:
+    caseCVE_2022_46289();
+    break;
+  case 11:
+    caseCVE_2022_46290();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
