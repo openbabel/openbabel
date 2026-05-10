@@ -66,7 +66,7 @@ the GitHub Security Advisory once published.
 | [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: title | Out-of-bounds write | Open | — | — | — |
 | [CVE-2022-42885](https://nvd.nist.gov/vuln/detail/CVE-2022-42885) | GRO: res | Uninitialized pointer | Pending merge | — | — | — |
 | [CVE-2022-43467](https://nvd.nist.gov/vuln/detail/CVE-2022-43467) | PQS: coord_file | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-43607](https://nvd.nist.gov/vuln/detail/CVE-2022-43607) | MOL2: attribute/value | Out-of-bounds write | Open | — | — | — |
+| [CVE-2022-43607](https://nvd.nist.gov/vuln/detail/CVE-2022-43607) | MOL2: attribute/value | Out-of-bounds write | Pending merge | — | — | — |
 | [CVE-2022-44451](https://nvd.nist.gov/vuln/detail/CVE-2022-44451) | MSI: atom | Uninitialized pointer | Pending merge | — | — | — |
 | [CVE-2022-46280](https://nvd.nist.gov/vuln/detail/CVE-2022-46280) | PQS: pFormat | Uninitialized pointer | Pending merge | — | — | — |
 | [CVE-2022-46289](https://nvd.nist.gov/vuln/detail/CVE-2022-46289) | ORCA: nAtoms | Out-of-bounds write | Pending merge | — | — | — |
