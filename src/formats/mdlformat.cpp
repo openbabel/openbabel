@@ -1495,6 +1495,7 @@ namespace OpenBabel
       {
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[2]=="END") break;
+        if(vs.size() < 7) return false; // need index, type, x, y, z
 
         indexmap[ReadUIntField(vs[2].c_str())] = obindex;
         atom.SetVector(atof(vs[4].c_str()), atof(vs[5].c_str()), atof(vs[6].c_str()));
@@ -1569,6 +1570,7 @@ namespace OpenBabel
       {
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[2]=="END") break;
+        if(vs.size() < 6) return false; // need index, order, atom1, atom2
 
         unsigned flag=0;
 
