@@ -21,6 +21,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
+#include <openbabel/generic.h>
 
 
 const double AAU = 0.5291772108;  // �ngstr�m per bohr (CODATA 2002)
@@ -168,9 +169,23 @@ bool TurbomoleFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
     if(pConv->IsOption("a"))
       UnitConv=1;
 
+    char buffer[BUFF_SIZE];
+
+    if (mol.HasData(OBGenericDataType::UnitCell)) {
+      const auto *const uc =
+          static_cast<OBUnitCell *>(mol.GetData(OBGenericDataType::UnitCell));
+      const auto &cell = uc->GetCellVectors();
+      ofs << "$periodic 3\n"
+          << "$lattice\n";
+      for (const auto &v : cell) {
+        snprintf(buffer, BUFF_SIZE, "%20.14f  %20.14f  %20.14f",
+                 v.x() / UnitConv, v.y() / UnitConv, v.z() / UnitConv);
+        ofs << buffer << '\n';
+      }
+    }
+
     ofs << "$coord" <<endl;
 
-    char buffer[BUFF_SIZE];
     OBAtom *atom;
     vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
