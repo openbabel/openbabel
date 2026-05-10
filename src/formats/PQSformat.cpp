@@ -231,8 +231,11 @@ namespace OpenBabel
                     else
                       full_coord_path[0] = '\0';
                   }
-                strcat(full_coord_path,coord_file);
-                full_coord_path[sizeof(full_coord_path) - 1] = '\0';
+                // CVE-2022-43467: use strncat to avoid overflowing
+                // full_coord_path when the directory prefix plus
+                // coord_file together exceed the 256-byte buffer.
+                strncat(full_coord_path, coord_file,
+                        sizeof(full_coord_path) - strlen(full_coord_path) - 1);
                 stringstream errorMsg;
                 errorMsg <<"External geometry file referenced: "<< \
                   full_coord_path<<endl;
@@ -302,7 +305,8 @@ namespace OpenBabel
             coord_file[sizeof(coord_file) - 1] = '\0';
             if (strrchr(coord_file, '.') != nullptr)
               *strrchr(coord_file,'.')='\0';
-            strcat(coord_file,".coord");
+            strncat(coord_file, ".coord",
+                    sizeof(coord_file) - strlen(coord_file) - 1);
             coordFileStream.open(coord_file);
             if (!coordFileStream)
               {

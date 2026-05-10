@@ -109,6 +109,31 @@ static bool RunReproConvert(const string &caseId, const string &inFormat,
   return true;
 }
 
+// Like RunRepro but sets one INOPTION flag before reading.  Needed for
+// formats that gate a code path behind a conversion option (e.g. mol2 -c).
+static bool RunReproWithInputFlag(const string &cveId, const string &inFormat,
+                                  const string &filename, const string &flag)
+{
+  string path = GetFuzzFile(filename);
+  ifstream probe(path.c_str());
+  if (!probe.good()) {
+    cout << "# skip " << cveId << ": corpus file missing (" << path << ")\n";
+    return true;
+  }
+
+  OBConversion conv;
+  if (!conv.SetInFormat(inFormat.c_str())) {
+    cout << "# skip " << cveId << ": format " << inFormat
+         << " not registered in this build\n";
+    return true;
+  }
+  conv.AddOption(flag.c_str(), OBConversion::INOPTIONS);
+
+  OBMol mol;
+  conv.ReadFile(&mol, path);
+  return true;
+}
+
 // CVE-2026-2704: heap-buffer-overflow in transform3d::DescribeAsString
 // when parsing a CIF with an all-zero row in a space-group transform.
 // Fixed in PR #2862.
@@ -225,6 +250,26 @@ void caseCVE_2022_46280()
   OB_ASSERT(RunRepro("CVE-2022-46280", "pqs", "cve-2022-46280.pqs"));
 }
 
+// CVE-2022-43467: out-of-bounds write in PQSFormat::ReadMolecule when
+// a relative "geom file=" name is long enough that the directory prefix
+// copied from the title plus the filename together overflow the 256-byte
+// full_coord_path[] buffer in the strcat() call.
+void caseCVE_2022_43467()
+{
+  OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
+}
+
+// CVE-2022-43607: stack-buffer-overflow in MOL2Format::ReadMolecule when
+// parsing a UCSF Dock "##########" comment line with an attribute or value
+// field longer than 31 chars.  sscanf %[^:] and %s had no width limit,
+// overflowing the 32-byte attr[] and val[] stack buffers.
+// Requires the -c INOPTION (UCSF Dock comment mode) to reach the sscanf.
+void caseCVE_2022_43607()
+{
+  OB_ASSERT(RunReproWithInputFlag("CVE-2022-43607", "mol2",
+                                  "cve-2022-43607.mol2", "c"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -285,6 +330,12 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 14:
     caseCVE_2022_46280();
+    break;
+  case 15:
+    caseCVE_2022_43467();
+    break;
+  case 16:
+    caseCVE_2022_43607();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

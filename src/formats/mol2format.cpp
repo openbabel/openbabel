@@ -183,7 +183,8 @@ namespace OpenBabel
         if (pConv->IsOption("c", OBConversion::INOPTIONS) != nullptr && EQn(buffer, "###########", 10))
           {
             char attr[32], val[32];
-            sscanf(buffer, "########## %[^:]:%s", attr, val);
+            // CVE-2022-43607: width-limit both specifiers to the buffer size.
+            sscanf(buffer, "########## %31[^:]:%31s", attr, val);
             OBPairData *dd = new OBPairData;
             dd->SetAttribute(attr);
             dd->SetValue(val);
