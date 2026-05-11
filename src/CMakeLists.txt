@@ -15,7 +15,7 @@ set(charges
   charges/fromfile.cpp
 )
 
-if (EIGEN2_FOUND OR EIGEN3_FOUND)
+if (TARGET Eigen3::Eigen)
 # if eigen is available, compile QEq, EQeq, and QTPIE charge models
 set(charges ${charges}
   charges/eqeq.cpp
@@ -58,7 +58,7 @@ set(math_srcs
   math/vector3.cpp
 )
 
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(math_srcs ${math_srcs}
     math/align.cpp
   )
@@ -89,7 +89,7 @@ set(ops
   ops/ophighlight.cpp
   ops/xout.cpp
 )
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(ops ${ops}
     ops/conformer.cpp
     ops/opalign.cpp
@@ -163,7 +163,7 @@ set(openbabel_srcs
   typer.cpp
   obmolecformat.cpp
 )
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(openbabel_srcs ${openbabel_srcs}
     conformersearch.cpp
     confsearch.cpp
@@ -254,6 +254,9 @@ add_dependencies(openbabel data_headers)
 target_link_libraries(openbabel PRIVATE ${libs})
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
+endif()
+if(TARGET Eigen3::Eigen)
+    target_link_libraries(openbabel PUBLIC Eigen3::Eigen)
 endif()
 
 if(BUILD_SHARED OR BUILD_MIXED)

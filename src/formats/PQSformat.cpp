@@ -46,7 +46,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.pqs-chem.com/"; }
+    { return "https://www.pqs-chem.com/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -231,8 +231,11 @@ namespace OpenBabel
                     else
                       full_coord_path[0] = '\0';
                   }
-                strcat(full_coord_path,coord_file);
-                full_coord_path[sizeof(full_coord_path) - 1] = '\0';
+                // CVE-2022-43467: use strncat to avoid overflowing
+                // full_coord_path when the directory prefix plus
+                // coord_file together exceed the 256-byte buffer.
+                strncat(full_coord_path, coord_file,
+                        sizeof(full_coord_path) - strlen(full_coord_path) - 1);
                 stringstream errorMsg;
                 errorMsg <<"External geometry file referenced: "<< \
                   full_coord_path<<endl;
@@ -251,15 +254,26 @@ namespace OpenBabel
 
                     //New framework mods
                     OBConversion coordconv(&coordFileStream);
-                    OBFormat* pFormat;
+                    // CVE-2022-46280: pFormat must be initialized so the
+                    // dispatch below does not call into a garbage pointer
+                    // when no recognized "=car/=hin/=pdb/=mop" suffix is
+                    // present, and FindFormat may also return nullptr if
+                    // the requested format is not registered in this build.
+                    OBFormat* pFormat = nullptr;
                     if (strstr(buffer, "=car" ) != nullptr)
-                      pFormat =OBConversion::FindFormat("BIOSYM");
-                    if (strstr(buffer, "=hin" ) != nullptr)
+                      pFormat = OBConversion::FindFormat("BIOSYM");
+                    else if (strstr(buffer, "=hin" ) != nullptr)
                       pFormat = OBConversion::FindFormat("HIN");
-                    if (strstr(buffer, "=pdb" ) != nullptr)
+                    else if (strstr(buffer, "=pdb" ) != nullptr)
                       pFormat = OBConversion::FindFormat("PDB");
-                    if (strstr(buffer, "=mop" ) != nullptr)
+                    else if (strstr(buffer, "=mop" ) != nullptr)
                       pFormat = OBConversion::FindFormat("MOPAC");
+                    if (pFormat == nullptr) {
+                      obErrorLog.ThrowError(__FUNCTION__,
+                        "PQS external geometry: unsupported or unregistered "
+                        "coordinate format", obError);
+                      return false;
+                    }
                     return pFormat->ReadMolecule(&mol,&coordconv);
 
                     /*         if (strstr(buffer,"=car" )!=NULL)
@@ -291,7 +305,8 @@ namespace OpenBabel
             coord_file[sizeof(coord_file) - 1] = '\0';
             if (strrchr(coord_file, '.') != nullptr)
               *strrchr(coord_file,'.')='\0';
-            strcat(coord_file,".coord");
+            strncat(coord_file, ".coord",
+                    sizeof(coord_file) - strlen(coord_file) - 1);
             coordFileStream.open(coord_file);
             if (!coordFileStream)
               {

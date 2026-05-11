@@ -69,7 +69,7 @@ public:
   //Optional URL where the file format is specified
   const char* SpecificationURL() override
   {
-    return "http://www.crystal.unito.it/";
+    return "https://www.crystal.unito.it/";
   }
 
   /* Flags() can return be any of the following combined by |

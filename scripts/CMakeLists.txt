@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.6.0)
+cmake_minimum_required(VERSION 3.10.0)
 # Library versioning (used in Mac Python bindings)x
 set(SOVERSION 4)
 
@@ -22,18 +22,8 @@ if (RUN_SWIG)
 endif (RUN_SWIG)
 
 # The following needs to be kept in synch with ..\CMakeLists.txt
-if(EIGEN3_FOUND)
-  set (eigen_define "-DHAVE_EIGEN" "-DHAVE_EIGEN3")
-  include_directories(${EIGEN3_INCLUDE_DIR})
-  set (CPPFLAGS_VALUE "-I${EIGEN3_INCLUDE_DIR}")
-  set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-else()
-  if(EIGEN2_FOUND)
-    set (eigen_define "-DHAVE_EIGEN")
-    include_directories(${EIGEN2_INCLUDE_DIR})
-    set (CPPFLAGS_VALUE "-I${EIGEN2_INCLUDE_DIR}")
-    set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-  endif()
+if(TARGET Eigen3::Eigen)
+  set (eigen_define "-DHAVE_EIGEN3")
 endif()
 
 ###################
@@ -108,24 +98,14 @@ if (DO_PYTHON_BINDINGS)
             PREFIX ""
             LIBRARY_OUTPUT_DIRECTORY "${openbabel_SOURCE_DIR}/scripts/python/openbabel/"
             SUFFIX .so )
-      if( "${PYTHON_INSTDIR}" STREQUAL "" )
-        execute_process(
-          COMMAND
-          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
-          OUTPUT_VARIABLE PYTHON_INSTDIR
-          OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-	#workaround for https://bugs.launchpad.net/ubuntu/+source/python3-defaults/+bug/1814653
-	if(NOT ${PYTHON_INSTDIR} MATCHES "python[0-9].[0-9]")
-	  execute_process(
-           COMMAND
-           ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,1,prefix='${CMAKE_INSTALL_PREFIX}'))"
-           OUTPUT_VARIABLE PYTHON_INSTDIR
-           OUTPUT_STRIP_TRAILING_WHITESPACE
+	if( "${PYTHON_INSTDIR}" STREQUAL "" )
+          execute_process(
+            COMMAND
+           ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+            OUTPUT_VARIABLE PYTHON_INSTDIR
+            OUTPUT_STRIP_TRAILING_WHITESPACE
           )
-          set(PYTHON_INSTDIR "${PYTHON_INSTDIR}/dist-packages")
-	endif()
-      endif()
+        endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
@@ -149,7 +129,7 @@ if (DO_PYTHON_BINDINGS)
             SUFFIX .pyd )
         execute_process(
           COMMAND
-          ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print(sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_PREFIX}'))"
+	  ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )

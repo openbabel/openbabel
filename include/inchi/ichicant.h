@@ -1,52 +1,55 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
+ * info@inchi-trust.org
+ *
+*/
 
 
-#ifndef __INCHICANT_H__
-#define __INCHICANT_H__
+#ifndef _INCHICANT_H_
+#define _INCHICANT_H_
 
-/******************************************************/
-/*                                                    */
-/*                 Canonicalization definitions       */
-/*                                                    */
-/******************************************************/
+
 #include "ichisize.h"
+#include "ichinorm.h"
 
+
+/*
+    Canonicalization definitions
+*/
 
 #ifndef INCHI_US_SHORT_DEF
 typedef signed short S_SHORT;
@@ -61,7 +64,7 @@ typedef union tagSplitLong {
     U_SHORT        us[2];
 }SU_LONG;
 
-#define _HI 1                            /* Intel platform */
+#define _HI 1            /* Intel platform */
 #define _LO 0
 
 #define NEIGH_LIST_LEN 4
@@ -83,15 +86,14 @@ typedef struct tagEQUIV_INFO {
 
 #define MOL_PART_MASK  (~0x0U ^ 0x07U)
 
-
 typedef struct tagAtData_dch {
-     char element[3];
-     int valence;
-   }AT_DATA;
+    char element[3];
+    int valence;
+}AT_DATA;
 
 
 #define MAXVAL 20       /* maximum valence */
- 
+
 #define ATOM_EL_LEN 6
 
 typedef struct tagAtomInvariantBytes {
@@ -99,7 +101,7 @@ typedef struct tagAtomInvariantBytes {
     S_CHAR cNumberOfConnections;
     /* S_CHAR cNumberOfNonHydrogenBonds; */
     S_CHAR cAtomicNumber;
-#if ( HYDROGENS_IN_INIT_RANKS == 1 ) 
+#if ( HYDROGENS_IN_INIT_RANKS == 1 )
     S_CHAR cNumberOfAttachedHydrogens;
 #endif
 } ATOM_INVARIANT_BYTES;
@@ -124,11 +126,11 @@ typedef enum tagAtInvariantIndexes {
     /* for endpoint + undirected graph, otherwise 0 */
     AT_INV_NUM_TG_ENDPOINTS,
     AT_INV_TG_NUMBERS,       /* num H, num (-) */
-    AT_INV_NUM_H_FIX = AT_INV_TG_NUMBERS+T_NUM_NO_ISOTOPIC,
+    AT_INV_NUM_H_FIX = AT_INV_TG_NUMBERS + T_NUM_NO_ISOTOPIC,
     AT_INV_BREAK1,
     /* here compare iso sort key */
     AT_INV_TAUT_ISO = AT_INV_BREAK1,
-    AT_INV_LENGTH   = AT_INV_TAUT_ISO + T_NUM_ISOTOPIC
+    AT_INV_LENGTH = AT_INV_TAUT_ISO + T_NUM_ISOTOPIC
 } AT_INV_INDEXES;
 
 typedef struct tagAtomInvariant2 {
@@ -181,7 +183,6 @@ typedef struct tagFixHOrTautCanonNumbering {
     int              len_iso_sort_keys;
     S_CHAR          *iso_exchg_atnos;     /* canonical: 0=> tautomeric or may have isotopic H exchanged */
     S_CHAR          *iso_exchg_atnosOrig; /* original: 0=> tautomeric or may have isotopic H exchanged */
-    
 } FTCN;
 
 /******************** BCN *************************************/
@@ -194,7 +195,6 @@ typedef struct tagBaseCanonNumbering {
     int                  num_atoms;
     struct tagInchiTime *ulTimeOutTime;
     FTCN                 ftcn[TAUT_NUM];
-
 } BCN;
 
 /***********************************
@@ -246,11 +246,11 @@ typedef struct tagCanonStat {
                                              1 => StereoCtInv < StereoCt;
                                              2 => StereoCtInv = StereoCt;
                                              3 => StereoCtInv > StereoCt;
-                                           */  
+                                           */
     int               nLenLinearCTStereoCarb;
     int               nLenLinearCTStereoCarbInv;
     int               nMaxLenLinearCTStereoCarb;  /* new */
-    
+
     int               nLenLinearCTIsotopic;
     int               nMaxLenLinearCTIsotopic;
 
@@ -265,12 +265,12 @@ typedef struct tagCanonStat {
 
     int               nLenLinearCTTautomer;
     int               nMaxLenLinearCTTautomer;
-    
+
     int               bCmpIsotopicStereo; /* 0 => no stereo to invert;
                                              1 => StereoCtInv < StereoCt;
                                              2 => StereoCtInv = StereoCt;
                                              3 => StereoCtInv > StereoCt;
-                                           */  
+                                           */
     int               nLenLinearCTIsotopicStereoDble;
     int               nLenLinearCTIsotopicStereoDbleInv;
     int               nMaxLenLinearCTIsotopicStereoDble;
@@ -282,7 +282,7 @@ typedef struct tagCanonStat {
     S_CHAR           *bAtomUsedForStereo;  /* 0 if not a stereo atom or during a canon. rank being mapped on this atom; */
                                            /* STEREO_AT_MARK if an unpapped stereogenic atom */
                                            /* or a number of stereogenic bonds adjacent to an atom */
-    
+
     AT_RANK          *nPrevAtomNumber;
 
     AT_RANK          *nCanonOrd;       /* atom numbers in order of increasing canon. ranks  */
@@ -293,7 +293,7 @@ typedef struct tagCanonStat {
     AT_RANK          *nCanonOrdStereo;     /* atom numbers in order of increasing canon. ranks */
     AT_RANK          *nCanonOrdStereoInv;     /* atom numbers in order of increasing canon. ranks */
     AT_RANK          *nCanonOrdStereoTaut; /* t-group numbers in order of increasing canon. ranks */
-    
+
     AT_RANK          *nSymmRankIsotopic;
     AT_RANK          *nCanonOrdIsotopic;        /* atom numbers in order of increasing canon. ranks */
     AT_RANK          *nSymmRankIsotopicTaut;    /* !!! */
@@ -331,32 +331,56 @@ typedef struct tagCanonStat {
     S_CHAR    *nExchgIsoH;
 } CANON_STAT;
 
+
+
+
+typedef struct tagCANON_GLOBALS
+{
+    const NEIGH_LIST      *m_pNeighList_RankForSort;
+    const ATOM_INVARIANT2 *m_pAtomInvariant2ForSort;
+    const AT_NUMB         *m_pNeighborsForSort;
+    const AT_RANK         *m_pn_RankForSort;
+    AT_RANK m_nMaxAtNeighRankForSort;
+    int m_nNumCompNeighborsRanksCountEql;
+    bitWord *m_bBit;
+    int m_bBitInitialized;
+    int m_num_bit;
+} CANON_GLOBALS;
+
+int  SetBitCreate( struct tagCANON_GLOBALS *pCG );
+
+void inchi_qsort( void *pParam, void *base, size_t num, size_t width, int( *comp )( const void *, const void *, void * ) );
+
+
+
+
+
 /**************************************************/
 typedef struct tagCanonData {
-    
+
     /* same names/types as in ConTable; here the order is from original numbering */
-    
+
     AT_NUMB *LinearCT;  /* output ?? */
-    
+
     int      nMaxLenLinearCT;
     int      nLenLinearCT;
     int      nLenCTAtOnly;
     int      nCanonFlags;
     /* hydrogen atoms fixed in tautomeric representation:
        compare before diff sign inversion: (+) <=> Ct1->() > Ct2->() */
-    NUM_H          *NumH;      
+    NUM_H          *NumH;
     int             lenNumH;    /* used length */
     int             maxlenNumH; /*  n + T_NUM_NO_ISOTOPIC*(n_tg-n) + 1 */
 
     /* hydrogen atoms fixed in non-tautomeric representation only:
        compare before diff sign inversion: (+) <=> Ct1->() > Ct2->() */
-    NUM_H           *NumHfixed;          
-    int              lenNumHfixed;       /* used length */   
+    NUM_H           *NumHfixed;
+    int              lenNumHfixed;       /* used length */
     int              maxlenNumHfixed;    /* max length = n+1  */
 
     /* isotopic atoms (without tautomeric H) and isotopic tautomeric groups */
     /* note: AT_ISO_SORT_KEY and T_GROUP_ISOWT are identical types: long    */
-    AT_ISO_SORT_KEY *iso_sort_key;        
+    AT_ISO_SORT_KEY *iso_sort_key;
     int              len_iso_sort_key;    /* used length */
     int              maxlen_iso_sort_key; /* max length = n_tg+1 */
     S_CHAR          *iso_exchg_atnos;
@@ -364,9 +388,9 @@ typedef struct tagCanonData {
     int              maxlen_iso_exchg_atnos;
 
     /* isotopic hydrogen atoms fixed in non-tautomeric representation only */
-#if ( USE_ISO_SORT_KEY_HFIXED == 1 )       
-    AT_ISO_SORT_KEY *iso_sort_key_Hfixed;     
-    int              len_iso_sort_key_Hfixed;    /* used length */    
+#if ( USE_ISO_SORT_KEY_HFIXED == 1 )
+    AT_ISO_SORT_KEY *iso_sort_key_Hfixed;
+    int              len_iso_sort_key_Hfixed;    /* used length */
     int              maxlen_iso_sort_key_Hfixed; /* max length = n+1  */
 #endif
     /* auxiliary ranking */
@@ -374,7 +398,6 @@ typedef struct tagCanonData {
     AT_RANK  *nAuxRank;
 
     struct tagInchiTime *ulTimeOutTime;  /* timeout */
-
 } CANON_DATA;
 /**************************************************/
 
@@ -387,7 +410,6 @@ typedef struct tagCanonCounts {
     double    dGroupSize;
     long     lNumGenerators;
     long     lNumStoredIsomorphisms;
-
 } CANON_COUNTS;
 /***********************************************
  tree structure: one segment
@@ -406,4 +428,5 @@ typedef struct tagCurTree {
     int       incr_len; /* reallocation increment */
 } CUR_TREE;
 
-#endif /* __INCHICANT_H__ */
+
+#endif /* _INCHICANT_H_ */
