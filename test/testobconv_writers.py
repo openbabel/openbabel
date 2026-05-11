@@ -714,7 +714,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
         {
           "x": -20.009999999999999,
           "y": 0.10200000000000001,
-          "l": 8
+          "l": "O"
         }
       ],
       "b": [
