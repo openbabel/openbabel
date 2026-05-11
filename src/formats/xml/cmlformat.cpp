@@ -267,15 +267,16 @@ namespace OpenBabel
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "id");
         if(!ptitle)
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "molID");//Marvin
-        if(ptitle)
+        if(ptitle) {
           _pmol->SetTitle((const char*)ptitle);
+          xmlFree((void*)ptitle);
+        }
 
         ptitle = xmlTextReaderGetAttribute(reader(), BAD_CAST "spinMultiplicity");
-        if(ptitle)
+        if(ptitle) {
           _pmol->SetTotalSpinMultiplicity(atoi((const char*)ptitle));
-
-        // free((void*)ptitle);//libxml2 doc says "The string must be deallocated by the caller."
-
+          xmlFree((void*)ptitle); //libxml2 doc says "The string must be deallocated by the caller."
+        }
       }
     else if(name=="atomArray")
       {
