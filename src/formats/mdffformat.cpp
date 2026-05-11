@@ -64,7 +64,7 @@ namespace OpenBabel {
         ;
     }
 
-    const char* SpecificationURL() override { return "https://code.google.com/p/mdff/"; }
+    const char* SpecificationURL() override { return "https://code.google.com/archive/p/mdff/"; }
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply

@@ -58,7 +58,7 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
     };
 
     const char* SpecificationURL() override
-    { return "http://web.chemdoodle.com/docs/chemdoodle-json-format"; };
+    { return "https://web.chemdoodle.com/docs/chemdoodle-json-format"; };
 
     bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
     bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;

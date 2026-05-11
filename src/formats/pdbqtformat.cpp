@@ -97,8 +97,9 @@ namespace OpenBabel
       "  n  Preserve atom names\n\n";
     }
 
-    const char* SpecificationURL() override
-      { return "http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file"; }
+    const char* SpecificationURL() override {
+      return "http://autodock.scripps.edu/faqs-help/faq/what-is-the-format-of-a-pdbqt-file"; // XXX dead
+    }
 
     const char* GetMIMEType() override
       { return "chemical/x-pdbqt"; }
@@ -894,7 +895,46 @@ namespace OpenBabel
           ofs << buffer << endl;
         }
         ofs << "REMARK  Name = " << mol.GetTitle(true) << endl;
-//        ofs << "USER    Name = " << mol.GetTitle(true) << endl;
+        std::vector<OBGenericData*> pairData = mol.GetAllData(OBGenericDataType::PairData);
+        for (std::vector<OBGenericData*>::iterator data = pairData.begin(); data != pairData.end(); ++data) {
+          OBPairData *pd = static_cast<OBPairData*>(*data);
+          string attr = pd->GetAttribute();
+
+          // filter to make sure we are writing pdb fields only
+          if (attr != "HEADER" && attr != "OBSLTE" && attr != "TITLE" && attr != "SPLIT" &&
+              attr != "CAVEAT" && attr != "COMPND" && attr != "SOURCE" && attr != "KEYWDS" &&
+              attr != "EXPDTA" && attr != "NUMMDL" && attr != "MDLTYP" && attr != "AUTHOR" &&
+              attr != "REVDAT" && attr != "SPRSDE" && attr != "JRNL" && attr != "REMARK" &&
+              attr != "DBREF" && attr != "DBREF1" && attr != "DBREF2" && attr != "SEQADV" &&
+              attr != "SEQRES" && attr != "MODRES" && attr != "HET" && attr != "HETNAM" &&
+              attr != "HETSYN" && attr != "FORMUL" && attr != "HELIX" && attr != "SHEET" &&
+              attr != "SSBOND" && attr != "LINK" && attr != "CISPEP" && attr != "SITE" &&
+              attr != "ORIGX1" && attr != "ORIGX2" && attr != "ORIGX3" && attr != "SCALE1" &&
+              attr != "SCALE2" && attr != "SCALE3" && attr != "MATRIX1" && attr != "MATRIX2" &&
+              attr != "MATRIX3" && attr != "MODEL")
+            continue;
+
+          // compute spacing needed. HELIX, SITE, HET, ... are trimmed when reading
+          int nSpacing = 6 - attr.size();
+          for (int i = 0; i < nSpacing; ++i)
+            attr += " ";
+
+
+          std::string lines = pd->GetValue();
+          string::size_type last = 0;
+          string::size_type pos = lines.find('\n');
+          while (last != string::npos) {
+            string line = lines.substr(last, pos - last);
+            if (pos == string::npos)
+              last = string::npos;
+            else
+              last = pos + 1;
+            pos = lines.find('\n', last);
+
+            ofs << attr << line << endl;
+          }
+        }
+
         if (!(pConv->IsOption("r",OBConversion::OUTOPTIONS)))
         {
           char type_name[10];

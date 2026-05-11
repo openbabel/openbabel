@@ -141,7 +141,7 @@ namespace OpenBabel
     };
 
     const char* SpecificationURL() override
-    {return "http://www.xml-cml.org/";}
+    { return "https://www.xml-cml.org/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-cml"; };

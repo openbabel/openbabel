@@ -214,7 +214,7 @@ namespace std { class stringbuf {}; }
 // %include <openbabel/fingerprint.h> // Causes an error (I do not know why)
 %include <openbabel/descriptor.h>
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #else

@@ -36,7 +36,7 @@ namespace OpenBabel {
  * @b CMakeLists.txt
  * @code
 # this line is required for cmake backwards compatibility
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.5)
 
 # name of your project
 project(myproject)
