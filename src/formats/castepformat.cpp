@@ -44,7 +44,7 @@ namespace OpenBabel {
         "The format used by CASTEP.\n\n";
     }
 
-    const char* SpecificationURL() override { return "http://www.castep.org/"; }
+    const char* SpecificationURL() override { return "https://www.castep.org/"; }
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply

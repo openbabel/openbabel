@@ -17,7 +17,7 @@ add_definitions(-DFORMATDIR="${FORMATDIR}/")
 # ############### Add new tests here
 set(cpptests
   alias automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
-  cistrans conversion graphsym gzip addh
+  cistrans conversion fuzzregress graphsym gzip addh
   implicitH lssr isomorphism multicml periodic regressions rotor shuffle smiles spectrophore
   squareplanar stereo stereoperception tautomer tetrahedral
   tetranonplanar tetraplanar uniqueid
@@ -32,6 +32,7 @@ set(carspacegroup_parts 1 2 3 4)
 set(cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12 13)
 set(cistrans_parts 1 2 3 4 5 6 7 8 9)
 set(conversion_parts 1)
+set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16)
 set(graphsym_parts 1 2 3 4 5)
 set(gzip_parts 1)
 set(addh_parts 1)
@@ -54,7 +55,7 @@ set(tetranonplanar_parts 1)
 set(tetraplanar_parts 1)
 set(uniqueid_parts 1 2)
 
-if(EIGEN2_FOUND OR EIGEN3_FOUND)
+if(TARGET Eigen3::Eigen)
   set(cpptests
     align ${cpptests})
   set(align_parts 1 2 3 4 5)
@@ -152,6 +153,7 @@ endif()
 
 add_executable(test_runner ${srclist} obtest.cpp)
 target_link_libraries(test_runner ${libs})
+set_target_properties(test_runner PROPERTIES ENABLE_EXPORTS TRUE)
 
 if(NOT BUILD_SHARED AND NOT BUILD_MIXED)
   set_target_properties(test_runner PROPERTIES LINK_SEARCH_END_STATIC TRUE)
@@ -232,7 +234,7 @@ install(TARGETS roundtrip
 if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
 
-  if(PYTHON_EXECUTABLE)
+  if(Python_EXECUTABLE)
     set(pytests
       babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
 
@@ -248,7 +250,7 @@ if(NOT MINGW AND NOT CYGWIN)
         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
       )
     endforeach(pytest ${pytests})
-  endif(PYTHON_EXECUTABLE)
+  endif(Python_EXECUTABLE)
 endif(NOT MINGW AND NOT CYGWIN)
 
 # ##############################
@@ -317,15 +319,45 @@ if(TEST_DEPICTION AND UNIX)
   endif()
 endif()
 
+# Fuzz harnesses. When LIB_FUZZING_ENGINE is set (OSS-Fuzz build), link
+# against the engine. Otherwise link against a small standalone main so
+# saved corpus files can be replayed as ordinary CTest regression cases.
 if(DEFINED ENV{LIB_FUZZING_ENGINE})
-  add_executable(fuzz_obconversion_smiles fuzz/fuzz_obconversion.cpp)
-  target_compile_definitions(fuzz_obconversion_smiles PRIVATE -DFUZZ_INPUT_FORMAT="SMILES")
-  target_link_libraries(fuzz_obconversion_smiles ${libs} $ENV{LIB_FUZZING_ENGINE})
+  set(_fuzz_main_lib $ENV{LIB_FUZZING_ENGINE})
+  set(_fuzz_extra_src "")
+else()
+  set(_fuzz_main_lib "")
+  set(_fuzz_extra_src fuzz/standalone_main.cc)
+endif()
 
-  add_executable(fuzz_obconversion_sdf fuzz/fuzz_obconversion.cpp)
-  target_compile_definitions(fuzz_obconversion_sdf PRIVATE -DFUZZ_INPUT_FORMAT="SDF")
-  target_link_libraries(fuzz_obconversion_sdf ${libs} $ENV{LIB_FUZZING_ENGINE})
+add_executable(fuzz_obconversion_smiles fuzz/fuzz_obconversion.cpp ${_fuzz_extra_src})
+target_compile_definitions(fuzz_obconversion_smiles PRIVATE -DFUZZ_INPUT_FORMAT="SMILES")
+target_link_libraries(fuzz_obconversion_smiles ${libs} ${_fuzz_main_lib})
 
-  add_executable(fuzz_convert fuzz/fuzz_convert.cpp)
-  target_link_libraries(fuzz_convert ${libs} $ENV{LIB_FUZZING_ENGINE})
+add_executable(fuzz_obconversion_sdf fuzz/fuzz_obconversion.cpp ${_fuzz_extra_src})
+target_compile_definitions(fuzz_obconversion_sdf PRIVATE -DFUZZ_INPUT_FORMAT="SDF")
+target_link_libraries(fuzz_obconversion_sdf ${libs} ${_fuzz_main_lib})
+
+add_executable(fuzz_convert fuzz/fuzz_convert.cpp ${_fuzz_extra_src})
+target_link_libraries(fuzz_convert ${libs} ${_fuzz_main_lib})
+# fuzz_convert.cpp pulls in FuzzedDataProvider.h, which requires C++17
+# (e.g. std::is_enum_v). The top-level project default is still C++11.
+set_target_properties(fuzz_convert PROPERTIES CXX_STANDARD 17)
+
+# Replay each saved corpus file as a regression test. CMake re-evaluates
+# the glob at configure time, so dropping a new file into the corpus
+# directory and re-running cmake is enough to register a new test.
+if(NOT DEFINED ENV{LIB_FUZZING_ENGINE})
+  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles)
+  foreach(_target ${_fuzz_targets})
+    file(GLOB _corpus_files CONFIGURE_DEPENDS
+      "${CMAKE_CURRENT_SOURCE_DIR}/fuzz/corpus/${_target}/*")
+    foreach(_corpus_file ${_corpus_files})
+      get_filename_component(_corpus_name "${_corpus_file}" NAME)
+      add_test(NAME ${_target}_${_corpus_name}
+        COMMAND ${TEST_PATH}/${_target} "${_corpus_file}")
+      set_tests_properties(${_target}_${_corpus_name} PROPERTIES
+        ENVIRONMENT "BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;BABEL_LIBDIR=${FORMATDIR};LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}")
+    endforeach()
+  endforeach()
 endif()

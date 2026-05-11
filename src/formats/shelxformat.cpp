@@ -46,8 +46,9 @@ namespace OpenBabel
         " b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://shelx.uni-ac.gwdg.de/SHELX/"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://shelx.uni-ac.gwdg.de/SHELX/"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-shelx"; }

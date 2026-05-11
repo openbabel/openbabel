@@ -152,8 +152,9 @@ public:
       " o display only objects in tree output\n";
   }
 
-  const char* SpecificationURL() override
-  {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm";}
+  const char* SpecificationURL() override {
+    return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm"; // XXX dead
+  }
 
   const char* GetMIMEType() override
   { return "chemical/x-cdx"; }

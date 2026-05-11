@@ -104,6 +104,7 @@ bool InChIFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     }
     if (ret!=inchi_Ret_WARNING)
     {
+      FreeStructFromINCHI(&out);
       obErrorLog.ThrowError("InChI code", "Reading InChI failed", obError);
       return false;
     }

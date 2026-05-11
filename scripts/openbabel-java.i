@@ -64,7 +64,7 @@
 #include <openbabel/obiter.h>
 %}
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %{
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
@@ -304,7 +304,7 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::OBDescriptor::LessThan;
 %include <openbabel/descriptor.h>
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #else
