@@ -1,4 +1,4 @@
-"""Test OpenBabel executables from Python
+r"""Test OpenBabel executables from Python
 
 Note: Python bindings not used
 
@@ -94,12 +94,12 @@ class TestCisTransSym(TestSym):
         self.cansmi = "Cl/C=C/C=C\\Br"
         self.inchi = "InChI=1S/C4H4BrCl/c5-3-1-2-4-6/h1-4H/b3-1-,4-2+"
         self.smiles = [
-                "C(=C\C=C/Br)/Cl",
-                "Cl/C=C/C=C\Br",
-                "Br/C=C\C=C\Cl",
-                "C(=C\Cl)/C=C\Br",
-                "C(=C\C=C\Cl)\Br",
-                "C(=C\Br)\C=C\Cl"
+                r"C(=C\C=C/Br)/Cl",
+                r"Cl/C=C/C=C\Br",
+                r"Br/C=C\C=C\Cl",
+                r"C(=C\Cl)/C=C\Br",
+                r"C(=C\C=C\Cl)\Br",
+                r"C(=C\Br)\C=C\Cl"
                 ]
 
 class TestLonePairTetSym(TestSym):
@@ -340,7 +340,7 @@ class TestStereoConversion(BaseTest):
         output, error = run_exec(test_inchi, "obabel -iinchi -osmi")
         self.assertEqual(output.rstrip(), "C=C/C=C/c1ccccc1")
 
-        test_smiles = "C=C\C=C/c1ccccc1"
+        test_smiles = r"C=C\C=C/c1ccccc1"
         output, error = run_exec(test_smiles, "obabel -ismi -oinchi")
         self.assertEqual(output.rstrip(), "InChI=1S/C10H10/c1-2-3-7-10-8-5-4-6-9-10/h2-9H,1H2/b7-3-")
     def testChiralToLonePair(self):

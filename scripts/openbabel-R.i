@@ -63,7 +63,7 @@
 %}
 
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %{
 #include <openbabel/forcefield.h>
 #include <openbabel/conformersearch.h>
@@ -364,7 +364,7 @@ IGNORE_ITER(OBMol, Residue)
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 
 // Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);

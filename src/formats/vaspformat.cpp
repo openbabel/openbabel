@@ -111,7 +111,7 @@ namespace OpenBabel {
     }
 
     const char* SpecificationURL() override {
-      return "http://cms.mpi.univie.ac.at/vasp/vasp/vasp.html";
+      return "https://www.vasp.at/wiki/index.php/POSCAR";
     }
 
     /* Flags() can return be any of the following combined by |
@@ -451,7 +451,7 @@ namespace OpenBabel {
             vector<vector3> vib;
             tokenize(vs, buffer);
             int freqnum = atoi(vs[0].c_str());
-            if (vs[1].size() == 1 and vs[1].compare("f") == 0) {
+            if (vs[1].size() == 1 && vs[1].compare("f") == 0) {
               // Real frequency
               Frequencies.push_back(atof(vs[7].c_str()));
             } else if (strstr(vs[1].c_str(), "f/i=")) {

@@ -141,7 +141,7 @@ namespace OpenBabel
     };
 
     const char* SpecificationURL() override
-    {return "http://www.xml-cml.org/";}
+    { return "https://www.xml-cml.org/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-cml"; };
@@ -267,15 +267,16 @@ namespace OpenBabel
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "id");
         if(!ptitle)
           ptitle  = xmlTextReaderGetAttribute(reader(), BAD_CAST "molID");//Marvin
-        if(ptitle)
+        if(ptitle) {
           _pmol->SetTitle((const char*)ptitle);
+          xmlFree((void*)ptitle);
+        }
 
         ptitle = xmlTextReaderGetAttribute(reader(), BAD_CAST "spinMultiplicity");
-        if(ptitle)
+        if(ptitle) {
           _pmol->SetTotalSpinMultiplicity(atoi((const char*)ptitle));
-
-        // free((void*)ptitle);//libxml2 doc says "The string must be deallocated by the caller."
-
+          xmlFree((void*)ptitle); //libxml2 doc says "The string must be deallocated by the caller."
+        }
       }
     else if(name=="atomArray")
       {
@@ -1113,7 +1114,7 @@ namespace OpenBabel
                     pbond2 = _pmol->GetBond(AtomRefIdx[2],AtomRefIdx[3]);
                   }
 
-                if(!pbond1 || !pbond2)
+                if(!pbond1 || !pbond2 || AtomRefIdx.empty())
                   continue;
 
                 // Create the list of 4 atomrefs

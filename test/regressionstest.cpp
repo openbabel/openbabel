@@ -86,7 +86,13 @@ void test_ChemDraw_Basic()
 void test_ChemDraw_XML_Basic()
 {
   static const CdxData cdxmlData[] = {
-      {"methanol.cdxml", "CO\t8\n"}};
+      {"methanol.cdxml", "CO\t8\n"},
+      {"gh2696_mols.cdxml", "[C@H]1(C2C=CC(C1)C2)C\t840\n"
+                            "c1ccccc1\t5\n"
+                            "c1cc(cs1)[C@H](CC)C\t23\n"
+                            "NC(C(=O)O)Cc1c[nH]c2c1cccc2\t523\n"
+                            "NC(C(=O)O)Cc1nc[nH]c1\t263\n"
+                            "C12CC3CC(C1)C1CC3CC2C1\t527\n"}};
 
   ios_base::openmode imode = ios_base::in;
   unsigned int size = sizeof(cdxmlData) / sizeof(CdxData);
@@ -646,6 +652,21 @@ void test_github_issue_2646()
   OB_COMPARE(can, "c1ccccc1");
 }
 
+// https://github.com/openbabel/openbabel/issues/2677
+void test_github_issue_2677()
+{
+  // Make sure that CorrectForPH doesn't mess up residues in pdb
+  OBMolPtr mol = OBTestUtil::ReadFile("1DRF.pdb");
+  OB_ASSERT(mol->HasChainsPerceived());
+  OBAtom *atom_before = mol->GetAtom(1);
+  OBResidue *res_before = atom_before->GetResidue();
+  mol->AddNewHydrogens(PolarHydrogen, true);
+  OBAtom *atom_after = mol->GetAtom(1);
+  OBResidue *res_after = atom_after->GetResidue();
+  OB_REQUIRE(res_after != nullptr);
+  OB_COMPARE(res_after->GetIdx(), res_before->GetIdx());
+}
+
 void test_SegCopySubstructure()
 {
   // Invalid memory access (atom->GetIdx()) detected in valgrind and sometimes
@@ -753,6 +774,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2646:
     test_github_issue_2646();
+    break;
+  case 2677:
+    test_github_issue_2677();
     break;
   // case N:
   //   YOUR_TEST_HERE();

@@ -59,7 +59,7 @@ public:
   }
 
   const char* SpecificationURL() override { return
-     "http://pubs.acs.org/cgi-bin/abstract.cgi/jcisd8/2001/41/i06/abs/ci000108y.html";}
+     "https://pubs.acs.org/doi/10.1021/ci000108y"; }
 
   const char* GetMIMEType() override
   { return "chemical/x-MCDL"; }
@@ -178,7 +178,7 @@ private:
 /* Create descriptor connectivity string from connectivity table of fragments */
   string MCDLFormat::constring(int conntab [MAXBONDS][4], char * tstr)
 {
-    int  i,j,k,n,nn,icons[6],comma;
+    int  i,j,k,n,nn,icons[MAXBONDS],comma;
     char line[82],semis[100];
     string result="";
 
@@ -191,8 +191,13 @@ private:
             strcat(semis,";");
 
         n = 0;
+        // icons is a fixed 6-element stack array (the maximum bond
+        // valence representable in MCDL); cap n to avoid writing past
+        // it on inputs with higher coordination numbers or malformed
+        // conntab data with duplicate entries.
+        const int icons_cap = (int)(sizeof(icons)/sizeof(icons[0]));
         for (j=0; j<nbonds; j++)
-            if (conntab[j][2] == (i+1))
+            if (conntab[j][2] == (i+1) && n < icons_cap)
                 icons[n++] = conntab[j][3];
         if (n > 1)
         {
@@ -239,7 +244,7 @@ private:
     char strg[MAXFRAGS+1];
     char * strngs[MAXFRAGS+1];
     char tstr[MAXFRAGS+1];
-    int  numdups, dupfrag, jump;
+    int  numdups = 0, dupfrag, jump;
     bool jflag;
     int  ix[MAXFRAGS],conntab[MAXBONDS][4],cx[MAXFRAGS];
     int  mx[MAXFRAGS];
@@ -1194,7 +1199,10 @@ private:
       n1=atoi(s.c_str());
       n1=n1*n2;
       n2=atoi(sa1.c_str());
-      charges[n2-1]=n1;
+      // n2 is read straight from the input; reject out-of-range
+      // indices rather than writing past the charges[] allocation.
+      if (n2 >= 1 && n2 <= MAXFRAGS)
+        charges[n2-1]=n1;
     };
   };
   for (i=0; i<MAXFRAGS; i++) radicals[i]=0;
@@ -1215,7 +1223,8 @@ private:
       if (indexOf(s,"-") > 0) n2=-1;
       s=s.substr(0,s.length()-1);
       n2=atoi(sa1.c_str());
-      radicals[n2-1]=1;
+      if (n2 >= 1 && n2 <= MAXFRAGS)
+        radicals[n2-1]=1;
     };
   };
 //passed

@@ -242,13 +242,12 @@ namespace OpenBabel
 
     if(result==-1)
     {
-      xmlError* perr = xmlGetLastError();
+      const xmlError* perr = xmlGetLastError();
       if(perr && perr->level!=XML_ERR_NONE)
         {
           obErrorLog.ThrowError("XML Parser " + GetInFilename(),
                                 perr->message, obError);
         }
-      xmlResetError(perr);
       GetInStream()->setstate(ios::eofbit);
       return false;
     }

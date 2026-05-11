@@ -1,44 +1,46 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
+ * info@inchi-trust.org
+ *
+*/
 
 
-#ifndef __INCHIERR_H__
-#define __INCHIERR_H__
+#ifndef _ICCHIERR_H_
+#define _ICCHIERR_H_
 
 #define _IS_OKAY    0
 #define _IS_WARNING 1
@@ -93,6 +95,8 @@
 #define BNS_REINIT_ERR     (BNS_ERR + 12) /*(-9987)*/
 #define BNS_ALTBOND_ERR    (BNS_ERR + 13) /*(-9986)*/
 
+#define BNS_TIMEOUT        (BNS_ERR + 14) /*(-9985)*/ /* v. 1.05 */
+
 #define BNS_MAX_ERR_VALUE  (BNS_ERR + 19) /*(-9980)*/
 
 #define IS_BNS_ERROR(X) (BNS_ERR <= (X) && (X) <= BNS_MAX_ERR_VALUE)
@@ -113,8 +117,8 @@ extern "C" {
 #endif
 #endif
 
-extern int (*UserAction)(void); /* callback */
-extern int (*ConsoleQuit)(void); /* Console user issued CTRL+C etc. */
+    extern int( *UserAction )( void ); /* callback */
+    extern int( *ConsoleQuit )( void ); /* Console user issued CTRL+C etc. */
 
 #ifndef COMPILE_ALL_CPP
 #ifdef  __cplusplus
@@ -138,10 +142,11 @@ extern "C" {
 #endif
 #endif
 
-extern void (*FWPRINT) (const char * format, va_list argptr );
-extern void (*DRAWDATA) ( struct DrawData * pDrawData);
-extern int  (*DRAWDATA_EXISTS) ( int nComponent, int nType, int bReconnected );
-extern struct DrawData * (*GET_DRAWDATA) ( int nComponent, int nType, int bReconnected );
+    extern void( *FWPRINT ) ( const char * format, va_list argptr );
+    extern void( *FWPUSH ) ( const char *s );
+    extern void( *DRAWDATA ) ( struct DrawData * pDrawData );
+    extern int( *DRAWDATA_EXISTS ) ( int nComponent, int nType, int bReconnected );
+    extern struct DrawData * ( *GET_DRAWDATA ) ( int nComponent, int nType, int bReconnected );
 
 #ifndef COMPILE_ALL_CPP
 #ifdef  __cplusplus
@@ -153,4 +158,19 @@ extern struct DrawData * (*GET_DRAWDATA) ( int nComponent, int nType, int bRecon
 
 #define USER_ACTION_QUIT   1
 
-#endif /* __INCHIERR_H__ */
+#define STR_ERR_LEN 256
+
+const char *ErrMsg( int nErrorCode );
+
+int AddErrorMessage( char *pStrErr, const char *szMsg );
+
+#define WarningMessage AddErrorMessage
+
+
+#define TREAT_ERR_AND_FIN(err, new_err, err_fin, msg) \
+        if ( !(err) && (new_err) ) { (err) = (new_err);} AddErrorMessage(pStrErr, (msg)); goto err_fin
+#define TREAT_ERR(err, new_err, msg) \
+        if ( !(err) && (new_err) ) { (err) = (new_err);} AddErrorMessage(pStrErr, (msg))
+
+
+#endif /* _ICCHIERR_H_ */

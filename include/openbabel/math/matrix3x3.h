@@ -125,7 +125,7 @@ namespace OpenBabel
       //! Calculates the inverse of a matrix.
       matrix3x3 inverse(void) const
 #ifdef OB_OLD_MATH_CHECKS
-  throw(OBError)
+  noexcept(false)
 #endif
       ;
 
@@ -201,7 +201,7 @@ namespace OpenBabel
         remains unchanged and an exception is thrown. */
       void SetColumn(int column, const vector3 &v)
 #ifdef OB_OLD_MATH_CHECKS
-  throw(OBError)
+  noexcept(false)
 #endif
       ;
 
@@ -210,7 +210,7 @@ namespace OpenBabel
         remains unchanged and an exception is thrown. */
       void SetRow(int row, const vector3 &v)
 #ifdef OB_OLD_MATH_CHECKS
-  throw(OBError)
+  noexcept(false)
 #endif
       ;
 
@@ -219,7 +219,7 @@ namespace OpenBabel
         thrown. */
       vector3 GetColumn(unsigned int col) const
 #ifdef OB_OLD_MATH_CHECKS
-  throw(OBError)
+  noexcept(false)
 #endif
       ;
 
@@ -228,7 +228,7 @@ namespace OpenBabel
         thrown. */
       vector3 GetRow(unsigned int row) const
 #ifdef OB_OLD_MATH_CHECKS
-  throw(OBError)
+  noexcept(false)
 #endif
       ;
 
@@ -269,7 +269,7 @@ namespace OpenBabel
       //! Find the eigenvalues and -vectors of a symmetric matrix
       matrix3x3 findEigenvectorsIfSymmetric(vector3 &eigenvals) const
 #ifdef OB_OLD_MATH_CHECKS
-  throw(OBError)
+  noexcept(false)
 #endif
       ;
 
