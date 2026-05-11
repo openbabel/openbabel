@@ -557,6 +557,10 @@ namespace OpenBabel {
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false; // invalid SMILES since rings aren't properly closed
     }
+    if (_hcount.size() < mol.NumAtoms()) {
+      mol.EndModify();
+      return false;
+    }
     if (mol.IsReaction()) {
       OBReactionFacade facade(&mol);
       facade.AssignComponentIds();
@@ -1995,12 +1999,16 @@ namespace OpenBabel {
         _updown = BondUpChar;
         _ptr++;
         break;
+      case '\0':
+        return false;
       default: // no bond indicator just leave order = 0
         break;
       }
 
     if (*_ptr == '%') // external bond indicator > 10
       {
+        if (!isdigit(*(_ptr + 1)) || !isdigit(*(_ptr + 2)))
+            return false;
         _ptr++;
         str[0] = *_ptr;
         _ptr++;
@@ -2009,6 +2017,8 @@ namespace OpenBabel {
       }
     else // simple single digit external bond indicator
       {
+        if (!isdigit(*_ptr))
+            return false;
         str[0] = *_ptr;
         str[1] = '\0';
       }
