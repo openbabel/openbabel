@@ -1,6 +1,6 @@
-.Dd Oct 10, 2019
+.Dd October 10, 2019
+.Dt OBMINIMIZE 1 URM
 .Os "Open Babel" 3.1
-.Dt obminimize 1 URM
 .Sh NAME
 .Nm obminimize
 .Nd "optimize the geometry, minimize the energy for a molecule"
@@ -12,14 +12,14 @@
 The
 .Nm
 tool can be used to minimize the energy for molecules
-inside (multi-)molecule files (e.g., MOL2, etc.)
+inside (multi\-)molecule files (e.g., MOL2, etc.)
 .Sh OPTIONS
 If no filename is given,
 .Nm
 will give all options including the available forcefields.
 .Bl -tag -width flag
 .It Fl c Ar criteria
-Set convergence criteria (default=1e-6)
+Set convergence criteria (default=1e\-6)
 .It Fl cg
 Use conjugate gradients algorithm (default)
 .It Fl sd
@@ -33,18 +33,17 @@ Select the output file format
 .It Fl h
 Add hydrogen atoms
 .It Fl n Ar steps
-Specify the maximum numer of steps (default=2500)
+Specify the maximum number of steps (default=2500)
 .It Fl cut
-Use cut-off (default=don't use cut-off)
+Use cut\-off (default=don\(aqt use cut\-off)
 .It Fl rvdw Ar rvdw
-Specify the VDW cut-off distance (default=6.0)
+Specify the VDW cut\-off distance (default=6.0)
 .It Fl rele Ar rele
-Specify the Electrostatic cut-off distance (default=10.0)
+Specify the Electrostatic cut\-off distance (default=10.0)
 .It Fl pf Ar freq
-Specify the frequency to update the non-bonded pairs (default=10)
+Specify the frequency to update the non\-bonded pairs (default=10)
 .El
 .Sh EXAMPLES
-.Pp
 View the possible options, including available forcefields:
 .Dl "obminimize"
 .Pp
@@ -60,7 +59,7 @@ at most 300 geometry optimization steps
 .Dl "obminimize -n 300 test.mol2"
 .Pp
 Minimize the energy for the molecule(s) in file test.mol2 using the
-steepest descent algorithm and convergence criteria 1e-5:
+steepest descent algorithm and convergence criteria 1e\-5:
 .Dl "obminimize -sd -c 1e-5 test.mol2"
 .Sh SEE ALSO
 .Xr obabel 1 ,
@@ -68,13 +67,13 @@ steepest descent algorithm and convergence criteria 1e-5:
 .Xr obrotamer 1 .
 .Pp
 The web pages for Open Babel can be found at:
-\%<\fBhttp://openbabel.org/\fR>
+\%<\fBhttps://openbabel.org/\fR>
 .Pp
 The web pages for Open Babel Molecular Mechanics can be found at:
 \%<\fBhttp://openbabel.org/wiki/Molecular_mechanics\fR>
 .Sh AUTHORS
 The minimize program was contributed by
-.An Tim Vandermeersch.
+.An Tim Vandermeersch .
 .Pp
 .An -nosplit
 Open Babel is developed by a cast of many, including current maintainers
@@ -93,5 +92,5 @@ the Free Software Foundation version 2 of the License.
 .Pp
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.

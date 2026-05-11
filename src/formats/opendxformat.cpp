@@ -60,7 +60,7 @@ namespace OpenBabel
     // I couldn't find it but close enough.
     const char* SpecificationURL() override
     {
-        return "http://apbs.sourceforge.net/doc/user-guide/index.html#id504516";
+        return "http://apbs.sourceforge.net/doc/user-guide/index.html#id504516"; // XXX dead
     }
 
     // Return MIME type, NULL in this case.

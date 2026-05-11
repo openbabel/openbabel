@@ -88,7 +88,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.iucr.org/iucr-top/cif/spec/"; }  // optional
+    { return "http://ww1.iucr.org/iucr-top/cif/spec/"; }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

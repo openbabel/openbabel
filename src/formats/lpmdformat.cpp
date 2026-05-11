@@ -52,9 +52,9 @@ class LpmdFormat : public OBMoleculeFormat
     ;
   }
 
-  //Optional URL where the file format is specified
-  const char* SpecificationURL() override
-  { return "http://www.lpmd.cl/index.php/documentation/the-lpmd-format"; }
+  const char* SpecificationURL() override {
+    return "http://www.lpmd.cl/index.php/documentation/the-lpmd-format"; // XXX dead
+  }
 
   //Optional
   const char* GetMIMEType() override { return "chemical/lpmd"; }

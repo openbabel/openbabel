@@ -22,6 +22,9 @@ GNU General Public License for more details.
 
 #include <openbabel/babelconfig.h>
 #include <openbabel/bitvec.h>
+#include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
 
 #include <vector>
 #include <stack>
@@ -395,10 +398,26 @@ namespace OpenBabel
     OBRing& operator*()  const { return *_ptr;}
   };
 
-#define FOR_ATOMS_OF_MOL(a,m)     for( OpenBabel::OBMolAtomIter     a(m); a; ++a )
-#define FOR_BONDS_OF_MOL(b,m)     for( OpenBabel::OBMolBondIter     b(m); b; ++b )
-#define FOR_NBORS_OF_ATOM(a,p)    for( OpenBabel::OBAtomAtomIter    a(p); a; ++a )
-#define FOR_BONDS_OF_ATOM(b,p)    for( OpenBabel::OBAtomBondIter    b(p); b; ++b )
+  namespace impl {
+
+    inline OBMolAtomRange MolGetAtoms(const OpenBabel::OBMol &mol) { return mol.GetAtoms(); }
+    inline OBMolAtomRange MolGetAtoms(const OpenBabel::OBMol *mol) { return mol->GetAtoms(); }
+
+    inline OBMolBondRange MolGetBonds(const OpenBabel::OBMol &mol) { return mol.GetBonds(); }
+    inline OBMolBondRange MolGetBonds(const OpenBabel::OBMol *mol) { return mol->GetBonds(); }
+
+    inline OBAtomBondRange AtomGetBonds(const OpenBabel::OBAtom &atom) { return atom.GetBonds(); }
+    inline OBAtomBondRange AtomGetBonds(const OpenBabel::OBAtom *atom) { return atom->GetBonds(); }
+
+    inline OBAtomAtomRange AtomGetNbrs(const OpenBabel::OBAtom &atom) { return atom.GetNbrs(); }
+    inline OBAtomAtomRange AtomGetNbrs(const OpenBabel::OBAtom *atom) { return atom->GetNbrs(); }
+
+  }
+
+#define FOR_ATOMS_OF_MOL(a,m)     for (auto a : impl::MolGetAtoms(m))
+#define FOR_BONDS_OF_MOL(b,m)     for (auto b : impl::MolGetBonds(m))
+#define FOR_NBORS_OF_ATOM(a,p)    for (auto a : impl::AtomGetNbrs(p))
+#define FOR_BONDS_OF_ATOM(b,p)    for (auto b : impl::AtomGetBonds(p))
 #define FOR_RESIDUES_OF_MOL(r,m)  for( OpenBabel::OBResidueIter     r(m); r; ++r )
 #define FOR_ATOMS_OF_RESIDUE(a,r) for( OpenBabel::OBResidueAtomIter a(r); a; ++a )
 #define FOR_DFS_OF_MOL(a,m)       for( OpenBabel::OBMolAtomDFSIter  a(m); a; ++a )

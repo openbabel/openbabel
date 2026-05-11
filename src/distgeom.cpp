@@ -17,7 +17,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 
 #include <openbabel/distgeom.h>
 #include <openbabel/mol.h>

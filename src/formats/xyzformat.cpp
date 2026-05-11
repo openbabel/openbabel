@@ -85,8 +85,9 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://openbabel.org/wiki/XYZ"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://openbabel.org/wiki/XYZ"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-xyz"; }

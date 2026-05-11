@@ -57,7 +57,7 @@
 #include <openbabel/obiter.h>
 %}
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %{
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
@@ -281,7 +281,7 @@ IGNORE_ITER(OBMol, Residue)
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #endif
