@@ -1,6 +1,6 @@
-.Dd Oct 10, 2019
+.Dd October 10, 2019
+.Dt OBGREP 1 URM
 .Os "Open Babel" 3.1
-.Dt obgrep 1 URM
 .Sh NAME
 .Nm obgrep
 .Nd an advanced molecular search program using SMARTS
@@ -13,7 +13,7 @@
 The
 .Nm
 tool can be used to search for molecules inside
-multi-molecule database files (e.g., SMILES, SDF, etc.) or across
+multi\-molecule database files (e.g., SMILES, SDF, etc.) or across
 multiple files.
 .Sh OPTIONS
 If only a filename is given,
@@ -23,7 +23,7 @@ will attempt to guess the file type from the filename extension.
 .It Fl c
 Print the number of matches
 .It Fl f
-Full match, print matching-molecules only when the number of heavy
+Full match, print matching\-molecules only when the number of heavy
 atoms is also equal to the number of atoms in the
 .Ar SMARTS-pattern
 .It Fl i Ar format
@@ -35,11 +35,11 @@ Only print the name of the molecules
 .It Fl t Ar #
 Print a molecule only if the pattern occurs # times inside the molecule
 .It Fl v
-Invert the matching, print non-matching molecules
+Invert the matching, print non\-matching molecules
 .El
 .Sh EXAMPLES
 Note that in all examples, the SMARTS pattern is enclosed in single
-quotes '...' to ensure it is not changed by the shell.
+quotes \(aq...\(aq to ensure it is not changed by the shell.
 .Pp
 Print all the molecules with a methylamine group:
 .Dl "obgrep 'CN' database.smi"
@@ -64,10 +64,10 @@ directory (i.e., *.smi)
 .Xr obrotate 1 .
 .Pp
 The web pages for Open Babel can be found at:
-\%<\fBhttp://openbabel.org/\fR>
+\%<\fBhttps://openbabel.org/\fR>
 .Pp
 A guide for constructing SMARTS patterns can be found at:
-\%<\fBhttp://www.daylight.com/dayhtml/doc/theory/theory.smarts.html\fR>
+\%<\fBhttps://www.daylight.com/dayhtml/doc/theory/theory.smarts.html\fR>
 .Sh AUTHORS
 The obgrep program was contributed by
 .An Fabien Fontaine
@@ -81,9 +81,9 @@ and innumerable others who have contributed fixes and additions.
 For more contributors to Open Babel, see
 \%<\fBhttp://openbabel.org/wiki/THANKS\fR>
 .Sh COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Copyright (C) 1998\-2001 by OpenEye Scientific Software, Inc.
 .br
-Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and
+Some portions Copyright (C) 2001\-2007 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
 This program is free software; you can redistribute it and/or modify
@@ -92,5 +92,5 @@ the Free Software Foundation version 2 of the License.
 .Pp
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.

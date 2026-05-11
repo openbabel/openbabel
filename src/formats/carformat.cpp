@@ -46,8 +46,9 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.centrcn.umontreal.ca/accelrys/life/insight2000.1/formats980/Files980TOC.doc.html"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.centrcn.umontreal.ca/accelrys/life/insight2000.1/formats980/Files980TOC.doc.html"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-msi-car"; }

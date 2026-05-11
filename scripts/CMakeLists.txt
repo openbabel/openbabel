@@ -22,18 +22,8 @@ if (RUN_SWIG)
 endif (RUN_SWIG)
 
 # The following needs to be kept in synch with ..\CMakeLists.txt
-if(EIGEN3_FOUND)
-  set (eigen_define "-DHAVE_EIGEN" "-DHAVE_EIGEN3")
-  include_directories(${EIGEN3_INCLUDE_DIR})
-  set (CPPFLAGS_VALUE "-I${EIGEN3_INCLUDE_DIR}")
-  set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-else()
-  if(EIGEN2_FOUND)
-    set (eigen_define "-DHAVE_EIGEN")
-    include_directories(${EIGEN2_INCLUDE_DIR})
-    set (CPPFLAGS_VALUE "-I${EIGEN2_INCLUDE_DIR}")
-    set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-  endif()
+if(TARGET Eigen3::Eigen)
+  set (eigen_define "-DHAVE_EIGEN3")
 endif()
 
 ###################

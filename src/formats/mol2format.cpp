@@ -62,8 +62,8 @@ namespace OpenBabel
 
     const char* SpecificationURL() override
     {
-      return "http://www.tripos.com/data/support/mol2.pdf";
-    } //optional
+      return "http://www.tripos.com/data/support/mol2.pdf"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-mol2"; }
@@ -183,7 +183,8 @@ namespace OpenBabel
         if (pConv->IsOption("c", OBConversion::INOPTIONS) != nullptr && EQn(buffer, "###########", 10))
           {
             char attr[32], val[32];
-            sscanf(buffer, "########## %[^:]:%s", attr, val);
+            // CVE-2022-43607: width-limit both specifiers to the buffer size.
+            sscanf(buffer, "########## %31[^:]:%31s", attr, val);
             OBPairData *dd = new OBPairData;
             dd->SetAttribute(attr);
             dd->SetValue(val);
@@ -418,10 +419,11 @@ namespace OpenBabel
             {
               int charge = 0;
               sscanf(buffer,"%*s %d",&charge);
-              if(aid <= mol.NumAtoms()) 
+              if(aid >= 1 && aid <= (int)mol.NumAtoms())
               {
                 OBAtom *atom = mol.GetAtom(aid);
-                atom->SetFormalCharge(charge);
+                if (atom != nullptr)
+                  atom->SetFormalCharge(charge);
               }
             }
           }

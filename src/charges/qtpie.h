@@ -24,7 +24,7 @@ GNU General Public License for more details.
 
 #include <math.h>
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 
 #include <Eigen/LU>
 #include <Eigen/SVD>
@@ -74,5 +74,5 @@ private:
   void ParseParamFile();
 };
 }; //namespace OpenBabel
-#endif //HAVE_EIGEN
+#endif //HAVE_EIGEN3
 #endif //__QTPIE_H__

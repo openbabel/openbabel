@@ -5,7 +5,10 @@
 #include <stdio.h>
 #include <sstream>
 
-#include <fuzzer/FuzzedDataProvider.h>
+// Vendored alongside this file (LLVM Apache-2.0 WITH LLVM-exception)
+// so the harness compiles outside of an LLVM/libfuzzer toolchain — in
+// particular under GCC, where the libfuzzer headers aren't shipped.
+#include "FuzzedDataProvider.h"
 
 std::vector<std::string> getAllFormats() {
     std::vector<std::string> formats;

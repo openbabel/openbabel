@@ -57,7 +57,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/zmat/"; }
+    { return "https://gaussian.com/zmat/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-input"; }
