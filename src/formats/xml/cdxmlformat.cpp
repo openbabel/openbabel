@@ -69,9 +69,9 @@ public:
   const char* GetMIMEType() override
   { return "chemical/x-cdxml"; };
 
-  const char* SpecificationURL() override
-  {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/";}
-
+  const char* SpecificationURL() override {
+    return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/"; // XXX dead
+  }
 
   unsigned int Flags() override
   {
@@ -264,8 +264,11 @@ bool ChemDrawXMLFormat::EndElement(const string& name)
     
     // Add implicit hydrogens on atoms without "hydrogens" property
     for (vector<unsigned int>::iterator vit = _handleImplicitHydrogens.begin();
-         vit != _handleImplicitHydrogens.end(); ++vit)
-           OBAtomAssignTypicalImplicitHydrogens(_pmol->GetAtom(atoms[*vit]));
+         vit != _handleImplicitHydrogens.end(); ++vit) {
+           OBAtom *atom = _pmol->GetAtom(atoms[*vit]);
+           if (atom != nullptr)
+             OBAtomAssignTypicalImplicitHydrogens(atom);
+    }
 
     _pmol->EndModify();
 

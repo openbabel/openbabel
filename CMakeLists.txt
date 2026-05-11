@@ -1,6 +1,6 @@
-# Please ensure that any changes remain compliant with 3.1.
+# Please ensure that any changes remain compliant with 3.10.
 if(NOT EMBED_OPENBABEL)
-  cmake_minimum_required(VERSION 3.1)
+  cmake_minimum_required(VERSION 3.10)
 endif()
 
 project(openbabel)
@@ -10,9 +10,6 @@ set (CMAKE_CXX_STANDARD 11)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  if(POLICY CMP0042)
-    cmake_policy(SET CMP0042 OLD)
-  endif()
 endif()
 
 include (CheckCXXCompilerFlag)
@@ -347,8 +344,13 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
     endif()
   endif()
 
-  set(CMAKE_C_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
+  if(POLICY CMP0069)
+    cmake_policy(SET CMP0069 NEW)
+    if("${CMAKE_BUILD_TYPE}" STREQUAL Release)
+      set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+    endif()
+  endif()
+  set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,-s")
 
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
@@ -417,15 +419,13 @@ include_directories(${openbabel_BINARY_DIR}/include
 )
 
 #cjh
-find_package(Eigen3)
-if(EIGEN3_FOUND)
-  add_definitions(-DHAVE_EIGEN -DHAVE_EIGEN3)
-  include_directories(${EIGEN3_INCLUDE_DIR})
+find_package(Eigen3 CONFIG)
+if(TARGET Eigen3::Eigen)
+  add_definitions(-DHAVE_EIGEN3)
 else()
-  find_package(Eigen2) # find and setup Eigen2
-  if(EIGEN2_FOUND)
-    add_definitions (-DHAVE_EIGEN)
-    include_directories(${EIGEN2_INCLUDE_DIR})
+  find_package(Eigen3 MODULE)
+  if(TARGET Eigen3::Eigen)
+    add_definitions(-DHAVE_EIGEN3)
   endif()
 endif()
 #cjh
@@ -713,7 +713,8 @@ write_basic_package_version_file("${openbabel_BINARY_DIR}/OpenBabel3ConfigVersio
   COMPATIBILITY AnyNewerVersion)
 configure_package_config_file("${openbabel_SOURCE_DIR}/OpenBabel3Config.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel3Config.cmake"
-  INSTALL_DESTINATION "${OB_CONFIG_DIR}")
+  INSTALL_DESTINATION "${OB_CONFIG_DIR}"
+  PATH_VARS OpenBabel3_INCLUDE_DIRS)
 
 install(EXPORT openbabel-targets
   DESTINATION "${OB_CONFIG_DIR}"

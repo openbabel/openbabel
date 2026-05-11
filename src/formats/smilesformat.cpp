@@ -88,7 +88,7 @@ namespace OpenBabel {
     const char* TargetClassDescription() override { return OBMol::ClassDescription(); }
 
     const char* SpecificationURL() override
-    { return "http://www.daylight.com/smiles/"; }
+    { return "https://www.daylight.com/smiles/"; }
 
     int SkipObjects(int n, OBConversion* pConv) override
     {
@@ -569,6 +569,11 @@ namespace OpenBabel {
     // Apply the SMILES valence model
     FOR_ATOMS_OF_MOL(atom, mol) {
       unsigned int idx = atom->GetIdx();
+      // Atoms created outside ParseSimple/ParseComplex (e.g. via
+      // malformed bracket paths) won't have a corresponding _hcount
+      // entry. Skip the implicit-valence step rather than read OOB.
+      if (idx == 0 || idx - 1 >= _hcount.size())
+        continue;
       int hcount = _hcount[idx - 1];
       if (hcount == -1) { // Apply SMILES implicit valence model
         unsigned int bosum = 0;
