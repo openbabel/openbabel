@@ -73,7 +73,6 @@ namespace OpenBabel
    * Omit the filename after 'file=' card */
   void lowerit(char *s)
   {
-    char tmp[6];
     unsigned int i, do_lower=5;
     for (i=0; i<strlen(s); i++)
       {
@@ -81,9 +80,7 @@ namespace OpenBabel
           do_lower=5;
         if (s[i]=='=')
           {
-            strncpy(tmp,&s[i-4],5);
-            tmp[5]='\0';
-            if (strcmp(tmp,"file=")!=0)
+            if (i < 4 || strncmp(&s[i-4], "file=", 5) != 0)
               do_lower=5;
           }
         else
