@@ -50,7 +50,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://abinit.org/" ; }  // optional
+    { return "https://www.abinit.org/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -219,6 +219,9 @@ namespace OpenBabel
     }
 
     mol.EndModify();
+
+    if (natom == 0)
+      return false;
 
     int numConformers = atomPositions.size() / natom;
     for (int i = 0; i < numConformers; ++i) {

@@ -141,7 +141,7 @@ namespace OpenBabel
     };
 
     const char* SpecificationURL() override
-    {return "http://www.xml-cml.org/";}
+    { return "https://www.xml-cml.org/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-cml"; };
@@ -1114,7 +1114,7 @@ namespace OpenBabel
                     pbond2 = _pmol->GetBond(AtomRefIdx[2],AtomRefIdx[3]);
                   }
 
-                if(!pbond1 || !pbond2)
+                if(!pbond1 || !pbond2 || AtomRefIdx.empty())
                   continue;
 
                 // Create the list of 4 atomrefs

@@ -35,7 +35,8 @@ GNU General Public License for more details.
 #include <time.h>
 #endif
 #endif
-
+// Include C++ version for clock() and CLOCKS_PER_SEC (required for GCC 12+ with C++17)
+#include <ctime>
 #include <math.h>
 
 #ifndef M_PI

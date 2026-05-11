@@ -269,7 +269,7 @@ namespace OpenBabel
 
     const char* SpecificationURL() override
     {
-      return "http://www.cse.scitech.ac.uk/ccg/software/DL_POLY";
+      return "http://www.cse.scitech.ac.uk/ccg/software/DL_POLY";  // XXX dead
     }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
@@ -401,7 +401,7 @@ public:
 
   const char* SpecificationURL() override
   {
-    return "http://www.cse.scitech.ac.uk/ccg/software/DL_POLY";
+    return "http://www.cse.scitech.ac.uk/ccg/software/DL_POLY";  // XXX dead
   }
 
   //Flags() can return be any the following combined by | or be omitted if none apply

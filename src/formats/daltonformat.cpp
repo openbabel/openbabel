@@ -50,7 +50,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://daltonprogram.org/www/resources/dalton2016manual.pdf"; }  // optional
+    { return "https://daltonprogram.org/documentation/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-dalton-output"; }
@@ -99,7 +99,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://daltonprogram.org/www/resources/dalton2016manual.pdf"; }  // optional
+    { return "https://daltonprogram.org/documentation/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-dalton-input"; }
