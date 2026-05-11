@@ -100,7 +100,7 @@ public:
   //Optional URL where the file format is specified
   const char* SpecificationURL() override
   {
-    return "http://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#gro";
+    return "https://manual.gromacs.org/documentation/current/reference-manual/file-formats.html#gro";
   }
 
   /* This optional function is for formats which can contain more than one
@@ -396,7 +396,7 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   OBVectorData* vector;
   vector3 v;
-  OBResidue* res;
+  OBResidue* res = nullptr;
   string tempstr = "";
   long int atIdx = 0;
   long int resIdx = 0;
@@ -406,17 +406,22 @@ bool GROFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
   ofs.setf(ios::fixed);
 
   FOR_ATOMS_OF_MOL(atom, pmol) {
+    // CVE-2022-42885: atoms read from formats without residue
+    // information return a null OBResidue. Synthesize defaults
+    // rather than dereferencing the null pointer.
     res = atom->GetResidue();
-    resIdx = res->GetNum();
+    resIdx = (res != nullptr) ? res->GetNum() : 1;
     // Check if residue index excedes the field width and should be wrapped
     if (resIdx > 99999) {
       ofs << setw(5) << resIdx - 100000*int(resIdx/100000);
     } else {
-      ofs << setw(5) << res->GetNum();
+      ofs << setw(5) << resIdx;
     }
-    ofs << setw(5) << left  << res->GetName();
+    ofs << setw(5) << left
+        << ((res != nullptr) ? res->GetName() : string("UNK"));
     // Remove whitespace from AtomID left by other formats
-    tempstr = res->GetAtomID(&(*atom));
+    tempstr = (res != nullptr) ? res->GetAtomID(&(*atom))
+                               : string(atom->GetType());
     ofs << setw(5) << right << Trim(tempstr);
     atIdx = atom->GetIdx();
     // Check if atom index excedes the field width and should be wrapped

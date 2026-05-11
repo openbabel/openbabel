@@ -219,6 +219,7 @@ bool ChemicalJSONFormat::ReadMolecule(OBBase *pOb, OBConversion *pConv) {
   if (inRoot.HasMember("unitCell") && inRoot["unitCell"].IsObject()) {
     const rapidjson::Value &unitCell = inRoot["unitCell"];
     OBUnitCell *uc = new OBUnitCell();
+    bool ucUsed = false;
 
     // if spaceGroup is set use it
     if (unitCell.HasMember("spaceGroup") && unitCell["spaceGroup"].IsString()) {
@@ -241,6 +242,7 @@ bool ChemicalJSONFormat::ReadMolecule(OBBase *pOb, OBConversion *pConv) {
 
         uc->SetData(v1, v2, v3);
         pmol->SetData(uc);
+        ucUsed = true;
       }
     } else if (unitCell.HasMember("a") && unitCell["a"].IsDouble() &&
                unitCell.HasMember("b") && unitCell["b"].IsDouble() &&
@@ -258,6 +260,11 @@ bool ChemicalJSONFormat::ReadMolecule(OBBase *pOb, OBConversion *pConv) {
       uc->SetData(a, b, c, alpha, beta, gamma);
 
       pmol->SetData(uc);
+      ucUsed = true;
+    }
+
+    if (!ucUsed) {
+      delete uc;
     }
   }
 
@@ -321,8 +328,8 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
     // check for NMR shifts
     if (patom->HasData("NMR Isotropic Shift"))
       nmrShifts.PushBack(
-          rapidjson::StringRef(
-              patom->GetData("NMR Isotropic Shift")->GetValue().c_str()),
+          rapidjson::Value(
+              patom->GetData("NMR Isotropic Shift")->GetValue().c_str(), al),
           al);
   }
 
@@ -356,7 +363,7 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
   doc.AddMember("atoms", atoms, al);
 
   rapidjson::Value charges(rapidjson::kObjectType);
-  charges.AddMember(rapidjson::StringRef(chargeMethod.c_str()), partialCharges,
+  charges.AddMember(rapidjson::Value(chargeMethod.c_str(), al), partialCharges,
                     al);
   doc.AddMember("partialCharges", charges, al);
 
@@ -404,8 +411,9 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
 
       // get the space group
       if (uc->GetSpaceGroup() != nullptr) {
-        unitCell.AddMember("spaceGroup",
-                           rapidjson::StringRef(uc->GetSpaceGroupName().c_str()), al);
+        unitCell.AddMember(
+            "spaceGroup", rapidjson::Value(uc->GetSpaceGroupName().c_str(), al),
+            al);
       }
 
       doc.AddMember("unitCell", unitCell, al);
@@ -521,7 +529,7 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
   // other properties
 
   rapidjson::Value properties(rapidjson::kObjectType);
-  properties.AddMember("name", rapidjson::StringRef(pmol->GetTitle()), al);
+  properties.AddMember("name", rapidjson::Value(pmol->GetTitle(), al), al);
   properties.AddMember("totalCharge", pmol->GetTotalCharge(), al);
   properties.AddMember("totalSpinMultiplicity",
                        pmol->GetTotalSpinMultiplicity(), al);
@@ -529,7 +537,7 @@ bool ChemicalJSONFormat::WriteMolecule(OBBase *pOb, OBConversion *pConv) {
   // look for conformer energies
   if (pmol->HasData(OBGenericDataType::ConformerData)) {
     OBConformerData *cd =
-        (OBConformerData *) pmol->GetData(OBGenericDataType::ConformerData);
+        (OBConformerData *)pmol->GetData(OBGenericDataType::ConformerData);
     vector<double> energies = cd->GetEnergies();
     rapidjson::Value confEnergies(rapidjson::kArrayType);
     for (auto i = energies.begin(); i != energies.end(); ++i) {

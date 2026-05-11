@@ -43,7 +43,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://crk.sourceforge.net/"; }  // optional
+    { return "https://sourceforge.net/projects/crk/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-crk2d"; }
@@ -146,7 +146,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://crk.sourceforge.net/"; }  // optional
+    { return "https://sourceforge.net/projects/crk/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-crk3d"; }

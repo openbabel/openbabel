@@ -55,7 +55,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/"; }
+    { return "https://gaussian.com/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-log"; }
@@ -103,7 +103,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/input/"; }
+    { return "https://gaussian.com/input/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-input"; }
@@ -621,7 +621,7 @@ namespace OpenBabel
                     coordinates.push_back(y);
                     coordinates.push_back(z);
                   }
-                else {
+                else if (numTranslationVectors < 3) {
                   translationVectors[numTranslationVectors++].Set(x, y, z);
                 }
 
@@ -801,7 +801,7 @@ namespace OpenBabel
                 tokenize(vs,buffer);
 
               }
-            if (CM5_q.size() == mol.NumAtoms() and
+            if (CM5_q.size() == mol.NumAtoms() &&
                 HPA_q.size() == mol.NumAtoms())
             {
                 Hirshfeld->AddPartialCharge(HPA_q);

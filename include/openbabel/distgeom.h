@@ -29,7 +29,7 @@ GNU General Public License for more details.
   #define OBAPI
 #endif
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 
 #include <Eigen/Core>
 #include <LBFGS.h>

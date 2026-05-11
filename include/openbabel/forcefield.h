@@ -1191,7 +1191,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      */
     int FastRotorSearch(bool permute = true);
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
     //! \since version 2.4
     int DiverseConfGen(double rmsd, unsigned int nconfs = 0, double energy_gap = 50, bool verbose = false);
 #endif
