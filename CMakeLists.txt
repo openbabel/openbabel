@@ -401,6 +401,20 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
+
+# Detect Eigen3 before configure_file so HAVE_EIGEN3 lands in babelconfig.h
+find_package(Eigen3 CONFIG)
+if(TARGET Eigen3::Eigen)
+  set(HAVE_EIGEN3 1)
+  add_definitions(-DHAVE_EIGEN3)
+else()
+  find_package(Eigen3 MODULE)
+  if(TARGET Eigen3::Eigen)
+    set(HAVE_EIGEN3 1)
+    add_definitions(-DHAVE_EIGEN3)
+  endif()
+endif()
+
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
   ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
@@ -417,18 +431,6 @@ include_directories(${openbabel_BINARY_DIR}/include
   ${openbabel_BINARY_DIR}/data
   ${openbabel_SOURCE_DIR}/include
 )
-
-#cjh
-find_package(Eigen3 CONFIG)
-if(TARGET Eigen3::Eigen)
-  add_definitions(-DHAVE_EIGEN3)
-else()
-  find_package(Eigen3 MODULE)
-  if(TARGET Eigen3::Eigen)
-    add_definitions(-DHAVE_EIGEN3)
-  endif()
-endif()
-#cjh
 
 
 find_package(Boost COMPONENTS filesystem iostreams unit_test_framework)
