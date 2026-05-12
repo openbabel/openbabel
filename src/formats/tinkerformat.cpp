@@ -57,7 +57,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://dasher.wustl.edu/tinker/"; }  // optional
+    { return "https://dasher.wustl.edu/tinker/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

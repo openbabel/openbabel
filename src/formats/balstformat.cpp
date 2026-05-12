@@ -41,8 +41,9 @@ namespace OpenBabel
         "No comments yet\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml"; }
+    const char* SpecificationURL() override {
+      return "http://www.orc.uni-linz.ac.at/mueller/ball_and_stick.shtml"; // XXX dead
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

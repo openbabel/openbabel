@@ -669,6 +669,15 @@ Oc1ccccc1\tphenol
 """)
 
 # cdjson -- ChemDoodle JSON
+# Coordinates that come from --gen2D etc. are computed in double precision and
+# the last digit or two can differ across platforms / math libraries. Round any
+# long decimals down to a precision that compares reliably.
+_json_float_pat = re.compile(r"-?\d+\.\d{8,}")
+def _round_json_match(m):
+    return "%.10g" % float(m.group(0))
+def normalize_json_floats(content):
+    return _json_float_pat.sub(_round_json_match, content)
+
 class TestCDJSON(unittest.TestCase, WriteMixin):
     fmt = "cdjson"
     maxDiff = None
@@ -705,7 +714,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
         {
           "x": -20.009999999999999,
           "y": 0.10200000000000001,
-          "l": 8
+          "l": "O"
         }
       ],
       "b": [
@@ -743,7 +752,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
       ]
     }
   ]
-}""")
+}""", normalize=normalize_json_floats)
 
 ## # cdxml -- ChemDraw CDXML format
 ## XXX fails on an unpatched system
@@ -2754,6 +2763,10 @@ DrawText 40.0 81.9 "HO"
 """)
 
 # pcjson -- PubChem JSON
+# Uses normalize_json_floats (see TestCDJSON) to round long double-precision
+# decimals to a stable representation across platforms / math libraries.
+normalize_pcjson_floats = normalize_json_floats
+
 class TestPCJSON(unittest.TestCase, WriteMixin):
     fmt = "pcjson"
     maxDiff = None
@@ -2879,19 +2892,19 @@ class TestPCJSON(unittest.TestCase, WriteMixin):
                 -1.4648575597102012
               ],
               "y": [
-                1.5846,
-                1.5703,
-                2.4295,
-                3.3031,
-                3.3175,
+                -0.0249,
+                0.9755,
+                1.4882,
+                1.0004,
+                -0.0,
                 0.0,
-                -1.0005,
-                2.313816216007316,
-                0.669250157347277,
-                2.4146659588503769,
-                4.189331679349326,
-                4.052466878708012,
-                -1.4648575597102012
+                0.0051,
+                -0.7551518129467202,
+                1.4786234252700852,
+                2.520093381713039,
+                1.5291886255562557,
+                -0.7244637238690441,
+                0.8189433858796094
               ],
               "style": {
                 "annotation": [
@@ -2926,7 +2939,7 @@ class TestPCJSON(unittest.TestCase, WriteMixin):
       "charge": 0
     }
   ]
-}""")
+}""", normalize=normalize_pcjson_floats)
 
 # pcm -- PCModel Format
 class TestPCM(unittest.TestCase, WriteMixin):

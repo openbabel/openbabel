@@ -1,6 +1,6 @@
-# Please ensure that any changes remain compliant with 3.1.
+# Please ensure that any changes remain compliant with 3.12.
 if(NOT EMBED_OPENBABEL)
-  cmake_minimum_required(VERSION 3.1)
+  cmake_minimum_required(VERSION 3.12)
 endif()
 
 project(openbabel)
@@ -10,9 +10,6 @@ set (CMAKE_CXX_STANDARD 11)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  if(POLICY CMP0042)
-    cmake_policy(SET CMP0042 OLD)
-  endif()
 endif()
 
 include (CheckCXXCompilerFlag)
@@ -216,15 +213,15 @@ check_include_file(conio.h      HAVE_CONIO_H)
 check_include_file(sys/time.h   HAVE_SYS_TIME_H)
 check_include_file(time.h       HAVE_TIME_H)
 check_include_file(strings.h    HAVE_STRINGS_H)
-check_include_file(rpc/xdr.h    HAVE_RPC_XDR_H)
 check_include_file(regex.h      HAVE_REGEX_H)
 check_include_file_cxx(sstream  HAVE_SSTREAM)
 
-check_symbol_exists(rint          "math.h"     HAVE_RINT)
-check_symbol_exists(snprintf      "stdio.h"    HAVE_SNPRINTF)
-check_symbol_exists(sranddev      "stdlib.h"   HAVE_SRANDDEV)
-check_symbol_exists(strcasecmp    "string.h"   HAVE_STRCASECMP)
-check_symbol_exists(strncasecmp   "string.h"   HAVE_STRNCASECMP)
+check_symbol_exists(rint             "math.h"     HAVE_RINT)
+check_symbol_exists(snprintf         "stdio.h"    HAVE_SNPRINTF)
+check_symbol_exists(sranddev         "stdlib.h"   HAVE_SRANDDEV)
+check_symbol_exists(strcasecmp       "string.h"   HAVE_STRCASECMP)
+check_symbol_exists(strncasecmp      "string.h"   HAVE_STRNCASECMP)
+check_symbol_exists(xdrstdio_create  "rpc/xdr.h"  HAVE_RPC_XDR_H)
 
 # BSDs don't link against libdl, but rather libc
 check_library_exists(dl dlopen "" HAVE_LIBDL)
@@ -347,8 +344,13 @@ if(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
     endif()
   endif()
 
-  set(CMAKE_C_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O3 -ipo1 -DNDEBUG -Wl,-s")
+  if(POLICY CMP0069)
+    cmake_policy(SET CMP0069 NEW)
+    if("${CMAKE_BUILD_TYPE}" STREQUAL Release)
+      set(CMAKE_INTERPROCEDURAL_OPTIMIZATION ON)
+    endif()
+  endif()
+  set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-Wl,-s")
 
   # define WITH_SSE2 to enable the SSE2 instruction set.
   # Available on Pentium 4, Athlon 64, and newer CPUs.
@@ -417,15 +419,13 @@ include_directories(${openbabel_BINARY_DIR}/include
 )
 
 #cjh
-find_package(Eigen3)
-if(EIGEN3_FOUND)
-  add_definitions(-DHAVE_EIGEN -DHAVE_EIGEN3)
-  include_directories(${EIGEN3_INCLUDE_DIR})
+find_package(Eigen3 CONFIG)
+if(TARGET Eigen3::Eigen)
+  add_definitions(-DHAVE_EIGEN3)
 else()
-  find_package(Eigen2) # find and setup Eigen2
-  if(EIGEN2_FOUND)
-    add_definitions (-DHAVE_EIGEN)
-    include_directories(${EIGEN2_INCLUDE_DIR})
+  find_package(Eigen3 MODULE)
+  if(TARGET Eigen3::Eigen)
+    add_definitions(-DHAVE_EIGEN3)
   endif()
 endif()
 #cjh
@@ -571,9 +571,9 @@ if(WITH_JSON)
   endif()
   # Otherwise download rapidjson to openbabel source directory
   if (NOT RAPIDJSON_FOUND OR RAPIDJSON_VERSION VERSION_LESS ${RAPIDJSON_VERSION_MIN})
-    set(RAPIDJSON_VERSION 1.1.0)
+    set(RAPIDJSON_VERSION "7c73dd7de7c4f14379b781418c6e947ad464c818")
     if(NOT EXISTS "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}")
-      file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/v${RAPIDJSON_VERSION}.tar.gz"
+      file(DOWNLOAD "https://github.com/Tencent/rapidjson/archive/${RAPIDJSON_VERSION}.tar.gz"
         "${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz" STATUS status)
       execute_process(COMMAND ${CMAKE_COMMAND} -E tar zxf
         ${openbabel_SOURCE_DIR}/external/rapidjson-${RAPIDJSON_VERSION}.tar.gz
@@ -713,7 +713,8 @@ write_basic_package_version_file("${openbabel_BINARY_DIR}/OpenBabel3ConfigVersio
   COMPATIBILITY AnyNewerVersion)
 configure_package_config_file("${openbabel_SOURCE_DIR}/OpenBabel3Config.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel3Config.cmake"
-  INSTALL_DESTINATION "${OB_CONFIG_DIR}")
+  INSTALL_DESTINATION "${OB_CONFIG_DIR}"
+  PATH_VARS OpenBabel3_INCLUDE_DIRS)
 
 install(EXPORT openbabel-targets
   DESTINATION "${OB_CONFIG_DIR}"
