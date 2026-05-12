@@ -57,8 +57,10 @@ set(uniqueid_parts 1 2)
 
 if(TARGET Eigen3::Eigen)
   set(cpptests
-    align ${cpptests})
+    align distgeom ${cpptests})
   set(align_parts 1 2 3 4 5)
+  # Parts 1-6 are fast; part 7 is the large 120-atom molecule (~10-60s)
+  set(distgeom_parts 1 2 3 4 5 6 7)
 endif()
 
 if(WITH_MAEPARSER)
