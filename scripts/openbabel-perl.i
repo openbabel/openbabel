@@ -12,6 +12,12 @@
   #undef seed
 #endif
 
+// workaround perl namespace pollution - handy.h defines Zero(d,n,t) which
+// conflicts with Eigen's Zero() static method declarations
+#ifdef Zero
+  #undef Zero
+#endif
+
 #include <openbabel/obutil.h>
 #include <openbabel/math/vector3.h>
 #include <openbabel/math/matrix3x3.h>
