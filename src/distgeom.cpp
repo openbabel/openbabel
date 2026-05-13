@@ -41,6 +41,7 @@ GNU General Public License for more details.
 #include <sstream>
 #include <string>
 #include <cmath>
+#include <chrono>
 #include <Eigen/Core>
 #include <Eigen/Eigenvalues>
 
@@ -104,7 +105,8 @@ namespace OpenBabel {
     }
 
     Eigen::MatrixXf bounds, preMet;
-    bool debug; double maxBoxSize;
+    bool debug; 
+    double maxBoxSize;
     OBGen3DStereoHelper stereoHelper;
     bool success;
   };
@@ -120,6 +122,29 @@ namespace OpenBabel {
   OBDistanceGeometry::~OBDistanceGeometry()
   {
     delete _d;
+  }
+
+  void OBDistanceGeometry::SetDebug(bool debug)
+  {
+    if (_d)
+      _d->debug = debug;
+  }
+
+  void OBDistanceGeometry::ReportStereoViolations()
+  {
+    for (auto& tetra : _stereo) {
+      vector<unsigned long> nbrs = tetra.GetNeighbors();
+      Eigen::Vector3d v1 = _coord.segment<3>(nbrs[0] * dim);
+      Eigen::Vector3d v2 = _coord.segment<3>(nbrs[1] * dim);
+      Eigen::Vector3d v3 = _coord.segment<3>(nbrs[2] * dim);
+      Eigen::Vector3d v4 = _coord.segment<3>(nbrs[3] * dim);
+      double vol = (v1-v4).dot((v2-v4).cross(v3-v4));
+      double lb = tetra.GetLowerBound();
+      double ub = tetra.GetUpperBound();
+      if (vol < lb || vol > ub)
+        cerr << "    stereo center " << tetra.GetCenter()
+             << ": vol=" << vol << " bounds=[" << lb << ", " << ub << "]" << endl;
+    }
   }
 
   float OBDistanceGeometry::GetUpperBounds(int i, int j) {
@@ -914,9 +939,21 @@ namespace OpenBabel {
           if (!AreInSameRing(a, b))
             minDist += 0.1; // prevents bonds going through rings
 
-          if (!_mol.GetBond(a, b)
-              && _d->GetLowerBounds(i, j) < 0.4f) { // only check for nonobonded contacts
+          if (!_mol.GetBond(a, b)) {
+            float lb = _d->GetLowerBounds(i, j);
+            if (lb < 0.4f) {
+              // Pair not touched by Set12-15: set full VDW contact
               _d->SetLowerBounds(i, j, minDist);
+            } else {
+              // Set14/15 set a value, but it may be unphysically small
+              // (e.g., a ring 1-5 pair where the cis-cis calculation yields
+              // near-zero). Enforce the same permissive floor that CheckBounds
+              // uses, so the optimizer and validator stay consistent.
+              float permissiveMin = aRad + bRad - 2.5f;
+              if (permissiveMin < 0.8f) permissiveMin = 0.8f;
+              if (lb < permissiveMin)
+                _d->SetLowerBounds(i, j, permissiveMin);
+            }
           }
         }
     }
@@ -1030,81 +1067,41 @@ namespace OpenBabel {
         distMat(j, i) = v;
       }
     }
-    // metrix matrix
+    // metric matrix (RDKit DistGeomUtils reference)
     // https://github.com/rdkit/rdkit/blob/master/Code/DistGeom/DistGeomUtils.cpp
-    Eigen::MatrixXd sqMat(N, N);
-    double sumSqD2 = 0.0;
-    for (size_t i=0; i<N; i++) {
-      for (size_t j=0; j<=i; j++) {
-        double d2 = distMat(i, j) * distMat(i, j);
-        sqMat(i, j) = d2;
-        sqMat(j, i) = d2;
-        sumSqD2 += d2;
-      }
-    }
-    sumSqD2 /= (N * N);
+    Eigen::MatrixXd sqMat = distMat.array().square();
+    // distMat is symmetric with 0 diagonal; full sum = 2 × lower-triangle sum
+    double sumSqD2 = sqMat.sum() / (2.0 * N * N);
 
-    Eigen::VectorXd sqD0i = Eigen::VectorXd::Zero(N);
-    for (size_t i = 0; i < N; i++) {
-      for (size_t j = 0; j < N; j++) {
-        sqD0i(i) += sqMat(i, j);
-      }
-      sqD0i(i) /= N;
-      sqD0i(i) -= sumSqD2;
-    }
+    Eigen::VectorXd sqD0i = sqMat.rowwise().sum().array() / N - sumSqD2;
 
-    Eigen::MatrixXd T(N, N);
-    for (size_t i = 0; i < N; i++) {
-      for (size_t j = 0; j <= i; j++) {
-        double v = 0.5 * (sqD0i(i) + sqD0i(j) - sqMat(i, j));
-        T(i, j) = v;
-        T(j, i) = v;
-      }
-    }
+    Eigen::MatrixXd T = 0.5 * (sqD0i.replicate(1, N)
+                                + sqD0i.transpose().replicate(N, 1) - sqMat);
     Eigen::SelfAdjointEigenSolver<Eigen::MatrixXd> es(T);
     Eigen::VectorXd eigVals = es.eigenvalues();
     Eigen::MatrixXd eigVecs = es.eigenvectors();
 
-    for (size_t i = 0; i < N; i++) {
-      if(eigVals(i) > 0) eigVals(i) = sqrt(eigVals(i));
-      else eigVals(i) *= -1;
+    // Only the top `dim` eigenvalues (indices N-1..N-dim) are used for coordinates.
+    // Negative eigenvalues in the rest are normal for a random distance sample.
+    // Return false only if the eigenvalues we'll actually embed are significantly negative.
+    const double negEpsilon = 1e-6;
+    for (size_t j = 0; j < static_cast<size_t>(dim); ++j) {
+      if (eigVals(N - 1 - j) < -negEpsilon)
+        return false;
     }
+    // Clamp any tiny numerical negatives to zero, then take square root
+    eigVals = eigVals.cwiseMax(0.0).array().sqrt();
 
     _coord.resize(N * dim);
-    for (size_t i = 0; i < N; i++) {
-      for (size_t j = 0; j < dim; j++) {
-        if(N-1-j >= 0) _coord(i*dim + j) = eigVals(N-1-j) * eigVecs(i, N-1-j);
-        else _coord(i*dim + j) = 0;
-      }
-    }
-    Eigen::MatrixXd distMat2(N, N);
-    for (size_t i = 0; i < N; i++) {
-      for (size_t j = 0; j < N; j++) {
-        for(size_t k = 0; k < dim; k++)
-          distMat2(i, j) += pow(_coord(i*dim + k)-_coord(j*dim + k), 2.0);
-        distMat2(i, j) = sqrt(distMat2(i, j));
-      }
-    }
-
-    for(size_t i=0; i<N; i++) {
-      for (size_t j=0; j<N; j++) {
-        double lb = _d->GetLowerBounds(i, j);
-        double ub = _d->GetUpperBounds(i, j);
-        //cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " (" << distMat(i, j) << ")" << " < " << ub << endl;
-      }
-    }
+    Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>
+      coordMap(_coord.data(), N, dim);
+    for (size_t j = 0; j < static_cast<size_t>(dim); ++j)
+      coordMap.col(j) = eigVals(N-1-j) * eigVecs.col(N-1-j);
     return true;
   }
 
   bool OBDistanceGeometry::firstMinimization(void) {
     unsigned int N = _mol.NumAtoms();
-    for(size_t i=0; i<N; ++i) {
-      vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
-      OBAtom* a = _mol.GetAtom(i+1);
-      a->SetVector(v);
-    }
-    DistGeomFunc f(this);
-
     LBFGSpp::LBFGSParam<double> param;
     param.epsilon = 1e-6;
     param.max_iterations = 1000;
@@ -1115,8 +1112,8 @@ namespace OpenBabel {
 
     double fx;
     int niter = solver.minimize(fun, _coord, fx);
-    //std::cout << niter << " iterations" << std::endl;
-    //std::cout << "f(x) = " << fx << std::endl;
+    if (_d->debug)
+      cerr << "  3D minimization: " << niter << " iters, fx=" << fx << endl;
 
     for(size_t i=0; i<N; ++i) {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
@@ -1124,44 +1121,27 @@ namespace OpenBabel {
       a->SetVector(v);
     }
 
-    Eigen::MatrixXd distMat2(N, N);
-    for (size_t i = 0; i < N; i++) {
-      for (size_t j = 0; j < N; j++) {
-        for(size_t k = 0; k < dim; k++)
-          distMat2(i, j) += pow(_coord(i*dim + k)-_coord(j*dim + k), 2.0);
-        distMat2(i, j) = sqrt(distMat2(i, j));
-      }
-    }
-
-    for(size_t i=0; i<N; i++) {
-      for (size_t j=0; j<N; j++) {
-        double lb = _d->GetLowerBounds(i, j);
-        double ub = _d->GetUpperBounds(i, j);
-        //cout << "(" << i << ", " << j << ")" << lb << " < " << distMat2(i, j) << " < " << ub << endl;
-      }
-    }
     return true;
   }
 
-  bool OBDistanceGeometry::minimizeFourthDimension(void) {
+  bool OBDistanceGeometry::minimizeFourthDimension(double w4d, int max_iterations) {
     unsigned int N = _mol.NumAtoms();
-    for(size_t i=0; i<N; ++i) {
-      vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
-      OBAtom* a = _mol.GetAtom(i+1);
-      a->SetVector(v);
-    }
-
     LBFGSpp::LBFGSParam<double> param;
     param.epsilon = 1e-6;
-    param.max_iterations = 2000;
+    param.max_iterations = max_iterations;
 
     LBFGSpp::LBFGSSolver<double> solver(param);
-    DistGeomFunc4D fun(this);
+    DistGeomFunc4D fun(this, w4d);
 
     double fx;
     int niter = solver.minimize(fun, _coord, fx);
-    //std::cout << niter << " iterations" << std::endl;
-    //std::cout << "f(x) = " << fx << std::endl;
+    if (_d->debug) {
+      double maxW = 0.0;
+      for (size_t i = 0; i < N; ++i)
+        maxW = std::max(maxW, std::abs(_coord(i * dim + 3)));
+      cerr << "  4D minimization (w4d=" << w4d << "): " << niter << " iters, fx=" << fx
+           << ", max 4th-coord=" << maxW << endl;
+    }
 
     for(size_t i=0; i<N; ++i) {
       vector3 v(_coord(i*dim), _coord(i*dim+1), _coord(i*dim+2));
@@ -1173,34 +1153,86 @@ namespace OpenBabel {
 
   void OBDistanceGeometry::AddConformer()
   {
-    // We should use Eigen here, and cast to double*
-    double *confCoord = new double [_mol.NumAtoms() * 3]; // initial state (random)
+    double *confCoord = new double [_mol.NumAtoms() * 3];
     _mol.AddConformer(confCoord);
     _mol.SetConformer(_mol.NumConformers());
 
+<<<<<<< mt19937_64
 #if !OB_USE_OBRANDOMMT
     OBRandom generator(true); // Use system rand() functions
     generator.Reset();
 #else
     OBRandomMT generator{};
 #endif
-
-    if (_d->debug) {
-      cerr << " max box size: " << _d->maxBoxSize << endl;
-    }
+=======
+    OBRandom generator(true);
+    generator.TimeSeed();
+>>>>>>> master
 
     _d->success = false;
     unsigned int maxIter = 10 * _mol.NumAtoms();
+
+    if (_d->debug) {
+      cerr << "DistGeom: " << _mol.NumAtoms() << " atoms, "
+           << _stereo.size() << " stereo constraints, "
+           << "max " << maxIter << " trials, "
+           << "box " << _d->maxBoxSize << endl;
+    }
+
+    unsigned int stereoFails = 0, boundsFails = 0;
+    auto wallStart = std::chrono::steady_clock::now();
+
     for (unsigned int trial = 0; trial < maxIter; trial++) {
-      generateInitialCoords();
-      firstMinimization();
-      if (dim == 4) minimizeFourthDimension();
-      if (CheckStereoConstraints() && CheckBounds()) {
+      auto trialStart = std::chrono::steady_clock::now();
+
+      if (!generateInitialCoords())
+        continue;
+      if (dim == 4) {
+        // Stage 1: small penalty — atoms are free to use the 4th dimension
+        // to tunnel past each other and satisfy stereo constraints.
+        minimizeFourthDimension(1.0, 2000);
+        // Stage 2: large penalty — aggressively collapse the 4th dimension
+        // back to 3D while preserving the stereo handedness settled in stage 1.
+        minimizeFourthDimension(100.0, 1000);
+        // Hard zero to ensure firstMinimization starts in true 3D.
+        for (size_t i = 0; i < _mol.NumAtoms(); ++i)
+          _coord(i * dim + 3) = 0.0;
+      }
+      firstMinimization();                     // refine in true 3D
+
+      bool stereoOk = CheckStereoConstraints();
+      bool boundsOk = stereoOk && CheckBounds();
+
+      if (stereoOk && boundsOk) {
         _d->success = true;
+        if (_d->debug) {
+          double elapsed = std::chrono::duration<double>(
+            std::chrono::steady_clock::now() - wallStart).count();
+          cerr << "DistGeom: success on trial " << trial
+               << " after " << elapsed << "s" << endl;
+        }
         break;
       }
-      if (_d->debug && !_d->success)
-        cerr << "Stereo unsatisfied, trying again" << endl;
+
+      if (_d->debug) {
+        double trialMs = std::chrono::duration<double, std::milli>(
+          std::chrono::steady_clock::now() - trialStart).count();
+        if (!stereoOk) {
+          ++stereoFails;
+          cerr << "Trial " << trial << ": stereo failed (" << trialMs << " ms)" << endl;
+          ReportStereoViolations();
+        } else {
+          ++boundsFails;
+          cerr << "Trial " << trial << ": bounds failed (" << trialMs << " ms)" << endl;
+        }
+      }
+    }
+
+    if (_d->debug && !_d->success) {
+      double elapsed = std::chrono::duration<double>(
+        std::chrono::steady_clock::now() - wallStart).count();
+      cerr << "DistGeom: FAILED after " << maxIter << " trials in " << elapsed << "s"
+           << " (stereo=" << stereoFails << ", bounds=" << boundsFails << ")" << endl;
     }
   }
 
@@ -1226,9 +1258,9 @@ namespace OpenBabel {
           // upper first
           uBounds = _d->GetUpperBounds(i - 1, j - 1);
           if (dist - uBounds > 2.5) {
-                if (_d->debug) {
-                  cerr << " upper violation " << dist << " " << uBounds << endl;
-                }
+            if (_d->debug)
+              cerr << "    upper violation atoms " << i << "-" << j
+                   << ": dist=" << dist << " > ub=" << uBounds << endl;
             return false;
           }
           // now lower.. if the two atoms aren't bonded
@@ -1240,11 +1272,18 @@ namespace OpenBabel {
           if (minDist < 0.8)
             minDist = 0.8;
 
-          // Compare the current distance to the lower bounds
+          // Compare the current distance to the lower bounds.
+          // Allow 0.04 Å tolerance for LBFGS convergence gaps: the optimizer
+          // may converge with gradient norm < epsilon while still marginally
+          // short of a bound, and the FF cleanup will resolve the remainder.
+          const double BOUNDS_TOL = 0.04;
           dist = a->GetDistance(b);
-          if (dist < minDist) {
+          if (dist < minDist - BOUNDS_TOL) {
             if (_d->debug) {
-                  cerr << " lower violation " << dist << " " << minDist << endl;
+              float matLB = _d->GetLowerBounds(i - 1, j - 1);
+              cerr << "    lower violation atoms " << i << "-" << j
+                   << ": dist=" << dist << " < min=" << minDist
+                   << " (matrix lb=" << matLB << ")" << endl;
             }
             return false;
           }
@@ -1283,8 +1322,11 @@ namespace OpenBabel {
   bool OBDistanceGeometry::GetGeometry(OBMol &mol, bool useCurrentGeom)
   {
     mol.AddHydrogens();
-    if (!Setup(mol, useCurrentGeom))
+
+    if (!Setup(mol, useCurrentGeom)) {
+      std::cerr << "DistGeom: Setup failed" << std::endl;
       return false;
+    }
 
     AddConformer();
     GetConformers(mol);
@@ -1300,9 +1342,7 @@ namespace OpenBabel {
     for(size_t i=0; i<size; ++i) {
         for(size_t j=0; j<size; ++j) {
             double v = 0.0;
-            double d2 = 0;
-            for(size_t k=0; k<dim; k++)
-              d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
+            double d2 = (x.segment(i*dim, dim) - x.segment(j*dim, dim)).squaredNorm();
             double d = sqrt(d2);
             double ub = owner->GetUpperBounds(i, j);
             double lb = owner->GetLowerBounds(i, j);
@@ -1317,10 +1357,10 @@ namespace OpenBabel {
     for(size_t i = 0; i < owner->_stereo.size(); i++) {
       TetrahedralInfo tetra = owner->_stereo[i];
       vector<unsigned long> nbrs = tetra.GetNeighbors();
-      Eigen::Vector3d v1(x(nbrs[0] * dim), x(nbrs[0]*dim+1), x(nbrs[0]*dim+2));
-      Eigen::Vector3d v2(x(nbrs[1] * dim), x(nbrs[1]*dim+1), x(nbrs[1]*dim+2));
-      Eigen::Vector3d v3(x(nbrs[2] * dim), x(nbrs[2]*dim+1), x(nbrs[2]*dim+2));
-      Eigen::Vector3d v4(x(nbrs[3] * dim), x(nbrs[3]*dim+1), x(nbrs[3]*dim+2));
+      Eigen::Vector3d v1 = x.segment<3>(nbrs[0] * dim);
+      Eigen::Vector3d v2 = x.segment<3>(nbrs[1] * dim);
+      Eigen::Vector3d v3 = x.segment<3>(nbrs[2] * dim);
+      Eigen::Vector3d v4 = x.segment<3>(nbrs[3] * dim);
       double vol = (v1-v4).dot((v2-v4).cross(v3-v4));
       double lb = tetra.GetLowerBound();
       double ub = tetra.GetUpperBound();
@@ -1328,9 +1368,7 @@ namespace OpenBabel {
       else if(vol > ub) ret += (vol - ub) * (vol - ub);
     }
     // clear gradient
-    for (size_t i=0; i<grad.rows(); i++) {
-      grad[i] = 0;
-    }
+    grad.setZero();
     // gradient for distance error
     unsigned int N = x.size() / dim;
     for(size_t i=0; i<N; ++i) {
@@ -1338,9 +1376,8 @@ namespace OpenBabel {
         double preFactor = 0.0;
         double ub = owner->GetUpperBounds(i, j);
         double lb = owner->GetLowerBounds(i, j);
-        double d2 = 0;
-        for(size_t k=0; k<dim; k++)
-          d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
+        auto diff = x.segment(i*dim, dim) - x.segment(j*dim, dim);
+        double d2 = diff.squaredNorm();
         double d = sqrt(d2);
         if (d > ub) {
           double u2 = ub * ub;
@@ -1350,11 +1387,10 @@ namespace OpenBabel {
           double l2d2 = d2 + l2;
           preFactor = 8.0 * l2 * d * (1.0 - 2.0 * l2 / l2d2) / (l2d2 * l2d2);
         }
-        for (size_t k=0; k<dim; ++k) {
-          double g = 0;
-          if(d > 0) g = preFactor * (x[i*dim+k] - x[j*dim+k]) / d;
-          grad[i * dim + k] += g;
-          grad[j * dim + k] += -g;
+        if (preFactor != 0.0 && d > 0) {
+          Eigen::VectorXd g = (preFactor / d) * diff;
+          grad.segment(i*dim, dim) += g;
+          grad.segment(j*dim, dim) -= g;
         }
       }
     }
@@ -1362,16 +1398,12 @@ namespace OpenBabel {
     for(size_t i = 0; i < owner->_stereo.size(); i++) {
       TetrahedralInfo tetra = owner->_stereo[i];
       vector<unsigned long> nbrs = tetra.GetNeighbors();
-      unsigned long idx1, idx2, idx3, idx4;
-      idx1 = nbrs[0];
-      idx2 = nbrs[1];
-      idx3 = nbrs[2];
-      idx4 = nbrs[3];
+      const auto idx1 = nbrs[0], idx2 = nbrs[1], idx3 = nbrs[2], idx4 = nbrs[3];
 
-      Eigen::Vector3d v1(x(idx1 * dim), x(idx1 * dim+1), x(idx1 * dim+2));
-      Eigen::Vector3d v2(x(idx2 * dim), x(idx2 * dim+1), x(idx2 * dim+2));
-      Eigen::Vector3d v3(x(idx3 * dim), x(idx3 * dim+1), x(idx3 * dim+2));
-      Eigen::Vector3d v4(x(idx4 * dim), x(idx4 * dim+1), x(idx4 * dim+2));
+      Eigen::Vector3d v1 = x.segment<3>(idx1 * dim);
+      Eigen::Vector3d v2 = x.segment<3>(idx2 * dim);
+      Eigen::Vector3d v3 = x.segment<3>(idx3 * dim);
+      Eigen::Vector3d v4 = x.segment<3>(idx4 * dim);
       v1 -= v4;
       v2 -= v4;
       v3 -= v4;
@@ -1386,35 +1418,12 @@ namespace OpenBabel {
       else continue;
 
       // RDKit: Code/DistGeom/ChiralViolationContrib.cpp
-      grad[dim * idx1] += preFactor * (v2.y() * v3.z() - v3.y() * v2.z());
-      grad[dim * idx1 + 1] += preFactor * (v3.x() * v2.z() - v2.x() * v3.z());
-      grad[dim * idx1 + 2] += preFactor * (v2.x() * v3.y() - v3.x() * v2.y());
-
-      grad[dim * idx2] += preFactor * (v3.y() * v1.z() - v3.z() * v1.y());
-      grad[dim * idx2 + 1] += preFactor * (v3.z() * v1.x() - v3.z() * v1.z());
-      grad[dim * idx2 + 2] += preFactor * (v3.x() * v1.y() - v3.y() * v1.x());
-
-      grad[dim * idx3] += preFactor * (v2.z() * v1.y() - v2.y() * v1.z());
-      grad[dim * idx3 + 1] += preFactor * (v2.x() * v1.z() - v2.z() * v1.x());
-      grad[dim * idx3 + 2] += preFactor * (v2.y() * v1.x() - v2.x() * v1.y());
-
-      grad[dim * idx4] += 
-        preFactor *
-        (x[idx1 * dim + 2] * (x[idx2 * dim + 1] - x[idx3 * dim + 1]) + 
-         x[idx2 * dim + 2] * (x[idx3 * dim + 1] - x[idx1 * dim + 1]) + 
-         x[idx3 * dim + 2] * (x[idx1 * dim + 1] - x[idx2 * dim + 1]));
-
-      grad[dim * idx4 + 1] += 
-        preFactor *
-        (x[idx1 * dim] * (x[idx2 * dim + 2] - x[idx3 * dim + 2]) + 
-         x[idx2 * dim] * (x[idx3 * dim + 2] - x[idx1 * dim + 2]) + 
-         x[idx3 * dim] * (x[idx1 * dim + 2] - x[idx2 * dim + 2]));
-
-      grad[dim * idx4 + 2] += 
-        preFactor *
-        (x[idx1 * dim + 1] * (x[idx2 * dim] - x[idx3 * dim]) + 
-         x[idx2 * dim + 1] * (x[idx3 * dim] - x[idx1 * dim]) + 
-         x[idx3 * dim + 1] * (x[idx1 * dim] - x[idx2 * dim]));
+      // ∂vol/∂v1 = v2×v3, ∂vol/∂v2 = v3×v1, ∂vol/∂v3 = v1×v2
+      grad.segment<3>(dim * idx1) += preFactor * v2.cross(v3);
+      grad.segment<3>(dim * idx2) += preFactor * v3.cross(v1);
+      grad.segment<3>(dim * idx3) += preFactor * v1.cross(v2);
+      // ∂vol/∂v4 = -(v2×v3 + v3×v1 + v1×v2) = -(v2-v1)×(v3-v1)
+      grad.segment<3>(dim * idx4) -= preFactor * (v2 - v1).cross(v3 - v1);
     }
     return ret;
   }
@@ -1423,19 +1432,19 @@ namespace OpenBabel {
     unsigned int dim = owner->GetDimension();
     const size_t size = x.size()/dim;
     double ret = 0.0;
-    // calculate distance error
+    // calculate distance error using only 3D coordinates — x4 is free to be non-zero
+    // for stereo tunneling; if we used 4D distances, atoms would satisfy 3D bounds
+    // by spreading in x4, and zeroing x4 afterward would cause a huge energy jump.
     for(size_t i=0; i<size; ++i) {
         for(size_t j=0; j<size; ++j) {
             double v = 0.0;
-            double d2 = 0;
-            for(size_t k=0; k<dim; k++)
-              d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
+            double d2 = (x.segment<3>(i*dim) - x.segment<3>(j*dim)).squaredNorm();
             double d = sqrt(d2);
             double ub = owner->GetUpperBounds(i, j);
             double lb = owner->GetLowerBounds(i, j);
             double u2 = ub * ub;
             double l2 = lb * lb;
-            if (d > ub) v = d2/u2-1.0; 
+            if (d > ub) v = d2/u2-1.0;
             else if (d < lb) v = (2.0*l2 / (l2+d2))-1.0;
             if(v > 0.0) ret += v*v;
         }
@@ -1444,10 +1453,10 @@ namespace OpenBabel {
     for(size_t i = 0; i < owner->_stereo.size(); i++) {
       TetrahedralInfo tetra = owner->_stereo[i];
       vector<unsigned long> nbrs = tetra.GetNeighbors();
-      Eigen::Vector3d v1(x(nbrs[0] * dim), x(nbrs[0]*dim+1), x(nbrs[0]*dim+2));
-      Eigen::Vector3d v2(x(nbrs[1] * dim), x(nbrs[1]*dim+1), x(nbrs[1]*dim+2));
-      Eigen::Vector3d v3(x(nbrs[2] * dim), x(nbrs[2]*dim+1), x(nbrs[2]*dim+2));
-      Eigen::Vector3d v4(x(nbrs[3] * dim), x(nbrs[3]*dim+1), x(nbrs[3]*dim+2));
+      Eigen::Vector3d v1 = x.segment<3>(nbrs[0] * dim);
+      Eigen::Vector3d v2 = x.segment<3>(nbrs[1] * dim);
+      Eigen::Vector3d v3 = x.segment<3>(nbrs[2] * dim);
+      Eigen::Vector3d v4 = x.segment<3>(nbrs[3] * dim);
       double vol = (v1-v4).dot((v2-v4).cross(v3-v4));
       double lb = tetra.GetLowerBound();
       double ub = tetra.GetUpperBound();
@@ -1455,19 +1464,16 @@ namespace OpenBabel {
       else if(vol > ub) ret += (vol - ub) * (vol - ub);
     }
     // clear gradient
-    for (size_t i=0; i<grad.rows(); i++) {
-      grad[i] = 0;
-    }
-    // gradient for distance error
+    grad.setZero();
+    // gradient for distance error — 3D only, matching the cost term above
     unsigned int N = x.size() / dim;
     for(size_t i=0; i<N; ++i) {
       for(size_t j=0; j<N; ++j) {
         double preFactor = 0.0;
         double ub = owner->GetUpperBounds(i, j);
         double lb = owner->GetLowerBounds(i, j);
-        double d2 = 0;
-        for(size_t k=0; k<dim; k++)
-          d2 += pow(x[i*dim+k]-x[j*dim+k], 2.0);
+        Eigen::Vector3d diff = x.segment<3>(i*dim) - x.segment<3>(j*dim);
+        double d2 = diff.squaredNorm();
         double d = sqrt(d2);
         if (d > ub) {
           double u2 = ub * ub;
@@ -1477,11 +1483,10 @@ namespace OpenBabel {
           double l2d2 = d2 + l2;
           preFactor = 8.0 * l2 * d * (1.0 - 2.0 * l2 / l2d2) / (l2d2 * l2d2);
         }
-        for (size_t k=0; k<dim; ++k) {
-          double g = 0;
-          if(d > 0) g = preFactor * (x[i*dim+k] - x[j*dim+k]) / d;
-          grad[i * dim + k] += g;
-          grad[j * dim + k] += -g;
+        if (preFactor != 0.0 && d > 0) {
+          Eigen::Vector3d g = (preFactor / d) * diff;
+          grad.segment<3>(i*dim) += g;
+          grad.segment<3>(j*dim) -= g;
         }
       }
     }
@@ -1489,16 +1494,12 @@ namespace OpenBabel {
     for(size_t i = 0; i < owner->_stereo.size(); i++) {
       TetrahedralInfo tetra = owner->_stereo[i];
       vector<unsigned long> nbrs = tetra.GetNeighbors();
-      unsigned long idx1, idx2, idx3, idx4;
-      idx1 = nbrs[0];
-      idx2 = nbrs[1];
-      idx3 = nbrs[2];
-      idx4 = nbrs[3];
+      const auto idx1 = nbrs[0], idx2 = nbrs[1], idx3 = nbrs[2], idx4 = nbrs[3];
 
-      Eigen::Vector3d v1(x(idx1 * dim), x(idx1 * dim+1), x(idx1 * dim+2));
-      Eigen::Vector3d v2(x(idx2 * dim), x(idx2 * dim+1), x(idx2 * dim+2));
-      Eigen::Vector3d v3(x(idx3 * dim), x(idx3 * dim+1), x(idx3 * dim+2));
-      Eigen::Vector3d v4(x(idx4 * dim), x(idx4 * dim+1), x(idx4 * dim+2));
+      Eigen::Vector3d v1 = x.segment<3>(idx1 * dim);
+      Eigen::Vector3d v2 = x.segment<3>(idx2 * dim);
+      Eigen::Vector3d v3 = x.segment<3>(idx3 * dim);
+      Eigen::Vector3d v4 = x.segment<3>(idx4 * dim);
       v1 -= v4;
       v2 -= v4;
       v3 -= v4;
@@ -1513,43 +1514,23 @@ namespace OpenBabel {
       else continue;
 
       // RDKit: Code/DistGeom/ChiralViolationContrib.cpp
-      grad[dim * idx1] += preFactor * (v2.y() * v3.z() - v3.y() * v2.z());
-      grad[dim * idx1 + 1] += preFactor * (v3.x() * v2.z() - v2.x() * v3.z());
-      grad[dim * idx1 + 2] += preFactor * (v2.x() * v3.y() - v3.x() * v2.y());
-
-      grad[dim * idx2] += preFactor * (v3.y() * v1.z() - v3.z() * v1.y());
-      grad[dim * idx2 + 1] += preFactor * (v3.z() * v1.x() - v3.z() * v1.z());
-      grad[dim * idx2 + 2] += preFactor * (v3.x() * v1.y() - v3.y() * v1.x());
-
-      grad[dim * idx3] += preFactor * (v2.z() * v1.y() - v2.y() * v1.z());
-      grad[dim * idx3 + 1] += preFactor * (v2.x() * v1.z() - v2.z() * v1.x());
-      grad[dim * idx3 + 2] += preFactor * (v2.y() * v1.x() - v2.x() * v1.y());
-
-      grad[dim * idx4] += 
-        preFactor *
-        (x[idx1 * dim + 2] * (x[idx2 * dim + 1] - x[idx3 * dim + 1]) + 
-         x[idx2 * dim + 2] * (x[idx3 * dim + 1] - x[idx1 * dim + 1]) + 
-         x[idx3 * dim + 2] * (x[idx1 * dim + 1] - x[idx2 * dim + 1]));
-
-      grad[dim * idx4 + 1] += 
-        preFactor *
-        (x[idx1 * dim] * (x[idx2 * dim + 2] - x[idx3 * dim + 2]) + 
-         x[idx2 * dim] * (x[idx3 * dim + 2] - x[idx1 * dim + 2]) + 
-         x[idx3 * dim] * (x[idx1 * dim + 2] - x[idx2 * dim + 2]));
-
-      grad[dim * idx4 + 2] += 
-        preFactor *
-        (x[idx1 * dim + 1] * (x[idx2 * dim] - x[idx3 * dim]) + 
-         x[idx2 * dim + 1] * (x[idx3 * dim] - x[idx1 * dim]) + 
-         x[idx3 * dim + 1] * (x[idx1 * dim] - x[idx2 * dim]));
+      // ∂vol/∂v1 = v2×v3, ∂vol/∂v2 = v3×v1, ∂vol/∂v3 = v1×v2
+      grad.segment<3>(dim * idx1) += preFactor * v2.cross(v3);
+      grad.segment<3>(dim * idx2) += preFactor * v3.cross(v1);
+      grad.segment<3>(dim * idx3) += preFactor * v1.cross(v2);
+      // ∂vol/∂v4 = -(v2×v3 + v3×v1 + v1×v2) = -(v2-v1)×(v3-v1)
+      grad.segment<3>(dim * idx4) -= preFactor * (v2 - v1).cross(v3 - v1);
     }
 
+    // Penalty to collapse the 4th dimension to zero.
+    // w4d is set by caller: small (≈1) for stage 1 (free 4D tunneling for stereo),
+    // large (≈100) for stage 2 (aggressive collapse back to 3D).
     for(size_t i=0; i<size; ++i) {
-      ret += pow(x[i*dim+3], 2.0);
+      ret += w4d * x[i*dim+3] * x[i*dim+3];
     }
 
     for(size_t i=0; i<N; ++i) {
-      grad[i * dim + 3] += 2.0 * x[i * dim + 3];
+      grad[i * dim + 3] += 2.0 * w4d * x[i * dim + 3];
     }
     return ret;
   }

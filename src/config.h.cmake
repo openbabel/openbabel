@@ -130,6 +130,9 @@
   #define DEBUG_NEW new
  #endif
 #endif  // _MSC_VER
+/* have Eigen3 linear algebra library */
+#cmakedefine HAVE_EIGEN3 1
+
 /* have <conio.h> */
 #cmakedefine HAVE_CONIO_H 1
 
