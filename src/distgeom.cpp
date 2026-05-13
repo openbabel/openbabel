@@ -105,7 +105,8 @@ namespace OpenBabel {
     }
 
     Eigen::MatrixXf bounds, preMet;
-    bool debug; double maxBoxSize;
+    bool debug; 
+    double maxBoxSize;
     OBGen3DStereoHelper stereoHelper;
     bool success;
   };
@@ -1076,7 +1077,16 @@ namespace OpenBabel {
     Eigen::VectorXd eigVals = es.eigenvalues();
     Eigen::MatrixXd eigVecs = es.eigenvectors();
 
-    eigVals = (eigVals.array() > 0.0).select(eigVals.array().sqrt(), -eigVals.array());
+    // Only the top `dim` eigenvalues (indices N-1..N-dim) are used for coordinates.
+    // Negative eigenvalues in the rest are normal for a random distance sample.
+    // Return false only if the eigenvalues we'll actually embed are significantly negative.
+    const double negEpsilon = 1e-6;
+    for (size_t j = 0; j < static_cast<size_t>(dim); ++j) {
+      if (eigVals(N - 1 - j) < -negEpsilon)
+        return false;
+    }
+    // Clamp any tiny numerical negatives to zero, then take square root
+    eigVals = eigVals.cwiseMax(0.0).array().sqrt();
 
     _coord.resize(N * dim);
     Eigen::Map<Eigen::Matrix<double, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor>>
@@ -1162,7 +1172,8 @@ namespace OpenBabel {
     for (unsigned int trial = 0; trial < maxIter; trial++) {
       auto trialStart = std::chrono::steady_clock::now();
 
-      generateInitialCoords();
+      if (!generateInitialCoords())
+        continue;
       if (dim == 4) {
         // Stage 1: small penalty — atoms are free to use the 4th dimension
         // to tunnel past each other and satisfy stereo constraints.
@@ -1364,7 +1375,7 @@ namespace OpenBabel {
           preFactor = 8.0 * l2 * d * (1.0 - 2.0 * l2 / l2d2) / (l2d2 * l2d2);
         }
         if (preFactor != 0.0 && d > 0) {
-          auto g = (preFactor / d) * diff.eval();
+          Eigen::VectorXd g = (preFactor / d) * diff;
           grad.segment(i*dim, dim) += g;
           grad.segment(j*dim, dim) -= g;
         }
