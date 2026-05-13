@@ -668,13 +668,6 @@ class TestCAN(unittest.TestCase, WriteMixin):
 Oc1ccccc1\tphenol
 """)
 
-# json normalizer, make num comparisons approximate
-# fps -- FPS text fingerprint format (Dalke) [Write-only]
-_many_decimals_pat = re.compile(r"(\.\d{5})\d+")
-def normalize_json(content):
-    content = _many_decimals_pat.sub(r"\1", content)
-    return content
-
 # cdjson -- ChemDoodle JSON
 class TestCDJSON(unittest.TestCase, WriteMixin):
     fmt = "cdjson"
@@ -750,7 +743,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
       ]
     }
   ]
-}""", normalize=normalize_json)
+}""")
 
 ## # cdxml -- ChemDraw CDXML format
 ## XXX fails on an unpatched system
@@ -2933,7 +2926,7 @@ class TestPCJSON(unittest.TestCase, WriteMixin):
       "charge": 0
     }
   ]
-}""", normalize=normalize_json)
+}""")
 
 # pcm -- PCModel Format
 class TestPCM(unittest.TestCase, WriteMixin):
