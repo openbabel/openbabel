@@ -74,7 +74,7 @@ namespace OpenBabel {
     }
 
     const char* SpecificationURL() override
-    { return "http://www.scm.com/"; }  // optional
+    { return "https://www.scm.com/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -275,7 +275,7 @@ namespace OpenBabel {
     }
 
     const char* SpecificationURL() override
-    { return "http://www.scm.com/Doc/Doc2007.01/ADF/ADFUsersGuide/page32.html"; }  // optional
+    { return "https://www.scm.com/doc/ADF/index.html"; }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////
@@ -672,7 +672,7 @@ public:
     /// I couldn't find it but close enough.
     const char* SpecificationURL() override
     {
-        return "http://www.scm.com/Doc/Doc2006.01/ADF/Analysis/page8.html";
+        return "https://www.scm.com/doc/ADF/index.html";
     }
 
     /// Return MIME type, NULL in this case.
@@ -868,7 +868,7 @@ bool OBT41Format::ReadASCII( OBBase* pOb, OBConversion* pConv )
 
       string buf;
       // nuuc
-      while( buf != "Geometry" ) ifs >> buf; cout << buf << endl;
+      while( buf != "Geometry" && ifs ) ifs >> buf; cout << buf << endl;
       ifs >> buf; cout << buf << endl;
       if( buf != "nnuc" )
       {

@@ -29,7 +29,7 @@ GNU General Public License for more details.
   #define OBAPI
 #endif
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 
 #include <Eigen/Core>
 #include <LBFGS.h>
@@ -80,6 +80,8 @@ namespace OpenBabel {
      */
     bool Setup(const OBMol &mol, bool useCurrentGeom = false);
 
+    void SetDebug(bool debug);
+
     void Generate();
     void AddConformer();
     void GetConformers(OBMol &mol);
@@ -120,7 +122,7 @@ namespace OpenBabel {
 
     bool generateInitialCoords();
     bool firstMinimization();
-    bool minimizeFourthDimension();
+    bool minimizeFourthDimension(double w4d = 1.0, int max_iterations = 2000);
     
     //! \brief Set the default upper bounds for the constraint matrix
     //! Upper bounds = maximum length of the molecule, or 1/2 the body diagonal in a unit cell
@@ -146,6 +148,8 @@ namespace OpenBabel {
 
     //! \return The specified cis/trans stereo configuration for this bond. NULL if not specified
     OBCisTransStereo *GetCisTransStereo(OBBond *bond);
+    //! \brief Print which stereo centers are currently violating their bounds
+    void ReportStereoViolations();
 
     //! \brief Use OBBuilder to attempt to correct stereo constraints
     void CorrectStereoConstraints(double scale = 1.0);
@@ -165,8 +169,10 @@ namespace OpenBabel {
 
   class DistGeomFunc4D {
     OBDistanceGeometry* const owner;
+    double w4d;
     public:
-      DistGeomFunc4D(OBDistanceGeometry* owner) : owner(owner) {}
+      DistGeomFunc4D(OBDistanceGeometry* owner, double w4d = 1.0)
+        : owner(owner), w4d(w4d) {}
       double operator() (const Eigen::VectorXd& x, Eigen::VectorXd& grad);
   };
 }

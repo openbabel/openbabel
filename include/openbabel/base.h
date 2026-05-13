@@ -340,6 +340,22 @@ class OBConversion; //used only as pointer
 
     };
 
+  template<typename T, typename Iter = typename std::vector<T>::const_iterator>
+  class OBAPI OBRange
+  {
+    public:
+      OBRange(Iter begin, Iter end) : m_begin{begin}, m_end{end}
+      {
+      }
+
+      Iter begin() const { return m_begin; }
+      Iter end() const { return m_end; }
+
+    private:
+      Iter m_begin;
+      Iter m_end;
+  };
+
 } //namespace OpenBabel
 
 #endif // OB_BASE_H

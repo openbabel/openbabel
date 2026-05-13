@@ -903,18 +903,21 @@ namespace OpenBabel
 
   void OBResidue::RemoveAtom(OBAtom *atom)
   {
-    if (atom != nullptr && _atoms.size())
+    if (atom == nullptr || _atoms.empty())
+      return;
+    // Iterate from the back so that erase doesn't shift elements past
+    // the cursor: an atom may have been AddAtom'd more than once, and
+    // every occurrence needs to go (otherwise ~OBResidue() later walks
+    // a stale pointer to the now-destroyed atom).
+    for (size_t i = _atoms.size(); i-- > 0; )
       {
-        for ( unsigned int i = 0 ; i < _atoms.size() ; ++i)
+        if (_atoms[i] == atom)
           {
-            if (_atoms[i] != nullptr && _atoms[i] == atom)
-              {
-                atom->SetResidue(nullptr);
-                _atoms.erase(_atoms.begin() + i);
-                _atomid.erase(_atomid.begin() + i);
-                _hetatm.erase(_hetatm.begin() + i);
-                _sernum.erase(_sernum.begin() + i);
-              }
+            atom->SetResidue(nullptr);
+            _atoms.erase(_atoms.begin() + i);
+            _atomid.erase(_atomid.begin() + i);
+            _hetatm.erase(_hetatm.begin() + i);
+            _sernum.erase(_sernum.begin() + i);
           }
       }
   }
@@ -960,6 +963,11 @@ namespace OpenBabel
     _resname = name;
     SetResidueKeys(_resname.c_str(), _reskey, _aakey);
   }
+
+  void OBResidue::SetSegName(const string &name)
+  {
+    _segname = name;
+  }  
 
   void OBResidue::SetNum(const unsigned int resnum)
   {
@@ -1035,6 +1043,11 @@ namespace OpenBabel
   string OBResidue::GetName(void) const
   {
     return _resname;
+  }
+
+  string OBResidue::GetSegName(void) const
+  {
+    return _segname;
   }
 
   std::string OBResidue::GetNumString(void)

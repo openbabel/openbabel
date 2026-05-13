@@ -64,9 +64,9 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override {
-      return "http://www.ebi.ac.uk/help/formats_frame.html";
+      // return "http://www.ebi.ac.uk/help/formats_frame.html";  // XXX dead
+      return "https://blast.ncbi.nlm.nih.gov/doc/blast-topics/";
     }
-    // Additionally http://www.ncbi.nlm.nih.gov/blast/fasta.shtml
 
     const char* GetMIMEType() override
     { return "chemical/x-fasta"; }
@@ -414,8 +414,11 @@ namespace OpenBabel
           }
         else
           {
+            // strchr will "find" a NUL byte in the sequence by matching the
+            // codes string's own terminator, returning a past-the-end index
+            // into Residues[]. Reject that case explicitly.
             const char * idx = strchr(IUPAC_codes, (* sx)); // e.g. "01NACGURYKMSWBDHV"
-            size_t unit_code = (size_t)( idx ? (idx - IUPAC_codes) : IUPAC_Unknown );
+            size_t unit_code = (size_t)( (idx && *idx != '\0') ? (idx - IUPAC_codes) : IUPAC_Unknown );
             ResidueRecord * res_rec = & Residues[unit_code];
             if (res_rec->IUPACcode)
               {
@@ -544,7 +547,6 @@ namespace OpenBabel
       default:
         break;
       }
-    pmol->SetChainsPerceived();
     return (pmol->NumAtoms() > 0 ? true : false);
   }
 
@@ -561,6 +563,7 @@ namespace OpenBabel
                                 pConv->IsOption("1",OBConversion::INOPTIONS),
                                 pConv->IsOption("t",OBConversion::INOPTIONS));
     pmol->EndModify();
+    pmol->SetChainsPerceived();
     return rv;
   }
 

@@ -52,7 +52,7 @@ public:
   }
 
   const char* SpecificationURL() override
-  {return "ftp://ftp.ncbi.nlm.nih.gov/pubchem/data_spec/pubchem.xsd";};
+  { return "https://ftp.ncbi.nlm.nih.gov/pubchem/specifications/pubchem.xsd"; }
 
   const char* GetMIMEType() override
   { return "chemical/x-ncbi-asn1-xml"; };

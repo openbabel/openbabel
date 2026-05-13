@@ -61,9 +61,10 @@ class PubChemJSONFormat : public OBMoleculeFormat
       ;
     };
 
-    const char* SpecificationURL() override
-    { return "http://www.ncbi.nlm.nih.gov/data_specs/asn/pcsubstance.asn"; };
-    // http://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html also useful
+    const char* SpecificationURL() override {
+      return "https://www.ncbi.nlm.nih.gov/data_specs/asn/pcsubstance.asn";
+      // https://pubchem.ncbi.nlm.nih.gov/pug_rest/PUG_REST.html also useful
+    }
 
     bool ReadMolecule(OBBase* pOb, OBConversion* pConv) override;
     bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override;
@@ -760,7 +761,7 @@ class PubChemJSONFormat : public OBMoleculeFormat
       // Coordinates
       // TODO: An option to round coordinates to n decimal places?
       xcoords.PushBack(rapidjson::Value(patom->GetX()).Move(), al);
-      ycoords.PushBack(rapidjson::Value(patom->GetX()).Move(), al);
+      ycoords.PushBack(rapidjson::Value(patom->GetY()).Move(), al);
       if (pmol->GetDimension() == 3) {
         zcoords.PushBack(rapidjson::Value(patom->GetZ()).Move(), al);
       }

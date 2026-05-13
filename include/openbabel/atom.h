@@ -65,6 +65,62 @@ namespace OpenBabel
   if (value) SetFlag(X); \
   else     UnsetFlag(X);
 
+  class OBAPI OBAtomAtomIterAdaptor
+  {
+    public:
+      using Iter = std::vector<OBBond*>::const_iterator;
+
+      using value_type = OBAtom*;
+      using difference_type = std::ptrdiff_t;
+      using pointer = OBAtom**;
+      using reference = OBAtom*&;
+      using iterator_category = std::forward_iterator_tag;
+
+      OBAtomAtomIterAdaptor() = default;
+
+      OBAtomAtomIterAdaptor(Iter iter, const OBAtom *atom = nullptr)
+        : m_iter(iter), m_atom(atom)
+      {
+      }
+
+      OBAtom* operator*() const;
+
+      OBAtomAtomIterAdaptor& operator++()
+      {
+        ++m_iter;
+        return *this;
+      }
+
+      OBAtomAtomIterAdaptor operator++(int)
+      {
+        auto tmp = *this;
+        ++m_iter;
+        return tmp;
+      }
+
+      bool operator==(const OBAtomAtomIterAdaptor &other) const
+      {
+        return m_iter == other.m_iter;
+      }
+
+      bool operator!=(const OBAtomAtomIterAdaptor &other) const
+      {
+        return m_iter != other.m_iter;
+      }
+
+    private:
+      Iter m_iter;
+      const OBAtom *m_atom = nullptr;
+  };
+
+  using OBAtomBondRange = OBRange<OBBond*>;
+  using OBAtomAtomRange = OBRange<OBAtom*, OBAtomAtomIterAdaptor>;
+
+#if __cplusplus >= 202002L
+  static_assert(std::forward_iterator<OBAtomAtomIterAdaptor>);
+  static_assert(std::ranges::range<OBAtomAtomRange>);
+#endif
+
   // Class OBAtom
   // class introduction in atom.cpp
  #define OBATOM_TYPE_LEN 6
@@ -269,12 +325,16 @@ namespace OpenBabel
       //! \return An iterator to the end of the bonds to this atom
       OBBondIterator EndBonds()
         { return(_vbond.end());   }
+      //! \return A range over the bonds to this atom. This range can be used in a range-based for loop.
+      OBAtomBondRange GetBonds() const { return {_vbond.begin(), _vbond.end()}; }
       //! Set the iterator @p i to the beginning of the bonds
       //! \return The first bond to this atom (or NULL if none exist)
       OBBond *BeginBond(OBBondIterator &i);
       //! Increment the iterator @p i
       //! \return The next bond to this atom (or NULL if none exist)
       OBBond *NextBond(OBBondIterator &i);
+      //! \return A range over the neighbors of this atom. This range can be used in a range-based for loop.
+      OBAtomAtomRange GetNbrs() const { return { {_vbond.begin(), this}, {_vbond.end()} }; }
       //! Set the iterator @p i to the beginning of the bonds
       //! \return The first neighboring atom (or NULL if none exist)
       OBAtom *BeginNbrAtom(OBBondIterator &i);
