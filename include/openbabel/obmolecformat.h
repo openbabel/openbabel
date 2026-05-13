@@ -19,7 +19,6 @@ GNU General Public License for more details.
 #ifndef OB_MOLECULEFORMAT_H
 #define OB_MOLECULEFORMAT_H
 
-#include <ciso646>  // detect std::lib
 #include <unordered_map>
 
 #include <openbabel/babelconfig.h>

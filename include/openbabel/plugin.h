@@ -570,7 +570,7 @@ public:
 #ifdef HAVE_STATIC_INCHI
   OB_STATIC_PLUGIN(OpUnique, theOpUnique)
 #endif
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
   OB_STATIC_PLUGIN(OpConformer, theOpConformer)
 #endif
 
@@ -579,11 +579,9 @@ public:
   OB_STATIC_PLUGIN(MMFF94Charges, theMMFF94Charges)
   OB_STATIC_PLUGIN(NoCharges, theNoCharges)
   OB_STATIC_PLUGIN(FromFileCharges, theFromFileCharges)
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
   OB_STATIC_PLUGIN(QEqCharges, theQEqCharges)
   OB_STATIC_PLUGIN(QTPIECharges, theQTPIECharges)
-#endif
-#ifdef HAVE_EIGEN3
   OB_STATIC_PLUGIN(EQEqCharges, theEQEqCharges)
 #endif
   OBAPI std::vector<std::string> EnableStaticPlugins();

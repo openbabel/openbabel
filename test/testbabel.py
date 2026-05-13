@@ -1,4 +1,4 @@
-"""Test OpenBabel executables from Python
+r"""Test OpenBabel executables from Python
 
 Note: Python bindings not used
 
@@ -100,7 +100,7 @@ class BaseTest(unittest.TestCase):
 
     def assertConverted(self, stderr, N):
         """Assert that N molecules were converted."""
-        pat = "(-?\d.*) molecule(?:s?) converted"
+        pat = r"(-?\d.*) molecule(?:s?) converted"
         lines = stderr.split("\n")
         convertedline =  [line for line in lines if re.match(pat, line)]
         if len(convertedline) == 0:

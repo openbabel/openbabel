@@ -926,14 +926,18 @@ namespace OpenBabel
     if (!HasSSSRPerceived())
       FindSSSR();
 
-    OBRingData *rd = nullptr;
-    if (!HasData("SSSR")) {
+    // SDF / MDL files can inject "<SSSR>" as a property field, which
+    // ends up stored as an OBPairData under that attribute. The legacy
+    // C-style cast misinterpreted it as OBRingData (UBSAN catches the
+    // vptr mismatch). Validate the type and replace if wrong.
+    OBGenericData *existing = GetData("SSSR");
+    OBRingData *rd = dynamic_cast<OBRingData *>(existing);
+    if (rd == nullptr) {
+      if (existing) DeleteData(existing);
       rd = new OBRingData();
       rd->SetAttribute("SSSR");
       SetData(rd);
     }
-
-    rd = (OBRingData *) GetData("SSSR");
     rd->SetOrigin(perceived);
     return(rd->GetData());
   }
@@ -943,14 +947,15 @@ namespace OpenBabel
     if (!HasLSSRPerceived())
       FindLSSR();
 
-    OBRingData *rd = nullptr;
-    if (!HasData("LSSR")) {
+    // Same type-confusion guard as GetSSSR().
+    OBGenericData *existing = GetData("LSSR");
+    OBRingData *rd = dynamic_cast<OBRingData *>(existing);
+    if (rd == nullptr) {
+      if (existing) DeleteData(existing);
       rd = new OBRingData();
       rd->SetAttribute("LSSR");
       SetData(rd);
     }
-
-    rd = (OBRingData *) GetData("LSSR");
     rd->SetOrigin(perceived);
     return(rd->GetData());
   }
@@ -1441,6 +1446,18 @@ namespace OpenBabel
       obErrorLog.ThrowError(__FUNCTION__,
                             "Ran OpenBabel::Clear Molecule", obAuditMsg);
 
+    // Destroy residues first: ~OBResidue() walks its atom list to clear
+    // back-pointers via SetResidue(nullptr). If atoms were destroyed
+    // first, those calls would dereference dead pointers (UBSAN trips
+    // in residue.cpp:853). The symmetric path in ~OBAtom() already
+    // handles the reverse direction by checking _residue != nullptr.
+    unsigned int ii;
+    for (ii=0 ; ii<_residue.size() ; ++ii)
+      {
+        DestroyResidue(_residue[ii]);
+      }
+    _residue.clear();
+
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
     for (i = _vatom.begin();i != _vatom.end();++i)
@@ -1457,14 +1474,6 @@ namespace OpenBabel
     _atomIds.clear();
     _bondIds.clear();
     _natoms = _nbonds = 0;
-
-    //Delete residues
-    unsigned int ii;
-    for (ii=0 ; ii<_residue.size() ; ++ii)
-      {
-        DestroyResidue(_residue[ii]);
-      }
-    _residue.clear();
 
     //clear out the multiconformer data
     vector<double*>::iterator k;
@@ -2765,12 +2774,14 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
     vector<OBResidue*>::iterator r;
+    // Destroy residues before atoms so ~OBResidue() can clear back-
+    // pointers on still-live atoms (see Clear() for the same reason).
+    for (residue = BeginResidue(r);residue;residue = NextResidue(r))
+      DestroyResidue(residue);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       DestroyAtom(atom);
     for (bond = BeginBond(j);bond;bond = NextBond(j))
       DestroyBond(bond);
-    for (residue = BeginResidue(r);residue;residue = NextResidue(r))
-      DestroyResidue(residue);
 
     //clear out the multiconformer data
     vector<double*>::iterator k;

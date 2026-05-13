@@ -56,7 +56,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    {return "http://www.cec.mpg.de/forum/portal.php";} //optional
+    { return "https://orcaforum.kofo.mpg.de/app.php/portal"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -94,7 +94,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    {return"http://www.cec.mpg.de/forum/portal.php";} //optional
+    { return "https://orcaforum.kofo.mpg.de/app.php/portal"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -146,7 +146,7 @@ namespace OpenBabel
 
     // Conformer data
     bool newMol = false;
-    double* confCoords;
+    double* confCoords = nullptr;
 
     // Unit cell
     bool unitCell = false;
@@ -159,7 +159,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
     string str;
     double x,y,z;
-    OBAtom *atom;
+    OBAtom *atom = nullptr;
 
     int nAtoms = 0;
 
@@ -181,7 +181,13 @@ namespace OpenBabel
 
                 if (checkNAtoms.find("Number of atoms") != notFound) {
                     tokenize(vs,buffer);
-                    nAtoms = atoi((char*)vs[4].c_str());
+                    if (vs.size() > 4)
+                        nAtoms = atoi((char*)vs[4].c_str());
+                    // CVE-2022-46289/46290: clamp to a sane range so a malformed
+                    // header cannot drive the confCoords allocation/write below
+                    // out of bounds.
+                    if (nAtoms < 0 || nAtoms > 10000000)
+                        nAtoms = 0;
                     break;
                 }
             }
@@ -193,7 +199,8 @@ namespace OpenBabel
             if (mol.NumAtoms() == 0) {
                 newMol = true;
             }
-            if (geoOptRun) {
+            confCoords = nullptr;
+            if (geoOptRun && nAtoms > 0) {
                 confCoords = new double[nAtoms*3];
             }
             ifs.getline(buffer,BUFF_SIZE);	// ---- ----- ----
@@ -212,11 +219,15 @@ namespace OpenBabel
                     atom->SetVector(x,y,z); //set atom coordinates
                 }
                 if (geoOptRun){
-                    confCoords[i*3] = x;
-                    confCoords[i*3+1] = y;
-                    confCoords[i*3+2] = z;
+                    // CVE-2022-46289/46290: bound the write to the buffer size
+                    // declared by the "Number of atoms" header.
+                    if (confCoords != nullptr && i < nAtoms) {
+                        confCoords[i*3] = x;
+                        confCoords[i*3+1] = y;
+                        confCoords[i*3+2] = z;
+                    }
                     i++;
-                } else {
+                } else if (atom != nullptr) {
                     atom->SetVector(x,y,z); //set atom coordinates
                 }
 
@@ -231,8 +242,17 @@ namespace OpenBabel
 //                    cout << confCoords[j*3] << " " << confCoords[j*3+1] << " " << confCoords[j*3+2] << endl;
 //                }
 
-                mol.AddConformer(confCoords);
-                mol.SetConformer(mol.NumConformers());
+                // Only attach the conformer if it is fully populated and its
+                // size matches the molecule. AddConformer takes ownership;
+                // otherwise free locally to avoid downstream OOB reads.
+                if (confCoords != nullptr && i == nAtoms
+                    && (int)mol.NumAtoms() == nAtoms) {
+                    mol.AddConformer(confCoords);
+                    mol.SetConformer(mol.NumConformers());
+                } else {
+                    delete[] confCoords;
+                }
+                confCoords = nullptr;
             }
         } // if "output coordinates"
 

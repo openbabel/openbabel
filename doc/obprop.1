@@ -1,6 +1,6 @@
-.Dd Oct 10, 2019
+.Dd October 10, 2019
+.Dt OBPROP 1 URM
 .Os "Open Babel" 3.1
-.Dt obprop 1 URM
 .Sh NAME
 .Nm obprop
 .Nd "print standard molecular properties"
@@ -11,8 +11,8 @@
 The
 .Nm
 program is a tool to print a set of standard molecular
-properties for all molecules in a file. It also serves as example code
-for using the Open Babel library (libopenbabel).
+properties for all molecules in a file.
+It also serves as example code for using the Open Babel library (libopenbabel).
 .Pp
 Output format includes:
 .br
@@ -47,7 +47,7 @@ num_rings
 .Op Ar Number of Rings (by SSSR)
 .br
 logP
-.Op Ar Number (octanol-water partition)
+.Op Ar Number (octanol\-water partition)
 .br
 PSA
 .Op Ar Number (topological polar surface area)
@@ -57,7 +57,7 @@ MR
 .br
 $$$
 .Pp
-The "$$$" is the separator between multiple molecular entries in a file
+The \(lq$$$\(rq is the separator between multiple molecular entries in a file
 .Sh EXAMPLES
 .Dl "obprop pyridines.sdf"
 .Sh SEE ALSO
@@ -68,7 +68,7 @@ The "$$$" is the separator between multiple molecular entries in a file
 .Xr obrotate 1 .
 .Pp
 The web pages for Open Babel can be found at:
-\%<\fBhttp://openbabel.org/\fR>
+\%<\fBhttps://openbabel.org/\fR>
 .Sh AUTHORS
 The obprop program was contributed by
 .An Fabien Fontaine
@@ -84,7 +84,7 @@ For more contributors to Open Babel, see
 .Sh COPYRIGHT
 Copyright (C) 2003 by Fabien Fontaine
 .br
-Some portions Copyright (C) 2004-2007 by Geoffrey R. Hutchison and
+Some portions Copyright (C) 2004\-2007 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
 This program is free software; you can redistribute it and/or modify
@@ -93,5 +93,5 @@ the Free Software Foundation version 2 of the License.
 .Pp
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.
