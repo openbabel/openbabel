@@ -385,6 +385,37 @@ H          0.74700        0.50628       -0.64089
                 else:
                     self.assertFalse(changed)
 
+    def testGen3D(self):
+        """Test gen3D coordinate generation, including the no-argument call
+        that previously segfaulted due to a null OptionText dereference"""
+        gen3d = ob.OBOp.FindType("gen3D")
+        self.assertIsNotNone(gen3d)
+
+        def make_mol(smi):
+            mol = ob.OBMol()
+            conv = ob.OBConversion()
+            conv.SetInFormat("smi")
+            conv.ReadString(mol, smi)
+            return mol
+
+        # Default call (no OptionText) must not crash and must produce 3D coords
+        mol = make_mol("C1CCCC1")
+        self.assertEqual(mol.GetDimension(), 0)
+        gen3d.Do(mol)
+        self.assertEqual(mol.GetDimension(), 3)
+
+        # Explicit word speeds for the slower (correct) paths
+        for opt in ("med", "best"):
+            mol = make_mol("CC")
+            gen3d.Do(mol, opt)
+            self.assertEqual(mol.GetDimension(), 3)
+
+        # Numeric speed levels
+        for opt in ("1", "2", "3"):
+            mol = make_mol("CC")
+            gen3d.Do(mol, opt)
+            self.assertEqual(mol.GetDimension(), 3)
+
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
         implicitly cis"""
