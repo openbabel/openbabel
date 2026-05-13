@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.12.0)
-# Library versioning (used in Mac Python bindings)x
+# Library versioning (used in Mac Python bindings)
 set(SOVERSION 4)
 
 if (RUN_SWIG)
@@ -53,7 +53,7 @@ if (PYTHON_BINDINGS)
 endif (PYTHON_BINDINGS)
 
 if (DO_PYTHON_BINDINGS)
-
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${Python_INCLUDE_DIRS}
     )
@@ -182,6 +182,7 @@ if (JAVA_BINDINGS)
 endif (JAVA_BINDINGS)
 
 if (DO_JAVA_BINDINGS)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
 include_directories(
 	${JNI_INCLUDE_DIRS}
@@ -247,7 +248,7 @@ if (R_BINDINGS)
 endif (R_BINDINGS)
 
 if (DO_R_BINDINGS)
-
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
     include_directories(/usr/share/R/include )
     if (RUN_SWIG)
@@ -323,6 +324,7 @@ if (PERL_BINDINGS)
 endif (PERL_BINDINGS)
 
 if (DO_PERL_BINDINGS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${PERL_INCLUDE_PATH}
     )
@@ -402,6 +404,7 @@ if (DO_RUBY_BINDINGS)
       )
     endif (RUN_SWIG)
 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${RUBY_INCLUDE_PATH}
     )
@@ -473,6 +476,7 @@ if (DO_CSHARP_BINDINGS)
       )
     endif (RUN_SWIG)
 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     add_library(bindings_csharp MODULE ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp)
     target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
     set_target_properties(bindings_csharp PROPERTIES
@@ -529,6 +533,7 @@ if (PHP_BINDINGS)
 endif (PHP_BINDINGS)
 
 if (DO_PHP_BINDINGS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${PHP_CONFIG_INCLUDES}
     )
