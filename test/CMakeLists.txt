@@ -354,11 +354,15 @@ add_executable(fuzz_smart fuzz/fuzz_smart.cpp ${_fuzz_extra_src})
 target_link_libraries(fuzz_smart ${libs} ${_fuzz_main_lib})
 set_target_properties(fuzz_smart PROPERTIES CXX_STANDARD 17)
 
+#add_executable(fuzz_depict fuzz/fuzz_depict.cpp ${_fuzz_extra_src})
+#target_link_libraries(fuzz_depict ${libs} ${_fuzz_main_lib})
+#set_target_properties(fuzz_depict PROPERTIES CXX_STANDARD 17)
+
 # Replay each saved corpus file as a regression test. CMake re-evaluates
 # the glob at configure time, so dropping a new file into the corpus
 # directory and re-running cmake is enough to register a new test.
 if(NOT DEFINED ENV{LIB_FUZZING_ENGINE})
-  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles fuzz_molecule fuzz_smart)
+  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles fuzz_molecule fuzz_smart) #fuzz_depict
   foreach(_target ${_fuzz_targets})
     file(GLOB _corpus_files CONFIGURE_DEPENDS
       "${CMAKE_CURRENT_SOURCE_DIR}/fuzz/corpus/${_target}/*")

@@ -3,10 +3,14 @@
 #include <openbabel/obconversion.h>
 #include <openbabel/builder.h>
 #include <openbabel/forcefield.h>
-#include <fuzzer/FuzzedDataProvider.h>
 
 #include <vector>
 #include <string>
+
+// Vendored alongside this file (LLVM Apache-2.0 WITH LLVM-exception)
+// so the harness compiles outside of an LLVM/libfuzzer toolchain — in
+// particular under GCC, where the libfuzzer headers aren't shipped.
+#include "FuzzedDataProvider.h"
 
 using namespace OpenBabel;
 

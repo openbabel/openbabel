@@ -2,7 +2,11 @@
 #include <openbabel/mol.h>
 #include <openbabel/parsmart.h>
 #include <openbabel/obconversion.h>
-#include <fuzzer/FuzzedDataProvider.h>
+
+// Vendored alongside this file (LLVM Apache-2.0 WITH LLVM-exception)
+// so the harness compiles outside of an LLVM/libfuzzer toolchain — in
+// particular under GCC, where the libfuzzer headers aren't shipped.
+#include "FuzzedDataProvider.h"
 
 extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
     if (Size < 2) return 0;
