@@ -215,6 +215,10 @@ namespace std { class stringbuf {}; }
 %include <openbabel/descriptor.h>
 
 #ifdef HAVE_EIGEN3
+%{
+#include <openbabel/conformersearch.h>
+#include <openbabel/math/align.h>
+%}
 %include <openbabel/conformersearch.h>
 %include <openbabel/math/align.h>
 #else
