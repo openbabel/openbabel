@@ -672,12 +672,13 @@ class Molecule(object):
         Tkinter and Python Imaging Library are required for image display.
         """
         obconversion = ob.OBConversion()
-        formatok = obconversion.SetOutFormat("_png2")
-        if not formatok:
-            raise ImportError("PNG depiction support not found. You should "
-                              "compile Open Babel with support for Cairo. See "
-                              "installation instructions for more "
-                              "information.")
+        if show or filename:
+            formatok = obconversion.SetOutFormat("_png2")
+            if not formatok:
+                raise ImportError("PNG depiction support not found. You should "
+                                  "compile Open Babel with support for Cairo. See "
+                                  "installation instructions for more "
+                                  "information.")
 
         # Need to copy to avoid removing hydrogens from self
         workingmol = Molecule(ob.OBMol(self.OBMol))
@@ -707,7 +708,8 @@ class Molecule(object):
 
             filedes, filename = tempfile.mkstemp()
 
-        workingmol.write("_png2", filename=filename, overwrite=True)
+        if show or (filedes is None):
+            workingmol.write("_png2", filename=filename, overwrite=True)
 
         if show:
             if sys.platform[:4] == "java":
