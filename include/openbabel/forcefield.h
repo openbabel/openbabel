@@ -1607,8 +1607,10 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      */
     static void VectorDivide(double *i, double n, double *result)
     {
-      for (unsigned int c = 0; c < 3; ++c)
-        result[c] = i[c] / n;
+      const double inv_n = 1.0 / n;
+      result[0] = i[0] * inv_n;
+      result[1] = i[1] * inv_n;
+      result[2] = i[2] * inv_n;
     }
 
     /*! inline fuction to speed up minimization speed
@@ -1643,9 +1645,10 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      */
     static void VectorNormalize(double *i)
     {
-      double length = VectorLength(i);
-      for (unsigned int c = 0; c < 3; ++c)
-        i[c] /= length;
+      const double inv_length = 1.0 / VectorLength(i);
+      i[0] *= inv_length;
+      i[1] *= inv_length;
+      i[2] *= inv_length;
     }
 
     /*! inline fuction to speed up minimization speed
