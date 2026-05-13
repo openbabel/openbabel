@@ -58,12 +58,37 @@ class TestDistanceGeomStereo(BaseTest):
             #'C[C@@H](CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C)O',
             #'CC(=O)OC[C@@]12CC[C@H]3[C@@]([C@@H]2C[C@H](O1)C1=CC(=O)O[C@H]1O)(C)CC[C@@H]1[C@]3(C)CCCC1(C)C'
             ]
+
         for smi in self.smiles:
             # generate a canonical SMILES in case the ordering changes
             canSMI, error = run_exec(smi, "obabel -ismi -ocan")
             # generate a mol2 (any 3D format without implicit hydrogens)
             mol2, error = run_exec(smi, "obabel -ismi -osdf --gen3d dg")
             # now check if it matches the previous canonical SMILES
+            output, error = run_exec(mol2, "obabel -isdf -ocan")
+
+            self.assertEqual(output.split('\t')[0].rstrip(), canSMI.rstrip())
+
+    def testHardSMItoSMI(self):
+        """
+        Challenging molecules with many stereo centers that stress 4D DG:
+        - glucuronide conjugate (19 stereo centers, 120 atoms)
+        These were previously broken due to incorrect 4D/3D minimization
+        order, unphysical SetLowerBounds values, and DistGeomFunc4D using
+        4D distances against 3D bounds.
+        """
+        self.canFindExecutable("obabel")
+
+        hard_smiles = [
+            # Glucuronide conjugate of a terpenoid, 19 stereo centers, 120 atoms
+            'O[C@@H]1[C@@H](O[C@@H]2O[C@H](C(=O)O)[C@H]([C@@H]([C@H]2O)O)O)'
+            '[C@H](O[C@@H]([C@H]1O)C(=O)O)O[C@H]1CC[C@]2([C@H](C1(C)C)'
+            'CC[C@@]1([C@@H]2C(=O)C=C2[C@@]1(C)CC[C@@]1([C@H]2C[C@](C)'
+            '(CC1)C(=O)O)C)C)C',
+        ]
+        for smi in hard_smiles:
+            canSMI, error = run_exec(smi, "obabel -ismi -ocan")
+            mol2, error = run_exec(smi, "obabel -ismi -osdf --gen3d dg")
             output, error = run_exec(mol2, "obabel -isdf -ocan")
 
             self.assertEqual(output.split('\t')[0].rstrip(), canSMI.rstrip())
