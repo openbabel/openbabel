@@ -183,8 +183,6 @@ namespace OpenBabel
     const OBMol* _ptargetmol;
     Eigen::MatrixXd _rotMatrix;
     Eigen::Vector3d _ref_centr, _target_centr;
-    const std::vector<vector3> *_pref;
-    const std::vector<vector3> *_ptarget;
     std::vector<vector3> _refmol_coords;
     std::vector<vector3> _targetmol_coords;
     Eigen::MatrixXd _result;

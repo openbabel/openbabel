@@ -58,7 +58,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.emsl.pnl.gov/docs/nwchem/"; }  // optional
+    { return "https://nwchemgit.github.io/index.html"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -145,7 +145,7 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
     }
 
     const char* SpecificationURL() override
-    { return "http://www.emsl.pnl.gov/docs/nwchem/"; }  // optional
+    { return "https://nwchemgit.github.io/index.html"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

@@ -1,4 +1,4 @@
-"""Test OpenBabel executables from Python
+r"""Test OpenBabel executables from Python
 
 Note: Python bindings not used
 

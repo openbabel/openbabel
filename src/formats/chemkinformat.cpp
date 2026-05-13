@@ -527,7 +527,13 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
         val /= pow(AUnitsFactor,pReact->NumReactants());
       else if(n==2)
         val /= EUnitsFactor;
-      pRD->SetRate((OBRateData::rate_type)n++, val);
+      if(n < 3) {
+        pRD->SetRate((OBRateData::rate_type)n++, val);
+      } else {
+        // Too many rate parameters; ignore or add to comment
+        pReact->SetComment(*itr);
+        continue;
+      }
       if(!ss)
       {
         //not numeric: put into comment (better than doing nothing)

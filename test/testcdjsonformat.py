@@ -1,4 +1,4 @@
-"""Test ChemDoodle JSON format using the OpenBabel Python bindings
+r"""Test ChemDoodle JSON format using the OpenBabel Python bindings
 
 On Windows or Linux, you can run these tests at the commandline
 in the build folder with:
@@ -61,6 +61,12 @@ class TestCdJsonFormat(PybelWrapper):
         mols = list(pybel.readfile("cdjson", os.path.join(filedir, 'butane.json')))
         self.assertEqual([a.atomicnum for a in mols[0].atoms], [6, 6, 6, 6])
         self.assertEqual([a.formalcharge for a in mols[0].atoms], [0, 0, 0, 0])
+        self.assertEqual([a.totalvalence for a in mols[0].atoms], [4, 4, 4, 4])
+
+    def test_read_molecule(self):
+        """Test that the molecular formula read is Butane."""
+        mols = list(pybel.readfile("cdjson", os.path.join(filedir, 'butane.json')))
+        self.assertEqual(mols[0].write().strip(), 'C(C)(C)C')
 
     def test_read_bonds(self):
         """Test reading bonds."""
@@ -90,6 +96,13 @@ class TestCdJsonFormat(PybelWrapper):
         self.assertNotIn('\n', output)
         output = mols[0].write('cdjson')
         self.assertIn('\n', output)
+
+    def test_read_write_round_trip(self):
+        mol = pybel.readstring('smi','C(=O)CO')
+        mol.make2D()
+        cdjson = mol.write('cdjson')
+        cdmol = pybel.readstring('cdjson', cdjson)
+        self.assertEqual(cdmol.write().strip(), 'C(=O)CO')
 
 
 if __name__ == "__main__":

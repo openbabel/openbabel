@@ -47,8 +47,9 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.xcrysden.org/doc/XSF.html/"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.xcrysden.org/doc/XSF.html/"; // XXX dead
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

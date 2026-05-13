@@ -167,7 +167,8 @@ namespace OpenBabel
                 y = atof((char*)vs[3].c_str());
                 z = atof((char*)vs[4].c_str());
 
-                translationVectors[numTranslationVectors++].Set(x, y, z);
+                if (numTranslationVectors < 3)
+                  translationVectors[numTranslationVectors++].Set(x, y, z);
                 if (!ifs.getline(buffer,BUFF_SIZE))
                   break;
                 tokenize(vs,buffer);
@@ -212,7 +213,7 @@ namespace OpenBabel
                   break;
                 }
 
-                if (isZ)
+                if (isZ && numTranslationVectors < 3)
                   translationVectors[numTranslationVectors++].Set(x, y, z);
 
                 if (!ifs.getline(buffer,BUFF_SIZE))
@@ -726,7 +727,8 @@ namespace OpenBabel
 
         if (elementSymbol == "Tv") //MOPAC translation vector
           {
-            translationVectors[numTranslationVectors++].Set(x, y, z);
+            if (numTranslationVectors < 3)
+              translationVectors[numTranslationVectors++].Set(x, y, z);
           }
         else
           {

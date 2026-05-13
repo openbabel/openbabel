@@ -1,45 +1,46 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
+ * info@inchi-trust.org
+ *
+*/
 
 
 #ifndef __ICHITIME_H__
 #define __ICHITIME_H__
-
 
 #ifdef COMPILE_ANSI_ONLY
 
@@ -63,34 +64,13 @@ typedef struct tagInchiTime {
 #else
 
 /* Win32 _ftime(): */
-#include <sys/timeb.h>
+#include <time.h>
 
 typedef struct tagInchiTime {
     unsigned long  clockTime; /* Time in seconds since midnight (00:00:00), January 1, 1970;
                                  signed long overflow expected in 2038 */
     long           millitime; /* milliseconds */
-
 } inchiTime;
-
-#endif
-
-
-#ifdef TARGET_EXE_USING_API
-
-#define InchiTimeGet           e_InchiTimeGet
-#define InchiTimeMsecDiff      e_InchiTimeMsecDiff
-#define InchiTimeAddMsec       e_InchiTimeAddMsec
-#define bInchiTimeIsOver       e_bInchiTimeIsOver
-#define InchiTimeElapsed       e_InchiTimeElapsed
-
-#define FullMaxClock           e_FullMaxClock
-#define HalfMaxClock           e_HalfMaxClock
-#define MaxPositiveClock       e_MaxPositiveClock
-#define MinNegativeClock       e_MinNegativeClock
-#define HalfMaxPositiveClock   e_HalfMaxPositiveClock
-#define HalfMinNegativeClock   e_HalfMinNegativeClock
-
-
 
 #endif
 
@@ -101,11 +81,20 @@ extern "C" {
 #endif
 
 
-void InchiTimeGet( inchiTime *TickEnd );
-long InchiTimeMsecDiff( inchiTime *TickEnd, inchiTime *TickStart );
-void InchiTimeAddMsec( inchiTime *TickEnd, unsigned long nNumMsec );
-int  bInchiTimeIsOver( inchiTime *TickEnd );
-long InchiTimeElapsed( inchiTime *TickStart );
+    typedef struct tagINCHI_CLOCK
+    {
+        clock_t m_MaxPositiveClock;
+        clock_t m_MinNegativeClock;
+        clock_t m_HalfMaxPositiveClock;
+        clock_t m_HalfMinNegativeClock;
+    } INCHI_CLOCK;
+
+    void InchiTimeGet( inchiTime *TickEnd );
+
+    long InchiTimeMsecDiff( INCHI_CLOCK *ic, inchiTime *TickEnd, inchiTime *TickStart );
+    void InchiTimeAddMsec( INCHI_CLOCK *ic, inchiTime *TickEnd, unsigned long nNumMsec );
+    int  bInchiTimeIsOver( INCHI_CLOCK *ic, inchiTime *TickEnd );
+    long InchiTimeElapsed( INCHI_CLOCK *ic, inchiTime *TickStart );
 
 #ifndef COMPILE_ALL_CPP
 #ifdef __cplusplus
@@ -115,4 +104,3 @@ long InchiTimeElapsed( inchiTime *TickStart );
 
 
 #endif /* __ICHITIME_H__ */
-

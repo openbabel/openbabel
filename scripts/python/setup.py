@@ -4,14 +4,12 @@ import os
 import re
 import subprocess
 import sys
-from distutils.command.build import build
-from distutils.command.sdist import sdist
-from distutils.errors import DistutilsExecError
-from distutils.version import StrictVersion
+from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
 from setuptools.command.install import install
-from setuptools import setup, Extension
-
+from setuptools.command.sdist import sdist
+from setuptools.command.build import build
+from packaging.version import Version
 
 # Path to the directory that contains this setup.py file.
 base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -43,18 +41,18 @@ def locate_ob():
     """Try use pkgconfig to locate Open Babel, otherwise guess default location."""
     try:
         # Warn if the (major, minor) version of the installed OB doesn't match these python bindings
-        py_ver = StrictVersion(find_version())
-        py_major_ver, py_minor_ver = py_ver.version[:2]
-        pcfile = 'openbabel-{}'.format(py_major_ver)
-        ob_ver = StrictVersion(pkgconfig(pcfile, '--modversion'))
-        if not ob_ver.version[:2] == py_ver.version[:2]:
-            print('Warning: Open Babel {}.{}.x is required. Your version ({}) may not be compatible.'
-                  .format(py_major_ver, py_minor_ver, ob_ver))
+        py_ver = Version(find_version())
+        py_major_ver, py_minor_ver = py_ver.release[:2]
+        pcfile = f'openbabel-{py_major_ver}'
+        ob_ver = Version(pkgconfig(pcfile, '--modversion'))
+        if ob_ver.release[:2] != (py_major_ver, py_minor_ver):
+            print(f'Warning: Open Babel {py_major_ver}.{py_minor_ver}.x is required. '
+                  f'Your version ({ob_ver}) may not be compatible.')
         include_dirs = pkgconfig(pcfile, '--variable=pkgincludedir')
         library_dirs = pkgconfig(pcfile, '--variable=libdir')
         print('Open Babel location automatically determined by pkg-config:')
     except Exception as e:
-        print('Warning: %s.\nGuessing Open Babel location:' % e)
+        print(f'Warning: {e}.\nGuessing Open Babel location:')
         include_dirs = '/usr/local/include/openbabel3'
         library_dirs = '/usr/local/lib'
     return include_dirs, library_dirs
@@ -64,20 +62,20 @@ class CustomBuild(build):
     """Ensure build_ext runs first in build command."""
     def run(self):
         self.run_command('build_ext')
-        build.run(self)
+        super().run()
 
 
 class CustomInstall(install):
     """Ensure build_ext runs first in install command."""
     def run(self):
         self.run_command('build_ext')
-        install.run(self)
+        super().run()
 
 
 class CustomSdist(sdist):
     """Add swig interface files into distribution from parent directory."""
     def make_release_tree(self, base_dir, files):
-        sdist.make_release_tree(self, base_dir, files)
+        super().make_release_tree(base_dir, files)
         link = 'hard' if hasattr(os, 'link') else None
         pkg_dir = os.path.join(base_dir, 'openbabel')
         self.copy_file(os.path.join('..', 'stereo.i'), pkg_dir, link=link)
@@ -89,7 +87,7 @@ class CustomBuildExt(build_ext):
     def finalize_options(self):
         # Setting include_dirs, library_dirs, swig_opts here instead of in Extension constructor allows them to be
         # overridden using -I and -L command line options to python setup.py build_ext.
-        build_ext.finalize_options(self)
+        super().finalize_options()
         self.ob_include_dir, self.ob_library_dir = locate_ob()
         self.include_dirs.append(self.ob_include_dir)
         self.library_dirs.append(self.ob_library_dir)
@@ -99,21 +97,21 @@ class CustomBuildExt(build_ext):
 
     def swig_sources(self, sources, extension):
         try:
-            return build_ext.swig_sources(self, sources, extension)
-        except DistutilsExecError:
+            return super().swig_sources(sources, extension)
+        except Exception:
             print('\nError: SWIG failed. Is Open Babel installed?',
                   'You may need to manually specify the location of Open Babel include and library directories. '
                   'For example:',
-                  '  python setup.py build_ext -I{} -L{}'.format(self.ob_include_dir, self.ob_library_dir),
+                  f'  python setup.py build_ext -I{self.ob_include_dir} -L{self.ob_library_dir}',
                   '  python setup.py install',
                   sep='\n')
             sys.exit(1)
 
 
 obextension = Extension(
-    'openbabel._openbabel', [os.path.join('openbabel', 'openbabel-python.i')], libraries=['openbabel']
+    'openbabel._openbabel', [os.path.join('openbabel', 'openbabel-python.i')],
+    libraries=['openbabel']
 )
-
 
 setup(
     name='openbabel',
@@ -125,7 +123,12 @@ setup(
     description='Python interface to the Open Babel chemistry library',
     long_description=open(os.path.join(base_dir, 'README.rst')).read(),
     zip_safe=False,
-    cmdclass={'build': CustomBuild, 'build_ext': CustomBuildExt, 'install': CustomInstall, 'sdist': CustomSdist},
+    cmdclass={
+        'build': CustomBuild,
+        'build_ext': CustomBuildExt,
+        'install': CustomInstall,
+        'sdist': CustomSdist
+    },
     packages=['openbabel'],
     ext_modules=[obextension],
     classifiers=[
