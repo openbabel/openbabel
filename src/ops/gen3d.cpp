@@ -109,9 +109,13 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     // This is done for all speed levels (i.e., create the structure)
     OBBuilder builder;
     bool attemptBuild = !useDistGeom;
-    if (attemptBuild && !builder.Build(molCopy) ) {
-      std::cerr << "Warning: Stereochemistry is wrong, using the distance geometry method instead" << std::endl;
-      useDistGeom = true; // don't try building anymore
+    if (attemptBuild) {
+      if (!builder.Build(molCopy) || !molCopy.HasNonZeroCoords()) {
+        std::cerr << "Warning: 3D builder failed, using distance geometry instead" << std::endl;
+        useDistGeom = true; // don't try building anymore
+        attemptBuild = false; // don't use zero/garbage coords as distgeom seed
+        molCopy = *pmol; // reset to original before distgeom
+      }
     }
 
 #ifdef HAVE_EIGEN3
@@ -191,6 +195,12 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     if (success) {
       *pmol = molCopy;
       break;
+    }
+    // Builder produced wrong stereo; switch to distance geometry for
+    // remaining trials (molCopy is reset to *pmol at the top of the loop).
+    if (!useDistGeom) {
+      std::cerr << "Warning: Stereochemistry is wrong, using distance geometry instead" << std::endl;
+      useDistGeom = true;
     }
   }
 
