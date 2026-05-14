@@ -359,6 +359,15 @@ void caseCVE_2022_43607()
                                   "cve-2022-43607.mol2", "c"));
 }
 
+// NULL dereference in OBAtom::IsPeriodic() when PointGroupPrivate::establish_pairs
+// calls GetDistance() on a temporary OBAtom with no parent molecule.
+// Fixed by null-checking GetParent() in OBAtom::IsPeriodic().
+void casePointGroupNullParent()
+{
+  OB_ASSERT(RunReproConvert("pointgroup-null-parent", "g09", "xyz",
+                            "methane-pointgroup.g09"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -452,6 +461,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 25:
     caseCVE_2025_10998();
+    break;
+  case 26:
+    casePointGroupNullParent();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
