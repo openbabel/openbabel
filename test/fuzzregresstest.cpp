@@ -259,6 +259,16 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2025-10996: heap-buffer-overflow in OBSmilesParser::ParseSmiles when
+// a malformed SMILES string (e.g. from a bracket path) creates atoms that
+// have no corresponding _hcount entry. The loop applied implicit valence
+// using _hcount[idx-1] without checking whether idx-1 is in range.
+// Fixed in b34cd604 by adding an `idx-1 >= _hcount.size()` bounds check.
+void caseCVE_2025_10996()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10996", "smi", "cve-2025-10996.smi"));
+}
+
 // CVE-2025-10999: NULL dereference in CacaoFormat::SetHilderbrandt when
 // atoms are spaced >10 Å apart. The original code used sum=100.0 as a
 // distance² threshold, so no reference atom was ever found and vit[i]->_a
@@ -400,6 +410,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 21:
     caseCVE_2025_10999();
+    break;
+  case 22:
+    caseCVE_2025_10996();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
