@@ -515,7 +515,8 @@ if(WITH_COORDGEN)
 
     else()
 
-      set(COORDGEN_VERSION "master" CACHE STRING "Coordgen fallback version to download")
+      # v3.0.2-10-gd20e735
+      set(COORDGEN_VERSION "d20e735d96480385b2e257522288004038a08cc9" CACHE STRING "Coordgen fallback version to download")
 
       set(COORDGEN_DIR "${openbabel_SOURCE_DIR}/external/coordgen-${COORDGEN_VERSION}")
 
