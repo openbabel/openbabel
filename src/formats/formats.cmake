@@ -78,6 +78,7 @@ if(WITH_JSON)
   set(formats_json
     chemdoodlejsonformat
     chemicaljsonformat
+    ketformat
     pubchemjsonformat
   )
 endif()

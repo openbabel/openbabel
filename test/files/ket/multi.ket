@@ -1,0 +1,26 @@
+{
+    "root": {
+        "nodes": [
+            { "$ref": "mol0" },
+            { "$ref": "mol1" }
+        ],
+        "connections": [],
+        "templates": []
+    },
+    "mol0": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "C", "location": [-3.0, 0.0, 0.0] },
+            { "label": "O", "location": [-2.25, 1.299, 0.0], "charge": -1 }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] }
+        ]
+    },
+    "mol1": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "Na", "location": [1.0, 0.5, 0.0], "charge": 1 }
+        ]
+    }
+}

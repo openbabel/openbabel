@@ -1,0 +1,63 @@
+{
+    "root": {
+        "nodes": [
+            { "$ref": "mol0" },
+            { "$ref": "mol1" }
+        ],
+        "connections": [],
+        "templates": []
+    },
+    "mol0": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "C", "location": [0.0, 0.0, 0.0] },
+            { "label": "C", "location": [1.0, 0.0, 0.0] },
+            { "label": "C", "location": [2.0, 0.0, 0.0] },
+            { "label": "O", "location": [3.0, 0.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] },
+            { "type": 1, "atoms": [1, 2] },
+            { "type": 1, "atoms": [2, 3] }
+        ],
+        "sgroups": [
+            {
+                "type": "GEN",
+                "atoms": [1, 2],
+                "bonds": [0, 2]
+            },
+            {
+                "type": "DAT",
+                "atoms": [0, 1, 2, 3],
+                "fieldName": "PROP",
+                "fieldData": "ethanol-like",
+                "fieldType": "F"
+            }
+        ],
+        "highlight": [
+            { "entityType": "atom", "items": [0, 1] },
+            { "entityType": "bond", "items": [0] }
+        ],
+        "properties": [
+            { "key": "name", "value": "test-compound" },
+            { "key": "experimental_logP", "value": "0.31" }
+        ]
+    },
+    "mol1": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "N", "location": [5.0, 0.0, 0.0] },
+            { "label": "C", "location": [6.0, 0.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] }
+        ],
+        "sgroups": [
+            {
+                "type": "GEN",
+                "atoms": [0, 1],
+                "bonds": [0]
+            }
+        ]
+    }
+}

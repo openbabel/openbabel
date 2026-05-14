@@ -1,0 +1,59 @@
+{
+    "ket_version": "2.0.0",
+    "root": {
+        "nodes": [
+            { "$ref": "mol5" },
+            {
+                "type": "text",
+                "boundingBox": { "x": 0, "y": -3, "z": 0, "width": 2, "height": 0.5 },
+                "paragraphs": [
+                    {
+                        "alignment": "left",
+                        "parts": [{ "text": "title" }]
+                    }
+                ]
+            },
+            { "$ref": "monomer0" }
+        ],
+        "connections": [
+            {
+                "connectionType": "single",
+                "endpoint1": { "monomerId": "monomer0", "attachmentPointId": "R1" },
+                "endpoint2": { "moleculeId": "mol5", "atomId": "0" }
+            }
+        ],
+        "templates": [
+            { "$ref": "monomerTemplate-X___Example" }
+        ],
+        "annotation": {
+            "label": "test-document"
+        }
+    },
+    "mol5": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "C", "location": [0.0, 0.0, 0.0] },
+            { "label": "O", "location": [1.5, 0.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] }
+        ]
+    },
+    "monomer0": {
+        "type": "monomer",
+        "id": "0",
+        "alias": "X",
+        "templateId": "X___Example",
+        "position": { "x": 3.0, "y": 0.0 }
+    },
+    "monomerTemplate-X___Example": {
+        "type": "monomerTemplate",
+        "id": "X___Example",
+        "class": "CHEM",
+        "classHELM": "CHEM",
+        "alias": "X",
+        "fullName": "Example monomer",
+        "atoms": [{ "label": "C", "location": [0, 0, 0] }],
+        "bonds": []
+    }
+}

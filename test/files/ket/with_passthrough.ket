@@ -1,0 +1,48 @@
+{
+    "ket_version": "2.0.0",
+    "root": {
+        "nodes": [
+            { "$ref": "mol0" },
+            { "$ref": "monomer0" },
+            {
+                "type": "image",
+                "format": "image/png",
+                "boundingBox": { "x": 0, "y": -5, "z": 0, "width": 1, "height": 1 },
+                "data": "iVBORw0KGgo="
+            }
+        ],
+        "connections": [],
+        "templates": [
+            { "$ref": "monomerTemplate-A___Adenine" }
+        ]
+    },
+    "mol0": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "C", "location": [0.0, 0.0, 0.0] },
+            { "label": "N", "location": [1.5, 0.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] }
+        ]
+    },
+    "monomer0": {
+        "type": "monomer",
+        "id": "0",
+        "alias": "A",
+        "templateId": "A___Adenine",
+        "position": { "x": 5.0, "y": 0.0 }
+    },
+    "monomerTemplate-A___Adenine": {
+        "type": "monomerTemplate",
+        "id": "A___Adenine",
+        "class": "Base",
+        "classHELM": "RNA",
+        "alias": "A",
+        "fullName": "Adenine",
+        "atoms": [
+            { "label": "C", "location": [0, 0, 0] }
+        ],
+        "bonds": []
+    }
+}
