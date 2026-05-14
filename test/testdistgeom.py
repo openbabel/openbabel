@@ -61,11 +61,11 @@ class TestDistanceGeomStereo(BaseTest):
 
         for smi in self.smiles:
             # generate a canonical SMILES in case the ordering changes
-            canSMI, error = run_exec(smi, "obabel -ismi -ocan")
+            canSMI, error = run_exec(smi, ["obabel", "-ismi", "-ocan"])
             # generate a mol2 (any 3D format without implicit hydrogens)
-            mol2, error = run_exec(smi, "obabel -ismi -osdf --gen3d dg")
+            mol2, error = run_exec(smi, ["obabel", "-ismi", "-osdf", "--gen3d", "dg"])
             # now check if it matches the previous canonical SMILES
-            output, error = run_exec(mol2, "obabel -isdf -ocan")
+            output, error = run_exec(mol2, ["obabel", "-isdf", "-ocan"])
 
             self.assertEqual(output.split('\t')[0].rstrip(), canSMI.rstrip())
 
@@ -87,9 +87,9 @@ class TestDistanceGeomStereo(BaseTest):
             '(CC1)C(=O)O)C)C)C',
         ]
         for smi in hard_smiles:
-            canSMI, error = run_exec(smi, "obabel -ismi -ocan")
-            mol2, error = run_exec(smi, "obabel -ismi -osdf --gen3d dg")
-            output, error = run_exec(mol2, "obabel -isdf -ocan")
+            canSMI, error = run_exec(smi, ["obabel", "-ismi", "-ocan"])
+            mol2, error = run_exec(smi, ["obabel", "-ismi", "-osdf", "--gen3d", "dg"])
+            output, error = run_exec(mol2, ["obabel", "-isdf", "-ocan"])
 
             self.assertEqual(output.split('\t')[0].rstrip(), canSMI.rstrip())
 

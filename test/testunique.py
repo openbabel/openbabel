@@ -49,7 +49,7 @@ C([2H])([2H])([2H])[2H]	deuteromethane"""
 
         for param in params:
             output, error = run_exec(self.smiles,
-                                     "obabel -ismi -osmi --unique %s" % param[0])
+                                     ["obabel", "-ismi", "-osmi", "--unique", param[0]])
             self.assertConverted(error, param[1])
 
 if __name__ == "__main__":

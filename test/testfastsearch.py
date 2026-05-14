@@ -42,15 +42,15 @@ c12[C]3([C@H]4([N@@](CCc1c1ccccc1[nH]2)C[C@H](C=C4CC)C3))C(=O)OC"""
         outputfile.write(smiles)
         outputfile.close()
 
-        output, error = run_exec(None, "obabel ten.smi -O ten.fs")
+        output, error = run_exec(None, ["obabel", "ten.smi", "-O", "ten.fs"])
         self.canFindFile("ten.fs")
         self.assertConverted(error, 10)
 
         query = "Nc2nc(c1ccccc1)nc3ccccc23"
-        output, error = run_exec(None, "obabel ten.fs -ifs -s %s -osmi" % query)
+        output, error = run_exec(None, ["obabel", "ten.fs", "-ifs", "-s", query, "-osmi"])
         self.assertConverted(error, 1)
 
-        output, error = run_exec(None, "obabel ten.fs -ifs -s %s -at 0.5 -aa -osmi" % query)
+        output, error = run_exec(None, ["obabel", "ten.fs", "-ifs", "-s", query, "-at", "0.5", "-aa", "-osmi"])
         self.assertConverted(error, 1)
 
 

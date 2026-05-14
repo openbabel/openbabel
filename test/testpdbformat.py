@@ -50,7 +50,7 @@ ATOM     10  CB  CYS A  16      44.435  17.811  54.045  1.00  0.00         B C
 ATOM     11  SG  CYS A  16      44.084  19.337  54.921  1.00  0.00         B S  '''
 
       output, error = run_exec(self.pdbin,
-                                     "obabel -ipdb -opdb")
+                                     ["obabel", "-ipdb", "-opdb"])
       
       #pull out only atoms
       outatoms = '\n'.join([line for line in output.split('\n') if line.startswith('ATOM')])
@@ -146,7 +146,7 @@ ATOM    474  HE2 TYR L  32      48.145  19.172  44.648  1.00  0.00           H
 ATOM    475  HH  TYR L  32      46.462  17.658  44.280  1.00  0.00           H
 """
         output, error = run_exec(self.entryPDBwithInsertioncodes,
-                                     "obabel -ipdb -ofasta")
+                                     ["obabel", "-ipdb", "-ofasta"])
         self.assertEqual(output.rstrip().rsplit("\n",1)[1], "VSSSY")
 
 if __name__ == "__main__":
