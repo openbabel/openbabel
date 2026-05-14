@@ -259,6 +259,17 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2025-10999: NULL dereference in CacaoFormat::SetHilderbrandt when
+// atoms are spaced >10 Å apart. The original code used sum=100.0 as a
+// distance² threshold, so no reference atom was ever found and vit[i]->_a
+// was left nullptr; the subsequent GetIdx() call then crashed. Fixed by
+// using numeric_limits::max() as the initial sum and adding null guards.
+void caseCVE_2025_10999()
+{
+  OB_ASSERT(RunReproConvert("CVE-2025-10999", "xyz", "cacint",
+                            "cve-2025-10999.xyz"));
+}
+
 // CVE-2025-11000: out-of-bounds read in PQSFormat::ReadMolecule via lowerit().
 // When a '=' appeared at position i<4, the original code did
 // strncpy(tmp, &s[i-4], 5) reading 5 bytes before the start of the buffer.
@@ -386,6 +397,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 20:
     caseCVE_2025_11000();
+    break;
+  case 21:
+    caseCVE_2025_10999();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
