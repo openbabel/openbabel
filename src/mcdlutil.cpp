@@ -1627,6 +1627,9 @@ namespace OpenBabel {
     for (i=0; i<nAtoms(); i++) {
       getAtom(i)->nb=0;
       getAtom(i)->currvalence=0;
+      for (int j=0; j<CONNMAX; j++) {
+        getAtom(i)->ac[j]=0;
+      }
     };
     for (i=0; i<nBonds(); i++) {
       n1=getBond(i)->at[0]; n2=getBond(i)->at[1];
@@ -2297,7 +2300,7 @@ namespace OpenBabel {
         r1=0;
         for (i=0; i<nBonds(); i++) if (tempBondArray[i] == 0) {
             r=this->bondLength(i);
-            if (r < bondLengthOld) bondLengthOld=n;
+            if (r < bondLengthOld) bondLengthOld=r;
             r1=r1+r;
             n++;
           };

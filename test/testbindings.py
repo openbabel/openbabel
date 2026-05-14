@@ -1,4 +1,4 @@
-"""Test OpenBabel Python bindings
+r"""Test OpenBabel Python bindings
 
 On Windows or Linux, you can run these tests at the commandline
 in the build folder with:
@@ -384,6 +384,37 @@ H          0.74700        0.50628       -0.64089
                     self.assertTrue(changed)
                 else:
                     self.assertFalse(changed)
+
+    def testGen3D(self):
+        """Test gen3D coordinate generation, including the no-argument call
+        that previously segfaulted due to a null OptionText dereference"""
+        gen3d = ob.OBOp.FindType("gen3D")
+        self.assertIsNotNone(gen3d)
+
+        def make_mol(smi):
+            mol = ob.OBMol()
+            conv = ob.OBConversion()
+            conv.SetInFormat("smi")
+            conv.ReadString(mol, smi)
+            return mol
+
+        # Default call (no OptionText) must not crash and must produce 3D coords
+        mol = make_mol("C1CCCC1")
+        self.assertEqual(mol.GetDimension(), 0)
+        gen3d.Do(mol)
+        self.assertEqual(mol.GetDimension(), 3)
+
+        # Explicit word speeds for the slower (correct) paths
+        for opt in ("med", "best"):
+            mol = make_mol("CC")
+            gen3d.Do(mol, opt)
+            self.assertEqual(mol.GetDimension(), 3)
+
+        # Numeric speed levels
+        for opt in ("1", "2", "3"):
+            mol = make_mol("CC")
+            gen3d.Do(mol, opt)
+            self.assertEqual(mol.GetDimension(), 3)
 
     def testImplicitCisDblBond(self):
         """Ensure that dbl bonds in rings of size 8 or less are always
@@ -1160,6 +1191,62 @@ class AtomClass(PythonBindings):
         mol.OBMol.DeleteHydrogens()
         nsmi = mol.write("smi", opt={"a": True, "h": True})
         self.assertEqual("C[H:1]", nsmi.rstrip())
+
+
+@unittest.skipUnless(ob and hasattr(ob, 'OBConformerSearch'),
+                     "OBConformerSearch not available (requires Eigen3)")
+class TestConformerSearch(PythonBindings):
+
+    def _build_mol(self, smi):
+        mol = ob.OBMol()
+        conv = ob.OBConversion()
+        conv.SetInFormat("smi")
+        conv.ReadString(mol, smi)
+        builder = ob.OBBuilder()
+        builder.Build(mol)
+        return mol
+
+    def testScoreOwnership(self):
+        """OBConformerSearch and scorer can both be deleted without crash (issue #2820)"""
+        mol = self._build_mol("CCCCC")  # n-pentane, 2 rotatable bonds
+        conf_search = ob.OBConformerSearch()
+        conf_search.Setup(mol, 5)
+        scorer = ob.OBEnergyConformerScore()
+        conf_search.SetScore(scorer)
+        conf_search.Search()
+        conf_search.GetConformers(mol)
+        num_confs = mol.NumConformers()
+        del conf_search
+        del scorer  # used to crash (issue #2820)
+        self.assertGreater(num_confs, 0)
+
+    def testFilterOwnership(self):
+        """OBConformerSearch and filter can both be deleted without crash (issue #2820)"""
+        mol = self._build_mol("CCCCC")
+        conf_search = ob.OBConformerSearch()
+        conf_search.Setup(mol, 5)
+        filt = ob.OBStericConformerFilter()
+        conf_search.SetFilter(filt)
+        conf_search.Search()
+        conf_search.GetConformers(mol)
+        num_confs = mol.NumConformers()
+        del conf_search
+        del filt  # used to crash (issue #2820)
+        self.assertGreater(num_confs, 0)
+
+    def testRepeatedSearches(self):
+        """OBConformerSearch can be used across multiple calls without crash (issue #2820)"""
+        for smi in ["CCCC", "CCCCC"]:
+            mol = self._build_mol(smi)
+            conf_search = ob.OBConformerSearch()
+            conf_search.Setup(mol, 5)
+            scorer = ob.OBEnergyConformerScore()
+            conf_search.SetScore(scorer)
+            conf_search.Search()
+            conf_search.GetConformers(mol)
+            self.assertGreater(mol.NumConformers(), 0)
+            del conf_search
+            del scorer
 
 
 if __name__ == "__main__":

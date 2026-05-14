@@ -1,44 +1,53 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
+ * info@inchi-trust.org
+ *
+*/
 
 
-#ifndef __INCHI_BNS_H___
-#define __INCHI_BNS_H___
+#ifndef _INCHI_BNS_H_
+#define _INCHI_BNS_H_
+
+
+#include "incomdef.h"
+#include "inpdef.h"
+
+
+/*#define FIX_SRU_CYCLIZING_PS_BONDS_IN_BNS 1*/
 
 #define BN_MAX_ALTP  16
 /*#define MAX_VERTEX 1024*/ /* including s; if vert[] has num_vert then MAX_VERTEX has (2*num_vert+2+FIRST_INDX) elements */
@@ -54,12 +63,12 @@ struct tagSaltChargeCandidate;
 
 /* define BNS types */
 
-typedef S_SHORT  Vertex;
-typedef S_SHORT  EdgeIndex;
-typedef S_SHORT  Edge[2];         /* Edge[0] = vertex1, Edge[1] = iedge or -(1+vertex1) if vertex2 = s or t */
-typedef S_SHORT BNS_IEDGE;
-typedef S_SHORT EdgeFlow;
-typedef S_SHORT VertexFlow;
+typedef int  Vertex;
+typedef int  EdgeIndex;
+typedef int  Edge[2];         /* Edge[0] = vertex1, Edge[1] = iedge or -(1+vertex1) if vertex2 = s or t */
+typedef int  BNS_IEDGE;
+typedef int  EdgeFlow;
+typedef int  VertexFlow;
 
 
 #define BNS_EDGE_FORBIDDEN_MASK  1
@@ -115,13 +124,13 @@ typedef S_SHORT VertexFlow;
 #define BNS_ADD_EDGES        1  /* max. number of edges to add to each atom (except edges to a t-group or c-group) */
 
 typedef enum tagAltPathConst {
-        iALTP_MAX_LEN,    /* 0 */
-        iALTP_FLOW,       /* 1 */
-        iALTP_PATH_LEN,   /* 2 */
-        iALTP_START_ATOM, /* 3 */
-        iALTP_END_ATOM,   /* 4 */
-        iALTP_NEIGHBOR,   /* 5 */
-        iALTP_HDR_LEN = iALTP_NEIGHBOR
+    iALTP_MAX_LEN,    /* 0 */
+    iALTP_FLOW,       /* 1 */
+    iALTP_PATH_LEN,   /* 2 */
+    iALTP_START_ATOM, /* 3 */
+    iALTP_END_ATOM,   /* 4 */
+    iALTP_NEIGHBOR,   /* 5 */
+    iALTP_HDR_LEN = iALTP_NEIGHBOR
 } ALT_CONST;
 
 #define ALTP_PATH_LEN(altp)             (altp)[iALTP_PATH_LEN].number  /* number of bonds = number of atoms-1*/
@@ -155,7 +164,7 @@ typedef enum tagAltPathConst {
 #define EDGE_FLOW_ST_PATH       0x4000  /* mark: the edge belongs to the augmenting path */
 
 /* edges between other vertices */
-/* EdgeFlow defined as S_SHORT; change from S_CHAR made 9-23-2005 */
+/* EdgeFlow WAS defined as S_SHORT; change from S_CHAR made 9-23-2005 */
 #define EDGE_FLOW_MASK          0x3fff  /* mask for flow */
 #define EDGE_FLOW_PATH          0x4000  /* mark: the edge belongs to the augmenting path */
 
@@ -179,38 +188,38 @@ typedef enum tagAltPathConst {
 
 /**************************** BNS_EDGE ************************************/
 typedef struct BnsEdge {
-  AT_NUMB   neighbor1;                      /* the smaller neighbor */
-  AT_NUMB   neighbor12;                     /* neighbor1 ^ neighbor2 */
-  AT_NUMB   neigh_ord[2];                   /* ordering number of the neighbor: [0]: at<neighbor, [1]: at>neighbor */
-  EdgeFlow  cap;                            /* Edge capacity */
-  EdgeFlow  cap0;                           /* Initial edge capacity */
-  EdgeFlow  flow;                           /* Edge flow */
-  EdgeFlow  flow0;                          /* Initial flow */
-  /*S_CHAR    delta; */
-  S_CHAR    pass;                           /* number of times changed in AugmentEdge() */
-  S_CHAR    forbidden;
+    AT_NUMB   neighbor1;                      /* the smaller neighbor */
+    AT_NUMB   neighbor12;                     /* neighbor1 ^ neighbor2 */
+    AT_NUMB   neigh_ord[2];                   /* ordering number of the neighbor: [0]: at<neighbor, [1]: at>neighbor */
+    EdgeFlow  cap;                            /* Edge capacity */
+    EdgeFlow  cap0;                           /* Initial edge capacity */
+    EdgeFlow  flow;                           /* Edge flow */
+    EdgeFlow  flow0;                          /* Initial flow */
+    /*S_CHAR    delta; */
+    S_CHAR    pass;                           /* number of times changed in AugmentEdge() */
+    S_CHAR    forbidden;
 } BNS_EDGE;
 
 /**************************** BNS_ST_EDGE ************************************/
 typedef struct BnsStEdge {
-  VertexFlow cap;                            /* Edge capacity */
-  VertexFlow cap0;                           /* Initial edge capacity */
-  VertexFlow flow;                           /* Edge flow */
-  VertexFlow flow0;                          /* Initial edge flow */
-  S_CHAR     pass;                           /* number of times changed in AugmentEdge() */
-  /*S_CHAR     delta; */
+    VertexFlow cap;                            /* Edge capacity */
+    VertexFlow cap0;                           /* Initial edge capacity */
+    VertexFlow flow;                           /* Edge flow */
+    VertexFlow flow0;                          /* Initial edge flow */
+    S_CHAR     pass;                           /* number of times changed in AugmentEdge() */
+    /*S_CHAR     delta; */
 } BNS_ST_EDGE;
 
 /**************************** BNS_VERTEX ************************************/
 typedef struct BnsVertex {
 
-  BNS_ST_EDGE st_edge;                     /* 0,1 capacity and flow of the edge to s or t */
-  AT_NUMB     type;                        /* 2, atom, t-group, or added atom: BNS_VERT_TYPE_TGROUP, etc. */
-  AT_NUMB     num_adj_edges;               /* 3, actual number of neighbors incl. t-groups, excl. s or t */
-  AT_NUMB     max_adj_edges;               /* 4, including reserved */
-  /*S_CHAR      path_neigh[2];*/               /* 5 found path information */
-  /* indexes of Edges */
-  BNS_IEDGE  *iedge;                       /* 6 a pointer to the array of edge indexes adjacent to this vertex */
+    BNS_ST_EDGE st_edge;                     /* 0,1 capacity and flow of the edge to s or t */
+    AT_NUMB     type;                        /* 2, atom, t-group, or added atom: BNS_VERT_TYPE_TGROUP, etc. */
+    AT_NUMB     num_adj_edges;               /* 3, actual number of neighbors incl. t-groups, excl. s or t */
+    AT_NUMB     max_adj_edges;               /* 4, including reserved */
+    /*S_CHAR      path_neigh[2];*/               /* 5 found path information */
+    /* indexes of Edges */
+    BNS_IEDGE  *iedge;                       /* 6 a pointer to the array of edge indexes adjacent to this vertex */
 }BNS_VERTEX;
 
 /**************************** BNS_ALT_PATH ************************************/
@@ -264,12 +273,14 @@ typedef struct BalancedNetworkStructure {
     AT_NUMB        type_T;    /* BNS_VERT_TYPE_TGROUP */
     AT_NUMB        type_CN;   /* BNS_VERT_TYPE_C_GROUP | BNS_VERT_TYPE_C_NEGATIVE */
     S_CHAR         edge_forbidden_mask;
-
+    /* v. 1.05 */
+    struct tagINCHI_CLOCK *ic;
+    struct tagInchiTime *ulTimeOutTime;
 } BN_STRUCT;
 
 /********************* BN_DATA *******************************************/
 typedef enum tagBnsRadSrchMode {
-    RAD_SRCH_NORM      = 0,   /* normal search for normalization */
+    RAD_SRCH_NORM = 0,   /* normal search for normalization */
     RAD_SRCH_FROM_FICT = 1    /* search from fict. vertices to atoms */
 } BRS_MODE;
 typedef struct BalancedNetworkData {
@@ -344,6 +355,25 @@ typedef struct tagBNS_FLOW_CHANGES {
 #define ALT_PATH_MODE_TAUTOM_KET 10  /* same as ALT_PATH_MODE_TAUTOM, applies to C=-OH or CH-=O; H may be (-) */
 #endif
 
+#if ( TAUT_PT_22_00 == 1 )
+#define ALT_PATH_MODE_TAUTOM_PT_22_00 11
+#endif
+#if ( TAUT_PT_16_00 == 1 )
+#define ALT_PATH_MODE_TAUTOM_PT_16_00 12
+#endif
+#if ( TAUT_PT_06_00 == 1 )
+#define ALT_PATH_MODE_TAUTOM_PT_06_00 13
+#endif
+#if ( TAUT_PT_39_00 == 1 )
+#define ALT_PATH_MODE_TAUTOM_PT_39_00 14
+#endif
+#if ( TAUT_PT_13_00 == 1 )
+#define ALT_PATH_MODE_TAUTOM_PT_13_00 15
+#endif
+#if ( TAUT_PT_18_00 == 1 )
+#define ALT_PATH_MODE_TAUTOM_PT_18_00 16
+#endif
+
 typedef U_SHORT  bitWord;
 #define BIT_WORD_MASK  ((bitWord)~0)
 
@@ -370,7 +400,7 @@ extern "C" {
 
   Note: (bChangeFlow & 1) == 1 is needed for multiple runs
 **********************************************************************************/
-    
+
 /* "EF" = "Edge Flow" */
 #define BNS_EF_CHNG_FLOW      1  /* change Balanced Network (BN) flow inside the BNS search */
 #define BNS_EF_RSTR_FLOW      2  /* undo BN flow changes after BNS */
@@ -389,70 +419,78 @@ extern "C" {
 #define BNS_EF_RAD_SRCH     128  /* search for rafical paths closures */
 
 
+    struct tagCANON_GLOBALS;
 
-int  SetBitCreate( void );
-int  NodeSetCreate( NodeSet *pSet, int n, int L );
-void NodeSetFree( NodeSet *pSet );
+    int  NodeSetCreate( struct tagCANON_GLOBALS *pCG, NodeSet *pSet, int n, int L );
+    void NodeSetFree( struct tagCANON_GLOBALS *pCG, NodeSet *pSet );
 
-int  IsNodeSetEmpty( NodeSet *cur_nodes, int k);
-int  DoNodeSetsIntersect( NodeSet *cur_nodes, int k1, int k2);
-void AddNodeSet2ToNodeSet1( NodeSet *cur_nodes, int k1, int k2);
-void NodeSetFromRadEndpoints( NodeSet *cur_nodes, int k, /*Node *v*/ Vertex RadEndpoints[], int num_v);
-void RemoveFromNodeSet( NodeSet *cur_nodes, int k, Vertex v[], int num_v);
-int  AddNodesToRadEndpoints( NodeSet *cur_nodes, int k, Vertex RadEndpoints[], Vertex vRad, int nStart, int nLen );
-
-
-int nExists2AtMoveAltPath( struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
-                           struct BN_AtomsAtTautGroup *pAATG, inp_ATOM *at, int num_atoms,
-                           int jj2, int jj1, struct tagSaltChargeCandidate *s_candidate, int nNumCandidates,
-                           AT_NUMB *nForbiddenAtom, int nNumForbiddenAtoms);
-int bExistsAltPath( struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
-                    struct BN_AtomsAtTautGroup *pAATG, inp_ATOM *at, int num_atoms, int nVertDoubleBond, int nVertSingleBond, int path_type );
-int bExistsAnyAltPath( struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
-                       inp_ATOM *at, int num_atoms, int nVertDoubleBond, int nVertSingleBond, int path_type );
-int AddTGroups2BnStruct( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
-                         struct tagTautomerGroupsInfo *tgi  );
-int AddSuperTGroup2BnStruct( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
-                             struct tagTautomerGroupsInfo *tgi  );
-int AddCGroups2BnStruct( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
-                         struct tagChargeGroupsInfo *cgi );
-
-int ReInitBnStruct( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_at, int bRemoveGroupsFromAtoms );
-int ReInitBnStructAddGroups( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
-                             struct tagTautomerGroupsInfo *tgi, struct tagChargeGroupsInfo *cgi );
+    int  IsNodeSetEmpty( NodeSet *cur_nodes, int k );
+    int  DoNodeSetsIntersect( NodeSet *cur_nodes, int k1, int k2 );
+    void AddNodeSet2ToNodeSet1( NodeSet *cur_nodes, int k1, int k2 );
+    void NodeSetFromRadEndpoints( struct tagCANON_GLOBALS *pCG, NodeSet *cur_nodes, int k, /*Node *v*/ Vertex RadEndpoints[], int num_v );
+    void RemoveFromNodeSet( struct tagCANON_GLOBALS *pCG, NodeSet *cur_nodes, int k, Vertex v[], int num_v );
+    int  AddNodesToRadEndpoints( struct tagCANON_GLOBALS *pCG, NodeSet *cur_nodes, int k, Vertex RadEndpoints[], Vertex vRad, int nStart, int nLen );
 
 
-int DisconnectTestAtomFromTGroup( struct BalancedNetworkStructure *pBNS, int v1, int *pv2, BNS_FLOW_CHANGES *fcd );
-int DisconnectTGroupFromSuperTGroup( struct BalancedNetworkStructure *pBNS, int v1, int *pv1, int *pv2,
-                                     BNS_FLOW_CHANGES *fcd );
-int ReconnectTestAtomToTGroup( struct BalancedNetworkStructure *pBNS, int v1, int v2, int ie, BNS_FLOW_CHANGES *fcd );
+    int nExists2AtMoveAltPath( struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
+                               struct BN_AtomsAtTautGroup *pAATG, inp_ATOM *at, int num_atoms,
+                               int jj2, int jj1, struct tagSaltChargeCandidate *s_candidate, int nNumCandidates,
+                               AT_NUMB *nForbiddenAtom, int nNumForbiddenAtoms );
 
-int bIsHardRemHCandidate(  inp_ATOM *at, int i, int *cSubType );
+    int bExistsAltPath( struct tagCANON_GLOBALS *pCG,
+                        struct BalancedNetworkStructure *pBNS,
+                        struct BalancedNetworkData *pBD,
+                        struct BN_AtomsAtTautGroup *pAATG,
+                        inp_ATOM *at,
+                        int num_atoms,
+                        int nVertDoubleBond,
+                        int nVertSingleBond,
+                        int path_type );
+    int bExistsAnyAltPath( struct tagCANON_GLOBALS *pCG, struct BalancedNetworkStructure *pBNS, struct BalancedNetworkData *pBD,
+                           inp_ATOM *at, int num_atoms, int nVertDoubleBond, int nVertSingleBond, int path_type );
+    int AddTGroups2BnStruct( struct tagCANON_GLOBALS *pCG, struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
+                             struct tagTautomerGroupsInfo *tgi );
+    int AddSuperTGroup2BnStruct( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
+                                 struct tagTautomerGroupsInfo *tgi );
+    int AddCGroups2BnStruct( struct tagCANON_GLOBALS *pCG, struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
+                             struct tagChargeGroupsInfo *cgi );
 
-/* moved from ichi_bns.c 2005-08-23 */
-int RunBalancedNetworkSearch( BN_STRUCT *pBNS, BN_DATA *pBD, int bChangeFlow );
-BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtoms, int nMaxAddEdges, int max_altp, int *num_changed_bonds );
-BN_STRUCT* DeAllocateBnStruct( BN_STRUCT *pBNS );
-int ReInitBnStructAltPaths( BN_STRUCT *pBNS );
-int ReInitBnStructForMoveableAltBondTest( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
-void ClearAllBnDataVertices( Vertex *v, Vertex value, int size );
-void ClearAllBnDataEdges( Edge *e, Vertex value, int size );
-BN_DATA *DeAllocateBnData( BN_DATA *pBD );
-BN_DATA *AllocateAndInitBnData( int max_num_vertices );
-int ReInitBnData( BN_DATA *pBD );
-int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int edge_forbidden_mask );
-/* main function: find augmenting path */
-int BalancedNetworkSearch ( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow );
+    int ReInitBnStruct( struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_at, int bRemoveGroupsFromAtoms );
+    int ReInitBnStructAddGroups( struct tagCANON_GLOBALS *pCG, struct BalancedNetworkStructure *pBNS, inp_ATOM *at, int num_atoms,
+                                 struct tagTautomerGroupsInfo *tgi, struct tagChargeGroupsInfo *cgi );
 
-int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
-int SetRadEndpoints2( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
 
-int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at );
+    int DisconnectTestAtomFromTGroup( struct BalancedNetworkStructure *pBNS, int v1, int *pv2, BNS_FLOW_CHANGES *fcd );
+    int DisconnectTGroupFromSuperTGroup( struct BalancedNetworkStructure *pBNS, int v1, int *pv1, int *pv2,
+                                         BNS_FLOW_CHANGES *fcd );
+    int ReconnectTestAtomToTGroup( struct BalancedNetworkStructure *pBNS, int v1, int v2, int ie, BNS_FLOW_CHANGES *fcd );
 
-int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
-                           int nNumProtAddedByRestr, INCHI_MODE bNormalizationFlags,
-                           int num_tg, int nChargeRevrs, int nChargeInChI );
-int AddRemoveIsoProtonsRestr( inp_ATOM *at, int num_atoms, NUM_H num_protons_to_add[], int num_tg );
+    int bIsHardRemHCandidate( inp_ATOM *at, int i, int *cSubType );
+
+    /* moved from ichi_bns.c 2005-08-23 */
+    int RunBalancedNetworkSearch( BN_STRUCT *pBNS, BN_DATA *pBD, int bChangeFlow );
+    BN_STRUCT* AllocateAndInitBnStruct( inp_ATOM *at, int num_atoms, int nMaxAddAtoms, int nMaxAddEdges, int max_altp, int *num_changed_bonds );
+    BN_STRUCT* DeAllocateBnStruct( BN_STRUCT *pBNS );
+    int ReInitBnStructAltPaths( BN_STRUCT *pBNS );
+    int ReInitBnStructForMoveableAltBondTest( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms );
+    void ClearAllBnDataVertices( Vertex *v, Vertex value, int size );
+    void ClearAllBnDataEdges( Edge *e, Vertex value, int size );
+    BN_DATA *DeAllocateBnData( BN_DATA *pBD );
+    BN_DATA *AllocateAndInitBnData( int max_num_vertices );
+    int ReInitBnData( BN_DATA *pBD );
+    int SetForbiddenEdges( BN_STRUCT *pBNS, inp_ATOM *at, int num_atoms, int edge_forbidden_mask,
+                           int nebend, int *ebend );
+    /* main function: find augmenting path */
+    int BalancedNetworkSearch( BN_STRUCT* pBNS, BN_DATA *pBD, int bChangeFlow );
+
+    int SetRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
+    int SetRadEndpoints2( struct tagCANON_GLOBALS *pCG, BN_STRUCT *pBNS, BN_DATA *pBD, BRS_MODE bRadSrchMode );
+    int RemoveRadEndpoints( BN_STRUCT *pBNS, BN_DATA *pBD, inp_ATOM *at );
+
+    int AddRemoveProtonsRestr( inp_ATOM *at, int num_atoms, int *num_protons_to_add,
+                               int nNumProtAddedByRestr, INCHI_MODE bNormalizationFlags,
+                               int num_tg, int nChargeRevrs, int nChargeInChI );
+    int AddRemoveIsoProtonsRestr( inp_ATOM *at, int num_atoms, NUM_H num_protons_to_add[], int num_tg );
 
 
 #ifndef COMPILE_ALL_CPP
@@ -462,4 +500,5 @@ int AddRemoveIsoProtonsRestr( inp_ATOM *at, int num_atoms, NUM_H num_protons_to_
 #endif
 
 
-#endif /* __INCHI_BNS_H___ */
+
+#endif    /* _INCHI_BNS_H_ */

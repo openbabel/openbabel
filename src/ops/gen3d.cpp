@@ -70,6 +70,9 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   int speed;
   bool useDistGeom = false;
 
+  if (!OptionText)
+    OptionText = "";
+
   // first try converting OptionText to an integer
   char *endptr;
   speed = strtol(OptionText, &endptr, 10);
@@ -111,10 +114,10 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     bool attemptBuild = !useDistGeom;
     if (attemptBuild && !builder.Build(molCopy) ) {
       std::cerr << "Warning: Stereochemistry is wrong, using the distance geometry method instead" << std::endl;
-      useDistGeom = true;
+      useDistGeom = true; // don't try building anymore
     }
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
     OBDistanceGeometry dg;
     if (useDistGeom) {
       // use the bond lengths and angles if we ran the builder

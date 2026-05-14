@@ -46,7 +46,7 @@ namespace OpenBabel {
     }
 
     const char* SpecificationURL() override {
-      return "http://www.quantum-espresso.org";
+      return "https://www.quantum-espresso.org/";
     }
 
     /* Flags() can return be any of the following combined by |

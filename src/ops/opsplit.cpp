@@ -84,6 +84,8 @@ OpSplit theOpSplit("split"); //Global instance
 /////////////////////////////////////////////////////////////////
 bool OpSplit::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
 {
+  if (!OptionText)
+    OptionText = "";
   if(!strcmp(OptionText, "inactive"))
   {
     ++_inputCount;

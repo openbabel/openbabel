@@ -243,7 +243,7 @@ namespace std { class stringbuf {}; }
 // Ignore shadowed methods
 %ignore OpenBabel::OBForceField::VectorSubtract(const double *const, const double *const, double *);
 %ignore OpenBabel::OBForceField::VectorMultiply(const double *const, const double, double *);
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %{
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>

@@ -48,7 +48,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.ncbi.nlm.nih.gov/Sitemap/samplerecord.html";} //optional
+    { return "https://www.ncbi.nlm.nih.gov/genbank/samplerecord/"; }
     // Genbank itself is here: http://www.ncbi.nlm.nih.gov/Genbank/
     // European EMBL-Bank is here: http://www.ebi.ac.uk/embl/
     // Japanese DDBJ is here: http://www.ddbj.nig.ac.jp/

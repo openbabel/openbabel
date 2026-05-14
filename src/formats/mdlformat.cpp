@@ -107,7 +107,7 @@ namespace OpenBabel
 
       const char* SpecificationURL() override
       {
-        return "https://www.3dsbiovia.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html";
+        return "https://www.3ds.com/products/biovia/draw";
       }
 
       const char* GetMIMEType() override
@@ -1424,9 +1424,13 @@ namespace OpenBabel
       {
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[1]=="END") return true;
+        // ReadV3000Line only guarantees vs.size() >= 2. Block-level
+        // directives use vs[2] and vs[3]; bail out on truncated lines.
+        if(vs.size() < 3) return false;
         if(vs[2]=="LINKNODE"){continue;} //not implemented
         if(vs[2]!="BEGIN") return false;
 
+        if(vs.size() < 4) return false;
         if(vs[3]=="CTAB")
           {
             if(!ReadV3000Line(ifs,vs) || vs[2]!="COUNTS") return false;
@@ -1471,13 +1475,18 @@ namespace OpenBabel
     if (vs.size() < 2) return false; // timvdm 18/06/2008
     if(vs[0]!="M" || (vs[1]!="V30" && vs[1]!="END")) return false;
 
-    if(buffer[strlen(buffer)-1] == '-') //continuation char
-      {
-        //Read continuation line iteratively and add parsed tokens (without M V30) to vs
-        vector<string> vsx;
-        if(!ReadV3000Line(ifs,vsx)) return false;
+    // Iterative continuation-line handling (avoids stack overflow on crafted input)
+    size_t len = strlen(buffer);
+    while(len > 0 && buffer[len-1] == '-') {
+      if(!ifs.getline(buffer,BUFF_SIZE)) return false;
+      vector<string> vsx;
+      tokenize(vsx,buffer," \t\n\r");
+      if(vsx.size() < 2) return false;
+      if(vsx[0]!="M" || (vsx[1]!="V30" && vsx[1]!="END")) return false;
+      if(vsx.size() > 3)
         vs.insert(vs.end(),vsx.begin()+3,vsx.end());
-      }
+      len = strlen(buffer);
+    }
     return true;
   }
 
@@ -1491,6 +1500,7 @@ namespace OpenBabel
       {
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[2]=="END") break;
+        if(vs.size() < 7) return false; // need index, type, x, y, z
 
         indexmap[ReadUIntField(vs[2].c_str())] = obindex;
         atom.SetVector(atof(vs[4].c_str()), atof(vs[5].c_str()), atof(vs[6].c_str()));
@@ -1565,6 +1575,7 @@ namespace OpenBabel
       {
         if(!ReadV3000Line(ifs,vs)) return false;
         if(vs[2]=="END") break;
+        if(vs.size() < 6) return false; // need index, order, atom1, atom2
 
         unsigned flag=0;
 

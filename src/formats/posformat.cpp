@@ -53,8 +53,9 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://cst-www.nrl.navy.mil/lattice/"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://cst-www.nrl.navy.mil/lattice/"; // XXX dead
+    }
 
     // it's basically the same as XYZ
     const char* GetMIMEType() override

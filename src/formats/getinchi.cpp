@@ -159,12 +159,14 @@ string GetInChI(istream& is)
   string result;
   enum statetype {before_inchi, match_inchi, unquoted, quoted};
   statetype state = before_inchi;
-  char ch, lastch=0, qch=0;
+  int ch_int;
+  signed char ch, lastch=0, qch=0;
   size_t split_pos = 0;
   bool inelement=false, afterelement=false;
 
-  while((ch=is.get())!=EOF)
+  while((ch_int=is.get())!=EOF)
   {
+    ch = (signed char)ch_int;
     if(state==before_inchi)
     {
       if(ch>=0 && !isspace(ch))

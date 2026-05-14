@@ -806,6 +806,8 @@ namespace OpenBabel
   bool OBAtom::IsPeriodic() const
   {
     OBMol *mol = (OBMol*)((OBAtom*)this)->GetParent();
+    if (mol == nullptr)
+      return false;
     return mol->IsPeriodic();
   }
 
