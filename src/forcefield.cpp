@@ -2406,15 +2406,14 @@ namespace OpenBabel
     const double def_step = 0.025; // default step
     const double max_step = 4.5; // don't go too far
 
-    double sum = 0.0;
+    // Sanitize once so downstream loops can run without per-element branches
     for (unsigned int c = 0; c < _ncoords; ++c) {
-      if (isfinite(direction[c])) {
-        sum += direction[c] * direction[c];
-      } else {
-        // make sure we don't have NaN or infinity
+      if (!isfinite(direction[c]))
         direction[c] = 0.0;
-      }
     }
+    double sum = 0.0;
+    for (unsigned int c = 0; c < _ncoords; ++c)
+      sum += direction[c] * direction[c];
 
     double scale = sqrt(sum);
     if (IsNearZero(scale)) {
@@ -2491,11 +2490,8 @@ namespace OpenBabel
   {
     double *currentCoords = _mol.GetCoordinates();
 
-    for (unsigned int c = 0; c < _ncoords; ++c) {
-      if (isfinite(direction[c])) {
-        currentCoords[c] = origCoords[c] + direction[c] * step;
-      }
-    }
+    for (unsigned int c = 0; c < _ncoords; ++c)
+      currentCoords[c] = origCoords[c] + direction[c] * step;
   }
 
   double OBForceField::LineSearch(double *currentCoords, double *direction)
@@ -2511,25 +2507,25 @@ namespace OpenBabel
     // The initial energy should be precomputed
     e_n1 = _e_n1; // Energy(false) + _constraints.GetConstraintEnergy();
 
+    // Sanitize once so the inner loop can run branch-free and vectorize
+    for (unsigned int c = 0; c < numCoords; ++c) {
+      if (!isfinite(direction[c]))
+        direction[c] = 0.0;
+    }
+
     unsigned int i;
     for (i=0; i < 10; ++i) {
       // Save the current position, before we take a step
       memcpy((char*)lastStep,(char*)currentCoords,sizeof(double)*numCoords);
 
-      // Vectorizing this would be a big benefit
-      // Need to look up using BLAS or Eigen or whatever
       for (unsigned int c = 0; c < numCoords; ++c) {
-        if (isfinite(direction[c])) {
-          // make sure we don't have NaN or infinity
-          tempStep = direction[c] * step;
-
-          if (tempStep > trustRadius) // positive big step
-            currentCoords[c] += trustRadius;
-          else if (tempStep < -trustRadius) // negative big step
-            currentCoords[c] -= trustRadius;
-          else
-            currentCoords[c] += tempStep;
-        }
+        tempStep = direction[c] * step;
+        // clamp to trust radius — min/max form is vectorizable
+        if (tempStep > trustRadius)
+          tempStep = trustRadius;
+        else if (tempStep < -trustRadius)
+          tempStep = -trustRadius;
+        currentCoords[c] += tempStep;
       }
 
       e_n2 = Energy(false) + _constraints.GetConstraintEnergy();

@@ -91,16 +91,14 @@ namespace OpenBabel
   }
 
   void OBAlign::SetRef(const vector<vector3> &ref) {
-    _pref = &ref;
-    VectorsToMatrix(_pref, _mref);
+    VectorsToMatrix(&ref, _mref);
     _ref_centr = MoveToOrigin(_mref);
 
     _ready = false;
   }
 
   void OBAlign::SetTarget(const vector<vector3> &target) {
-    _ptarget = &target;
-    VectorsToMatrix(_ptarget, _mtarget);
+    VectorsToMatrix(&target, _mtarget);
     _target_centr = MoveToOrigin(_mtarget);
 
     _ready = false;
@@ -193,11 +191,7 @@ namespace OpenBabel
                     SxzpSzx, SyzpSzy, SxypSyx, SyzmSzy,
                     SxzmSzx, SxymSyx, SxxpSyy, SxxmSyy;
 
-#ifdef HAVE_EIGEN3
     Eigen::MatrixXd M_sqr = M.array().square();
-#else
-    Eigen::MatrixXd M_sqr = M.cwise().square();
-#endif
 
     Sxx = M(0, 0);
     Sxy = M(1, 0);
@@ -274,11 +268,7 @@ namespace OpenBabel
     Eigen::Matrix3d C = _mref * mtarget.transpose();
 
     // Singular Value Decomposition of C into USV(t)
-#ifdef HAVE_EIGEN3
     Eigen::JacobiSVD<Eigen::Matrix3d> svd(C, Eigen::ComputeFullU | Eigen::ComputeFullV);
-#else
-    Eigen::SVD<Eigen::Matrix3d> svd(C);
-#endif
 
     // Prepare matrix T
     double sign = (C.determinant() > 0) ? 1. : -1.; // Sign of determinant
@@ -292,11 +282,7 @@ namespace OpenBabel
     _result = _rotMatrix.transpose() * mtarget;
 
     Eigen::MatrixXd deviation = _result - _mref;
-#ifdef HAVE_EIGEN3
     Eigen::MatrixXd sqr = deviation.array().square();
-#else
-    Eigen::MatrixXd sqr = deviation.cwise().square();
-#endif
     double sum = sqr.sum();
     _rmsd = sqrt( sum / sqr.cols() );
 
@@ -304,9 +290,11 @@ namespace OpenBabel
 
   bool OBAlign::Align()
   {
-    vector<vector3>::size_type N = _ptarget->size();
+    // Use auto to stay portable across Eigen versions (older builds
+    // shipped via msvc-dependencies don't expose Eigen::Index).
+    const auto N = _mtarget.cols();
 
-    if (_pref->size() != N) {
+    if (_mref.cols() != N) {
       obErrorLog.ThrowError(__FUNCTION__, "Cannot align the reference and target as they are of different size" , obError);
       return false;
     }

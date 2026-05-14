@@ -11,6 +11,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ***********************************************************************/
 
+#include <memory>
 #include "openbabel/babelconfig.h"
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
@@ -18,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
 #include "openbabel/reaction.h"
+#include "openbabel/reactionfacade.h"
 #include "openbabel/xml.h"
 #include "openbabel/kinetics.h"
 #include "openbabel/text.h"
@@ -26,6 +28,36 @@ using namespace std;
 
 namespace OpenBabel
 {
+
+unique_ptr<OBReaction> convertToReaction(OBMol *mol) {
+    OBReactionFacade rf(mol);
+
+    // Check if the molecule is in a valid state to represent a reaction
+    if (rf.IsValid()) {
+        auto reaction = unique_ptr<OBReaction>(new OBReaction());
+        // Iterate over reaction roles and components
+        for (unsigned role = OBReactionRole::REACTANT; role <= OBReactionRole::PRODUCT; ++role) {
+            unsigned numComponents = rf.NumComponents(static_cast<OBReactionRole>(role));
+            for (unsigned i = 0; i < numComponents; ++i) {
+                OBMol compMol;
+                if (rf.GetComponent(&compMol, static_cast<OBReactionRole>(role), i)) {
+                    auto sharedCompMol = make_shared<OBMol>(compMol);
+                    if (role == OBReactionRole::REACTANT) {
+                        reaction->AddReactant(sharedCompMol);
+                    } else if (role == OBReactionRole::PRODUCT) {
+                        reaction->AddProduct(sharedCompMol);
+                    } else {
+                        reaction->AddAgent(sharedCompMol);
+                    }
+                }
+            }
+        }
+        return reaction;
+    } else {
+      obErrorLog.ThrowError(__FUNCTION__, "Cannot convert to OBReaction", obError);
+    }
+    return unique_ptr<OBReaction>();
+}
 
 class CMLReactFormat : XMLBaseFormat
 {
@@ -317,6 +349,16 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
   //WriteChemObject() always deletes the object retrieved by GetChemObject
   OBBase* pOb=pConv->GetChemObject();
   OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
+
+  unique_ptr<OBReaction> upReact;
+  if (!pReact) {
+    OBMol* mol = dynamic_cast<OBMol*>(pOb);
+    if (mol && mol->IsReaction()) {
+      upReact = convertToReaction(mol);
+      pReact = upReact.get();
+    }
+  }
+
   if (pReact == nullptr)
   {
     //If sent a molecule, add it to the list.
@@ -413,6 +455,16 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
   //Cast output object to the class type need, i.e. OBReaction
   OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
+
+  unique_ptr<OBReaction> upReact;
+  if (!pReact) {
+    OBMol* mol = dynamic_cast<OBMol*>(pOb);
+    if (mol && mol->IsReaction()) {
+      upReact = convertToReaction(mol);
+      pReact = upReact.get();
+    }
+  }
+
   if (pReact == nullptr)
       return false;
 

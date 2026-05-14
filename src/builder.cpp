@@ -1086,6 +1086,8 @@ namespace OpenBabel
     conv.SetOutFormat("can"); // Canonical SMILES
 
     // Trigger hybridisation perception now so it will be copied to workMol
+    if (mol.NumAtoms() == 0)
+      return true;
     mol.GetFirstAtom()->GetHyb();
 
     // copy the molecule to private data

@@ -37,7 +37,7 @@ class AoforceFormat : public OBMoleculeFormat {
     }
 
     const char* SpecificationURL() override {
-      return "http://www.turbomole-gmbh.com/manuals/";
+      return "https://www.turbomole.org/turbomole/turbomole-documentation/";
     }
 
     unsigned int Flags() override { return READONEONLY | NOTWRITABLE; }

@@ -41,8 +41,9 @@ namespace OpenBabel
         "Accelrys/MSI Cerius II MSI format\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://openbabel.org/wiki/MSI_format"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://openbabel.org/wiki/MSI_format"; // XXX dead
+    }
 
     const char* GetMIMEType() override
     { return "chemical/x-msi-msi"; }
@@ -106,7 +107,7 @@ namespace OpenBabel
     unsigned int startBondAtom, endBondAtom, bondOrder;
     bool atomRecord = false;
     bool bondRecord = false;
-    OBAtom *atom;
+    OBAtom *atom = nullptr;
 //    OBBond *bond;
     vector<string> vs;
     const SpaceGroup *sg;
@@ -127,6 +128,7 @@ namespace OpenBabel
         // atom record
         if (!bondRecord && strstr(buffer, "Atom") != nullptr) {
           atomRecord = true;
+          atom = nullptr;
           openParens++;
           continue;
         }
@@ -153,7 +155,8 @@ namespace OpenBabel
               y = atof((char*)vs[4].c_str());
               z = atof((char*)vs[5].c_str());
 
-              translationVectors[numTranslationVectors++].Set(x, y, z);
+              if (numTranslationVectors < 3)
+                translationVectors[numTranslationVectors++].Set(x, y, z);
               if (!ifs.getline(buffer,BUFF_SIZE))
                 break;
               tokenize(vs,buffer);
@@ -188,6 +191,11 @@ namespace OpenBabel
             tokenize(vs, buffer);
             // size should be 6 -- need a test here
             if (vs.size() != 6) return false; // timvdm 18/06/2008
+            // CVE-2022-44451: an atom record may contain XYZ before
+            // the ACL line that normally creates `atom`. Skip the
+            // coordinates rather than dereferencing an unset pointer.
+            if (atom == nullptr)
+              continue;
             vs[3].erase(0,1); // remove ( character
             vs[5].erase(vs[5].length()-2, 2); // remove trailing )) characters
             atom->SetVector(atof(vs[3].c_str()),

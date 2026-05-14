@@ -530,7 +530,11 @@ namespace OpenBabel {
         if(pInput==&cin)
           {
             if(pInput->peek()==-1) //Cntl Z Was \n but interfered with piping
-              break;
+            {
+              if (!IsOption("separate", OBConversion::GENOPTIONS))
+                break;
+              pInput->clear();
+            }
           }
         else
           rInpos = pInput->tellg();

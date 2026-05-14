@@ -90,8 +90,9 @@ namespace OpenBabel
 "  b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://openbabel.org/wiki/Free_Form_Fractional"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://openbabel.org/wiki/Free_Form_Fractional"; // XXX dead
+    }
 
     //*** This section identical for most OBMol conversions ***
     ////////////////////////////////////////////////////

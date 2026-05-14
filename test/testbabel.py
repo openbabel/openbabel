@@ -1,4 +1,4 @@
-"""Test OpenBabel executables from Python
+r"""Test OpenBabel executables from Python
 
 Note: Python bindings not used
 
@@ -100,7 +100,7 @@ class BaseTest(unittest.TestCase):
 
     def assertConverted(self, stderr, N):
         """Assert that N molecules were converted."""
-        pat = "(-?\d.*) molecule(?:s?) converted"
+        pat = r"(-?\d.*) molecule(?:s?) converted"
         lines = stderr.split("\n")
         convertedline =  [line for line in lines if re.match(pat, line)]
         if len(convertedline) == 0:
@@ -538,6 +538,11 @@ charge 1
         self.assertEqual(rmsds[1],2.73807)
         self.assertEqual(rmsds[-1],INF)
 
+    def testSeparateOnPipe(self):
+        """Check that piped input works with --separate, see https://github.com/openbabel/openbabel/issues/2386"""
+        self.canFindExecutable("obabel")
+        output, err = run_exec("[Na].[Cl]", "obabel -ismi -ocan --separate")
+        self.assertEqual(output, "[Na]\t#1\n[Cl]\t#2\n")
 
 
 if __name__ == "__main__":

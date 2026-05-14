@@ -88,7 +88,7 @@ if sys.platform.find("linux") != -1:
 %ignore OpenBabel::OBMol::FindChildren(std::vector< OBAtom * > &, OBAtom *, OBAtom *);
 %ignore OpenBabel::OBResidue::GetAtoms;
 
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
 %{
 #include <openbabel/conformersearch.h>
 #include <openbabel/math/align.h>
@@ -356,8 +356,14 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %ignore OpenBabel::Swab;
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
-#ifdef HAVE_EIGEN
+#ifdef HAVE_EIGEN3
+// OBConformerSearch takes ownership of filter/score via SetFilter/SetScore,
+// so tell SWIG to disown the Python wrapper when these are passed.
+%apply SWIGTYPE *DISOWN { OpenBabel::OBConformerFilter *filter };
+%apply SWIGTYPE *DISOWN { OpenBabel::OBConformerScore *score };
 %include <openbabel/conformersearch.h>
+%clear OpenBabel::OBConformerFilter *filter;
+%clear OpenBabel::OBConformerScore *score;
 %include <openbabel/math/align.h>
 #endif
 
