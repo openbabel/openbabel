@@ -87,7 +87,7 @@ namespace OpenBabel
     vector<string> vs;
 
     OBAtom *atom;
-    int natom;
+    int natom = 0;
     vector<int> atomicNumbers, atomTypes;
     double x, y, z;
     vector<vector3> atomPositions;
@@ -209,11 +209,18 @@ namespace OpenBabel
         // forces
       }
 
+    if (natom == 0 || (int)atomTypes.size() < natom || atomicNumbers.empty()) {
+      mol.EndModify();
+      return false;
+    }
+
     for (int i = 0; i < natom; ++i) {
       atom = mol.NewAtom();
       //set atomic number
       int idx = atom->GetIdx();
       int type = atomTypes[idx - 1];
+      if (type < 0 || type >= (int)atomicNumbers.size())
+        continue;
       atom->SetAtomicNum(atomicNumbers[type]);
       // we set the coordinates by conformers in another loop
     }

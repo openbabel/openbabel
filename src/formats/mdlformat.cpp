@@ -1475,13 +1475,18 @@ namespace OpenBabel
     if (vs.size() < 2) return false; // timvdm 18/06/2008
     if(vs[0]!="M" || (vs[1]!="V30" && vs[1]!="END")) return false;
 
-    if(buffer[strlen(buffer)-1] == '-') //continuation char
-      {
-        //Read continuation line iteratively and add parsed tokens (without M V30) to vs
-        vector<string> vsx;
-        if(!ReadV3000Line(ifs,vsx)) return false;
+    // Iterative continuation-line handling (avoids stack overflow on crafted input)
+    size_t len = strlen(buffer);
+    while(len > 0 && buffer[len-1] == '-') {
+      if(!ifs.getline(buffer,BUFF_SIZE)) return false;
+      vector<string> vsx;
+      tokenize(vsx,buffer," \t\n\r");
+      if(vsx.size() < 2) return false;
+      if(vsx[0]!="M" || (vsx[1]!="V30" && vsx[1]!="END")) return false;
+      if(vsx.size() > 3)
         vs.insert(vs.end(),vsx.begin()+3,vsx.end());
-      }
+      len = strlen(buffer);
+    }
     return true;
   }
 
