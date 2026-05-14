@@ -1193,5 +1193,61 @@ class AtomClass(PythonBindings):
         self.assertEqual("C[H:1]", nsmi.rstrip())
 
 
+@unittest.skipUnless(ob and hasattr(ob, 'OBConformerSearch'),
+                     "OBConformerSearch not available (requires Eigen3)")
+class TestConformerSearch(PythonBindings):
+
+    def _build_mol(self, smi):
+        mol = ob.OBMol()
+        conv = ob.OBConversion()
+        conv.SetInFormat("smi")
+        conv.ReadString(mol, smi)
+        builder = ob.OBBuilder()
+        builder.Build(mol)
+        return mol
+
+    def testScoreOwnership(self):
+        """OBConformerSearch and scorer can both be deleted without crash (issue #2820)"""
+        mol = self._build_mol("CCCCC")  # n-pentane, 2 rotatable bonds
+        conf_search = ob.OBConformerSearch()
+        conf_search.Setup(mol, 5)
+        scorer = ob.OBEnergyConformerScore()
+        conf_search.SetScore(scorer)
+        conf_search.Search()
+        conf_search.GetConformers(mol)
+        num_confs = mol.NumConformers()
+        del conf_search
+        del scorer  # used to crash (issue #2820)
+        self.assertGreater(num_confs, 0)
+
+    def testFilterOwnership(self):
+        """OBConformerSearch and filter can both be deleted without crash (issue #2820)"""
+        mol = self._build_mol("CCCCC")
+        conf_search = ob.OBConformerSearch()
+        conf_search.Setup(mol, 5)
+        filt = ob.OBStericConformerFilter()
+        conf_search.SetFilter(filt)
+        conf_search.Search()
+        conf_search.GetConformers(mol)
+        num_confs = mol.NumConformers()
+        del conf_search
+        del filt  # used to crash (issue #2820)
+        self.assertGreater(num_confs, 0)
+
+    def testRepeatedSearches(self):
+        """OBConformerSearch can be used across multiple calls without crash (issue #2820)"""
+        for smi in ["CCCC", "CCCCC"]:
+            mol = self._build_mol(smi)
+            conf_search = ob.OBConformerSearch()
+            conf_search.Setup(mol, 5)
+            scorer = ob.OBEnergyConformerScore()
+            conf_search.SetScore(scorer)
+            conf_search.Search()
+            conf_search.GetConformers(mol)
+            self.assertGreater(mol.NumConformers(), 0)
+            del conf_search
+            del scorer
+
+
 if __name__ == "__main__":
     unittest.main()

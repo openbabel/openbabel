@@ -10,6 +10,13 @@ endif()
 
 add_definitions(-DFORMATDIR="${FORMATDIR}/")
 
+# TRUE for build types with optimization; slow tests are skipped otherwise
+if(CMAKE_BUILD_TYPE MATCHES "^(Release|RelWithDebInfo|MinSizeRel)$")
+  set(OB_OPTIMIZED_BUILD TRUE)
+else()
+  set(OB_OPTIMIZED_BUILD FALSE)
+endif()
+
 # ##########################################################
 # new tests using obtest.h
 # ###########################################################
@@ -32,7 +39,7 @@ set(carspacegroup_parts 1 2 3 4)
 set(cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12 13)
 set(cistrans_parts 1 2 3 4 5 6 7 8 9)
 set(conversion_parts 1)
-set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17)
+set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26)
 set(graphsym_parts 1 2 3 4 5)
 set(gzip_parts 1)
 set(addh_parts 1)
@@ -59,8 +66,14 @@ if(TARGET Eigen3::Eigen)
   set(cpptests
     align distgeom ${cpptests})
   set(align_parts 1 2 3 4 5)
-  # Parts 1-6 are fast; part 7 is the large 120-atom molecule (~10-60s)
-  set(distgeom_parts 1 2 3 4 5 6 7)
+  # Parts 6-7 are slow (large molecules, 10-60s+); skip them in unoptimized builds
+  # (Debug, sanitizer builds, etc.)
+  if(NOT OB_OPTIMIZED_BUILD)
+    set(distgeom_parts 1 2 3 4 5)
+  else()
+    # Parts 1-6 are fast; part 7 is the large 120-atom molecule (~10-60s)
+    set(distgeom_parts 1 2 3 4 5 6 7)
+  endif()
 endif()
 
 if(WITH_MAEPARSER)
@@ -237,8 +250,14 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
 
   if(Python_EXECUTABLE)
-    set(pytests
-      babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+    # Exclude distgeom from unoptimized builds (Debug, sanitizers) — it times out
+    if(NOT OB_OPTIMIZED_BUILD)
+      set(pytests
+        babel gauss sym smartssym fastsearch unique kekule pdbformat RInChI)
+    else()
+      set(pytests
+        babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+    endif()
 
     foreach(pytest ${pytests})
       SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
