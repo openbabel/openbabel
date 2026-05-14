@@ -259,6 +259,15 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2025-10995: memcpy-param-overlap in basic_unzip_streambuf::underflow.
+// When the get pointer is close enough to the start of _buffer, the putback
+// copy destination and source overlap. memcpy has undefined behaviour on
+// overlapping ranges; fixed by replacing it with memmove.
+void caseCVE_2025_10995()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10995", "sdf", "cve-2025-10995.sdf.gz"));
+}
+
 // CVE-2025-10996: heap-buffer-overflow in OBSmilesParser::ParseSmiles when
 // a malformed SMILES string (e.g. from a bracket path) creates atoms that
 // have no corresponding _hcount entry. The loop applied implicit valence
@@ -413,6 +422,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 22:
     caseCVE_2025_10996();
+    break;
+  case 23:
+    caseCVE_2025_10995();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
