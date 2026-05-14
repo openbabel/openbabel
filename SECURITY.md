@@ -62,8 +62,8 @@ the GitHub Security Advisory once published.
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |
 | --- | --- | --- | --- | --- | --- | --- |
-| [CVE-2022-37331](https://nvd.nist.gov/vuln/detail/CVE-2022-37331) | Gaussian: orientation | Out-of-bounds write | Open | — | — | — |
-| [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: title | Out-of-bounds write | Open | — | — | — |
+| [CVE-2022-37331](https://nvd.nist.gov/vuln/detail/CVE-2022-37331) | Gaussian: `coords_type` orientation | Out-of-bounds write | Pending merge | — | — | — |
+| [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: `PadString` title | Out-of-bounds write | Pending merge | — | — | — |
 | [CVE-2022-42885](https://nvd.nist.gov/vuln/detail/CVE-2022-42885) | GRO: res | Uninitialized pointer | Pending merge | — | — | — |
 | [CVE-2022-43467](https://nvd.nist.gov/vuln/detail/CVE-2022-43467) | PQS: coord_file | Out-of-bounds write | Pending merge | — | — | — |
 | [CVE-2022-43607](https://nvd.nist.gov/vuln/detail/CVE-2022-43607) | MOL2: attribute/value | Out-of-bounds write | Pending merge | — | — | — |
