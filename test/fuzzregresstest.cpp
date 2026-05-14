@@ -259,6 +259,15 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2025-11000: out-of-bounds read in PQSFormat::ReadMolecule via lowerit().
+// When a '=' appeared at position i<4, the original code did
+// strncpy(tmp, &s[i-4], 5) reading 5 bytes before the start of the buffer.
+// Fixed by replacing strncpy+strcmp with an i<4 guard + strncmp in-place.
+void caseCVE_2025_11000()
+{
+  OB_ASSERT(RunRepro("CVE-2025-11000", "pqs", "cve-2025-11000.pqs"));
+}
+
 // CVE-2022-37331: stack-buffer-overflow in GaussianOutputFormat::ReadMolecule
 // during the orientation pre-scan. strncpy(coords_type, vs[0], 24) followed
 // by strcat(coords_type, " orientation:") overflowed the 25-byte coords_type[]
@@ -374,6 +383,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 19:
     caseCVE_2022_37331();
+    break;
+  case 20:
+    caseCVE_2025_11000();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

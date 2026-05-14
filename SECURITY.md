@@ -68,7 +68,7 @@ the GitHub Security Advisory once published.
 | [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Open ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | — | — | — |
 | [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Open ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | — | — | — |
 | [CVE-2025-10999](https://nvd.nist.gov/vuln/detail/CVE-2025-10999) | CACAO: `CacaoFormat::SetHilderbrandt` | NULL dereference | Open ([#2827](https://github.com/openbabel/openbabel/issues/2827)) | — | — | — |
-| [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `PQSFormat::ReadMolecule` | NULL dereference | Open ([#2826](https://github.com/openbabel/openbabel/issues/2826)) | — | — | — |
+| [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `lowerit` pre-buffer read | Out-of-bounds read | Fixed (duplicate of OSS-Fuzz `lowerit` fix, `f4a5ebae`) | — | f4a5ebae | — |
 
 ### 2022 (Cisco TALOS batch — see [#2650](https://github.com/openbabel/openbabel/issues/2650))
 
