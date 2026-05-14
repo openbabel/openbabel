@@ -358,9 +358,9 @@ basic_unzip_streambuf<charT, traits>::underflow(void)
     if(n_putback > 4)
         n_putback = 4;
 
-    memcpy(&_buffer[0] + (4 - n_putback),
-           this->gptr() - n_putback,
-           n_putback * sizeof(char_type));
+    memmove(&_buffer[0] + (4 - n_putback),
+            this->gptr() - n_putback,
+            n_putback * sizeof(char_type));
 
     int num =
         unzip_from_stream(&_buffer[0] + 4,
