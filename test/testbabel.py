@@ -16,10 +16,11 @@ and so you can quickly develop the tests and try them out.
 
 import os
 import re
+import subprocess
 import sys
 import unittest
 
-from subprocess import CalledProcessError, Popen, PIPE, check_output, STDOUT
+from subprocess import CalledProcessError, PIPE, check_output, STDOUT
 
 INF = float("inf")
 
@@ -36,7 +37,7 @@ def run_exec(*args):
     if len(args) == 2:
         text, commandline = args
     elif len(args) == 1:
-        text, commandline = "", args[0]
+        text, commandline = None, args[0]
     else:
         raise Exception("One or two arguments expected")
 
@@ -44,15 +45,9 @@ def run_exec(*args):
     exe = executable(broken[0])
     # Note that bufsize = -1 means default buffering
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
-    if text:
-        p = Popen([exe] + broken[1:],
-                  stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=1,
-                  universal_newlines=True)
-        stdout, stderr = p.communicate(text)
-    else:
-        p = Popen([exe] + broken[1:],
-                  stdout=PIPE, stderr=PIPE, bufsize=-1, universal_newlines=True)
-        stdout, stderr = p.communicate()
+    p = subprocess.run([exe] + broken[1:], input=text, stdout=PIPE, stderr=PIPE,
+                       bufsize=-1, universal_newlines=True)
+    stdout, stderr = p.stdout, p.stderr
 
     if p.returncode and len(stderr) == 0:
         #should never exit with an error without an error message
