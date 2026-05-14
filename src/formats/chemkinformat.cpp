@@ -615,7 +615,7 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
       if(pRD->ReactionType != OBRateData::TROE)
         pRD->ReactionType = OBRateData::LINDERMANN;
       unsigned n;
-      for(n=0;n<3;++n)
+      for(n=0;n<3 && (n+1)<toks.size();++n)
       {
         double val = atof(toks[n+1].c_str());
         if(n==0)
@@ -628,7 +628,7 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
     else if(pRD && !strcasecmp(toks[0].c_str(),"TROE"))
     {
       pRD->ReactionType = OBRateData::TROE;
-      for(int i=0;i<4;++i)
+      for(int i=0;i<4 && (i+1)<(int)toks.size();++i)
         pRD->SetTroeParams(i, atof(toks[i+1].c_str()));
     }
 

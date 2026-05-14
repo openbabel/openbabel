@@ -65,8 +65,8 @@ the GitHub Security Advisory once published.
 | [CVE-2025-10994](https://nvd.nist.gov/vuln/detail/CVE-2025-10994) | GAMESS: `GAMESSOutputFormat::ReadMolecule` | Use-after-free | Pending merge ([#2834](https://github.com/openbabel/openbabel/issues/2834)) | — | — | — |
 | [CVE-2025-10995](https://nvd.nist.gov/vuln/detail/CVE-2025-10995) | zipstream: `basic_unzip_streambuf::underflow` | Overlapping memcpy | Pending merge ([#2832](https://github.com/openbabel/openbabel/issues/2832)) | — | — | — |
 | [CVE-2025-10996](https://nvd.nist.gov/vuln/detail/CVE-2025-10996) | SMILES: `OBSmilesParser::ParseSmiles` | Heap-buffer-overflow | Fixed (b34cd604) ([#2831](https://github.com/openbabel/openbabel/issues/2831)) | — | b34cd604 | — |
-| [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Open ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | — | — | — |
-| [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Open ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | — | — | — |
+| [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Fixed (af4a4212) ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | — | af4a4212 | — |
+| [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Fixed (af4a4212) ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | — | af4a4212 | — |
 | [CVE-2025-10999](https://nvd.nist.gov/vuln/detail/CVE-2025-10999) | CACAO: `CacaoFormat::SetHilderbrandt` | NULL dereference | Fixed (ecaed96f) ([#2827](https://github.com/openbabel/openbabel/issues/2827)) | — | ecaed96f | — |
 | [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `lowerit` pre-buffer read | Out-of-bounds read | Fixed (duplicate of OSS-Fuzz `lowerit` fix, `f4a5ebae`) | — | f4a5ebae | — |
 

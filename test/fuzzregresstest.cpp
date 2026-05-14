@@ -259,6 +259,27 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2025-10998: NULL dereference in ChemKinFormat::ReadReactionQualifierLines.
+// A qualifier line that tokenizes to empty caused toks[0] to be accessed
+// out-of-bounds; the resulting invalid std::string had _M_data()==nullptr,
+// so the subsequent strcasecmp(toks[0].c_str(),...) SEGVed at address 0x0.
+// Fixed in af4a4212 by adding an upfront toks.empty() early-continue.
+void caseCVE_2025_10998()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10998", "ck", "cve-2025-10998.ck"));
+}
+
+// CVE-2025-10997: heap-buffer-overflow in ChemKinFormat::CheckSpecies via
+// ReadReactionQualifierLines. A "TS" qualifier line with fewer than two
+// tokens caused toks[1] to be accessed out-of-bounds; the resulting garbage
+// std::string was passed to IMols.find(), whose map-node traversal then
+// tripped a heap-buffer-overflow. Fixed in af4a4212 by adding a
+// toks.size()>=2 guard and an upfront toks.empty() early-continue.
+void caseCVE_2025_10997()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10997", "ck", "cve-2025-10997.ck"));
+}
+
 // CVE-2025-10995: memcpy-param-overlap in basic_unzip_streambuf::underflow.
 // When the get pointer is close enough to the start of _buffer, the putback
 // copy destination and source overlap. memcpy has undefined behaviour on
@@ -425,6 +446,12 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 23:
     caseCVE_2025_10995();
+    break;
+  case 24:
+    caseCVE_2025_10997();
+    break;
+  case 25:
+    caseCVE_2025_10998();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
