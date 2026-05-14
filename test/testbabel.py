@@ -538,6 +538,11 @@ charge 1
         self.assertEqual(rmsds[1],2.73807)
         self.assertEqual(rmsds[-1],INF)
 
+    def testSeparateOnPipe(self):
+        """Check that piped input works with --separate, see https://github.com/openbabel/openbabel/issues/2386"""
+        self.canFindExecutable("obabel")
+        output, err = run_exec("[Na].[Cl]", "obabel -ismi -ocan --separate")
+        self.assertEqual(output, "[Na]\t#1\n[Cl]\t#2\n")
 
 
 if __name__ == "__main__":
