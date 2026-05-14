@@ -25,7 +25,7 @@
 #
 
 # This line is required for cmake backwards compatibility.
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.10)
 
 # Name of your project
 project(myproject)

@@ -1,6 +1,6 @@
-# Please ensure that any changes remain compliant with 3.1.
+# Please ensure that any changes remain compliant with 3.12.
 if(NOT EMBED_OPENBABEL)
-  cmake_minimum_required(VERSION 3.1)
+  cmake_minimum_required(VERSION 3.12)
 endif()
 
 project(openbabel)
@@ -10,9 +10,6 @@ set (CMAKE_CXX_STANDARD 11)
 
 if(COMMAND cmake_policy)
   cmake_policy(SET CMP0003 NEW)
-  if(POLICY CMP0042)
-    cmake_policy(SET CMP0042 OLD)
-  endif()
 endif()
 
 include (CheckCXXCompilerFlag)
@@ -408,6 +405,20 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
+
+# Detect Eigen3 before configure_file so HAVE_EIGEN3 lands in babelconfig.h
+find_package(Eigen3 CONFIG)
+if(TARGET Eigen3::Eigen)
+  set(HAVE_EIGEN3 1)
+  add_definitions(-DHAVE_EIGEN3)
+else()
+  find_package(Eigen3 MODULE)
+  if(TARGET Eigen3::Eigen)
+    set(HAVE_EIGEN3 1)
+    add_definitions(-DHAVE_EIGEN3)
+  endif()
+endif()
+
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
   ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h
@@ -424,20 +435,6 @@ include_directories(${openbabel_BINARY_DIR}/include
   ${openbabel_BINARY_DIR}/data
   ${openbabel_SOURCE_DIR}/include
 )
-
-#cjh
-find_package(Eigen3)
-if(EIGEN3_FOUND)
-  add_definitions(-DHAVE_EIGEN -DHAVE_EIGEN3)
-  include_directories(${EIGEN3_INCLUDE_DIR})
-else()
-  find_package(Eigen2) # find and setup Eigen2
-  if(EIGEN2_FOUND)
-    add_definitions (-DHAVE_EIGEN)
-    include_directories(${EIGEN2_INCLUDE_DIR})
-  endif()
-endif()
-#cjh
 
 
 find_package(Boost COMPONENTS filesystem iostreams unit_test_framework)
@@ -463,7 +460,7 @@ if(WITH_MAEPARSER)
 
     else()
 
-      set(MAEPARSER_VERSION "v1.2.3" CACHE STRING "Maeparser fallback version to download")
+      set(MAEPARSER_VERSION "v1.3.3" CACHE STRING "Maeparser fallback version to download")
 
       set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
 
@@ -522,7 +519,8 @@ if(WITH_COORDGEN)
 
     else()
 
-      set(COORDGEN_VERSION "master" CACHE STRING "Coordgen fallback version to download")
+      # v3.0.2-10-gd20e735
+      set(COORDGEN_VERSION "d20e735d96480385b2e257522288004038a08cc9" CACHE STRING "Coordgen fallback version to download")
 
       set(COORDGEN_DIR "${openbabel_SOURCE_DIR}/external/coordgen-${COORDGEN_VERSION}")
 
@@ -722,7 +720,8 @@ write_basic_package_version_file("${openbabel_BINARY_DIR}/OpenBabel3ConfigVersio
   COMPATIBILITY AnyNewerVersion)
 configure_package_config_file("${openbabel_SOURCE_DIR}/OpenBabel3Config.cmake.in"
   "${openbabel_BINARY_DIR}/OpenBabel3Config.cmake"
-  INSTALL_DESTINATION "${OB_CONFIG_DIR}")
+  INSTALL_DESTINATION "${OB_CONFIG_DIR}"
+  PATH_VARS OpenBabel3_INCLUDE_DIRS)
 
 install(EXPORT openbabel-targets
   DESTINATION "${OB_CONFIG_DIR}"

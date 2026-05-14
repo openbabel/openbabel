@@ -1,8 +1,10 @@
 @PACKAGE_INIT@
 
-set(OpenBabel3_INCLUDE_DIRS "@OpenBabel3_INCLUDE_DIRS@")
+set_and_check(OpenBabel3_INCLUDE_DIRS "@PACKAGE_OpenBabel3_INCLUDE_DIRS@")
 set(OpenBabel3_LIBRARIES "@OpenBabel3_LIBRARIES@")
 set(OpenBabel3_ENABLE_VERSIONED_FORMATS "@ENABLE_VERSIONED_FORMATS@")
 
 # Include the exports file to import the exported OpenBabel targets
 include("${CMAKE_CURRENT_LIST_DIR}/@OB_EXPORTS_FILE@")
+
+check_required_components(OpenBabel3)

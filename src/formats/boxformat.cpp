@@ -41,7 +41,7 @@ public:
   }
 
   const char* SpecificationURL() override
-  { return "http://dock.compbio.ucsf.edu/"; }  // optional
+  { return "https://dock.compbio.ucsf.edu/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
