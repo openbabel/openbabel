@@ -58,6 +58,18 @@ the GitHub Security Advisory once published.
 | [CVE-2026-2705](https://nvd.nist.gov/vuln/detail/CVE-2026-2705) | MOL2: `OBAtom::SetFormalCharge` | NULL dereference | Pending merge (#2862) | — | — | — |
 | [CVE-2026-3408](https://nvd.nist.gov/vuln/detail/CVE-2026-3408) | CDXML: `OBAtom::GetExplicitValence` | NULL dereference | Pending merge (#2862) | — | — | — |
 
+### 2025
+
+| CVE | Component | Type | Status | Fixed in | Patch | GHSA |
+| --- | --- | --- | --- | --- | --- | --- |
+| [CVE-2025-10994](https://nvd.nist.gov/vuln/detail/CVE-2025-10994) | GAMESS: `GAMESSOutputFormat::ReadMolecule` | Use-after-free | Pending merge ([#2834](https://github.com/openbabel/openbabel/issues/2834)) | — | — | — |
+| [CVE-2025-10995](https://nvd.nist.gov/vuln/detail/CVE-2025-10995) | zipstream: `basic_unzip_streambuf::underflow` | Overlapping memcpy | Open ([#2832](https://github.com/openbabel/openbabel/issues/2832)) | — | — | — |
+| [CVE-2025-10996](https://nvd.nist.gov/vuln/detail/CVE-2025-10996) | SMILES: `OBSmilesParser::ParseSmiles` | Heap-buffer-overflow | Open ([#2831](https://github.com/openbabel/openbabel/issues/2831)) | — | — | — |
+| [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Open ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | — | — | — |
+| [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Open ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | — | — | — |
+| [CVE-2025-10999](https://nvd.nist.gov/vuln/detail/CVE-2025-10999) | CACAO: `CacaoFormat::SetHilderbrandt` | NULL dereference | Open ([#2827](https://github.com/openbabel/openbabel/issues/2827)) | — | — | — |
+| [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `PQSFormat::ReadMolecule` | NULL dereference | Open ([#2826](https://github.com/openbabel/openbabel/issues/2826)) | — | — | — |
+
 ### 2022 (Cisco TALOS batch — see [#2650](https://github.com/openbabel/openbabel/issues/2650))
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |

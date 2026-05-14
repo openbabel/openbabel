@@ -259,6 +259,35 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2022-37331: stack-buffer-overflow in GaussianOutputFormat::ReadMolecule
+// during the orientation pre-scan. strncpy(coords_type, vs[0], 24) followed
+// by strcat(coords_type, " orientation:") overflowed the 25-byte coords_type[]
+// buffer when the first token on an "orientation:" line exceeded 10 chars.
+// Fixed by replacing coords_type with std::string.
+void caseCVE_2022_37331()
+{
+  OB_ASSERT(RunRepro("CVE-2022-37331", "g09", "cve-2022-37331.g09"));
+}
+
+// CVE-2022-41793: heap-buffer-overflow in CSRFormat::PadString when
+// mol.GetTitle() is longer than the 100-byte output buffer. strncpy was
+// called with strlen(input) as the limit instead of the buffer size,
+// so a title longer than 100 chars overflowed into adjacent heap memory
+// during WriteCSRHeader.
+void caseCVE_2022_41793()
+{
+  OB_ASSERT(RunReproConvert("CVE-2022-41793", "xyz", "csr",
+                            "cve-2022-41793.xyz"));
+}
+
+// CVE-2025-10994: heap-use-after-free in GAMESSOutputFormat::ReadMolecule
+// when a line matching "ICHARG=" or "MULT " has fewer whitespace-separated
+// tokens than expected, causing vs[1] or vs[2] to read freed vector memory.
+void caseCVE_2025_10994()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10994", "gamout", "cve-2025-10994.out"));
+}
+
 // CVE-2022-43607: stack-buffer-overflow in MOL2Format::ReadMolecule when
 // parsing a UCSF Dock "##########" comment line with an attribute or value
 // field longer than 31 chars.  sscanf %[^:] and %s had no width limit,
@@ -336,6 +365,15 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 16:
     caseCVE_2022_43607();
+    break;
+  case 17:
+    caseCVE_2025_10994();
+    break;
+  case 18:
+    caseCVE_2022_41793();
+    break;
+  case 19:
+    caseCVE_2022_37331();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
