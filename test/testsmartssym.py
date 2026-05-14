@@ -21,7 +21,7 @@ from testbabel import run_exec, BaseTest
 def checkmatch(query, molecules):
     result = []
     for smi in molecules:
-        output, error = run_exec("obabel -:%s -s%s -osmi" % (smi, query))
+        output, error = run_exec(None, "obabel -:%s -s%s -osmi" % (smi, query))
         result.append(output.strip() != "")
     return result
 
@@ -52,7 +52,7 @@ class TestSmartsSym(BaseTest):
                 '[C@H]1(Cl)NC1'
             ]
         for smi in data:
-            output, error = run_exec("obabel -:%s -s%s -osmi" % (smi, smi))
+            output, error = run_exec(None, "obabel -:%s -s%s -osmi" % (smi, smi))
             self.assertEqual(output.rstrip(), smi)
 
     def testTetStereo(self):

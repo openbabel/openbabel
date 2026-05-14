@@ -24,7 +24,7 @@ from subprocess import CalledProcessError, PIPE, check_output, STDOUT
 
 INF = float("inf")
 
-def run_exec(*args):
+def run_exec(text, commandline):
     """Run one of OpenBabel's executables
 
     With two arguments (stdin, commandline) it pipes
@@ -34,12 +34,6 @@ def run_exec(*args):
 
     Return a tuple (stdout, stderr)
     """
-    if len(args) == 2:
-        text, commandline = args
-    elif len(args) == 1:
-        text, commandline = None, args[0]
-    else:
-        raise Exception("One or two arguments expected")
 
     broken = commandline.split()
     exe = executable(broken[0])
@@ -108,7 +102,7 @@ class TestOBabel(BaseTest):
     def testNoInput(self):
         """Ensure that this does not segfault (PR#1818)"""
         self.canFindExecutable("obabel")
-        output, error = run_exec("obabel -i")
+        output, error = run_exec(None, "obabel -i")
         self.assertGreater(len(output), 1, "Did not generate output")
         self.assertGreater(len(error), 1, "Did not generate error message")
 
@@ -129,13 +123,13 @@ class TestOBabel(BaseTest):
         data = ["O>N>S", "O>>S", "O>N>", "O>>",
                 ">N>S", ">>S", ">>"]
         for rsmi in data:
-            output, error = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
+            output, error = run_exec(None, 'obabel -:%s -irsmi -orsmi' % rsmi)
             self.assertEqual(output.rstrip(), rsmi)
         # Check handling of invalid rxn components
         data = ["Noel>N>S", "O>Noel>S", "O>N>Noel"]
         errors = ["reactant", "agent", "product"]
         for rsmi, error in zip(data, errors):
-            output, errormsg = run_exec('obabel -:%s -irsmi -orsmi' % rsmi)
+            output, errormsg = run_exec(None, 'obabel -:%s -irsmi -orsmi' % rsmi)
             self.assertIn(error, errormsg)
 
     def sort(self, rsmi):
@@ -151,16 +145,16 @@ class TestOBabel(BaseTest):
         data = ["c1ccccc1", "c%11ccccc%11", "c%(1)ccccc%(1)", "c%(51)ccccc%51",
                 "c%(99999)ccccc%(99999)"]
         for smi in data:
-            output, error = run_exec("obabel -:%s -osmi" % smi)
+            output, error = run_exec(None, "obabel -:%s -osmi" % smi)
             self.assertEqual("c1ccccc1", output.rstrip())
         # Test negatives
         data = ["c%1ccccc%1", "c%a1cccc%a1", "c%(a1)ccccc%(a1)",
                 "c%(000001)ccccc%(000001)", "c%(51)ccccc%(15)"]
         for smi in data:
-            output, error = run_exec("obabel -:%s -osmi" % smi)
+            output, error = run_exec(None, "obabel -:%s -osmi" % smi)
             self.assertIn("0 molecules converted", error)
         # Now test writing of %(NNN) notation
-        output, error = run_exec("obabel %s -osmi" % self.getTestFile("102Uridine.smi"))
+        output, error = run_exec(None, "obabel %s -osmi" % self.getTestFile("102Uridine.smi"))
         self.assertIn("%(100)", output)
 
     def testPDBQT(self):
@@ -282,7 +276,7 @@ TORSDOF 5
                 cofname = 'mol24' # Special case: 'internal name' not the same as file name
             coffile = self.getTestFile(coffilename)
             cansmi = CAN + '\t' + cofname # Expected SMILES line plus molecule name
-            output, error = run_exec( "obabel -icof -ocan %s" % coffile)
+            output, error = run_exec(None, "obabel -icof -ocan %s" % coffile)
             self.assertEqual(output.rstrip('\r\n'), cansmi)
 
     def testCOFtoMOL(self):
@@ -306,7 +300,7 @@ TORSDOF 5
             if(cofname == 'culgi_06'):
                 cofname = 'mol24'
             coffile = self.getTestFile(coffilename)
-            output, error = run_exec( "obabel -icof -omol %s" % coffile)
+            output, error = run_exec(None, "obabel -icof -omol %s" % coffile)
             molfilename = cofname + '.mol'
             molfile = self.getTestFile(molfilename)
 
@@ -341,7 +335,7 @@ TORSDOF 5
             coffilename = molname + '_from_mol.cof'
             coffile = self.getTestFile(coffilename)
             molfile = self.getTestFile(molfilename)
-            output, error = run_exec( "obabel -imol -ocof %s --partialcharge none" % molfile)
+            output, error = run_exec(None, "obabel -imol -ocof %s --partialcharge none" % molfile)
 
             # Chop up the output and the baseline files into single lines
             # Skip first three lines: first line contains Culgi version,
@@ -374,7 +368,7 @@ TORSDOF 5
             if(cofname == 'culgi_06'):
                 cofname = 'mol24'
             coffile = self.getTestFile(coffilename)
-            output, error = run_exec( "obabel -icof -omol2 %s" % coffile)
+            output, error = run_exec(None, "obabel -icof -omol2 %s" % coffile)
             mol2filename = cofname + '.mol2'
             mol2file = self.getTestFile(mol2filename)
 
@@ -407,7 +401,7 @@ TORSDOF 5
             coffilename = mol2name + '_from_mol2.cof'
             coffile = self.getTestFile(coffilename)
             mol2file = self.getTestFile(mol2filename)
-            output, error = run_exec( "obabel -imol2 -ocof %s" % mol2file)
+            output, error = run_exec(None, "obabel -imol2 -ocof %s" % mol2file)
 
             # Chop up the output and the baseline files into single lines
             # Skip first three lines: first line contains Culgi version,
@@ -423,7 +417,7 @@ TORSDOF 5
         '''This is a regression test for a segfault, but could put
         other mol2 test here'''
         mol2file = self.getTestFile('5sun_protein.mol2')
-        outputerr = run_exec( "obabel -imol2 %s -osdf" % mol2file)
+        outputerr = run_exec(None, "obabel -imol2 %s -osdf" % mol2file)
         self.assertGreater(len(outputerr[0]), 0, "Did not generate output")
 
     def testXYZazete(self):
@@ -518,12 +512,12 @@ charge 1
     def testOBRMS(self):
         '''Sanity checks for obrms'''
         sdffile = self.getTestFile('testsym_2Dtests.sdf')
-        output, err = run_exec( "obrms -t 10 %s %s"%(sdffile,sdffile))
+        output, err = run_exec(None, "obrms -t 10 %s %s"%(sdffile,sdffile))
         # all rmsds should be zero
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
         for rmsd in rmsds:
             self.assertEqual(rmsd, 0, "RMSD not zero between identical structures")
-        output, err = run_exec( "obrms -t 10 -f %s %s" % (sdffile,sdffile))
+        output, err = run_exec(None, "obrms -t 10 -f %s %s" % (sdffile,sdffile))
         #first zero, second nonzero, last inf
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
         self.assertEqual(rmsds[0],0)

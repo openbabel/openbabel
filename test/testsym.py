@@ -267,11 +267,11 @@ class TestConversions(BaseTest):
         # the SMILES strings in data[x][0] below.
         filename = self.getTestFile("testsym_2Dtests.sdf")
 
-        output, error = run_exec("obabel -isdf %s -ocan" % filename)
+        output, error = run_exec(None, "obabel -isdf %s -ocan" % filename)
         for i, smiles in enumerate(output.rstrip().split("\n")):
             self.assertEqual(smiles.rstrip(), self.data[i][1])
 
-        output, error = run_exec("obabel -isdf %s -oinchi" % filename)
+        output, error = run_exec(None, "obabel -isdf %s -oinchi" % filename)
         for i, inchi in enumerate(output.rstrip().split("\n")):
             self.assertEqual(inchi.rstrip(), self.data[i][2])
 
@@ -283,7 +283,7 @@ class TestConversions(BaseTest):
         # The test files have the correct canonical SMILES string
         # stored in the data field "smiles"
 
-        output, error = run_exec("obabel -isdf %s %s -ocan --append smiles" %
+        output, error = run_exec(None, "obabel -isdf %s %s -ocan --append smiles" %
                                  (filenames[0], filenames[1]))
         for line in output.rstrip().split("\n"):
             result, correct_answer = line.split()
@@ -297,7 +297,7 @@ class TestConversions(BaseTest):
         # The test files have the correct canonical SMILES string
         # stored in the data field "smiles"
 
-        output, error = run_exec("obabel -isdf %s %s -osdf --append smiles" %
+        output, error = run_exec(None, "obabel -isdf %s %s -osdf --append smiles" %
                                  (filenames[0], filenames[1]))
         finaloutput, error = run_exec(output, "obabel -isdf -ocan")
         for line in finaloutput.rstrip().split("\n"):
