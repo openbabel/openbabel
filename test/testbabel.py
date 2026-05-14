@@ -40,27 +40,24 @@ def run_exec(*args):
     else:
         raise Exception("One or two arguments expected")
 
-    if sys.platform.startswith("win"):
-        broken = commandline.split()
-        exe = executable(broken[0])
-    else:
-        broken = commandline.encode().split()
-        exe = executable(broken[0].decode())
+    broken = commandline.split()
+    exe = executable(broken[0])
     # Note that bufsize = -1 means default buffering
     # Without this, it's unbuffered and it takes 10x longer on MacOSX
     if text:
         p = Popen([exe] + broken[1:],
-                  stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=1)
-        stdout, stderr = p.communicate(text.encode())
+                  stdin=PIPE, stdout=PIPE, stderr=PIPE, bufsize=1,
+                  universal_newlines=True)
+        stdout, stderr = p.communicate(text)
     else:
         p = Popen([exe] + broken[1:],
-                  stdout=PIPE, stderr=PIPE, bufsize=-1)
+                  stdout=PIPE, stderr=PIPE, bufsize=-1, universal_newlines=True)
         stdout, stderr = p.communicate()
 
     if p.returncode and len(stderr) == 0:
         #should never exit with an error without an error message
-        raise CalledProcessError(p.returncode,commandline,stdout.decode())
-    return stdout.decode(), stderr.decode()
+        raise CalledProcessError(p.returncode, commandline, stdout)
+    return stdout, stderr
 
 def executable(name):
     """Return the full path to an executable"""
