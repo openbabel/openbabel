@@ -59,6 +59,7 @@ namespace OpenBabel {
       std::string m_inputSmiles;
       std::vector<unsigned long> m_unspecifiedTetrahedral;
       std::vector<unsigned long> m_unspecifiedCisTrans;
+      bool m_hasSpecifiedStereo = false;
   };
 
 } // namespace OpenBabel

@@ -37,6 +37,7 @@ namespace OpenBabel {
   {
     m_unspecifiedTetrahedral.clear();
     m_unspecifiedCisTrans.clear();
+    m_hasSpecifiedStereo = false;
 
     // Store canonical SMILES of original molecule
     OBConversion conv;
@@ -51,6 +52,8 @@ namespace OpenBabel {
       OBTetrahedralStereo::Config cfg = tetrahedral[i]->GetConfig();
       if (!cfg.specified)
         m_unspecifiedTetrahedral.push_back(cfg.center);
+      else
+        m_hasSpecifiedStereo = true;
     }
 
     std::vector<OBCisTransStereo*> cistrans = facade.GetAllCisTransStereo();
@@ -65,11 +68,19 @@ namespace OpenBabel {
         continue;
       if (!cfg.specified)
         m_unspecifiedCisTrans.push_back(bond->GetId());
+      else
+        m_hasSpecifiedStereo = true;
     }
   }
 
   bool OBGen3DStereoHelper::Check(OBMol *mol)
   {
+    // If no stereo was specified in the input, any 3D geometry is acceptable.
+    // StereoFrom3D would perceive new stereocenters not in the original 0D
+    // perception, causing spurious SMILES mismatches.
+    if (!m_hasSpecifiedStereo)
+      return true;
+
     // Perceive stereo from 3D coords
     StereoFrom3D(mol, true); // true  = force
 
