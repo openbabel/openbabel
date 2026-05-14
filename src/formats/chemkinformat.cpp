@@ -607,6 +607,9 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
     tokenize(toks, ln, " \t\n\r/\\");
     ln.clear(); //have to clear line when it has been dealt with
 
+    if(toks.empty())
+      continue;
+
     if(pRD && !strcasecmp(toks[0].c_str(),"LOW"))
     {
       if(pRD->ReactionType != OBRateData::TROE)
@@ -632,7 +635,7 @@ bool ChemKinFormat::ReadReactionQualifierLines(istream& ifs, OBReaction* pReact)
     else if(!strcasecmp(toks[0].c_str(),"DUPLICATE"))
     {}
 
-    else if(pReact && !strcasecmp(toks[0].c_str(),"TS"))
+    else if(pReact && toks.size() >= 2 && !strcasecmp(toks[0].c_str(),"TS"))
     {
       //Defines the molecule which is a transition state for a reaction
       //This is not a ChemKin keyword. Used for Mesmer.
