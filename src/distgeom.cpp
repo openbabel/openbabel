@@ -1168,9 +1168,29 @@ namespace OpenBabel {
 
     unsigned int stereoFails = 0, boundsFails = 0;
     auto wallStart = std::chrono::steady_clock::now();
+    // Safety limit: bridged bicyclics and other pathological topologies can
+    // exhaust max_iterations on every L-BFGS call without converging, making
+    // the full trial loop take many minutes.
+    const double maxWallSeconds = 30.0;
+    double lastProgressReport = 0.0; // seconds since last progress message
 
     for (unsigned int trial = 0; trial < maxIter; trial++) {
       auto trialStart = std::chrono::steady_clock::now();
+
+      // Check wall-clock limit before starting a new (expensive) trial.
+      double wallElapsed = std::chrono::duration<double>(
+        trialStart - wallStart).count();
+      if (wallElapsed > maxWallSeconds) {
+        cerr << "DistGeom: wall-clock limit (" << maxWallSeconds
+             << "s) reached after " << trial << " trials" << endl;
+        break;
+      }
+
+      // Emit a progress dot every 5 seconds so users know we're still running.
+      if (wallElapsed - lastProgressReport >= 5.0) {
+        cerr << "." << flush;
+        lastProgressReport = wallElapsed;
+      }
 
       if (!generateInitialCoords())
         continue;

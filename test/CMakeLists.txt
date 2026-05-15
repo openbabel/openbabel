@@ -64,15 +64,23 @@ set(uniqueid_parts 1 2)
 
 if(TARGET Eigen3::Eigen)
   set(cpptests
-    align distgeom ${cpptests})
+    align distgeom gen3d ${cpptests})
   set(align_parts 1 2 3 4 5)
-  # Parts 6-7 are slow (large molecules, 10-60s+); skip them in unoptimized builds
-  # (Debug, sanitizer builds, etc.)
+  # Parts 1-5 are fast; parts 6-7 are large molecules (~10-60s)
+  # Parts 8-19 are the pr2317 hard cases (new distgeom fallback tests).
+  # Excluded (fused/bridged ring systems that exhaust L-BFGS on every trial):
+  #   13 (quinine/quinidine), 15 (polycyclic alkaloids), 16 (aminoglycoside)
+  # Excluded (too large for 30 s wall-clock limit):
+  #   19 (disaccharide, 38+ atoms)
+  # All excluded cases are covered by gen3dtest via the builder path.
   if(NOT OB_OPTIMIZED_BUILD)
+    # Skip slow tests in unoptimized builds (Debug, sanitizer builds, etc.)
     set(distgeom_parts 1 2 3 4 5)
+    set(gen3d_parts 1 2 3 4)
   else()
-    # Parts 1-6 are fast; part 7 is the large 120-atom molecule (~10-60s)
-    set(distgeom_parts 1 2 3 4 5 6 7)
+    # In optimized builds, include comprehensive test coverage
+    set(distgeom_parts 1 2 3 4 5 6 7 8 9 10 11 12 14 17 18)
+    set(gen3d_parts 1 2 3 4 5)
   endif()
 endif()
 
