@@ -1047,7 +1047,7 @@ namespace OpenBabel
               type = atmid.substr(0,1);
           } else if (atmid[0] == ' ')
             type = atmid.substr(1,1); // one char element
-          else
+          else if (atmid.size() > 1)
             type = atmid.substr(1,2);
 
           // Some cleanup steps
