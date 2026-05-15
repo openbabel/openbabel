@@ -567,6 +567,9 @@ private:
 //    return "started"; //passed
   naStore=pmol->NumAtoms();
   nbStore=pmol->NumBonds();
+  if (naStore > MAXFRAGS || nbStore > MAXBONDS)
+    return "";
+
   for (i=1; i<=naStore; i++) {
     atom=pmol->GetAtom(i);
     nHydr[i-1]=atom->GetImplicitHCount()+atom->ExplicitHydrogenCount();

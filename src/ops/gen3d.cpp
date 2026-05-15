@@ -70,6 +70,9 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
   int speed;
   bool useDistGeom = false;
 
+  if (!OptionText)
+    OptionText = "";
+
   // first try converting OptionText to an integer
   char *endptr;
   speed = strtol(OptionText, &endptr, 10);

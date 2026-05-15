@@ -357,7 +357,13 @@ OBMol.BeginResidues = OBMol.EndResidues = OBMol.BeginResidue = OBMol.EndResidue 
 %include <openbabel/rotamer.h>
 %include <openbabel/spectrophore.h>
 #ifdef HAVE_EIGEN3
+// OBConformerSearch takes ownership of filter/score via SetFilter/SetScore,
+// so tell SWIG to disown the Python wrapper when these are passed.
+%apply SWIGTYPE *DISOWN { OpenBabel::OBConformerFilter *filter };
+%apply SWIGTYPE *DISOWN { OpenBabel::OBConformerScore *score };
 %include <openbabel/conformersearch.h>
+%clear OpenBabel::OBConformerFilter *filter;
+%clear OpenBabel::OBConformerScore *score;
 %include <openbabel/math/align.h>
 #endif
 

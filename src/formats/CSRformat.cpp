@@ -189,8 +189,11 @@ namespace OpenBabel
 
     output = new char[size];
     memset(output, ' ', size);
-    strncpy(output, input, strlen(input));
-    output[ size - 1] = '\0';
+    size_t len = strlen(input);
+    if (len > static_cast<size_t>(size - 1))
+      len = static_cast<size_t>(size - 1);
+    memcpy(output, input, len);
+    output[size - 1] = '\0';
     return(output);
   }
 

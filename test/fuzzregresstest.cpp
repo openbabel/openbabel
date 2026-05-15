@@ -259,6 +259,95 @@ void caseCVE_2022_43467()
   OB_ASSERT(RunRepro("CVE-2022-43467", "pqs", "cve-2022-43467.pqs"));
 }
 
+// CVE-2025-10998: NULL dereference in ChemKinFormat::ReadReactionQualifierLines.
+// A qualifier line that tokenizes to empty caused toks[0] to be accessed
+// out-of-bounds; the resulting invalid std::string had _M_data()==nullptr,
+// so the subsequent strcasecmp(toks[0].c_str(),...) SEGVed at address 0x0.
+// Fixed in af4a4212 by adding an upfront toks.empty() early-continue.
+void caseCVE_2025_10998()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10998", "ck", "cve-2025-10998.ck"));
+}
+
+// CVE-2025-10997: heap-buffer-overflow in ChemKinFormat::CheckSpecies via
+// ReadReactionQualifierLines. A "TS" qualifier line with fewer than two
+// tokens caused toks[1] to be accessed out-of-bounds; the resulting garbage
+// std::string was passed to IMols.find(), whose map-node traversal then
+// tripped a heap-buffer-overflow. Fixed in af4a4212 by adding a
+// toks.size()>=2 guard and an upfront toks.empty() early-continue.
+void caseCVE_2025_10997()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10997", "ck", "cve-2025-10997.ck"));
+}
+
+// CVE-2025-10995: memcpy-param-overlap in basic_unzip_streambuf::underflow.
+// When the get pointer is close enough to the start of _buffer, the putback
+// copy destination and source overlap. memcpy has undefined behaviour on
+// overlapping ranges; fixed by replacing it with memmove.
+void caseCVE_2025_10995()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10995", "sdf", "cve-2025-10995.sdf.gz"));
+}
+
+// CVE-2025-10996: heap-buffer-overflow in OBSmilesParser::ParseSmiles when
+// a malformed SMILES string (e.g. from a bracket path) creates atoms that
+// have no corresponding _hcount entry. The loop applied implicit valence
+// using _hcount[idx-1] without checking whether idx-1 is in range.
+// Fixed in b34cd604 by adding an `idx-1 >= _hcount.size()` bounds check.
+void caseCVE_2025_10996()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10996", "smi", "cve-2025-10996.smi"));
+}
+
+// CVE-2025-10999: NULL dereference in CacaoFormat::SetHilderbrandt when
+// atoms are spaced >10 Å apart. The original code used sum=100.0 as a
+// distance² threshold, so no reference atom was ever found and vit[i]->_a
+// was left nullptr; the subsequent GetIdx() call then crashed. Fixed by
+// using numeric_limits::max() as the initial sum and adding null guards.
+void caseCVE_2025_10999()
+{
+  OB_ASSERT(RunReproConvert("CVE-2025-10999", "xyz", "cacint",
+                            "cve-2025-10999.xyz"));
+}
+
+// CVE-2025-11000: out-of-bounds read in PQSFormat::ReadMolecule via lowerit().
+// When a '=' appeared at position i<4, the original code did
+// strncpy(tmp, &s[i-4], 5) reading 5 bytes before the start of the buffer.
+// Fixed by replacing strncpy+strcmp with an i<4 guard + strncmp in-place.
+void caseCVE_2025_11000()
+{
+  OB_ASSERT(RunRepro("CVE-2025-11000", "pqs", "cve-2025-11000.pqs"));
+}
+
+// CVE-2022-37331: stack-buffer-overflow in GaussianOutputFormat::ReadMolecule
+// during the orientation pre-scan. strncpy(coords_type, vs[0], 24) followed
+// by strcat(coords_type, " orientation:") overflowed the 25-byte coords_type[]
+// buffer when the first token on an "orientation:" line exceeded 10 chars.
+// Fixed by replacing coords_type with std::string.
+void caseCVE_2022_37331()
+{
+  OB_ASSERT(RunRepro("CVE-2022-37331", "g09", "cve-2022-37331.g09"));
+}
+
+// CVE-2022-41793: heap-buffer-overflow in CSRFormat::PadString when
+// mol.GetTitle() is longer than the 100-byte output buffer. strncpy was
+// called with strlen(input) as the limit instead of the buffer size,
+// so a title longer than 100 chars overflowed into adjacent heap memory
+// during WriteCSRHeader.
+void caseCVE_2022_41793()
+{
+  OB_ASSERT(RunReproConvert("CVE-2022-41793", "xyz", "csr",
+                            "cve-2022-41793.xyz"));
+}
+
+// CVE-2025-10994: heap-use-after-free in GAMESSOutputFormat::ReadMolecule
+// when a line matching "ICHARG=" or "MULT " has fewer whitespace-separated
+// tokens than expected, causing vs[1] or vs[2] to read freed vector memory.
+void caseCVE_2025_10994()
+{
+  OB_ASSERT(RunRepro("CVE-2025-10994", "gamout", "cve-2025-10994.out"));
+}
+
 // CVE-2022-43607: stack-buffer-overflow in MOL2Format::ReadMolecule when
 // parsing a UCSF Dock "##########" comment line with an attribute or value
 // field longer than 31 chars.  sscanf %[^:] and %s had no width limit,
@@ -268,6 +357,15 @@ void caseCVE_2022_43607()
 {
   OB_ASSERT(RunReproWithInputFlag("CVE-2022-43607", "mol2",
                                   "cve-2022-43607.mol2", "c"));
+}
+
+// NULL dereference in OBAtom::IsPeriodic() when PointGroupPrivate::establish_pairs
+// calls GetDistance() on a temporary OBAtom with no parent molecule.
+// Fixed by null-checking GetParent() in OBAtom::IsPeriodic().
+void casePointGroupNullParent()
+{
+  OB_ASSERT(RunReproConvert("pointgroup-null-parent", "g09", "xyz",
+                            "methane-pointgroup.g09"));
 }
 
 int fuzzregresstest(int argc, char *argv[])
@@ -336,6 +434,36 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 16:
     caseCVE_2022_43607();
+    break;
+  case 17:
+    caseCVE_2025_10994();
+    break;
+  case 18:
+    caseCVE_2022_41793();
+    break;
+  case 19:
+    caseCVE_2022_37331();
+    break;
+  case 20:
+    caseCVE_2025_11000();
+    break;
+  case 21:
+    caseCVE_2025_10999();
+    break;
+  case 22:
+    caseCVE_2025_10996();
+    break;
+  case 23:
+    caseCVE_2025_10995();
+    break;
+  case 24:
+    caseCVE_2025_10997();
+    break;
+  case 25:
+    caseCVE_2025_10998();
+    break;
+  case 26:
+    casePointGroupNullParent();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

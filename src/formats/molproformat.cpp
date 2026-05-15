@@ -220,15 +220,16 @@ namespace OpenBabel
               tokenize(vs,buffer);
               for (unsigned int i = 1; i < vs.size(); i++)
                 z.push_back(atof(vs[i].c_str()));
-              for (unsigned int i = 0; i < freq.size(); i++) {
-                vib.push_back(vector<vector3>());
+              for (unsigned int i = 0; i < freq.size() && i < x.size() && i < y.size() && i < z.size(); i++) {
+                if (vib.size() <= i)
+                  vib.push_back(vector<vector3>());
                 vib[i].push_back(vector3(x[i], y[i], z[i]));
               }
               ifs.getline(buffer, BUFF_SIZE);
               tokenize(vs,buffer);
             } // while
-            for (unsigned int i = 0; i < freq.size(); i++) {
-	      Frequencies.push_back(freq[i]);
+            for (unsigned int i = 0; i < freq.size() && i < intens.size() && i < vib.size(); i++) {
+              Frequencies.push_back(freq[i]);
               Intensities.push_back(intens[i]);
               Lx.push_back(vib[i]);
             }

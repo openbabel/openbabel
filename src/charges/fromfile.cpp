@@ -106,16 +106,19 @@ namespace OpenBabel
 			OBResidue *res;
 			double q   = 0.;
 			bool found = false;
-			char *name = nullptr;
+			std::string atomID;
 
 			// First try atom type name
 			if ((res = a->GetResidue()) != nullptr)
 			{
-				char *f = name  = (char*)res->GetAtomID( a ).c_str();
-				for( int j = strlen(f)-1; j>=0; j-- ) { if( f[j]==' ' ){ f[j]='\0'; } } // trim trailing whitespace
-				std::string ff = string(f);
-				if( q_by_name.count( ff ) ) {
-					q = q_by_name[ string(ff) ];
+				atomID = res->GetAtomID(a);
+				size_t end = atomID.find_last_not_of(' ');
+				if (end != std::string::npos)
+					atomID.resize(end + 1);
+				else
+					atomID.clear();
+				if (q_by_name.count(atomID)) {
+					q = q_by_name[atomID];
 					found = true;
 				}
 			}
@@ -138,9 +141,9 @@ namespace OpenBabel
 
 			if( !found ) {
 				stringstream msg;
-				msg << "Charge mapping for atom # " << i ;
-				if( name ) {
-					msg << " (" << name <<") ";
+				msg << "Charge mapping for atom # " << i;
+				if (!atomID.empty()) {
+					msg << " (" << atomID << ") ";
 				}
 				msg << "not found " <<  endl;  
 				obErrorLog.ThrowError(__FUNCTION__, msg.str(), obError);

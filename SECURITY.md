@@ -58,12 +58,24 @@ the GitHub Security Advisory once published.
 | [CVE-2026-2705](https://nvd.nist.gov/vuln/detail/CVE-2026-2705) | MOL2: `OBAtom::SetFormalCharge` | NULL dereference | Pending merge (#2862) | — | — | — |
 | [CVE-2026-3408](https://nvd.nist.gov/vuln/detail/CVE-2026-3408) | CDXML: `OBAtom::GetExplicitValence` | NULL dereference | Pending merge (#2862) | — | — | — |
 
+### 2025
+
+| CVE | Component | Type | Status | Fixed in | Patch | GHSA |
+| --- | --- | --- | --- | --- | --- | --- |
+| [CVE-2025-10994](https://nvd.nist.gov/vuln/detail/CVE-2025-10994) | GAMESS: `GAMESSOutputFormat::ReadMolecule` | Use-after-free | Pending merge ([#2834](https://github.com/openbabel/openbabel/issues/2834)) | — | — | — |
+| [CVE-2025-10995](https://nvd.nist.gov/vuln/detail/CVE-2025-10995) | zipstream: `basic_unzip_streambuf::underflow` | Overlapping memcpy | Pending merge ([#2832](https://github.com/openbabel/openbabel/issues/2832)) | — | — | — |
+| [CVE-2025-10996](https://nvd.nist.gov/vuln/detail/CVE-2025-10996) | SMILES: `OBSmilesParser::ParseSmiles` | Heap-buffer-overflow | Fixed (b34cd604) ([#2831](https://github.com/openbabel/openbabel/issues/2831)) | — | b34cd604 | — |
+| [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Fixed (af4a4212) ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | — | af4a4212 | — |
+| [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Fixed (af4a4212) ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | — | af4a4212 | — |
+| [CVE-2025-10999](https://nvd.nist.gov/vuln/detail/CVE-2025-10999) | CACAO: `CacaoFormat::SetHilderbrandt` | NULL dereference | Fixed (ecaed96f) ([#2827](https://github.com/openbabel/openbabel/issues/2827)) | — | ecaed96f | — |
+| [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `lowerit` pre-buffer read | Out-of-bounds read | Fixed (duplicate of OSS-Fuzz `lowerit` fix, `f4a5ebae`) | — | f4a5ebae | — |
+
 ### 2022 (Cisco TALOS batch — see [#2650](https://github.com/openbabel/openbabel/issues/2650))
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |
 | --- | --- | --- | --- | --- | --- | --- |
-| [CVE-2022-37331](https://nvd.nist.gov/vuln/detail/CVE-2022-37331) | Gaussian: orientation | Out-of-bounds write | Open | — | — | — |
-| [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: title | Out-of-bounds write | Open | — | — | — |
+| [CVE-2022-37331](https://nvd.nist.gov/vuln/detail/CVE-2022-37331) | Gaussian: `coords_type` orientation | Out-of-bounds write | Pending merge | — | — | — |
+| [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: `PadString` title | Out-of-bounds write | Pending merge | — | — | — |
 | [CVE-2022-42885](https://nvd.nist.gov/vuln/detail/CVE-2022-42885) | GRO: res | Uninitialized pointer | Pending merge | — | — | — |
 | [CVE-2022-43467](https://nvd.nist.gov/vuln/detail/CVE-2022-43467) | PQS: coord_file | Out-of-bounds write | Pending merge | — | — | — |
 | [CVE-2022-43607](https://nvd.nist.gov/vuln/detail/CVE-2022-43607) | MOL2: attribute/value | Out-of-bounds write | Pending merge | — | — | — |

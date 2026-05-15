@@ -318,6 +318,19 @@ namespace OpenBabel {
     OBSmilesParser(bool preserve_aromaticity=false): _preserve_aromaticity(preserve_aromaticity), _rxnrole(1) { }
     ~OBSmilesParser() { }
 
+  private:
+    void ClearStereoMaps()
+    {
+      for (auto& kv : _tetrahedralMap)
+        delete kv.second;
+      _tetrahedralMap.clear();
+      for (auto& kv : _squarePlanarMap)
+        delete kv.second;
+      _squarePlanarMap.clear();
+    }
+
+  public:
+
     bool SmiToMol(OBMol&,const string&);
     bool ParseSmiles(OBMol&, const string&);
     bool ParseSimple(OBMol&);
@@ -394,19 +407,11 @@ namespace OpenBabel {
     if (!ParseSmiles(mol, s) || (!mol.IsReaction() && mol.NumAtoms() == 0))
       {
         mol.Clear();
+        ClearStereoMaps();
         return(false);
       }
 
-    // TODO: Is the following a memory leak? - there are return statements above
-    map<OBAtom*, OBTetrahedralStereo::Config*>::iterator i;
-    for (i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); ++i)
-      delete i->second;
-    _tetrahedralMap.clear();
-
-    map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator j;
-    for (j = _squarePlanarMap.begin(); j != _squarePlanarMap.end(); ++j)
-      delete j->second;
-    _squarePlanarMap.clear();
+    ClearStereoMaps();
 
     mol.SetAutomaticFormalCharge(false);
 
