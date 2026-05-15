@@ -269,6 +269,9 @@ bool ChemKinFormat::ReadHeader(istream& ifs, OBConversion* pConv)
     tokenize(toks, ln, " \t\n\r/\\");
     ln.clear(); //have to clear line when it has been dealt with
 
+    if(toks.empty())
+      continue;
+
     if(doingspecies || !strcasecmp(toks[0].c_str(),"SPECIES") || !strcasecmp(toks[0].c_str(),"SPEC"))
     {
       SpeciesListed = true; //Means that molecules in reactions must have been specified in SPECIES
@@ -403,7 +406,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
       */
       vector<string> firstr;
       tokenize(firstr, *itr, " \t");
-      if(isalpha(firstr[0][0]))
+      if(!firstr.empty() && !firstr[0].empty() && isalpha(firstr[0][0]))
       {
         //Starts with letter, so could be a label. Further tests...
         if(pConv->IsOption("L",OBConversion::INOPTIONS)//this option mandates a label
