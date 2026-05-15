@@ -76,11 +76,12 @@ if(TARGET Eigen3::Eigen)
   if(NOT OB_OPTIMIZED_BUILD)
     # Skip slow tests in unoptimized builds (Debug, sanitizer builds, etc.)
     set(distgeom_parts 1 2 3 4 5)
+    set(gen3d_parts 1 2 3 4)
   else()
     # In optimized builds, include comprehensive test coverage
     set(distgeom_parts 1 2 3 4 5 6 7 8 9 10 11 12 14 17 18)
+    set(gen3d_parts 1 2 3 4 5)
   endif()
-  set(gen3d_parts 1 2 3 4 5)
 endif()
 
 if(WITH_MAEPARSER)
