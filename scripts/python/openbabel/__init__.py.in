@@ -1,8 +1,20 @@
+import os
 import sys
 import warnings
-from . import openbabel
 
 __version__ = "${BABEL_VERSION}"
+base_dir = os.path.abspath(os.path.dirname(__file__))
+
+if os.name == "nt":
+    dll_dir = os.path.join(base_dir, "bin")
+    if os.path.isdir(dll_dir):
+        os.add_dll_directory(dll_dir)
+
+if "${BUILD_BY_PIP}" == "ON":
+    os.environ["BABEL_LIBDIR"] = os.path.join(base_dir, "lib", "openbabel", __version__)
+    os.environ["BABEL_DATADIR"] = os.path.join(base_dir, "share", "openbabel", __version__)
+
+from . import openbabel
 
 _thismodule = sys.modules[__name__]
 

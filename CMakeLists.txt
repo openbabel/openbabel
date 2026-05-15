@@ -415,6 +415,22 @@ endif()
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
 
+if(BUILD_BY_PIP)
+  find_package(Python COMPONENTS Interpreter)
+  if(Python_Interpreter_FOUND)
+    execute_process(
+      COMMAND ${Python_EXECUTABLE} -m cmeel cmake
+      OUTPUT_VARIABLE CMEEL_PREFIX_PATH
+      RESULT_VARIABLE CMEEL_RESULT
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+    if(CMEEL_RESULT EQUAL 0 AND NOT "${CMEEL_PREFIX_PATH}" STREQUAL "")
+      list(PREPEND CMAKE_PREFIX_PATH "${CMEEL_PREFIX_PATH}")
+    endif()
+  endif()
+endif()
+
 # Detect Eigen3 before configure_file so HAVE_EIGEN3 lands in babelconfig.h
 find_package(Eigen3 CONFIG)
 if(TARGET Eigen3::Eigen)
@@ -684,6 +700,11 @@ option(PHP_BINDINGS "Build PHP bindings" OFF)
 
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
+
+# Install Python bindings into the scikit-build wheel package directory when
+# building through pip/cibuildwheel. Normal CMake installs keep using the
+# interpreter platlib path.
+option(BUILD_BY_PIP "Install Python bindings relative to CMAKE_INSTALL_PREFIX for wheel builds" OFF)
 
 # Should Ruby bindings be built?
 option(RUBY_BINDINGS "Build Ruby bindings" OFF)

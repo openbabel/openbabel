@@ -1,0 +1,86 @@
+[build-system]
+requires = [
+    "scikit-build-core>=0.11",
+    "setuptools-scm",
+    "swig",
+    "cmeel-eigen",
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "openbabel"
+dynamic = ["version"]
+description = "Python interface to the Open Babel chemistry library"
+readme = "scripts/python/README.rst"
+requires-python = ">=3.9"
+authors = [
+  {name = "Noel O'Boyle", email = "openbabel-discuss@lists.sourceforge.net"},
+]
+license = {text = "GPL-2.0-only"}
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: Other Environment",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License (GPL)",
+    "Natural Language :: English",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://openbabel.org/"
+Repository = "https://github.com/openbabel/openbabel"
+Documentation = "https://openbabel.org/docs/"
+
+[project.scripts]
+obabel = "openbabel.executable:obabel"
+
+[tool.scikit-build]
+minimum-version = "0.11"
+cmake.version = ">=3.12"
+sdist.include = ["scripts/openbabel-python.i", "scripts/stereo.i"]
+wheel.install-dir = "openbabel"
+metadata.version.provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.scikit-build.cmake.define]
+CMAKE_BUILD_TYPE = "Release"
+WITH_INCHI = "ON"
+PYTHON_BINDINGS = "ON"
+RUN_SWIG = "ON"
+BUILD_BY_PIP = "ON"
+ENABLE_TESTS = "OFF"
+BUILD_GUI = "OFF"
+
+[tool.setuptools_scm]
+
+[tool.cibuildwheel]
+test-command = [
+    "python -c \"from openbabel import openbabel; conv = openbabel.OBConversion(); assert conv.SetInAndOutFormats('smi', 'can')\"",
+    "obabel -:C -ocan",
+]
+build = ["cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
+skip = ["*-win32", "*-manylinux_i686", "*-musllinux*", "cp314t-*"]
+manylinux-x86_64-image = "manylinux2014"
+manylinux-aarch64-image = "manylinux2014"
+
+[tool.cibuildwheel.linux]
+before-all = [
+    "yum install -y epel-release",
+    "yum install -y eigen3-devel libxml2-devel zlib-devel",
+]
+
+[tool.cibuildwheel.macos]
+before-all = "brew install eigen"
+
+[tool.cibuildwheel.windows]
+before-build = "pip install delvewheel"
+repair-wheel-command = "delvewheel repair -w {dest_dir} {wheel} --ignore-in-wheel"
