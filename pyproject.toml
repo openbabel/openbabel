@@ -40,6 +40,11 @@ build-dir = "build/{wheel_tag}"
 build.verbose = true
 cmake.version = ">=3.16"
 
+# wheel.install-dir starting with "/" is gated behind the experimental
+# flag in scikit-build-core; we use it to push the CMake install tree
+# into the python platlib directly.
+experimental = true
+
 # Force everything CMake installs into the python platlib so the SWIG
 # extension lands next to libopenbabel, its plugins, and the data tree.
 wheel.install-dir = "/platlib"
