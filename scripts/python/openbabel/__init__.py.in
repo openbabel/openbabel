@@ -1,5 +1,30 @@
+import os
 import sys
 import warnings
+
+# Point Open Babel at the data files and plugin shared libraries that ship
+# inside this Python package, unless the caller has already set them.
+_pkg_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Data files are installed at <pkg>/data/<version>/...; OB appends the
+# version subdirectory itself, so BABEL_DATADIR is the parent.
+_default_datadir = os.path.join(_pkg_dir, "data")
+if os.path.isdir(_default_datadir):
+    os.environ.setdefault("BABEL_DATADIR", _default_datadir)
+
+# Plugin shared libraries are installed alongside the bindings.
+_default_libdir = os.path.join(_pkg_dir, "plugins")
+if os.path.isdir(_default_libdir):
+    os.environ.setdefault("BABEL_LIBDIR", _default_libdir)
+
+# On Windows the libopenbabel DLL lives next to the extension module; make
+# sure it is discoverable for the SWIG module load below.
+if sys.platform == "win32" and hasattr(os, "add_dll_directory"):
+    try:
+        os.add_dll_directory(_pkg_dir)
+    except (OSError, FileNotFoundError):
+        pass
+
 from . import openbabel
 
 __version__ = "${BABEL_VERSION}"

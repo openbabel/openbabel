@@ -57,11 +57,17 @@ set(to_install
     UFF.prm
 )
 
-if(NOT MSVC)
-  install(FILES ${to_install} DESTINATION share/openbabel/${BABEL_VERSION})
-else(NOT MSVC)
-  install(FILES ${to_install} DESTINATION bin/data)
-endif(NOT MSVC)
+# Default install destinations can be overridden (e.g. for Python wheel
+# packaging) by setting OB_DATA_INSTALL_DIR before this file is processed.
+if(NOT DEFINED OB_DATA_INSTALL_DIR)
+  if(NOT MSVC)
+    set(OB_DATA_INSTALL_DIR "share/openbabel/${BABEL_VERSION}")
+  else()
+    set(OB_DATA_INSTALL_DIR "bin/data")
+  endif()
+endif()
+
+install(FILES ${to_install} DESTINATION ${OB_DATA_INSTALL_DIR})
 
 
 

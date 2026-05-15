@@ -628,7 +628,13 @@ add_subdirectory(include)
 add_subdirectory(data)
 add_subdirectory(doc)
 add_subdirectory(src)
-add_subdirectory(tools)
+
+# Command-line tools (obabel and friends) are built by default but can be
+# skipped for slim builds such as Python wheel packaging.
+option(BUILD_TOOLS "Build the command-line tools (obabel, obenergy, etc.)" ON)
+if(BUILD_TOOLS)
+  add_subdirectory(tools)
+endif()
 
 # Should we build the GUI? Default is yes on Linux or Windows, not Mac.
 if (APPLE OR NOT BUILD_SHARED)

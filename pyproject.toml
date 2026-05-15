@@ -1,0 +1,109 @@
+[build-system]
+requires = ["scikit-build-core>=0.10", "setuptools_scm>=8"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "openbabel"
+dynamic = ["version"]
+description = "Python interface to the Open Babel chemistry library"
+readme = "scripts/python/README.rst"
+license = "GPL-2.0-or-later"
+requires-python = ">=3.10"
+authors = [
+    { name = "Open Babel Developers", email = "openbabel-discuss@lists.sourceforge.net" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: C++",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Software Development :: Libraries",
+]
+
+[project.urls]
+Homepage = "https://openbabel.org/"
+Documentation = "https://open-babel.readthedocs.io/"
+Source = "https://github.com/openbabel/openbabel"
+Tracker = "https://github.com/openbabel/openbabel/issues"
+
+[tool.scikit-build]
+build-dir = "build/{wheel_tag}"
+build.verbose = true
+cmake.version = ">=3.16"
+
+# Force everything CMake installs into the python platlib so the SWIG
+# extension lands next to libopenbabel, its plugins, and the data tree.
+wheel.install-dir = "/platlib"
+
+# CMake options for a slim wheel build: Python bindings only, no other
+# language bindings, no GUI, no CLI tools, no tests.
+cmake.define.BUILD_SHARED = "ON"
+cmake.define.BUILD_TOOLS = "OFF"
+cmake.define.BUILD_GUI = "OFF"
+cmake.define.BUILD_DOCS = "OFF"
+cmake.define.ENABLE_TESTS = "OFF"
+cmake.define.WITH_INCHI = "ON"
+cmake.define.WITH_MAEPARSER = "OFF"
+cmake.define.WITH_COORDGEN = "OFF"
+cmake.define.WITH_JSON = "OFF"
+cmake.define.PYTHON_BINDINGS = "ON"
+cmake.define.RUN_SWIG = "ON"
+cmake.define.JAVA_BINDINGS = "OFF"
+cmake.define.PERL_BINDINGS = "OFF"
+cmake.define.RUBY_BINDINGS = "OFF"
+cmake.define.CSHARP_BINDINGS = "OFF"
+cmake.define.PHP_BINDINGS = "OFF"
+cmake.define.R_BINDINGS = "OFF"
+cmake.define.ENABLE_VERSIONED_FORMATS = "OFF"
+
+# Install layout so everything lands inside the openbabel/ Python package
+# at <site-packages>/openbabel/. wheel.install-dir handles the platlib
+# prefix; these are relative paths under it.
+cmake.define.BIN_INSTALL_DIR = "openbabel/_bin"
+cmake.define.LIB_INSTALL_DIR = "openbabel"
+cmake.define.OB_PLUGIN_INSTALL_DIR = "openbabel/plugins"
+cmake.define.OB_DATA_INSTALL_DIR = "openbabel/data"
+# scripts/CMakeLists.txt installs the Python bindings at
+# ${PYTHON_INSTDIR}/openbabel; leading "." keeps the path relative.
+cmake.define.PYTHON_INSTDIR = "."
+
+[tool.scikit-build.metadata.version]
+provider = "scikit_build_core.metadata.setuptools_scm"
+
+[tool.setuptools_scm]
+fallback_version = "3.1.1"
+
+[tool.cibuildwheel]
+build-verbosity = "1"
+test-command = "python {project}/scripts/github-actions/simple_test.py"
+# We can't currently test Mac arm64 builds on x64 runners, and musllinux
+# isn't a build target for the first pass.
+test-skip = "*_arm64 *-musllinux*"
+
+[tool.cibuildwheel.linux]
+manylinux-x86_64-image = "manylinux_2_28"
+manylinux-aarch64-image = "manylinux_2_28"
+before-all = "bash {project}/scripts/github-actions/before_all_linux.sh"
+repair-wheel-command = "bash {project}/scripts/github-actions/repair_wheel_linux.sh {wheel} {dest_dir}"
+
+[tool.cibuildwheel.macos]
+before-all = "bash {project}/scripts/github-actions/before_all_macos.sh"
+# Match the OS version of the runner so wheel tags line up with what
+# cibuildwheel expects. macos-15 (intel) and macos-latest (arm64) both
+# require at least 11.0 for the modern toolchain.
+environment = { MACOSX_DEPLOYMENT_TARGET = "11.0" }
+
+[tool.cibuildwheel.windows]
+before-all = "bash {project}/scripts/github-actions/before_all_windows.sh"
+# Hand CMake the vcpkg toolchain so eigen/libxml2/zlib are picked up
+# from the vcpkg install populated in before-all.
+environment = { CMAKE_ARGS = "-DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-windows" }
