@@ -206,5 +206,5 @@
 
 // use OBRandomMT if true, otherwise deprecated OBRandom
 #ifndef OB_USE_OBRANDOMMT
-#define OB_USE_OBRANDOMMT (OB_VERSION >= OB_VERSION_CHECK(4, 0, 0))
+#define OB_USE_OBRANDOMMT @OB_USE_OBRANDOMMT_DEFAULT@
 #endif
