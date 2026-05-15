@@ -1451,6 +1451,7 @@ namespace OpenBabel
               {
                 stat->closord[index] = bexpr;
                 stat->closure[index] = prev;
+                bexpr = nullptr;
               }
             else if( stat->closure[index] != prev )
               {
