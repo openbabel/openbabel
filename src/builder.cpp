@@ -1513,15 +1513,37 @@ namespace OpenBabel
         }
       }
 
-    // Perceive CisTransStereos
+    // Perceive CisTransStereos. With addToMol=false the caller owns the
+    // returned objects and must delete them before the vector goes out of
+    // scope.
     newcistrans = CisTransFrom3D(&mol, sgunits, false);
 
-    // Compare and correct if necessary
+    // Compare and correct if necessary. CisTransFrom3D() may return fewer
+    // entries than cistrans (e.g. for bonds whose geometry it can't classify),
+    // so match by the (begin,end) bond id instead of iterating in parallel.
+    std::map<OBStereo::Ref, OBCisTransStereo*> newByBond;
+    for (std::vector<OBCisTransStereo*>::iterator it = newcistrans.begin();
+         it != newcistrans.end(); ++it) {
+      OBCisTransStereo::Config c = (*it)->GetConfig();
+      OBBond *bnd = mol.GetBond(mol.GetAtomById(c.begin), mol.GetAtomById(c.end));
+      if (bnd != nullptr)
+        newByBond[bnd->GetId()] = *it;
+    }
+
     double newangle, angle;
     OBAtom *a, *b, *c, *d;
-    std::vector<OBCisTransStereo*>::iterator origct, newct;
-    for (origct=cistrans.begin(), newct=newcistrans.begin(); origct!=cistrans.end(); ++origct, ++newct) {
-      OBCisTransStereo::Config config = (*newct)->GetConfig(OBStereo::ShapeU);
+    for (std::vector<OBCisTransStereo*>::iterator origct = cistrans.begin();
+         origct != cistrans.end(); ++origct) {
+      OBCisTransStereo::Config origConfig = (*origct)->GetConfig();
+      OBBond *origBond = mol.GetBond(mol.GetAtomById(origConfig.begin),
+                                     mol.GetAtomById(origConfig.end));
+      if (origBond == nullptr)
+        continue;
+      std::map<OBStereo::Ref, OBCisTransStereo*>::iterator found =
+        newByBond.find(origBond->GetId());
+      if (found == newByBond.end())
+        continue; // CisTransFrom3D() did not produce an entry for this bond
+      OBCisTransStereo::Config config = found->second->GetConfig(OBStereo::ShapeU);
 
       if ((*origct)->GetConfig(OBStereo::ShapeU) != config) { // Wrong cis/trans stereochemistry
 
@@ -1544,6 +1566,11 @@ namespace OpenBabel
         mol.SetTorsion(a, b, c, d, newangle); // In radians
       }
     }
+
+    // Free the temporary stereos allocated by CisTransFrom3D(addToMol=false).
+    for (std::vector<OBCisTransStereo*>::iterator it = newcistrans.begin();
+         it != newcistrans.end(); ++it)
+      delete *it;
 
     return true; // was all the ring bond stereochemistry corrected?
   }
@@ -1647,8 +1674,11 @@ namespace OpenBabel
         }
       }
 
-    // Perceive TetrahedralStereos
+    // Perceive TetrahedralStereos. With addToMol=false the caller owns the
+    // returned objects. Track every allocation we receive so we can delete
+    // them before returning.
     newtetra = TetrahedralFrom3D(&mol, sgunits, false);
+    std::vector<OBTetrahedralStereo*> owned(newtetra.begin(), newtetra.end());
 
     // Identify any ring stereochemistry and whether it is right or wrong
     // - ring stereo involves 3 ring bonds, or 4 ring bonds but the
@@ -1658,9 +1688,25 @@ namespace OpenBabel
     typedef std::pair<OBStereo::Ref, bool> IsThisStereoRight;
     std::vector<IsThisStereoRight> ringstereo;
     std::vector<OBTetrahedralStereo*> nonringtetra, nonringnewtetra;
-    std::vector<OBTetrahedralStereo*>::iterator origth, newth;
-    for (origth=tetra.begin(), newth=newtetra.begin(); origth!=tetra.end(); ++origth, ++newth) {
-      OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
+
+    // TetrahedralFrom3D() can skip stereo units (e.g. centers with too few
+    // heavy-atom neighbors), so newtetra is not necessarily parallel to
+    // tetra. Index the perceived stereos by center id so each original
+    // stereo is matched against the one with the same center.
+    std::map<OBStereo::Ref, OBTetrahedralStereo*> newByCenter;
+    for (std::vector<OBTetrahedralStereo*>::iterator it = newtetra.begin();
+         it != newtetra.end(); ++it)
+      newByCenter[(*it)->GetConfig().center] = *it;
+
+    for (std::vector<OBTetrahedralStereo*>::iterator origth = tetra.begin();
+         origth != tetra.end(); ++origth) {
+      OBStereo::Ref centerId = (*origth)->GetConfig().center;
+      std::map<OBStereo::Ref, OBTetrahedralStereo*>::iterator found =
+        newByCenter.find(centerId);
+      if (found == newByCenter.end())
+        continue; // TetrahedralFrom3D() skipped this center; nothing to compare against
+      OBTetrahedralStereo *newth = found->second;
+      OBTetrahedralStereo::Config config = newth->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
 
       center = mol.GetAtomById(config.center);
       int ringbonds = 0;
@@ -1676,7 +1722,7 @@ namespace OpenBabel
       }
       else { // A non-ring stereocenter
         nonringtetra.push_back(*origth);
-        nonringnewtetra.push_back(*newth);
+        nonringnewtetra.push_back(newth);
       }
     }
 
@@ -1700,15 +1746,33 @@ namespace OpenBabel
       // Reperceive non-ring TetrahedralStereos if an inversion occurred
       if (inversion) {
         sgunits.clear();
-        for (origth = nonringtetra.begin(); origth != nonringtetra.end(); ++origth)
+        for (std::vector<OBTetrahedralStereo*>::iterator origth = nonringtetra.begin();
+             origth != nonringtetra.end(); ++origth)
           sgunits.push_back(OBStereoUnit(OBStereo::Tetrahedral, (*origth)->GetConfig().center));
         nonringnewtetra = TetrahedralFrom3D(&mol, sgunits, false);
+        // These are freshly allocated; the previous nonringnewtetra contents
+        // were aliases into newtetra and are still tracked by `owned`.
+        owned.insert(owned.end(), nonringnewtetra.begin(), nonringnewtetra.end());
       }
     }
 
-    // Correct the non-ring stereo
-    for (origth=nonringtetra.begin(), newth=nonringnewtetra.begin(); origth!=nonringtetra.end(); ++origth, ++newth) {
-      OBTetrahedralStereo::Config config = (*newth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
+    // Correct the non-ring stereo. TetrahedralFrom3D() may again return
+    // fewer entries than nonringtetra, so match by center id instead of
+    // iterating both vectors in parallel.
+    std::map<OBStereo::Ref, OBTetrahedralStereo*> nonringNewByCenter;
+    for (std::vector<OBTetrahedralStereo*>::iterator it = nonringnewtetra.begin();
+         it != nonringnewtetra.end(); ++it)
+      nonringNewByCenter[(*it)->GetConfig().center] = *it;
+
+    for (std::vector<OBTetrahedralStereo*>::iterator origth = nonringtetra.begin();
+         origth != nonringtetra.end(); ++origth) {
+      OBStereo::Ref centerId = (*origth)->GetConfig().center;
+      std::map<OBStereo::Ref, OBTetrahedralStereo*>::iterator found =
+        nonringNewByCenter.find(centerId);
+      if (found == nonringNewByCenter.end())
+        continue;
+      OBTetrahedralStereo *newth = found->second;
+      OBTetrahedralStereo::Config config = newth->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom);
       if ((*origth)->GetConfig(OBStereo::Clockwise, OBStereo::ViewFrom) != config) {
         // Wrong tetrahedral stereochemistry
 
@@ -1736,6 +1800,11 @@ namespace OpenBabel
         }
       }
     }
+
+    // Free the temporary stereos allocated by TetrahedralFrom3D(addToMol=false).
+    for (std::vector<OBTetrahedralStereo*>::iterator it = owned.begin();
+         it != owned.end(); ++it)
+      delete *it;
 
     return success; // did we fix all atoms, including ring stereo?
   }

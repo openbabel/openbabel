@@ -1032,7 +1032,8 @@ namespace OpenBabel
           obErrorLog.ThrowError(__FUNCTION__, buffer, obWarning);
           continue;
         }
-        bool IsHiso = anum == 1 && a->GetIsotope()>=2;
+        unsigned int iso = a->GetIsotope();
+        bool IsHiso = anum == 1 && (iso == 2 || iso == 3);
         if(UseImplicitH)
           {
             if (anum == 1 && !IsHiso && HasHvyAtoms)
@@ -1046,7 +1047,7 @@ namespace OpenBabel
               atomicCount[0] += a->GetImplicitHCount() + a->ExplicitHydrogenCount();
           }
         if (IsHiso)
-          anum = NumElements + a->GetIsotope() - 3; //pseudo AtNo for D, T
+          anum = NumElements + iso - 3; //pseudo AtNo for D, T
         atomicCount[anum - 1]++;
       }
 
