@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <cctype>
+#include <climits>
 #include <iomanip>
 #include <cstring>
 
@@ -164,6 +165,22 @@ namespace OpenBabel
     stringstream errorMsg;
     errorMsg << "Error: Unable to allocate" << ptr << endl;
     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+  }
+
+  // Accumulate a run of decimal digits at LexPtr into result, advancing LexPtr.
+  // Caller may pre-seed result with a leading digit already consumed.
+  // Returns false on int overflow; LexPtr then stops at the offending digit.
+  static bool ReadInt( char *&LexPtr, int &result )
+  {
+    while( isdigit(*LexPtr) )
+      {
+        int digit = *LexPtr - '0';
+        if( result > (INT_MAX - digit) / 10 )
+          return false;
+        result = result*10 + digit;
+        LexPtr++;
+      }
+    return true;
   }
 
   /*================================*/
@@ -649,8 +666,8 @@ namespace OpenBabel
           return nullptr;
 
         index = 0;
-        while( isdigit(*LexPtr) )
-          index = index*10 + ((*LexPtr++)-'0');
+        if( !ReadInt(LexPtr, index) )
+          return nullptr;
         if( index > 255 )
           {
             LexPtr--;
@@ -681,8 +698,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
           }
         else
           {
@@ -699,8 +716,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
           }
         else
           {
@@ -731,8 +748,8 @@ namespace OpenBabel
         if (isdigit(*LexPtr))
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_HYB,index);
           }
         else
@@ -741,8 +758,8 @@ namespace OpenBabel
       case('0'): case('1'): case('2'): case('3'): case('4'):
       case('5'): case('6'): case('7'): case('8'): case('9'):
         index = LexPtr[-1]-'0';
-        while( isdigit(*LexPtr) )
-          index = index*10 + ((*LexPtr++)-'0');
+        if( !ReadInt(LexPtr, index) )
+          return nullptr;
         return BuildAtomLeaf(AE_MASS,index);
 
       case('A'):
@@ -798,8 +815,8 @@ namespace OpenBabel
         else if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_DEGREE,index);
           }
         return BuildAtomLeaf(AE_DEGREE,1);
@@ -882,8 +899,8 @@ namespace OpenBabel
         else if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_HCOUNT,index);
           }
         return BuildAtomLeaf(AE_HCOUNT,1);
@@ -1006,8 +1023,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             if( index == 0 )
               return BuildAtomPred(AE_ACYCLIC);
             return BuildAtomLeaf(AE_RINGS,index);
@@ -1056,8 +1073,8 @@ namespace OpenBabel
         else if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             if (index == 0) // default to 1 (if no number present)
               index = 1;
             return BuildAtomLeaf(AE_CONNECT,index);
@@ -1100,8 +1117,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
           }
         else
           index = 1;
@@ -1115,8 +1132,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             if( index == 0 )
               return BuildAtomPred(AE_ACYCLIC);
             return BuildAtomLeaf(AE_SIZE,index);
@@ -1135,8 +1152,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_VALENCE,index);
           }
         return BuildAtomLeaf(AE_VALENCE,1);
@@ -1145,8 +1162,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_RINGCONNECT,index);
           }
         return BuildAtomPred(AE_CYCLIC);
@@ -1340,8 +1357,9 @@ namespace OpenBabel
     if(isdigit(*LexPtr))
       {
         vb = 0;
-        while( isdigit(*LexPtr) )
-          vb = vb*10 + ((*LexPtr++)-'0');
+        // On overflow, ReadInt leaves LexPtr at the offending digit; the
+        // outer parser then sees a non-']' and errors out via ParseSMARTSError.
+        ReadInt(LexPtr, vb);
       }
 
     return(vb);
@@ -1433,17 +1451,23 @@ namespace OpenBabel
               {
                 stat->closord[index] = bexpr;
                 stat->closure[index] = prev;
+                bexpr = nullptr;
               }
             else if( stat->closure[index] != prev )
               {
                 if( !bexpr ) {
                   if (!stat->closord[index]) {
                     bexpr = GenerateDefaultBond();
-                    FreeBondExpr(stat->closord[index]);
-                  } else
+                  } else {
                     bexpr = stat->closord[index];
-                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index]))
+                  }
+                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index])) {
                   return ParseSMARTSError(pat,bexpr);
+                } else if (stat->closord[index]) {
+                  // equivalent: discard the redundant opening bond expression
+                  FreeBondExpr(stat->closord[index]);
+                }
+                stat->closord[index] = nullptr;
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 stat->closure[index] = -1;
@@ -1473,11 +1497,16 @@ namespace OpenBabel
                 if( !bexpr ) {
                   if (!stat->closord[index]) {
                     bexpr = GenerateDefaultBond();
-                    FreeBondExpr(stat->closord[index]);
-                  } else
+                  } else {
                     bexpr = stat->closord[index];
-                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index]))
+                  }
+                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index])) {
                   return ParseSMARTSError(pat,bexpr);
+                } else if (stat->closord[index]) {
+                  // equivalent: discard the redundant opening bond expression
+                  FreeBondExpr(stat->closord[index]);
+                }
+                stat->closord[index] = nullptr;
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 pat->atom[prev].nbrs.push_back(stat->closure[index]);
