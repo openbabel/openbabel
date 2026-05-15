@@ -1609,8 +1609,10 @@ namespace OpenBabel
     ParseState stat;
     int i,flag;
 
-    for( i=0; i<100; i++ )
+    for( i=0; i<100; i++ ) {
       stat.closure[i] = -1;
+      stat.closord[i] = nullptr;
+    }
 
     result = SMARTSParser(result,&stat,-1,part);
 

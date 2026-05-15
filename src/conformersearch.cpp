@@ -324,6 +324,8 @@ namespace OpenBabel {
 
   OBConformerSearch::~OBConformerSearch()
   {
+    delete m_filter;
+    delete m_score;
   }
 
 

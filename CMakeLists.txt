@@ -26,6 +26,10 @@ set(BABEL_PATCH_VER 1)
 # This should be phased out in preference for just using the target name
 set(BABEL_LIBRARY openbabel)
 
+if(CMAKE_CXX_BYTE_ORDER STREQUAL "BIG_ENDIAN")
+  add_compile_definitions(WORDS_BIGENDIAN=1)
+endif()
+
 # This would be better handled with external projects...
 if(EMBED_OPENBABEL)
   set(BABEL_VERSION  "${BABEL_MAJ_VER}.${BABEL_MIN_VER}.${BABEL_PATCH_VER}" PARENT_SCOPE)
@@ -456,7 +460,7 @@ if(WITH_MAEPARSER)
 
     else()
 
-      set(MAEPARSER_VERSION "v1.2.3" CACHE STRING "Maeparser fallback version to download")
+      set(MAEPARSER_VERSION "v1.3.3" CACHE STRING "Maeparser fallback version to download")
 
       set(MAEPARSER_DIR "${openbabel_SOURCE_DIR}/external/maeparser-${MAEPARSER_VERSION}")
 
@@ -515,7 +519,8 @@ if(WITH_COORDGEN)
 
     else()
 
-      set(COORDGEN_VERSION "master" CACHE STRING "Coordgen fallback version to download")
+      # v3.0.2-10-gd20e735
+      set(COORDGEN_VERSION "d20e735d96480385b2e257522288004038a08cc9" CACHE STRING "Coordgen fallback version to download")
 
       set(COORDGEN_DIR "${openbabel_SOURCE_DIR}/external/coordgen-${COORDGEN_VERSION}")
 

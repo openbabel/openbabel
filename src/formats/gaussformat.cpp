@@ -497,7 +497,7 @@ namespace OpenBabel
 
     int i=0;
     bool no_symmetry=false;
-    char coords_type[25];
+    std::string coords_type;
 
     //Prescan file to find second instance of "orientation:"
     //This will be the kind of coords used in the chk/fchk file
@@ -514,8 +514,7 @@ namespace OpenBabel
             i++;
             tokenize (vs, buffer);
             // gotta check what types of orientation are present
-            strncpy (coords_type, vs[0].c_str(), 24);
-            strcat (coords_type, " orientation:");
+            coords_type = vs[0] + " orientation:";
           }
         if ((no_symmetry && i==1) || i==2)
            break;
@@ -594,7 +593,7 @@ namespace OpenBabel
 
             ifs.getline(buffer,BUFF_SIZE);
           }
-        else if (strstr(buffer, coords_type) != nullptr)
+        else if (strstr(buffer, coords_type.c_str()) != nullptr)
           {
             numTranslationVectors = 0; // ignore old translationVectors
             ifs.getline(buffer,BUFF_SIZE);      // ---------------

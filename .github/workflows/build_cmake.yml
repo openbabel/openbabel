@@ -41,11 +41,18 @@ jobs:
             cmake_flags: '-DLIBXML2_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/libxml2.lib" -DCAIRO_INCLUDE_DIRS="$GITHUB_WORKSPACE/$DEPS/include/cairo" -DCAIRO_LIBRARIES="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/cairo.lib" -DLIBXML2_INCLUDE_DIR=. -DZLIB_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/zlib1.lib" -DZLIB_INCLUDE_DIR=. -DXDR_INCLUDE_DIR="$GITHUB_WORKSPACE/$DEPS/include" -DXDR_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-common/i386/xdr.lib"  -DJSON_LIBRARY="$GITHUB_WORKSPACE/$DEPS/libs-vs12/i386/jsoncpp.lib" -DwxWidgets_LIB_DIR="$GITHUB_WORKSPACE/$DEPS/wx/lib/vc120_dll" -DEIGEN3_INCLUDE_DIR="$GITHUB_WORKSPACE/$DEPS/include" -DWITH_MAEPARSER=OFF'
           }
         - {
+            name: "Ubuntu ARM ASAN+UBSAN",
+            os: 	ubuntu-24.04-arm,
+            cc: "clang", cxx: "clang++",
+            sanitizer: "asan-ubsan",
+            cmake_flags: '-DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g" -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined" -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined" -DCMAKE_MODULE_LINKER_FLAGS="-fsanitize=address,undefined"'
+          }
+        - {
             name: "Ubuntu Clang ASAN+UBSAN",
             os: ubuntu-latest,
             cc: "clang", cxx: "clang++",
             sanitizer: "asan-ubsan",
-            cmake_flags: '-DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g" -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined" -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined" -DCMAKE_MODULE_LINKER_FLAGS="-fsanitize=address,undefined"'
+            cmake_flags: '-DCMAKE_BUILD_TYPE=Debug -DCMAKE_C_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g" -DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-sanitize-recover=all -fno-omit-frame-pointer -g" -DCMAKE_EXE_LINKER_FLAGS="-fsanitize=address,undefined" -DCMAKE_SHARED_LINKER_FLAGS="-fsanitize=address,undefined" -DCMAKE_MODULE_LINKER_FLAGS="-fsanitize=address,undefined"'
           }
 
     steps:

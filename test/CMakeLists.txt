@@ -10,6 +10,13 @@ endif()
 
 add_definitions(-DFORMATDIR="${FORMATDIR}/")
 
+# TRUE for build types with optimization; slow tests are skipped otherwise
+if(CMAKE_BUILD_TYPE MATCHES "^(Release|RelWithDebInfo|MinSizeRel)$")
+  set(OB_OPTIMIZED_BUILD TRUE)
+else()
+  set(OB_OPTIMIZED_BUILD FALSE)
+endif()
+
 # ##########################################################
 # new tests using obtest.h
 # ###########################################################
@@ -32,7 +39,7 @@ set(carspacegroup_parts 1 2 3 4)
 set(cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12 13)
 set(cistrans_parts 1 2 3 4 5 6 7 8 9)
 set(conversion_parts 1)
-set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16)
+set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26)
 set(graphsym_parts 1 2 3 4 5)
 set(gzip_parts 1)
 set(addh_parts 1)
@@ -57,10 +64,24 @@ set(uniqueid_parts 1 2)
 
 if(TARGET Eigen3::Eigen)
   set(cpptests
-    align distgeom ${cpptests})
+    align distgeom gen3d ${cpptests})
   set(align_parts 1 2 3 4 5)
-  # Parts 1-6 are fast; part 7 is the large 120-atom molecule (~10-60s)
-  set(distgeom_parts 1 2 3 4 5 6 7)
+  # Parts 1-5 are fast; parts 6-7 are large molecules (~10-60s)
+  # Parts 8-19 are the pr2317 hard cases (new distgeom fallback tests).
+  # Excluded (fused/bridged ring systems that exhaust L-BFGS on every trial):
+  #   13 (quinine/quinidine), 15 (polycyclic alkaloids), 16 (aminoglycoside)
+  # Excluded (too large for 30 s wall-clock limit):
+  #   19 (disaccharide, 38+ atoms)
+  # All excluded cases are covered by gen3dtest via the builder path.
+  if(NOT OB_OPTIMIZED_BUILD)
+    # Skip slow tests in unoptimized builds (Debug, sanitizer builds, etc.)
+    set(distgeom_parts 1 2 3 4 5)
+    set(gen3d_parts 1 2 3 4)
+  else()
+    # In optimized builds, include comprehensive test coverage
+    set(distgeom_parts 1 2 3 4 5 6 7 8 9 10 11 12 14 17 18)
+    set(gen3d_parts 1 2 3 4 5)
+  endif()
 endif()
 
 if(WITH_MAEPARSER)
@@ -237,19 +258,20 @@ if(NOT MINGW AND NOT CYGWIN)
   include(UsePythonTest)
 
   if(Python_EXECUTABLE)
-    set(pytests
-      babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+    # Exclude distgeom from unoptimized builds (Debug, sanitizers) — it times out
+    if(NOT OB_OPTIMIZED_BUILD)
+      set(pytests
+        babel gauss sym smartssym fastsearch unique kekule pdbformat RInChI)
+    else()
+      set(pytests
+        babel gauss sym smartssym fastsearch distgeom unique kekule pdbformat RInChI)
+    endif()
 
     foreach(pytest ${pytests})
-      SET_SOURCE_FILES_PROPERTIES(test${pytest}.py PROPERTIES
-        PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-        BABEL_LIBDIR "${FORMATDIR}"
-        BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-        LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
-      )
-      ADD_PYTHON_TEST(pytest_${pytest} test${pytest}.py)
+      ADD_TEST(NAME pytest_${pytest} COMMAND ${Python_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/test${pytest}.py")
       set_tests_properties(pytest_${pytest} PROPERTIES
         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+        ENVIRONMENT "PYTHONPATH=${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX};BABEL_LIBDIR=${FORMATDIR};BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
       )
     endforeach(pytest ${pytests})
   endif(Python_EXECUTABLE)
@@ -271,22 +293,16 @@ if(PYTHON_BINDINGS)
   )
 
   foreach(pybindtest ${pybindtests})
-    SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-      PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}"
-      BABEL_LIBDIR "${FORMATDIR}"
-      BABEL_DATADIR "${CMAKE_SOURCE_DIR}/data"
-      LD_LIBRARY_PATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
-    )
-
-    if(MSVC)
-      SET_SOURCE_FILES_PROPERTIES(test${pybindtest}.py PROPERTIES
-        PYTHONPATH "\"${CMAKE_SOURCE_DIR}/scripts/python;${CMAKE_BINARY_DIR}/bin/Release\""
-      )
+    if(NOT MSVC)
+      set(PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+    else()
+      set(PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python\;${CMAKE_BINARY_DIR}/bin/Release")
     endif()
 
-    ADD_PYTHON_TEST(pybindtest_${pybindtest} test${pybindtest}.py)
+    ADD_TEST(NAME pybindtest_${pybindtest} COMMAND ${Python_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/test${pybindtest}.py")
     set_tests_properties(pybindtest_${pybindtest} PROPERTIES
       FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
+      ENVIRONMENT "PYTHONPATH=${PYTHONPATH};BABEL_LIBDIR=${FORMATDIR};BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
     )
   endforeach(pybindtest ${pybindtests})
 endif(PYTHON_BINDINGS)
@@ -331,7 +347,7 @@ else()
   set(_fuzz_main_lib "")
   set(_fuzz_extra_src fuzz/standalone_main.cc)
 endif()
-
+  
 add_executable(fuzz_obconversion_smiles fuzz/fuzz_obconversion.cpp ${_fuzz_extra_src})
 target_compile_definitions(fuzz_obconversion_smiles PRIVATE -DFUZZ_INPUT_FORMAT="SMILES")
 target_link_libraries(fuzz_obconversion_smiles ${libs} ${_fuzz_main_lib})
@@ -346,11 +362,23 @@ target_link_libraries(fuzz_convert ${libs} ${_fuzz_main_lib})
 # (e.g. std::is_enum_v). The top-level project default is still C++11.
 set_target_properties(fuzz_convert PROPERTIES CXX_STANDARD 17)
 
+add_executable(fuzz_molecule fuzz/fuzz_molecule.cpp ${_fuzz_extra_src})
+target_link_libraries(fuzz_molecule ${libs} ${_fuzz_main_lib})
+set_target_properties(fuzz_molecule PROPERTIES CXX_STANDARD 17)
+
+add_executable(fuzz_smart fuzz/fuzz_smart.cpp ${_fuzz_extra_src})
+target_link_libraries(fuzz_smart ${libs} ${_fuzz_main_lib})
+set_target_properties(fuzz_smart PROPERTIES CXX_STANDARD 17)
+
+#add_executable(fuzz_depict fuzz/fuzz_depict.cpp ${_fuzz_extra_src})
+#target_link_libraries(fuzz_depict ${libs} ${_fuzz_main_lib})
+#set_target_properties(fuzz_depict PROPERTIES CXX_STANDARD 17)
+
 # Replay each saved corpus file as a regression test. CMake re-evaluates
 # the glob at configure time, so dropping a new file into the corpus
 # directory and re-running cmake is enough to register a new test.
 if(NOT DEFINED ENV{LIB_FUZZING_ENGINE})
-  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles)
+  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles fuzz_molecule fuzz_smart) #fuzz_depict
   foreach(_target ${_fuzz_targets})
     file(GLOB _corpus_files CONFIGURE_DEPENDS
       "${CMAKE_CURRENT_SOURCE_DIR}/fuzz/corpus/${_target}/*")

@@ -324,6 +324,7 @@ namespace OpenBabel {
        */
       void SetFilter(OBConformerFilter *filter)
       {
+        delete m_filter;
         m_filter = filter;
       }
       /**
@@ -337,6 +338,7 @@ namespace OpenBabel {
        */
       void SetScore(OBConformerScore *score)
       {
+        delete m_score;
         m_score = score;
       }
 
