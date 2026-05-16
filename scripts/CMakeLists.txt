@@ -97,10 +97,13 @@ if (DO_PYTHON_BINDINGS)
       # Python extension modules for Unix-like wheels should resolve Python
       # symbols from the running interpreter.  Linking libpython can leave a
       # non-portable NEEDED entry for the build interpreter's libpython.
+      # Open Babel enables --no-undefined globally on Linux, so explicitly
+      # allow unresolved Python API symbols for this extension module.
+      set(PYTHON_EXTENSION_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
       if(BINDINGS_ONLY)
-        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY})
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY} ${PYTHON_EXTENSION_EXTRA_LINK_FLAGS})
       else()
-        target_link_libraries(bindings_python ${BABEL_LIBRARY})
+        target_link_libraries(bindings_python ${BABEL_LIBRARY} ${PYTHON_EXTENSION_EXTRA_LINK_FLAGS})
       endif()
     else()
       # Link against Python library on non-wheel Linux and Windows
