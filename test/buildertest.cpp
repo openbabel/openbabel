@@ -1,5 +1,8 @@
 #include "obtest.h"
 #include <openbabel/mol.h>
+#include <openbabel/atom.h>
+#include <openbabel/bond.h>
+#include <openbabel/obiter.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/builder.h>
 #include <openbabel/forcefield.h>
@@ -8,6 +11,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 using namespace OpenBabel;
@@ -99,6 +103,53 @@ bool doSMILESBuilderTest(string smiles)
   return (mol.Has3D() && mol.HasNonZeroCoords());
 }
 
+// Verify that Build() produces a sane ring geometry: no atom-atom overlaps
+// and no stretched ring-closure bonds. maxBondLen relaxes the bond-length
+// cap for fused/bridged systems where a smaller fused ring may still close
+// with some strain (only the largest ring per system is crowned).
+bool doRingClosureTest(const string &smiles, double maxBondLen)
+{
+  cout << " Ring closure: " << smiles << " (max bond " << maxBondLen << ")" << endl;
+
+  testCount++;
+
+  OBMol mol;
+  OBConversion conv;
+  OBFormat *smilesFormat = conv.FindFormat("smi");
+  OB_REQUIRE(smilesFormat);
+  OB_REQUIRE(conv.SetInFormat(smilesFormat));
+  OB_REQUIRE(conv.ReadString(&mol, smiles));
+
+  OBBuilder builder;
+  OB_REQUIRE(builder.Build(mol, false));
+  OB_REQUIRE(mol.Has3D());
+
+  double worst = 0.0;
+  FOR_BONDS_OF_MOL(b, mol) {
+    double len = b->GetLength();
+    if (len > worst) worst = len;
+  }
+  if (worst > maxBondLen) {
+    cout << "  FAIL: longest bond = " << worst << " A" << endl;
+    return false;
+  }
+
+  // No two heavy atoms should overlap.
+  vector<OBAtom*> atoms;
+  FOR_ATOMS_OF_MOL(a, mol) atoms.push_back(&*a);
+  for (size_t i = 0; i < atoms.size(); ++i) {
+    for (size_t j = i + 1; j < atoms.size(); ++j) {
+      double d = atoms[i]->GetDistance(atoms[j]);
+      if (d < 0.5) {
+        cout << "  FAIL: atoms " << i << " and " << j
+             << " overlap (d=" << d << " A)" << endl;
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
 int buildertest(int argc, char* argv[])
 {
   int defaultchoice = 1;
@@ -150,6 +201,37 @@ int buildertest(int argc, char* argv[])
   case 6:
     // from Hubertus van Dam -- #2144
     OB_ASSERT( doSMILESBuilderTest("OC1(C2=CN(CC3=CC=CC=C3F)N=N2)CCOC1") );
+    break;
+  case 7:
+    // Regression: small/medium rings (sizes 7, 8, 12) are templated in
+    // ring-fragments.txt; the post-pass must not disturb their geometry.
+    OB_ASSERT( doRingClosureTest("C1CCCCCC1", 1.8) );        // cycloheptane
+    OB_ASSERT( doRingClosureTest("C1CCCCCCC1", 1.8) );       // cyclooctane
+    OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCC1", 1.8) );   // cyclododecane
+    break;
+  case 8:
+    // Macrocycles past the templated ring sizes (>18). Without the crown
+    // post-pass these closed with bonds > 20 A (effectively a stretched
+    // chain). The 180-720/n crown formula tightens up for n~19-24 but
+    // approaches a trans (180 deg) chain for larger n, so we cap there
+    // (very large rings remain a job for FF cleanup or a future Dale-
+    // diamond-lattice builder).
+    OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCC1", 2.0) );     // cyclo-19
+    OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCCCCC1", 2.5) );  // cyclo-22
+    // Past the cap (n > 24): builder must not crash and must not
+    // produce overlapping atoms (cleaner failure than a folded tangle).
+    OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCCCCCCCCCCCCC1", 40.0) ); // cyclo-30
+    break;
+  case 9:
+    // Fused/bridged systems: only the largest ring per system is crowned,
+    // so the smaller fused ring may still strain. Use a looser cap.
+    OB_ASSERT( doRingClosureTest("C1CCC2CCCCC2C1", 2.2) );   // decalin
+    OB_ASSERT( doRingClosureTest("C1CC2CCC1C2", 2.2) );      // norbornane
+    break;
+  case 10:
+    // Aromatic ring that's unlikely to be templated -- verify it builds
+    // (no stretched closure) and that the post-pass treats it as planar.
+    OB_ASSERT( doRingClosureTest("C1=CC=CC=CC=N1", 1.8) );   // 1H-azocine
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

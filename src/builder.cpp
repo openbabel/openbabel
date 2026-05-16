@@ -26,6 +26,7 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/ring.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 #include <openbabel/obconversion.h>
@@ -1305,6 +1306,119 @@ namespace OpenBabel
         workMol.AddBond(*bond);
       }
 
+    }
+
+    // Crown post-pass: rings not covered by a fragment template were placed
+    // as a linear chain by the DFS loop above, which leaves a stretched
+    // closure bond when bonds are restored below. Fold each such ring into a
+    // crown/chair by setting torsions along its path. The DFS adds only
+    // spanning-tree bonds, so exactly one ring-path bond (the back-edge) is
+    // missing in workMol; rotating the path so that bond is last keeps the
+    // SetTorsion FindChildren walk from crossing back to the start atom.
+    if (!mol.HasSSSRPerceived())
+      mol.FindSSSR();
+    vector<OBRing*> rlist = mol.GetSSSR();
+    if (!rlist.empty()) {
+      // Group rings into ring systems (rings sharing any atom).
+      vector<int> system(rlist.size(), -1);
+      int nsystems = 0;
+      for (size_t i = 0; i < rlist.size(); ++i) {
+        if (system[i] != -1) continue;
+        system[i] = nsystems;
+        vector<size_t> queue;
+        queue.push_back(i);
+        while (!queue.empty()) {
+          size_t r = queue.back();
+          queue.pop_back();
+          for (size_t s = 0; s < rlist.size(); ++s) {
+            if (system[s] != -1) continue;
+            OBBitVec common = rlist[r]->_pathset & rlist[s]->_pathset;
+            if (!common.IsEmpty()) {
+              system[s] = nsystems;
+              queue.push_back(s);
+            }
+          }
+        }
+        ++nsystems;
+      }
+
+      for (int sys = 0; sys < nsystems; ++sys) {
+        // Skip if any atom in the system was already placed by a fragment.
+        bool covered = false;
+        vector<size_t> members;
+        for (size_t i = 0; i < rlist.size() && !covered; ++i) {
+          if (system[i] != sys) continue;
+          members.push_back(i);
+          for (vector<int>::iterator it = rlist[i]->_path.begin();
+               it != rlist[i]->_path.end(); ++it) {
+            if (vfrag.BitIsSet(*it)) { covered = true; break; }
+          }
+        }
+        if (covered) continue;
+
+        // Order candidates largest-first so we crown the dominant ring.
+        std::sort(members.begin(), members.end(),
+                  [&rlist](size_t a, size_t b) {
+                    return rlist[a]->_path.size() > rlist[b]->_path.size();
+                  });
+
+        for (size_t idx : members) {
+          OBRing *ring = rlist[idx];
+          const vector<int> &path = ring->_path;
+          int n = static_cast<int>(path.size());
+          if (n <= 3) break;
+
+          // Locate the back-edge (the unique missing path bond in workMol).
+          int backEdge = -1;
+          int missing = 0;
+          for (int i = 0; i < n; ++i) {
+            int j = (i + 1) % n;
+            if (workMol.GetBond(path[i], path[j]) == nullptr) {
+              backEdge = i;
+              if (++missing > 1) break;
+            }
+          }
+          // If the ring isn't a clean spanning-tree path (e.g. two back-edges
+          // landed in this ring of a fused system), try the next candidate.
+          if (missing != 1) continue;
+
+          // Rotate path so the missing bond sits between [n-1] and [0].
+          vector<int> walk(n);
+          int start = (backEdge + 1) % n;
+          for (int i = 0; i < n; ++i)
+            walk[i] = path[(start + i) % n];
+
+          // Aromatic or all-sp2 rings prefer planar geometry; otherwise
+          // 180 - 720/n gives the ideal chair (n=6 -> 60) or crown.
+          bool planar = ring->IsAromatic();
+          if (!planar) {
+            planar = true;
+            for (int v : walk) {
+              if (workMol.GetAtom(v)->GetHyb() != 2) { planar = false; break; }
+            }
+          }
+          // The crown formula asymptotes to trans (180 deg) as n grows;
+          // for non-planar rings beyond ~n=24 it both fails to close and
+          // can fold atoms onto themselves at unpredictable n. Skip those
+          // here so we leave the open chain that the DFS placed -- ugly
+          // closure bond but no overlaps, which FF cleanup can recover
+          // from far more reliably than a tangle.
+          if (!planar && n > 24) break;
+          double torsion = planar ? 0.0
+                                  : DEG_TO_RAD * (180.0 - 720.0 / double(n));
+
+          double sign = 1.0;
+          for (int i = 3; i < n; ++i) {
+            workMol.SetTorsion(workMol.GetAtom(walk[i - 3]),
+                               workMol.GetAtom(walk[i - 2]),
+                               workMol.GetAtom(walk[i - 1]),
+                               workMol.GetAtom(walk[i]),
+                               sign * torsion);
+            sign = -sign;
+          }
+          break; // one ring per system
+        }
+      }
     }
 
     // Make sure we keep the bond indexes the same
