@@ -98,6 +98,7 @@ namespace OpenBabel
     stringstream errorMsg;
 
     if (!ifs || ifs.peek() == EOF) {
+      pmol->EndModify();
       return false; // Trying to read past end of the file
     }
 
@@ -105,6 +106,7 @@ namespace OpenBabel
       errorMsg << "Problems reading a Tinker file: "
                << "Cannot read the first line!";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      pmol->EndModify();
       return false;
     }
 
@@ -115,6 +117,7 @@ namespace OpenBabel
       errorMsg << "Problems reading a Tinker file: "
                << "The first line is empty!";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      pmol->EndModify();
       return false;
     } else if (vs.size() == 1) {
       title = pConv->GetTitle();
@@ -129,6 +132,7 @@ namespace OpenBabel
                << "There are no atoms in the file or the first line is"
                << " incorrectly written.";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      pmol->EndModify();
       return false;
     }
     pmol->ReserveAtoms(natoms);
@@ -141,12 +145,16 @@ namespace OpenBabel
 
     for (int i = 1; i <= natoms; ++i)
     {
-        if (!ifs.getline(buffer,BUFF_SIZE))
+        if (!ifs.getline(buffer,BUFF_SIZE)) {
+            pmol->EndModify();
             return false;
+        }
         tokenize(vs,buffer);
         // e.g. "2  C      2.476285    0.121331   -0.001070     2     1     3    14"
-        if (vs.size() < 5)
+        if (vs.size() < 5) {
+            pmol->EndModify();
             return false;
+        }
 
         atom = pmol->NewAtom();
         x = stof(vs[2]);
