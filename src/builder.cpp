@@ -1320,21 +1320,21 @@ namespace OpenBabel
     vector<OBRing*> rlist = mol.GetSSSR();
     if (!rlist.empty()) {
       // Group rings into ring systems (rings sharing any atom).
-      vector<int> system(rlist.size(), -1);
+      vector<int> ringSystem(rlist.size(), -1);
       int nsystems = 0;
       for (size_t i = 0; i < rlist.size(); ++i) {
-        if (system[i] != -1) continue;
-        system[i] = nsystems;
+        if (ringSystem[i] != -1) continue;
+        ringSystem[i] = nsystems;
         vector<size_t> queue;
         queue.push_back(i);
         while (!queue.empty()) {
           size_t r = queue.back();
           queue.pop_back();
           for (size_t s = 0; s < rlist.size(); ++s) {
-            if (system[s] != -1) continue;
+            if (ringSystem[s] != -1) continue;
             OBBitVec common = rlist[r]->_pathset & rlist[s]->_pathset;
             if (!common.IsEmpty()) {
-              system[s] = nsystems;
+              ringSystem[s] = nsystems;
               queue.push_back(s);
             }
           }
@@ -1347,11 +1347,13 @@ namespace OpenBabel
         bool covered = false;
         vector<size_t> members;
         for (size_t i = 0; i < rlist.size() && !covered; ++i) {
-          if (system[i] != sys) continue;
+          if (ringSystem[i] != sys) continue;
           members.push_back(i);
-          for (vector<int>::iterator it = rlist[i]->_path.begin();
-               it != rlist[i]->_path.end(); ++it) {
-            if (vfrag.BitIsSet(*it)) { covered = true; break; }
+          for (int idx : rlist[i]->_path) {
+            if (vfrag.BitIsSet(idx)) {
+              covered = true;
+              break;
+            }
           }
         }
         if (covered) continue;
@@ -1366,7 +1368,7 @@ namespace OpenBabel
           OBRing *ring = rlist[idx];
           const vector<int> &path = ring->_path;
           int n = static_cast<int>(path.size());
-          if (n <= 3) break;
+          if (n <= 3) continue;
 
           // Locate the back-edge (the unique missing path bond in workMol).
           int backEdge = -1;
@@ -1384,9 +1386,8 @@ namespace OpenBabel
 
           // Rotate path so the missing bond sits between [n-1] and [0].
           vector<int> walk(n);
-          int start = (backEdge + 1) % n;
           for (int i = 0; i < n; ++i)
-            walk[i] = path[(start + i) % n];
+            walk[i] = path[(backEdge + 1 + i) % n];
 
           // Aromatic or all-sp2 rings prefer planar geometry; otherwise
           // 180 - 720/n gives the ideal chair (n=6 -> 60) or crown.
@@ -1394,7 +1395,10 @@ namespace OpenBabel
           if (!planar) {
             planar = true;
             for (int v : walk) {
-              if (workMol.GetAtom(v)->GetHyb() != 2) { planar = false; break; }
+              if (workMol.GetAtom(v)->GetHyb() != 2) {
+                planar = false;
+                break;
+              }
             }
           }
           // The crown formula asymptotes to trans (180 deg) as n grows;
@@ -1403,7 +1407,7 @@ namespace OpenBabel
           // here so we leave the open chain that the DFS placed -- ugly
           // closure bond but no overlaps, which FF cleanup can recover
           // from far more reliably than a tangle.
-          if (!planar && n > 24) break;
+          if (!planar && n > 24) continue;
           double torsion = planar ? 0.0
                                   : DEG_TO_RAD * (180.0 - 720.0 / double(n));
 
