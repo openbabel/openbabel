@@ -79,6 +79,7 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t *Data, size_t Size) {
                     uint8_t min_steps = fdp.ConsumeIntegralInRange<uint8_t>(0, 10);
                     if (min_steps > 0) {
                         ff->SteepestDescent(min_steps);
+                        ff->ConjugateGradients(min_steps);
                     }
                 }
             }
