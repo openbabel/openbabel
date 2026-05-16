@@ -2036,6 +2036,11 @@ namespace OpenBabel
     if (atom->GetAtomicNum() != OBElements::Hydrogen)
       return false;
 
+    // OBAngleData/OBTorsionData cache raw OBAtom* pointers; drop them now so
+    // a later FOR_ANGLES_OF_MOL doesn't read freed memory.
+    DeleteData(OBGenericDataType::AngleData);
+    DeleteData(OBGenericDataType::TorsionData);
+
     unsigned atomidx = atom->GetIdx();
 
     //find bonds to delete
@@ -2440,6 +2445,11 @@ namespace OpenBabel
     if (atom->GetAtomicNum() == OBElements::Hydrogen)
       return(DeleteHydrogen(atom));
 
+    // OBAngleData/OBTorsionData cache raw OBAtom* pointers; drop them now so
+    // a later FOR_ANGLES_OF_MOL doesn't read freed memory.
+    DeleteData(OBGenericDataType::AngleData);
+    DeleteData(OBGenericDataType::TorsionData);
+
     BeginModify();
     //don't need to do anything with coordinates b/c
     //BeginModify() blows away coordinates
@@ -2497,6 +2507,11 @@ namespace OpenBabel
 
   bool OBMol::DeleteBond(OBBond *bond, bool destroyBond)
   {
+    // Cached angles/torsions are derived from bond connectivity. They aren't
+    // a UAF risk here, but they no longer match the topology — invalidate.
+    DeleteData(OBGenericDataType::AngleData);
+    DeleteData(OBGenericDataType::TorsionData);
+
     BeginModify();
 
     (bond->GetBeginAtom())->DeleteBond(bond);
