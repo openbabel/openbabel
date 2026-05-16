@@ -203,3 +203,8 @@
     #define TIME_WITH_SYS_TIME 0
   #endif
 #endif
+
+// use OBRandomMT if true, otherwise deprecated OBRandom
+#ifndef OB_USE_OBRANDOMMT
+#define OB_USE_OBRANDOMMT @OB_USE_OBRANDOMMT_DEFAULT@
+#endif

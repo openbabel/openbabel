@@ -370,6 +370,15 @@ endif(${CMAKE_CXX_COMPILER_ID} MATCHES Intel AND UNIX)
 option(ENABLE_OPENMP
     "Enable support for OpenMP compilation of forcefield code"
     OFF)
+
+option(USE_RANDOMMT
+    "Use the modern OBRandomMT (Mersenne Twister) RNG instead of the deprecated OBRandom"
+    ON)
+if(USE_RANDOMMT)
+  set(OB_USE_OBRANDOMMT_DEFAULT 1)
+else()
+  set(OB_USE_OBRANDOMMT_DEFAULT 0)
+endif()
 if(ENABLE_OPENMP)
   find_package(OpenMP)
   if(OPENMP_FOUND)

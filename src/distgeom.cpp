@@ -1052,13 +1052,17 @@ namespace OpenBabel {
     unsigned int N = _mol.NumAtoms();
     // random distance matrix
     Eigen::MatrixXd distMat = Eigen::MatrixXd::Zero(N, N);
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     for (size_t i=0; i<N; ++i) {
       for(size_t j=0; j<i; ++j) {
         double lb = _d->GetLowerBounds(i, j);
         double ub = _d->GetUpperBounds(i, j);
-        double v = generator.NextFloat() * (ub - lb) + lb;
+        double v = generator.UniformReal(lb, ub);
         distMat(i, j) = v;
         distMat(j, i) = v;
       }
@@ -1153,8 +1157,12 @@ namespace OpenBabel {
     _mol.AddConformer(confCoord);
     _mol.SetConformer(_mol.NumConformers());
 
-    OBRandom generator(true);
-    generator.TimeSeed();
+#if !OB_USE_OBRANDOMMT
+    OBRandom generator(true); // Use system rand() functions
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
 
     _d->success = false;
     unsigned int maxIter = 10 * _mol.NumAtoms();

@@ -36,8 +36,6 @@ GNU General Public License for more details.
 
 namespace OpenBabel
 {
-  class OBRandom; // class introduction in rand.h
-
   // class introduction in matrix3x3.cpp
   class OBAPI matrix3x3
     {
