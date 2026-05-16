@@ -147,6 +147,7 @@ namespace OpenBabel
     // Conformer data
     bool newMol = false;
     double* confCoords = nullptr;
+    std::vector<double*> vconf; // accumulated frames; ownership handed to SetConformers
 
     // Unit cell
     bool unitCell = false;
@@ -226,6 +227,13 @@ namespace OpenBabel
                         confCoords[i*3+1] = y;
                         confCoords[i*3+2] = z;
                     }
+                    // PR #2538: keep atom positions in sync with the latest
+                    // frame so EndModify() doesn't snapshot a stale geometry.
+                    if (i < (int)mol.NumAtoms()) {
+                        OBAtom *a = mol.GetAtom(i+1);
+                        if (a != nullptr)
+                            a->SetVector(x,y,z);
+                    }
                     i++;
                 } else if (atom != nullptr) {
                     atom->SetVector(x,y,z); //set atom coordinates
@@ -242,13 +250,13 @@ namespace OpenBabel
 //                    cout << confCoords[j*3] << " " << confCoords[j*3+1] << " " << confCoords[j*3+2] << endl;
 //                }
 
-                // Only attach the conformer if it is fully populated and its
-                // size matches the molecule. AddConformer takes ownership;
-                // otherwise free locally to avoid downstream OOB reads.
+                // PR #2538: collect every optimization frame so SetConformers
+                // (after EndModify) can install the complete trajectory.
+                // CVE-2022-46289/46290: only push fully populated frames whose
+                // size matches the molecule; otherwise free locally.
                 if (confCoords != nullptr && i == nAtoms
                     && (int)mol.NumAtoms() == nAtoms) {
-                    mol.AddConformer(confCoords);
-                    mol.SetConformer(mol.NumConformers());
+                    vconf.push_back(confCoords);
                 } else {
                     delete[] confCoords;
                 }
@@ -666,6 +674,14 @@ namespace OpenBabel
 
     mol.EndModify();
 
+    // PR #2538: EndModify() pushes the current atom positions as an extra
+    // conformer (mol.cpp:1561). Replace _vconf with the frames collected
+    // during the geometry optimization so callers see every step rather
+    // than only the final snapshot. SetConformers frees the prior entries.
+    if (!vconf.empty()) {
+        mol.SetConformers(vconf);
+        mol.SetConformer(mol.NumConformers() - 1);
+    }
 
 //    cout << "num conformers = " << mol.NumConformers() << endl;
     //cout << "Atom index 0 = " << mol.GetAtom(0)->GetX() << " " << mol.GetAtom(0)->GetY() << " " << mol.GetAtom(0)->GetZ() << endl;
