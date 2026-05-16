@@ -640,7 +640,12 @@ if(WITH_JSON)
   endif()
 endif()
 
-find_package(Cairo)
+if(NOT BUILD_BY_PIP OR BUILD_WHEEL_CAIRO)
+  find_package(Cairo)
+else()
+  set(CAIRO_FOUND FALSE)
+  message(STATUS "Skipping Cairo for wheel builds. Set BUILD_WHEEL_CAIRO=ON to enable PNG output support.")
+endif()
 if(CAIRO_FOUND)
   message(STATUS "Cairo found. PNG output will be supported.")
 else(CAIRO_FOUND)
@@ -723,6 +728,7 @@ option(PYTHON_BINDINGS "Build Python bindings" OFF)
 # building through pip/cibuildwheel. Normal CMake installs keep using the
 # interpreter platlib path.
 option(BUILD_BY_PIP "Install Python bindings relative to CMAKE_INSTALL_PREFIX for wheel builds" OFF)
+option(BUILD_WHEEL_CAIRO "Enable Cairo-backed PNG depiction support in wheel builds" OFF)
 
 # Should Ruby bindings be built?
 option(RUBY_BINDINGS "Build Ruby bindings" OFF)
