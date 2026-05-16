@@ -400,10 +400,10 @@ if(UNIX AND BUILD_SHARED)
     if(APPLE)
       set(CMAKE_INSTALL_NAME_DIR "@rpath")
       set(CMAKE_INSTALL_RPATH
-        "@loader_path;@loader_path/lib;@loader_path/../lib;@loader_path/../../lib")
+        "@loader_path;@loader_path/lib;@loader_path/../lib;@loader_path/..;@loader_path/../..")
     else()
       set(CMAKE_INSTALL_RPATH
-        "$ORIGIN;$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN/../../lib")
+        "$ORIGIN;$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN/..;$ORIGIN/../..")
     endif()
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
     set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
