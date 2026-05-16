@@ -78,8 +78,17 @@ if (DO_PYTHON_BINDINGS)
       else()
         target_link_libraries(bindings_python ${BABEL_LIBRARY})
       endif()
+    elseif(BUILD_BY_PIP AND NOT WIN32)
+      # Python extension modules for Unix-like wheels should resolve Python
+      # symbols from the running interpreter.  Linking libpython can leave a
+      # non-portable NEEDED entry for the build interpreter's libpython.
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY})
+      else()
+        target_link_libraries(bindings_python ${BABEL_LIBRARY})
+      endif()
     else()
-      # Link against Python library on Linux and Windows
+      # Link against Python library on non-wheel Linux and Windows
       if(BINDINGS_ONLY)
         target_link_libraries(bindings_python ${Python_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
       else()

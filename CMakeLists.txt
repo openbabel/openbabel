@@ -390,7 +390,25 @@ endif()
 
 # Some rpath handling for Linux and Mac
 if(UNIX AND BUILD_SHARED)
-  if(APPLE)
+  if(BUILD_BY_PIP)
+    # Wheels are installed under a relocatable package directory
+    # (openbabel/).  Avoid embedding the temporary scikit-build install
+    # prefix, otherwise auditwheel/delocate cannot find libraries after the
+    # wheel is unpacked for repair.  The different depths cover the Python
+    # extension (openbabel/), command-line tools (openbabel/bin), libraries
+    # (openbabel/lib), and plugins (openbabel/lib/openbabel/<version>).
+    if(APPLE)
+      set(CMAKE_INSTALL_NAME_DIR "@rpath")
+      set(CMAKE_INSTALL_RPATH
+        "@loader_path;@loader_path/lib;@loader_path/../lib;@loader_path/../../lib")
+    else()
+      set(CMAKE_INSTALL_RPATH
+        "$ORIGIN;$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN/../../lib")
+    endif()
+    set(CMAKE_SKIP_BUILD_RPATH FALSE)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
+  elseif(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
