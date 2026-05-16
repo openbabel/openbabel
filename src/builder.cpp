@@ -1319,7 +1319,9 @@ namespace OpenBabel
       mol.FindSSSR();
     vector<OBRing*> rlist = mol.GetSSSR();
     if (!rlist.empty()) {
-      // Group rings into ring systems (rings sharing any atom).
+      // Group rings into fused systems (sharing at least one bond, i.e. two
+      // or more atoms). Spiro rings share a single atom and must stay in
+      // separate systems so each gets its own crown pass below.
       vector<int> ringSystem(rlist.size(), -1);
       int nsystems = 0;
       for (size_t i = 0; i < rlist.size(); ++i) {
@@ -1333,7 +1335,7 @@ namespace OpenBabel
           for (size_t s = 0; s < rlist.size(); ++s) {
             if (ringSystem[s] != -1) continue;
             OBBitVec common = rlist[r]->_pathset & rlist[s]->_pathset;
-            if (!common.IsEmpty()) {
+            if (common.CountBits() >= 2) {
               ringSystem[s] = nsystems;
               queue.push_back(s);
             }
