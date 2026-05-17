@@ -230,13 +230,13 @@ int main(int argc, char **argv)
 	 "obrms: Computes the heavy-atom RMSD of identical compound structures.\n"
 	  "Usage: obrms reference_file [test_file]\n"
 	  "Options:\n"
-    "\t -o, --out        re-oriented test structure output\n"
-	  "\t -f, --firstonly  use only the first structure in the reference file\n"
-	  "\t -m, --minimize   compute minimum RMSD\n"
-	  "\t -x, --cross      compute all n^2 RMSDs between molecules of reference file\n"
-	  "\t -s, --separate   separate reference file into constituent molecules and report best RMSD\n"
-	  "\t -t, --timeout   give up on matching after specified number of seconds\n"
-	  "\t -h, --help       help message\n";
+	  "\t -o file, --out  file       re-oriented test structure output\n"
+	  "\t -f,      --firstonly       use only the first structure in the reference file\n"
+	  "\t -m,      --minimize        compute minimum RMSD\n"
+	  "\t -x,      --cross           compute all n^2 RMSDs between molecules of reference file\n"
+	  "\t -s,      --separate        separate reference file into constituent molecules and report best RMSD\n"
+	  "\t -t t,    --timeout t       give up on matching after specified number of seconds\n"
+	  "\t -h,      --help            help message\n";
 	struct option long_options[] = {
 	    {"firstonly", no_argument, nullptr, 'f'},
 	    {"minimize", no_argument, nullptr, 'm'},

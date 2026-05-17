@@ -28,7 +28,9 @@ Test file is ignored.
 .It Fl s , -separate
 Separate reference file into constituent molecules (disconnected fragments)
 and report best RMSD
-.It Fl o , -out
+.It Fl t Ar t , Fl -timeout Ar t
+Give up on matching after specified number of seconds
+.It Fl o Ar file , Fl -out Ar file
 Re\-oriented test structure output (used with
 .Fl m )
 .El
