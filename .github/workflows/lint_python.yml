@@ -9,7 +9,7 @@ jobs:
         with:
           python-version: '3.10'
       - run: pip install --upgrade pip wheel
-      - run: pip install --upgrade setuptools
+      - run: pip install --upgrade "setuptools<81"
       - run: pip install bandit black codespell flake8 flake8-bugbear
                          flake8-comprehensions isort mypy pytest pyupgrade "safety<3"
       - run: safety generate policy_file --path .
