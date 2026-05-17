@@ -127,38 +127,27 @@ namespace OpenBabel
       return table;
     }
 
-    // Fallback for n > 100 (or other gaps): produce a balanced 12-corner
-    // all-odd code summing to n. This rarely matches the offline table's
-    // exact closure, but typically lands within 5-30 A of closure -- far
-    // better than the open chain DFS produces for large rings, and well
-    // within MMFF/UFF cleanup's basin of convergence.
+    // Fallback for n outside the precomputed table: produce a
+    // balanced 12-corner all-odd code summing to n. Typically lands
+    // within 5-30 A of closure, comfortably inside MMFF/UFF cleanup's
+    // basin -- not as tight as the table but far better than the open
+    // chain DFS produces for large rings.
     std::vector<int> generateCode(int n)
     {
       std::vector<int> code;
       if (n < 6)
         return code;
-      // Pick corner count: even m for even n (so the all-odd-sides
-      // sum is even); odd m for odd n. Target ~12 corners so sides
-      // stay around length 8-12 even for n ~ 200.
+      // m has same parity as n so n - base*m can be even with odd base.
       int m = (n % 2 == 0) ? 12 : 13;
       int base = (n / m) | 1;
-      if (base * m > n) base -= 2;
-      if (base < 1) base = 1;
-      int extra = n - base * m;
-      // Need extras even (each bump is +2) to keep sides odd. If
-      // base*m is the wrong parity, drop base by 2 until extras
-      // becomes a non-negative even number.
-      while ((extra < 0 || extra % 2 != 0) && base >= 3) {
+      while (base * m > n && base >= 3)
         base -= 2;
-        extra = n - base * m;
-      }
-      if (extra < 0 || extra % 2 != 0)
+      if (base < 1)
         return code;
-      int bumps = extra / 2;
+      int bumps = (n - base * m) / 2;
       if (bumps > m)
         return code;
       code.assign(m, base);
-      // Spread bumps evenly so longest sides alternate with shortest.
       if (bumps > 0) {
         double step = double(m) / double(bumps);
         for (int i = 0; i < bumps; ++i)
@@ -197,14 +186,9 @@ namespace OpenBabel
         nhat.normalize();
         vector3 mhat = cross(bc, nhat);
 
-        // tors[i-2]: NeRF iteration i applies the dihedral about
-        // bond (i-2, i-1) using atoms (i-3, i-2, i-1, i). Bond
-        // angle at C is `angleRad`; the bc-component is
-        // +cos(pi-angleRad). The -cos(phi)*mhat sign aligns phi
-        // with the standard A-B-C-D dihedral convention so that
-        // phi=180 places D on the side anti to A (mhat is
-        // perpendicular to bc within the ABC plane and points
-        // *away* from A's projection).
+        // -cos(phi)*mhat (rather than +cos(phi)) aligns phi with the
+        // standard A-B-C-D dihedral convention: phi=180 places D anti
+        // to A, since mhat points away from A's projection onto bc.
         double phi = tors[i - 2];
         coords[i] = C + bondLen * (cosA * bc
                                    + sinA * (-std::cos(phi) * mhat
@@ -231,51 +215,58 @@ namespace OpenBabel
       for (int a : code) n += a;
       tors.assign(n, kAnti);
 
-      // Find cyclic rotation that puts the longest side last.
       int m = static_cast<int>(code.size());
       int maxSide = 0, maxIdx = 0;
       for (int i = 0; i < m; ++i) {
         if (code[i] > maxSide) { maxSide = code[i]; maxIdx = i; }
       }
-      // After rotation, original index maxIdx becomes index m-1
-      // (the last side). Sign for the corner *preceding* a side
-      // moves with that side under rotation.
-      auto rotated = [&](int i) {
-        return code[(maxIdx + 1 + i) % m];
-      };
-      auto rotatedSign = [&](int i) {
-        return signs[(maxIdx + 1 + i) % m];
-      };
-
+      std::vector<int> rcode(m), rsign(m);
+      for (int i = 0; i < m; ++i) {
+        rcode[i] = code[(maxIdx + 1 + i) % m];
+        rsign[i] = signs[(maxIdx + 1 + i) % m];
+      }
       int pos = 1;
       for (int i = 0; i < m; ++i) {
-        tors[pos % n] = rotatedSign(i) * kGauche;
-        pos += rotated(i);
+        tors[pos % n] = rsign[i] * kGauche;
+        pos += rcode[i];
       }
     }
 
-    // Composite score for the sign search: penalises closure error
-    // (chain end + tangent) AND non-adjacent atoms that fold onto
-    // each other (e.g. a 4-corner code closing as a degenerate
-    // figure-eight with atom k coincident with atom k+n/2). Both
-    // failure modes must be punished here because the runtime sign
-    // search picks the BEST score; without the overlap term, an
-    // exactly-closing self-intersecting conformer would win and
-    // poison FF cleanup.
-    double signScore(const std::vector<vector3> &coords)
+    // Composite score for the sign search. The overlap term punishes
+    // self-intersecting conformers (e.g. a 4-corner code closing as a
+    // degenerate figure-eight with atom k coincident with atom k+n/2)
+    // that would otherwise win on closure alone and poison FF cleanup.
+    // `bestSoFar` lets the inner pair loop bail out once the score
+    // can't beat the current best -- the O(n^2) pair scan is the hot
+    // path of the 2^(m-1) sign search.
+    constexpr double kOverlapCutoff = 1.5;
+    constexpr double kOverlapWeight = 10.0;
+
+    double signScore(const std::vector<vector3> &coords, double bestSoFar)
     {
       int n = static_cast<int>(coords.size()) - 2;
-      double dPos  = (coords[n]     - coords[0]).length();
-      double dTan  = (coords[n + 1] - coords[1]).length();
-      double minD = 1e9;
+      double base = (coords[n]     - coords[0]).length()
+                  + (coords[n + 1] - coords[1]).length();
+      if (base >= bestSoFar)
+        return base;
+      const double cutoff2 = kOverlapCutoff * kOverlapCutoff;
+      double minD2 = cutoff2; // only track distances that would trigger overlap
+      bool overlapped = false;
       for (int i = 0; i < n; ++i)
         for (int j = i + 2; j < n; ++j) {
           if (i == 0 && j == n - 1) continue; // closure bond
-          double d = (coords[i] - coords[j]).length();
-          if (d < minD) minD = d;
+          double d2 = (coords[i] - coords[j]).length_2();
+          if (d2 < minD2) {
+            minD2 = d2;
+            overlapped = true;
+            double penalty = kOverlapWeight * (kOverlapCutoff - std::sqrt(d2));
+            if (base + penalty >= bestSoFar)
+              return base + penalty;
+          }
         }
-      double overlap = (minD < 1.5) ? 10.0 * (1.5 - minD) : 0.0;
-      return dPos + dTan + overlap;
+      if (!overlapped)
+        return base;
+      return base + kOverlapWeight * (kOverlapCutoff - std::sqrt(minD2));
     }
 
     // Find the corner sign assignment that minimizes closure error.
@@ -313,7 +304,7 @@ namespace OpenBabel
 
         expandTorsions(code, signs, tors);
         nerfChain(tors, bondLen, angleRad, coords);
-        double err = signScore(coords);
+        double err = signScore(coords, bestErr);
         if (err < bestErr) {
           bestErr = err;
           best = signs;

@@ -47,9 +47,8 @@ namespace OpenBabel
    * residual at the supplied bond length and bond angle.
    *
    * The returned array is indexed around the ring: torsions[k] is
-   * the dihedral about the bond between ring atoms k and k+1
-   * (i.e., the dihedral atom (k-1) -- atom k -- atom (k+1) --
-   * atom (k+2), indices modulo n). Returns empty when n < 6.
+   * the dihedral about the bond between ring atoms k and k+1.
+   * Returns empty when n < 6.
    *
    * Residual closure error after applying these torsions is small
    * enough that a short force-field minimization closes the ring.

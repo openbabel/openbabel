@@ -94,7 +94,7 @@ static Score evaluate(const std::vector<int> &code, int n, double b,
                       double theta)
 {
   int m = static_cast<int>(code.size());
-  Score best{1e9, 1e9, 0.0};
+  Score best{1e9, 1e9, 1e9};
   int maxMask = (m <= 17) ? (1 << (m - 1)) : 1;
   for (int mask = 0; mask < maxMask; ++mask) {
     std::vector<int> s(m, 1);

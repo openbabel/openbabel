@@ -1330,7 +1330,6 @@ namespace OpenBabel
     // rings are owned by `extraRings` so SSSR memory is not touched.
     std::vector<std::unique_ptr<OpenBabel::OBRing>> extraRings;
     {
-      // Collect ring-mol bonds that are missing in workMol (back-edges).
       std::vector<std::pair<int,int>> backEdges;
       FOR_BONDS_OF_MOL(b, mol) {
         int u = b->GetBeginAtomIdx();
@@ -1338,22 +1337,22 @@ namespace OpenBabel
         if (!workMol.GetBond(u, v))
           backEdges.emplace_back(u, v);
       }
-      // Build atom -> SSSR-ring-set so we can ask "is this back-edge
-      // covered by any SSSR ring?"
       auto coveredBySSSR = [&](int u, int v) {
         for (OBRing *r : rlist) {
-          if (r->_pathset.BitIsSet(u) && r->_pathset.BitIsSet(v))
+          if (r->IsInRing(u) && r->IsInRing(v))
             return true;
         }
         return false;
       };
+      std::vector<int> parent(workMol.NumAtoms() + 1, 0);
+      std::vector<bool> seen(workMol.NumAtoms() + 1, false);
+      std::deque<int> q;
       for (auto &be : backEdges) {
         if (coveredBySSSR(be.first, be.second))
           continue;
-        // BFS in workMol from be.first to be.second to find the ring path.
-        std::vector<int> parent(workMol.NumAtoms() + 1, 0);
-        std::vector<bool> seen(workMol.NumAtoms() + 1, false);
-        std::deque<int> q;
+        std::fill(parent.begin(), parent.end(), 0);
+        std::fill(seen.begin(), seen.end(), false);
+        q.clear();
         q.push_back(be.first);
         seen[be.first] = true;
         while (!q.empty()) {
@@ -1370,12 +1369,11 @@ namespace OpenBabel
           }
         }
         if (!seen[be.second])
-          continue;  // disconnected (shouldn't happen for a real ring)
+          continue;
         std::vector<int> path;
         for (int cur = be.second; cur != be.first; cur = parent[cur])
           path.push_back(cur);
         path.push_back(be.first);
-        // OBRing::_path is the SSSR convention (atom indices in cycle order).
         std::unique_ptr<OpenBabel::OBRing> ring(
             new OpenBabel::OBRing(path, mol.NumAtoms() + 1));
         ring->SetParent(&mol);
@@ -1468,35 +1466,23 @@ namespace OpenBabel
               }
             }
           }
-          // Planar rings (aromatic / all sp2) want every dihedral 0.
-          // For non-planar rings up to n=24 the crown formula
-          // 180 - 720/n gives a working alternating fold. Beyond n=24
-          // the formula asymptotes to anti (180) and the chain
-          // unfolds; dispatch to Dale's diamond-lattice torsion
-          // sequence there. (See [[openbabel-dale-builder-plan]]
-          // for the longer-term plan to extend Dale into smaller
-          // n once we have per-n closure validation.)
+          // Crown's 180 - 720/n asymptotes to anti for n > 24, so
+          // beyond that we hand off to Dale's diamond-lattice
+          // torsion sequence instead.
           std::vector<double> daleTors;
           double crownTorsion = 0.0;
-          bool useDale = false;
-          if (planar) {
-            crownTorsion = 0.0;
-          } else if (n <= 24) {
+          if (!planar && n <= 24) {
             crownTorsion = DEG_TO_RAD * (180.0 - 720.0 / double(n));
-          } else {
+          } else if (!planar) {
             daleTors = OBDaleTorsions(n);
             if (daleTors.empty())
               continue;
-            useDale = true;
           }
 
           double sign = 1.0;
           for (int i = 3; i < n; ++i) {
             double phi;
-            if (useDale) {
-              // SetTorsion at iteration i sets the dihedral about ring
-              // bond (i-2) using atoms walk[i-3..i]; that matches
-              // daleTors[i-2] in the ring-indexed torsion array.
+            if (!daleTors.empty()) {
               phi = daleTors[i - 2];
             } else {
               phi = sign * crownTorsion;
