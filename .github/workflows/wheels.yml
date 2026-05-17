@@ -18,9 +18,6 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            python: '39'
-            platform_id: manylinux_x86_64
-          - os: ubuntu-latest
             python: '310'
             platform_id: manylinux_x86_64
           - os: ubuntu-latest
@@ -35,9 +32,6 @@ jobs:
           - os: ubuntu-latest
             python: '314'
             platform_id: manylinux_x86_64
-          - os: ubuntu-24.04-arm
-            python: '39'
-            platform_id: manylinux_aarch64
           - os: ubuntu-24.04-arm
             python: '310'
             platform_id: manylinux_aarch64
@@ -54,9 +48,6 @@ jobs:
             python: '314'
             platform_id: manylinux_aarch64
           - os: macos-15-intel
-            python: '39'
-            platform_id: macosx_x86_64
-          - os: macos-15-intel
             python: '310'
             platform_id: macosx_x86_64
           - os: macos-15-intel
@@ -72,9 +63,6 @@ jobs:
             python: '314'
             platform_id: macosx_x86_64
           - os: macos-14
-            python: '39'
-            platform_id: macosx_arm64
-          - os: macos-14
             python: '310'
             platform_id: macosx_arm64
           - os: macos-14
@@ -89,9 +77,6 @@ jobs:
           - os: macos-14
             python: '314'
             platform_id: macosx_arm64
-          - os: windows-2025
-            python: '39'
-            platform_id: win_amd64
           - os: windows-2025
             python: '310'
             platform_id: win_amd64

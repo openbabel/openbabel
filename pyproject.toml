@@ -12,7 +12,7 @@ name = "openbabel"
 dynamic = ["version"]
 description = "Python interface to the Open Babel chemistry library"
 readme = "scripts/python/README.rst"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 authors = [
   {name = "Noel O'Boyle", email = "openbabel-discuss@lists.sourceforge.net"},
 ]
@@ -69,7 +69,7 @@ test-command = [
     "python -c \"from openbabel import openbabel; conv = openbabel.OBConversion(); assert conv.SetInAndOutFormats('smi', 'can')\"",
     "obabel -:C -ocan",
 ]
-build = ["cp39-*", "cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
+build = ["cp310-*", "cp311-*", "cp312-*", "cp313-*", "cp314-*"]
 skip = ["*-win32", "*-manylinux_i686", "*-musllinux*", "cp314t-*"]
 manylinux-x86_64-image = "manylinux2014"
 manylinux-aarch64-image = "manylinux2014"
