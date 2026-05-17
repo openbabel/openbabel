@@ -32,12 +32,12 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include <openbabel/atom.h>
+#include <openbabel/alias.h>
 #include <openbabel/babelconfig.h>
 #include <openbabel/bond.h>
 #include <openbabel/elements.h>
 #include <openbabel/generic.h>
 #include <openbabel/json.h>
-#include <openbabel/kekulize.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obiter.h>
@@ -83,6 +83,7 @@ constexpr const char *kAttrKetSubstitutionCount  = "_ket_substitutionCount";
 constexpr const char *kAttrKetUnsaturatedAtom    = "_ket_unsaturatedAtom";
 constexpr const char *kAttrKetSelected           = "_ket_selected";
 constexpr const char *kAttrKetExplicitValence    = "_ket_explicitValence";
+constexpr const char *kAttrKetImplicitHCountSet  = "_ket_implicitHCountSet";
 
 constexpr const char *kAttrKetBondTopology       = "_ket_bond_topology";
 constexpr const char *kAttrKetBondCenter         = "_ket_bond_center";
@@ -206,6 +207,26 @@ bool getPairDataInt(OBBase *target, const char *attr, int &out)
     if (!getPairDataString(target, attr, s)) return false;
     try { out = std::stoi(s); return true; }
     catch (...) { return false; }
+}
+
+bool ketVersionMajor(const std::string &version, int &major)
+{
+    if (version.empty()) return false;
+    size_t dot = version.find('.');
+    const std::string majorPart =
+        (dot == std::string::npos) ? version : version.substr(0, dot);
+    try {
+        major = std::stoi(majorPart);
+        return true;
+    } catch (...) {
+        return false;
+    }
+}
+
+bool ketVersionIsSupported(const std::string &version)
+{
+    int major = 0;
+    return !ketVersionMajor(version, major) || major <= 2;
 }
 
 // Convert an isotope keyword to (element, mass) for D and T.
@@ -389,7 +410,10 @@ struct KetPassthrough {
 
 class KetReader {
 public:
-    explicit KetReader(OBMol *mol) : mol_(mol) {}
+    explicit KetReader(OBMol *mol, OBConversion *conv) : mol_(mol)
+    {
+        expandAliases_ = conv && conv->IsOption("a", OBConversion::INOPTIONS);
+    }
 
     bool parse(const rapidjson::Document &doc, std::string &errorMsg)
     {
@@ -398,8 +422,14 @@ public:
             return false;
         }
 
-        if (doc.HasMember("ket_version") && doc["ket_version"].IsString())
-            setPairData(mol_, kAttrKetVersion, doc["ket_version"].GetString());
+        if (doc.HasMember("ket_version") && doc["ket_version"].IsString()) {
+            const std::string version = doc["ket_version"].GetString();
+            if (!ketVersionIsSupported(version)) {
+                errorMsg = "unsupported KET major version: " + version;
+                return false;
+            }
+            setPairData(mol_, kAttrKetVersion, version);
+        }
 
         const auto &root = doc["root"];
 
@@ -513,7 +543,8 @@ public:
         // a few things that EndModify wipes (selected flags, etc.) — handled
         // via OBPairData attributes so they survive.
 
-        // Aromatic bonds: kekulize if any were flagged.
+        // Aromatic bonds: preserve KET aromaticity rather than forcing a
+        // Kekule form chosen by Open Babel.
         if (needsKekulization_) {
             mol_->SetAromaticPerceived();
             FOR_BONDS_OF_MOL(b, mol_) {
@@ -522,9 +553,10 @@ public:
                     b->GetEndAtom()->SetAromatic();
                 }
             }
-            OBKekulize(mol_);
-            mol_->SetAromaticPerceived(false);
         }
+
+        for (const auto &alias : aliasesToExpand_)
+            alias.first->Expand(*mol_, alias.second->GetIdx());
 
         // Flush accumulated S-group JSON to a single OBPairData (avoiding
         // O(N^2) re-parse+re-serialize that the naive append would cause).
@@ -556,7 +588,9 @@ public:
 
 private:
     OBMol *mol_;
+    bool expandAliases_ = false;
     bool needsKekulization_ = false;
+    std::vector<std::pair<AliasData *, OBAtom *>> aliasesToExpand_;
     std::vector<ArrowGeometry> arrows_;
     std::vector<PlusGeometry> pluses_;
     KetPassthrough passthrough_;
@@ -729,8 +763,10 @@ private:
 
         // Implicit hydrogens.
         int implH = -1;
-        if (getMemberInt(a, "implicitHCount", implH) && implH >= 0)
+        if (getMemberInt(a, "implicitHCount", implH) && implH >= 0) {
             atom->SetImplicitHCount(static_cast<unsigned int>(implH));
+            setPairData(atom, kAttrKetImplicitHCountSet, "true");
+        }
 
         // Explicit valence — KET uses 15 to mean zero.
         int evalence = -1;
@@ -761,8 +797,15 @@ private:
             setPairData(atom, kAttrKetStereoLabel, s);
         if (getMemberString(a, "cip", s))
             setPairData(atom, kAttrKetCip, s);
-        if (getMemberString(a, "alias", s))
+        if (getMemberString(a, "alias", s)) {
             setPairData(atom, kAttrKetAlias, s);
+            auto *ad = new AliasData();
+            ad->SetAlias(s);
+            ad->SetOrigin(fileformatInput);
+            atom->SetData(ad);
+            if (expandAliases_ && atom->GetAtomicNum() == 0)
+                aliasesToExpand_.push_back(std::make_pair(ad, atom));
+        }
 
         // Attachment points (bitmask).
         int aps = 0;
@@ -989,7 +1032,7 @@ private:
         const double ux = dx / axisLen;
         const double uy = dy / axisLen;
         // Perpendicular distance threshold — molecules near the arrow axis
-        // (within ~25% of the arrow length above or below) are agents.
+        // (within half the arrow length perpendicular distance) are agents.
         const double agentBand = std::max(0.5 * axisLen, 1.0);
 
         mol_->SetIsReaction();
@@ -1177,8 +1220,9 @@ void writeAtomEntry(rapidjson::Value &arr,
     if (getPairDataInt(atom, kAttrKetHCount, v))
         obj.AddMember("hCount", v, al);
 
-    // Emit implicitHCount if it differs from OB's default H perception.
-    if (atom->GetImplicitHCount() > 0) {
+    std::string explicitImplicitH;
+    if (getPairDataString(atom, kAttrKetImplicitHCountSet, explicitImplicitH) ||
+        atom->GetImplicitHCount() > 0) {
         obj.AddMember("implicitHCount",
                       static_cast<int>(atom->GetImplicitHCount()), al);
     }
@@ -1390,6 +1434,7 @@ public:
     KETFormat()
     {
         OBConversion::RegisterFormat("ket", this, "chemical/x-indigo-ket");
+        OBConversion::RegisterOptionParam("a", this, 0, OBConversion::INOPTIONS);
     }
 
     const char *Description() override
@@ -1404,8 +1449,8 @@ public:
                "images are preserved verbatim across round-trips.\n\n"
                "Write Options, e.g. -xm\n"
                "  m  minified output (no indentation)\n\n"
-               "Read Options\n"
-               "  (none)\n\n";
+               "Read Options, e.g. -ia\n"
+               "  a  expand KET atom aliases where chemically meaningful\n\n";
     }
 
     const char *SpecificationURL() override
@@ -1449,7 +1494,7 @@ bool KETFormat::ReadMolecule(OBBase *pOb, OBConversion *pConv)
         return false;
     }
 
-    KetReader reader(pmol);
+    KetReader reader(pmol, pConv);
     std::string err;
     if (!reader.parse(doc, err)) {
         obErrorLog.ThrowError("KETFormat", err, obError);
@@ -1516,15 +1561,8 @@ bool nodeOrderHasInlineType(const KetPassthrough &pt, const char *type)
 // True if the version string's major component is > 1.
 bool majorVersionExceedsOne(const std::string &version)
 {
-    if (version.empty()) return false;
-    size_t dot = version.find('.');
-    const std::string majorPart =
-        (dot == std::string::npos) ? version : version.substr(0, dot);
-    try {
-        return std::stoi(majorPart) > 1;
-    } catch (...) {
-        return false;
-    }
+    int major = 0;
+    return ketVersionMajor(version, major) && major > 1;
 }
 
 }  // anonymous namespace

@@ -16,6 +16,7 @@ GNU General Public License for more details.
 
 #include "obtest.h"
 
+#include <openbabel/alias.h>
 #include <openbabel/atom.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
@@ -379,8 +380,7 @@ void testNoDuplicateArrow()
 }
 
 // ---------------------------------------------------------------------
-// Test 14: aromatic KET bonds remain KET type 4 after round-trip, even
-// though the reader kekulizes the OBMol internally.
+// Test 14: aromatic KET bonds remain KET type 4 after round-trip.
 // ---------------------------------------------------------------------
 
 void testAromaticBondTypePreserved()
@@ -398,7 +398,56 @@ void testAromaticBondTypePreserved()
 }
 
 // ---------------------------------------------------------------------
-//  Entry point — the test harness uses cpptests=1..14 (see CMakeLists).
+// Test 15: unsupported future KET major versions fail explicitly.
+// ---------------------------------------------------------------------
+
+void testUnsupportedFutureKetVersionRejected()
+{
+    const string text =
+        "{\"ket_version\":\"3.0.0\",\"root\":{\"nodes\":[]}}";
+    OBConversion conv;
+    OB_REQUIRE(conv.SetInFormat("ket"));
+    OBMol mol;
+    OB_ASSERT(!conv.ReadString(&mol, text));
+}
+
+// ---------------------------------------------------------------------
+// Test 16: an explicit implicitHCount:0 must not be dropped on write.
+// ---------------------------------------------------------------------
+
+void testExplicitZeroImplicitHCountPreserved()
+{
+    const string text =
+        "{\"root\":{\"nodes\":[{\"$ref\":\"mol0\"}]},"
+        "\"mol0\":{\"type\":\"molecule\","
+        "\"atoms\":[{\"label\":\"N\",\"location\":[0,0,0],"
+        "\"implicitHCount\":0}],\"bonds\":[]}}";
+    OBMol mol = readKetString(text);
+    const string out = writeKetMinified(mol);
+    OB_ASSERT(out.find("\"implicitHCount\":0") != string::npos);
+}
+
+// ---------------------------------------------------------------------
+// Test 17: KET atom aliases are exposed as Open Babel AliasData.
+// ---------------------------------------------------------------------
+
+void testAliasDataPreserved()
+{
+    const string text =
+        "{\"root\":{\"nodes\":[{\"$ref\":\"mol0\"}]},"
+        "\"mol0\":{\"type\":\"molecule\","
+        "\"atoms\":[{\"label\":\"*\",\"alias\":\"COOH\","
+        "\"location\":[0,0,0]}],\"bonds\":[]}}";
+    OBMol mol = readKetString(text);
+    OBAtom *atom = mol.GetAtom(1);
+    OB_REQUIRE(atom != nullptr);
+    auto *ad = dynamic_cast<AliasData *>(atom->GetData(AliasDataType));
+    OB_REQUIRE(ad != nullptr);
+    OB_ASSERT(ad->GetAlias() == "COOH");
+}
+
+// ---------------------------------------------------------------------
+//  Entry point — the test harness uses cpptests=1..17 (see CMakeLists).
 // ---------------------------------------------------------------------
 
 int ketformattest(int argc, char *argv[])
@@ -432,6 +481,9 @@ int ketformattest(int argc, char *argv[])
     case 12: testEmptyMolEmitsNoDanglingRef();     break;
     case 13: testNoDuplicateArrow();               break;
     case 14: testAromaticBondTypePreserved();      break;
+    case 15: testUnsupportedFutureKetVersionRejected(); break;
+    case 16: testExplicitZeroImplicitHCountPreserved(); break;
+    case 17: testAliasDataPreserved();             break;
     default:
         cout << "Test number " << choice << " does not exist!\n";
         return -1;

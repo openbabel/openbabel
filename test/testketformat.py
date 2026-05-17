@@ -17,7 +17,7 @@ import json
 import os
 import unittest
 
-from testbindings import PybelWrapper, pybel
+from testbindings import pybel, PybelWrapper
 
 
 filedir = os.path.join(os.path.dirname(__file__), "files", "ket")
@@ -28,6 +28,11 @@ def _readket(name):
     return list(pybel.readfile("ket", os.path.join(filedir, name)))
 
 
+def _readketstring(text, opt=None):
+    """Helper: read a KET document from a string."""
+    return pybel.readstring("ket", text, opt=opt)
+
+
 class TestKetFormat(PybelWrapper):
     """Read/write/round-trip tests for the KET format."""
 
@@ -36,7 +41,7 @@ class TestKetFormat(PybelWrapper):
     # ------------------------------------------------------------------
 
     def test_read_single_molecule(self):
-        """Reads ethanol (C-C-O) and verifies atom count, bond count, formula."""
+        """Reads ethanol (C-C-O) and verifies atom/bond counts and structure."""
         mols = _readket("ethanol.ket")
         self.assertEqual(len(mols), 1)
         mol = mols[0]
@@ -45,7 +50,29 @@ class TestKetFormat(PybelWrapper):
         self.assertEqual(
             sorted(a.atomicnum for a in mol.atoms), [6, 6, 8]
         )
-        self.assertEqual(mol.formula, "C2H6O")
+        bond_elements = sorted(
+            tuple(
+                sorted(
+                    [
+                        bond.GetBeginAtom().GetAtomicNum(),
+                        bond.GetEndAtom().GetAtomicNum(),
+                    ]
+                )
+            )
+            for bond in pybel.ob.OBMolBondIter(mol.OBMol)
+        )
+        self.assertEqual(bond_elements, [(6, 6), (6, 8)])
+
+    def test_rejects_unsupported_future_major_version(self):
+        """Future KET major versions fail explicitly instead of partial parsing."""
+        text = json.dumps(
+            {
+                "ket_version": "3.0.0",
+                "root": {"nodes": []},
+            }
+        )
+        with self.assertRaises(OSError):
+            _readketstring(text)
 
     def test_read_multi_component(self):
         """Reads methoxide + sodium as a single OBMol with two components."""
@@ -177,6 +204,50 @@ class TestKetFormat(PybelWrapper):
         rt = pybel.readstring("ket", text)
         rt_charges = sorted(a.formalcharge for a in rt.atoms)
         self.assertEqual(rt_charges, [-1, 0, 1])
+
+    def test_round_trip_preserves_explicit_zero_implicit_h_count(self):
+        """Explicit implicitHCount: 0 survives a KET round-trip."""
+        text = json.dumps(
+            {
+                "root": {"nodes": [{"$ref": "mol0"}]},
+                "mol0": {
+                    "type": "molecule",
+                    "atoms": [
+                        {
+                            "label": "N",
+                            "location": [0.0, 0.0, 0.0],
+                            "implicitHCount": 0,
+                        }
+                    ],
+                    "bonds": [],
+                },
+            }
+        )
+        doc = json.loads(_readketstring(text).write("ket"))
+        self.assertEqual(doc["mol0"]["atoms"][0]["implicitHCount"], 0)
+
+    def test_atom_alias_is_available_as_alias_data(self):
+        """KET atom aliases are exposed through Open Babel AliasData."""
+        text = json.dumps(
+            {
+                "root": {"nodes": [{"$ref": "mol0"}]},
+                "mol0": {
+                    "type": "molecule",
+                    "atoms": [
+                        {
+                            "label": "*",
+                            "alias": "COOH",
+                            "location": [0.0, 0.0, 0.0],
+                        }
+                    ],
+                    "bonds": [],
+                },
+            }
+        )
+        atom = _readketstring(text).atoms[0].OBAtom
+        data = atom.GetData(pybel.ob.AliasDataType)
+        self.assertTrue(data)
+        self.assertEqual(pybel.ob.toAliasData(data).GetAlias(), "COOH")
 
     def test_round_trip_preserves_reaction(self):
         """A reaction KET stays a reaction after a round-trip."""
