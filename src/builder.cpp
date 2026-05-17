@@ -20,6 +20,10 @@ GNU General Public License for more details.
 
 
 #include <openbabel/builder.h>
+#include <openbabel/macrocycle.h>
+
+#include <deque>
+#include <memory>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
@@ -1318,6 +1322,67 @@ namespace OpenBabel
     if (!mol.HasSSSRPerceived())
       mol.FindSSSR();
     vector<OBRing*> rlist = mol.GetSSSR();
+    // SSSR uses OB_RTREE_CUTOFF=20, so rings with more than ~40 atoms
+    // (macrocyclic peptides, large cycloalkanes, supramolecular cages)
+    // are silently dropped. For any back-edge in workMol that isn't
+    // already covered by an SSSR ring, trace the unique fundamental
+    // cycle through workMol's spanning tree and add it. The traced
+    // rings are owned by `extraRings` so SSSR memory is not touched.
+    std::vector<std::unique_ptr<OpenBabel::OBRing>> extraRings;
+    {
+      // Collect ring-mol bonds that are missing in workMol (back-edges).
+      std::vector<std::pair<int,int>> backEdges;
+      FOR_BONDS_OF_MOL(b, mol) {
+        int u = b->GetBeginAtomIdx();
+        int v = b->GetEndAtomIdx();
+        if (!workMol.GetBond(u, v))
+          backEdges.emplace_back(u, v);
+      }
+      // Build atom -> SSSR-ring-set so we can ask "is this back-edge
+      // covered by any SSSR ring?"
+      auto coveredBySSSR = [&](int u, int v) {
+        for (OBRing *r : rlist) {
+          if (r->_pathset.BitIsSet(u) && r->_pathset.BitIsSet(v))
+            return true;
+        }
+        return false;
+      };
+      for (auto &be : backEdges) {
+        if (coveredBySSSR(be.first, be.second))
+          continue;
+        // BFS in workMol from be.first to be.second to find the ring path.
+        std::vector<int> parent(workMol.NumAtoms() + 1, 0);
+        std::vector<bool> seen(workMol.NumAtoms() + 1, false);
+        std::deque<int> q;
+        q.push_back(be.first);
+        seen[be.first] = true;
+        while (!q.empty()) {
+          int u = q.front(); q.pop_front();
+          if (u == be.second) break;
+          OBAtom *atom = workMol.GetAtom(u);
+          FOR_NBORS_OF_ATOM (n, atom) {
+            int w = n->GetIdx();
+            if (!seen[w]) {
+              seen[w] = true;
+              parent[w] = u;
+              q.push_back(w);
+            }
+          }
+        }
+        if (!seen[be.second])
+          continue;  // disconnected (shouldn't happen for a real ring)
+        std::vector<int> path;
+        for (int cur = be.second; cur != be.first; cur = parent[cur])
+          path.push_back(cur);
+        path.push_back(be.first);
+        // OBRing::_path is the SSSR convention (atom indices in cycle order).
+        std::unique_ptr<OpenBabel::OBRing> ring(
+            new OpenBabel::OBRing(path, mol.NumAtoms() + 1));
+        ring->SetParent(&mol);
+        rlist.push_back(ring.get());
+        extraRings.push_back(std::move(ring));
+      }
+    }
     if (!rlist.empty()) {
       // Group rings into fused systems (sharing at least one bond, i.e. two
       // or more atoms). Spiro rings share a single atom and must stay in
@@ -1403,24 +1468,45 @@ namespace OpenBabel
               }
             }
           }
-          // The crown formula asymptotes to trans (180 deg) as n grows;
-          // for non-planar rings beyond ~n=24 it both fails to close and
-          // can fold atoms onto themselves at unpredictable n. Skip those
-          // here so we leave the open chain that the DFS placed -- ugly
-          // closure bond but no overlaps, which FF cleanup can recover
-          // from far more reliably than a tangle.
-          if (!planar && n > 24) continue;
-          double torsion = planar ? 0.0
-                                  : DEG_TO_RAD * (180.0 - 720.0 / double(n));
+          // Planar rings (aromatic / all sp2) want every dihedral 0.
+          // For non-planar rings up to n=24 the crown formula
+          // 180 - 720/n gives a working alternating fold. Beyond n=24
+          // the formula asymptotes to anti (180) and the chain
+          // unfolds; dispatch to Dale's diamond-lattice torsion
+          // sequence there. (See [[openbabel-dale-builder-plan]]
+          // for the longer-term plan to extend Dale into smaller
+          // n once we have per-n closure validation.)
+          std::vector<double> daleTors;
+          double crownTorsion = 0.0;
+          bool useDale = false;
+          if (planar) {
+            crownTorsion = 0.0;
+          } else if (n <= 24) {
+            crownTorsion = DEG_TO_RAD * (180.0 - 720.0 / double(n));
+          } else {
+            daleTors = OBDaleTorsions(n);
+            if (daleTors.empty())
+              continue;
+            useDale = true;
+          }
 
           double sign = 1.0;
           for (int i = 3; i < n; ++i) {
+            double phi;
+            if (useDale) {
+              // SetTorsion at iteration i sets the dihedral about ring
+              // bond (i-2) using atoms walk[i-3..i]; that matches
+              // daleTors[i-2] in the ring-indexed torsion array.
+              phi = daleTors[i - 2];
+            } else {
+              phi = sign * crownTorsion;
+              sign = -sign;
+            }
             workMol.SetTorsion(workMol.GetAtom(walk[i - 3]),
                                workMol.GetAtom(walk[i - 2]),
                                workMol.GetAtom(walk[i - 1]),
                                workMol.GetAtom(walk[i]),
-                               sign * torsion);
-            sign = -sign;
+                               phi);
           }
           break; // one ring per system
         }

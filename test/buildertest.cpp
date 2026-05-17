@@ -210,17 +210,27 @@ int buildertest(int argc, char* argv[])
     OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCC1", 1.8) );   // cyclododecane
     break;
   case 8:
-    // Macrocycles past the templated ring sizes (>18). Without the crown
-    // post-pass these closed with bonds > 20 A (effectively a stretched
-    // chain). The 180-720/n crown formula tightens up for n~19-24 but
-    // approaches a trans (180 deg) chain for larger n, so we cap there
-    // (very large rings remain a job for FF cleanup or a future Dale-
-    // diamond-lattice builder).
+    // Crown post-pass covers n=19, 22 (formula 180 - 720/n).
     OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCC1", 2.0) );     // cyclo-19
     OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCCCCC1", 2.5) );  // cyclo-22
-    // Past the cap (n > 24): builder must not crash and must not
-    // produce overlapping atoms (cleaner failure than a folded tangle).
-    OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCCCCCCCCCCCCC1", 40.0) ); // cyclo-30
+    // Beyond the crown cap, OBDaleTorsions emits a precomputed
+    // diamond-lattice Dale code. Even n close to ~1.5 A pre-FF (the
+    // normal C-C bond length); odd n leave a ~2.5 A residual from
+    // the bipartite-lattice constraint. Both are well inside FF
+    // cleanup's basin of convergence.
+    OB_ASSERT( doRingClosureTest("C1CCCCCCCCCCCCCCCCCCCCCCCCCCCCC1", 2.6) ); // cyclo-30
+    // cyclo-44 and cyclo-50 exercise the back-edge ring tracer:
+    // OB's SSSR (OB_RTREE_CUTOFF=20) silently drops rings >~40
+    // atoms, so the post-pass falls back to tracing through the
+    // workMol spanning tree.
+    {
+      std::string s44 = "C1" + std::string(43, 'C') + "1";
+      OB_ASSERT( doRingClosureTest(s44, 2.0) );                       // cyclo-44
+      std::string s50 = "C1" + std::string(49, 'C') + "1";
+      OB_ASSERT( doRingClosureTest(s50, 2.0) );                       // cyclo-50
+      std::string s100 = "C1" + std::string(99, 'C') + "1";
+      OB_ASSERT( doRingClosureTest(s100, 2.0) );                      // cyclo-100
+    }
     break;
   case 9:
     // Fused/bridged systems: only the largest ring per system is crowned,
