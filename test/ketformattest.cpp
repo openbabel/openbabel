@@ -379,7 +379,26 @@ void testNoDuplicateArrow()
 }
 
 // ---------------------------------------------------------------------
-//  Entry point — the test harness uses cpptests=1..13 (see CMakeLists).
+// Test 14: aromatic KET bonds remain KET type 4 after round-trip, even
+// though the reader kekulizes the OBMol internally.
+// ---------------------------------------------------------------------
+
+void testAromaticBondTypePreserved()
+{
+    OBMol mol = readKetFile(testFilePath("aromatic.ket"));
+    const string out = writeKetMinified(mol);
+
+    OB_ASSERT(countOccurrences(out, "\"type\":4") == 6);
+    OB_ASSERT(countOccurrences(out, "\"type\":1") == 0);
+    OB_ASSERT(countOccurrences(out, "\"type\":2") == 0);
+
+    OBMol second = readKetString(out);
+    const string out2 = writeKetMinified(second);
+    OB_ASSERT(out2 == out);
+}
+
+// ---------------------------------------------------------------------
+//  Entry point — the test harness uses cpptests=1..14 (see CMakeLists).
 // ---------------------------------------------------------------------
 
 int ketformattest(int argc, char *argv[])
@@ -412,6 +431,7 @@ int ketformattest(int argc, char *argv[])
     case 11: testStableRoundTrip();                break;
     case 12: testEmptyMolEmitsNoDanglingRef();     break;
     case 13: testNoDuplicateArrow();               break;
+    case 14: testAromaticBondTypePreserved();      break;
     default:
         cout << "Test number " << choice << " does not exist!\n";
         return -1;

@@ -87,7 +87,7 @@ constexpr const char *kAttrKetExplicitValence    = "_ket_explicitValence";
 constexpr const char *kAttrKetBondTopology       = "_ket_bond_topology";
 constexpr const char *kAttrKetBondCenter         = "_ket_bond_center";
 constexpr const char *kAttrKetBondCustomQuery    = "_ket_bond_customQuery";
-constexpr const char *kAttrKetBondType           = "_ket_bond_type";  // raw KET integer (5-10)
+constexpr const char *kAttrKetBondType           = "_ket_bond_type";  // raw KET integer (4-10)
 constexpr const char *kAttrKetBondStereobox      = "_ket_bond_stereobox";
 
 constexpr const char *kAttrKetVersion            = "_ket_version";
@@ -846,8 +846,9 @@ private:
         OBBond *bond = mol_->GetBond(beginIdx, endIdx);
         if (!bond) return;
 
-        if (ketType != KET_BOND_SINGLE && ketType != KET_BOND_DOUBLE &&
-            ketType != KET_BOND_TRIPLE && ketType != KET_BOND_AROMATIC)
+        if (ketType == KET_BOND_AROMATIC ||
+            (ketType != KET_BOND_SINGLE && ketType != KET_BOND_DOUBLE &&
+             ketType != KET_BOND_TRIPLE))
             setPairDataInt(bond, kAttrKetBondType, ketType);
 
         int topology = 0;
