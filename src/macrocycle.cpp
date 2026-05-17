@@ -20,9 +20,10 @@ GNU General Public License for more details.
 #include <openbabel/math/vector3.h>
 #include <openbabel/oberror.h>
 
-#include <algorithm>
-#include <cmath>
-#include <map>
+`#include` <algorithm>
+`#include` <cmath>
+`#include` <limits>
+`#include` <map>
 
 namespace OpenBabel
 {
