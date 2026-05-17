@@ -89,22 +89,22 @@ jobs:
           - os: macos-14
             python: '314'
             platform_id: macosx_arm64
-          - os: windows-2019
+          - os: windows-2025
             python: '39'
             platform_id: win_amd64
-          - os: windows-2019
+          - os: windows-2025
             python: '310'
             platform_id: win_amd64
-          - os: windows-2019
+          - os: windows-2025
             python: '311'
             platform_id: win_amd64
-          - os: windows-2019
+          - os: windows-2025
             python: '312'
             platform_id: win_amd64
-          - os: windows-2019
+          - os: windows-2025
             python: '313'
             platform_id: win_amd64
-          - os: windows-2019
+          - os: windows-2025
             python: '314'
             platform_id: win_amd64
 
