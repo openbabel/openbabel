@@ -41,7 +41,8 @@ namespace OpenBabel
   class Kekulizer
   {
   public:
-    Kekulizer(OBMol* mol) : m_mol(mol), needs_dbl_bond(nullptr), doubleBonds(nullptr), kekule_system(nullptr)
+    Kekulizer(OBMol* mol) : m_mol(mol), needs_dbl_bond(nullptr), doubleBonds(nullptr),
+      kekule_system(nullptr), m_findPathCalls(0)
     {
       atomArraySize = GetMaxAtomIdx(m_mol) + 1;
       bondArraySize = GetMaxBondIdx(m_mol) + 1;
@@ -63,6 +64,11 @@ namespace OpenBabel
     unsigned int atomArraySize;
     unsigned int bondArraySize;
     std::vector<unsigned int> m_path;
+    // Budget for FindPath recursive calls per BackTrack iteration. The DFS is
+    // exponential in the worst case on pathological aromatic systems; bail out
+    // rather than spinning. Treated as "not kekulizable" by the caller.
+    static constexpr unsigned int FindPathCallLimit = 10000;
+    unsigned int m_findPathCalls;
   };
 
   static bool IsSpecialCase(OBAtom* atom)
@@ -319,6 +325,8 @@ namespace OpenBabel
   // an alternating path
   bool Kekulizer::FindPath(unsigned int atomidx, bool isDoubleBond, OBBitVec &visited)
   {
+    if (++m_findPathCalls > FindPathCallLimit)
+      return false;
     if (needs_dbl_bond->BitIsSet(atomidx))
       return true;
     visited.SetBitOn(atomidx);
@@ -358,6 +366,7 @@ namespace OpenBabel
       needs_dbl_bond->SetBitOff(idx); // to avoid the trivial null path being found
       OBBitVec visited(atomArraySize);
       m_path.clear();
+      m_findPathCalls = 0;
       bool found_path = FindPath(idx, false, visited);
       if (!found_path) { // could only happen if not kekulizable
         needs_dbl_bond->SetBitOn(idx); // reset

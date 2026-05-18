@@ -657,7 +657,7 @@ bool CMLReactFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
 
       //Send to real output stream with the moleculeList first
       string::size_type reaclistPos, mollistPos, footerPos;
-      const string& s = ssout.str();
+      const string s = ssout.str();
       reaclistPos = s.find("<reactionList");
       if(reaclistPos!=string::npos)
         mollistPos = s.find("<moleculeList",reaclistPos+1);

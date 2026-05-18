@@ -117,6 +117,7 @@ set(openbabel_srcs
   bond.cpp
   bondtyper.cpp
   builder.cpp
+  macrocycle.cpp
   canon.cpp
   chains.cpp
   chargemodel.cpp

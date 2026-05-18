@@ -73,7 +73,7 @@ GNU General Public License for more details.
 //       definition there.
 OpenBabel::vector3 my_center_coords(double *c, unsigned int size)
 {
-  if (size == 0)
+  if (size == 0 || c == nullptr)
     {
       return(OpenBabel::VZero);
     }
