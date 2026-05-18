@@ -226,18 +226,18 @@ TORSDOF 5
     def testMissingPlugins(self):
         if sys.platform.startswith("win32"):
             return
-        libdir = os.environ.pop("BABEL_LIBDIR", None)
-        os.environ["BABEL_LIBDIR"] = ""
+        env = os.environ.copy()
+        env["BABEL_LIBDIR"] = ""
 
         obabel = executable("obabel")
         with self.assertRaises(CalledProcessError) as cm:
-            check_output('%s -:C -osmi' % obabel, shell=True, stderr=STDOUT, universal_newlines=True)
+            check_output(
+                [obabel, "-:C", "-osmi"],
+                stderr=STDOUT,
+                universal_newlines=True,
+                env=env,
+            )
         msg = cm.exception.output
-        if libdir:
-            os.environ["BABEL_LIBDIR"] = libdir
-        else:
-            os.environ.pop("BABEL_LIBDIR")
-
         self.assertIn('BABEL_LIBDIR', msg)
 
     def testCOFtoCAN(self):
