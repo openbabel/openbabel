@@ -399,7 +399,7 @@ namespace OpenBabel
     {
       if (!isalnum(element_name[0])) {element_name_final[0]=' ';}
       else element_name_final[0]=element_name[0];
-      if (!isalnum(element_name[1])) {element_name_final[1]=' ';}
+      if (element_name[0] == '\0' || !isalnum(element_name[1])) {element_name_final[1]=' ';}
       else element_name_final[1]=element_name[1];
     }
 
