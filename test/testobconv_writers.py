@@ -164,25 +164,14 @@ def test_write_string(test_case, mol, conv, expected_output, normalize):
         
     test_case.assertMultiLineEqual(output.replace("\r\n", "\n"), expected_output.replace("\r\n", "\n"))
 
-if type(u"") == type(""):
-    # Python 3
-    def test_binary_write_string(test_case, mol, conv, expected_output, normalize):
-        # I think 'surrogateescape' is the right way to handle this
-        output = conv.WriteString(mol).encode("utf8", "surrogateescape")
-        if normalize:
-            output = normalize(output)
-            expected_output = normalize(expected_output)
-        ## print("===", repr(output))
-        test_case.assertEqual(output, expected_output)
-else:
-    # Python 2
-    def test_binary_write_string(test_case, mol, conv, expected_output, normalize):
-        output = conv.WriteString(mol)
-##        print("===", repr(output))
-        if normalize:
-            output = normalize(output)
-            expected_output = normalize(expected_output)
-        test_case.assertEqual(output, expected_output)
+def test_binary_write_string(test_case, mol, conv, expected_output, normalize):
+    # I think 'surrogateescape' is the right way to handle this
+    output = conv.WriteString(mol).encode("utf8", "surrogateescape")
+    if normalize:
+        output = normalize(output)
+        expected_output = normalize(expected_output)
+    ## print("===", repr(output))
+    test_case.assertEqual(output, expected_output)
 
 def test_write_file(test_case, mol, conv, expected_output, normalize):
     temp_file_object = tempfile.NamedTemporaryFile(delete=False) # we will delete it manually
@@ -2166,13 +2155,13 @@ O       -1.0004999999999999449      0.0051000000000000004      0.000000000000000
 """)
 
 # Normalize MDL formats by removing the timestamp from the string
-_sd_timestamp_pat_u = re.compile(u"OpenBabel\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")
+_sd_timestamp_pat_u = re.compile("OpenBabel\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")
 _sd_timestamp_pat_b = re.compile(b"OpenBabel\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")
 def normalize_sd_timestamp(data):
-    if isinstance(data, type(b"")):
+    if isinstance(data, bytes):
         return _sd_timestamp_pat_b.sub(b"OpenBabel2020202020", data)
     else:
-        return _sd_timestamp_pat_u.sub(u"OpenBabel2020202020", data)
+        return _sd_timestamp_pat_u.sub("OpenBabel2020202020", data)
 
         
 # mdl -- MDL MOL format
