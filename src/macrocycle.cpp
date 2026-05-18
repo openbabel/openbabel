@@ -30,6 +30,11 @@ namespace OpenBabel
 
   namespace {
 
+    // kPi isn't part of standard C++ -- MSVC only exposes it when
+    // _USE_MATH_DEFINES is set before <cmath>, and we don't want to
+    // rely on that here.
+    constexpr double kPi = 3.14159265358979323846;
+
     // Precomputed Dale codes for n = 25 .. 100, generated offline by
     // find_dale_codes.cpp using a NeRF-based candidate search at
     // theta = 109.47 deg, b = 1.54 A. The search penalises both
@@ -169,7 +174,7 @@ namespace OpenBabel
       const int n = static_cast<int>(tors.size());
       coords.assign(n + 2, vector3(0.0, 0.0, 0.0));
 
-      const double piMinusTheta = M_PI - angleRad;
+      const double piMinusTheta = kPi - angleRad;
       const double cosA = std::cos(piMinusTheta);
       const double sinA = std::sin(piMinusTheta);
 
@@ -210,8 +215,8 @@ namespace OpenBabel
                         const std::vector<int> &signs,
                         std::vector<double> &tors)
     {
-      const double kAnti   = M_PI;
-      const double kGauche = M_PI / 3.0;
+      const double kAnti   = kPi;
+      const double kGauche = kPi / 3.0;
       int n = 0;
       for (int a : code) n += a;
       tors.assign(n, kAnti);

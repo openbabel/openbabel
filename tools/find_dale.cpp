@@ -38,12 +38,15 @@
 
 using namespace OpenBabel;
 
+// MSVC only exposes kPi when _USE_MATH_DEFINES is set before <cmath>.
+constexpr double kPi = 3.14159265358979323846;
+
 static void nerfChain(const std::vector<double> &tors, double b, double theta,
                       std::vector<vector3> &out)
 {
   const int n = static_cast<int>(tors.size());
   out.assign(n + 2, vector3(0, 0, 0));
-  const double piMinusTheta = M_PI - theta;
+  const double piMinusTheta = kPi - theta;
   const double cA = std::cos(piMinusTheta);
   const double sA = std::sin(piMinusTheta);
   out[1] = vector3(b, 0, 0);
@@ -65,10 +68,10 @@ static std::vector<double> expandTorsions(const std::vector<int> &code,
                                           const std::vector<int> &signs,
                                           int n)
 {
-  std::vector<double> t(n, M_PI);
+  std::vector<double> t(n, kPi);
   int pos = 1;
   for (size_t i = 0; i < code.size(); ++i) {
-    t[pos % n] = signs[i] * M_PI / 3.0;
+    t[pos % n] = signs[i] * kPi / 3.0;
     pos += code[i];
   }
   return t;
