@@ -460,19 +460,21 @@ namespace OpenBabel
 
   static int CreateAtom( Pattern *pat, AtomExpr *expr, int part,int vb)
   {
-    int index,size;
+    int index;
 
     if (!pat)
       return -1; // should never happen
 
     if( pat->acount == pat->aalloc )
       {
-        pat->aalloc += ATOMPOOL;
-        size = (int)(pat->aalloc*sizeof(AtomSpec));
+        // Double the pool to keep insertion amortized O(1); the previous
+        // linear growth was O(N^2) and made large fuzzer inputs time out.
+        int oldalloc = pat->aalloc;
+        pat->aalloc = oldalloc ? oldalloc * 2 : ATOMPOOL;
         if( pat->atom )
           {
             AtomSpec *tmp = new AtomSpec[pat->aalloc];
-            copy(pat->atom, pat->atom + pat->aalloc - ATOMPOOL, tmp);
+            copy(pat->atom, pat->atom + oldalloc, tmp);
             delete [] pat->atom;
             pat->atom = tmp;
           }
@@ -492,19 +494,19 @@ namespace OpenBabel
 
   static int CreateBond( Pattern *pat, BondExpr *expr, int src, int dst )
   {
-    int index,size;
+    int index;
 
     if (!pat)
       return -1; // should never happen
 
     if( pat->bcount == pat->balloc )
       {
-        pat->balloc += BONDPOOL;
-        size = (int)(pat->balloc*sizeof(BondSpec));
+        int oldalloc = pat->balloc;
+        pat->balloc = oldalloc ? oldalloc * 2 : BONDPOOL;
         if( pat->bond )
           {
             BondSpec *tmp = new BondSpec[pat->balloc];
-            copy(pat->bond, pat->bond + pat->balloc - BONDPOOL, tmp);
+            copy(pat->bond, pat->bond + oldalloc, tmp);
             delete [] pat->bond;
             pat->bond = tmp;
           }
@@ -2064,6 +2066,11 @@ namespace OpenBabel
 
           // use the mapping the get the chiral atom in the molecule being queried
           OBAtom *center = mol.GetAtom((*m)[j]);
+          if (!center) {
+            // mapping index out of range (e.g. from a degenerate match)
+            allStereoCentersMatch = false;
+            break;
+          }
 
           // get the OBTetrahedralStereo::Config from the molecule
           OBStereoFacade stereo(&mol);
@@ -2090,15 +2097,22 @@ namespace OpenBabel
           smartsConfig.center = center->GetId();
           if (nbrs.at(0) == SmartsImplicitRef)
             smartsConfig.from = OBStereo::ImplicitRef;
-          else
-            smartsConfig.from = mol.GetAtom( (*m)[nbrs.at(0)] )->GetId();
+          else {
+            OBAtom *ra0 = mol.GetAtom( (*m)[nbrs.at(0)] );
+            if (!ra0) { allStereoCentersMatch = false; break; }
+            smartsConfig.from = ra0->GetId();
+          }
           OBStereo::Ref firstref;
           if (nbrs.at(1) == SmartsImplicitRef)
             firstref = OBStereo::ImplicitRef;
-          else
-            firstref = mol.GetAtom( (*m)[nbrs.at(1)] )->GetId();
+          else {
+            OBAtom *ra1 = mol.GetAtom( (*m)[nbrs.at(1)] );
+            if (!ra1) { allStereoCentersMatch = false; break; }
+            firstref = ra1->GetId();
+          }
           OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(2)] );
           OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(3)] );
+          if (!ra2 || !ra3) { allStereoCentersMatch = false; break; }
           smartsConfig.refs = OBStereo::MakeRefs(firstref, ra2->GetId(), ra3->GetId());
 
           smartsConfig.view = OBStereo::ViewFrom;
