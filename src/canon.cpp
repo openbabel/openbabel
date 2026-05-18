@@ -737,11 +737,24 @@ namespace OpenBabel {
      */
     struct Timeout
     {
-      Timeout(time_t _maxTime) : maxTime(_maxTime)
+      Timeout(time_t _maxTime) : maxTime(_maxTime), expired(false)
       {
         startTime = time(nullptr);
       }
+      // Cache the expired state so deep recursion doesn't pay a time() syscall
+      // on every call. Once expired, stay expired so the unwind is fast.
+      bool isExpired()
+      {
+        if (expired)
+          return true;
+        if (time(nullptr) - startTime > maxTime) {
+          expired = true;
+          return true;
+        }
+        return false;
+      }
       time_t startTime, maxTime;
+      bool expired;
     };
 
 
@@ -1164,6 +1177,12 @@ namespace OpenBabel {
      */
     static void CanonicalLabelsRecursive(OBAtom *current, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
     {
+      // Bail out early on timeout. Checked here, at the top, so the unwind
+      // is fast even when most recursive frames hit the "full mapping"
+      // path below (which can be expensive on pathological molecules).
+      if (timeout.isExpired())
+        return;
+
       OBMol *mol = current->GetParent();
       PartialCode &code = state.code;
 
@@ -1245,7 +1264,7 @@ namespace OpenBabel {
       }
 
       // Avoid endless loops.
-      if (time(nullptr) - timeout.startTime > timeout.maxTime) {
+      if (timeout.isExpired()) {
         return;
       }
 
@@ -1590,7 +1609,7 @@ namespace OpenBabel {
         }
 
         // Throw an error if the timeout is exceeded.
-        if (time(nullptr) - timeout.startTime > timeout.maxTime) {
+        if (timeout.isExpired()) {
           obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
         }
 

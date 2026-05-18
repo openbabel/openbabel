@@ -20,12 +20,17 @@ GNU General Public License for more details.
 
 
 #include <openbabel/builder.h>
+#include <openbabel/macrocycle.h>
+
+#include <deque>
+#include <memory>
 
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/math/matrix3x3.h>
+#include <openbabel/ring.h>
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 #include <openbabel/obconversion.h>
@@ -1305,6 +1310,193 @@ namespace OpenBabel
         workMol.AddBond(*bond);
       }
 
+    }
+
+    // Crown post-pass: rings not covered by a fragment template were placed
+    // as a linear chain by the DFS loop above, which leaves a stretched
+    // closure bond when bonds are restored below. Fold each such ring into a
+    // crown/chair by setting torsions along its path. The DFS adds only
+    // spanning-tree bonds, so exactly one ring-path bond (the back-edge) is
+    // missing in workMol; rotating the path so that bond is last keeps the
+    // SetTorsion FindChildren walk from crossing back to the start atom.
+    if (!mol.HasSSSRPerceived())
+      mol.FindSSSR();
+    vector<OBRing*> rlist = mol.GetSSSR();
+    // SSSR uses OB_RTREE_CUTOFF=20, so rings with more than ~40 atoms
+    // (macrocyclic peptides, large cycloalkanes, supramolecular cages)
+    // are silently dropped. For any back-edge in workMol that isn't
+    // already covered by an SSSR ring, trace the unique fundamental
+    // cycle through workMol's spanning tree and add it. The traced
+    // rings are owned by `extraRings` so SSSR memory is not touched.
+    std::vector<std::unique_ptr<OpenBabel::OBRing>> extraRings;
+    {
+      std::vector<std::pair<int,int>> backEdges;
+      FOR_BONDS_OF_MOL(b, mol) {
+        int u = b->GetBeginAtomIdx();
+        int v = b->GetEndAtomIdx();
+        if (!workMol.GetBond(u, v))
+          backEdges.emplace_back(u, v);
+      }
+      auto coveredBySSSR = [&](int u, int v) {
+        for (OBRing *r : rlist) {
+          if (r->IsInRing(u) && r->IsInRing(v))
+            return true;
+        }
+        return false;
+      };
+      std::vector<int> parent(workMol.NumAtoms() + 1, 0);
+      std::vector<bool> seen(workMol.NumAtoms() + 1, false);
+      std::deque<int> q;
+      for (auto &be : backEdges) {
+        if (coveredBySSSR(be.first, be.second))
+          continue;
+        std::fill(parent.begin(), parent.end(), 0);
+        std::fill(seen.begin(), seen.end(), false);
+        q.clear();
+        q.push_back(be.first);
+        seen[be.first] = true;
+        while (!q.empty()) {
+          int u = q.front(); q.pop_front();
+          if (u == be.second) break;
+          OBAtom *atom = workMol.GetAtom(u);
+          FOR_NBORS_OF_ATOM (n, atom) {
+            int w = n->GetIdx();
+            if (!seen[w]) {
+              seen[w] = true;
+              parent[w] = u;
+              q.push_back(w);
+            }
+          }
+        }
+        if (!seen[be.second])
+          continue;
+        std::vector<int> path;
+        for (int cur = be.second; cur != be.first; cur = parent[cur])
+          path.push_back(cur);
+        path.push_back(be.first);
+        std::unique_ptr<OpenBabel::OBRing> ring(
+            new OpenBabel::OBRing(path, mol.NumAtoms() + 1));
+        ring->SetParent(&mol);
+        rlist.push_back(ring.get());
+        extraRings.push_back(std::move(ring));
+      }
+    }
+    if (!rlist.empty()) {
+      // Group rings into fused systems (sharing at least one bond, i.e. two
+      // or more atoms). Spiro rings share a single atom and must stay in
+      // separate systems so each gets its own crown pass below.
+      vector<int> ringSystem(rlist.size(), -1);
+      int nsystems = 0;
+      for (size_t i = 0; i < rlist.size(); ++i) {
+        if (ringSystem[i] != -1) continue;
+        ringSystem[i] = nsystems;
+        vector<size_t> queue;
+        queue.push_back(i);
+        while (!queue.empty()) {
+          size_t r = queue.back();
+          queue.pop_back();
+          for (size_t s = 0; s < rlist.size(); ++s) {
+            if (ringSystem[s] != -1) continue;
+            OBBitVec common = rlist[r]->_pathset & rlist[s]->_pathset;
+            if (common.CountBits() >= 2) {
+              ringSystem[s] = nsystems;
+              queue.push_back(s);
+            }
+          }
+        }
+        ++nsystems;
+      }
+
+      for (int sys = 0; sys < nsystems; ++sys) {
+        // Skip if any atom in the system was already placed by a fragment.
+        bool covered = false;
+        vector<size_t> members;
+        for (size_t i = 0; i < rlist.size() && !covered; ++i) {
+          if (ringSystem[i] != sys) continue;
+          members.push_back(i);
+          for (int idx : rlist[i]->_path) {
+            if (vfrag.BitIsSet(idx)) {
+              covered = true;
+              break;
+            }
+          }
+        }
+        if (covered) continue;
+
+        // Order candidates largest-first so we crown the dominant ring.
+        std::sort(members.begin(), members.end(),
+                  [&rlist](size_t a, size_t b) {
+                    return rlist[a]->_path.size() > rlist[b]->_path.size();
+                  });
+
+        for (size_t idx : members) {
+          OBRing *ring = rlist[idx];
+          const vector<int> &path = ring->_path;
+          int n = static_cast<int>(path.size());
+          if (n <= 3) continue;
+
+          // Locate the back-edge (the unique missing path bond in workMol).
+          int backEdge = -1;
+          int missing = 0;
+          for (int i = 0; i < n; ++i) {
+            int j = (i + 1) % n;
+            if (workMol.GetBond(path[i], path[j]) == nullptr) {
+              backEdge = i;
+              if (++missing > 1) break;
+            }
+          }
+          // If the ring isn't a clean spanning-tree path (e.g. two back-edges
+          // landed in this ring of a fused system), try the next candidate.
+          if (missing != 1) continue;
+
+          // Rotate path so the missing bond sits between [n-1] and [0].
+          vector<int> walk(n);
+          for (int i = 0; i < n; ++i)
+            walk[i] = path[(backEdge + 1 + i) % n];
+
+          // Aromatic or all-sp2 rings prefer planar geometry; otherwise
+          // 180 - 720/n gives the ideal chair (n=6 -> 60) or crown.
+          bool planar = ring->IsAromatic();
+          if (!planar) {
+            planar = true;
+            for (int v : walk) {
+              if (workMol.GetAtom(v)->GetHyb() != 2) {
+                planar = false;
+                break;
+              }
+            }
+          }
+          // Crown's 180 - 720/n asymptotes to anti for n > 24, so
+          // beyond that we hand off to Dale's diamond-lattice
+          // torsion sequence instead.
+          std::vector<double> daleTors;
+          double crownTorsion = 0.0;
+          if (!planar && n <= 24) {
+            crownTorsion = DEG_TO_RAD * (180.0 - 720.0 / double(n));
+          } else if (!planar) {
+            daleTors = OBDaleTorsions(n);
+            if (daleTors.empty())
+              continue;
+          }
+
+          double sign = 1.0;
+          for (int i = 3; i < n; ++i) {
+            double phi;
+            if (!daleTors.empty()) {
+              phi = daleTors[i - 2];
+            } else {
+              phi = sign * crownTorsion;
+              sign = -sign;
+            }
+            workMol.SetTorsion(workMol.GetAtom(walk[i - 3]),
+                               workMol.GetAtom(walk[i - 2]),
+                               workMol.GetAtom(walk[i - 1]),
+                               workMol.GetAtom(walk[i]),
+                               phi);
+          }
+          break; // one ring per system
+        }
+      }
     }
 
     // Make sure we keep the bond indexes the same

@@ -96,7 +96,8 @@ if (DO_PYTHON_BINDINGS)
 	if( "${PYTHON_INSTDIR}" STREQUAL "" )
           execute_process(
             COMMAND
-           ${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+           ${Python_EXECUTABLE} -c "import sysconfig
+print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}', 'platbase': '${CMAKE_INSTALL_PREFIX}'}))"
             OUTPUT_VARIABLE PYTHON_INSTDIR
             OUTPUT_STRIP_TRAILING_WHITESPACE
           )
@@ -124,7 +125,8 @@ if (DO_PYTHON_BINDINGS)
             SUFFIX .pyd )
         execute_process(
           COMMAND
-	  ${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+	  ${Python_EXECUTABLE} -c "import sysconfig
+print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}', 'platbase': '${CMAKE_INSTALL_PREFIX}'}))"
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
