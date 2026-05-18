@@ -3932,8 +3932,13 @@ namespace OpenBabel
         bonds.erase(bonds.begin() + bi);
         OBAtom *bgn = bond->GetBeginAtom();
         OBAtom *end = bond->GetEndAtom();
-        int blockb = BLOCKS[bgn->GetAtomicNum()];
-        int blocke = BLOCKS[end->GetAtomicNum()];;
+        // _ele is an unsigned char (0..255), but BLOCKS only covers known
+        // elements (Z<=112). Treat anything outside the table as block 0
+        // so the heuristics below leave the bond as a plain single bond.
+        unsigned int zb = bgn->GetAtomicNum();
+        unsigned int ze = end->GetAtomicNum();
+        int blockb = (zb < sizeof(BLOCKS)/sizeof(BLOCKS[0])) ? BLOCKS[zb] : 0;
+        int blocke = (ze < sizeof(BLOCKS)/sizeof(BLOCKS[0])) ? BLOCKS[ze] : 0;
         pair<int, int> lb = bgn->LewisAcidBaseCounts();
         pair<int, int> le = end->LewisAcidBaseCounts();
         int chg = 0; // Amount to adjust atom charges

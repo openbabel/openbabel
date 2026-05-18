@@ -400,16 +400,22 @@ namespace OpenBabel {
     
     //Set elements array
     vector< pair<string, unsigned int> > atypes_def;
-    string last_atom_smb = "";
+    // Sentinel must not match any real OBElements::GetSymbol() output,
+    // including "" returned for out-of-table atomic numbers (Z > NUMELEMENTS).
+    // Previously initialized to "" so a first atom with empty symbol skipped
+    // the push_back and then dereferenced atypes_def[-1].
+    bool first = true;
+    string last_atom_smb;
     for(map<aindx, OBAtom *>::const_iterator it = amap.begin(); it != amap.end(); ++it)
     {
       string curr_atom_smb = OpenBabel::OBElements::GetSymbol(it->second->GetAtomicNum());
-      if( last_atom_smb != curr_atom_smb )
-      {  
+      if( first || last_atom_smb != curr_atom_smb )
+      {
+        first = false;
         last_atom_smb = curr_atom_smb;
         atypes_def.push_back( pair<string, unsigned int>(curr_atom_smb, 0) );
       }
-      atypes_def[atypes_def.size() - 1].second++;
+      atypes_def.back().second++;
     }
 
     // write number of atoms

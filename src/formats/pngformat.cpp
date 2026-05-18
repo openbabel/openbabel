@@ -355,7 +355,18 @@ bool PNGFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       formatID.erase(pos);
   }
   else //if no param on -xO option, format is input format
-    formatID = pConv->GetInFormat()->GetID();
+  {
+    OBFormat *inFormat = pConv->GetInFormat();
+    if (!inFormat) // e.g. writing directly via OBConversion::WriteString
+    {
+      obErrorLog.ThrowError("PNG Format",
+                            "No input format set; use -xO to specify which "
+                            "format to embed in the PNG tEXt chunk.",
+                            obError);
+      return false;
+    }
+    formatID = inFormat->GetID();
+  }
   if(!conv2.SetOutFormat(OBConversion::FindFormat(formatID)))
   {
     obErrorLog.ThrowError("PNG Format","Format not found", obError);

@@ -32,10 +32,12 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/plugin.h>
 
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 using namespace OpenBabel;
@@ -368,6 +370,43 @@ void casePointGroupNullParent()
                             "methane-pointgroup.g09"));
 }
 
+// Write a high-atomic-number SMILES through every registered writable
+// format. The original report was a global-buffer-overflow in
+// OBMol::ConvertZeroBonds(), where the 113-entry BLOCKS[] table was
+// indexed by GetAtomicNum() — an unsigned char that can hold any value
+// up to 255. Similar off-table assumptions can lurk in other writers,
+// so we don't care whether each writer succeeds; we only require that
+// none crashes or trips a sanitizer on out-of-table elements.
+static void writeHighZToAllFormats(const string &smiles)
+{
+  OBConversion readConv;
+  OB_ASSERT(readConv.SetInFormat("smi"));
+
+  OBMol mol;
+  OB_ASSERT(readConv.ReadString(&mol, smiles));
+
+  vector<string> formats;
+  OBPlugin::ListAsVector("formats", "ids", formats);
+  OB_ASSERT(!formats.empty());
+
+  for (const string &id : formats) {
+    OBConversion conv;
+    if (!conv.SetOutFormat(id.c_str()))
+      continue; // not writable (NOTWRITABLE flag), or unknown
+    // We only care that this doesn't crash. Result string, return value,
+    // and per-format warnings are all irrelevant.
+    (void)conv.WriteString(&mol);
+  }
+}
+
+void caseHighZSmilesToAllFormats()
+{
+  // Two disconnected atoms (so we exercise both single-atom and multi-
+  // atom code paths) plus a third high-Z atom bonded to a normal one
+  // (so writers that walk bonds also see an off-table neighbour).
+  writeHighZToAllFormats("[#129].[#250].C[#200]");
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -464,6 +503,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 26:
     casePointGroupNullParent();
+    break;
+  case 27:
+    caseHighZSmilesToAllFormats();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
