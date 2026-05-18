@@ -312,14 +312,23 @@ namespace OpenBabel {
       //    vid[i] = 0;
       vid[i] = OBGraphSym::NoSymmetryClass;
       if (_frag_atoms.BitIsSet(atom->GetIdx())) {
-        vid[i] =
-          v[i]                                                    // 10 bits: graph-theoretical distance
-          | (GetHvyDegree(atom)                <<10)  //  4 bits: heavy valence
-          | (((atom->IsAromatic()) ? 1 : 0)                <<14)  //  1 bit:  aromaticity
-          | (((ring_atoms.BitIsSet(atom->GetIdx())) ? 1 : 0)<<15)  //  1 bit:  ring atom
-          | (atom->GetAtomicNum()                          <<16)  //  7 bits: atomic number
-          | (GetHvyBondSum(atom)               <<23)  //  4 bits: heavy bond sum
-          | ((7 + atom->GetFormalCharge())                 <<27); //  4 bits: formal charge
+        // Mask each field to its bit width so a pathological input (e.g.
+        // formal charge outside -7..+8, or Z > 127) cannot bleed into the
+        // next field or trigger UB from a left shift overflowing int.
+        unsigned int dist    = static_cast<unsigned int>(v[i]) & 0x3FFu;       // 10 bits
+        unsigned int hvyDeg  = GetHvyDegree(atom)              & 0xFu;        //  4 bits
+        unsigned int aro     = atom->IsAromatic() ? 1u : 0u;                  //  1 bit
+        unsigned int ring    = ring_atoms.BitIsSet(atom->GetIdx()) ? 1u : 0u; //  1 bit
+        unsigned int z       = atom->GetAtomicNum()            & 0x7Fu;       //  7 bits
+        unsigned int hvyBond = GetHvyBondSum(atom)             & 0xFu;        //  4 bits
+        unsigned int charge  = static_cast<unsigned int>(7 + atom->GetFormalCharge()) & 0xFu; // 4 bits
+        vid[i] = dist
+               | (hvyDeg  << 10)
+               | (aro     << 14)
+               | (ring    << 15)
+               | (z       << 16)
+               | (hvyBond << 23)
+               | (charge  << 27);
       }
       i++;
     }

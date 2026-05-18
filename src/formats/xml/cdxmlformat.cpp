@@ -336,12 +336,14 @@ Boundary ChemDrawXMLFormat::CalculateMoleculeBoundary(OBMol* pMol)
     atomYs.push_back(patom->GetY());
   }
 
-  Boundary bd = {
-    *min_element(atomXs.begin(), atomXs.end()),
-    *max_element(atomXs.begin(), atomXs.end()),
-    *min_element(atomYs.begin(), atomYs.end()),
-    *max_element(atomYs.begin(), atomYs.end()),
-  };
+  Boundary bd = {0.0, 0.0, 0.0, 0.0};
+  if (!atomXs.empty())
+  {
+    bd.xMin = *min_element(atomXs.begin(), atomXs.end());
+    bd.xMax = *max_element(atomXs.begin(), atomXs.end());
+    bd.yMin = *min_element(atomYs.begin(), atomYs.end());
+    bd.yMax = *max_element(atomYs.begin(), atomYs.end());
+  }
 
   return bd;
 }

@@ -249,11 +249,8 @@ private:
     int  ix[MAXFRAGS],conntab[MAXBONDS][4],cx[MAXFRAGS];
     int  mx[MAXFRAGS];
 
-	//stack overflow message-move data from stack to heap
-	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS,sizeof(char));
-    for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) calloc(MAXFRAGS,sizeof(int));
-
-    // depth = recursion level
+    // depth = recursion level — bail before any allocation so the early
+    // return path doesn't leak strngs[]/nsum[] (each call allocs ~800B).
     if (depth > 10)
     {
         printf("Ten recursion levels exceeded.\n");
@@ -262,6 +259,10 @@ private:
     }
     if (depth > maxdepth)
         maxdepth = depth;
+
+	//stack overflow message-move data from stack to heap
+	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS,sizeof(char));
+    for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) calloc(MAXFRAGS,sizeof(int));
 
     for (i=0; i<nbonds; i++)
     {

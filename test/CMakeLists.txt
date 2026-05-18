@@ -39,7 +39,7 @@ set(carspacegroup_parts 1 2 3 4)
 set(cifspacegroup_parts 1 2 3 4 5 6 7 8 9 10 11 12 13)
 set(cistrans_parts 1 2 3 4 5 6 7 8 9)
 set(conversion_parts 1)
-set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26)
+set(fuzzregress_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27)
 set(graphsym_parts 1 2 3 4 5)
 set(gzip_parts 1)
 set(addh_parts 1)
@@ -370,6 +370,10 @@ add_executable(fuzz_smart fuzz/fuzz_smart.cpp ${_fuzz_extra_src})
 target_link_libraries(fuzz_smart ${libs} ${_fuzz_main_lib})
 set_target_properties(fuzz_smart PROPERTIES CXX_STANDARD 17)
 
+add_executable(fuzz_empty_write fuzz/fuzz_empty_write.cpp ${_fuzz_extra_src})
+target_link_libraries(fuzz_empty_write ${libs} ${_fuzz_main_lib})
+set_target_properties(fuzz_empty_write PROPERTIES CXX_STANDARD 17)
+
 #add_executable(fuzz_depict fuzz/fuzz_depict.cpp ${_fuzz_extra_src})
 #target_link_libraries(fuzz_depict ${libs} ${_fuzz_main_lib})
 #set_target_properties(fuzz_depict PROPERTIES CXX_STANDARD 17)
@@ -378,7 +382,7 @@ set_target_properties(fuzz_smart PROPERTIES CXX_STANDARD 17)
 # the glob at configure time, so dropping a new file into the corpus
 # directory and re-running cmake is enough to register a new test.
 if(NOT DEFINED ENV{LIB_FUZZING_ENGINE})
-  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles fuzz_molecule fuzz_smart) #fuzz_depict
+  set(_fuzz_targets fuzz_convert fuzz_obconversion_sdf fuzz_obconversion_smiles fuzz_molecule fuzz_smart fuzz_empty_write) #fuzz_depict
   foreach(_target ${_fuzz_targets})
     file(GLOB _corpus_files CONFIGURE_DEPENDS
       "${CMAKE_CURRENT_SOURCE_DIR}/fuzz/corpus/${_target}/*")

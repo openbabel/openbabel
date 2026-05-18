@@ -511,42 +511,99 @@ namespace OpenBabel
       cout << (*i)->_pathset << endl;
   }
 
-  /* A recursive O(N) traversal of the molecule */
-  static int FindRings(OBAtom *atom, int *avisit, unsigned char *bvisit,
-                       unsigned int &frj, int depth)
+  /* O(N) DFS traversal of the molecule. Uses an explicit heap-allocated
+     stack rather than recursion so deep/long acyclic chains (fuzzed or
+     real, e.g. a 100k-atom polymer) can't overflow the C stack. The
+     algorithm is unchanged: descend on unvisited bonds, recording each
+     atom's depth; treat a bond to an already-visited atom as a ring
+     closure (set Closure + InRing, bump frj); on the way back, propagate
+     the minimum closure depth and mark the atom InRing iff some closure
+     reaches at or above it. */
+  static int FindRings(OBAtom *root, int *avisit, unsigned char *bvisit,
+                       unsigned int &frj, int rootDepth)
   {
-    OBBond *bond;
-    int result = -1;
-    vector<OBBond*>::iterator k;
-    for(bond = atom->BeginBond(k);bond;bond=atom->NextBond(k)) {
-      unsigned int bidx = bond->GetIdx();
-      if (bvisit[bidx] == 0) {
-        bvisit[bidx] = 1;
-        OBAtom *nbor = bond->GetNbrAtom(atom);
-        unsigned int nidx = nbor->GetIdx();
-        int nvisit = avisit[nidx];
-        if (nvisit == 0) {
-          avisit[nidx] = depth+1;
-          nvisit = FindRings(nbor,avisit,bvisit,frj,depth+1);
-          if (nvisit > 0) {
-            if (nvisit <= depth) {
-              bond->SetInRing();
-              if (result < 0 || nvisit < result)
-                result = nvisit;
-            }
-          }
-        } else {
-          if (result < 0 || nvisit < result)
-            result = nvisit;
-          bond->SetClosure();
-          bond->SetInRing();
-          frj++;
-        }
-      }
+    struct Frame {
+      OBAtom *atom;
+      int depth;
+      int result;
+      vector<OBBond*>::iterator it;
+      OBBond *bond; // bond currently being processed (also the one
+                    // awaiting the child's return value when we recurse)
+    };
+
+    std::vector<Frame> stack;
+    stack.reserve(64);
+
+    {
+      Frame f;
+      f.atom = root;
+      f.depth = rootDepth;
+      f.result = -1;
+      f.bond = root->BeginBond(f.it);
+      stack.push_back(f);
     }
-    if (result > 0 && result <= depth)
-      atom->SetInRing();
-    return result;
+
+    int childResult = 0;
+    bool returning = false;
+
+    while (!stack.empty()) {
+      Frame &cur = stack.back();
+
+      if (returning) {
+        // childResult is the recursive call's return value for cur.bond's neighbor
+        returning = false;
+        int nvisit = childResult;
+        if (nvisit > 0 && nvisit <= cur.depth) {
+          cur.bond->SetInRing();
+          if (cur.result < 0 || nvisit < cur.result)
+            cur.result = nvisit;
+        }
+        cur.bond = cur.atom->NextBond(cur.it);
+      }
+
+      bool recursed = false;
+      while (cur.bond) {
+        OBBond *bond = cur.bond;
+        unsigned int bidx = bond->GetIdx();
+        if (bvisit[bidx] == 0) {
+          bvisit[bidx] = 1;
+          OBAtom *nbor = bond->GetNbrAtom(cur.atom);
+          unsigned int nidx = nbor->GetIdx();
+          int nvisit = avisit[nidx];
+          if (nvisit == 0) {
+            avisit[nidx] = cur.depth + 1;
+            Frame nf;
+            nf.atom = nbor;
+            nf.depth = cur.depth + 1;
+            nf.result = -1;
+            nf.bond = nbor->BeginBond(nf.it);
+            // push_back may invalidate `cur`; we don't touch it again before break
+            stack.push_back(nf);
+            recursed = true;
+            break;
+          } else {
+            if (cur.result < 0 || nvisit < cur.result)
+              cur.result = nvisit;
+            bond->SetClosure();
+            bond->SetInRing();
+            frj++;
+          }
+        }
+        cur.bond = cur.atom->NextBond(cur.it);
+      }
+
+      if (recursed)
+        continue;
+
+      // done with this atom's bonds
+      if (cur.result > 0 && cur.result <= cur.depth)
+        cur.atom->SetInRing();
+      childResult = cur.result;
+      returning = true;
+      stack.pop_back();
+    }
+
+    return childResult;
   }
 
   static unsigned int FindRingAtomsAndBonds2(OBMol &mol)

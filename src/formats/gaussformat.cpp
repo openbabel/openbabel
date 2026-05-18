@@ -631,8 +631,10 @@ namespace OpenBabel
               }
             // done with reading atoms
             natoms = mol.NumAtoms();
-            if(natoms==0)
+            if(natoms==0) {
+              delete confData;
               return false;
+            }
             // malloc / memcpy
             double *tmpCoords = new double [(natoms)*3];
             memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
@@ -1273,6 +1275,7 @@ namespace OpenBabel
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
+      delete confData;
       return false;
     }
 
