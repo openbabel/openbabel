@@ -470,6 +470,12 @@ namespace OpenBabel
         // Double the pool to keep insertion amortized O(1); the previous
         // linear growth was O(N^2) and made large fuzzer inputs time out.
         int oldalloc = pat->aalloc;
+        if( oldalloc > INT_MAX/2 )
+          {
+            // Would overflow on doubling — leave aalloc untouched and bail.
+            FatalAllocationError("atom pool");
+            return -1;
+          }
         pat->aalloc = oldalloc ? oldalloc * 2 : ATOMPOOL;
         if( pat->atom )
           {
@@ -502,6 +508,11 @@ namespace OpenBabel
     if( pat->bcount == pat->balloc )
       {
         int oldalloc = pat->balloc;
+        if( oldalloc > INT_MAX/2 )
+          {
+            FatalAllocationError("bond pool");
+            return -1;
+          }
         pat->balloc = oldalloc ? oldalloc * 2 : BONDPOOL;
         if( pat->bond )
           {
