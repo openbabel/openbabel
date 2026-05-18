@@ -1783,13 +1783,13 @@ namespace OpenBabel {
               charge--; // handle [O--]
             if (charge == 0) {
               while (isdigit(*_ptr)) { // handle [O-2]
-                // Bound magnitude before multiplying so a pathological
-                // run of digits cannot overflow int (UB).
+                charge = charge * 10 - ((*_ptr++) - '0');
+                // Reject magnitudes beyond ±999 — also bounds the value
+                // well within int range so the next multiply can't overflow.
                 if (charge < -999) {
                   obErrorLog.ThrowError(__FUNCTION__, "Charge value out of range", obWarning);
                   return false;
                 }
-                charge = charge * 10 - ((*_ptr++) - '0');
               }
               if (charge == 0) // handle [Cl-]
                 charge = -1;
@@ -1807,11 +1807,11 @@ namespace OpenBabel {
               charge++; // handle [Ca++]
             if (charge == 0) {
               while (isdigit(*_ptr)) { // handle [Ca+2]
+                charge = charge * 10 + ((*_ptr++) - '0');
                 if (charge > 999) {
                   obErrorLog.ThrowError(__FUNCTION__, "Charge value out of range", obWarning);
                   return false;
                 }
-                charge = charge * 10 + ((*_ptr++) - '0');
               }
               if (charge == 0) // handle [Na+]
                 charge = 1;
