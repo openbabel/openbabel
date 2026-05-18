@@ -627,9 +627,11 @@ namespace OpenBabel
           break;
         if (line.substr(0, 6) == "S  SKP") {
           int i = ReadUIntField((line.substr(6, line.size() - 6)).c_str());
-          for(; i > 0; --i)
-            if (ifs.good()) // check for EOL, suggested by Dalke
-              std::getline(ifs, line);
+          for(; i > 0; --i) {
+            if (!ifs.good()) // stop once the stream is exhausted; otherwise
+              break;         // a huge skip count busy-loops to timeout
+            std::getline(ifs, line);
+          }
         }
 
         if (line.substr(0, 3) == "A  " && line.size() > 3) { //alias
