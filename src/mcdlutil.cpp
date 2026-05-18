@@ -518,7 +518,7 @@ namespace OpenBabel {
     k1=nv;
     k1=k1-currvalence-abs(nc)-rl;
     if (k1<0) k1=0;
-    k2=hVal[na];
+    k2=(na >= 0 && na < NELEMMCDL) ? hVal[na] : 0;
     k2=k2-currvalence-abs(nc)-rl;
     if (k2<0) k2=0;
     if (k1 == k2) result=0; else if (k1 < k2) result=1; else result=2;
