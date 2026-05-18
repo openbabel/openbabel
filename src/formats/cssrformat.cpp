@@ -103,17 +103,20 @@ namespace OpenBabel
     OBAtom *atom,*nbr;
     vector<OBAtom*>::iterator i;
     vector<OBBond*>::iterator j;
-    vector<int> vtmp(106,0);
+    vector<int> vtmp(119,0);
     int bonds;
 
     for(atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
         //assign_pdb_number(pdb_types,atom->GetIdx());
-        vtmp[atom->GetAtomicNum()]++;
+        unsigned int atomicNum = atom->GetAtomicNum();
+        if (atomicNum >= vtmp.size())
+          atomicNum = 0;
+        vtmp[atomicNum]++;
         snprintf(buffer, BUFF_SIZE, "%4d%2s%-3d  %9.5f %9.5f %9.5f ",
                  atom->GetIdx(),
-                 OBElements::GetSymbol(atom->GetAtomicNum()),
-                 vtmp[atom->GetAtomicNum()],
+                 OBElements::GetSymbol(atomicNum),
+                 vtmp[atomicNum],
                  atom->x(),
                  atom->y(),
                  atom->z());
