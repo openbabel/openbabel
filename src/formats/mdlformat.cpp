@@ -640,17 +640,17 @@ namespace OpenBabel
           //and the alias is ignored if the line starts with ? or * or is blank .
           std::getline(ifs, line);
           if(!line.empty() && line.at(0) != '?' && line.at(0) != '*') {
-            AliasData* ad = new AliasData();
-            ad->SetAlias(line);
-            ad->SetOrigin(fileformatInput);
             OBAtom* at = mol.GetAtom(atomnum);
             if (at) { // dkoes - only expand wild cards
+              AliasData* ad = new AliasData();
+              ad->SetAlias(line);
+              ad->SetOrigin(fileformatInput);
               at->SetData(ad);
               //at->SetAtomicNum(0); Now leave element as found
               //The alias has now been added as a dummy atom with a AliasData object.
               //Delay the chemical interpretation until the rest of the molecule has been built
               //dkoes - only expand alias if referenced atom is wild card
-              //this is necessary since this field is used to store atom names (at least in the PDB)              
+              //this is necessary since this field is used to store atom names (at least in the PDB)
               if(at->GetAtomicNum() == 0)
                 aliases.push_back(make_pair(ad, at));
             }
