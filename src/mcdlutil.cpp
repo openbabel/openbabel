@@ -3237,7 +3237,9 @@ namespace OpenBabel {
         l2=ab[aList[0]];
         if (n > 1) for (i=1; i<n; i++) {
             l3=ab[aList[i]];
-            l3=l3 << (i*i2);
+            // Shift in unsigned to avoid signed overflow UB — this is a
+            // fingerprint hash, so wraparound is the desired behavior.
+            l3=static_cast<int>(static_cast<unsigned int>(l3) << (i*i2));
             l2=l2 ^ l3;
           };
         l3=0;
