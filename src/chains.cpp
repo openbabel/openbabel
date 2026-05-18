@@ -885,12 +885,12 @@ namespace OpenBabel
 
       if (atomids[i] == -1) {
         symbol = OBElements::GetSymbol(atom->GetAtomicNum());
-        if ( symbol[1] ) {
+        if ( symbol[0] && symbol[1] ) {
           buffer[0] = symbol[0];
           buffer[1] = (char) toupper(symbol[1]);
         } else {
           buffer[0] = ' ';
-          buffer[1] = symbol[0];
+          buffer[1] = symbol[0] ? symbol[0] : ' ';
         }
         buffer[2] = ' ';
         buffer[3] = ' ';
