@@ -1659,14 +1659,19 @@ namespace OpenBabel
     OBAtom *atom;
     int index=1;
     vector<OBAtom*>::iterator i;
+    // Use fixed-point formatting to avoid scientific notation for near-zero
+    // coordinates (e.g. 2.22045e-16). Higher precision for true 3D coords.
+    const char* coordFmt = (mol.GetDimension() == 3) ? "%.6f %.6f %.6f"
+                                                    : "%.4f %.4f %.4f";
     for (atom = mol.BeginAtom(i);atom;atom = mol.NextAtom(i))
       {
+        char coords[64];
+        snprintf(coords, sizeof(coords), coordFmt,
+                 atom->GetX(), atom->GetY(), atom->GetZ());
         ofs     << "M  V30 "
                 << index++ << " "
                 << OBElements::GetSymbol(atom->GetAtomicNum()) << " "
-                << atom->GetX() << " "
-                << atom->GetY() << " "
-                << atom->GetZ()
+                << coords
                 << " 0";
         if(atom->GetFormalCharge()!=0)
           ofs << " CHG=" << atom->GetFormalCharge();
