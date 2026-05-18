@@ -18,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "obtest.h"
+#include "stereo_test_helpers.h"
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/stereo/stereo.h>
@@ -33,38 +34,11 @@ GNU General Public License for more details.
 using namespace std;
 using namespace OpenBabel;
 
-// Convert a 3D OBMol to canonical SMILES by doing a full SDF roundtrip so
-// that StereoFrom3D is invoked and the SMILES reflects the 3D stereo.
-static string canSmiFrom3D(OBMol& mol3D)
-{
-  OBConversion conv;
-  conv.SetInAndOutFormats("sdf", "can");
-
-  ostringstream sdfBuf;
-  conv.SetOutFormat("sdf");
-  conv.Write(&mol3D, &sdfBuf);
-
-  OBMol mol2D;
-  conv.SetInFormat("sdf");
-  istringstream iss(sdfBuf.str());
-  conv.Read(&mol2D, &iss);
-
-  conv.SetOutFormat("can");
-  string result = conv.WriteString(&mol2D, true);
-  // trim trailing newlines/whitespace
-  while (!result.empty() && (result.back() == '\n' || result.back() == '\r' || result.back() == '\t'))
-    result.pop_back();
-  return result;
-}
-
-// Read SMILES, get canonical form, generate 3D with distance geometry,
-// do SDF roundtrip to force 3D stereo perception, compare canonical SMILES.
-// Returns true if stereo is preserved.
+#ifdef HAVE_EIGEN3
 // Verify only that GetGeometry produces non-zero 3D coordinates.
 // Use this when stereo cannot be verified via SMILES roundtrip (e.g. ring
 // double bonds that StereoFrom3D doesn't perceive, or bridged bicyclics
 // where the embedding is too slow to retry to convergence).
-#ifdef HAVE_EIGEN3
 static bool doDistGeomCoordsTest(const string& smiles)
 {
   cout << " Testing coords: " << smiles << endl;
@@ -89,6 +63,8 @@ static bool doDistGeomCoordsTest(const string& smiles)
   return true;
 }
 
+// Generate 3D with distance geometry, then do an SDF roundtrip to force
+// 3D stereo perception and verify the canonical SMILES matches the input.
 static bool doDistGeomStereoTest(const string& smiles)
 {
   cout << " Testing: " << smiles << endl;
@@ -290,6 +266,28 @@ int distgeomtest(int argc, char* argv[])
     // exceeds the 30 s wall-clock limit.  Coordinate generation is tested
     // via gen3dtest (builder path) instead.
     OB_ASSERT( doDistGeomCoordsTest("OC[C@H]1O[C@@H](Oc2ccc(N=Nc3ccccc3)cc2)[C@H](O)[C@@H](O)[C@@H]1O[C@@H]1O[C@H](CO)[C@H](O)[C@H](O)[C@H]1O") );
+    break;
+
+  case 20:
+    // Stereoisomer coverage.  Distgeom's stereo constraints are built from
+    // the input @/@@ markers; an enantiomer or diastereomer of a tested
+    // SMILES must still embed to non-zero coordinates and round-trip back
+    // to the same canonical SMILES.  This guards against rigid-fragment
+    // or template paths that quietly assume a specific stereoisomer.
+    {
+      const char* inputs[] = {
+        "OC[C@H]([C@H](S)CC)C",                // 2 stereocenters
+        "C[C@H]([C@@H](C(=O)O)N)O",            // L-threonine
+        "[C@@H]([C@H](C(=O)O)O)(C(=O)O)O",     // L-tartaric acid
+        "C[C@H]([C@@H](C)O)O",                 // butane-2,3-diol
+      };
+      for (const char* smi : inputs) {
+        OB_ASSERT( doDistGeomStereoTest(smi) );
+        OB_ASSERT( doDistGeomStereoTest(makeEnantiomer(smi)) );
+        if (countChirality(smi) >= 2)
+          OB_ASSERT( doDistGeomStereoTest(makeDiastereomer(smi, 0)) );
+      }
+    }
     break;
 
   default:

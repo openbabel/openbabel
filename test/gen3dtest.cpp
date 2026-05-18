@@ -19,6 +19,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 
 #include "obtest.h"
+#include "stereo_test_helpers.h"
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/op.h>
@@ -29,29 +30,6 @@ GNU General Public License for more details.
 
 using namespace std;
 using namespace OpenBabel;
-
-// Convert a 3D OBMol to canonical SMILES by doing a full SDF roundtrip so
-// that StereoFrom3D is invoked and the SMILES reflects the 3D stereo.
-static string canSmiFrom3D(OBMol& mol3D)
-{
-  OBConversion conv;
-  conv.SetInAndOutFormats("sdf", "can");
-
-  ostringstream sdfBuf;
-  conv.SetOutFormat("sdf");
-  conv.Write(&mol3D, &sdfBuf);
-
-  OBMol mol2D;
-  conv.SetInFormat("sdf");
-  istringstream iss(sdfBuf.str());
-  conv.Read(&mol2D, &iss);
-
-  conv.SetOutFormat("can");
-  string result = conv.WriteString(&mol2D, true);
-  while (!result.empty() && (result.back() == '\n' || result.back() == '\r' || result.back() == '\t'))
-    result.pop_back();
-  return result;
-}
 
 // Read SMILES, apply gen3D op at the given speed level, verify 3D
 // coordinates are generated and non-zero.  If checkStereo is true,
@@ -169,6 +147,30 @@ int gen3dtest(int argc, char* argv[])
                             "3", false) ); // aminoglycoside
     OB_ASSERT( doGen3DTest("C1[C@@H](NC(=N[C@H]1O)N)[C@@H](C(=O)O)N",
                             "3", false) ); // cyclic arginine analog
+    break;
+
+  case 6:
+    // Stereoisomer coverage.  The rigid-fragment template library used by
+    // OBBuilder stores specific stereoisomers; the wrong enantiomer or
+    // diastereomer could in principle drop through to a zero-coordinate
+    // result.  For each input, exercise the original, its enantiomer
+    // (every @ flipped), and one diastereomer (a single @ flipped), and
+    // verify both non-zero coordinates and stereo retention through the
+    // SDF round-trip.
+    {
+      const char* inputs[] = {
+        "OC[C@H]([C@H](S)CC)C",                // 2 stereocenters
+        "C[C@H]([C@@H](C(=O)O)N)O",            // L-threonine
+        "[C@@H]([C@H](C(=O)O)O)(C(=O)O)O",     // L-tartaric acid
+        "C1CC[C@H]2[C@@H](C1)CCCC2",           // cis-decalin (ring stereo)
+      };
+      for (const char* smi : inputs) {
+        OB_ASSERT( doGen3DTest(smi) );
+        OB_ASSERT( doGen3DTest(makeEnantiomer(smi)) );
+        if (countChirality(smi) >= 2)
+          OB_ASSERT( doGen3DTest(makeDiastereomer(smi, 0)) );
+      }
+    }
     break;
 
   default:

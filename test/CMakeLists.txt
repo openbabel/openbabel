@@ -75,12 +75,13 @@ if(TARGET Eigen3::Eigen)
   # All excluded cases are covered by gen3dtest via the builder path.
   if(NOT OB_OPTIMIZED_BUILD)
     # Skip slow tests in unoptimized builds (Debug, sanitizer builds, etc.)
-    set(distgeom_parts 1 2 3 4 5)
-    set(gen3d_parts 1 2 3 4)
+    # Part 6/20 (stereoisomer coverage) uses small molecules and is fast.
+    set(distgeom_parts 1 2 3 4 5 20)
+    set(gen3d_parts 1 2 3 4 6)
   else()
     # In optimized builds, include comprehensive test coverage
-    set(distgeom_parts 1 2 3 4 5 6 7 8 9 10 11 12 14 17 18)
-    set(gen3d_parts 1 2 3 4 5)
+    set(distgeom_parts 1 2 3 4 5 6 7 8 9 10 11 12 14 17 18 20)
+    set(gen3d_parts 1 2 3 4 5 6)
   endif()
 endif()
 
