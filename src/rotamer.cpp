@@ -60,10 +60,10 @@ namespace OpenBabel
       std::vector<int> rotorKey(rl.Size() + 1, 0);
 
       // each entry represents the configuration of a rotor
-      // e.g. indexes into OBRotor::GetResolution() -- the different angles
+      // e.g. indexes into OBRotor::GetTorsionValues() -- the different angles
       //   to sample for a rotamer search
       for (unsigned int i = 0; i < rl.Size() + 1; ++i)
-      rotorKey[i] = 0; // could be anything from 0 .. OBRotor->GetResolution().size()
+      rotorKey[i] = 0; // could be anything from 0 .. OBRotor->GetTorsionValues().size()
       // -1 is for no rotation
 
       // The OBRotamerList can generate conformations (i.e., coordinate sets)
@@ -229,7 +229,7 @@ namespace OpenBabel
         atomlist[3] = mol.GetAtom(ref[3]);
         mol.FindChildren(children,ref[1],ref[2]);
         _vrotor.push_back(pair<OBAtom**,vector<int> > (atomlist,children));
-        _vres.push_back(rotor->GetResolution());
+        _vres.push_back(rotor->GetTorsionValues());
       }
 
     // if the rotor list has ring bonds, build up an index

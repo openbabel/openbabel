@@ -415,9 +415,9 @@ namespace OpenBabel {
       for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
         if (generator.UniformInt(0, m_mutability - 1) == 0) {
 #if !OB_USE_OBRANDOMMT
-          rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u);
+          rotorKey[i] = generator.UniformInt(0, rotor->GetTorsionValues().size() - 1u);
 #else
-          rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+          rotorKey[i] = generator.UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
 #endif
         }
       }
@@ -490,9 +490,9 @@ namespace OpenBabel {
           for (unsigned int i = 1; i < m_rotorList.Size() + 1; ++i, rotor = m_rotorList.NextRotor(ri)) {
             if (generator.UniformInt(0, m_mutability - 1) == 0) {
 #if !OB_USE_OBRANDOMMT
-              rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u); // permutate gene
+              rotorKey[i] = generator.UniformInt(0, rotor->GetTorsionValues().size() - 1u); // permutate gene
 #else
-              rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u); // permutate gene
+              rotorKey[i] = generator.UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u); // permutate gene
 #endif
             }
           }
@@ -814,9 +814,9 @@ namespace OpenBabel {
         neighbor = best;
         do {
 #if !OB_USE_OBRANDOMMT
-          new_val = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+          new_val = d->UniformInt(0, rotor->GetTorsionValues().size() - 1u);
 #else
-          new_val = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+          new_val = d->UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
 #endif
         } while (new_val == best[i]);
         neighbor[i] = new_val;
@@ -926,16 +926,16 @@ namespace OpenBabel {
       {
         if (d->UniformInt(0, m_mutability - 1) == 0) {
 #if !OB_USE_OBRANDOMMT
-          key1[i] = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+          key1[i] = d->UniformInt(0, rotor->GetTorsionValues().size() - 1u);
 #else
-          key1[i] = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+          key1[i] = d->UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
 #endif
         }
         if (d->UniformInt(0, m_mutability - 1) == 0) {
 #if !OB_USE_OBRANDOMMT
-          key2[i] = d->UniformInt(0, rotor->GetResolution().size() - 1u);
+          key2[i] = d->UniformInt(0, rotor->GetTorsionValues().size() - 1u);
 #else
-          key2[i] = d->UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+          key2[i] = d->UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
 #endif
         }
       }

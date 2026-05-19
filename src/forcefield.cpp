@@ -1190,7 +1190,7 @@ namespace OpenBabel
       unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
-        combinations *= rotor->GetResolution().size();
+        combinations *= rotor->GetTorsionValues().size();
       }
       snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
@@ -1210,7 +1210,7 @@ namespace OpenBabel
     OBRotorKeys rotorKeys;
     rotor = rl.BeginRotor(ri);
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
-      rotorKeys.AddRotor(rotor->GetResolution().size());
+      rotorKeys.AddRotor(rotor->GetTorsionValues().size());
 
     rotamers.AddRotamer(rotorKeys.GetKey());
     while (rotorKeys.Next())
@@ -1369,7 +1369,7 @@ namespace OpenBabel
 
         minE = DBL_MAX;
 
-        for (j = 0; j < rotor->GetResolution().size(); j++) { // For each rotor position
+        for (j = 0; j < rotor->GetTorsionValues().size(); j++) { // For each rotor position
           // Note: we could do slightly better by skipping the rotor position we already
           //       tested in the last loop (position 0 at the moment). Note that this
           //       isn't as simple as just changing the loop starting point to j = 1.
@@ -1458,7 +1458,7 @@ namespace OpenBabel
       unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
-        combinations *= rotor->GetResolution().size();
+        combinations *= rotor->GetTorsionValues().size();
       }
       snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
@@ -1484,9 +1484,9 @@ namespace OpenBabel
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
 #if !OB_USE_OBRANDOMMT
-        rotorKey[i] = generator.UniformInt(0, rotor->GetResolution().size() - 1u);
+        rotorKey[i] = generator.UniformInt(0, rotor->GetTorsionValues().size() - 1u);
 #else
-        rotorKey[i] = generator.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+        rotorKey[i] = generator.UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
 #endif
       }
       rotamers.AddRotamer(rotorKey);
@@ -1644,7 +1644,7 @@ namespace OpenBabel
       unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
-        combinations *= rotor->GetResolution().size();
+        combinations *= rotor->GetTorsionValues().size();
       }
       snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
@@ -1694,7 +1694,7 @@ namespace OpenBabel
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       // foreach rotor
       energies.clear();
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+      for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
         // foreach rotor position
         _mol.SetCoordinates(initialCoord);
         rotorKey[i] = j;
@@ -1721,16 +1721,16 @@ namespace OpenBabel
       weightSet.clear();
       // first loop through and calculate the relative populations from Boltzmann
       double totalPop = 0.0;
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+      for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
         currentE = energies[j];
         // add back the Boltzmann population for these relative energies at 300K (assuming kJ/mol)
         energies[j] = exp(-1.0*fabs(currentE - bestE) / 2.5);
         totalPop += energies[j];
       }
       // now set the weights
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+      for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
         if (IsNear(worstE, bestE, 1.0e-3))
-          weight = 1 / rotor->GetResolution().size();
+          weight = 1 / rotor->GetTorsionValues().size();
         else
           weight = energies[j]/totalPop;
         weightSet.push_back(weight);
@@ -1769,7 +1769,7 @@ namespace OpenBabel
 
         randFloat = generator.UniformReal(0.0, 1.0);
         total = 0.0;
-        for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+        for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
           if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
             rotorKey[i] = j;
             break;

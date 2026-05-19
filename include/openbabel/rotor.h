@@ -751,7 +751,7 @@ namespace OpenBabel
       OBRotorIterator ri;
       OBRotor *rotor = rl.BeginRotor(ri);
       for (int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
-        rotorKeys.AddRotor(rotor->GetResolution().size());
+        rotorKeys.AddRotor(rotor->GetTorsionValues().size());
       }
 
       while (rotorKeys.Next()) {
