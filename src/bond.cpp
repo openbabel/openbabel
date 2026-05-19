@@ -121,7 +121,7 @@ namespace OpenBabel
     v2 = fixed->GetVector();
     v3 = v1 - v2;
 
-    if (IsNearZero(v3.length_2())) { // too small to normalize, move the atoms apart
+    if (fabs(v3.length_2()) < 2e-6) { // too small to normalize, move the atoms apart
       obErrorLog.ThrowError(__FUNCTION__,
                             "Atoms are both at the same location, moving out of the way.", obWarning);
       v3.randomUnitVector();

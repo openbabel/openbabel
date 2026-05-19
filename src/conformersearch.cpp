@@ -660,7 +660,7 @@ namespace OpenBabel {
       if (i == 0)
         last_score = score;
 
-      if (IsNear(last_score, score)) {
+      if (fabs(last_score - score) < 2e-6) {
         identicalGenerations++;
         last_score = score;
       } else {

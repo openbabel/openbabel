@@ -176,9 +176,9 @@ int main(int argc,char **argv)
       alpha = M_PI/2.0f - atan(v.z() / sqrt(v.y()*v.y() + v.x()*v.x()) );
     }
 
-  if ( !IsNearZero(alpha) ||
-       !IsNearZero(beta)  ||
-       !IsNearZero(gamma) )
+  if ( fabs(alpha) >= 2e-6 ||
+       fabs(beta)  >= 2e-6 ||
+       fabs(gamma) >= 2e-6 )
     {
       matrix3x3 mat;
       mat.SetupRotMat(alpha*RAD_TO_DEG, beta*RAD_TO_DEG, gamma*RAD_TO_DEG);

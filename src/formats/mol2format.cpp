@@ -369,7 +369,7 @@ namespace OpenBabel
           atom.SetFormalCharge((int)pcharge);
         if (!mol.AddAtom(atom))
           return(false);
-        if (!IsNearZero(pcharge))
+        if (fabs(pcharge) >= 2e-6)
           hasPartialCharges = true;
 
         // Add residue information if it exists

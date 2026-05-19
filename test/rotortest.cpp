@@ -93,7 +93,7 @@ void testOBRotorSetToAngle()
   // rotate
   rotor.SetToAngle(mol->GetCoordinates(), 60.0 * DEG_TO_RAD);
 
-  OB_ASSERT(IsNear(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 60.0, 1.0));
+  OB_ASSERT(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()) - 60.0) < 1.0);
 }
 
 void testOBRotorSetRotor()
@@ -131,13 +131,13 @@ void testOBRotorSetRotor()
 
   // rotate to 0.0 radians
   rotor.SetRotor(mol->GetCoordinates(), 0);
-  OB_ASSERT(IsNear(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 0.0, 1.0));
+  OB_ASSERT(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()) - 0.0) < 1.0);
   // rotate to 3.1415 radians
   rotor.SetRotor(mol->GetCoordinates(), 1);
   OB_ASSERT(IsNear_mod(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 180.0, 360.0, 1.0));
    // rotate to 0.0 radians
   rotor.SetRotor(mol->GetCoordinates(), 0, 1);
-  OB_ASSERT(IsNear(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()), 0.0, 1.0)); 
+  OB_ASSERT(fabs(RAD_TO_DEG * rotor.CalcTorsion(mol->GetCoordinates()) - 0.0) < 1.0);
 }
 
 

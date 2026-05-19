@@ -1729,7 +1729,7 @@ namespace OpenBabel
       }
       // now set the weights
       for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
-        if (IsNear(worstE, bestE, 1.0e-3))
+        if (fabs(worstE - bestE) < 1.0e-3)
           weight = 1 / rotor->GetTorsionValues().size();
         else
           weight = energies[j]/totalPop;
@@ -2372,7 +2372,7 @@ namespace OpenBabel
 
       // convergence criteria: A higher precision here
       // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-3))
+      if (fabs(e_n2 - e_n1) < 1.0e-3)
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
@@ -2427,7 +2427,7 @@ namespace OpenBabel
       sum += direction[c] * direction[c];
 
     double scale = sqrt(sum);
-    if (IsNearZero(scale)) {
+    if (fabs(scale) < 2e-6) {
       //      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
       scale = 1.0e-70; // try to avoid "division by zero" conditions
     }
@@ -2543,7 +2543,7 @@ namespace OpenBabel
 
       // convergence criteria: A higher precision here
       // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-3)) {
+      if (fabs(e_n2 - e_n1) < 1.0e-3) {
         alpha += step;
         break;
       }
@@ -2661,7 +2661,7 @@ namespace OpenBabel
         OBFFLog(_logbuf);
       }
 
-      if (IsNear(e_n2, e_n1, 1.0e-7)) {
+      if (fabs(e_n2 - e_n1) < 1.0e-7) {
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 1.0e-7)\n");
         break;
@@ -2729,7 +2729,7 @@ namespace OpenBabel
           OBFFLog(_logbuf);
         }
 
-        if (IsNear(e_n2, e_n1, 1.0e-7)) {
+        if (fabs(e_n2 - e_n1) < 1.0e-7) {
           IF_OBFF_LOGLVL_LOW
             OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 1.0e-7)\n");
           break;
@@ -2842,7 +2842,7 @@ namespace OpenBabel
         }
       }
 
-      if (IsNear(e_n2, _e_n1, _econv)
+      if (fabs(e_n2 - _e_n1) < _econv
           && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
@@ -3043,7 +3043,7 @@ namespace OpenBabel
       if ((_cstep % _pairfreq == 0) && _cutoff)
         UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
 
-      if (IsNear(e_n2, _e_n1, _econv)
+      if (fabs(e_n2 - _e_n1) < _econv
           && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
@@ -3647,7 +3647,7 @@ namespace OpenBabel
     double length2 = v2.length();
 
     // test if the vector has length larger than 0 and normalize it
-    if (IsNearZero(length1) || IsNearZero(length2)) {
+    if (fabs(length1) < 2e-6 || fabs(length2) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3664,7 +3664,7 @@ namespace OpenBabel
     // and normalize it.
     vector3 c1 = cross(v1, v2);
     double length = c1.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3714,7 +3714,7 @@ namespace OpenBabel
     l_ij = VectorLength(ij);
     l_jk = VectorLength(jk);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk)) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3730,7 +3730,7 @@ namespace OpenBabel
     double c1[3];
     VectorCross(ij, jk, c1);
     double length = VectorLength(c1);
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3784,7 +3784,7 @@ namespace OpenBabel
     l_ij = VectorLength(ij);
     l_jk = VectorLength(jk);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk)) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6) {
       return 0.0;
     }
 
@@ -3797,7 +3797,7 @@ namespace OpenBabel
     double c1[3];
     VectorCross(ij, jk, c1);
     double length = VectorLength(c1);
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       return 0.0;
     }
 
@@ -3832,7 +3832,7 @@ namespace OpenBabel
     // calculate normalized bond vectors from central atom to outer atoms:
     delta = i - j;
     length = delta.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3848,7 +3848,7 @@ namespace OpenBabel
 
     delta = k - j;
     length = delta.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3864,7 +3864,7 @@ namespace OpenBabel
 
     delta = l - j;
     length = delta.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3887,7 +3887,7 @@ namespace OpenBabel
     const double cos_theta = dot(ji, jk);
     const double theta = acos(cos_theta);
     // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+    if (fabs(theta) < 2e-6 || fabs(theta - M_PI) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3902,7 +3902,7 @@ namespace OpenBabel
     const double dl = asin(sin_dl);
 
     // In case: wilson angle equals 0 or 180 degree: do nothing
-    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
+    if (fabs(dl) < 2e-6 || fabs(dl - M_PI) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3944,7 +3944,7 @@ namespace OpenBabel
     VectorSubtract(pos_i, pos_j, ji);
     // store length of this bond:
     const double length_ji = VectorLength(ji);
-    if (IsNearZero(length_ji)) {
+    if (fabs(length_ji) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3957,7 +3957,7 @@ namespace OpenBabel
 
     VectorSubtract(pos_k, pos_j, jk);
     const double length_jk = VectorLength(jk);
-    if (IsNearZero(length_jk)) {
+    if (fabs(length_jk) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3968,7 +3968,7 @@ namespace OpenBabel
 
     VectorSubtract(pos_l, pos_j, jl);
     const double length_jl = VectorLength(jl);
-    if (IsNearZero(length_jl)) {
+    if (fabs(length_jl) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3986,7 +3986,7 @@ namespace OpenBabel
     const double cos_theta = VectorDot(ji, jk);
     const double theta = acos(cos_theta);
     // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+    if (fabs(theta) < 2e-6 || fabs(theta - M_PI) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -4001,7 +4001,7 @@ namespace OpenBabel
     const double dl = asin(sin_dl);
 
     // In case: wilson angle equals 0 or 180 degree: do nothing
-    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
+    if (fabs(dl) < 2e-6 || fabs(dl - M_PI) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -4062,7 +4062,7 @@ namespace OpenBabel
     VectorSubtract(pos_i, pos_j, ji);
     // store length of this bond:
     const double length_ji = VectorLength(ji);
-    if (IsNearZero(length_ji)) {
+    if (fabs(length_ji) < 2e-6) {
       return 0.0;
     }
     // store the normalized bond vector from central atom to outer atoms:
@@ -4071,14 +4071,14 @@ namespace OpenBabel
 
     VectorSubtract(pos_k, pos_j, jk);
     const double length_jk = VectorLength(jk);
-    if (IsNearZero(length_jk)) {
+    if (fabs(length_jk) < 2e-6) {
       return 0.0;
     }
     VectorDivide(jk, length_jk, jk);
 
     VectorSubtract(pos_l, pos_j, jl);
     const double length_jl = VectorLength(jl);
-    if (IsNearZero(length_jl)) {
+    if (fabs(length_jl) < 2e-6) {
       return 0.0;
     }
     VectorDivide(jl, length_jl, jl);
@@ -4092,7 +4092,7 @@ namespace OpenBabel
     const double cos_theta = VectorDot(ji, jk);
     const double theta = acos(cos_theta);
     // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+    if (fabs(theta) < 2e-6 || fabs(theta - M_PI) < 2e-6) {
       return 0.0;
     }
 
@@ -4125,7 +4125,7 @@ namespace OpenBabel
     l_jk = jk.length();
     l_kl = kl.length();
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6 || fabs(l_kl) < 2e-6 ) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -4190,7 +4190,7 @@ namespace OpenBabel
     l_jk = VectorLength(jk);
     l_kl = VectorLength(kl);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6 || fabs(l_kl) < 2e-6 ) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -4280,7 +4280,7 @@ namespace OpenBabel
     const double l_jk = VectorLength(jk);
     const double l_kl = VectorLength(kl);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6 || fabs(l_kl) < 2e-6 ) {
       return 0.0;
     }
 
