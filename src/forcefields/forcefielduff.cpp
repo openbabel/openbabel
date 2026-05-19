@@ -266,7 +266,7 @@ namespace OpenBabel {
 
       double dotAbbcBccd = dot(abbc,bccd);
       tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+      if (fabs(dotAbbcBccd) < 2e-6 || !isfinite(tor)) { // stop any NaN or infinity
         tor = 1.0e-3; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
@@ -516,7 +516,7 @@ namespace OpenBabel {
     } else
       rab = a->GetDistance(b);
 
-    if (IsNearZero(rab, 1.0e-3))
+    if (fabs(rab) < 1.0e-3)
       rab = 1.0e-3;
 
     energy = qq / rab;
@@ -1330,7 +1330,7 @@ namespace OpenBabel {
         }
       }
 
-      if (IsNearZero(torsioncalc.V)) // don't bother calcuating this torsion
+      if (fabs(torsioncalc.V) < 2e-6) // don't bother calcuating this torsion
         continue;
 
       // still need to implement special case of sp2-sp3 with sp2-sp2

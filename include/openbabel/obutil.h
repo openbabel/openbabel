@@ -181,21 +181,20 @@ namespace OpenBabel
   //! Comparison -- returns true if first parameter less than second
   //! \return True if @p a < @p b, False otherwise.
   OBAPI bool OBCompareUnsigned(const unsigned int &a,const unsigned int &b);
-  /*! "Safe" comparison for floats/doubles: returns fabs(a - b) < epsilon
-   * This function really doesn't make any sense w.r.t. floating-point
-   * representation, so you should never use it. It is provided only for
-   * backwards compatibility.
-   * \deprecated Use IsApprox() instead
+  /*! Absolute-tolerance comparison for floats/doubles: returns fabs(a - b) < epsilon
+   * Provided for backwards compatibility. For relative-tolerance comparisons,
+   * see IsApprox(); for absolute checks, prefer an inline std::fabs(a - b) < eps.
+   * \deprecated Prefer std::fabs(a - b) < eps (absolute) or IsApprox() (relative)
    */
-  OB_DEPRECATED_MSG("Use IsApprox() instead")
+  OB_DEPRECATED_MSG("Prefer std::fabs(a - b) < eps, or IsApprox() for relative comparisons")
   OBAPI bool IsNear(const double &, const double &, const double epsilon=2e-6);
-  /*! "Safe" comparison for floats/doubles: true if a is less than epsilon
-   * This function really doesn't make any sense w.r.t. floating-point
-   * representation, so you should never use it. It is provided only for
-   * backwards compatibility.
-   * \deprecated
+  /*! Absolute-tolerance comparison against zero: returns fabs(a) < epsilon
+   * Provided for backwards compatibility. Prefer an inline std::fabs(a) < eps.
+   * Note: IsApprox(a, 0.0) is not a valid replacement; the relative
+   * tolerance collapses to zero when one operand is zero.
+   * \deprecated Prefer std::fabs(a) < eps
    */
-  OB_DEPRECATED
+  OB_DEPRECATED_MSG("Prefer std::fabs(a) < eps")
   OBAPI bool IsNearZero(const double &, const double epsilon=2e-6);
   OBAPI bool IsNan(const double &);
   /**

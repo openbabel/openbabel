@@ -438,7 +438,7 @@ namespace OpenBabel
       rab = OBForceField::VectorDistance(pos_a, pos_b);
     }
 
-    if (IsNearZero(rab, 1.0e-3))
+    if (fabs(rab) < 1.0e-3)
       rab = 1.0e-3;
 
     energy = qq / rab;

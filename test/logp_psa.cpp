@@ -75,14 +75,14 @@ int logp_psa(int argc, char* argv[])
   obMol.AddHydrogens();
   
   logP = obLogP->Predict(&obMol);
-  if (IsNear(logP , 1.4008)) { // value from JOELib2
+  if (fabs(logP - 1.4008) < 2e-6) { // value from JOELib2
     cout << "ok 2 # " << logP << '\n';
   } else {
     cout << "not ok 2 # " << logP << '\n';
   }
   
   psa = obPSA->Predict(&obMol);
-  if (IsNear(psa , 29.46)) { // value from JOELib2
+  if (fabs(psa - 29.46) < 2e-6) { // value from JOELib2
     cout << "ok 3 # " << psa << '\n';
   } else {
     cout << "not ok 3 # " << psa << '\n';
@@ -92,14 +92,14 @@ int logp_psa(int argc, char* argv[])
   obMol.AddHydrogens();
   
   logP = obLogP->Predict(&obMol);
-  if (IsNear(logP, 2.5815)) { // Value from JOELib2
+  if (fabs(logP - 2.5815) < 2e-6) { // Value from JOELib2
     cout << "ok 4 # " << logP << '\n';
   } else {
     cout << "not ok 4 # " << logP << '\n';
   }
   
   psa = obPSA->Predict(&obMol);
-  if (IsNear(psa, 0.0)) { // Value from JOELib2
+  if (fabs(psa - 0.0) < 2e-6) { // Value from JOELib2
     cout << "ok 5 # " << psa << '\n';
   } else {
     cout << "not ok 5 # " << psa << '\n';
@@ -109,14 +109,14 @@ int logp_psa(int argc, char* argv[])
   obMol.AddHydrogens();
   
   logP = obLogP->Predict(&obMol);
-  if (IsNear(logP, 2.0264)) { // JOELib2 = 1.9534, more H added on N
+  if (fabs(logP - 2.0264) < 2e-6) { // JOELib2 = 1.9534, more H added on N
     cout << "ok 6 # " << logP << '\n';
   } else {
     cout << "not ok 6 # " << logP << '\n';
   }
   
   psa = obPSA->Predict(&obMol);
-  if (IsNear(psa, 29.1)) { // Value from JOELib2
+  if (fabs(psa - 29.1) < 2e-6) { // Value from JOELib2
     cout << "ok 7 # " << psa << '\n';
   } else {
     cout << "not ok 7 # " << psa << '\n';

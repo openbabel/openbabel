@@ -95,15 +95,15 @@ int main(int argc,char *argv[])
       std::vector<int> rotorKey(rl.Size() + 1, 0);
 
       // each entry represents the configuration of a rotor
-      // e.g. indexes into OBRotor::GetResolution()
+      // e.g. indexes into OBRotor::GetTorsionValues()
       //       (the different angles to sample from the OBRotorRules database)
       OBRotorIterator ri;
       OBRotor *rotor = rl.BeginRotor(ri);
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
 #if !OB_USE_OBRANDOMMT
-        rotorKey[i] = rand.UniformInt(0, rotor->GetResolution().size() - 1u);
+        rotorKey[i] = rand.UniformInt(0, rotor->GetTorsionValues().size() - 1u);
 #else
-        rotorKey[i] = rand.UniformInt<int>(0, rotor->GetResolution().size() - 1u);
+        rotorKey[i] = rand.UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
 #endif
       }
 

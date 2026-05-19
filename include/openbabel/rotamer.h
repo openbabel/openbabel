@@ -41,7 +41,7 @@ namespace OpenBabel
     //! Individual bond rotors (from an OBRotor object or other)
     std::vector<std::pair<OBAtom**,std::vector<int> > > _vrotor;
     //! \brief Index of each rotor's different sampling states ("resolution")
-    //! Usually from OBRotor::GetResolution()
+    //! Usually from OBRotor::GetTorsionValues()
     std::vector<std::vector<double> >    _vres;
     //! Individual rotamer states (i.e., the array of rotor settings)
     std::vector<unsigned char*>          _vrotamer;
