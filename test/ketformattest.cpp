@@ -18,6 +18,7 @@ GNU General Public License for more details.
 
 #include <openbabel/alias.h>
 #include <openbabel/atom.h>
+#include <openbabel/elements.h>
 #include <openbabel/mol.h>
 #include <openbabel/obconversion.h>
 #include <openbabel/obiter.h>
@@ -67,10 +68,12 @@ string writeKetMinified(OBMol &mol)
     return conv.WriteString(&mol);
 }
 
-OBMol readKetString(const string &text)
+OBMol readKetString(const string &text, bool expandAliases = false)
 {
     OBConversion conv;
     OB_REQUIRE(conv.SetInFormat("ket"));
+    if (expandAliases)
+        conv.AddOption("a", OBConversion::INOPTIONS);
     OBMol mol;
     OB_REQUIRE(conv.ReadString(&mol, text));
     return mol;
@@ -447,7 +450,32 @@ void testAliasDataPreserved()
 }
 
 // ---------------------------------------------------------------------
-//  Entry point — the test harness uses cpptests=1..17 (see CMakeLists).
+// Test 18: the -ia read option expands chemically meaningful aliases.
+// ---------------------------------------------------------------------
+
+void testAliasExpansionOption()
+{
+    const string text =
+        "{\"root\":{\"nodes\":[{\"$ref\":\"mol0\"}]},"
+        "\"mol0\":{\"type\":\"molecule\","
+        "\"atoms\":[{\"label\":\"C\",\"location\":[0,0,0]},"
+        "{\"label\":\"*\",\"alias\":\"COOH\",\"location\":[1,0,0]}],"
+        "\"bonds\":[{\"type\":1,\"atoms\":[0,1]}]}}";
+    OBMol mol = readKetString(text, true);
+    OB_REQUIRE(mol.NumAtoms() == 4);
+    OB_REQUIRE(mol.NumBonds() == 3);
+    OB_ASSERT(mol.GetAtom(1)->GetAtomicNum() == OBElements::Carbon);
+    OB_ASSERT(mol.GetAtom(2)->GetAtomicNum() == OBElements::Carbon);
+    OB_ASSERT(mol.GetAtom(3)->GetAtomicNum() == OBElements::Oxygen);
+    OB_ASSERT(mol.GetAtom(4)->GetAtomicNum() == OBElements::Oxygen);
+    auto *ad = dynamic_cast<AliasData *>(mol.GetAtom(2)->GetData(AliasDataType));
+    OB_REQUIRE(ad != nullptr);
+    OB_ASSERT(ad->IsExpanded());
+    OB_ASSERT(ad->GetAlias() == "COOH");
+}
+
+// ---------------------------------------------------------------------
+//  Entry point — the test harness uses cpptests=1..18 (see CMakeLists).
 // ---------------------------------------------------------------------
 
 int ketformattest(int argc, char *argv[])
@@ -484,6 +512,7 @@ int ketformattest(int argc, char *argv[])
     case 15: testUnsupportedFutureKetVersionRejected(); break;
     case 16: testExplicitZeroImplicitHCountPreserved(); break;
     case 17: testAliasDataPreserved();             break;
+    case 18: testAliasExpansionOption();           break;
     default:
         cout << "Test number " << choice << " does not exist!\n";
         return -1;

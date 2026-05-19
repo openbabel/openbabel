@@ -249,6 +249,38 @@ class TestKetFormat(PybelWrapper):
         self.assertTrue(data)
         self.assertEqual(pybel.ob.toAliasData(data).GetAlias(), "COOH")
 
+    def test_atom_alias_expands_with_read_option(self):
+        """The -ia read option expands chemically meaningful KET atom aliases."""
+        text = json.dumps(
+            {
+                "root": {"nodes": [{"$ref": "mol0"}]},
+                "mol0": {
+                    "type": "molecule",
+                    "atoms": [
+                        {
+                            "label": "C",
+                            "location": [0.0, 0.0, 0.0],
+                        },
+                        {
+                            "label": "*",
+                            "alias": "COOH",
+                            "location": [1.0, 0.0, 0.0],
+                        }
+                    ],
+                    "bonds": [{"type": 1, "atoms": [0, 1]}],
+                },
+            }
+        )
+        mol = _readketstring(text, opt={"a": None})
+        self.assertEqual(mol.OBMol.NumAtoms(), 4)
+        self.assertEqual(mol.OBMol.NumBonds(), 3)
+        self.assertEqual(sorted(a.atomicnum for a in mol.atoms), [6, 6, 8, 8])
+        data = mol.atoms[1].OBAtom.GetData(pybel.ob.AliasDataType)
+        self.assertTrue(data)
+        alias = pybel.ob.toAliasData(data)
+        self.assertTrue(alias.IsExpanded())
+        self.assertEqual(alias.GetAlias(), "COOH")
+
     def test_round_trip_preserves_reaction(self):
         """A reaction KET stays a reaction after a round-trip."""
         mol = _readket("reaction.ket")[0]

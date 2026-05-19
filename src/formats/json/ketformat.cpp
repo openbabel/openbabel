@@ -555,9 +555,6 @@ public:
             }
         }
 
-        for (const auto &alias : aliasesToExpand_)
-            alias.first->Expand(*mol_, alias.second->GetIdx());
-
         // Flush accumulated S-group JSON to a single OBPairData (avoiding
         // O(N^2) re-parse+re-serialize that the naive append would cause).
         flushSGroupAccumulator();
@@ -579,6 +576,11 @@ public:
             StereoFrom2D(mol_);
         else
             StereoFrom3D(mol_);
+
+        // Alias expansion can delete and replace atoms, so keep it as the final
+        // reader mutation after all bookkeeping based on original KET indices.
+        for (const auto &alias : aliasesToExpand_)
+            alias.first->Expand(*mol_, alias.second->GetIdx());
 
         if (!passthrough_.empty())
             setPairData(mol_, kAttrKetPassthrough, passthrough_.serialize());
