@@ -1446,12 +1446,16 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
   string asym;
   string value=formulaString;
 
-  for (i = 0; i<NELEMMCDL; i++) enumber[i] = 0;
+  // enumber is sized NELEMMAX (120) by the caller, but NELEMMCDL is
+  // 121, so iterating to NELEMMCDL wrote one past the end on every
+  // call. Bound by the actual vector size instead.
+  const unsigned int nelem = enumber.size();
+  for (i = 0; i<nelem; i++) enumber[i] = 0;
 
   // n is unsigned; indexOf() returns -1 on miss, so `if (n>=0)` was
   // always true and the resulting substr() threw std::out_of_range.
   // Capture the result in a signed local for the presence test.
-  for (i = 1; i<NELEMMCDL; i++) if (strlen(OBElements::GetSymbol(i)) == 2) {
+  for (i = 1; i<nelem; i++) if (strlen(OBElements::GetSymbol(i)) == 2) {
       test=true;
     asym=OBElements::GetSymbol(i);
       while (test) {
@@ -1475,7 +1479,7 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
         };
       };
     };
-  for (i = 1; i<NELEMMCDL; i++) if (strlen(OBElements::GetSymbol(i)) == 1) {
+  for (i = 1; i<nelem; i++) if (strlen(OBElements::GetSymbol(i)) == 1) {
       test=true;
     asym=OBElements::GetSymbol(i);
       while (test) {
