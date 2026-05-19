@@ -213,7 +213,7 @@ namespace OpenBabel {
       if (!ff->Setup(mol))
         return 10e10;
     }
-    ff->ConjugateGradients(50);
+    ff->LBFGS(50);
     double score = ff->Energy(false); // no gradients
 
     // copy original coordinates back
@@ -246,7 +246,7 @@ namespace OpenBabel {
       if (!ff->Setup(mol))
         return 10e10;
     }
-    ff->ConjugateGradients(50);
+    ff->LBFGS(50);
     double score = ff->Energy(false); // no gradients
 
     // copy original coordinates back
