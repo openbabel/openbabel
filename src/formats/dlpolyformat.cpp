@@ -151,22 +151,25 @@ namespace OpenBabel
 
     bool ok;
     double x,y,z;
-    ifs.getline(buffer,BUFF_SIZE);
+    if ( ! ifs.getline(buffer,BUFF_SIZE) ) return false;
     tokenize(tokens, buffer, " \t\n");
+    if ( tokens.size() < 3 ) return false;
     ok = from_string<double>(x, tokens.at(0), std::dec);
     ok = from_string<double>(y, tokens.at(1), std::dec);
     ok = from_string<double>(z, tokens.at(2), std::dec);
     vector3 vx = vector3( x, y, z );
 
-    ifs.getline(buffer,BUFF_SIZE);
+    if ( ! ifs.getline(buffer,BUFF_SIZE) ) return false;
     tokenize(tokens, buffer, " \t\n");
+    if ( tokens.size() < 3 ) return false;
     ok = from_string<double>(x, tokens.at(0), std::dec);
     ok = from_string<double>(y, tokens.at(1), std::dec);
     ok = from_string<double>(z, tokens.at(2), std::dec);
     vector3 vy = vector3( x, y, z );
 
-    ifs.getline(buffer,BUFF_SIZE);
+    if ( ! ifs.getline(buffer,BUFF_SIZE) ) return false;
     tokenize(tokens, buffer, " \t\n");
+    if ( tokens.size() < 3 ) return false;
     ok = from_string<double>(x, tokens.at(0), std::dec);
     ok = from_string<double>(y, tokens.at(1), std::dec);
     ok = from_string<double>(z, tokens.at(2), std::dec);
@@ -200,8 +203,9 @@ namespace OpenBabel
     //std::cout << "Got Atom line " << buffer << std::endl;
 
     tokenize(tokens, buffer, " \t\n");
+    if ( tokens.empty() ) return false;
     AtomLabel = tokens.at(0);
-        
+
     // Currently we ignore atom index as it is optional - assume atoms are in order
     if ( tokens.size() >= 2 ) ok = from_string<int>(AtomIndex, tokens.at(1), std::dec);
 
@@ -210,10 +214,11 @@ namespace OpenBabel
         ok = from_string<int>(AtomicNumber, tokens.at(2), std::dec);
         if ( ! ok ) AtomicNumber=-1;
       }
-        
+
     // Got data so read in  coordinates on next line
     if ( !ifs.getline(buffer,BUFF_SIZE) ) return false;
     tokenize(tokens, buffer, " \t\n");
+    if ( tokens.size() < 3 ) return false;
     ok = from_string<double>(x, tokens.at(0), std::dec);
     ok = from_string<double>(y, tokens.at(1), std::dec);
     ok = from_string<double>(z, tokens.at(2), std::dec);
@@ -241,6 +246,7 @@ namespace OpenBabel
       {
         if ( !ifs.getline(buffer,BUFF_SIZE) ) return false;
         tokenize(tokens, buffer, " \t\n");
+        if ( tokens.size() < 3 ) return false;
         ok =  from_string<double>(x, tokens.at(0), std::dec);
         ok =  from_string<double>(y, tokens.at(1), std::dec);
         ok =  from_string<double>(z, tokens.at(2), std::dec);
