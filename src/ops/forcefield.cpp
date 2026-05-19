@@ -144,10 +144,17 @@ namespace OpenBabel
           " options:         description:\n"
           " --log        output a log of the minimization process(default= no log)\n"
           " --crit #     set convergence criteria (default=1e-6)\n"
+#ifdef HAVE_EIGEN3
           " --sd         use steepest descent algorithm (default = L-BFGS)\n"
           " --cg         use conjugate gradients algorithm (default = L-BFGS)\n"
           " --lbfgs      use L-BFGS algorithm (the default; flag is for explicit selection)\n"
-          " --newton     use Newton2Num linesearch (default = Simple); ignored for L-BFGS\n"
+          " --newton     use Newton2Num linesearch (default); ignored for L-BFGS\n"
+#else
+          // no L-BFGS (will fall back to CG if requested)
+          " --sd         use steepest descent algorithm (default = CG)\n"
+          " --cg         use conjugate gradients algorithm (default)\n"
+          " --newton     use Newton2Num linesearch (default)\n"
+#endif
           " --ff #       select a forcefield (default = MMFF94)\n"
           " --steps #    specify the maximum number of steps (default = 2500)\n"
           " --cut        use cut-off (default = don't use cut-off)\n"
