@@ -48,7 +48,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.ncbi.nlm.nih.gov/Sitemap/samplerecord.html";} //optional
+    { return "https://www.ncbi.nlm.nih.gov/genbank/samplerecord/"; }
     // Genbank itself is here: http://www.ncbi.nlm.nih.gov/Genbank/
     // European EMBL-Bank is here: http://www.ebi.ac.uk/embl/
     // Japanese DDBJ is here: http://www.ddbj.nig.ac.jp/
@@ -121,9 +121,13 @@ namespace OpenBabel
         if (pmol->GetTitle()[0] == 0)
           {
           std::string::size_type fc = line.find(' ');
-          while (fc != std::string::npos && strchr(" \t\n\r", line[fc]))
+          // strchr(" \t\n\r", '\0') matches the needle's own terminator, so
+          // without the fc < line.size() guard a trailing-whitespace line
+          // walked fc past the buffer and read out of bounds.
+          while (fc != std::string::npos && fc < line.size()
+                 && strchr(" \t\n\r", line[fc]))
             ++ fc;
-          if (fc != std::string::npos)
+          if (fc != std::string::npos && fc < line.size())
             pmol->SetTitle( & (line.c_str()[fc]) );
           }
         }

@@ -266,7 +266,7 @@ namespace OpenBabel {
 
       double dotAbbcBccd = dot(abbc,bccd);
       tor = acos(dotAbbcBccd / (abbc.length() * bccd.length()));
-      if (IsNearZero(dotAbbcBccd) || !isfinite(tor)) { // stop any NaN or infinity
+      if (fabs(dotAbbcBccd) < 2e-6 || !isfinite(tor)) { // stop any NaN or infinity
         tor = 1.0e-3; // rather than NaN
       }
       else if (dotAbbcBccd > 0.0) {
@@ -516,7 +516,7 @@ namespace OpenBabel {
     } else
       rab = a->GetDistance(b);
 
-    if (IsNearZero(rab, 1.0e-3))
+    if (fabs(rab) < 1.0e-3)
       rab = 1.0e-3;
 
     energy = qq / rab;
@@ -982,6 +982,9 @@ namespace OpenBabel {
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
+      // Cached AngleData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr)
+        continue;
 
       // skip this angle if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx())
@@ -1147,18 +1150,18 @@ namespace OpenBabel {
       anglecalc.zk = parameterC->_dpar[5];
 			// Precompute the force constant
 			bondPtr = _mol.GetBond(a,b);
-			bondorder = bondPtr->GetBondOrder();
-      if (bondPtr->IsAromatic())
+			bondorder = (bondPtr != nullptr) ? bondPtr->GetBondOrder() : 1;
+      if (bondPtr != nullptr && bondPtr->IsAromatic())
         bondorder = 1.5;
-      if (bondPtr->IsAmide())
+      if (bondPtr != nullptr && bondPtr->IsAmide())
         bondorder = 1.41;
 			rab = CalculateBondDistance(parameterA, parameterB, bondorder);
 
 			bondPtr = _mol.GetBond(b,c);
-			bondorder = bondPtr->GetBondOrder();
-      if (bondPtr->IsAromatic())
+			bondorder = (bondPtr != nullptr) ? bondPtr->GetBondOrder() : 1;
+      if (bondPtr != nullptr && bondPtr->IsAromatic())
         bondorder = 1.5;
-      if (bondPtr->IsAmide())
+      if (bondPtr != nullptr && bondPtr->IsAmide())
         bondorder = 1.41;
 			rbc = CalculateBondDistance(parameterB, parameterC, bondorder);
 			rac = sqrt(rab*rab + rbc*rbc - 2.0 * rab*rbc*anglecalc.cosT0);
@@ -1201,6 +1204,9 @@ namespace OpenBabel {
       b = _mol.GetAtom((*t)[1] + 1);
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
+      // Cached TorsionData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr || d == nullptr)
+        continue;
 
       // skip this torsion if the atoms are ignored
       if ( _constraints.IsIgnored(a->GetIdx()) || _constraints.IsIgnored(b->GetIdx()) ||
@@ -1220,6 +1226,8 @@ namespace OpenBabel {
       }
 
       OBBond *bc = _mol.GetBond(b, c);
+      if (bc == nullptr)
+        continue;
       torsiontype = bc->GetBondOrder();
       if (bc->IsAromatic())
         torsiontype = 1.5;
@@ -1322,7 +1330,7 @@ namespace OpenBabel {
         }
       }
 
-      if (IsNearZero(torsioncalc.V)) // don't bother calcuating this torsion
+      if (fabs(torsioncalc.V) < 2e-6) // don't bother calcuating this torsion
         continue;
 
       // still need to implement special case of sp2-sp3 with sp2-sp2

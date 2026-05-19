@@ -49,8 +49,9 @@ namespace OpenBabel
         " b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.qtp.ufl.edu/ACES/"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.qtp.ufl.edu/ACES/"; // XXX dead
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -84,8 +85,9 @@ namespace OpenBabel
         ;
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.qtp.ufl.edu/ACES/"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.qtp.ufl.edu/ACES/"; // XXX dead
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

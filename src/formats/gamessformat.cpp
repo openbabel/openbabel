@@ -56,7 +56,7 @@ namespace OpenBabel {
 
       // Optional
       const char* SpecificationURL() override {
-        return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
+        return "https://www.msg.chem.iastate.edu/gamess/documentation.html";
       }
 
       const char* GetMIMEType() override {
@@ -103,7 +103,7 @@ namespace OpenBabel {
 
       // Optional
       const char* SpecificationURL() override {
-        return "http://www.msg.ameslab.gov/GAMESS/doc.menu.html";
+        return "https://www.msg.chem.iastate.edu/gamess/documentation.html";
       }
 
       const char* GetMIMEType() override {
@@ -259,12 +259,14 @@ namespace OpenBabel {
 
       if (strstr(buffer, "ICHARG=")) {
         tokenize(vs, (strstr(buffer, "ICHARG=")));
-        charge=atoi(vs[1].c_str());
+        if (vs.size() >= 2)
+          charge = atoi(vs[1].c_str());
       }
 
       if (strstr(buffer, "MULT ")) {
         tokenize(vs, (strstr(buffer, "MULT ")));
-        mult=atoi(vs[2].c_str());
+        if (vs.size() >= 3)
+          mult = atoi(vs[2].c_str());
       }
 
       if (strstr(buffer, "ATOMIC                      COORDINATES (BOHR)") != nullptr) {

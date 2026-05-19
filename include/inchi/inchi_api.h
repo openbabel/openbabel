@@ -1,49 +1,48 @@
 /*
  * International Chemical Identifier (InChI)
  * Version 1
- * Software version 1.04
- * September 9, 2011
+ * Software version 1.07
+ * April 30, 2024
  *
- * The InChI library and programs are free software developed under the
+ * MIT License
+ *
+ * Copyright (c) 2024 IUPAC and InChI Trust
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+*
+* The InChI library and programs are free software developed under the
  * auspices of the International Union of Pure and Applied Chemistry (IUPAC).
- * Originally developed at NIST. Modifications and additions by IUPAC 
- * and the InChI Trust.
+ * Originally developed at NIST.
+ * Modifications and additions by IUPAC and the InChI Trust.
+ * Some portions of code were developed/changed by external contributors
+ * (either contractor or volunteer) which are listed in the file
+ * 'External-contributors' included in this distribution.
  *
- * IUPAC/InChI-Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0.
- * Copyright (C) IUPAC and InChI Trust Limited
- * 
- * This library is free software; you can redistribute it and/or modify it under the 
- * terms of the IUPAC/InChI Trust Licence for the International Chemical Identifier 
- * (InChI) Software version 1.0; either version 1.0 of the License, or 
- * (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
- * See the IUPAC/InChI Trust Licence for the International Chemical Identifier (InChI) 
- * Software version 1.0 for more details.
- * 
- * You should have received a copy of the IUPAC/InChI Trust Licence for the 
- * International Chemical Identifier (InChI) Software version 1.0 along with 
- * this library; if not, write to:
- * 
- * The InChI Trust
- * c/o FIZ CHEMIE Berlin
- * Franklinstrasse 11
- * 10587 Berlin
- * GERMANY
- * 
- */
+ * info@inchi-trust.org
+ *
+*/
 
 
-#ifndef __INHCH_API_H__
-#define __INHCH_API_H__
+#ifndef _INHCH_API_H_
+#define _INHCH_API_H_
 
 
-
-
-/*^^^ Post-1.02b fix - thanks to David Foss */
 #ifndef FIND_RING_SYSTEMS
 #define FIND_RING_SYSTEMS 1
 #endif
@@ -52,37 +51,39 @@
 #endif
 
 
+#ifndef FIX_DOCANON_RETCODE_RESET_BUG
+#define FIX_DOCANON_RETCODE_RESET_BUG 1
+#endif
+
 /* radical definitions */
 typedef enum tagINCHIRadical {
-   INCHI_RADICAL_NONE    = 0,
-   INCHI_RADICAL_SINGLET = 1,
-   INCHI_RADICAL_DOUBLET = 2,
-   INCHI_RADICAL_TRIPLET = 3
+    INCHI_RADICAL_NONE = 0,
+    INCHI_RADICAL_SINGLET = 1,
+    INCHI_RADICAL_DOUBLET = 2,
+    INCHI_RADICAL_TRIPLET = 3
 } inchi_Radical;
 
 /* bond type definitions */
 typedef enum tagINCHIBondType {
-   INCHI_BOND_TYPE_NONE    =  0,
-   INCHI_BOND_TYPE_SINGLE  =  1,
-   INCHI_BOND_TYPE_DOUBLE  =  2,
-   INCHI_BOND_TYPE_TRIPLE  =  3,
-   INCHI_BOND_TYPE_ALTERN  =  4  /* avoid by all means */
+    INCHI_BOND_TYPE_NONE = 0,
+    INCHI_BOND_TYPE_SINGLE = 1,
+    INCHI_BOND_TYPE_DOUBLE = 2,
+    INCHI_BOND_TYPE_TRIPLE = 3,
+    INCHI_BOND_TYPE_ALTERN = 4  /* avoid by all means */
 } inchi_BondType;
-/* 2D stereo definitions */
 typedef enum tagINCHIBondStereo2D {
    /* stereocenter-related; positive: the sharp end points to this atom  */
-   INCHI_BOND_STEREO_NONE           =  0,
-   INCHI_BOND_STEREO_SINGLE_1UP     =  1,
-   INCHI_BOND_STEREO_SINGLE_1EITHER =  4,
-   INCHI_BOND_STEREO_SINGLE_1DOWN   =  6,
-   /* stereocenter-related; negative: the sharp end points to the opposite atom  */
-   INCHI_BOND_STEREO_SINGLE_2UP     = -1,
-   INCHI_BOND_STEREO_SINGLE_2EITHER = -4,
-   INCHI_BOND_STEREO_SINGLE_2DOWN   = -6,
-   /* stereobond-related */
-   INCHI_BOND_STEREO_DOUBLE_EITHER  =  3 /* unknown stereobond geometry */
+    INCHI_BOND_STEREO_NONE = 0,
+    INCHI_BOND_STEREO_SINGLE_1UP = 1,
+    INCHI_BOND_STEREO_SINGLE_1EITHER = 4,
+    INCHI_BOND_STEREO_SINGLE_1DOWN = 6,
+    /* stereocenter-related; negative: the sharp end points to the opposite atom  */
+    INCHI_BOND_STEREO_SINGLE_2UP = -1,
+    INCHI_BOND_STEREO_SINGLE_2EITHER = -4,
+    INCHI_BOND_STEREO_SINGLE_2DOWN = -6,
+    /* stereobond-related */
+    INCHI_BOND_STEREO_DOUBLE_EITHER = 3 /* unknown stereobond geometry */
 } inchi_BondStereo2D;
-
 /*************************************************************************
  * Notes on using INCHI_BOND_STEREO_SINGLE_*  from inchi_BondStereo2D    *
  *                                                                       *
@@ -120,7 +121,7 @@ typedef unsigned short U_SHORT;
 #define INCHI_US_SHORT_DEF
 #endif
 
-typedef  S_SHORT AT_NUM;            /* atom number; starts from 0 */
+typedef  S_SHORT AT_NUM;        /* atom number; starts from 0 */
 
 /*************************************************
  *
@@ -147,7 +148,7 @@ typedef struct tagInchiAtom {
                                   /* "H", "Si", etc. */
     AT_NUM  num_bonds;            /* number of neighbors, bond types and bond*/
                                   /* stereo in the adjacency list */
-    S_CHAR  num_iso_H[NUM_H_ISOTOPES+1]; /* implicit hydrogen atoms */
+    S_CHAR  num_iso_H[NUM_H_ISOTOPES + 1]; /* implicit hydrogen atoms */
                                   /* [0]: number of implicit non-isotopic H
                                        (exception: num_iso_H[0]=-1 means INCHI
                                        adds implicit H automatically),
@@ -292,37 +293,6 @@ typedef struct tagInchiAtom {
    ===========
    o Atoms A and B in allenes MUST be connected by a chain of double bonds;
 
-   ==============================================
-   Note. Correspondence to CML 0D stereo parities
-   ==============================================
-   a list of 4 atoms corresponds to CML atomRefs4
-
-   tetrahedral atom
-   ================
-       CML atomParity > 0 <=> INCHI_PARITY_EVEN
-       CML atomParity < 0 <=> INCHI_PARITY_ODD
-
-                                    | 1   1   1   1  |  where xW is x-coordinate of
-                                    | xW  xX  xY  xZ |  atom W, etc. (xyz is a
-       CML atomParity = determinant | yW  yX  yY  yZ |  'right-handed' Cartesian
-                                    | zW  zX  xY  zZ |  coordinate system)
-
-   allene (not yet defined in CML)
-   ===============================
-   the parity corresponds to the sign of the following determinant
-   in exactly same way as for tetrahedral atoms:
-
-       | 1   1   1   1  |  where bonds and neighbor[4] array are
-       | xX  xA  xB  xY |  same as defined above for allenes
-       | yX  yA  yB  yY |  Obviously, the parity is same for
-       | zX  zA  xB  zY |  {#X,#A,#B,#Y} and {#Y,#B,#A,#X}
-                           because of the even number of column permutations.
-
-   stereogenic double bond and (not yet defined in CML) cumulenes
-   ==============================================================
-       CML 'C' (cis)      <=> INCHI_PARITY_ODD
-       CML 'T' (trans)    <=> INCHI_PARITY_EVEN
-
 
    How InChI uses 0D parities
    ==========================
@@ -371,10 +341,10 @@ typedef struct tagInchiAtom {
 
    1) previously non-stereogenic bond may become stereogenic:
 
-         \     /                            \     /  
-          CH==CH          disconnection      CH==CH  
-           \ /               ======>                 
-            M                                  M     
+         \     /                            \     /
+          CH==CH          disconnection      CH==CH
+           \ /               ======>
+            M                                  M
 
      before the disconnection:    after the disconnection:
      atoms C have valence=5 and   the double bond may become
@@ -383,23 +353,23 @@ typedef struct tagInchiAtom {
 
    2) previously stereogenic bond may become non-stereogenic:
 
-       M                           M(+)       
-        \    /                             / 
-         N==C      disconnection    (-)N==C  
-             \        ======>              \ 
+       M                           M(+)
+        \    /                             /
+         N==C      disconnection    (-)N==C
+             \        ======>              \
 
    3) Oddball structures, usually resulting from projecting 3D
       structures on the plane, may contain fragment like that
       depicted on Fig. 5:
 
-              M   A                      M   A   
-              |\ /   B                      /   B 
-              | X   /     disconnection    /   /  
-              |/ \ /         ======>      /   /   
-              C===C                      C===C    
+              M   A                      M   A
+              |\ /   B                      /   B
+              | X   /     disconnection    /   /
+              |/ \ /         ======>      /   /
+              C===C                      C===C
              Fig. 5
      (X stands for bond intersection)
-    
+
      A-C=C-B parity is              A-C=C-B parity is
      trans (e)                      cis (o) or undefined
      because the bond               because C valence = 3,
@@ -409,7 +379,7 @@ typedef struct tagInchiAtom {
           A       M
            \     /     Removal of M from the structure
             C===C      on Fig. 5 changes the geometry from trans
-           /     \     to cis. 
+           /     \     to cis.
           M'      B    Removal of M and M' from the structure
           Fig. 6       on Fig. 6 does not change the A-C=C-B
                        geometry: it is trans.
@@ -435,20 +405,20 @@ typedef struct tagInchiAtom {
 
 /* 0D parity types */
 typedef enum tagINCHIStereoType0D {
-   INCHI_StereoType_None        = 0,
-   INCHI_StereoType_DoubleBond  = 1,
-   INCHI_StereoType_Tetrahedral = 2,
-   INCHI_StereoType_Allene      = 3
+    INCHI_StereoType_None = 0,
+    INCHI_StereoType_DoubleBond = 1,
+    INCHI_StereoType_Tetrahedral = 2,
+    INCHI_StereoType_Allene = 3
 } inchi_StereoType0D;
 
 /* 0D parities */
 typedef enum tagINCHIStereoParity0D {
-   INCHI_PARITY_NONE      = 0,
-   INCHI_PARITY_ODD       = 1,  /* 'o' */
-   INCHI_PARITY_EVEN      = 2,  /* 'e' */
-   INCHI_PARITY_UNKNOWN   = 3,  /* 'u' */ /* (see also readinch.c)
-                                          used in: Extract0DParities, INChITo_Atom  */
-   INCHI_PARITY_UNDEFINED = 4   /* '?' -- should not be used; however, see Note above */
+    INCHI_PARITY_NONE = 0,
+    INCHI_PARITY_ODD = 1,  /* 'o' */
+    INCHI_PARITY_EVEN = 2,  /* 'e' */
+    INCHI_PARITY_UNKNOWN = 3,  /* 'u' */ /* (see also readinch.c)
+                                           used in: Extract0DParities, InchiToAtom  */
+    INCHI_PARITY_UNDEFINED = 4   /* '?' -- should not be used; however, see Note above */
 } inchi_StereoParity0D;
 
 
@@ -482,24 +452,155 @@ typedef struct tagINCHIStereo0D {
  *************************************************/
 
 
-/* Structure -> InChI, GetINCHI() / GetStdINCHI() */
-typedef struct tagINCHI_Input {
-    /* the caller is responsible for the data allocation and deallocation */
-    inchi_Atom     *atom;         /* array of num_atoms elements */
-    inchi_Stereo0D *stereo0D;     /* array of num_stereo0D 0D stereo elements or NULL */
-    char           *szOptions;    /* InChI options: space-delimited; each is preceded by */
-                                  /* '/' or '-' depending on OS and compiler */
-    AT_NUM          num_atoms;    /* number of atoms in the structure < 1024 */
-    AT_NUM          num_stereo0D; /* number of 0D stereo elements */
+/*
+    Structure -> InChI
+
+    GetINCHI()
+    GetStdINCHI()
+    GetINCHIEx()
+
+*/
+
+
+typedef struct tagINCHI_Input
+{
+    /* the caller is responsible for the data allocation and deallocation               */
+    inchi_Atom     *atom;         /* array of num_atoms elements                        */
+    inchi_Stereo0D *stereo0D;     /* array of num_stereo0D 0D stereo elements or NULL   */
+    char           *szOptions;    /* InChI options: space-delimited; each is preceded by*/
+                                  /* '/' or '-' depending on OS and compiler            */
+    AT_NUM          num_atoms;    /* number of atoms in the structure < MAX_ATOMS       */
+    AT_NUM          num_stereo0D; /* number of 0D stereo elements                       */
 }inchi_Input;
 
-/* InChI -> Structure, GetStructFromINCHI()/GetStructFromStdINCHI() */
-typedef struct tagINCHI_InputINCHI {
-    /* the caller is responsible for the data allocation and deallocation */
-    char *szInChI;     /* InChI ASCIIZ string to be converted to a strucure */
-    char *szOptions;   /* InChI options: space-delimited; each is preceded by */
-                       /* '/' or '-' depending on OS and compiler */
+
+/*
+    Extended input supporting v. 1.05+ extensions: V3000; polymers
+
+    Mainly follows Accelrys CTFile cpecification.
+
+    See:
+    CTFile Formats. Accelrys, December 2011.
+    http://accelrys.com/products/collaborative-science/biovia-draw/ctfile-no-fee.html
+
+    Note that V3000 extensions are supported onlyprovisionally: the data are read but not used
+
+*/
+
+
+/* Polymers */
+
+typedef struct inchi_Input_PolymerUnit
+{
+    int id;             /* Unit id; it is what is called 'Sgroup number'        */
+                        /* in CTFile (not used, kept for compatibility)         */
+    int type;           /* Unit type as per CTFile format (STY)                 */
+    int subtype;        /* Unit subtype as per CTFile format (SST)              */
+    int conn;           /* Unit connection scheme  as per CTFile format (SCN)   */
+    int label;          /* One more unit id; what is called 'unique Sgroup      */
+                        /* identifier' in CTFile (not used, for compatibility)  */
+    int na;             /* Number of atoms in the unit                          */
+    int nb;             /* Number of bonds in the unit                          */
+    double xbr1[4];     /* Bracket ends coordinates (SDI)                       */
+    double xbr2[4];     /* Bracket ends coordinates (SDI)                       */
+    char smt[80];       /* Sgroup Subscript (SMT) ('n' or so )                  */
+    int *alist;         /* List of atoms in the unit (SAL), atomic numbers      */
+    int *blist;         /* List of crossing bonds of unit:                      */
+                        /* [bond1end1, bond1end2, bond2end1, bond2end2]         */
+}  inchi_Input_PolymerUnit;
+
+
+typedef struct inchi_Input_Polymer
+{
+    /* List of pointers to polymer units        */
+    inchi_Input_PolymerUnit **units;
+    int        n;   /* Number of polymer units  */
+} inchi_Input_Polymer;
+
+
+/*
+    V3000 Extensions
+
+    Note that V3000 extensions are supported only
+    provisionally, the data are read but not used
+*/
+typedef struct inchi_Input_V3000
+{
+    int n_non_star_atoms;
+    int n_star_atoms;
+    int *atom_index_orig;       /* Index as supplied for atoms                      */
+    int *atom_index_fin;        /* = index or -1 for star atom                      */
+    int n_sgroups;              /* Not used yet.                                    */
+    int n_3d_constraints;       /* Not used yet.                                    */
+    int n_collections;
+    int n_non_haptic_bonds;
+    int n_haptic_bonds;
+    int **lists_haptic_bonds;   /* Haptic_bonds[i] is pointer to int                */
+                                /*    array which contains:                         */
+                                /* bond_type, non-star atom number,                 */
+                                /* nendpts, then endpts themselves                  */
+    /* Enhanced stereo collections */
+    int n_steabs;
+    int **lists_steabs;         /* steabs[k][0] - not used                          */
+                                /* steabs[k][1] -  number of members in collection  */
+                                /* steabs[k][2..] - member atom numbers             */
+    int n_sterel;
+    int **lists_sterel;         /* sterel[k][0] - n from "STERELn" tag              */
+                                /* sterel[k][1] -  number of members in collection  */
+                                /* sterel[k][2..] - member atom numbers             */
+    int n_sterac;
+    int **lists_sterac;         /* sterac[k][0] - n from "STERACn" tag              */
+                                /* sterac[k][1] -  number of members in collection  */
+                                /* sterac[k][0] - number from "STERACn" tag         */
+} inchi_Input_V3000;
+
+
+/* Input data structure for GetINCHIEx() */
+
+
+typedef struct inchi_InputEx
+{
+    /* the caller is responsible for the data allocation and deallocation                           */
+
+    /* same as in older inchi_Input                                                                 */
+    inchi_Atom *atom;                       /* array of num_atoms elements                          */
+    /* same as in older inchi_Input                                                                 */
+    inchi_Stereo0D *stereo0D;               /* array of num_stereo0D 0D stereo elements or NULL     */
+    /* same as in older inchi_Input                                                                 */
+    char *szOptions;                        /* InChI options: space-delimited; each is preceded by  */
+                                            /* '/' or '-' depending on OS and compiler              */
+    /* same as in older inchi_Input                                                                 */
+    AT_NUM num_atoms;                       /* number of atoms in the structure                     */
+    /* same as in older inchi_Input                                                                 */
+    AT_NUM num_stereo0D;                    /* number of 0D stereo elements                         */
+    inchi_Input_Polymer *polymer;           /* v. 1.05+ extended data, polymers                      */
+                                            /* NULL if not a polymer                                */
+    inchi_Input_V3000 *v3000;               /* v. 1.05+ extended data, V3000 Molfile features        */
+                                            /* NULL if no V3000 extensions present                  */
+} inchi_InputEx;
+
+
+/*
+    InChI -> Structure
+
+    GetStructFromINCHI()
+    GetStructFromStdINCHI()
+    GetStructFromINCHIEx()
+*/
+typedef struct tagINCHI_InputINCHI
+{
+    /* the caller is responsible for the data allocation and deallocation       */
+    char *szInChI;      /* InChI ASCIIZ string to be converted to a strucure    */
+    char *szOptions;    /* InChI options: space-delimited; each is preceded by  */
+                        /* '/' or '-' depending on OS and compiler */
 } inchi_InputINCHI;
+
+
+typedef inchi_Input_PolymerUnit inchi_Output_PolymerUnit;
+typedef inchi_Input_Polymer inchi_Output_Polymer;
+typedef inchi_Input_V3000 inchi_Output_V3000;
+
+
 
 
 /*************************************************
@@ -510,8 +611,15 @@ typedef struct tagINCHI_InputINCHI {
  *
  *************************************************/
 
-/* Structure -> InChI */
-typedef struct tagINCHI_Output {
+
+
+/*
+    Structure -> InChI
+*/
+
+
+typedef struct tagINCHI_Output
+{
     /* zero-terminated C-strings allocated by GetStdINCHI() */
     /* to deallocate all of them call FreeStdINCHI() (see below) */
     char *szInChI;     /* InChI ASCIIZ string */
@@ -521,25 +629,53 @@ typedef struct tagINCHI_Output {
                        /* of recognized options and possibly an Error/warning message */
 } inchi_Output;
 
+
 /* InChI -> Structure */
-typedef struct tagINCHI_OutputStruct {
-    /* 4 pointers are allocated by GetStructFromINCHI()/GetStructFromStdINCHI()     */
-    /* to deallocate all of them call FreeStructFromStdINCHI()/FreeStructFromStdINCHI() */
-    inchi_Atom     *atom;         /* array of num_atoms elements */
-    inchi_Stereo0D *stereo0D;     /* array of num_stereo0D 0D stereo elements or NULL */
-    AT_NUM          num_atoms;    /* number of atoms in the structure < 1024 */
-    AT_NUM          num_stereo0D; /* number of 0D stereo elements */
-    char           *szMessage;    /* Error/warning ASCIIZ message */
-    char           *szLog;        /* log-file ASCIIZ string, contains a human-readable list */
-                                  /* of recognized options and possibly an Error/warning message */
-    unsigned long  WarningFlags[2][2]; /* warnings, see INCHIDIFF in inchicmp.h */
-                                       /* [x][y]: x=0 => Reconnected if present in InChI otherwise Disconnected/Normal
-                                                  x=1 => Disconnected layer if Reconnected layer is present
-                                                  y=1 => Main layer or Mobile-H
-                                                  y=0 => Fixed-H layer
-                                        */
+
+typedef struct tagINCHI_OutputStruct
+{
+    /* Pointers are allocated by GetStructFromINCHI()/GetStructFromStdINCHI()                       */
+    /* to deallocate all of them call FreeStructFromStdINCHI()/FreeStructFromStdINCHI()             */
+    inchi_Atom     *atom;               /* array of num_atoms elements                              */
+    inchi_Stereo0D *stereo0D;           /* array of num_stereo0D 0D stereo elements or NULL         */
+    AT_NUM          num_atoms;          /* number of atoms in the structure                         */
+    AT_NUM          num_stereo0D;       /* number of 0D stereo elements                             */
+    char           *szMessage;          /* Error/warning ASCIIZ message                             */
+    char           *szLog;              /* log-file ASCIIZ string, contains a human-readable list   */
+                                        /* of recognized options and possibly an Error/warn message */
+    unsigned long  WarningFlags[2][2];  /* warnings, see INCHIDIFF in inchicmp.h                    */
+                                        /* [x][y]:                                                  */
+                                        /*  x=0 => Reconnected if present in InChI                  */
+                                        /*         otherwise Disconnected/Normal                    */
+                                        /*  x=1 => Disconnected layer if Reconn. layer is present   */
+                                        /*  y=1 => Main layer or Mobile-H                           */
+                                        /*  y=0 => Fixed-H layer                                    */
 }inchi_OutputStruct;
 
+
+
+typedef struct tagINCHI_OutputStructEx
+{
+    /* Pointers are allocated by GetStructFromINCHIEx()                                                 */
+    /* to deallocate all of them call FreeStructFromNCHIEx()                                            */
+    inchi_Atom           *atom;             /* array of num_atoms elements                              */
+    inchi_Stereo0D       *stereo0D;         /* array of num_stereo0D 0D stereo elements or NULL         */
+    AT_NUM               num_atoms;         /* number of atoms in the structure                         */
+    AT_NUM               num_stereo0D;      /* number of 0D stereo elements                             */
+    char                 *szMessage;        /* Error/warning ASCIIZ message                             */
+    char                 *szLog;            /* log-file ASCIIZ string, contains a human-readable list   */
+                                            /* of recognized options and possibly an Error/Warn message */
+    unsigned long        WarningFlags[2][2];/* warnings, see INCHIDIFF in inchicmp.h                    */
+                                            /* [x][y]: x=0 => Reconnected if present in InChI           */
+                                            /*                otherwise Disconnected/Normal             */
+                                            /*  x=1 => Disconnected layer if Reconne layer is present   */
+                                            /*  y=1 => Main layer or Mobile-H                           */
+                                            /*  y=0 => Fixed-H layer                                    */
+    inchi_Output_Polymer *polymer;          /* v. 1.05+ extended data, polymers                          */
+    inchi_Output_V3000   *v3000;            /* v. 1.05+ extended data, V3000 Molfile features            */
+} inchi_OutputStructEx;
+
+void FreeInChIExtInput( inchi_Input_Polymer    *polymer, inchi_Input_V3000 *v3000 );
 
 
 
@@ -551,56 +687,76 @@ typedef struct tagINCHI_OutputStruct {
  *
  *************************************************/
 
+
 #if (defined( _WIN32 ) && defined( _MSC_VER ) && defined(BUILD_LINK_AS_DLL) )
     /* Win32 & MS VC ++, compile and link as a DLL */
-    #ifdef _USRDLL
-        /* InChI library dll */
-        #define INCHI_API __declspec(dllexport)
-        #define EXPIMP_TEMPLATE
-        #define INCHI_DECL __stdcall
-     #else
-        /* calling the InChI dll program */
-        #define INCHI_API __declspec(dllimport)
-        #define EXPIMP_TEMPLATE extern
-        #define INCHI_DECL __stdcall
-     #endif
+#ifdef _USRDLL
+    /* InChI library dll */
+#define INCHI_API __declspec(dllexport)
+#define EXPIMP_TEMPLATE
+#define INCHI_DECL
+#else
+   /* calling the InChI dll program */
+#define INCHI_API __declspec(dllimport)
+#define EXPIMP_TEMPLATE extern
+#define INCHI_DECL
+#endif
 #else
     /* create a statically linked InChI library or link to an executable */
-    #define INCHI_API
-    #define EXPIMP_TEMPLATE
-    #define INCHI_DECL
+#define INCHI_API
+#define EXPIMP_TEMPLATE
+#define INCHI_DECL
 #endif
 
-/*^^^ Return codes for 
-        GetINCHI 
-        GetStdINCHI 
-        Get_inchi_Input_FromAuxInfo 
-        Get_std_inchi_Input_FromAuxInfo 
+/* Return codes for
+        GetINCHI
+        GetStdINCHI
+        GetINCHIEx
+        Get_inchi_Input_FromAuxInfo
+        Get_std_inchi_Input_FromAuxInfo
         GetStructFromINCHI
         GetStructFromStdINCHI
+        GetStructFromINCHIEx
 */
-typedef enum tagRetValGetINCHI {
-    inchi_Ret_SKIP    = -2, /* not used in InChI library */
-    inchi_Ret_EOF     = -1, /* no structural data has been provided */
-    inchi_Ret_OKAY    =  0, /* Success; no errors or warnings */
-    inchi_Ret_WARNING =  1, /* Success; warning(s) issued */
-    inchi_Ret_ERROR   =  2, /* Error: no InChI has been created */
-    inchi_Ret_FATAL   =  3, /* Severe error: no InChI has been created (typically, memory allocation failure) */
-    inchi_Ret_UNKNOWN =  4, /* Unknown program error */
-    inchi_Ret_BUSY    =  5  /* Previuos call to InChI has not returned yet */
 
+typedef enum tagRetValGetINCHI
+{
+    inchi_Ret_BREAK = -100,
+    inchi_Ret_SKIP = -2, /* not used in InChI library */
+    inchi_Ret_EOF = -1, /* no structural data has been provided */
+    inchi_Ret_OKAY = 0, /* Success; no errors or warnings */
+    inchi_Ret_WARNING = 1, /* Success; warning(s) issued */
+    inchi_Ret_ERROR = 2, /* Error: no InChI has been created */
+    inchi_Ret_FATAL = 3, /* Severe error: no InChI has been created (typically, memory allocation failure) */
+    inchi_Ret_UNKNOWN = 4, /* Unknown program error */
+    inchi_Ret_BUSY = 5  /* Previuos call to InChI has not returned yet */
 } RetValGetINCHI;
 
-/*^^^ Return codes for CheckINCHI */
-typedef enum tagRetValCheckINCHI 
+/* Return codes for
+        MakeINCHIFromMolfileText
+*/
+typedef enum tagRetValMOL2INCHI
 {
-    INCHI_VALID_STANDARD     =   0,
-    INCHI_VALID_NON_STANDARD =  -1,    
-    INCHI_INVALID_PREFIX     =   1,
-    INCHI_INVALID_VERSION    =   2,
-    INCHI_INVALID_LAYOUT     =   3,
-    INCHI_FAIL_I2I           =   4
-    
+    mol2inchi_Ret_OKAY = 0, /* Success; no errors or warnings */
+    mol2inchi_Ret_WARNING = 1, /* Success; warning(s) issued */
+    mol2inchi_Ret_EOF = -1, /* generic Error: no InChI has been created */
+    mol2inchi_Ret_ERROR = 2, /* generic Error: no InChI has been created */
+    mol2inchi_Ret_ERROR_get = 4, /* get structure Error: no InChI has been created */
+    mol2inchi_Ret_ERROR_comp = 5  /* compute InChI Error: no InChI has been created */
+} RetValMol2INCHI;
+
+
+
+/* Return codes for CheckINCHI */
+typedef enum tagRetValCheckINCHI
+{
+    INCHI_VALID_STANDARD = 0,
+    INCHI_VALID_NON_STANDARD = 1,
+    INCHI_VALID_BETA = 2,
+    INCHI_INVALID_PREFIX = 3,
+    INCHI_INVALID_VERSION = 4,
+    INCHI_INVALID_LAYOUT = 5,
+    INCHI_FAIL_I2I = 6
 } RetValCheckINCHI;
 
 
@@ -613,13 +769,13 @@ extern "C" {
 #endif
 
 
-/*^^^ InChI PREFIX */
+/* InChI PREFIX */
 #define INCHI_STRING_PREFIX "InChI="
 #define LEN_INCHI_STRING_PREFIX 6
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Format:
-    
+
     Standard InChI starts with: InChI=1S/
     Non-standard one with:      InChI=1/
     Empty std InChI:            InChI=1S//
@@ -634,6 +790,7 @@ Format:
 
 
 
+
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 GetINCHI / GetStdINCHI
 
@@ -645,97 +802,104 @@ GetINCHI / GetStdINCHI
     Valid options for GetINCHI:
     (use - instead of / for O.S. other than MS Windows)
 
-    Structure perception (compatible with stdInChI)                     
+    Structure perception (compatible with stdInChI)
         /NEWPSOFF   /DoNotAddH   /SNon
     Stereo interpretation (lead to generation of non-standard InChI)
         /SRel /SRac /SUCF /ChiralFlagON /ChiralFlagOFF
     InChI creation options (lead to generation of non-standard InChI)
         /SUU /SLUUD   /FixedH  /RecMet  /KET /15T
 
-    
-    GetINCHI produces standard InChI if no InChI creation/stereo modification options 
-    are specified. Inveresely, if any of SUU/SLUUD/RecMet/FixedH/Ket/15T/SRel/SRac/SUCF 
-    options are specified, generated InChI will be non-standard one. 
- 
-    
-    GetStdINCHI produces standard InChI only. 
+
+    GetINCHI produces standard InChI if no InChI creation/stereo modification options
+    are specified. Inveresely, if any of SUU/SLUUD/RecMet/FixedH/Ket/15T/SRel/SRac/SUCF
+    options are specified, generated InChI will be non-standard one.
+
+
+    GetStdINCHI produces standard InChI only.
     The valid structure perception options are:
         /NEWPSOFF   /DoNotAddH   /SNon
 
-    
-    Other options are:    
+
+    Other options are:
         /AuxNone    Omit auxiliary information (default: Include)
         /Wnumber    Set time-out per structure in seconds; W0 means unlimited
                     In InChI library the default value is unlimited
+        /WMnumber   Set time-out per structure in milliseconds; WM0 means unlimited
+                    In InChI library the default value is unlimited
         /OutputSDF  Output SDfile instead of InChI
-        /WarnOnEmptyStructure 
+        /WarnOnEmptyStructure
                     Warn and produce empty InChI for empty structure
         /SaveOpt    Save custom InChI creation options (non-standard InChI)
 
  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out );
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHI( inchi_Input *inp, inchi_Output *out );
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHI( inchi_Input *inp, inchi_Output *out );
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHI( inchi_Input *inp, inchi_Output *out );
+
+
+    /* Extended version of GetINCHI supporting v. 1.05+ extensions: V3000; polymers */
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIEx( inchi_InputEx *inp, inchi_Output *out );
+
+
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    FreeINCHI / FreeStdINCHI
+
+        should be called to deallocate char* pointers
+        obtained from each GetINCHI /GetStdINCHI call
+
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeINCHI( inchi_Output *out );
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStdINCHI( inchi_Output *out );
 
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FreeINCHI / FreeStdINCHI
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    GetStringLength
 
-    should be called to deallocate char* pointers 
-    obtained from each GetINCHI /GetStdINCHI call                         
+        helper: get string length
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeINCHI ( inchi_Output *out );
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStdINCHI ( inchi_Output *out );
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStringLength( char *p );
 
 
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    GetStructFromINCHI / GetStructFromStdINCHI / GetStructFromINCHIEx
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-GetStringLength
-    
-    helper: get string length
+        inchi_Inputinchi_InputINCHI is created by the user; pointers in inchi_OutputStruct are allocated and deallocated by InChI
+        inchi_OutputStruct does not need to be initialized out to zeroes; see FreeStructFromStdINCHI() on how to deallocate it
+        Option /Inchi2Struct is not needed for GetStructFromINCHI()/GetStructFromStdINCHI()
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStringLength( char *p );
-
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-GetStructFromINCHI / GetStructFromStdINCHI
-
-    inchi_Inputinchi_InputINCHI is created by the user; pointers in inchi_OutputStruct are allocated and deallocated by InChI 
-    inchi_OutputStruct does not need to be initilized out to zeroes; see FreeStructFromStdINCHI() on how to deallocate it 
-    Option /Inchi2Struct is not needed for GetStructFromINCHI()/GetStructFromStdINCHI()
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStructFromINCHIEx( inchi_InputINCHI *inpInChI, inchi_OutputStructEx *outStruct );
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FreeStructFromINCHI / FreeStructFromStdINCHI
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    FreeStructFromINCHI / FreeStructFromStdINCHI / FreeStructFromINCHIEx
 
-    should be called to deallocate pointers obtained from each 
-    GetStructFromStdINCHI / GetStructFromINCHI
+        should be called to deallocate pointers obtained from each
+        GetStructFromStdINCHI / GetStructFromINCHI / GetStructFromINCHIEx
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromINCHI( inchi_OutputStruct *out );
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromStdINCHI( inchi_OutputStruct *out );
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromINCHI( inchi_OutputStruct *out );
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromStdINCHI( inchi_OutputStruct *out );
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL FreeStructFromINCHIEx( inchi_OutputStructEx *out );
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-GetINCHIfromINCHI
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    GetINCHIfromINCHI
 
-    GetINCHIfromINCHI does same as -InChI2InChI option: converts InChI into InChI for validation purposes    
-    It may also be used to filter out specific layers. For instance, /Snon would remove stereochemical layer 
-    Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers                               
-    To keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed         
-    inchi_InputINCHI is created by the user; strings in inchi_Output are allocated and deallocated by InChI  
-    inchi_Output does not need to be initilized out to zeroes; see FreeINCHI() on how to deallocate it  
-                                                                                                        
-    Note: there is no explicit tool to conversion from/to standard InChI                                   
+        GetINCHIfromINCHI does same as -InChI2InChI option: converts InChI into InChI for validation purposes
+        It may also be used to filter out specific layers. For instance, /Snon would remove stereochemical layer
+        Omitting /FixedH and/or /RecMet would remove Fixed-H or Reconnected layers
+        To keep all InChI layers use options string "/FixedH /RecMet"; option /InChI2InChI is not needed
+        inchi_InputINCHI is created by the user; strings in inchi_Output are allocated and deallocated by InChI
+        inchi_Output does not need to be initilized out to zeroes; see FreeINCHI() on how to deallocate it
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out );
+        Note: there is no explicit tool to conversion from/to standard InChI
+
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIfromINCHI( inchi_InputINCHI *inpInChI, inchi_Output *out );
 
 #ifndef COMPILE_ALL_CPP
 #ifdef __cplusplus
@@ -780,8 +944,8 @@ Input:
     bDoNotAddH:    if 0 then InChI will be allowed to add implicit H
     bDiffUnkUndfStereo
                    if not 0, use different labels for unknown and undefined stereo
-    pInchiInp:     should have a valid pointer pInchiInp->pInp to an empty 
-                   (all members = 0) inchi_Input structure 
+    pInchiInp:     should have a valid pointer pInchiInp->pInp to an empty
+                   (all members = 0) inchi_Input structure
 
 Output:
     pInchiInp:     The following members of pInp may be filled during the call:
@@ -789,45 +953,45 @@ Output:
     Return value:  see RetValGetINCHI
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo( 
-                                                        char *szInchiAuxInfo, 
-                                                        int bDoNotAddH, 
-                                                        int bDiffUnkUndfStereo,
-                                                        InchiInpData *pInchiInp );
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_std_inchi_Input_FromAuxInfo( char *szInchiAuxInfo, 
-                                                        int bDoNotAddH, 
-                                                        InchiInpData *pInchiInp );
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_inchi_Input_FromAuxInfo(
+                                                            char *szInchiAuxInfo,
+                                                            int bDoNotAddH,
+                                                            int bDiffUnkUndfStereo,
+                                                            InchiInpData *pInchiInp );
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL Get_std_inchi_Input_FromAuxInfo( char *szInchiAuxInfo,
+                                                            int bDoNotAddH,
+                                                            InchiInpData *pInchiInp );
 
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-Free_inchi_Input / Free_std_inchi_Input
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    Free_inchi_Input / Free_std_inchi_Input
 
-    To deallocate and write zeroes into the changed members of pInchiInp->pInp call
-    Free_std_inchi_Input( inchi_Input *pInp )
+        To deallocate and write zeroes into the changed members of pInchiInp->pInp call
+        Free_inchi_Input( inchi_Input *pInp )
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_inchi_Input( inchi_Input *pInp );
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_std_inchi_Input( inchi_Input *pInp );
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_inchi_Input( inchi_Input *pInp );
+    EXPIMP_TEMPLATE INCHI_API void INCHI_DECL Free_std_inchi_Input( inchi_Input *pInp );
 
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-CheckINCHI
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    CheckINCHI
 
-Check if the string represents valid InChI/standard InChI.          
-Input:
-    szINCHI     source InChI
-    strict      if 0, just briefly check for proper layout (prefix, version, etc.)
-                The result may not be strict.
-                If not 0, try to perform InChI2InChI conversion and 
-                returns success if a resulting InChI string exactly match source.
-                The result may be 'false alarm' due to imperfectness of conversion.
-Returns:
-    success/errors codes
+    Check if the string represents valid InChI/standard InChI.
+    Input:
+        szINCHI     source InChI
+        strict      if 0, just briefly check for proper layout (prefix, version, etc.)
+                    The result may not be strict.
+                    If not 0, try to perform InChI2InChI conversion and
+                    returns success if a resulting InChI string exactly match source.
+                    The result may be 'false alarm' due to imperfectness of conversion.
+    Returns:
+        success/errors codes
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI(const char *szINCHI, const int strict);    
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI( const char *szINCHI, const int strict );
 
 
 #ifndef COMPILE_ALL_CPP
@@ -839,18 +1003,18 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI(const char *szINCHI, const i
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
+
                                 InChIKey API
-                                
+
 
     InChIKey description
 
 
 
-    The InChIKey is a character signature based on a hash code of the InChI string.        
+    The InChIKey is a character signature based on a hash code of the InChI string.
     Standard InChIKey is produced out of standard InChI.
     Non-standard InChIKey is produced out of non-standard InChI.
-           
+
                     AAAAAAAAAAAAAA-BBBBBBBBCD-P
 
 
@@ -862,7 +1026,7 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI(const char *szINCHI, const i
 
     BBBBBBBB
         Second block (8 letters)
-        Encodes tautomers, stereochemistry, isotopomers, reconnected layer 
+        Encodes tautomers, stereochemistry, isotopomers, reconnected layer
     C
         'S' for standard
         'N' for non-standard
@@ -872,17 +1036,17 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI(const char *szINCHI, const i
         Protonization encoding:
         N 0
         O +1 P +2 Q +3 R +4 S +5 T +6 U +7 V +8 W +9 X +10 Y +11 Z +12
-        M -1 L-2 K -3 J -4 I -5 H -6 G -7 F -8 E -9 D -10 C -11 B -12 
+        M -1 L-2 K -3 J -4 I -5 H -6 G -7 F -8 E -9 D -10 C -11 B -12
         A < -12 or > +12
 
 
-    All symbols except delimiter (dash, that is, minus) are uppercase English 
+    All symbols except delimiter (dash, that is, minus) are uppercase English
     letters representing a "base 26" encoding.
-    
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
 
 
-/*^^^ Return codes for key generation procedure */
+/* Return codes for key generation procedure */
 #define INCHIKEY_OK 0
 #define INCHIKEY_UNKNOWN_ERROR 1
 #define INCHIKEY_EMPTY_INPUT 2
@@ -892,14 +1056,14 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHI(const char *szINCHI, const i
 #define INCHIKEY_INVALID_STD_INCHI 21
 
 
-/*^^^ Return codes for CheckINCHIKey */
+/* Return codes for CheckINCHIKey */
 typedef enum tagRetValGetINCHIKey
 {
-    INCHIKEY_VALID_STANDARD     =   0,
-    INCHIKEY_VALID_NON_STANDARD =  -1,
-    INCHIKEY_INVALID_LENGTH     =   1,
-    INCHIKEY_INVALID_LAYOUT     =   2,
-    INCHIKEY_INVALID_VERSION    =   3
+    INCHIKEY_VALID_STANDARD = 0,
+    INCHIKEY_VALID_NON_STANDARD = -1,
+    INCHIKEY_INVALID_LENGTH = 1,
+    INCHIKEY_INVALID_LAYOUT = 2,
+    INCHIKEY_INVALID_VERSION = 3
 } RetValCheckINCHIKeyv;
 
 
@@ -921,11 +1085,11 @@ extern "C" {
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 GetINCHIKeyFromINCHI
 
-Calculate InChIKey by InChI string. 
+Calculate InChIKey by InChI string.
 
 Input:
         szINCHISource
-            source InChI string 
+            source InChI string
         xtra1
             =1 calculate hash extension (up to 256 bits; 1st block)
         xtra2
@@ -933,53 +1097,53 @@ Input:
 
 Output:
         szINCHIKey
-            InChIKey string 
+            InChIKey string
             The user-supplied buffer szINCHIKey should be at least 28 bytes long.
         szXtra1
-            hash extension (up to 256 bits; 1st block) string 
+            hash extension (up to 256 bits; 1st block) string
             Caller should allocate space for 64 characters + trailing NULL
         szXtra2
-            hash extension (up to 256 bits; 2nd block) string 
+            hash extension (up to 256 bits; 2nd block) string
             Caller should allocate space for 64 characters + trailing NULL
 
 Returns:
         success/errors codes
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIKeyFromINCHI(const char* szINCHISource, 
-                                                              const int xtra1,
-                                                              const int xtra2,
-                                                              char* szINCHIKey, 
-                                                              char* szXtra1, 
-                                                              char* szXtra2);
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetINCHIKeyFromINCHI( const char* szINCHISource,
+                                                                  const int xtra1,
+                                                                  const int xtra2,
+                                                                  char* szINCHIKey,
+                                                                  char* szXtra1,
+                                                                  char* szXtra2 );
 
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-GetStdINCHIKeyFromStdINCHI
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    GetStdINCHIKeyFromStdINCHI
 
-    "Standard" counterpart
+        "Standard" counterpart
 
-    For compatibility with v. 1.02std, no extra hash calculation is allowed.
-    To calculate extra hash(es), use GetINCHIKeyFromINCHI with stdInChI as input.
+        For compatibility with v. 1.02std, no extra hash calculation is allowed.
+        To calculate extra hash(es), use GetINCHIKeyFromINCHI with stdInChI as input.
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHIKeyFromStdINCHI(const char* szINCHISource, 
-                                                                    char* szINCHIKey);
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL GetStdINCHIKeyFromStdINCHI( const char* szINCHISource,
+                                                                        char* szINCHIKey );
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-CheckINCHIKey
+    /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    CheckINCHIKey
 
-Check if the string represents valid InChIKey.          
-Input:
-        szINCHIKey
-            source InChIKey string 
-Returns:
-        success/errors codes
+    Check if the string represents valid InChIKey.
+    Input:
+            szINCHIKey
+                source InChIKey string
+    Returns:
+            success/errors codes
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHIKey(const char *szINCHIKey);    
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+    EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHIKey( const char *szINCHIKey );
 
 #ifndef COMPILE_ALL_CPP
 #ifdef __cplusplus
@@ -990,12 +1154,12 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHIKey(const char *szINCHIKey);
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    
+
                           Modularized InChI generation API
 
 
 
-    Note. Functions with STDINCHIGEN prefix are 
+    Note. Functions with STDINCHIGEN prefix are
     retained for compatibility with v. 1.02std
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
@@ -1003,7 +1167,7 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHIKey(const char *szINCHIKey);
 
 
 
-/*^^^ Data structures holding intermediate (normalization) results */
+/* Data structures holding intermediate (normalization) results */
 
 #ifndef MAX_NUM_STEREO_ATOM_NEIGH
 #define MAX_NUM_STEREO_ATOM_NEIGH 4
@@ -1016,11 +1180,11 @@ EXPIMP_TEMPLATE INCHI_API int INCHI_DECL CheckINCHIKey(const char *szINCHIKey);
 #endif
 
 
-typedef unsigned short AT_NUMBR;    
-typedef signed short NUM_HS; 
-typedef unsigned long INCHI_MODES;        
+typedef unsigned short AT_NUMBR;
+typedef signed short NUM_HS;
+typedef unsigned long INCHI_MODES;
 
-typedef struct tagNormAtom 
+typedef struct tagNormAtom
 {
     char          elname[ATOM_EL_LEN];      /* chem. element name */
     U_CHAR        el_number;                /* number of the element in the Periodic Table */
@@ -1060,7 +1224,7 @@ typedef struct tagNormAtom
     S_CHAR        sn_ord[MAX_NUM_STEREO_BONDS];  /* neighbor[] index of a bond that is not this SB; starts from 0;
                                                   -1 means the neighbor is a removed explicit H */
     /* atoms on both ends of a stereobond have same parity => trans/T/E/2, diff. parities => cis/C/Z/1 */
-    S_CHAR        sb_parity[MAX_NUM_STEREO_BONDS];       /* parities of stereobonds (sp2) incident to this atom */	
+    S_CHAR        sb_parity[MAX_NUM_STEREO_BONDS];       /* parities of stereobonds (sp2) incident to this atom */
     AT_NUMBR      sn_orig_at_num[MAX_NUM_STEREO_BONDS];  /* orig_at_number of sn_ord[] neighbor > 0 */
 
 #if ( FIND_RING_SYSTEMS == 1 )
@@ -1092,10 +1256,10 @@ typedef struct tagNormAtomData
     int       bTautomeric;
     int       bTautPreprocessed;    /* for internal use */
     int       nNumRemovedProtons;
-    NUM_HS    nNumRemovedProtonsIsotopic[NUM_H_ISOTOPES]; 
+    NUM_HS    nNumRemovedProtonsIsotopic[NUM_H_ISOTOPES];
                                     /* isotopic composition of removed protons, not included in num_iso_H[] */
-    NUM_HS    num_iso_H[NUM_H_ISOTOPES]; 
-                                    /* isotopic H on tautomeric atoms and those 
+    NUM_HS    num_iso_H[NUM_H_ISOTOPES];
+                                    /* isotopic H on tautomeric atoms and those
                                        in nIsotopicEndpointAtomNumber */
     INCHI_MODES bTautFlags;         /* for internal use */
     INCHI_MODES bTautFlagsDone;     /* for internal use */
@@ -1103,22 +1267,21 @@ typedef struct tagNormAtomData
 } NORM_ATOMS;
 
 
-typedef struct tagINCHIGEN_DATA 
+typedef struct tagINCHIGEN_DATA
 {
-    
+
     char          pStrErrStruct[STR_ERR_LEN]; /* intermediate log (warning/error report) */
     int           num_components[INCHI_NUM];  /* number of allocated INChI, INChI_Aux data structures */
                                               /* index=0 => disconnected, 1 => reconnected structure */
-    
-    /*^^^ The results of normalization stage */
-    /*^^^ for each member of pair disconnected/reconnected structures: */
-    NORM_ATOMS   *NormAtomsNontaut[INCHI_NUM]; 
-    NORM_ATOMS   *NormAtomsTaut[INCHI_NUM];
 
+    /* The results of normalization stage */
+    /* for each member of pair disconnected/reconnected structures: */
+    NORM_ATOMS   *NormAtomsNontaut[INCHI_NUM];
+    NORM_ATOMS   *NormAtomsTaut[INCHI_NUM];
 } INCHIGEN_DATA;
 
 
-/*^^^ InChI Generator Handle */
+/* InChI Generator Handle */
 
 typedef void* INCHIGEN_HANDLE;
 
@@ -1141,101 +1304,104 @@ extern "C" {
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 INCHIGEN_Create / STDINCHIGEN_Create
 
-    InChI Generator: create generator
-    Returns handle of generator object or NULL on failure
+InChI Generator: create generator
+Returns handle of generator object or NULL on failure
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API 
-INCHIGEN_HANDLE INCHI_DECL INCHIGEN_Create(void);
-EXPIMP_TEMPLATE INCHI_API 
-INCHIGEN_HANDLE INCHI_DECL STDINCHIGEN_Create(void);
+EXPIMP_TEMPLATE INCHI_API INCHIGEN_HANDLE INCHI_DECL INCHIGEN_Create( void );
+EXPIMP_TEMPLATE INCHI_API INCHIGEN_HANDLE INCHI_DECL STDINCHIGEN_Create( void );
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 INCHIGEN_Setup / STDINCHIGEN_Setup
 
-    InChI Generator: setup
+InChI Generator: setup
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_Setup(INCHIGEN_HANDLE HGen, 
-                                                        INCHIGEN_DATA * pGenData, 
-                                                        inchi_Input * pInp);
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_Setup(INCHIGEN_HANDLE HGen, 
-                                                           INCHIGEN_DATA * pGenData, 
-                                                           inchi_Input * pInp);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_Setup( INCHIGEN_HANDLE HGen,
+                                                         INCHIGEN_DATA * pGenData,
+                                                         inchi_Input * pInp );
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_Setup( INCHIGEN_HANDLE HGen,
+                                                            INCHIGEN_DATA * pGenData,
+                                                            inchi_Input * pInp );
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 INCHIGEN_DoNormalization / STDINCHIGEN_DoNormalization
 
-    InChI Generator: structure normalization stage
+InChI Generator: structure normalization stage
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoNormalization(INCHIGEN_HANDLE HGen, 
-                                                                     INCHIGEN_DATA * pGenData);
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoNormalization(INCHIGEN_HANDLE HGen, 
-                                                                     INCHIGEN_DATA * pGenData);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoNormalization( INCHIGEN_HANDLE HGen,
+                                                                   INCHIGEN_DATA * pGenData );
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoNormalization( INCHIGEN_HANDLE HGen,
+                                                                      INCHIGEN_DATA * pGenData );
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 INCHIGEN_DoCanonicalization / STDINCHIGEN_DoCanonicalization
 
-    InChI Generator: structure canonicalization stage
+InChI Generator: structure canonicalization stage
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoCanonicalization
-                                (INCHIGEN_HANDLE HGen, INCHIGEN_DATA * pGenData);
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoCanonicalization
-                                (INCHIGEN_HANDLE HGen, INCHIGEN_DATA * pGenData);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoCanonicalization( INCHIGEN_HANDLE HGen,
+                                                                      INCHIGEN_DATA * pGenData );
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoCanonicalization( INCHIGEN_HANDLE HGen,
+                                                                         INCHIGEN_DATA * pGenData );
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 INCHIGEN_DoSerialization / STDINCHIGEN_DoSerialization
 
-    InChI Generator: InChI serialization stage
+InChI Generator: InChI serialization stage
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoSerialization(INCHIGEN_HANDLE HGen, 
-                                                                  INCHIGEN_DATA * pGenData, 
-                                                                  inchi_Output * pResults);
-EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoSerialization(INCHIGEN_HANDLE HGen, 
-                                                                     INCHIGEN_DATA * pGenData, 
-                                                                     inchi_Output * pResults);
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL INCHIGEN_DoSerialization( INCHIGEN_HANDLE HGen,
+                                                                   INCHIGEN_DATA * pGenData,
+                                                                   inchi_Output * pResults );
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL STDINCHIGEN_DoSerialization( INCHIGEN_HANDLE HGen,
+                                                                      INCHIGEN_DATA * pGenData,
+                                                                      inchi_Output * pResults );
 
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-INCHIGEN_DoSerialization / STDINCHIGEN_DoSerialization
+INCHIGEN_Reset / STDINCHIGEN_Reset
 
     InChI Generator: reset stage (use before get next structure)
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API 
-void INCHI_DECL INCHIGEN_Reset(INCHIGEN_HANDLE HGen, 
-                               INCHIGEN_DATA * pGenData, 
-                               inchi_Output * pResults);
-EXPIMP_TEMPLATE INCHI_API 
-void INCHI_DECL STDINCHIGEN_Reset(INCHIGEN_HANDLE HGen, 
-                               INCHIGEN_DATA * pGenData, 
-                               inchi_Output * pResults);
-
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL INCHIGEN_Reset( INCHIGEN_HANDLE HGen,
+                                                          INCHIGEN_DATA * pGenData,
+                                                          inchi_Output * pResults );
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL STDINCHIGEN_Reset( INCHIGEN_HANDLE HGen,
+                                                             INCHIGEN_DATA * pGenData,
+                                                             inchi_Output * pResults );
 
 
 /*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-INCHIGEN_DoSerialization / STDINCHIGEN_DoSerialization
+INCHIGEN_Destroy / STDINCHIGEN_Destroy
 
     InChI Generator: destroy generator
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL INCHIGEN_Destroy(INCHIGEN_HANDLE HGen);
-EXPIMP_TEMPLATE INCHI_API void INCHI_DECL STDINCHIGEN_Destroy(INCHIGEN_HANDLE HGen);
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL INCHIGEN_Destroy( INCHIGEN_HANDLE HGen );
+EXPIMP_TEMPLATE INCHI_API void INCHI_DECL STDINCHIGEN_Destroy( INCHIGEN_HANDLE HGen );
 
 
+/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+MakeINCHIFromMolfileText
 
+    Direct generation of InChI from Molfile supplied as text
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
+EXPIMP_TEMPLATE INCHI_API int INCHI_DECL MakeINCHIFromMolfileText( const char *moltext,
+                                                                   char *options,
+                                                                   inchi_Output *result );
 
 
 #ifndef COMPILE_ALL_CPP
@@ -1244,105 +1410,7 @@ EXPIMP_TEMPLATE INCHI_API void INCHI_DECL STDINCHIGEN_Destroy(INCHIGEN_HANDLE HG
 #endif
 #endif
 
+#include "ixa.h"
 
 
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Prototypes for C calling conventions:
-
-    int  GetINCHI( inchi_Input *inp, inchi_Output *out );
-    int  GetStdINCHI( inchi_Input *inp, inchi_Output *out );
-    void FreeINCHI( inchi_Output *out );
-    void FreeStdINCHI( inchi_Output *out );
-    int  GetStringLength( char *p );
-    int  Get_inchi_Input_FromAuxInfo
-     ( char *szInchiAuxInfo, int bDoNotAddH, int bDiffUnkUndfStereo, InchiInpData *pInchiInp );
-    int  Get_std_inchi_Input_FromAuxInfo
-     ( char *szInchiAuxInfo, int bDoNotAddH, int bDiffUnkUndfStereo,InchiInpData *pInchiInp );
-    void Free_inchi_Input( inchi_Input *pInp );
-    void Free_std_inchi_Input( inchi_Input *pInp );
-    int GetStructFromINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
-    int GetStructFromStdINCHI( inchi_InputINCHI *inpInChI, inchi_OutputStruct *outStruct );
-    void FreeStructFromStdINCHI( inchi_OutputStruct *out );
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
-
-/*^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Win32 Dumpbin export information
-
-    ordinal hint RVA      name
-cdecl 
-          1    0 000B7EAB CheckINCHI
-          2    1 000B7221 CheckINCHIKey
-          3    2 000B7C62 FreeINCHI
-          4    3 000B7B04 FreeStdINCHI
-          5    4 000B72B7 FreeStructFromINCHI
-          6    5 000B7BC2 FreeStructFromStdINCHI
-          7    6 000B7E33 Free_inchi_Input
-          8    7 000B7C58 Free_std_inchi_Input
-          9    8 000B727B GetINCHI
-         10    9 000B75B4 GetINCHIKeyFromINCHI
-         11    A 000B757D GetINCHIfromINCHI
-         12    B 000B8211 GetStdINCHI
-         13    C 000B7F0A GetStdINCHIKeyFromStdINCHI
-         14    D 000B77CB GetStringLength
-         15    E 000B7CA3 GetStructFromINCHI
-         16    F 000B778A GetStructFromStdINCHI
-         17   10 000B7DAC Get_inchi_Input_FromAuxInfo
-         18   11 000B7D6B Get_std_inchi_Input_FromAuxInfo
-         19   12 000B7D6B INCHIGEN_Create
-         20   13 000B7F2D INCHIGEN_Destroy
-         21   14 000B7F23 INCHIGEN_DoCanonicalization
-         22   15 000B7F23 INCHIGEN_DoNormalization
-         23   16 000B714A INCHIGEN_DoSerialization
-         24   17 000B7FCD INCHIGEN_Reset
-         25   18 000B7FCD INCHIGEN_Setup
-         26   19 000B7EA6 STDINCHIGEN_Create
-         27   1A 000B7EA6 STDINCHIGEN_Destroy
-         28   1B 000B711D STDINCHIGEN_DoCanonicalization
-         29   1C 000B7073 STDINCHIGEN_DoNormalization
-         30   1D 000B7FC3 STDINCHIGEN_DoSerialization
-         31   1E 000B7668 STDINCHIGEN_Reset
-         32   1F 000B7438 STDINCHIGEN_Setup
-__stdcall or PASCAL
-         33   20 000B7DFC _CheckINCHI@8
-         34   21 000B7802 _CheckINCHIKey@4
-         35   22 000B7F73 _FreeINCHI@4
-         36   23 000B7F82 _FreeStdINCHI@4
-         37   24 000B75E1 _FreeStructFromINCHI@4
-         38   25 000B7B81 _FreeStructFromStdINCHI@4
-         39   26 000B7B86 _Free_inchi_Input@4
-         40   27 000B7A96 _Free_std_inchi_Input@4
-         41   28 000B7B5E _GetINCHI@8
-         42   29 000B7285 _GetINCHIKeyFromINCHI@24
-         43   2A 000B758C _GetINCHIfromINCHI@8
-         44   2B 000B7CDA _GetStdINCHI@8
-         45   2C 000B7979 _GetStdINCHIKeyFromStdINCHI@8
-         46   2D 000B7BA4 _GetStringLength@4
-         47   2E 000B70A5 _GetStructFromINCHI@8
-         48   2F 000B79B0 _GetStructFromStdINCHI@8
-         49   30 000B8022 _Get_inchi_Input_FromAuxInfo@16
-         50   31 000B76E0 _Get_std_inchi_Input_FromAuxInfo@12
-         51   32 000B7230 _INCHIGEN_Create@0
-         52   33 000B760E _INCHIGEN_Destroy@4
-         53   34 000B7087 _INCHIGEN_DoCanonicalization@8
-         54   35 000B70B4 _INCHIGEN_DoNormalization@8
-         55   36 000B72D5 _INCHIGEN_DoSerialization@12
-         56   37 000B7FE1 _INCHIGEN_Reset@12
-         57   38 000B7163 _INCHIGEN_Setup@12
-         58   39 000B7159 _STDINCHIGEN_Create@0
-         59   3A 000B78A7 _STDINCHIGEN_Destroy@4
-         60   3B 000B72F3 _STDINCHIGEN_DoCanonicalization@8
-         61   3C 000B737A _STDINCHIGEN_DoNormalization@8
-         62   3D 000B7B72 _STDINCHIGEN_DoSerialization@12
-         63   3E 000B7654 _STDINCHIGEN_Reset@12
-         64   3F 000B75FF _STDINCHIGEN_Setup@12
-
-
-    Note. Currently there is no callback function for aborting, progress, etc.
-
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^*/
-
-#endif /* __INHCH_API_H__ */
+#endif    /* _INHCH_API_H_ */

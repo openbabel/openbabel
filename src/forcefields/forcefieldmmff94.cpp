@@ -2804,6 +2804,9 @@ namespace OpenBabel
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
+      // Cached AngleData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr)
+        continue;
 
       type_a = atoi(a->GetType());
       type_b = atoi(b->GetType());
@@ -3100,6 +3103,9 @@ namespace OpenBabel
       b = _mol.GetAtom((*t)[1] + 1);
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
+      // Cached TorsionData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr || d == nullptr)
+        continue;
 
       type_a = atoi(a->GetType());
       type_b = atoi(b->GetType());
@@ -3168,7 +3174,8 @@ namespace OpenBabel
           continue;
 
         // rule (b) page 631
-        if (b->GetBond(c)->IsAromatic()) {
+        OBBond *bc_bond = b->GetBond(c);
+        if (bc_bond != nullptr && bc_bond->IsAromatic()) {
           double Ub, Uc, pi_bc, beta;
           Ub = GetUParam(b);
           Uc = GetUParam(c);
@@ -3194,7 +3201,7 @@ namespace OpenBabel
           Ub = GetUParam(b);
           Uc = GetUParam(c);
           OBBond *bond = a->GetBond(b);
-          if (((GetMltb(type_b) == 2) && (GetMltb(type_c) == 2)) && !bond->IsAromatic() && bond->GetBondOrder() == 2)
+          if (bond != nullptr && ((GetMltb(type_b) == 2) && (GetMltb(type_c) == 2)) && !bond->IsAromatic() && bond->GetBondOrder() == 2)
             pi_bc = 1.0;
           else
             pi_bc = 0.4;
@@ -3250,7 +3257,7 @@ namespace OpenBabel
         // rule (g) page 632
         if (!found_rule) {
           OBBond *bond = b->GetBond(c);
-          if (!bond->IsAromatic() && bond->GetBondOrder() == 1 && (
+          if (bond != nullptr && !bond->IsAromatic() && bond->GetBondOrder() == 1 && (
             (GetMltb(type_b) && GetMltb(type_c)) ||
             (GetMltb(type_b) && HasPilpSet(type_c)) ||
             (GetMltb(type_c) && HasPilpSet(type_b)))) {
@@ -4483,6 +4490,8 @@ namespace OpenBabel
   int OBForceFieldMMFF94::GetBondType(OBAtom* a, OBAtom* b)
   {
     OBBond *bond = _mol.GetBond(a, b);
+    if (bond == nullptr)
+      return 0;
     if (bond->GetBondOrder() != 1 || bond->IsAromatic())
       return 0;
 
@@ -4633,7 +4642,7 @@ namespace OpenBabel
         return 4;
 
     OBBond *bond = _mol.GetBond(b, c);
-    if (bond->GetBondOrder() == 1 && !bond->IsAromatic()) {
+    if (bond != nullptr && bond->GetBondOrder() == 1 && !bond->IsAromatic()) {
       if (btab || btcd)
         return 2;
       /*
@@ -5038,14 +5047,15 @@ namespace OpenBabel
     else
       Hb = 3;
 
-    BOab = a->GetBond(b)->GetBondOrder();
+    OBBond *ab_bond = a->GetBond(b);
+    BOab = (ab_bond != nullptr) ? ab_bond->GetBondOrder() : 1;
     if ((GetMltb(atoi(a->GetType())) == 1) && (GetMltb(atoi(b->GetType())) == 1))
       BOab = 4;
     if ((GetMltb(atoi(a->GetType())) == 1) && (GetMltb(atoi(b->GetType())) == 2))
       BOab = 5;
     if ((GetMltb(atoi(a->GetType())) == 2) && (GetMltb(atoi(b->GetType())) == 1))
       BOab = 5;
-    if (a->GetBond(b)->IsAromatic()) {
+    if (ab_bond != nullptr && ab_bond->IsAromatic()) {
       if (!HasPilpSet(atoi(a->GetType())) && !HasPilpSet(atoi(b->GetType()))) {
         BOab = 4;
       } else {

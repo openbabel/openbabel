@@ -329,7 +329,7 @@ public:
     }
 
     const char* SpecificationURL() override { return
-            "http://www.yasara.org"; }  // optional
+            "https://www.yasara.org/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -565,7 +565,11 @@ bool YOBFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
       pos=4;
       if (!pConv->IsOption("f",OBConversion::OUTOPTIONS))
       { /* GUESS IF THE ATOM NAME NEEDS TO BE SHIFTED */
-        if (strlen(mob_elementsym[element])==1||strncasecmp(mob_elementsym[element],atomname,2)) pos=5; }
+        // mob_elementsym only covers Z=0..MOB_ELEMENTS-1; _ele is an
+        // unsigned char (0..255) so an out-of-table Z would otherwise
+        // index past the array and dereference garbage.
+        const char *sym = (element < MOB_ELEMENTS) ? mob_elementsym[element] : "";
+        if (strlen(sym)==1||strncasecmp(sym,atomname,2)) pos=5; }
       str_copy(&buffer[pos],atomname);
       str_copy(&buffer[8],(char*)res->GetName().c_str());
       snprintf(&buffer[12], 4, "%4d",res->GetNum()); }

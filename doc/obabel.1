@@ -1,47 +1,50 @@
-.Dd Oct 10, 2019
+.Dd October 10, 2019
+.Dt OBABEL 1 URM
 .Os "Open Babel" 3.1
-.Dt obabel 1 URM
 .Sh NAME
 .Nm obabel
 .Nd "a converter for chemistry and molecular modeling data files"
 .Sh SYNOPSIS
 .Nm
-.Op Fl H Ar help-options
+.Fl H Ns Ar help-options
 .Nm
 .Op Ar OPTIONS
-.Op Fl i Ar input-type | Fl : Ns Ar SMILES-string
+.Op Fl i Ns Ar input-type | Fl : Ns Ar SMILES-string
 .Ar infile
-.Op Fl o Ar output-type
-.Fl O Ar outfile
+.Op Fl o Ns Ar output-type
+.Fl O Ns Ar outfile
 .Sh DESCRIPTION
 .Nm
-is a cross-platform program designed to interconvert
+is a cross\-platform program designed to interconvert
 between many file formats used in molecular modeling and computational
 chemistry and related areas.
 .Pp
 Open Babel is also a complete programmers toolkit for developing
-chemistry software. For more information, see the Open Babel web pages
-\%<\fBhttp://openbabel.org/\fR>.
+chemistry software.
+For more information, see the Open Babel web pages
+\%<\fBhttps://openbabel.org/\fR>.
 .Sh OPTIONS
 If only input and output files are given, Open Babel will guess the
 file type from the filename extension.
 .Bl -tag -width flag
 .It Fl : Ns Ar SMILES-string
-Enter SMILES string and use it in place of an input file. The
+Enter SMILES string and use it in place of an input file.
+The
 .Ar SMILES-string
 might need to be enclosed in quotation marks to avoid shell interpretation.
 More than one can be used, and a molecule title can be included if enclosed in
 quotes.
 .It Fl a Ns Ar options
-Format-specific input options. See
-.Fl H Ar format-ID
+Format\-specific input options.
+See
+.Fl H Ns Ar format-ID
 for options allowed by a particular format
 .It Fl -addtotitle
 Append text to the current molecule title
 .It Fl -addformula
 Append the molecular formula after the current molecule title
 .It Fl b
-Convert dative bonds: e.g., [N+]([O-])=O to N(=O)=O
+Convert dative bonds: e.g., [N+]([O\-])=O to N(=O)=O
 .It Fl c
 Center atomic coordinates at (0,0,0)
 .It Fl C
@@ -52,11 +55,10 @@ Continue after errors
 Delete Hydrogens
 .It Fl --errorlevel Ar n
 Filter the level of errors and warnings displayed:
-.br
        1 = critical errors only
        2 = include warnings too (default)
        3 = include informational messages too
-       4 = include "audit log" messages of changes to data
+       4 = include \(lqaudit log\(rq messages of changes to data
        5 = include debugging messages too
 .It Fl f Ar #
 For multiple entry input, start import with molecule # as the first entry
@@ -66,11 +68,11 @@ Output the available fingerprint types
 Add hydrogens
 .It Fl H
 Output usage information
-.It Fl H Ar format-ID
+.It Fl H Ns Ar format-ID
 Output formatting information and options for format specified
 .It Fl Hall
 Output formatting information and options for all formats
-.It Fl i Ar format-ID
+.It Fl i Ns Ar format-ID
 Specifies input format, see below for the available formats
 .It Fl j , -join
 Join all input molecules into a single output molecule entry
@@ -80,17 +82,17 @@ Translate computational chemistry modeling keywords (e.g., GAMESS and Gaussian)
 Produce multiple output files, to allow:
 .Bl -dash -offset indent -compact
 .It
-Splitting one input file - put each molecule into consecutively
+Splitting one input file \(em put each molecule into consecutively
 numbered output files
 .It
-Batch conversion - convert each of multiple input files into a
+Batch conversion \(em convert each of multiple input files into a
 specified output format
 .El
 .It Fl l Ar #
 For multiple entry input, stop import with molecule # as the last entry
-.It Fl o Ar format-ID
+.It Fl o Ns Ar format-ID
 Specifies output format, see below for the available formats
-.It Fl O Ar outfile
+.It Fl O Ns Ar outfile
 Specify the output file
 .It Fl p
 Add Hydrogens appropriate for pH (use transforms in phmodel.txt)
@@ -105,7 +107,8 @@ All input files describe a single molecule
 .It Fl -title Ar title
 Add or replace molecular title
 .It Fl x Ns Ar options
-Format-specific output options. See
+Format\-specific output options.
+See
 .Fl H Ar format-ID
 for options allowed by a particular format
 .It Fl v Ar SMARTS
@@ -119,422 +122,429 @@ Compress the output with gzip
 The following formats are currently supported by Open Babel:
 .Bl -item -offset indent -compact
 .It
-abinit -- ABINIT Output Format [Read-only]
+abinit \(em ABINIT Output Format [Read\-only]
 .It
-acesin -- ACES input format [Write-only]
+acesin \(em ACES input format [Write\-only]
 .It
-acesout -- ACES output format [Read-only]
+acesout \(em ACES output format [Read\-only]
 .It
-acr -- ACR format [Read-only]
+acr \(em ACR format [Read\-only]
 .It
-adf -- ADF cartesian input format [Write-only]
+adf \(em ADF cartesian input format [Write\-only]
 .It
-adfband -- ADF Band output format [Read-only]
+adfband \(em ADF Band output format [Read\-only]
 .It
-adfdftb -- ADF DFTB output format [Read-only]
+adfdftb \(em ADF DFTB output format [Read\-only]
 .It
-adfout -- ADF output format [Read-only]
+adfout \(em ADF output format [Read\-only]
 .It
-alc -- Alchemy format
+alc \(em Alchemy format
 .It
-aoforce -- Turbomole AOFORCE output format [Read-only]
+aoforce \(em Turbomole AOFORCE output format [Read\-only]
 .It
-arc -- Accelrys/MSI Biosym/Insight II CAR format [Read-only]
+arc \(em Accelrys/MSI Biosym/Insight II CAR format [Read\-only]
 .It
-ascii -- ASCII format [Write-only]
+ascii \(em ASCII format [Write\-only]
 .It
-axsf -- XCrySDen Structure Format [Read-only]
+axsf \(em XCrySDen Structure Format [Read\-only]
 .It
-bgf -- MSI BGF format
+bgf \(em MSI BGF format
 .It
-box -- Dock 3.5 Box format
+box \(em Dock 3.5 Box format
 .It
-bs -- Ball and Stick format
+bs \(em Ball and Stick format
 .It
-c09out -- Crystal 09 output format [Read-only]
+c09out \(em Crystal 09 output format [Read\-only]
 .It
-c3d1 -- Chem3D Cartesian 1 format
+c3d1 \(em Chem3D Cartesian 1 format
 .It
-c3d2 -- Chem3D Cartesian 2 format
+c3d2 \(em Chem3D Cartesian 2 format
 .It
-cac -- CAChe MolStruct format [Write-only]
+cac \(em CAChe MolStruct format [Write\-only]
 .It
-caccrt -- Cacao Cartesian format
+caccrt \(em Cacao Cartesian format
 .It
-cache -- CAChe MolStruct format [Write-only]
+cache \(em CAChe MolStruct format [Write\-only]
 .It
-cacint -- Cacao Internal format [Write-only]
+cacint \(em Cacao Internal format [Write\-only]
 .It
-can -- Canonical SMILES format
+can \(em Canonical SMILES format
 .It
-car -- Accelrys/MSI Biosym/Insight II CAR format [Read-only]
+car \(em Accelrys/MSI Biosym/Insight II CAR format [Read\-only]
 .It
-castep -- CASTEP format [Read-only]
+castep \(em CASTEP format [Read\-only]
 .It
-ccc -- CCC format [Read-only]
+ccc \(em CCC format [Read\-only]
 .It
-cdjson -- ChemDoodle JSON
+cdjson \(em ChemDoodle JSON
 .It
-cdx -- ChemDraw binary format [Read-only]
+cdx \(em ChemDraw binary format [Read\-only]
 .It
-cdxml -- ChemDraw CDXML format
+cdxml \(em ChemDraw CDXML format
 .It
-cht -- Chemtool format [Write-only]
+cht \(em Chemtool format [Write\-only]
 .It
-cif -- Crystallographic Information File
+cif \(em Crystallographic Information File
 .It
-cjson -- Chemical JSON
+cjson \(em Chemical JSON
 .It
-ck -- ChemKin format
+ck \(em ChemKin format
 .It
-cml -- Chemical Markup Language
+cml \(em Chemical Markup Language
 .It
-cmlr -- CML Reaction format
+cmlr \(em CML Reaction format
 .It
-cof -- Culgi object file format
+cof \(em Culgi object file format
 .It
-com -- Gaussian Input [Write-only]
+com \(em Gaussian Input [Write\-only]
 .It
-confabreport -- Confab report format [Write-only]
+confabreport \(em Confab report format [Write\-only]
 .It
-CONFIG -- DL-POLY CONFIG
+CONFIG \(em DL\-POLY CONFIG
 .It
-CONTCAR -- VASP format
+CONTCAR \(em VASP format
 .It
-CONTFF -- MDFF format
+CONTFF \(em MDFF format
 .It
-copy -- Copy raw text [Write-only]
+copy \(em Copy raw text [Write\-only]
 .It
-crk2d -- Chemical Resource Kit diagram(2D)
+crk2d \(em Chemical Resource Kit diagram(2D)
 .It
-crk3d -- Chemical Resource Kit 3D format
+crk3d \(em Chemical Resource Kit 3D format
 .It
-csr -- Accelrys/MSI Quanta CSR format [Write-only]
+csr \(em Accelrys/MSI Quanta CSR format [Write\-only]
 .It
-cssr -- CSD CSSR format [Write-only]
+cssr \(em CSD CSSR format [Write\-only]
 .It
-ct -- ChemDraw Connection Table format
+ct \(em ChemDraw Connection Table format
 .It
-cub -- Gaussian cube format
+cub \(em Gaussian cube format
 .It
-cube -- Gaussian cube format
+cube \(em Gaussian cube format
 .It
-dallog -- DALTON output format [Read-only]
+dallog \(em DALTON output format [Read\-only]
 .It
-dalmol -- DALTON input format
+dalmol \(em DALTON input format
 .It
-dat -- Generic Output file format [Read-only]
+dat \(em Generic Output file format [Read\-only]
 .It
-dmol -- DMol3 coordinates format
+dmol \(em DMol3 coordinates format
 .It
-dx -- OpenDX cube format for APBS
+dx \(em OpenDX cube format for APBS
 .It
-ent -- Protein Data Bank format
+ent \(em Protein Data Bank format
 .It
-exyz -- Extended XYZ cartesian coordinates format
+exyz \(em Extended XYZ cartesian coordinates format
 .It
-fa -- FASTA format
+fa \(em FASTA format
 .It
-fasta -- FASTA format
+fasta \(em FASTA format
 .It
-fch -- Gaussian formatted checkpoint file format [Read-only]
+fch \(em Gaussian formatted checkpoint file format [Read\-only]
 .It
-fchk -- Gaussian formatted checkpoint file format [Read-only]
+fchk \(em Gaussian formatted checkpoint file format [Read\-only]
 .It
-fck -- Gaussian formatted checkpoint file format [Read-only]
+fck \(em Gaussian formatted checkpoint file format [Read\-only]
 .It
-feat -- Feature format
+feat \(em Feature format
 .It
-fh -- Fenske-Hall Z-Matrix format [Write-only]
+fh \(em Fenske\-Hall Z\-Matrix format [Write\-only]
 .It
-fhiaims -- FHIaims XYZ format
+fhiaims \(em FHIaims XYZ format
 .It
-fix -- SMILES FIX format [Write-only]
+fix \(em SMILES FIX format [Write\-only]
 .It
-fps -- FPS text fingerprint format (Dalke) [Write-only]
+fps \(em FPS text fingerprint format (Dalke) [Write\-only]
 .It
-fpt -- Fingerprint format [Write-only]
+fpt \(em Fingerprint format [Write\-only]
 .It
-fract -- Free Form Fractional format
+fract \(em Free Form Fractional format
 .It
-fs -- Fastsearch format
+fs \(em Fastsearch format
 .It
-fsa -- FASTA format
+fsa \(em FASTA format
 .It
-g03 -- Gaussian Output [Read-only]
+g03 \(em Gaussian Output [Read\-only]
 .It
-g09 -- Gaussian Output [Read-only]
+g09 \(em Gaussian Output [Read\-only]
 .It
-g16 -- Gaussian Output [Read-only]
+g16 \(em Gaussian Output [Read\-only]
 .It
-g92 -- Gaussian Output [Read-only]
+g92 \(em Gaussian Output [Read\-only]
 .It
-g94 -- Gaussian Output [Read-only]
+g94 \(em Gaussian Output [Read\-only]
 .It
-g98 -- Gaussian Output [Read-only]
+g98 \(em Gaussian Output [Read\-only]
 .It
-gal -- Gaussian Output [Read-only]
+gal \(em Gaussian Output [Read\-only]
 .It
-gam -- GAMESS Output [Read-only]
+gam \(em GAMESS Output [Read\-only]
 .It
-gamess -- GAMESS Output [Read-only]
+gamess \(em GAMESS Output [Read\-only]
 .It
-gamin -- GAMESS Input
+gamin \(em GAMESS Input
 .It
-gamout -- GAMESS Output [Read-only]
+gamout \(em GAMESS Output [Read\-only]
 .It
-gau -- Gaussian Input [Write-only]
+gau \(em Gaussian Input [Write\-only]
 .It
-gjc -- Gaussian Input [Write-only]
+gjc \(em Gaussian Input [Write\-only]
 .It
-gjf -- Gaussian Input [Write-only]
+gjf \(em Gaussian Input [Write\-only]
 .It
-got -- GULP format [Read-only]
+got \(em GULP format [Read\-only]
 .It
-gpr -- Ghemical format
+gpr \(em Ghemical format
 .It
-gr96 -- GROMOS96 format [Write-only]
+gr96 \(em GROMOS96 format [Write\-only]
 .It
-gro -- GRO format
+gro \(em GRO format
 .It
-gukin -- GAMESS-UK Input
+gukin \(em GAMESS\-UK Input
 .It
-gukout -- GAMESS-UK Output
+gukout \(em GAMESS\-UK Output
 .It
-gzmat -- Gaussian Z-Matrix Input
+gzmat \(em Gaussian Z\-Matrix Input
 .It
-hin -- HyperChem HIN format
+hin \(em HyperChem HIN format
 .It
-HISTORY -- DL-POLY HISTORY [Read-only]
+HISTORY \(em DL\-POLY HISTORY [Read\-only]
 .It
-inchi -- InChI format
+inchi \(em InChI format
 .It
-inchikey -- InChIKey [Write-only]
+inchikey \(em InChIKey [Write\-only]
 .It
-inp -- GAMESS Input
+inp \(em GAMESS Input
 .It
-ins -- ShelX format [Read-only]
+ins \(em ShelX format [Read\-only]
 .It
-jin -- Jaguar input format
+jin \(em Jaguar input format
 .It
-jout -- Jaguar output format [Read-only]
+jout \(em Jaguar output format [Read\-only]
 .It
-k -- Compare molecules using InChI [Write-only]
+k \(em Compare molecules using InChI [Write\-only]
 .It
-lmpdat -- The LAMMPS data format [Write-only]
+lmpdat \(em The LAMMPS data format [Write\-only]
 .It
-log -- Generic Output file format [Read-only]
+log \(em Generic Output file format [Read\-only]
 .It
-lpmd -- LPMD format
+lpmd \(em LPMD format
 .It
-mae -- Maestro format
+mae \(em Maestro format
 .It
-maegz -- Maestro format
+maegz \(em Maestro format
 .It
-mcdl -- MCDL format
+mcdl \(em MCDL format
 .It
-mcif -- Macromolecular Crystallographic Info
+mcif \(em Macromolecular Crystallographic Info
 .It
-MDFF -- MDFF format
+MDFF \(em MDFF format
 .It
-mdl -- MDL MOL format
+mdl \(em MDL MOL format
 .It
-ml2 -- Sybyl Mol2 format
+ml2 \(em Sybyl Mol2 format
 .It
-mmcif -- Macromolecular Crystallographic Info
+mmcif \(em Macromolecular Crystallographic Info
 .It
-mmd -- MacroModel format
+mmd \(em MacroModel format
 .It
-mmod -- MacroModel format
+mmod \(em MacroModel format
 .It
-mna -- Multilevel Neighborhoods of Atoms (MNA) [Write-only]
+mna \(em Multilevel Neighborhoods of Atoms (MNA) [Write\-only]
 .It
-mol -- MDL MOL format
+mol \(em MDL MOL format
 .It
-mol2 -- Sybyl Mol2 format
+mol2 \(em Sybyl Mol2 format
 .It
-mold -- Molden format
+mold \(em Molden format
 .It
-molden -- Molden format
+molden \(em Molden format
 .It
-molf -- Molden format
+molf \(em Molden format
 .It
-molreport -- Open Babel molecule report [Write-only]
+molreport \(em Open Babel molecule report [Write\-only]
 .It
-moo -- MOPAC Output format [Read-only]
+moo \(em MOPAC Output format [Read\-only]
 .It
-mop -- MOPAC Cartesian format
+mop \(em MOPAC Cartesian format
 .It
-mopcrt -- MOPAC Cartesian format
+mopcrt \(em MOPAC Cartesian format
 .It
-mopin -- MOPAC Internal
+mopin \(em MOPAC Internal
 .It
-mopout -- MOPAC Output format [Read-only]
+mopout \(em MOPAC Output format [Read\-only]
 .It
-mp -- Molpro input format [Write-only]
+mp \(em Molpro input format [Write\-only]
 .It
-mpc -- MOPAC Cartesian format
+mpc \(em MOPAC Cartesian format
 .It
-mpd -- MolPrint2D format [Write-only]
+mpd \(em MolPrint2D format [Write\-only]
 .It
-mpo -- Molpro output format [Read-only]
+mpo \(em Molpro output format [Read\-only]
 .It
-mpqc -- MPQC output format [Read-only]
+mpqc \(em MPQC output format [Read\-only]
 .It
-mpqcin -- MPQC simplified input format [Write-only]
+mpqcin \(em MPQC simplified input format [Write\-only]
 .It
-mrv -- Chemical Markup Language
+mrv \(em Chemical Markup Language
 .It
-msi -- Accelrys/MSI Cerius II MSI format [Read-only]
+msi \(em Accelrys/MSI Cerius II MSI format [Read\-only]
 .It
-msms -- M.F. Sanner's MSMS input format [Write-only]
+msms \(em M.F. Sanner\(aqs MSMS input format [Write\-only]
 .It
-nul -- Outputs nothing [Write-only]
+nul \(em Outputs nothing [Write\-only]
 .It
-nw -- NWChem input format [Write-only]
+nw \(em NWChem input format [Write\-only]
 .It
-nwo -- NWChem output format [Read-only]
+nwo \(em NWChem output format [Read\-only]
 .It
-orca -- ORCA output format [Read-only]
+orca \(em ORCA output format [Read\-only]
 .It
-orcainp -- ORCA input format [Write-only]
+orcainp \(em ORCA input format [Write\-only]
 .It
-out -- Generic Output file format [Read-only]
+out \(em Generic Output file format [Read\-only]
 .It
-outmol -- DMol3 coordinates format
+outmol \(em DMol3 coordinates format
 .It
-output -- Generic Output file format [Read-only]
+output \(em Generic Output file format [Read\-only]
 .It
-paint -- Painter format [Write-only]
+paint \(em Painter format [Write\-only]
 .It
-pc -- PubChem format [Read-only]
+pc \(em PubChem format [Read\-only]
 .It
-pcjson -- PubChem JSON
+pcjson \(em PubChem JSON
 .It
-pcm -- PCModel Format
+pcm \(em PCModel Format
 .It
-pdb -- Protein Data Bank format
+pdb \(em Protein Data Bank format
 .It
-pdbqt -- AutoDock PDBQT format
+pdbqt \(em AutoDock PDBQT format
 .It
-png -- PNG 2D depiction
+png \(em PNG 2D depiction
 .It
-pointcloud -- Point cloud on VDW surface [Write-only]
+pointcloud \(em Point cloud on VDW surface [Write\-only]
 .It
-pos -- POS cartesian coordinates format [Read-only]
+pos \(em POS cartesian coordinates format [Read\-only]
 .It
-POSCAR -- VASP format
+POSCAR \(em VASP format
 .It
-POSFF -- MDFF format
+POSFF \(em MDFF format
 .It
-pov -- POV-Ray input format [Write-only]
+pov \(em POV\-Ray input format [Write\-only]
 .It
-pqr -- PQR format
+pqr \(em PQR format
 .It
-pqs -- Parallel Quantum Solutions format
+pqs \(em Parallel Quantum Solutions format
 .It
-prep -- Amber Prep format [Read-only]
+prep \(em Amber Prep format [Read\-only]
 .It
-pwscf -- PWscf format [Read-only]
+pwscf \(em PWscf format [Read\-only]
 .It
-qcin -- Q-Chem input format [Write-only]
+qcin \(em Q\-Chem input format [Write\-only]
 .It
-qcout -- Q-Chem output format [Read-only]
+qcout \(em Q\-Chem output format [Read\-only]
 .It
-report -- Open Babel report format [Write-only]
+report \(em Open Babel report format [Write\-only]
 .It
-res -- ShelX format [Read-only]
+res \(em ShelX format [Read\-only]
 .It
-rinchi -- RInChI [Write-only]
+rinchi \(em RInChI [Write\-only]
 .It
-rsmi -- Reaction SMILES format
+rsmi \(em Reaction SMILES format
 .It
-rxn -- MDL RXN format
+rxn \(em MDL RXN format
 .It
-sd -- MDL MOL format
+sd \(em MDL MOL format
 .It
-sdf -- MDL MOL format
+sdf \(em MDL MOL format
 .It
-siesta -- SIESTA format [Read-only]
+siesta \(em SIESTA format [Read\-only]
 .It
-smi -- SMILES format
+smi \(em SMILES format
 .It
-smiles -- SMILES format
+smiles \(em SMILES format
 .It
-smy -- SMILES format using Smiley parser [Read-only]
+smy \(em SMILES format using Smiley parser [Read\-only]
 .It
-stl -- STL 3D-printing format [Write-only]
+stl \(em STL 3D\-printing format [Write\-only]
 .It
-svg -- SVG 2D depiction [Write-only]
+svg \(em SVG 2D depiction [Write\-only]
 .It
-sy2 -- Sybyl Mol2 format
+sy2 \(em Sybyl Mol2 format
 .It
-t41 -- ADF TAPE41 format [Read-only]
+t41 \(em ADF TAPE41 format [Read\-only]
 .It
-tdd -- Thermo format
+tdd \(em Thermo format
 .It
-text -- Read and write raw text
+text \(em Read and write raw text
 .It
-therm -- Thermo format
+therm \(em Thermo format
 .It
-tmol -- TurboMole Coordinate format
+tmol \(em TurboMole Coordinate format
 .It
-txt -- Title format
+txt \(em Title format
 .It
-txyz -- Tinker XYZ format
+txyz \(em Tinker XYZ format
 .It
-unixyz -- UniChem XYZ format
+unixyz \(em UniChem XYZ format
 .It
-VASP -- VASP format
+VASP \(em VASP format
 .It
-vmol -- ViewMol format
+vmol \(em ViewMol format
 .It
-wln -- Wiswesser Line Notation [Read-only]
+wln \(em Wiswesser Line Notation [Read\-only]
 .It
-xed -- XED format [Write-only]
+xed \(em XED format [Write\-only]
 .It
-xml -- General XML format [Read-only]
+xml \(em General XML format [Read\-only]
 .It
-xsf -- XCrySDen Structure Format [Read-only]
+xsf \(em XCrySDen Structure Format [Read\-only]
 .It
-xyz -- XYZ cartesian coordinates format
+xyz \(em XYZ cartesian coordinates format
 .It
-yob -- YASARA.org YOB format
+yob \(em YASARA.org YOB format
 .It
-zin -- ZINDO input format [Write-only]
+zin \(em ZINDO input format [Write\-only]
 .El
 .Sh "FORMAT OPTIONS"
 Individual file formats may have additional formatting options.
 .Pp
 Input format options are preceded by
-.Cm a ,
+.Fl a ,
 e.g.,
 .Fl as
 .Pp
 Output format options are preceded by
-.Cm x ,
+.Fl x ,
 e.g.,
 .Fl xn
 .Pp
 For further specific information and options, use
-.Fl H Ar format-type ,
+.Fl H Ns Ar format-type ,
 e.g.,
 .Fl Hcml
+.Sh ENVIRONMENT
+.Bl -tag -width flag
+.It Ev OB_RANDOM_SEED
+Seed for pseudo random number generator; random seed is used if unset or null.
+This feature is effective if Open Babel is built with \fI-DOB_USE_OBRANDOMMT\fP
+cpreprocessor flag (will be automatically enabled when version 4 is released).
+.El
 .Sh EXAMPLES
 Standard conversion:
 .Dl "obabel ethanol.xyz \-Oethanol.pdb"
 Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT:
 .Dl "obabel \-ismi \-omol2"
-Split a multi-molecule file into new1.smi, new2.smi, etc.:
+Split a multi\-molecule file into new1.smi, new2.smi, etc.:
 .Dl "obabel infile.mol -Onew.smi \-m"
-.Sh SEE ALSO
+.Sh "SEE ALSO"
 .Xr obenergy 1 ,
 .Xr obfit 1 ,
 .Xr obgrep 1 ,
 .Xr obminimize 1 ,
 .Xr obprop 1 ,
-.Xr obrotate 1 ,
-.Xr obrotamer 1 .
+.Xr obrotamer 1 ,
+.Xr obrotate 1 .
 The web pages for Open Babel can be found at:
 \%<\fBhttp://openbabel.org/\fR>
 .Sh AUTHORS
@@ -547,9 +557,9 @@ and innumerable others who have contributed fixes and additions.
 For more contributors to Open Babel, see
 \%<\fBhttp://openbabel.org/wiki/THANKS\fR>
 .Sh COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Copyright (C) 1998\-2001 by OpenEye Scientific Software, Inc.
 .br
-Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison
+Some portions Copyright (C) 2001\-2007 by Geoffrey R. Hutchison
 .Pp
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -557,5 +567,5 @@ the Free Software Foundation version 2 of the License.
 .Pp
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.

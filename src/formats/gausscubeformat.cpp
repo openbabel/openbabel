@@ -76,7 +76,7 @@ namespace OpenBabel
     // I couldn't find it but close enough.
     const char* SpecificationURL() override
     {
-        return "https://www.gaussian.com/cubegen/";
+        return "https://gaussian.com/cubegen/";
     }
 
     // Return MIME type, NULL in this case.

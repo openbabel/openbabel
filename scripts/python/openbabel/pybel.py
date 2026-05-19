@@ -51,10 +51,7 @@ else:
     from . import openbabel as ob
     _obfuncs = _obconsts = ob
     try:
-        if sys.version_info[0] >= 3:
-            import tkinter as tk
-        else:
-            import Tkinter as tk
+        import tkinter as tk
         from PIL import Image as PIL
         from PIL import ImageTk as piltk
     except ImportError:  # pragma: no cover
@@ -132,10 +129,9 @@ def readfile(format=None, filename=None, opt=None):
                 For format options with no parameters, specify the
                 value as None.
 
-    You can access the first molecule in a file using the next() method
-    of the iterator (or the next() keyword in Python 3):
-        mol = readfile("smi", "myfile.smi").next() # Python 2
-        mol = next(readfile("smi", "myfile.smi"))  # Python 3
+    You can access the first molecule in a file using the next() builtin
+    function:
+        mol = next(readfile("smi", "myfile.smi"))
 
     You can make a list of the molecules in a file using:
         mols = list(readfile("smi", "myfile.smi"))
@@ -146,14 +142,14 @@ def readfile(format=None, filename=None, opt=None):
     >>> for mol in readfile("sdf", "head.sdf"):
     ...     atomtotal += len(mol.atoms)
     ...
-    >>> print atomtotal
+    >>> print(atomtotal)
     43
 
     >>> atomtotal = 0
     >>> for mol in readfile(filename="head.sdf.tgz"):
     ...     atomtotal += len(mol.atoms)
     ...
-    >>> print atomtotal
+    >>> print(atomtotal)
     43
     """
     # To be compitable with testing work inside `python/examples/testpybel.py`,
@@ -449,7 +445,7 @@ class Molecule(object):
 
         This allows constructions such as the following:
            for atom in mymol:
-               print atom
+               print(atom)
         """
         return iter(self.atoms)
 
@@ -672,12 +668,13 @@ class Molecule(object):
         Tkinter and Python Imaging Library are required for image display.
         """
         obconversion = ob.OBConversion()
-        formatok = obconversion.SetOutFormat("_png2")
-        if not formatok:
-            raise ImportError("PNG depiction support not found. You should "
-                              "compile Open Babel with support for Cairo. See "
-                              "installation instructions for more "
-                              "information.")
+        if show or filename:
+            formatok = obconversion.SetOutFormat("_png2")
+            if not formatok:
+                raise ImportError("PNG depiction support not found. You should "
+                                  "compile Open Babel with support for Cairo. See "
+                                  "installation instructions for more "
+                                  "information.")
 
         # Need to copy to avoid removing hydrogens from self
         workingmol = Molecule(ob.OBMol(self.OBMol))
@@ -707,7 +704,8 @@ class Molecule(object):
 
             filedes, filename = tempfile.mkstemp()
 
-        workingmol.write("_png2", filename=filename, overwrite=True)
+        if show or (filedes is None):
+            workingmol.write("_png2", filename=filename, overwrite=True)
 
         if show:
             if sys.platform[:4] == "java":
@@ -902,7 +900,7 @@ class Residue(object):
 
         This allows constructions such as the following:
            for atom in residue:
-               print atom
+               print(atom)
         """
         return iter(self.atoms)
 
@@ -976,7 +974,7 @@ class Smarts(object):
     Example:
     >>> mol = readstring("smi","CCN(CC)CC") # triethylamine
     >>> smarts = Smarts("[#6][#6]") # Matches an ethyl group
-    >>> print smarts.findall(mol)
+    >>> print(smarts.findall(mol))
     [(1, 2), (4, 5), (6, 7)]
 
     The numbers returned are the indices (starting from 1) of the atoms
@@ -1014,22 +1012,21 @@ class MoleculeData(object):
     that the data is retrieved on-the-fly from the underlying OBMol.
 
     Example:
-    >>> mol = readfile("sdf", 'head.sdf').next() # Python 2
-    >>> # mol = next(readfile("sdf", 'head.sdf')) # Python 3
+    >>> mol = next(readfile("sdf", 'head.sdf'))
     >>> data = mol.data
-    >>> print data
+    >>> print(data)
     {'Comment': 'CORINA 2.61 0041  25.10.2001', 'NSC': '1'}
-    >>> print len(data), data.keys(), data.has_key("NSC")
+    >>> print(len(data), data.keys(), data.has_key("NSC")))
     2 ['Comment', 'NSC'] True
-    >>> print data['Comment']
+    >>> print(data['Comment'])
     CORINA 2.61 0041  25.10.2001
     >>> data['Comment'] = 'This is a new comment'
     >>> for k,v in data.items():
-    ...    print k, "-->", v
+    ...    print(k, "-->", v)
     Comment --> This is a new comment
     NSC --> 1
     >>> del data['NSC']
-    >>> print len(data), data.keys(), data.has_key("NSC")
+    >>> print(len(data), data.keys(), data.has_key("NSC"))
     1 ['Comment'] False
     """
 
@@ -1062,9 +1059,6 @@ class MoleculeData(object):
 
     def __iter__(self):
         return iter(self.keys())
-
-    def iteritems(self):  # Can remove for Python 3
-        return self.items()
 
     def __len__(self):
         return len(self._data())

@@ -37,11 +37,18 @@ namespace OpenBabel {
   {
     m_unspecifiedTetrahedral.clear();
     m_unspecifiedCisTrans.clear();
+    m_inputHasStereoNotation = false;
 
     // Store canonical SMILES of original molecule
     OBConversion conv;
     conv.SetOutFormat("can");
     m_inputSmiles = conv.WriteString(mol, true);
+
+    // Check if the input SMILES contains any stereo notation
+    // (@ for tetrahedral, / \ for cis/trans)
+    m_inputHasStereoNotation = (m_inputSmiles.find('@') != std::string::npos ||
+                                m_inputSmiles.find('/') != std::string::npos ||
+                                m_inputSmiles.find('\\') != std::string::npos);
 
     // Keep track of unspecified stereochemistry
     OBStereoFacade facade(mol);
@@ -70,6 +77,12 @@ namespace OpenBabel {
 
   bool OBGen3DStereoHelper::Check(OBMol *mol)
   {
+    // If the input SMILES has no stereo notation, any 3D geometry is acceptable.
+    // The E/Z configuration might change during optimization, but that's fine
+    // since no stereo was specified in the input.
+    if (!m_inputHasStereoNotation)
+      return true;
+
     // Perceive stereo from 3D coords
     StereoFrom3D(mol, true); // true  = force
 

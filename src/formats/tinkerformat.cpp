@@ -57,7 +57,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://dasher.wustl.edu/tinker/"; }  // optional
+    { return "https://dasher.wustl.edu/tinker/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -98,6 +98,7 @@ namespace OpenBabel
     stringstream errorMsg;
 
     if (!ifs || ifs.peek() == EOF) {
+      pmol->EndModify();
       return false; // Trying to read past end of the file
     }
 
@@ -105,6 +106,7 @@ namespace OpenBabel
       errorMsg << "Problems reading a Tinker file: "
                << "Cannot read the first line!";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      pmol->EndModify();
       return false;
     }
 
@@ -115,6 +117,7 @@ namespace OpenBabel
       errorMsg << "Problems reading a Tinker file: "
                << "The first line is empty!";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      pmol->EndModify();
       return false;
     } else if (vs.size() == 1) {
       title = pConv->GetTitle();
@@ -129,6 +132,7 @@ namespace OpenBabel
                << "There are no atoms in the file or the first line is"
                << " incorrectly written.";
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+      pmol->EndModify();
       return false;
     }
     pmol->ReserveAtoms(natoms);
@@ -141,17 +145,34 @@ namespace OpenBabel
 
     for (int i = 1; i <= natoms; ++i)
     {
-        if (!ifs.getline(buffer,BUFF_SIZE))
+        if (!ifs.getline(buffer,BUFF_SIZE)) {
+            pmol->EndModify();
             return false;
+        }
         tokenize(vs,buffer);
         // e.g. "2  C      2.476285    0.121331   -0.001070     2     1     3    14"
-        if (vs.size() < 5)
+        // Need at least 6 tokens: idx, symbol, x, y, z, atomClass.
+        if (vs.size() < 6) {
+            pmol->EndModify();
             return false;
+        }
+
+        // Parse numeric fields up front with non-throwing helpers; stof/stoi
+        // throw on bad input, and an exception out of here leaks the OBMol
+        // (and the ReserveAtoms capacity) that the caller heap-allocated.
+        // Require *endptr == '\0' too so partial parses like "1.5xyz" are
+        // rejected rather than silently truncated.
+        char *endptr;
+        x = strtod(vs[2].c_str(), &endptr);
+        if (endptr == vs[2].c_str() || *endptr != '\0') return false;
+        y = strtod(vs[3].c_str(), &endptr);
+        if (endptr == vs[3].c_str() || *endptr != '\0') return false;
+        z = strtod(vs[4].c_str(), &endptr);
+        if (endptr == vs[4].c_str() || *endptr != '\0') return false;
+        long atomClass = strtol(vs[5].c_str(), &endptr, 10);
+        if (endptr == vs[5].c_str() || *endptr != '\0') return false;
 
         atom = pmol->NewAtom();
-        x = stof(vs[2]);
-        y = stof(vs[3]);
-        z = stof(vs[4]);
         atom->SetVector(x,y,z); //set coordinates
 
         //set atomic number
@@ -160,14 +181,17 @@ namespace OpenBabel
         // set atom class number
         OBPairInteger *pac = new OBPairInteger();
         pac->SetAttribute("Atom Class");
-        pac->SetValue(stoi(vs[5]));
+        pac->SetValue(static_cast<int>(atomClass));
         pac->SetOrigin(fileformatInput);
         atom->SetData(pac);
 
         // add bonding
         if (vs.size() > 6)
-          for (unsigned int j = 6; j < vs.size(); ++j)
-            pmol->AddBond(pmol->NumAtoms(), stoi(vs[j]), 1); // we don't know the bond order
+          for (unsigned int j = 6; j < vs.size(); ++j) {
+            long nbr = strtol(vs[j].c_str(), &endptr, 10);
+            if (endptr == vs[j].c_str() || *endptr != '\0') return false;
+            pmol->AddBond(pmol->NumAtoms(), static_cast<int>(nbr), 1); // we don't know the bond order
+          }
 
     }
     if (!pConv->IsOption("s",OBConversion::INOPTIONS))

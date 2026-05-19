@@ -75,7 +75,7 @@ public:
     /// I couldn't find it but close enough.
     const char* SpecificationURL() override
     {
-        return "http://www.cmbi.ru.nl/molden/molden_format.html";
+        return "https://www.theochem.ru.nl/molden/molden_format.html";
     }
 
     /// Return MIME type, NULL in this case.

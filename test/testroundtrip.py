@@ -1,4 +1,4 @@
-"""Test the ability of openbabel to roundtrip various properties
+r"""Test the ability of openbabel to roundtrip various properties
 (protonation, hybridization, aromaticity...) through various file formats
 (sdf,pdb,mol2).
 
@@ -30,8 +30,6 @@ import traceback
 import itertools
 from multiprocessing import Pool  
 from multiprocessing import TimeoutError
-
-from contextlib import contextmanager
 
 here = sys.path[0]
 iswin = sys.platform.startswith("win")
@@ -185,16 +183,6 @@ class TestSuite(unittest.TestCase):
         fullpath = os.path.join(here, filename)
         self.canFindFile(fullpath)
         return fullpath    
-        
-    @contextmanager
-    def dummy_context(self, enter_result=None):
-        yield enter_result
-        
-    def subtest(self, enter_result=None):
-        try:
-            return self.subTest()
-        except AttributeError: # python < 3.4
-            return self.dummy_context()
 
             
     def testRoundtrip(self):
@@ -203,7 +191,7 @@ class TestSuite(unittest.TestCase):
         #sometimes openbabel segfaults, so fork off each test        
         processes_pool = Pool(1)
         for (i,fname) in enumerate(glob.glob(os.path.join(root,'*.sdf'))):
-          with self.subtest():
+          with self.subTest():
             try:
               result = processes_pool.apply_async(roundtripFile, args = (fname, ))
               ret = result.get(timeout=10) #surely 10 seconds is long enough

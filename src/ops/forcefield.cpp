@@ -140,13 +140,22 @@ namespace OpenBabel
       const char* Description() override
       {
         return "ForceField Energy Minimization (not displayed in GUI)\n"
-          "Typical usage: obabel infile.xxx -O outfile.yyy --minimize --steps 1500 --sd\n"
+          "Typical usage: obabel infile.xxx -O outfile.yyy --minimize --steps 1500\n"
           " options:         description:\n"
           " --log        output a log of the minimization process(default= no log)\n"
           " --crit #     set convergence criteria (default=1e-6)\n"
-          " --sd         use steepest descent algorithm (default = conjugate gradient)\n"
-          " --newton     use Newton2Num linesearch (default = Simple)\n"
-          " --ff #       select a forcefield (default = Ghemical)\n"
+#ifdef HAVE_EIGEN3
+          " --sd         use steepest descent algorithm (default = L-BFGS)\n"
+          " --cg         use conjugate gradients algorithm (default = L-BFGS)\n"
+          " --lbfgs      use L-BFGS algorithm (the default; flag is for explicit selection)\n"
+          " --newton     use Newton2Num linesearch (default); ignored for L-BFGS\n"
+#else
+          // no L-BFGS (will fall back to CG if requested)
+          " --sd         use steepest descent algorithm (default = CG)\n"
+          " --cg         use conjugate gradients algorithm (default)\n"
+          " --newton     use Newton2Num linesearch (default)\n"
+#endif
+          " --ff #       select a forcefield (default = MMFF94)\n"
           " --steps #    specify the maximum number of steps (default = 2500)\n"
           " --cut        use cut-off (default = don't use cut-off)\n"
           " --noh        don't add explicit hydrogens (default = make explicit)\n"
@@ -180,6 +189,7 @@ namespace OpenBabel
     int steps = 2500;
     double crit = 1e-6;
     bool sd = false;
+    bool cg = false;
     bool cut = false;
     bool addh = true;
     bool newton = true;
@@ -198,6 +208,13 @@ namespace OpenBabel
     iter = pmap->find("sd");
     if(iter!=pmap->end())
       sd=true;
+
+    iter = pmap->find("cg");
+    if(iter!=pmap->end())
+      cg=true;
+
+    // --lbfgs is accepted but not parsed: it selects the default
+    // algorithm and would otherwise be a dead flag.
 
     iter = pmap->find("newton");
     if(iter!=pmap->end())
@@ -263,10 +280,13 @@ namespace OpenBabel
     }
 
     bool done = true;
+    // Precedence if multiple flags are passed: --sd > --cg > L-BFGS (default).
     if (sd)
       pFF->SteepestDescent(steps, crit);
-    else
+    else if (cg)
       pFF->ConjugateGradients(steps, crit);
+    else
+      pFF->LBFGS(steps, crit);
 
     pFF->GetCoordinates(*pmol);
 

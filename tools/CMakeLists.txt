@@ -26,7 +26,7 @@ else(MINIMAL_BUILD)
         obtautomer
         obthermo
      )
-  if(EIGEN3_FOUND)
+  if(TARGET Eigen3::Eigen)
     set(tools
         ${tools}
         obdistgen
@@ -52,7 +52,7 @@ if(BUILD_SHARED)
   if(NOT MINIMAL_BUILD)
     # obgrep, obrms, obspectrophore -- require getopt
     set(toolnames obgrep obspectrophore)
-    if(EIGEN3_FOUND)
+    if(TARGET Eigen3::Eigen)
       set(toolnames ${toolnames} obrms)
     endif()
     foreach(tool ${toolnames})

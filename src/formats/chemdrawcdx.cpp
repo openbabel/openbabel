@@ -152,8 +152,9 @@ public:
       " o display only objects in tree output\n";
   }
 
-  const char* SpecificationURL() override
-  {return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm";}
+  const char* SpecificationURL() override {
+    return "http://www.cambridgesoft.com/services/documentation/sdk/chemdraw/cdx/IntroCDX.htm"; // XXX dead
+  }
 
   const char* GetMIMEType() override
   { return "chemical/x-cdx"; }
@@ -476,8 +477,8 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
       unsigned nodeID = cdxr.CurrentID();
       bool isAlias=false, hasElement=false;
       bool hasNumHs = false;
-      UINT16 atnum=-1, spin=0, numHs=0;
-      int x, y, charge=0, iso=0;
+      UINT16 atnum=-1, spin=0, iso=0, numHs=0;
+      int x, y, charge=0;
       string aliastext;
 
       //Read all node properties
@@ -577,8 +578,8 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
     else if(tag==kCDXObj_Bond)
     {
       CDXObjectID bgnID, endID;
-      int order=1, bgnIdx, endIdx ;
-      UINT16 stereo=0;
+      int bgnIdx, endIdx ;
+      UINT16 order=1, stereo=0;
 
       while( (tag = cdxr.ReadNext()) )
       {
@@ -738,9 +739,11 @@ CDXReader::CDXReader(std::istream& is) : ifs(is), depth(0)
     ifs.ignore(kCDX_HeaderLength - kCDX_HeaderStringLen);	// Discard rest of header.
   else
   {
+    // No active exception here: a bare `throw;` would call std::terminate.
+    // Mark the stream failed instead — the class's operator bool() (and the
+    // while(cdxr) / while(*this) callers) already treats this as end-of-input.
     obErrorLog.ThrowError(__FUNCTION__,"Invalid file, no ChemDraw Header",obError);
     ifs.setstate(ios::eofbit);
-    throw;
   }
 }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

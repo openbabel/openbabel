@@ -22,6 +22,8 @@ GNU General Public License for more details.
 #include <openbabel/internalcoord.h>
 #include <openbabel/math/matrix3x3.h>
 #include <cstdlib>
+#include <cmath>
+#include <limits>
 
 using namespace std;
 namespace OpenBabel
@@ -45,8 +47,9 @@ namespace OpenBabel
         "  b  Disable bonding entirely\n\n";
     }
 
-    const char* SpecificationURL() override
-    { return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm"; }  // optional
+    const char* SpecificationURL() override {
+      return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm"; // XXX dead
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
@@ -236,12 +239,12 @@ namespace OpenBabel
       {
         ref = nullptr;
         a1 = mol.GetAtom(i);
-        sum = 100.0;
+        sum = std::numeric_limits<double>::max();
         for (j = 1;j < i;j++)
           {
             a2 = mol.GetAtom(j);
             r = (a1->GetVector()-a2->GetVector()).length_2();
-            if ((r < sum) && (vit[j]->_a != a2) && (vit[j]->_b != a2))
+            if (std::isfinite(r) && (r < sum) && (vit[j]->_a != a2) && (vit[j]->_b != a2))
               {
                 sum = r;
                 ref = a2;
@@ -251,11 +254,14 @@ namespace OpenBabel
       }
 
     for (i = 3;i <= mol.NumAtoms();i++)
-      vit[i]->_b = vit[vit[i]->_a->GetIdx()]->_a;
+      {
+        if (vit[i]->_a && vit[i]->_a->GetIdx() < vit.size())
+          vit[i]->_b = vit[vit[i]->_a->GetIdx()]->_a;
+      }
 
     for (i = 4;i <= mol.NumAtoms();i++)
       {
-        if (vit[i]->_b && vit[i]->_b->GetIdx())
+        if (vit[i]->_b && vit[i]->_b->GetIdx() && vit[i]->_b->GetIdx() < vit.size())
           vit[i]->_c = vit[vit[i]->_b->GetIdx()]->_b;
         else
           vit[i]->_c = &dummy1;
@@ -269,6 +275,8 @@ namespace OpenBabel
         a = vit[i]->_a;
         b = vit[i]->_b;
         c = vit[i]->_c;
+        if (!a || !b || !c)
+          continue;
         // TODO: fix explicit calculations for PBC?
         v1 = atom->GetVector() - a->GetVector();
         v2 = b->GetVector() - a->GetVector();
@@ -299,8 +307,8 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override {
-      return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm";
-    } //optional
+      return "http://www.chembio.uoguelph.ca/oakley/310/cacao/cacao.htm"; // XXX dead
+    }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

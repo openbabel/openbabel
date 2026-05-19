@@ -5,6 +5,7 @@
 #include <openbabel/obiter.h>
 
 #include <iostream>
+#include <random>
 #include <vector>
 #include <algorithm>
 
@@ -42,7 +43,7 @@ int canonstabletest(int /*argc*/, char * /*argv*/[])
 
     for (int i = 0; i < 5; ++i) {
       // shuffle the atoms
-      std::random_shuffle(atoms.begin(), atoms.end());
+      std::shuffle(atoms.begin(), atoms.end(), std::mt19937{std::random_device{}()});
       mol.RenumberAtoms(atoms);
 
       // get can smiles

@@ -1,6 +1,6 @@
-.Dd Oct 10, 2019
+.Dd October 10, 2019
+.Dt OBROTAMER 1 URM
 .Os "Open Babel" 3.1
-.Dt obrotamer 1 URM
 .Sh NAME
 .Nm obrotamer
 .Nd "generate conformer/rotamer coordinates"
@@ -11,12 +11,19 @@
 The
 .Nm
 tool can be used as part of a conformational search
-by generating random isomers based on rotating dihedral angles. These
-rotamers are not conformers -- that is,
+by generating random isomers based on rotating dihedral angles.
+These rotamers are not conformers \(em that is,
 .Nm
 does not perform geometry optimization after generating the rotamer
-structure. The obminimize tool can do geometry optimization using
-molecular mechanics.
+structure.
+The obminimize tool can do geometry optimization using molecular mechanics.
+.Sh ENVIRONMENT
+.Bl -tag -width flag
+.It Ev OB_RANDOM_SEED
+Seed for pseudo random number generator; random seed is used if unset or null.
+This feature is effective if Open Babel is built with \fI-DOB_USE_OBRANDOMMT\fP
+cpreprocessor flag (will be automatically enabled when version 4 is released).
+.El
 .Sh EXAMPLES
 .Dl "obrotamer baseconformer.sdf > rotamer1.sdf"
 .Pp
@@ -31,7 +38,7 @@ it to rotamer1.sdf
 .Xr obrotate 1 .
 .Pp
 The web pages for Open Babel can be found at:
-\%<\fBhttp://openbabel.org/\fR>
+\%<\fBhttps://openbabel.org/\fR>
 .Sh AUTHORS
 .An -nosplit
 Open Babel is developed by a cast of many, including current maintainers
@@ -42,9 +49,9 @@ and innumerable others who have contributed fixes and additions.
 For more contributors to Open Babel, see
 \%<\fBhttp://openbabel.org/wiki/THANKS\fR>
 .Sh COPYRIGHT
-Copyright (C) 1998-2001 by OpenEye Scientific Software, Inc.
+Copyright (C) 1998\-2001 by OpenEye Scientific Software, Inc.
 .br
-Some portions Copyright (C) 2001-2007 by Geoffrey R. Hutchison and
+Some portions Copyright (C) 2001\-2007 by Geoffrey R. Hutchison and
 other contributors.
 .Pp
 This program is free software; you can redistribute it and/or modify
@@ -53,5 +60,5 @@ the Free Software Foundation version 2 of the License.
 .Pp
 This program is distributed in the hope that it will be useful, but
 WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
-General Public License for more details.
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+See the GNU General Public License for more details.

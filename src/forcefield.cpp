@@ -36,6 +36,10 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include "rand.h"
 
+#ifdef HAVE_EIGEN3
+#include <Eigen/Core>
+#endif
+
 using namespace std;
 
 namespace OpenBabel
@@ -44,6 +48,46 @@ namespace OpenBabel
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBForceField)
 #endif
+
+  // L-BFGS limited-memory state. Forward-declared in forcefield.h so the
+  // header doesn't have to pull in Eigen. When OB is built without Eigen
+  // (HAVE_EIGEN3 not defined), the struct is an empty stub so that the
+  // destructor's `delete _lbfgsState` remains well-formed; the pointer is
+  // never allocated in that build.
+#ifdef HAVE_EIGEN3
+  struct OBForceField::LBFGSState {
+    Eigen::MatrixXd s;        //!< column j = x_{k-j} - x_{k-j-1} (history of position deltas)
+    Eigen::MatrixXd y;        //!< column j = g_{k-j} - g_{k-j-1} (history of gradient deltas)
+    Eigen::VectorXd ys;       //!< ys[j] = y_j . s_j  (1/rho_j)
+    Eigen::VectorXd alpha;    //!< two-loop recursion scratch
+    Eigen::VectorXd x;        //!< current flattened coordinates
+    Eigen::VectorXd xp;       //!< previous x
+    Eigen::VectorXd grad;     //!< current flattened gradient
+    Eigen::VectorXd gradp;    //!< previous gradient
+    Eigen::VectorXd drt;      //!< search direction (-H * grad)
+    double step;              //!< suggested initial line-search step
+    int m;                    //!< history depth (typically 6)
+    int k;                    //!< iteration counter
+    int end;                  //!< ring-buffer head
+  };
+#else
+  struct OBForceField::LBFGSState {};
+#endif
+
+  OBForceField::~OBForceField()
+  {
+    if (_grad1 != nullptr) {
+      delete [] _grad1;
+      _grad1 = nullptr;
+    }
+    if (_gradientPtr != nullptr) {
+      delete [] _gradientPtr;
+      _gradientPtr = nullptr;
+    }
+    // Defined here so LBFGSState is a complete type at the delete site.
+    delete _lbfgsState;
+    _lbfgsState = nullptr;
+  }
 
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
       \brief Base class for molecular mechanics force fields
@@ -128,7 +172,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->ConjugateGradients(1000);
+      pFF->LBFGS(1000);
       \endcode
 
       Minimize the structure in mol using steepest descent and fix the position of atom with index 1.
@@ -156,7 +200,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->ConjugateGradients(1000);
+      pFF->LBFGS(1000);
       \endcode
 
       Minimize a ligand molecule in a binding pocket.
@@ -202,7 +246,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->ConjugateGradients(1000);
+      pFF->LBFGS(1000);
       \endcode
 
   **/
@@ -1190,7 +1234,7 @@ namespace OpenBabel
       unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
-        combinations *= rotor->GetResolution().size();
+        combinations *= rotor->GetTorsionValues().size();
       }
       snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
@@ -1202,7 +1246,7 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
-      ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
+      LBFGS(geomSteps); // final energy minimization for best conformation
 
       return 1; // there are no more conformers
     }
@@ -1210,7 +1254,7 @@ namespace OpenBabel
     OBRotorKeys rotorKeys;
     rotor = rl.BeginRotor(ri);
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) // foreach rotor
-      rotorKeys.AddRotor(rotor->GetResolution().size());
+      rotorKeys.AddRotor(rotor->GetTorsionValues().size());
 
     rotamers.AddRotamer(rotorKeys.GetKey());
     while (rotorKeys.Next())
@@ -1259,7 +1303,7 @@ namespace OpenBabel
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
     _loglvl = OBFF_LOGLVL_NONE;
-    ConjugateGradients(geomSteps); // energy minimization for conformer
+    LBFGS(geomSteps); // energy minimization for conformer
     _loglvl = _origLogLevel;
 
     _energies.push_back(Energy(false)); // calculate and store energy
@@ -1369,7 +1413,7 @@ namespace OpenBabel
 
         minE = DBL_MAX;
 
-        for (j = 0; j < rotor->GetResolution().size(); j++) { // For each rotor position
+        for (j = 0; j < rotor->GetTorsionValues().size(); j++) { // For each rotor position
           // Note: we could do slightly better by skipping the rotor position we already
           //       tested in the last loop (position 0 at the moment). Note that this
           //       isn't as simple as just changing the loop starting point to j = 1.
@@ -1433,8 +1477,12 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     _origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1454,7 +1502,7 @@ namespace OpenBabel
       unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
-        combinations *= rotor->GetResolution().size();
+        combinations *= rotor->GetTorsionValues().size();
       }
       snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
@@ -1467,7 +1515,7 @@ namespace OpenBabel
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
       _loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
+      LBFGS(geomSteps); // energy minimization for conformer
       _loglvl = _origLogLevel;
 
       return;
@@ -1479,7 +1527,11 @@ namespace OpenBabel
       rotor = rl.BeginRotor(ri);
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
-        rotorKey[i] = generator.NextInt() % rotor->GetResolution().size();
+#if !OB_USE_OBRANDOMMT
+        rotorKey[i] = generator.UniformInt(0, rotor->GetTorsionValues().size() - 1u);
+#else
+        rotorKey[i] = generator.UniformInt<int>(0, rotor->GetTorsionValues().size() - 1u);
+#endif
       }
       rotamers.AddRotamer(rotorKey);
     }
@@ -1525,7 +1577,7 @@ namespace OpenBabel
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
     _loglvl = OBFF_LOGLVL_NONE;
-    ConjugateGradients(geomSteps); // energy minimization for conformer
+    LBFGS(geomSteps); // energy minimization for conformer
     _loglvl = _origLogLevel;
 
     _energies.push_back(Energy(false)); // calculate and store energy
@@ -1603,8 +1655,12 @@ namespace OpenBabel
     OBRotorIterator ri;
     OBRotor *rotor;
 
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     int origLogLevel = _loglvl;
 
     if (_mol.GetCoordinates() == nullptr)
@@ -1632,7 +1688,7 @@ namespace OpenBabel
       unsigned long int combinations = 1;
       for (rotor = rl.BeginRotor(ri); rotor;
            rotor = rl.NextRotor(ri)) {
-        combinations *= rotor->GetResolution().size();
+        combinations *= rotor->GetTorsionValues().size();
       }
       snprintf(_logbuf, BUFF_SIZE, "  NUMBER OF POSSIBLE ROTAMERS: %lu\n", combinations);
       OBFFLog(_logbuf);
@@ -1646,7 +1702,7 @@ namespace OpenBabel
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
       _loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
+      LBFGS(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       _energies.push_back(Energy(false));
 
@@ -1682,7 +1738,7 @@ namespace OpenBabel
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
       // foreach rotor
       energies.clear();
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+      for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
         // foreach rotor position
         _mol.SetCoordinates(initialCoord);
         rotorKey[i] = j;
@@ -1690,7 +1746,7 @@ namespace OpenBabel
         SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
         _loglvl = OBFF_LOGLVL_NONE;
-        ConjugateGradients(geomSteps); // energy minimization for conformer
+        LBFGS(geomSteps); // energy minimization for conformer
         _loglvl = origLogLevel;
         currentE = Energy(false);
 
@@ -1709,16 +1765,16 @@ namespace OpenBabel
       weightSet.clear();
       // first loop through and calculate the relative populations from Boltzmann
       double totalPop = 0.0;
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+      for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
         currentE = energies[j];
         // add back the Boltzmann population for these relative energies at 300K (assuming kJ/mol)
         energies[j] = exp(-1.0*fabs(currentE - bestE) / 2.5);
         totalPop += energies[j];
       }
       // now set the weights
-      for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
-        if (IsNear(worstE, bestE, 1.0e-3))
-          weight = 1 / rotor->GetResolution().size();
+      for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
+        if (fabs(worstE - bestE) < 1.0e-3)
+          weight = 1 / rotor->GetTorsionValues().size();
         else
           weight = energies[j]/totalPop;
         weightSet.push_back(weight);
@@ -1752,13 +1808,12 @@ namespace OpenBabel
       for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) {
         // foreach rotor
         rotorKey[i] = -1; // default = don't change dihedral
-        randFloat = generator.NextFloat();
-        if (randFloat < defaultRotor) // should we just leave this rotor with default setting?
+        if (generator.Bernoulli(defaultRotor)) // should we just leave this rotor with default setting?
           continue;
 
-        randFloat = generator.NextFloat();
+        randFloat = generator.UniformReal(0.0, 1.0);
         total = 0.0;
-        for (unsigned int j = 0; j < rotor->GetResolution().size(); j++) {
+        for (unsigned int j = 0; j < rotor->GetTorsionValues().size(); j++) {
           if (randFloat > total && randFloat < (total+ rotorWeights[i][j])) {
             rotorKey[i] = j;
             break;
@@ -1775,7 +1830,7 @@ namespace OpenBabel
       SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
       _loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
+      LBFGS(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       currentE = Energy(false);
       _energies.push_back(currentE);
@@ -2361,7 +2416,7 @@ namespace OpenBabel
 
       // convergence criteria: A higher precision here
       // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-3))
+      if (fabs(e_n2 - e_n1) < 1.0e-3)
         break;
 
       if (e_n2 > e_n1) { // decrease stepsize
@@ -2406,18 +2461,17 @@ namespace OpenBabel
     const double def_step = 0.025; // default step
     const double max_step = 4.5; // don't go too far
 
-    double sum = 0.0;
+    // Sanitize once so downstream loops can run without per-element branches
     for (unsigned int c = 0; c < _ncoords; ++c) {
-      if (isfinite(direction[c])) {
-        sum += direction[c] * direction[c];
-      } else {
-        // make sure we don't have NaN or infinity
+      if (!isfinite(direction[c]))
         direction[c] = 0.0;
-      }
     }
+    double sum = 0.0;
+    for (unsigned int c = 0; c < _ncoords; ++c)
+      sum += direction[c] * direction[c];
 
     double scale = sqrt(sum);
-    if (IsNearZero(scale)) {
+    if (fabs(scale) < 2e-6) {
       //      cout << "WARNING: too small \"scale\" at Newton2NumLineSearch" << endl;
       scale = 1.0e-70; // try to avoid "division by zero" conditions
     }
@@ -2491,11 +2545,8 @@ namespace OpenBabel
   {
     double *currentCoords = _mol.GetCoordinates();
 
-    for (unsigned int c = 0; c < _ncoords; ++c) {
-      if (isfinite(direction[c])) {
-        currentCoords[c] = origCoords[c] + direction[c] * step;
-      }
-    }
+    for (unsigned int c = 0; c < _ncoords; ++c)
+      currentCoords[c] = origCoords[c] + direction[c] * step;
   }
 
   double OBForceField::LineSearch(double *currentCoords, double *direction)
@@ -2511,32 +2562,32 @@ namespace OpenBabel
     // The initial energy should be precomputed
     e_n1 = _e_n1; // Energy(false) + _constraints.GetConstraintEnergy();
 
+    // Sanitize once so the inner loop can run branch-free and vectorize
+    for (unsigned int c = 0; c < numCoords; ++c) {
+      if (!isfinite(direction[c]))
+        direction[c] = 0.0;
+    }
+
     unsigned int i;
     for (i=0; i < 10; ++i) {
       // Save the current position, before we take a step
       memcpy((char*)lastStep,(char*)currentCoords,sizeof(double)*numCoords);
 
-      // Vectorizing this would be a big benefit
-      // Need to look up using BLAS or Eigen or whatever
       for (unsigned int c = 0; c < numCoords; ++c) {
-        if (isfinite(direction[c])) {
-          // make sure we don't have NaN or infinity
-          tempStep = direction[c] * step;
-
-          if (tempStep > trustRadius) // positive big step
-            currentCoords[c] += trustRadius;
-          else if (tempStep < -trustRadius) // negative big step
-            currentCoords[c] -= trustRadius;
-          else
-            currentCoords[c] += tempStep;
-        }
+        tempStep = direction[c] * step;
+        // clamp to trust radius — min/max form is vectorizable
+        if (tempStep > trustRadius)
+          tempStep = trustRadius;
+        else if (tempStep < -trustRadius)
+          tempStep = -trustRadius;
+        currentCoords[c] += tempStep;
       }
 
       e_n2 = Energy(false) + _constraints.GetConstraintEnergy();
 
       // convergence criteria: A higher precision here
       // only takes longer with the same result.
-      if (IsNear(e_n2, e_n1, 1.0e-3)) {
+      if (fabs(e_n2 - e_n1) < 1.0e-3) {
         alpha += step;
         break;
       }
@@ -2654,7 +2705,7 @@ namespace OpenBabel
         OBFFLog(_logbuf);
       }
 
-      if (IsNear(e_n2, e_n1, 1.0e-7)) {
+      if (fabs(e_n2 - e_n1) < 1.0e-7) {
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED (DELTA E < 1.0e-7)\n");
         break;
@@ -2722,7 +2773,7 @@ namespace OpenBabel
           OBFFLog(_logbuf);
         }
 
-        if (IsNear(e_n2, e_n1, 1.0e-7)) {
+        if (fabs(e_n2 - e_n1) < 1.0e-7) {
           IF_OBFF_LOGLVL_LOW
             OBFFLog("    CONJUGATE GRADIENTS HAS CONVERGED (DELTA E < 1.0e-7)\n");
           break;
@@ -2835,7 +2886,7 @@ namespace OpenBabel
         }
       }
 
-      if (IsNear(e_n2, _e_n1, _econv)
+      if (fabs(e_n2 - _e_n1) < _econv
           && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW
           OBFFLog("    STEEPEST DESCENT HAS CONVERGED\n");
@@ -3036,7 +3087,7 @@ namespace OpenBabel
       if ((_cstep % _pairfreq == 0) && _cutoff)
         UpdatePairsSimple(); // Update the non-bonded pairs (Cut-off)
 
-      if (IsNear(e_n2, _e_n1, _econv)
+      if (fabs(e_n2 - _e_n1) < _econv
           && (maxgrad < _gconv)) { // gradient criteria (0.1) squared
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, e_n2, _e_n1);
@@ -3068,6 +3119,288 @@ namespace OpenBabel
     if (steps > 1) // ConjugateGradientsInitialize takes the first step
       ConjugateGradientsTakeNSteps(steps);
   }
+
+  //
+  // L-BFGS (limited-memory BFGS)
+  //
+  // Quasi-Newton method: approximates the inverse Hessian from the last
+  // m gradient/position deltas, then steps with a backtracking line
+  // search. Implementation modeled on Nocedal's classic two-loop recursion
+  // (cf. LBFGSpp::LBFGSSolver::minimize() in include/LBFGS.h), but split
+  // across LBFGSInitialize/LBFGSTakeNSteps so the GUI can redraw between
+  // batches the same way it does for SD and CG.
+  //
+  // OB convention trap: OBForceField::GetGradient() and
+  // OBFFConstraints::GetGradient() both return the FORCE (-grad E), not
+  // the gradient -- SD/CG step coords by +direction*step to descend. The
+  // gather helper negates so we hold the true gradient and the standard
+  // L-BFGS formulas (drt = -H*grad) apply unchanged.
+  //
+  // The line search type chosen via SetLineSearchType() is intentionally
+  // ignored: only the internal backtracking gives the monotone-decrease
+  // guarantee L-BFGS needs to keep the s/y history sane.
+  //
+  // The implementation requires Eigen. In builds without it, the public
+  // LBFGS* methods delegate to ConjugateGradients* so callers (gen3d,
+  // OpMinimize, the rotor searches) don't need to feature-gate.
+  //
+
+#ifdef HAVE_EIGEN3
+
+  void OBForceField::gatherLBFGSGradient(double* gradOut, double& minGrad2)
+  {
+    minGrad2 = 1.0e20;
+    vector3 dir;
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      unsigned int idx = a->GetIdx();
+      unsigned int coordIdx = (idx - 1) * 3;
+
+      if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
+        gradOut[coordIdx]     = 0.0;
+        gradOut[coordIdx + 1] = 0.0;
+        gradOut[coordIdx + 2] = 0.0;
+      } else {
+        if (!HasAnalyticalGradients())
+          dir = NumericalDerivative(&*a) + _constraints.GetGradient(idx);
+        else
+          dir = GetGradient(&*a) + _constraints.GetGradient(idx);
+
+        if (dir.length_2() < minGrad2)
+          minGrad2 = dir.length_2();
+
+        gradOut[coordIdx]     = _constraints.IsXFixed(idx) ? 0.0 : -dir.x();
+        gradOut[coordIdx + 1] = _constraints.IsYFixed(idx) ? 0.0 : -dir.y();
+        gradOut[coordIdx + 2] = _constraints.IsZFixed(idx) ? 0.0 : -dir.z();
+      }
+    }
+  }
+
+  void OBForceField::LBFGSInitialize(int steps, double econv, int method)
+  {
+    if (!_validSetup || steps == 0)
+      return;
+
+    _cstep = 0;
+    _nsteps = steps;
+    _econv = econv;
+    _gconv = 1.0e-2; // gradient convergence (0.1) squared
+    _ncoords = _mol.NumAtoms() * 3;
+
+    if (_cutoff)
+      UpdatePairsSimple();
+
+    // Allocate (or reset) the L-BFGS history. Memory size m=6 is the
+    // standard default and matches LBFGSpp.
+    delete _lbfgsState;
+    _lbfgsState = new LBFGSState;
+    LBFGSState& st = *_lbfgsState;
+    st.m = 6;
+    st.k = 1;
+    st.end = 0;
+    st.s.setZero(_ncoords, st.m);
+    st.y.setZero(_ncoords, st.m);
+    st.ys.setZero(st.m);
+    st.alpha.setZero(st.m);
+    st.x.setZero(_ncoords);
+    st.xp.setZero(_ncoords);
+    st.grad.setZero(_ncoords);
+    st.gradp.setZero(_ncoords);
+    st.drt.setZero(_ncoords);
+
+    _e_n1 = Energy() + _constraints.GetConstraintEnergy();
+    double minGrad2;
+    gatherLBFGSGradient(st.grad.data(), minGrad2);
+
+    memcpy(st.x.data(), _mol.GetCoordinates(), _ncoords * sizeof(double));
+
+    // First-iter step heuristic: 1/||drt|| so we don't overshoot before
+    // the Hessian estimate has had a chance to mature (LBFGSpp does the
+    // same). The trust-radius cap in TakeNSteps then further constrains
+    // it for FF energies.
+    st.drt = -st.grad;
+    double drtNorm = st.drt.norm();
+    st.step = (drtNorm > 0.0) ? 1.0 / drtNorm : 1.0;
+    st.xp = st.x;
+    st.gradp = st.grad;
+
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nL - B F G S\n\n");
+      snprintf(_logbuf, BUFF_SIZE, "STEPS = %d\n\n", steps);
+      OBFFLog(_logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
+    }
+  }
+
+  bool OBForceField::LBFGSTakeNSteps(int n)
+  {
+    if (!_validSetup || !_lbfgsState)
+      return false;
+    if (_ncoords != _mol.NumAtoms() * 3)
+      return false;
+
+    LBFGSState& st = *_lbfgsState;
+    const int m = st.m;
+    double* coords = _mol.GetCoordinates();
+    double fx = _e_n1;
+    double minGrad2 = 1.0e20;
+
+    // Monotone-decrease line search (cf. ASE's L-BFGS). Strict Armijo
+    // doesn't work well on FF energies from poor starting geometries:
+    // the directional derivative is dominated by one atom's huge
+    // gradient, so Armijo demands more decrease per step than the energy
+    // surface can deliver. Accept any step that lowers the energy, but
+    // cap per-coord displacement.
+    const int maxLineSearch = 20;
+    const double minStep = 1.0e-20;
+    // 0.04 Ang matches ASE's L-BFGS default and is small enough to keep
+    // vdW terms well-behaved.
+    const double trustRadius = 0.04;
+
+    for (int i = 1; i <= n; ++i) {
+      _cstep++;
+
+      double step = st.step;
+      // If the quasi-Newton direction goes uphill (can happen after a
+      // bad curvature update), fall back to steepest descent to recover.
+      if (st.grad.dot(st.drt) > 0.0) {
+        st.drt = -st.grad;
+        step = 1.0;
+      }
+      // Cap step so the worst per-coord displacement <= trustRadius.
+      // Keeps the line search from launching atoms through each other's
+      // vdW cores on a strained starting geometry.
+      double drtMax = st.drt.cwiseAbs().maxCoeff();
+      if (drtMax > 0.0) {
+        double cap = trustRadius / drtMax;
+        if (step > cap)
+          step = cap;
+      }
+      const double fxInit = fx;
+
+      bool lsOk = false;
+      for (int ls = 0; ls < maxLineSearch; ++ls) {
+        if (step < minStep)
+          break;
+
+        for (unsigned int c = 0; c < _ncoords; ++c)
+          coords[c] = st.x[c] + step * st.drt[c];
+
+        fx = Energy() + _constraints.GetConstraintEnergy();
+        gatherLBFGSGradient(st.grad.data(), minGrad2);
+
+        if (fx < fxInit) {
+          lsOk = true;
+          break;
+        }
+        step *= 0.5;
+      }
+
+      if (!lsOk) {
+        // No descent step found; restore last accepted point and bail so
+        // the caller knows we stopped progressing.
+        memcpy(coords, st.x.data(), _ncoords * sizeof(double));
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog("    L-BFGS LINE SEARCH FAILED\n");
+        return false;
+      }
+
+      memcpy(st.x.data(), coords, _ncoords * sizeof(double));
+
+      // Convergence test (matches SD/CG semantics).
+      if (IsNear(fx, _e_n1, _econv) && (minGrad2 < _gconv)) {
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, fx, _e_n1);
+          OBFFLog(_logbuf);
+          OBFFLog("    L-BFGS HAS CONVERGED\n");
+        }
+        _e_n1 = fx;
+        return false;
+      }
+
+      if ((_cstep % _pairfreq == 0) && _cutoff)
+        UpdatePairsSimple();
+
+      IF_OBFF_LOGLVL_LOW {
+        if (_cstep % 10 == 0) {
+          snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, fx, _e_n1);
+          OBFFLog(_logbuf);
+        }
+      }
+
+      _e_n1 = fx;
+
+      if (_cstep == _nsteps)
+        return false;
+
+      // Update L-BFGS history and compute the next search direction via
+      // Nocedal's two-loop recursion. drt = -H_k * grad.
+      st.s.col(st.end).noalias() = st.x - st.xp;
+      st.y.col(st.end).noalias() = st.grad - st.gradp;
+      double ysNew = st.y.col(st.end).dot(st.s.col(st.end));
+      double yyNew = st.y.col(st.end).squaredNorm();
+      st.ys[st.end] = ysNew;
+
+      st.drt = -st.grad;
+      const int bound = std::min(m, st.k);
+      st.end = (st.end + 1) % m;
+
+      int j = st.end;
+      for (int b = 0; b < bound; ++b) {
+        j = (j + m - 1) % m;
+        st.alpha[j] = st.s.col(j).dot(st.drt) / st.ys[j];
+        st.drt.noalias() -= st.alpha[j] * st.y.col(j);
+      }
+
+      // H_0 = (ys/yy) * I (Nocedal). Guard against the degenerate pair
+      // that would NaN the direction.
+      if (yyNew > 0.0)
+        st.drt *= (ysNew / yyNew);
+
+      for (int b = 0; b < bound; ++b) {
+        double beta = st.y.col(j).dot(st.drt) / st.ys[j];
+        st.drt.noalias() += (st.alpha[j] - beta) * st.s.col(j);
+        j = (j + 1) % m;
+      }
+
+      st.xp = st.x;
+      st.gradp = st.grad;
+      // L-BFGS initial step from iteration 2 onwards is the full unit
+      // step; the trust-radius cap at the top of the loop handles the
+      // pathological cases.
+      st.step = 1.0;
+      st.k++;
+    }
+
+    return true; // No convergence yet, caller can call us again.
+  }
+
+  void OBForceField::LBFGS(int steps, double econv, int method)
+  {
+    if (steps > 0) {
+      LBFGSInitialize(steps, econv, method);
+      LBFGSTakeNSteps(steps);
+    }
+  }
+
+#else  // HAVE_EIGEN3 not defined: fall back to ConjugateGradients
+
+  void OBForceField::LBFGSInitialize(int steps, double econv, int method)
+  {
+    ConjugateGradientsInitialize(steps, econv, method);
+  }
+
+  bool OBForceField::LBFGSTakeNSteps(int n)
+  {
+    return ConjugateGradientsTakeNSteps(n);
+  }
+
+  void OBForceField::LBFGS(int steps, double econv, int method)
+  {
+    ConjugateGradients(steps, econv, method);
+  }
+
+#endif  // HAVE_EIGEN3
 
   //
   //         f(1) - f(0)
@@ -3416,11 +3749,14 @@ namespace OpenBabel
   void OBForceField::GenerateVelocities()
   {
     cout << "OBForceField::GenerateVelocities()" << endl;
+#if !OB_USE_OBRANDOMMT
     OBRandom generator;
-    generator.TimeSeed();
+    generator.Reset();
+#else
+    OBRandomMT generator{};
+#endif
     _ncoords = _mol.NumAtoms() * 3;
     int velocityIdx;
-    double velocity;
 
     _velocityPtr = new double[_ncoords];
     memset(_velocityPtr, '\0', sizeof(double)*_ncoords);
@@ -3429,32 +3765,20 @@ namespace OpenBabel
       if (!_constraints.IsFixed(a->GetIdx()) || (_fixAtom == a->GetIdx()) || (_ignoreAtom == a->GetIdx())) {
         velocityIdx = (a->GetIdx() - 1) * 3;
 
-        // add twelve random numbers between 0.0 and 1.0,
-        // subtract 6.0 from their sum, multiply with sqrt(kT/m)
+        // sqrt(kT/m)
+        const double sigma = sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
         if (!_constraints.IsXFixed(a->GetIdx())) {
-          velocity = 0.0;
-          for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
-          velocity -= 6.0;
-          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
+          double velocity = generator.Normal(0.0, sigma);
           _velocityPtr[velocityIdx] = velocity; // x10: gromacs uses nm instead of A
         }
 
         if (!_constraints.IsYFixed(a->GetIdx())) {
-          velocity = 0.0;
-          for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
-          velocity -= 6.0;
-          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
+          double velocity = generator.Normal(0.0, sigma);
           _velocityPtr[velocityIdx+1] = velocity; // idem
         }
 
         if (!_constraints.IsZFixed(a->GetIdx())) {
-          velocity = 0.0;
-          for (int i=0; i < 12; ++i)
-            velocity += generator.NextFloat();
-          velocity -= 6.0;
-          velocity *= sqrt((GAS_CONSTANT * _temp)/ (1000 * a->GetAtomicMass()));
+          double velocity = generator.Normal(0.0, sigma);
           _velocityPtr[velocityIdx+2] = velocity; // idem
         }
       }
@@ -3649,7 +3973,7 @@ namespace OpenBabel
     double length2 = v2.length();
 
     // test if the vector has length larger than 0 and normalize it
-    if (IsNearZero(length1) || IsNearZero(length2)) {
+    if (fabs(length1) < 2e-6 || fabs(length2) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3666,7 +3990,7 @@ namespace OpenBabel
     // and normalize it.
     vector3 c1 = cross(v1, v2);
     double length = c1.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3716,7 +4040,7 @@ namespace OpenBabel
     l_ij = VectorLength(ij);
     l_jk = VectorLength(jk);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk)) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3732,7 +4056,7 @@ namespace OpenBabel
     double c1[3];
     VectorCross(ij, jk, c1);
     double length = VectorLength(c1);
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3786,7 +4110,7 @@ namespace OpenBabel
     l_ij = VectorLength(ij);
     l_jk = VectorLength(jk);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk)) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6) {
       return 0.0;
     }
 
@@ -3799,7 +4123,7 @@ namespace OpenBabel
     double c1[3];
     VectorCross(ij, jk, c1);
     double length = VectorLength(c1);
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       return 0.0;
     }
 
@@ -3834,7 +4158,7 @@ namespace OpenBabel
     // calculate normalized bond vectors from central atom to outer atoms:
     delta = i - j;
     length = delta.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3850,7 +4174,7 @@ namespace OpenBabel
 
     delta = k - j;
     length = delta.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3866,7 +4190,7 @@ namespace OpenBabel
 
     delta = l - j;
     length = delta.length();
-    if (IsNearZero(length)) {
+    if (fabs(length) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3889,7 +4213,7 @@ namespace OpenBabel
     const double cos_theta = dot(ji, jk);
     const double theta = acos(cos_theta);
     // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+    if (fabs(theta) < 2e-6 || fabs(theta - M_PI) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3904,7 +4228,7 @@ namespace OpenBabel
     const double dl = asin(sin_dl);
 
     // In case: wilson angle equals 0 or 180 degree: do nothing
-    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
+    if (fabs(dl) < 2e-6 || fabs(dl - M_PI) < 2e-6) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -3946,7 +4270,7 @@ namespace OpenBabel
     VectorSubtract(pos_i, pos_j, ji);
     // store length of this bond:
     const double length_ji = VectorLength(ji);
-    if (IsNearZero(length_ji)) {
+    if (fabs(length_ji) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3959,7 +4283,7 @@ namespace OpenBabel
 
     VectorSubtract(pos_k, pos_j, jk);
     const double length_jk = VectorLength(jk);
-    if (IsNearZero(length_jk)) {
+    if (fabs(length_jk) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3970,7 +4294,7 @@ namespace OpenBabel
 
     VectorSubtract(pos_l, pos_j, jl);
     const double length_jl = VectorLength(jl);
-    if (IsNearZero(length_jl)) {
+    if (fabs(length_jl) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -3988,7 +4312,7 @@ namespace OpenBabel
     const double cos_theta = VectorDot(ji, jk);
     const double theta = acos(cos_theta);
     // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+    if (fabs(theta) < 2e-6 || fabs(theta - M_PI) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -4003,7 +4327,7 @@ namespace OpenBabel
     const double dl = asin(sin_dl);
 
     // In case: wilson angle equals 0 or 180 degree: do nothing
-    if (IsNearZero(dl) || IsNearZero(fabs(dl - M_PI))) {
+    if (fabs(dl) < 2e-6 || fabs(dl - M_PI) < 2e-6) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -4064,7 +4388,7 @@ namespace OpenBabel
     VectorSubtract(pos_i, pos_j, ji);
     // store length of this bond:
     const double length_ji = VectorLength(ji);
-    if (IsNearZero(length_ji)) {
+    if (fabs(length_ji) < 2e-6) {
       return 0.0;
     }
     // store the normalized bond vector from central atom to outer atoms:
@@ -4073,14 +4397,14 @@ namespace OpenBabel
 
     VectorSubtract(pos_k, pos_j, jk);
     const double length_jk = VectorLength(jk);
-    if (IsNearZero(length_jk)) {
+    if (fabs(length_jk) < 2e-6) {
       return 0.0;
     }
     VectorDivide(jk, length_jk, jk);
 
     VectorSubtract(pos_l, pos_j, jl);
     const double length_jl = VectorLength(jl);
-    if (IsNearZero(length_jl)) {
+    if (fabs(length_jl) < 2e-6) {
       return 0.0;
     }
     VectorDivide(jl, length_jl, jl);
@@ -4094,7 +4418,7 @@ namespace OpenBabel
     const double cos_theta = VectorDot(ji, jk);
     const double theta = acos(cos_theta);
     // If theta equals 180 degree or 0 degree
-    if (IsNearZero(theta) || IsNearZero(fabs(theta - M_PI))) {
+    if (fabs(theta) < 2e-6 || fabs(theta - M_PI) < 2e-6) {
       return 0.0;
     }
 
@@ -4127,7 +4451,7 @@ namespace OpenBabel
     l_jk = jk.length();
     l_kl = kl.length();
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6 || fabs(l_kl) < 2e-6 ) {
       i = VZero;
       j = VZero;
       k = VZero;
@@ -4192,7 +4516,7 @@ namespace OpenBabel
     l_jk = VectorLength(jk);
     l_kl = VectorLength(kl);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6 || fabs(l_kl) < 2e-6 ) {
       VectorClear(force_i);
       VectorClear(force_j);
       VectorClear(force_k);
@@ -4282,7 +4606,7 @@ namespace OpenBabel
     const double l_jk = VectorLength(jk);
     const double l_kl = VectorLength(kl);
 
-    if (IsNearZero(l_ij) || IsNearZero(l_jk) || IsNearZero(l_kl) ) {
+    if (fabs(l_ij) < 2e-6 || fabs(l_jk) < 2e-6 || fabs(l_kl) < 2e-6 ) {
       return 0.0;
     }
 

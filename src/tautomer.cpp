@@ -482,25 +482,25 @@ namespace OpenBabel {
         }
 
         // Any unassigned atom that has all of its bonds assigned single, must be assigned a donor
-        if (numHydrogens) {
-          FOR_ATOMS_OF_MOL (atom, mol) {
-            if (atomTypes[atom->GetIndex()] != Unassigned)
-              continue;
-            bool allBondsSingle = true;
-            FOR_BONDS_OF_ATOM (bond, &*atom) {
-              if (bondTypes[bond->GetIdx()] != Single) {
-                allBondsSingle = false;
-                break;
-              }
+        FOR_ATOMS_OF_MOL (atom, mol) {
+          if (!numHydrogens)
+            break;
+          if (atomTypes[atom->GetIndex()] != Unassigned)
+            continue;
+          bool allBondsSingle = true;
+          FOR_BONDS_OF_ATOM (bond, &*atom) {
+            if (bondTypes[bond->GetIdx()] != Single) {
+              allBondsSingle = false;
+              break;
             }
+          }
 
-            if (allBondsSingle) {
-              propagation.assignDonor(&*atom);
-              changed = true;
+          if (allBondsSingle) {
+            propagation.assignDonor(&*atom);
+            changed = true;
 #ifdef DEBUG
-              std::cout << ee.indentation() << "-> Rule 2: Assign " << atom->GetIndex() << " Donor" << std::endl;
+            std::cout << ee.indentation() << "-> Rule 2: Assign " << atom->GetIndex() << " Donor" << std::endl;
 #endif
-            }
           }
         }
 

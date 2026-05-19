@@ -6,6 +6,7 @@
 #include <openbabel/obiter.h>
 
 #include <iostream>
+#include <random>
 #include <string>
 #include <vector>
 #include <algorithm>
@@ -61,7 +62,7 @@ bool doShuffleTestMolecule(OBMol &mol)
   
   for (int i = 0; i < N; ++i) {
     // shuffle the atoms
-    std::random_shuffle(atoms.begin(), atoms.end());
+    std::shuffle(atoms.begin(), atoms.end(), std::mt19937{std::random_device{}()});
     mol.RenumberAtoms(atoms);
     // get rings
     std::vector< std::vector<unsigned long> > rings = getIdRingPaths(mol);

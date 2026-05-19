@@ -88,7 +88,7 @@ namespace OpenBabel {
     const char* TargetClassDescription() override { return OBMol::ClassDescription(); }
 
     const char* SpecificationURL() override
-    { return "http://www.daylight.com/smiles/"; }
+    { return "https://www.daylight.com/smiles/"; }
 
     int SkipObjects(int n, OBConversion* pConv) override
     {
@@ -318,6 +318,19 @@ namespace OpenBabel {
     OBSmilesParser(bool preserve_aromaticity=false): _preserve_aromaticity(preserve_aromaticity), _rxnrole(1) { }
     ~OBSmilesParser() { }
 
+  private:
+    void ClearStereoMaps()
+    {
+      for (auto& kv : _tetrahedralMap)
+        delete kv.second;
+      _tetrahedralMap.clear();
+      for (auto& kv : _squarePlanarMap)
+        delete kv.second;
+      _squarePlanarMap.clear();
+    }
+
+  public:
+
     bool SmiToMol(OBMol&,const string&);
     bool ParseSmiles(OBMol&, const string&);
     bool ParseSimple(OBMol&);
@@ -394,19 +407,11 @@ namespace OpenBabel {
     if (!ParseSmiles(mol, s) || (!mol.IsReaction() && mol.NumAtoms() == 0))
       {
         mol.Clear();
+        ClearStereoMaps();
         return(false);
       }
 
-    // TODO: Is the following a memory leak? - there are return statements above
-    map<OBAtom*, OBTetrahedralStereo::Config*>::iterator i;
-    for (i = _tetrahedralMap.begin(); i != _tetrahedralMap.end(); ++i)
-      delete i->second;
-    _tetrahedralMap.clear();
-
-    map<OBAtom*, OBSquarePlanarStereo::Config*>::iterator j;
-    for (j = _squarePlanarMap.begin(); j != _squarePlanarMap.end(); ++j)
-      delete j->second;
-    _squarePlanarMap.clear();
+    ClearStereoMaps();
 
     mol.SetAutomaticFormalCharge(false);
 
@@ -557,6 +562,10 @@ namespace OpenBabel {
       obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
       return false; // invalid SMILES since rings aren't properly closed
     }
+    if (_hcount.size() < mol.NumAtoms()) {
+      mol.EndModify();
+      return false;
+    }
     if (mol.IsReaction()) {
       OBReactionFacade facade(&mol);
       facade.AssignComponentIds();
@@ -565,6 +574,11 @@ namespace OpenBabel {
     // Apply the SMILES valence model
     FOR_ATOMS_OF_MOL(atom, mol) {
       unsigned int idx = atom->GetIdx();
+      // Atoms created outside ParseSimple/ParseComplex (e.g. via
+      // malformed bracket paths) won't have a corresponding _hcount
+      // entry. Skip the implicit-valence step rather than read OOB.
+      if (idx == 0 || idx - 1 >= _hcount.size())
+        continue;
       int hcount = _hcount[idx - 1];
       if (hcount == -1) { // Apply SMILES implicit valence model
         unsigned int bosum = 0;
@@ -1768,8 +1782,15 @@ namespace OpenBabel {
             while (*++_ptr == '-')
               charge--; // handle [O--]
             if (charge == 0) {
-              while (isdigit(*_ptr)) // handle [O-2]
+              while (isdigit(*_ptr)) { // handle [O-2]
                 charge = charge * 10 - ((*_ptr++) - '0');
+                // Reject magnitudes beyond ±999 — also bounds the value
+                // well within int range so the next multiply can't overflow.
+                if (charge < -999) {
+                  obErrorLog.ThrowError(__FUNCTION__, "Charge value out of range", obWarning);
+                  return false;
+                }
+              }
               if (charge == 0) // handle [Cl-]
                 charge = -1;
             }
@@ -1785,8 +1806,13 @@ namespace OpenBabel {
             while (*++_ptr == '+')
               charge++; // handle [Ca++]
             if (charge == 0) {
-              while (isdigit(*_ptr)) // handle [Ca+2]
+              while (isdigit(*_ptr)) { // handle [Ca+2]
                 charge = charge * 10 + ((*_ptr++) - '0');
+                if (charge > 999) {
+                  obErrorLog.ThrowError(__FUNCTION__, "Charge value out of range", obWarning);
+                  return false;
+                }
+              }
               if (charge == 0) // handle [Na+]
                 charge = 1;
             }
@@ -1990,12 +2016,16 @@ namespace OpenBabel {
         _updown = BondUpChar;
         _ptr++;
         break;
+      case '\0':
+        return false;
       default: // no bond indicator just leave order = 0
         break;
       }
 
     if (*_ptr == '%') // external bond indicator > 10
       {
+        if (!isdigit(*(_ptr + 1)) || !isdigit(*(_ptr + 2)))
+            return false;
         _ptr++;
         str[0] = *_ptr;
         _ptr++;
@@ -2004,6 +2034,8 @@ namespace OpenBabel {
       }
     else // simple single digit external bond indicator
       {
+        if (!isdigit(*_ptr))
+            return false;
         str[0] = *_ptr;
         str[1] = '\0';
       }

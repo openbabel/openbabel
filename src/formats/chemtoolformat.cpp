@@ -23,10 +23,36 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 
 #include <cstdlib>
+#include <cmath>
+#include <climits>
 
 using namespace std;
 namespace OpenBabel
 {
+
+  // Cast a double to int, clamping out-of-range or non-finite values.
+  // Casting an out-of-range double to int is UB; UBSan flagged it on
+  // fuzz inputs with absurd coordinates.
+  static int chtClampToInt(double d)
+  {
+    if (!std::isfinite(d)) return 0;
+    if (d > (double)INT_MAX) return INT_MAX;
+    if (d < (double)INT_MIN) return INT_MIN;
+    return (int)d;
+  }
+
+  // Truncate `d` to int and multiply by `scale`, clamping the input so
+  // the multiply cannot overflow. Preserves the original truncate-first
+  // rounding (so output matches the chemtool format test fixture).
+  static int chtTruncScale(double d, int scale)
+  {
+    if (!std::isfinite(d) || scale == 0) return 0;
+    const int absScale = scale > 0 ? scale : -scale;
+    const double kBound = (double)INT_MAX / absScale;
+    if (d > kBound) d = kBound;
+    else if (d < -kBound) d = -kBound;
+    return (int)d * scale;
+  }
 
   class CHTFormat : public OBMoleculeFormat
   {
@@ -91,8 +117,8 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
       {
-        x = (int)(atom->GetX()) * conv_factor;
-        y = (int)(atom->GetY()) * conv_factor;
+        x = chtTruncScale(atom->GetX(), conv_factor);
+        y = chtTruncScale(atom->GetY(), conv_factor);
         if (x > w)
           w = x;
         if (y > h)
@@ -116,10 +142,10 @@ namespace OpenBabel
           bondtype = 3;
         // @todo: use flag-info, too
         snprintf(buffer, BUFF_SIZE, "%d\t%d\t%d\t%d\t%1d",
-                 (int)floor(atom1->GetX() * conv_factor + 0.5),
-                 (int)floor(atom1->GetY() * conv_factor + 0.5),
-                 (int)floor(atom2->GetX() * conv_factor + 0.5),
-                 (int)floor(atom2->GetY() * conv_factor + 0.5),
+                 chtClampToInt(floor(atom1->GetX() * conv_factor + 0.5)),
+                 chtClampToInt(floor(atom1->GetY() * conv_factor + 0.5)),
+                 chtClampToInt(floor(atom2->GetX() * conv_factor + 0.5)),
+                 chtClampToInt(floor(atom2->GetY() * conv_factor + 0.5)),
                  bondtype);
         ofs << buffer << endl;
       }
@@ -132,8 +158,8 @@ namespace OpenBabel
         if (atom->GetAtomicNum() != 6)
           {
             snprintf(buffer, BUFF_SIZE, "%d\t%d\t%s\t%d",
-                     (int)floor(atom->GetX() * conv_factor + 0.5),
-                     (int)floor(atom->GetY() * conv_factor + 0.5),
+                     chtClampToInt(floor(atom->GetX() * conv_factor + 0.5)),
+                     chtClampToInt(floor(atom->GetY() * conv_factor + 0.5)),
                      OBElements::GetSymbol(atom->GetAtomicNum()),
                      -1 // assume centered Text
                      );

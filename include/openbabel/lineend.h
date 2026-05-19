@@ -138,7 +138,7 @@ namespace OpenBabel
       {
         if( result < 0 || result > UCHAR_MAX )
           std::cerr << "FilteringInputStreambuf error" << std::endl;
-        myBuffer = result ;
+        myBuffer = static_cast<char>(static_cast<unsigned char>(result)) ;
         setg( &myBuffer , &myBuffer , &myBuffer + 1 ) ;
       }
     }

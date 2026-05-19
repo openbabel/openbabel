@@ -899,6 +899,11 @@ namespace OpenBabel
 
   void OBDepictPrivate::DrawAtomLabel(const std::string &label, int alignment, const vector3 &pos)
   {
+    // OBElements::GetSymbol() returns "" for atomic numbers outside the
+    // known element table (Z > NUMELEMENTS). The substr math below uses
+    // label.size()-1 which underflows on an empty string and throws.
+    if (label.empty())
+      return;
    /*
     cout << "FontMetrics(" << label << "):" << endl;
     cout << "  ascent = " << metrics.ascent << endl;

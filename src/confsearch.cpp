@@ -379,7 +379,7 @@ int OBForceField::DiverseConfGen(double rmsd, unsigned int nconfs, double energy
     unsigned int combinations = 1;
     std::vector<size_t> rotor_sizes;
     for (unsigned int i = 1; i < rl.Size() + 1; ++i, rotor = rl.NextRotor(ri)) { // foreach rotor
-      size_t size = rotor->GetResolution().size();
+      size_t size = rotor->GetTorsionValues().size();
       rotorKeys.AddRotor(size);
       combinations *= size;
       rotor_sizes.push_back(size);

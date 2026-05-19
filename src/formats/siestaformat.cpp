@@ -43,7 +43,7 @@ namespace OpenBabel {
         "The format used by SIESTA (Spanish Initiative for Electronic Simulations with Thousands of Atoms).\n\n";
     }
 
-    const char* SpecificationURL() override { return "http://departments.icmab.es/leem/siesta/"; }
+    const char* SpecificationURL() override { return "https://siesta-project.org/siesta/"; }
 
     /* Flags() can return be any of the following combined by |
        or be omitted if none apply

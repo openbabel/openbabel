@@ -1,5 +1,5 @@
-cmake_minimum_required(VERSION 2.6.0)
-# Library versioning (used in Mac Python bindings)x
+cmake_minimum_required(VERSION 3.12.0)
+# Library versioning (used in Mac Python bindings)
 set(SOVERSION 4)
 
 if (RUN_SWIG)
@@ -22,18 +22,8 @@ if (RUN_SWIG)
 endif (RUN_SWIG)
 
 # The following needs to be kept in synch with ..\CMakeLists.txt
-if(EIGEN3_FOUND)
-  set (eigen_define "-DHAVE_EIGEN" "-DHAVE_EIGEN3")
-  include_directories(${EIGEN3_INCLUDE_DIR})
-  set (CPPFLAGS_VALUE "-I${EIGEN3_INCLUDE_DIR}")
-  set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-else()
-  if(EIGEN2_FOUND)
-    set (eigen_define "-DHAVE_EIGEN")
-    include_directories(${EIGEN2_INCLUDE_DIR})
-    set (CPPFLAGS_VALUE "-I${EIGEN2_INCLUDE_DIR}")
-    set (CPPFLAGS_TEXT "CPPFLAGS=${CPPFLAGS_VALUE}")
-  endif()
+if(TARGET Eigen3::Eigen)
+  set (eigen_define "-DHAVE_EIGEN3")
 endif()
 
 ###################
@@ -42,24 +32,19 @@ endif()
 
 if (PYTHON_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp OR RUN_SWIG)
-    find_package(PythonInterp)
-    if (NOT PYTHONINTERP_FOUND)
+    find_package(Python COMPONENTS Interpreter Development)
+    if (NOT Python_Interpreter_FOUND)
       message(STATUS "Python interpreter NOT found")
-    endif (NOT PYTHONINTERP_FOUND)
+    endif (NOT Python_Interpreter_FOUND)
 
-    if (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
-      set(Python_ADDITIONAL_VERSIONS "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
-    endif (PYTHONINTERP_FOUND AND NOT Python_ADDITIONAL_VERSIONS)
-
-    find_package(PythonLibs)
-    if (NOT PYTHONLIBS_FOUND)
+    if (NOT Python_Development_FOUND)
       message(STATUS "Python libraries NOT found")
-    endif (NOT PYTHONLIBS_FOUND)
+    endif (NOT Python_Development_FOUND)
 
-    if(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
+    if(Python_Development_FOUND AND Python_Interpreter_FOUND)
       set(DO_PYTHON_BINDINGS ON BOOL)
       message(STATUS "Python bindings will be compiled")
-    endif(PYTHONLIBS_FOUND AND PYTHONINTERP_FOUND)
+    endif(Python_Development_FOUND AND Python_Interpreter_FOUND)
 
   else ()
     message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG=ON.")
@@ -68,9 +53,9 @@ if (PYTHON_BINDINGS)
 endif (PYTHON_BINDINGS)
 
 if (DO_PYTHON_BINDINGS)
-
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
-        ${PYTHON_INCLUDE_PATH}
+        ${Python_INCLUDE_DIRS}
     )
 
     if(RUN_SWIG)
@@ -96,9 +81,9 @@ if (DO_PYTHON_BINDINGS)
     else()
       # Link against Python library on Linux and Windows
       if(BINDINGS_ONLY)
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
+        target_link_libraries(bindings_python ${Python_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
       else()
-        target_link_libraries(bindings_python ${PYTHON_LIBRARIES} ${BABEL_LIBRARY})
+        target_link_libraries(bindings_python ${Python_LIBRARIES} ${BABEL_LIBRARY})
       endif()
     endif()
 
@@ -111,7 +96,8 @@ if (DO_PYTHON_BINDINGS)
 	if( "${PYTHON_INSTDIR}" STREQUAL "" )
           execute_process(
             COMMAND
-           ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+           ${Python_EXECUTABLE} -c "import sysconfig
+print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}', 'platbase': '${CMAKE_INSTALL_PREFIX}'}))"
             OUTPUT_VARIABLE PYTHON_INSTDIR
             OUTPUT_STRIP_TRAILING_WHITESPACE
           )
@@ -139,7 +125,8 @@ if (DO_PYTHON_BINDINGS)
             SUFFIX .pyd )
         execute_process(
           COMMAND
-	  ${PYTHON_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+	  ${Python_EXECUTABLE} -c "import sysconfig
+print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}', 'platbase': '${CMAKE_INSTALL_PREFIX}'}))"
           OUTPUT_VARIABLE PYTHON_INSTDIR
           OUTPUT_STRIP_TRAILING_WHITESPACE
         )
@@ -197,6 +184,7 @@ if (JAVA_BINDINGS)
 endif (JAVA_BINDINGS)
 
 if (DO_JAVA_BINDINGS)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
 include_directories(
 	${JNI_INCLUDE_DIRS}
@@ -262,7 +250,7 @@ if (R_BINDINGS)
 endif (R_BINDINGS)
 
 if (DO_R_BINDINGS)
-
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
 
     include_directories(/usr/share/R/include )
     if (RUN_SWIG)
@@ -338,6 +326,7 @@ if (PERL_BINDINGS)
 endif (PERL_BINDINGS)
 
 if (DO_PERL_BINDINGS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${PERL_INCLUDE_PATH}
     )
@@ -417,6 +406,7 @@ if (DO_RUBY_BINDINGS)
       )
     endif (RUN_SWIG)
 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${RUBY_INCLUDE_PATH}
     )
@@ -488,6 +478,7 @@ if (DO_CSHARP_BINDINGS)
       )
     endif (RUN_SWIG)
 
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     add_library(bindings_csharp MODULE ${openbabel_SOURCE_DIR}/scripts/csharp/openbabel-csharp.cpp)
     target_link_libraries(bindings_csharp ${BABEL_LIBRARY})
     set_target_properties(bindings_csharp PROPERTIES
@@ -544,6 +535,7 @@ if (PHP_BINDINGS)
 endif (PHP_BINDINGS)
 
 if (DO_PHP_BINDINGS)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
     include_directories(
         ${PHP_CONFIG_INCLUDES}
     )

@@ -391,7 +391,7 @@ int DynOptionswx::SetOptions(OpenBabel::OBConversion& Conv, OpenBabel::OBConvers
 char* DynOptionswx::strcasestr(const char* haystack, const char* needle)
 {
   //Adapted from http://primates.ximian.com/~fejj/strlib.c
-  register unsigned char *h, *n, *hc, *nc;
+  unsigned char *h, *n, *hc, *nc;
   size_t needlelen = strlen (needle);
   if (needlelen == 0)
     return (char *) haystack;

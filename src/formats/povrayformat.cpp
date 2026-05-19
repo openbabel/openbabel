@@ -73,7 +73,7 @@ GNU General Public License for more details.
 //       definition there.
 OpenBabel::vector3 my_center_coords(double *c, unsigned int size)
 {
-  if (size == 0)
+  if (size == 0 || c == nullptr)
     {
       return(OpenBabel::VZero);
     }
@@ -143,7 +143,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "http://www.povray.org/"; }  // optional
+    { return "https://www.povray.org/"; }
 
     //Flags() can return be any the following combined by | or be omitted if none apply
     // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY

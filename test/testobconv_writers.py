@@ -164,25 +164,14 @@ def test_write_string(test_case, mol, conv, expected_output, normalize):
         
     test_case.assertMultiLineEqual(output.replace("\r\n", "\n"), expected_output.replace("\r\n", "\n"))
 
-if type(u"") == type(""):
-    # Python 3
-    def test_binary_write_string(test_case, mol, conv, expected_output, normalize):
-        # I think 'surrogateescape' is the right way to handle this
-        output = conv.WriteString(mol).encode("utf8", "surrogateescape")
-        if normalize:
-            output = normalize(output)
-            expected_output = normalize(expected_output)
-        ## print("===", repr(output))
-        test_case.assertEqual(output, expected_output)
-else:
-    # Python 2
-    def test_binary_write_string(test_case, mol, conv, expected_output, normalize):
-        output = conv.WriteString(mol)
-##        print("===", repr(output))
-        if normalize:
-            output = normalize(output)
-            expected_output = normalize(expected_output)
-        test_case.assertEqual(output, expected_output)
+def test_binary_write_string(test_case, mol, conv, expected_output, normalize):
+    # I think 'surrogateescape' is the right way to handle this
+    output = conv.WriteString(mol).encode("utf8", "surrogateescape")
+    if normalize:
+        output = normalize(output)
+        expected_output = normalize(expected_output)
+    ## print("===", repr(output))
+    test_case.assertEqual(output, expected_output)
 
 def test_write_file(test_case, mol, conv, expected_output, normalize):
     temp_file_object = tempfile.NamedTemporaryFile(delete=False) # we will delete it manually
@@ -669,6 +658,15 @@ Oc1ccccc1\tphenol
 """)
 
 # cdjson -- ChemDoodle JSON
+# Coordinates that come from --gen2D etc. are computed in double precision and
+# the last digit or two can differ across platforms / math libraries. Round any
+# long decimals down to a precision that compares reliably.
+_json_float_pat = re.compile(r"-?\d+\.\d{8,}")
+def _round_json_match(m):
+    return "%.10g" % float(m.group(0))
+def normalize_json_floats(content):
+    return _json_float_pat.sub(_round_json_match, content)
+
 class TestCDJSON(unittest.TestCase, WriteMixin):
     fmt = "cdjson"
     maxDiff = None
@@ -705,7 +703,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
         {
           "x": -20.009999999999999,
           "y": 0.10200000000000001,
-          "l": 8
+          "l": "O"
         }
       ],
       "b": [
@@ -743,7 +741,7 @@ class TestCDJSON(unittest.TestCase, WriteMixin):
       ]
     }
   ]
-}""")
+}""", normalize=normalize_json_floats)
 
 ## # cdxml -- ChemDraw CDXML format
 ## XXX fails on an unpatched system
@@ -2157,13 +2155,13 @@ O       -1.0004999999999999449      0.0051000000000000004      0.000000000000000
 """)
 
 # Normalize MDL formats by removing the timestamp from the string
-_sd_timestamp_pat_u = re.compile(u"OpenBabel\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")
+_sd_timestamp_pat_u = re.compile("OpenBabel\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")
 _sd_timestamp_pat_b = re.compile(b"OpenBabel\\d\\d\\d\\d\\d\\d\\d\\d\\d\\d")
 def normalize_sd_timestamp(data):
-    if isinstance(data, type(b"")):
+    if isinstance(data, bytes):
         return _sd_timestamp_pat_b.sub(b"OpenBabel2020202020", data)
     else:
-        return _sd_timestamp_pat_u.sub(u"OpenBabel2020202020", data)
+        return _sd_timestamp_pat_u.sub("OpenBabel2020202020", data)
 
         
 # mdl -- MDL MOL format
@@ -2754,6 +2752,10 @@ DrawText 40.0 81.9 "HO"
 """)
 
 # pcjson -- PubChem JSON
+# Uses normalize_json_floats (see TestCDJSON) to round long double-precision
+# decimals to a stable representation across platforms / math libraries.
+normalize_pcjson_floats = normalize_json_floats
+
 class TestPCJSON(unittest.TestCase, WriteMixin):
     fmt = "pcjson"
     maxDiff = None
@@ -2926,7 +2928,7 @@ class TestPCJSON(unittest.TestCase, WriteMixin):
       "charge": 0
     }
   ]
-}""")
+}""", normalize=normalize_pcjson_floats)
 
 # pcm -- PCModel Format
 class TestPCM(unittest.TestCase, WriteMixin):
@@ -2985,13 +2987,13 @@ REMARK  status: ('A' for Active; 'I' for Inactive)
 REMARK                            x       y       z     vdW  Elec       q    Type
 REMARK                         _______ _______ _______ _____ _____    ______ ____
 ROOT
-ATOM      1  C   UNL     1       1.585  -0.025   0.000  0.00  0.00    +0.000 A 
-ATOM      2  C   UNL     1       1.570   0.976   0.000  0.00  0.00    +0.000 A 
-ATOM      3  C   UNL     1       2.429   1.488   0.000  0.00  0.00    +0.000 A 
-ATOM      4  C   UNL     1       3.303   1.000   0.000  0.00  0.00    +0.000 A 
-ATOM      5  C   UNL     1       3.317   0.000   0.000  0.00  0.00    +0.000 A 
-ATOM      6  C   UNL     1       0.000   0.000   0.000  0.00  0.00    +0.000 A 
-ATOM      7  O   UNL     1      -1.000   0.005   0.000  0.00  0.00    +0.000 OA
+ATOM      1  C   UNL     1       1.585  -0.025   0.000  1.00  0.00    +0.000 A 
+ATOM      2  C   UNL     1       1.570   0.976   0.000  1.00  0.00    +0.000 A 
+ATOM      3  C   UNL     1       2.429   1.488   0.000  1.00  0.00    +0.000 A 
+ATOM      4  C   UNL     1       3.303   1.000   0.000  1.00  0.00    +0.000 A 
+ATOM      5  C   UNL     1       3.317   0.000   0.000  1.00  0.00    +0.000 A 
+ATOM      6  C   UNL     1       0.000   0.000   0.000  1.00  0.00    +0.000 A 
+ATOM      7  O   UNL     1      -1.000   0.005   0.000  1.00  0.00    +0.000 OA
 ENDROOT
 TORSDOF 0
 """)

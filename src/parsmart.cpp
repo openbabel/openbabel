@@ -19,6 +19,7 @@ GNU General Public License for more details.
 #include <openbabel/babelconfig.h>
 
 #include <cctype>
+#include <climits>
 #include <iomanip>
 #include <cstring>
 
@@ -164,6 +165,22 @@ namespace OpenBabel
     stringstream errorMsg;
     errorMsg << "Error: Unable to allocate" << ptr << endl;
     obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obError);
+  }
+
+  // Accumulate a run of decimal digits at LexPtr into result, advancing LexPtr.
+  // Caller may pre-seed result with a leading digit already consumed.
+  // Returns false on int overflow; LexPtr then stops at the offending digit.
+  static bool ReadInt( char *&LexPtr, int &result )
+  {
+    while( isdigit(*LexPtr) )
+      {
+        int digit = *LexPtr - '0';
+        if( result > (INT_MAX - digit) / 10 )
+          return false;
+        result = result*10 + digit;
+        LexPtr++;
+      }
+    return true;
   }
 
   /*================================*/
@@ -443,19 +460,27 @@ namespace OpenBabel
 
   static int CreateAtom( Pattern *pat, AtomExpr *expr, int part,int vb)
   {
-    int index,size;
+    int index;
 
     if (!pat)
       return -1; // should never happen
 
     if( pat->acount == pat->aalloc )
       {
-        pat->aalloc += ATOMPOOL;
-        size = (int)(pat->aalloc*sizeof(AtomSpec));
+        // Double the pool to keep insertion amortized O(1); the previous
+        // linear growth was O(N^2) and made large fuzzer inputs time out.
+        int oldalloc = pat->aalloc;
+        if( oldalloc > INT_MAX/2 )
+          {
+            // Would overflow on doubling — leave aalloc untouched and bail.
+            FatalAllocationError("atom pool");
+            return -1;
+          }
+        pat->aalloc = oldalloc ? oldalloc * 2 : ATOMPOOL;
         if( pat->atom )
           {
             AtomSpec *tmp = new AtomSpec[pat->aalloc];
-            copy(pat->atom, pat->atom + pat->aalloc - ATOMPOOL, tmp);
+            copy(pat->atom, pat->atom + oldalloc, tmp);
             delete [] pat->atom;
             pat->atom = tmp;
           }
@@ -475,19 +500,24 @@ namespace OpenBabel
 
   static int CreateBond( Pattern *pat, BondExpr *expr, int src, int dst )
   {
-    int index,size;
+    int index;
 
     if (!pat)
       return -1; // should never happen
 
     if( pat->bcount == pat->balloc )
       {
-        pat->balloc += BONDPOOL;
-        size = (int)(pat->balloc*sizeof(BondSpec));
+        int oldalloc = pat->balloc;
+        if( oldalloc > INT_MAX/2 )
+          {
+            FatalAllocationError("bond pool");
+            return -1;
+          }
+        pat->balloc = oldalloc ? oldalloc * 2 : BONDPOOL;
         if( pat->bond )
           {
             BondSpec *tmp = new BondSpec[pat->balloc];
-            copy(pat->bond, pat->bond + pat->balloc - BONDPOOL, tmp);
+            copy(pat->bond, pat->bond + oldalloc, tmp);
             delete [] pat->bond;
             pat->bond = tmp;
           }
@@ -649,8 +679,8 @@ namespace OpenBabel
           return nullptr;
 
         index = 0;
-        while( isdigit(*LexPtr) )
-          index = index*10 + ((*LexPtr++)-'0');
+        if( !ReadInt(LexPtr, index) )
+          return nullptr;
         if( index > 255 )
           {
             LexPtr--;
@@ -681,8 +711,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
           }
         else
           {
@@ -699,8 +729,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
           }
         else
           {
@@ -731,8 +761,8 @@ namespace OpenBabel
         if (isdigit(*LexPtr))
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_HYB,index);
           }
         else
@@ -741,8 +771,8 @@ namespace OpenBabel
       case('0'): case('1'): case('2'): case('3'): case('4'):
       case('5'): case('6'): case('7'): case('8'): case('9'):
         index = LexPtr[-1]-'0';
-        while( isdigit(*LexPtr) )
-          index = index*10 + ((*LexPtr++)-'0');
+        if( !ReadInt(LexPtr, index) )
+          return nullptr;
         return BuildAtomLeaf(AE_MASS,index);
 
       case('A'):
@@ -798,8 +828,8 @@ namespace OpenBabel
         else if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_DEGREE,index);
           }
         return BuildAtomLeaf(AE_DEGREE,1);
@@ -882,8 +912,8 @@ namespace OpenBabel
         else if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_HCOUNT,index);
           }
         return BuildAtomLeaf(AE_HCOUNT,1);
@@ -1006,8 +1036,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             if( index == 0 )
               return BuildAtomPred(AE_ACYCLIC);
             return BuildAtomLeaf(AE_RINGS,index);
@@ -1056,8 +1086,8 @@ namespace OpenBabel
         else if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             if (index == 0) // default to 1 (if no number present)
               index = 1;
             return BuildAtomLeaf(AE_CONNECT,index);
@@ -1100,8 +1130,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
           }
         else
           index = 1;
@@ -1115,8 +1145,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             if( index == 0 )
               return BuildAtomPred(AE_ACYCLIC);
             return BuildAtomLeaf(AE_SIZE,index);
@@ -1135,8 +1165,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_VALENCE,index);
           }
         return BuildAtomLeaf(AE_VALENCE,1);
@@ -1145,8 +1175,8 @@ namespace OpenBabel
         if( isdigit(*LexPtr) )
           {
             index = 0;
-            while( isdigit(*LexPtr) )
-              index = index*10 + ((*LexPtr++)-'0');
+            if( !ReadInt(LexPtr, index) )
+              return nullptr;
             return BuildAtomLeaf(AE_RINGCONNECT,index);
           }
         return BuildAtomPred(AE_CYCLIC);
@@ -1340,8 +1370,9 @@ namespace OpenBabel
     if(isdigit(*LexPtr))
       {
         vb = 0;
-        while( isdigit(*LexPtr) )
-          vb = vb*10 + ((*LexPtr++)-'0');
+        // On overflow, ReadInt leaves LexPtr at the offending digit; the
+        // outer parser then sees a non-']' and errors out via ParseSMARTSError.
+        ReadInt(LexPtr, vb);
       }
 
     return(vb);
@@ -1433,17 +1464,23 @@ namespace OpenBabel
               {
                 stat->closord[index] = bexpr;
                 stat->closure[index] = prev;
+                bexpr = nullptr;
               }
             else if( stat->closure[index] != prev )
               {
                 if( !bexpr ) {
                   if (!stat->closord[index]) {
                     bexpr = GenerateDefaultBond();
-                    FreeBondExpr(stat->closord[index]);
-                  } else
+                  } else {
                     bexpr = stat->closord[index];
-                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index]))
+                  }
+                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index])) {
                   return ParseSMARTSError(pat,bexpr);
+                } else if (stat->closord[index]) {
+                  // equivalent: discard the redundant opening bond expression
+                  FreeBondExpr(stat->closord[index]);
+                }
+                stat->closord[index] = nullptr;
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 stat->closure[index] = -1;
@@ -1473,11 +1510,16 @@ namespace OpenBabel
                 if( !bexpr ) {
                   if (!stat->closord[index]) {
                     bexpr = GenerateDefaultBond();
-                    FreeBondExpr(stat->closord[index]);
-                  } else
+                  } else {
                     bexpr = stat->closord[index];
-                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index]))
+                  }
+                } else if (stat->closord[index] && !EquivalentBondExpr(bexpr, stat->closord[index])) {
                   return ParseSMARTSError(pat,bexpr);
+                } else if (stat->closord[index]) {
+                  // equivalent: discard the redundant opening bond expression
+                  FreeBondExpr(stat->closord[index]);
+                }
+                stat->closord[index] = nullptr;
 
                 CreateBond(pat,bexpr,prev,stat->closure[index]);
                 pat->atom[prev].nbrs.push_back(stat->closure[index]);
@@ -1609,8 +1651,10 @@ namespace OpenBabel
     ParseState stat;
     int i,flag;
 
-    for( i=0; i<100; i++ )
+    for( i=0; i<100; i++ ) {
       stat.closure[i] = -1;
+      stat.closord[i] = nullptr;
+    }
 
     result = SMARTSParser(result,&stat,-1,part);
 
@@ -2033,6 +2077,11 @@ namespace OpenBabel
 
           // use the mapping the get the chiral atom in the molecule being queried
           OBAtom *center = mol.GetAtom((*m)[j]);
+          if (!center) {
+            // mapping index out of range (e.g. from a degenerate match)
+            allStereoCentersMatch = false;
+            break;
+          }
 
           // get the OBTetrahedralStereo::Config from the molecule
           OBStereoFacade stereo(&mol);
@@ -2059,15 +2108,22 @@ namespace OpenBabel
           smartsConfig.center = center->GetId();
           if (nbrs.at(0) == SmartsImplicitRef)
             smartsConfig.from = OBStereo::ImplicitRef;
-          else
-            smartsConfig.from = mol.GetAtom( (*m)[nbrs.at(0)] )->GetId();
+          else {
+            OBAtom *ra0 = mol.GetAtom( (*m)[nbrs.at(0)] );
+            if (!ra0) { allStereoCentersMatch = false; break; }
+            smartsConfig.from = ra0->GetId();
+          }
           OBStereo::Ref firstref;
           if (nbrs.at(1) == SmartsImplicitRef)
             firstref = OBStereo::ImplicitRef;
-          else
-            firstref = mol.GetAtom( (*m)[nbrs.at(1)] )->GetId();
+          else {
+            OBAtom *ra1 = mol.GetAtom( (*m)[nbrs.at(1)] );
+            if (!ra1) { allStereoCentersMatch = false; break; }
+            firstref = ra1->GetId();
+          }
           OBAtom *ra2 = mol.GetAtom( (*m)[nbrs.at(2)] );
           OBAtom *ra3 = mol.GetAtom( (*m)[nbrs.at(3)] );
+          if (!ra2 || !ra3) { allStereoCentersMatch = false; break; }
           smartsConfig.refs = OBStereo::MakeRefs(firstref, ra2->GetId(), ra3->GetId());
 
           smartsConfig.view = OBStereo::ViewFrom;

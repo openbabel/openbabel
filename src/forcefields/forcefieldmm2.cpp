@@ -90,6 +90,9 @@ namespace OpenBabel
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
+      // Cached AngleData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr)
+        continue;
       ang = a->GetAngle(b->GetIdx(), c->GetIdx());
 
       va = a->GetVector();
@@ -155,9 +158,14 @@ namespace OpenBabel
       b = _mol.GetAtom((*angle)[0] + 1);
       a = _mol.GetAtom((*angle)[1] + 1);
       c = _mol.GetAtom((*angle)[2] + 1);
+      // Cached AngleData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr)
+        continue;
       ang = a->GetAngle(b->GetIdx(), c->GetIdx());
       b1 = _mol.GetBond(b->GetIdx(), a->GetIdx());
       b2 = _mol.GetBond(b->GetIdx(), c->GetIdx());
+      if (b1 == nullptr || b2 == nullptr)
+        continue;
       l1 = b1->GetLength();
       l2 = b2->GetLength();
 
@@ -206,6 +214,9 @@ namespace OpenBabel
       b = _mol.GetAtom((*t)[1] + 1);
       c = _mol.GetAtom((*t)[2] + 1);
       d = _mol.GetAtom((*t)[3] + 1);
+      // Cached TorsionData can reference indices that no longer exist.
+      if (a == nullptr || b == nullptr || c == nullptr || d == nullptr)
+        continue;
       tor = _mol.GetTorsion(a->GetIdx(), b->GetIdx(), c->GetIdx(), d->GetIdx());
 
       va = a->GetVector();

@@ -55,7 +55,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/"; }
+    { return "https://gaussian.com/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-log"; }
@@ -103,7 +103,7 @@ namespace OpenBabel
     }
 
     const char* SpecificationURL() override
-    { return "https://www.gaussian.com/input/"; }
+    { return "https://gaussian.com/input/"; }
 
     const char* GetMIMEType() override
     { return "chemical/x-gaussian-input"; }
@@ -497,7 +497,7 @@ namespace OpenBabel
 
     int i=0;
     bool no_symmetry=false;
-    char coords_type[25];
+    std::string coords_type;
 
     //Prescan file to find second instance of "orientation:"
     //This will be the kind of coords used in the chk/fchk file
@@ -514,8 +514,7 @@ namespace OpenBabel
             i++;
             tokenize (vs, buffer);
             // gotta check what types of orientation are present
-            strncpy (coords_type, vs[0].c_str(), 24);
-            strcat (coords_type, " orientation:");
+            coords_type = vs[0] + " orientation:";
           }
         if ((no_symmetry && i==1) || i==2)
            break;
@@ -594,7 +593,7 @@ namespace OpenBabel
 
             ifs.getline(buffer,BUFF_SIZE);
           }
-        else if (strstr(buffer, coords_type) != nullptr)
+        else if (strstr(buffer, coords_type.c_str()) != nullptr)
           {
             numTranslationVectors = 0; // ignore old translationVectors
             ifs.getline(buffer,BUFF_SIZE);      // ---------------
@@ -621,7 +620,7 @@ namespace OpenBabel
                     coordinates.push_back(y);
                     coordinates.push_back(z);
                   }
-                else {
+                else if (numTranslationVectors < 3) {
                   translationVectors[numTranslationVectors++].Set(x, y, z);
                 }
 
@@ -632,8 +631,10 @@ namespace OpenBabel
               }
             // done with reading atoms
             natoms = mol.NumAtoms();
-            if(natoms==0)
+            if(natoms==0) {
+              delete confData;
               return false;
+            }
             // malloc / memcpy
             double *tmpCoords = new double [(natoms)*3];
             memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
@@ -801,7 +802,7 @@ namespace OpenBabel
                 tokenize(vs,buffer);
 
               }
-            if (CM5_q.size() == mol.NumAtoms() and
+            if (CM5_q.size() == mol.NumAtoms() &&
                 HPA_q.size() == mol.NumAtoms())
             {
                 Hirshfeld->AddPartialCharge(HPA_q);
@@ -1274,6 +1275,7 @@ namespace OpenBabel
 
     if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file PR#1737209
       mol.EndModify();
+      delete confData;
       return false;
     }
 

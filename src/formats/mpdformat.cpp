@@ -274,7 +274,8 @@ namespace OpenBabel
             otyp = atoi(str.c_str());
             //}
             //  else {otyp=MyType(str);}
-            layer[0][otyp]=layer[0][otyp]+1;
+            if (otyp < LAYER_SIZE)
+              layer[0][otyp]=layer[0][otyp]+1;
 
             vector<OBBond*>::iterator k; // iterate again over neighbours
             for (nbr2 = nbr->BeginNbrAtom(k);nbr2;nbr2 = nbr->NextNbrAtom(k))
@@ -286,7 +287,8 @@ namespace OpenBabel
                 otyp = atoi(str.c_str());
                 //}
                 //  else {otyp=MyType(str);}
-                layer[1][otyp]=layer[1][otyp]+1;
+                if (otyp < LAYER_SIZE)
+                  layer[1][otyp]=layer[1][otyp]+1;
               } // end k
           } // end j
         if(xml_true==true)PrintXML(layer,ofs);

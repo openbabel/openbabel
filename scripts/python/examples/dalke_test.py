@@ -100,28 +100,28 @@ def readfile(filename, filetype):
 class TestIO(MyTestCase):
     def test_read_smiles(self):
         it = readfile("FormulaTest.smi", "smi")
-        mol = it.next()
+        mol = next(it)
         self.assertEqual(mol.GetTitle(), "CH4")
         self.assertTrue(mol.NumAtoms())
-        mol = it.next()
+        mol = next(it)
         self.assertEqual(mol.GetTitle(), "C atom")
         self.assertTrue(mol.NumAtoms())
 
     def test_read_sdf(self):
         it = readfile("cantest.sdf", "sdf")
-        mol = it.next()
+        mol = next(it)
         self.assertEqual(mol.GetTitle(), "8978")
         self.assertEqual(mol.NumBonds(), 64)
-        mol = it.next()
+        mol = next(it)
         self.assertEqual(mol.GetTitle(), "10617")
         self.assertEqual(mol.NumBonds(), 40)
 
     def test_read_sdf_gz(self):
         it = readfile("ziptest.sdf.gz", "sdf")
-        mol = it.next()
+        mol = next(it)
         self.assertEqual(mol.GetTitle(), "ZINC04985529")
         self.assertEqual(mol.NumAtoms(), 49)
-        mol = it.next()
+        mol = next(it)
         self.assertEqual(mol.GetTitle(), "ZINC01700999")
         self.assertEqual(mol.NumAtoms(), 34)
 
