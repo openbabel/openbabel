@@ -36,7 +36,9 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include "rand.h"
 
+#ifdef HAVE_EIGEN3
 #include <Eigen/Core>
+#endif
 
 using namespace std;
 
@@ -47,8 +49,12 @@ namespace OpenBabel
   PLUGIN_CPP_FILE(OBForceField)
 #endif
 
-  // L-BFGS limited-memory state. Forward-declared in forcefield.h so that
-  // header doesn't have to pull in Eigen.
+  // L-BFGS limited-memory state. Forward-declared in forcefield.h so the
+  // header doesn't have to pull in Eigen. When OB is built without Eigen
+  // (HAVE_EIGEN3 not defined), the struct is an empty stub so that the
+  // destructor's `delete _lbfgsState` remains well-formed; the pointer is
+  // never allocated in that build.
+#ifdef HAVE_EIGEN3
   struct OBForceField::LBFGSState {
     Eigen::MatrixXd s;        //!< column j = x_{k-j} - x_{k-j-1} (history of position deltas)
     Eigen::MatrixXd y;        //!< column j = g_{k-j} - g_{k-j-1} (history of gradient deltas)
@@ -64,6 +70,9 @@ namespace OpenBabel
     int k;                    //!< iteration counter
     int end;                  //!< ring-buffer head
   };
+#else
+  struct OBForceField::LBFGSState {};
+#endif
 
   OBForceField::~OBForceField()
   {
@@ -3131,6 +3140,12 @@ namespace OpenBabel
   // ignored: only the internal backtracking gives the monotone-decrease
   // guarantee L-BFGS needs to keep the s/y history sane.
   //
+  // The implementation requires Eigen. In builds without it, the public
+  // LBFGS* methods delegate to ConjugateGradients* so callers (gen3d,
+  // OpMinimize, the rotor searches) don't need to feature-gate.
+  //
+
+#ifdef HAVE_EIGEN3
 
   void OBForceField::gatherLBFGSGradient(double* gradOut, double& minGrad2)
   {
@@ -3367,6 +3382,25 @@ namespace OpenBabel
       LBFGSTakeNSteps(steps);
     }
   }
+
+#else  // HAVE_EIGEN3 not defined: fall back to ConjugateGradients
+
+  void OBForceField::LBFGSInitialize(int steps, double econv, int method)
+  {
+    ConjugateGradientsInitialize(steps, econv, method);
+  }
+
+  bool OBForceField::LBFGSTakeNSteps(int n)
+  {
+    return ConjugateGradientsTakeNSteps(n);
+  }
+
+  void OBForceField::LBFGS(int steps, double econv, int method)
+  {
+    ConjugateGradients(steps, econv, method);
+  }
+
+#endif  // HAVE_EIGEN3
 
   //
   //         f(1) - f(0)
