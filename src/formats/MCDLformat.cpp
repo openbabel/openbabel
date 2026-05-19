@@ -1184,19 +1184,24 @@ private:
 
   //parsing and analizing...
   for (i=0; i<MAXFRAGS; i++) charges[i]=0;
+  // indexOf() returns -1 on miss; n1/n2 are unsigned ints in this
+  // function, so a missed search produces 0xFFFFFFFF, takes the
+  // `n1>0` branch, and substr(n1+1) underflows back to substr(0) -
+  // chargestring is never consumed and the loop spins. Use a signed
+  // local for the find result here and below.
   if (chargestring != "") while (chargestring.length() > 0) {
-    n1=indexOf(chargestring,";");
-    if (n1>0) {
-      s=chargestring.substr(0,n1);
-      chargestring=chargestring.substr(n1+1);
+    int sep=indexOf(chargestring,";");
+    if (sep>0) {
+      s=chargestring.substr(0,sep);
+      chargestring=chargestring.substr(sep+1);
     } else {
       s=chargestring;
       chargestring="";
     };
-    n1=indexOf(s,",");
-    if (n1 > 0) {
-      sa1=s.substr(0,n1);
-      s=s.substr(n1+1);
+    int comma=indexOf(s,",");
+    if (comma > 0) {
+      sa1=s.substr(0,comma);
+      s=s.substr(comma+1);
       n2=1;
       if (indexOf(s,"-") > 0) n2=-1;
       s=s.substr(0,s.length()-1);
@@ -1211,18 +1216,18 @@ private:
   };
   for (i=0; i<MAXFRAGS; i++) radicals[i]=0;
   if (radicalstring != "") while (radicalstring.length() > 0) {
-    n1=indexOf(radicalstring,";");
-    if (n1>0) {
-      s=radicalstring.substr(0,n1);
-      radicalstring=radicalstring.substr(n1+1);
+    int sep=indexOf(radicalstring,";");
+    if (sep>0) {
+      s=radicalstring.substr(0,sep);
+      radicalstring=radicalstring.substr(sep+1);
     } else {
       s=radicalstring;
       radicalstring="";
     };
-    n1=indexOf(s,",");
-    if (n1 > 0) {
-      sa1=s.substr(0,n1);
-      s=s.substr(n1+1);
+    int comma=indexOf(s,",");
+    if (comma > 0) {
+      sa1=s.substr(0,comma);
+      s=s.substr(comma+1);
       n2=1;
       if (indexOf(s,"-") > 0) n2=-1;
       s=s.substr(0,s.length()-1);
@@ -1307,11 +1312,19 @@ private:
   ss="";
   test=true;
   while ((value.length()>0) && test) {
-    n1=indexOf(value,";");
-    n2=indexOf(value,"]");
-    if (n1<0) n1=n2; else if ((n2<n1) && (n2>=0)) n1=n2;
+    // indexOf() returns -1 on miss; n1/n2 are unsigned, so the
+    // straight assignments below would wrap to 0xFFFFFFFF and the
+    // subsequent comparisons (n1<0, n2>=0) would silently misbehave.
+    // Use signed locals and pick the earliest delimiter explicitly.
+    int sSemi=indexOf(value,";");
+    int sBrak=indexOf(value,"]");
+    int pick=-1;
+    if (sSemi>=0 && sBrak>=0) pick = (sBrak<sSemi)?sBrak:sSemi;
+    else if (sSemi>=0) pick=sSemi;
+    else if (sBrak>=0) pick=sBrak;
     mf="";
-    if ((n1>=0) && (value.length() > n1)) {
+    if (pick>=0 && (int)value.length() > pick) {
+      n1=pick;
       mf=value.substr(0,n1);
       value=value.substr(n1+1,value.length());
     } else {
@@ -1321,16 +1334,20 @@ private:
     };
     nt++;
     //parsing each fragment
-    while (mf.length()>0) {
-      n1=indexOf(mf,",");
-      if (n1>=0) {
-        s=mf.substr(0,n1);
-        mf=mf.substr(n1+1,mf.length());
+    // Bail out if bcount would exceed MAXBONDS - the inner loop runs
+    // off well-formed input is bounded by mf length, but garbage input
+    // can still push past the vector size.
+    while (mf.length()>0 && bcount<MAXBONDS) {
+      int comma=indexOf(mf,",");
+      if (comma>=0) {
+        s=mf.substr(0,comma);
+        mf=mf.substr(comma+1,mf.length());
       } else {
         s=mf;
         mf="";
       };
       n1=atoi(s.c_str());
+      if (n1<1) break;  // atom indices are 1-based; junk -> stop
       bcount++;
       bondOrders[bcount-1]=0;
       iA1[bcount-1]=nt-1;
@@ -1431,13 +1448,17 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
 
   for (i = 0; i<NELEMMCDL; i++) enumber[i] = 0;
 
+  // n is unsigned; indexOf() returns -1 on miss, so `if (n>=0)` was
+  // always true and the resulting substr() threw std::out_of_range.
+  // Capture the result in a signed local for the presence test.
   for (i = 1; i<NELEMMCDL; i++) if (strlen(OBElements::GetSymbol(i)) == 2) {
       test=true;
     asym=OBElements::GetSymbol(i);
       while (test) {
         test=false;
-        n=indexOf(value,asym);
-        if (n>=0) {
+        int hit=indexOf(value,asym);
+        if (hit>=0) {
+          n=hit;
           test=true;
           value=value.substr(0,n)+value.substr(n+asym.length(),value.length());
           k=1;
@@ -1459,8 +1480,9 @@ bool MCDLFormat::parseFormula(const string formulaString, std::vector <int>& enu
     asym=OBElements::GetSymbol(i);
       while (test) {
         test=false;
-        n=indexOf(value,asym);
-        if (n>=0) {
+        int hit=indexOf(value,asym);
+        if (hit>=0) {
+          n=hit;
           test=true;
           value=value.substr(0,n)+value.substr(n+asym.length(),value.length());
           k=1;

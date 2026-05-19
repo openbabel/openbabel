@@ -169,6 +169,18 @@ void caseANT_2026_00770()
                             "ant-2026-00770.sdf"));
 }
 
+// trailofbits-2026: cascade of MCDL parser bugs reachable from a single
+// {CZ:201,1+} entry. The original report was a heap-buffer-overflow
+// at charges[n2-1] (fixed in 1f11fb7b9). The bounds check unmasked an
+// infinite loop in the same charge/radical parser, an std::out_of_range
+// from parseFormula, and a BUS write in the bond-fragment parser - all
+// instances of the same unsigned-vs-signed indexOf() pattern. Reader
+// must now return cleanly without hang, exception, or memory error.
+void caseTrailOfBits_2026()
+{
+  OB_ASSERT(RunRepro("trailofbits-2026", "mcdl", "trailofbits-2026.mcdl"));
+}
+
 // CVE-2022-46291: out-of-bounds write into a fixed 3-element
 // translationVectors[] in GaussianOutputFormat when the orientation
 // block contains more than three atomicNum=-2 (Tv) rows.
@@ -506,6 +518,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 27:
     caseHighZSmilesToAllFormats();
+    break;
+  case 28:
+    caseTrailOfBits_2026();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
