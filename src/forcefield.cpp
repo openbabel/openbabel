@@ -36,6 +36,8 @@ GNU General Public License for more details.
 #include <openbabel/elements.h>
 #include "rand.h"
 
+#include <Eigen/Core>
+
 using namespace std;
 
 namespace OpenBabel
@@ -44,6 +46,39 @@ namespace OpenBabel
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBForceField)
 #endif
+
+  // L-BFGS limited-memory state. Forward-declared in forcefield.h so that
+  // header doesn't have to pull in Eigen.
+  struct OBForceField::LBFGSState {
+    Eigen::MatrixXd s;        //!< column j = x_{k-j} - x_{k-j-1} (history of position deltas)
+    Eigen::MatrixXd y;        //!< column j = g_{k-j} - g_{k-j-1} (history of gradient deltas)
+    Eigen::VectorXd ys;       //!< ys[j] = y_j . s_j  (1/rho_j)
+    Eigen::VectorXd alpha;    //!< two-loop recursion scratch
+    Eigen::VectorXd x;        //!< current flattened coordinates
+    Eigen::VectorXd xp;       //!< previous x
+    Eigen::VectorXd grad;     //!< current flattened gradient
+    Eigen::VectorXd gradp;    //!< previous gradient
+    Eigen::VectorXd drt;      //!< search direction (-H * grad)
+    double step;              //!< suggested initial line-search step
+    int m;                    //!< history depth (typically 6)
+    int k;                    //!< iteration counter
+    int end;                  //!< ring-buffer head
+  };
+
+  OBForceField::~OBForceField()
+  {
+    if (_grad1 != nullptr) {
+      delete [] _grad1;
+      _grad1 = nullptr;
+    }
+    if (_gradientPtr != nullptr) {
+      delete [] _gradientPtr;
+      _gradientPtr = nullptr;
+    }
+    // Defined here so LBFGSState is a complete type at the delete site.
+    delete _lbfgsState;
+    _lbfgsState = nullptr;
+  }
 
   /** \class OBForceField forcefield.h <openbabel/forcefield.h>
       \brief Base class for molecular mechanics force fields
@@ -3074,6 +3109,263 @@ namespace OpenBabel
     ConjugateGradientsInitialize(steps, econv, method);
     if (steps > 1) // ConjugateGradientsInitialize takes the first step
       ConjugateGradientsTakeNSteps(steps);
+  }
+
+  //
+  // L-BFGS (limited-memory BFGS)
+  //
+  // Quasi-Newton method: approximates the inverse Hessian from the last
+  // m gradient/position deltas, then steps with a backtracking line
+  // search. Implementation modeled on Nocedal's classic two-loop recursion
+  // (cf. LBFGSpp::LBFGSSolver::minimize() in include/LBFGS.h), but split
+  // across LBFGSInitialize/LBFGSTakeNSteps so the GUI can redraw between
+  // batches the same way it does for SD and CG.
+  //
+  // OB convention trap: OBForceField::GetGradient() and
+  // OBFFConstraints::GetGradient() both return the FORCE (-grad E), not
+  // the gradient -- SD/CG step coords by +direction*step to descend. The
+  // gather helper negates so we hold the true gradient and the standard
+  // L-BFGS formulas (drt = -H*grad) apply unchanged.
+  //
+  // The line search type chosen via SetLineSearchType() is intentionally
+  // ignored: only the internal backtracking gives the monotone-decrease
+  // guarantee L-BFGS needs to keep the s/y history sane.
+  //
+
+  void OBForceField::gatherLBFGSGradient(double* gradOut, double& minGrad2)
+  {
+    minGrad2 = 1.0e20;
+    vector3 dir;
+    FOR_ATOMS_OF_MOL (a, _mol) {
+      unsigned int idx = a->GetIdx();
+      unsigned int coordIdx = (idx - 1) * 3;
+
+      if (_constraints.IsFixed(idx) || (_fixAtom == idx) || (_ignoreAtom == idx)) {
+        gradOut[coordIdx]     = 0.0;
+        gradOut[coordIdx + 1] = 0.0;
+        gradOut[coordIdx + 2] = 0.0;
+      } else {
+        if (!HasAnalyticalGradients())
+          dir = NumericalDerivative(&*a) + _constraints.GetGradient(idx);
+        else
+          dir = GetGradient(&*a) + _constraints.GetGradient(idx);
+
+        if (dir.length_2() < minGrad2)
+          minGrad2 = dir.length_2();
+
+        gradOut[coordIdx]     = _constraints.IsXFixed(idx) ? 0.0 : -dir.x();
+        gradOut[coordIdx + 1] = _constraints.IsYFixed(idx) ? 0.0 : -dir.y();
+        gradOut[coordIdx + 2] = _constraints.IsZFixed(idx) ? 0.0 : -dir.z();
+      }
+    }
+  }
+
+  void OBForceField::LBFGSInitialize(int steps, double econv, int method)
+  {
+    if (!_validSetup || steps == 0)
+      return;
+
+    _cstep = 0;
+    _nsteps = steps;
+    _econv = econv;
+    _gconv = 1.0e-2; // gradient convergence (0.1) squared
+    _ncoords = _mol.NumAtoms() * 3;
+
+    if (_cutoff)
+      UpdatePairsSimple();
+
+    // Allocate (or reset) the L-BFGS history. Memory size m=6 is the
+    // standard default and matches LBFGSpp.
+    delete _lbfgsState;
+    _lbfgsState = new LBFGSState;
+    LBFGSState& st = *_lbfgsState;
+    st.m = 6;
+    st.k = 1;
+    st.end = 0;
+    st.s.setZero(_ncoords, st.m);
+    st.y.setZero(_ncoords, st.m);
+    st.ys.setZero(st.m);
+    st.alpha.setZero(st.m);
+    st.x.setZero(_ncoords);
+    st.xp.setZero(_ncoords);
+    st.grad.setZero(_ncoords);
+    st.gradp.setZero(_ncoords);
+    st.drt.setZero(_ncoords);
+
+    _e_n1 = Energy() + _constraints.GetConstraintEnergy();
+    double minGrad2;
+    gatherLBFGSGradient(st.grad.data(), minGrad2);
+
+    memcpy(st.x.data(), _mol.GetCoordinates(), _ncoords * sizeof(double));
+
+    // First-iter step heuristic: 1/||drt|| so we don't overshoot before
+    // the Hessian estimate has had a chance to mature (LBFGSpp does the
+    // same). The trust-radius cap in TakeNSteps then further constrains
+    // it for FF energies.
+    st.drt = -st.grad;
+    double drtNorm = st.drt.norm();
+    st.step = (drtNorm > 0.0) ? 1.0 / drtNorm : 1.0;
+    st.xp = st.x;
+    st.gradp = st.grad;
+
+    IF_OBFF_LOGLVL_LOW {
+      OBFFLog("\nL - B F G S\n\n");
+      snprintf(_logbuf, BUFF_SIZE, "STEPS = %d\n\n", steps);
+      OBFFLog(_logbuf);
+      OBFFLog("STEP n     E(n)       E(n-1)    \n");
+      OBFFLog("--------------------------------\n");
+    }
+  }
+
+  bool OBForceField::LBFGSTakeNSteps(int n)
+  {
+    if (!_validSetup || !_lbfgsState)
+      return false;
+    if (_ncoords != _mol.NumAtoms() * 3)
+      return false;
+
+    LBFGSState& st = *_lbfgsState;
+    const int m = st.m;
+    double* coords = _mol.GetCoordinates();
+    double fx = _e_n1;
+    double minGrad2 = 1.0e20;
+
+    // Monotone-decrease line search (cf. ASE's L-BFGS). Strict Armijo
+    // doesn't work well on FF energies from poor starting geometries:
+    // the directional derivative is dominated by one atom's huge
+    // gradient, so Armijo demands more decrease per step than the energy
+    // surface can deliver. Accept any step that lowers the energy, but
+    // cap per-coord displacement.
+    const int maxLineSearch = 20;
+    const double minStep = 1.0e-20;
+    // 0.04 Ang matches ASE's L-BFGS default and is small enough to keep
+    // vdW terms well-behaved.
+    const double trustRadius = 0.04;
+
+    for (int i = 1; i <= n; ++i) {
+      _cstep++;
+
+      double step = st.step;
+      // If the quasi-Newton direction goes uphill (can happen after a
+      // bad curvature update), fall back to steepest descent to recover.
+      if (st.grad.dot(st.drt) > 0.0) {
+        st.drt = -st.grad;
+        step = 1.0;
+      }
+      // Cap step so the worst per-coord displacement <= trustRadius.
+      // Keeps the line search from launching atoms through each other's
+      // vdW cores on a strained starting geometry.
+      double drtMax = st.drt.cwiseAbs().maxCoeff();
+      if (drtMax > 0.0) {
+        double cap = trustRadius / drtMax;
+        if (step > cap)
+          step = cap;
+      }
+      const double fxInit = fx;
+
+      bool lsOk = false;
+      for (int ls = 0; ls < maxLineSearch; ++ls) {
+        if (step < minStep)
+          break;
+
+        for (unsigned int c = 0; c < _ncoords; ++c)
+          coords[c] = st.x[c] + step * st.drt[c];
+
+        fx = Energy() + _constraints.GetConstraintEnergy();
+        gatherLBFGSGradient(st.grad.data(), minGrad2);
+
+        if (fx < fxInit) {
+          lsOk = true;
+          break;
+        }
+        step *= 0.5;
+      }
+
+      if (!lsOk) {
+        // No descent step found; restore last accepted point and bail so
+        // the caller knows we stopped progressing.
+        memcpy(coords, st.x.data(), _ncoords * sizeof(double));
+        IF_OBFF_LOGLVL_LOW
+          OBFFLog("    L-BFGS LINE SEARCH FAILED\n");
+        return false;
+      }
+
+      memcpy(st.x.data(), coords, _ncoords * sizeof(double));
+
+      // Convergence test (matches SD/CG semantics).
+      if (IsNear(fx, _e_n1, _econv) && (minGrad2 < _gconv)) {
+        IF_OBFF_LOGLVL_LOW {
+          snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, fx, _e_n1);
+          OBFFLog(_logbuf);
+          OBFFLog("    L-BFGS HAS CONVERGED\n");
+        }
+        _e_n1 = fx;
+        return false;
+      }
+
+      if ((_cstep % _pairfreq == 0) && _cutoff)
+        UpdatePairsSimple();
+
+      IF_OBFF_LOGLVL_LOW {
+        if (_cstep % 10 == 0) {
+          snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, fx, _e_n1);
+          OBFFLog(_logbuf);
+        }
+      }
+
+      _e_n1 = fx;
+
+      if (_cstep == _nsteps)
+        return false;
+
+      // Update L-BFGS history and compute the next search direction via
+      // Nocedal's two-loop recursion. drt = -H_k * grad.
+      st.s.col(st.end).noalias() = st.x - st.xp;
+      st.y.col(st.end).noalias() = st.grad - st.gradp;
+      double ysNew = st.y.col(st.end).dot(st.s.col(st.end));
+      double yyNew = st.y.col(st.end).squaredNorm();
+      st.ys[st.end] = ysNew;
+
+      st.drt = -st.grad;
+      const int bound = std::min(m, st.k);
+      st.end = (st.end + 1) % m;
+
+      int j = st.end;
+      for (int b = 0; b < bound; ++b) {
+        j = (j + m - 1) % m;
+        st.alpha[j] = st.s.col(j).dot(st.drt) / st.ys[j];
+        st.drt.noalias() -= st.alpha[j] * st.y.col(j);
+      }
+
+      // H_0 = (ys/yy) * I (Nocedal). Guard against the degenerate pair
+      // that would NaN the direction.
+      if (yyNew > 0.0)
+        st.drt *= (ysNew / yyNew);
+
+      for (int b = 0; b < bound; ++b) {
+        double beta = st.y.col(j).dot(st.drt) / st.ys[j];
+        st.drt.noalias() += (st.alpha[j] - beta) * st.s.col(j);
+        j = (j + 1) % m;
+      }
+
+      st.xp = st.x;
+      st.gradp = st.grad;
+      // L-BFGS initial step from iteration 2 onwards is the full unit
+      // step; the trust-radius cap at the top of the loop handles the
+      // pathological cases.
+      st.step = 1.0;
+      st.k++;
+    }
+
+    return true; // No convergence yet, caller can call us again.
+  }
+
+  void OBForceField::LBFGS(int steps, double econv, int method)
+  {
+    if (steps > 0) {
+      LBFGSInitialize(steps, econv, method);
+      LBFGSTakeNSteps(steps);
+    }
   }
 
   //

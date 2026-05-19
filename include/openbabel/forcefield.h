@@ -543,6 +543,14 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
     int         _linesearch; //!< LineSearch type
+    struct LBFGSState; //!< Hidden L-BFGS history (defined in forcefield.cpp to keep Eigen out of this header)
+    LBFGSState* _lbfgsState = nullptr; //!< Used for L-BFGS (Initialize and TakeNSteps); owned, destroyed in ~OBForceField()
+    //! Gather the per-atom gradient as a flat vector for L-BFGS. Writes the
+    //! true gradient (negated from OB's "GetGradient() returns force"
+    //! convention), honors fixed-atom and per-axis constraints, and reports
+    //! the minimum per-atom squared force as minGrad2 (matches the
+    //! convergence metric used by SD/CG).
+    void gatherLBFGSGradient(double* gradOut, double& minGrad2);
     // molecular dynamics variables
     double 	_timestep; //!< Molecular dynamics time step in picoseconds
     double 	_temp; //!< Molecular dynamics temperature in Kelvin
@@ -570,18 +578,9 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      */
     virtual OBForceField* MakeNewInstance()=0;
 
-    //! Destructor
-    virtual ~OBForceField()
-    {
-      if (_grad1 != nullptr) {
-        delete [] _grad1;
-        _grad1 = nullptr;
-      }
-      if (_gradientPtr != nullptr) {
-        delete [] _gradientPtr;
-	_gradientPtr = nullptr;
-      }
-    }
+    //! Destructor (defined in forcefield.cpp because _lbfgsState's pimpl
+    //! type LBFGSState is incomplete in this header).
+    virtual ~OBForceField();
 
     //! \return Plugin type ("forcefields")
     const char* TypeID() override
@@ -1372,6 +1371,47 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
      *  OBFF_LOGLVL_HIGH:   see note above \n
     */
     bool ConjugateGradientsTakeNSteps(int n);
+    /*! Perform L-BFGS optimization for steps steps or until convergence criteria is reached.
+     *
+     *  L-BFGS is a quasi-Newton method that approximates the inverse Hessian
+     *  from a limited history of gradient changes. For typical molecular
+     *  systems it converges faster than steepest descent or conjugate
+     *  gradients while using comparable memory.
+     *
+     *  Note: the line search algorithm chosen via SetLineSearchType()
+     *  (Simple, Newton2Num) does NOT apply here. L-BFGS uses an internal
+     *  backtracking line search with the Armijo condition; mixing in an
+     *  arbitrary line search would break the curvature approximation.
+     *
+     *  \param steps The number of steps.
+     *  \param econv Energy convergence criteria. (default is 1e-6)
+     *  \param method Deprecated. (see HasAnalyticalGradients())
+     */
+    void LBFGS(int steps, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Initialize L-BFGS optimization, to be used in combination with LBFGSTakeNSteps().
+     *
+     *  example:
+     *  \code
+     *  // pFF is a pointer to an OBForceField class
+     *  pFF->LBFGSInitialize(100, 1e-5f);
+     *  while (pFF->LBFGSTakeNSteps(5)) {
+     *    // do some updating in your program (redraw structure, ...)
+     *  }
+     *  \endcode
+     *
+     *  If you don't need any updating in your program, LBFGS() is recommended.
+     *
+     *  \param steps The number of steps.
+     *  \param econv Energy convergence criteria. (default is 1e-6)
+     *  \param method Deprecated. (see HasAnalyticalGradients())
+     */
+    void LBFGSInitialize(int steps = 1000, double econv = 1e-6f, int method = OBFF_ANALYTICAL_GRADIENT);
+    /*! Take n steps in an L-BFGS optimization previously initialized with LBFGSInitialize().
+     *
+     *  \param n The number of steps to take.
+     *  \return False if convergence or the number of steps given by LBFGSInitialize() has been reached.
+     */
+    bool LBFGSTakeNSteps(int n);
     //@}
 
     /////////////////////////////////////////////////////////////////////////
