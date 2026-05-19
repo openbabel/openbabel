@@ -170,7 +170,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     }
 
     // Initial cleanup for every level
-    pFF->ConjugateGradients(iterations, 1.0e-4);
+    pFF->LBFGS(iterations, 1.0e-4);
 
     if (speed == 4) {
       pFF->UpdateCoordinates(molCopy);
@@ -190,7 +190,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConvers
     }
 
     // Final cleanup and copy the new coordinates back
-    pFF->ConjugateGradients(iterations, 1.0e-6);
+    pFF->LBFGS(iterations, 1.0e-6);
     pFF->UpdateCoordinates(molCopy);
 
     // Check stereochemistry

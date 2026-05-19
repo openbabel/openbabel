@@ -163,7 +163,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->ConjugateGradients(1000);
+      pFF->LBFGS(1000);
       \endcode
 
       Minimize the structure in mol using steepest descent and fix the position of atom with index 1.
@@ -191,7 +191,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->ConjugateGradients(1000);
+      pFF->LBFGS(1000);
       \endcode
 
       Minimize a ligand molecule in a binding pocket.
@@ -237,7 +237,7 @@ namespace OpenBabel
       }
 
       // Perform the actual minimization, maximum 1000 steps
-      pFF->ConjugateGradients(1000);
+      pFF->LBFGS(1000);
       \endcode
 
   **/
@@ -1237,7 +1237,7 @@ namespace OpenBabel
       IF_OBFF_LOGLVL_LOW
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
-      ConjugateGradients(geomSteps); // final energy minimizatin for best conformation
+      LBFGS(geomSteps); // final energy minimization for best conformation
 
       return 1; // there are no more conformers
     }
@@ -1294,7 +1294,7 @@ namespace OpenBabel
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
     _loglvl = OBFF_LOGLVL_NONE;
-    ConjugateGradients(geomSteps); // energy minimization for conformer
+    LBFGS(geomSteps); // energy minimization for conformer
     _loglvl = _origLogLevel;
 
     _energies.push_back(Energy(false)); // calculate and store energy
@@ -1506,7 +1506,7 @@ namespace OpenBabel
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
       _loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
+      LBFGS(geomSteps); // energy minimization for conformer
       _loglvl = _origLogLevel;
 
       return;
@@ -1568,7 +1568,7 @@ namespace OpenBabel
     SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
     _loglvl = OBFF_LOGLVL_NONE;
-    ConjugateGradients(geomSteps); // energy minimization for conformer
+    LBFGS(geomSteps); // energy minimization for conformer
     _loglvl = _origLogLevel;
 
     _energies.push_back(Energy(false)); // calculate and store energy
@@ -1693,7 +1693,7 @@ namespace OpenBabel
         OBFFLog("  GENERATED ONLY ONE CONFORMER\n\n");
 
       _loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
+      LBFGS(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       _energies.push_back(Energy(false));
 
@@ -1737,7 +1737,7 @@ namespace OpenBabel
         SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
         _loglvl = OBFF_LOGLVL_NONE;
-        ConjugateGradients(geomSteps); // energy minimization for conformer
+        LBFGS(geomSteps); // energy minimization for conformer
         _loglvl = origLogLevel;
         currentE = Energy(false);
 
@@ -1821,7 +1821,7 @@ namespace OpenBabel
       SetupPointers(); // update pointers to atom positions in the OBFFCalculation objects
 
       _loglvl = OBFF_LOGLVL_NONE;
-      ConjugateGradients(geomSteps); // energy minimization for conformer
+      LBFGS(geomSteps); // energy minimization for conformer
       _loglvl = origLogLevel;
       currentE = Energy(false);
       _energies.push_back(currentE);
