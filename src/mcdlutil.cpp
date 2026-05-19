@@ -628,7 +628,7 @@ namespace OpenBabel {
 
   int TSingleBond::getValence() {
     int result=0;
-    if (this->tb <=NBONDTYPES) result=bondValence[this->tb-1];
+    if (this->tb >= 1 && this->tb <= NBONDTYPES) result=bondValence[this->tb-1];
     return result;
   };
 
