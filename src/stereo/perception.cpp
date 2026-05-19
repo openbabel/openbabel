@@ -2398,8 +2398,8 @@ namespace OpenBabel {
       v1 = box->MinimumImageCartesian(v1);
       v2 = box->MinimumImageCartesian(v2);
     }
-    if (IsNearZero(v1.length(), 1.0e-3)
-      || IsNearZero(v2.length(), 1.0e-3)) {
+    if (fabs(v1.length()) < 1.0e-3
+      || fabs(v2.length()) < 1.0e-3) {
         return(0.0);
     }
 

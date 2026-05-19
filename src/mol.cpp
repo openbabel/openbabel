@@ -2561,6 +2561,7 @@ namespace OpenBabel
         if (!bgn || !end)
           {
             obErrorLog.ThrowError(__FUNCTION__, "Unable to add bond - invalid atom index", obDebug);
+            delete bond;
             return(false);
           }
         bond->Set(_nbonds,bgn,end,order,flags);
@@ -2827,9 +2828,9 @@ namespace OpenBabel
     hasX = hasY = false;
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        if (!hasX && !IsNearZero(atom->x()))
+        if (!hasX && fabs(atom->x()) >= 2e-6)
           hasX = true;
-        if (!hasY && !IsNearZero(atom->y()))
+        if (!hasY && fabs(atom->y()) >= 2e-6)
           hasY = true;
         if(Not3D && atom->z())
           return false;
@@ -2850,11 +2851,11 @@ namespace OpenBabel
     //      return(false);
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
       {
-        if (!hasX && !IsNearZero(atom->x()))
+        if (!hasX && fabs(atom->x()) >= 2e-6)
           hasX = true;
-        if (!hasY && !IsNearZero(atom->y()))
+        if (!hasY && fabs(atom->y()) >= 2e-6)
           hasY = true;
-        if (!hasZ && !IsNearZero(atom->z()))
+        if (!hasZ && fabs(atom->z()) >= 2e-6)
           hasZ = true;
 
         if (hasX && hasY && hasZ)

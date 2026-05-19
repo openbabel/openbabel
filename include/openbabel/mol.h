@@ -166,8 +166,14 @@ enum HydrogenType { AllHydrogen, PolarHydrogen, NonPolarHydrogen };
 
     //! Reserve a minimum number of atoms for internal storage
     //! This improves performance since the internal atom vector does not grow.
+    //! Reservation is purely a hint, so an unreasonably large value (e.g.
+    //! a count read from a malformed file) is silently clamped to a sane
+    //! upper bound to avoid OOM on untrusted input.
     void ReserveAtoms(int natoms)
     {
+      const int kMaxReservedAtoms = 10000000;
+      if (natoms > kMaxReservedAtoms)
+        natoms = kMaxReservedAtoms;
       if (natoms > 0 && _mod) {
         _vatom.reserve(natoms);
         _atomIds.reserve(natoms);

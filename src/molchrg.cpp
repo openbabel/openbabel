@@ -294,7 +294,7 @@ namespace OpenBabel
         break;
       }
 
-    if (!IsNearZero(val[2]))
+    if (fabs(val[2]) >= 2e-6)
       {
         a = val[1];
         b = (val[2]-val[0])/2;

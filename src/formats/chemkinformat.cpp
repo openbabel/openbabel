@@ -34,6 +34,7 @@ GNU General Public License for more details.
 #include "openbabel/obmolecformat.h"
 
 #include <cstdlib>
+#include <memory>
 
 using namespace std;
 
@@ -351,7 +352,10 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
   2H + M => H2 + M 1e-16 comment: has A only
   Label A+B = C+D comment: has no rates
   */
-  OBRateData* pRD = new OBRateData; //to store rate constant data. Attach only if rate data found
+  // Rate data is owned here until we attach it to pReact via SetData on the
+  // HasRateData path; every other path (early returns, no rate data found)
+  // would otherwise leak. unique_ptr handles cleanup; release on attach.
+  std::unique_ptr<OBRateData> pRD(new OBRateData);
 
   int n=0;
   std::shared_ptr<OBMol> sp;
@@ -547,7 +551,7 @@ bool ChemKinFormat::ParseReactionLine(OBReaction* pReact, OBConversion* pConv)
     }
     //Rate parameters were specified, so OBReaction needs to have the OBRateData attached
     if(HasRateData)
-      pReact->SetData(pRD);
+      pReact->SetData(pRD.release());
     else if(SpeciesListed) //a true ChemKin file
       obErrorLog.ThrowError(__FUNCTION__,
             "In " + ln + "\nNo rate data found.", obWarning);

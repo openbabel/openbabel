@@ -739,9 +739,11 @@ CDXReader::CDXReader(std::istream& is) : ifs(is), depth(0)
     ifs.ignore(kCDX_HeaderLength - kCDX_HeaderStringLen);	// Discard rest of header.
   else
   {
+    // No active exception here: a bare `throw;` would call std::terminate.
+    // Mark the stream failed instead — the class's operator bool() (and the
+    // while(cdxr) / while(*this) callers) already treats this as end-of-input.
     obErrorLog.ThrowError(__FUNCTION__,"Invalid file, no ChemDraw Header",obError);
     ifs.setstate(ios::eofbit);
-    throw;
   }
 }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
