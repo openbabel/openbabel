@@ -41,6 +41,19 @@ namespace OpenBabel
     return (int)d;
   }
 
+  // Truncate `d` to int and multiply by `scale`, clamping the input so
+  // the multiply cannot overflow. Preserves the original truncate-first
+  // rounding (so output matches the chemtool format test fixture).
+  static int chtTruncScale(double d, int scale)
+  {
+    if (!std::isfinite(d) || scale == 0) return 0;
+    const int absScale = scale > 0 ? scale : -scale;
+    const double kBound = (double)INT_MAX / absScale;
+    if (d > kBound) d = kBound;
+    else if (d < -kBound) d = -kBound;
+    return (int)d * scale;
+  }
+
   class CHTFormat : public OBMoleculeFormat
   {
   public:
@@ -104,8 +117,8 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
     for (atom = mol.BeginAtom(i); atom; atom = mol.NextAtom(i))
       {
-        x = chtClampToInt(atom->GetX() * conv_factor);
-        y = chtClampToInt(atom->GetY() * conv_factor);
+        x = chtTruncScale(atom->GetX(), conv_factor);
+        y = chtTruncScale(atom->GetY(), conv_factor);
         if (x > w)
           w = x;
         if (y > h)
