@@ -9,6 +9,7 @@
 #include <openbabel/canon.h>
 
 #include <iostream>
+#include <random>
 #include <vector>
 #include <algorithm>
 
@@ -130,7 +131,7 @@ bool doShuffleTest(const std::string &smiles)
   bool result = true;
   for (unsigned int i = 0; i < N; ++i) {
     // shuffle the atoms
-    std::random_shuffle(atoms.begin(), atoms.end());
+    std::shuffle(atoms.begin(), atoms.end(), std::mt19937{std::random_device{}()});
     mol.RenumberAtoms(atoms);
     // get can smiles
     std::string cansmi = canConv.WriteString(&mol, true);
@@ -172,7 +173,7 @@ bool doShuffleTestFile(const std::string &filename)
   bool result = true;
   for (unsigned int i = 0; i < N; ++i) {
     // shuffle the atoms
-    std::random_shuffle(atoms.begin(), atoms.end());
+    std::shuffle(atoms.begin(), atoms.end(), std::mt19937{std::random_device{}()});
     mol.RenumberAtoms(atoms);
 
     // get can smiles
@@ -217,7 +218,7 @@ bool doShuffleTestOnMultiFile(const std::string &filename)
     bool subresult = true;
     for (unsigned int i = 0; i < N; ++i) {
       // shuffle the atoms
-      std::random_shuffle(atoms.begin(), atoms.end());
+      std::shuffle(atoms.begin(), atoms.end(), std::mt19937{std::random_device{}()});
       mol.RenumberAtoms(atoms);
 
       // get can smiles

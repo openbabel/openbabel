@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <openbabel/atom.h>
 #include <openbabel/obiter.h>
+#include <random>
 
 using namespace std;
 using namespace OpenBabel;
@@ -182,7 +183,7 @@ bool doStereoPerception3(OBMol &mol, const OBStereoUnitSet &refUnits = OBStereoU
     atoms.push_back(&*atom);
 
   for (int i = 0; i < 100; ++i) {
-    std::random_shuffle(atoms.begin(), atoms.end());
+    std::shuffle(atoms.begin(), atoms.end(), std::mt19937{std::random_device{}()});
     mol.RenumberAtoms(atoms);
 
     // need to calculate symmetry first
