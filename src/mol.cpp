@@ -2561,6 +2561,7 @@ namespace OpenBabel
         if (!bgn || !end)
           {
             obErrorLog.ThrowError(__FUNCTION__, "Unable to add bond - invalid atom index", obDebug);
+            delete bond;
             return(false);
           }
         bond->Set(_nbonds,bgn,end,order,flags);
