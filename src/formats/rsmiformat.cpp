@@ -16,12 +16,15 @@ GNU General Public License for more details.
 #include "openbabel/babelconfig.h"
 #include <string>
 #include <iomanip>
+#include <memory>
 #include <openbabel/mol.h>
 #include <openbabel/atom.h>
 #include <openbabel/elements.h>
+#include <openbabel/op.h>
 
 #include "openbabel/obconversion.h"
 #include "openbabel/reaction.h"
+#include "openbabel/reactionfacade.h"
 
 using namespace std;
 //using std::tr1::shared_ptr;
@@ -41,6 +44,9 @@ namespace OpenBabel
     {
       return
         "Reaction SMILES format\n"
+        "Read Options e.g. -a3\n"
+        "  3 Generate 3D coordinates (default is 2D)\n"
+        "\n"
         "Write Options e.g. -xt\n"
         "  r radicals lower case eg ethyl is Cc\n"
         "\n";
@@ -135,6 +141,15 @@ namespace OpenBabel
     //It's really a reaction, not a molecule.
     //Doesn't make a new OBReaction object, but does make mew reactant and product OBMols
     OBReaction* pReact = pOb->CastAndClear<OBReaction>();
+
+    // If CastAndClear failed (e.g., pOb is an OBMol*), create a new OBReaction
+    // This can happen when ReadMolecule is called directly from OBConversion::Read
+    // with an OBMol object instead of an OBReaction object
+    std::unique_ptr<OBReaction> tempReact;
+    if (pReact == nullptr) {
+      tempReact = std::unique_ptr<OBReaction>(new OBReaction());
+      pReact = tempReact.get();
+    }
 
     istream &ifs = *pConv->GetInStream();
     OBConversion sconv; //Copy
@@ -231,6 +246,54 @@ namespace OpenBabel
     for(itr=mols.begin();itr!=mols.end();++itr)
       pReact->AddProduct(std::shared_ptr<OBMol>(new OBMol(*itr)));
 
+    // If we created a temporary OBReaction (because pOb was an OBMol*),
+    // convert it to an OBMol using OBReactionFacade and generate coordinates
+    if (tempReact) {
+      OBMol* pmol = dynamic_cast<OBMol*>(pOb);
+      if (pmol) {
+        pmol->Clear();
+        pmol->SetIsReaction(true);
+        OBReactionFacade facade(pmol);
+
+        // Check if 3D coordinates are requested (option "3"), otherwise use 2D
+        bool use3D = pConv->IsOption("3", OBConversion::INOPTIONS) != nullptr;
+        OBOp* pCoordGen = OBOp::FindType(use3D ? "gen3D" : "gen2D");
+
+        // Add reactants with coordinate generation
+        for (int i = 0; i < pReact->NumReactants(); ++i) {
+          std::shared_ptr<OBMol> sp = pReact->GetReactant(i);
+          if (sp) {
+            OBMol component = *sp;
+            if (pCoordGen) pCoordGen->Do(&component);
+            facade.AddComponent(&component, OBReactionRole::REACTANT);
+          }
+        }
+
+        // Add agents with coordinate generation
+        for (int i = 0; i < pReact->NumAgents(); ++i) {
+          std::shared_ptr<OBMol> sp = pReact->GetAgent(i);
+          if (sp) {
+            OBMol component = *sp;
+            if (pCoordGen) pCoordGen->Do(&component);
+            facade.AddComponent(&component, OBReactionRole::AGENT);
+          }
+        }
+
+        // Add products with coordinate generation
+        for (int i = 0; i < pReact->NumProducts(); ++i) {
+          std::shared_ptr<OBMol> sp = pReact->GetProduct(i);
+          if (sp) {
+            OBMol component = *sp;
+            if (pCoordGen) pCoordGen->Do(&component);
+            facade.AddComponent(&component, OBReactionRole::PRODUCT);
+          }
+        }
+
+        if (!pReact->GetTitle().empty()) {
+          pmol->SetTitle(pReact->GetTitle().c_str());
+        }
+      }
+    }
     return true;
   }
 
