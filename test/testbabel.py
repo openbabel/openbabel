@@ -512,14 +512,15 @@ charge 1
     def testOBRMS(self):
         '''Sanity checks for obrms'''
         sdffile = self.getTestFile('testsym_2Dtests.sdf')
+        nmols = 7
         output, err = run_exec(None, ["obrms", "-t", "10", sdffile, sdffile])
         # all rmsds should be zero
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
-        for rmsd in rmsds:
-            self.assertEqual(rmsd, 0, "RMSD not zero between identical structures")
+        self.assertEqual(rmsds, [0.0] * nmols, msg="RMSD not zero between identical structures")
         output, err = run_exec(None, ["obrms", "-t", "10", "-f", sdffile, sdffile])
         #first zero, second nonzero, last inf
         rmsds = [float(line.split()[-1]) for line in output.split('\n') if line]
+        self.assertEqual(len(rmsds), nmols, msg="%s" % rmsds)
         self.assertEqual(rmsds[0],0)
         self.assertEqual(rmsds[1],2.73807)
         self.assertEqual(rmsds[-1],INF)
