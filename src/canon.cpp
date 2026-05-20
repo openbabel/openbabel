@@ -1383,14 +1383,21 @@ namespace OpenBabel {
                 }
               }
 
-            // Add the other permutations.
-            while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
-              if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
-                for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
-                  allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
-                  for (std::size_t i = 0; i < finalNbrs.size(); ++i)
-                    allOrderedNbrs.back().push_back(finalNbrs[i]);
-                }
+            // Cap n! permutations of equivalent neighbors; pathological
+            // hypervalent inputs (e.g. 12 identical F on one ring atom)
+            // otherwise blow up time and memory.  Reuse the timeout flag to
+            // bail out through the normal path.
+            if (finalNbrs.size() > 9) {
+              timeout.expired = true;
+            } else {
+              while (std::next_permutation(finalNbrs.begin(), finalNbrs.end())) {
+                if (state.mcr.BitIsSet(finalNbrs[0]->GetIdx()))
+                  for (std::size_t j = 0; j < allOrderedNbrsCopy.size(); ++j) {
+                    allOrderedNbrs.push_back(allOrderedNbrsCopy[j]);
+                    for (std::size_t i = 0; i < finalNbrs.size(); ++i)
+                      allOrderedNbrs.back().push_back(finalNbrs[i]);
+                  }
+              }
             }
 
           } // finalNbrs.size() != 1
