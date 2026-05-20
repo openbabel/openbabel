@@ -53,18 +53,18 @@ class TestReactionInChIWriter(BaseTest):
         for eqm in [False, True]:
             for rsmi, rinchi in data:
                 if eqm:
-                    output, error = run_exec('obabel -:%s -ismi -orinchi -xe' % rsmi)
+                    output, error = run_exec(None, ['obabel', '-:%s' % rsmi, '-ismi', '-orinchi', '-xe'])
                     ans = rinchi.replace("/d-", "/d=").replace("/d+", "/d=")
                     self.assertEqual(output.rstrip(), ans)
                 else:
-                    output, error = run_exec('obabel -:%s -ismi -orinchi' % rsmi)
+                    output, error = run_exec(None, ['obabel', '-:%s' % rsmi, '-ismi', '-orinchi'])
                     self.assertEqual(output.rstrip(), rinchi)
 
     def testRInChIOfficialExamples(self):
         """These test RXN to RInChI using the examples in the RInChI distrib"""
         for rxnfile in glob.glob(os.path.join(here, "rinchi", "*.rxn")):
             dirname, fname = os.path.split(rxnfile)
-            output, error = run_exec('obabel %s -orinchi' % rxnfile)
+            output, error = run_exec(None, ['obabel', '%s' % rxnfile, '-orinchi'])
             with open(os.path.join(dirname, fname.split(".")[0]+".txt")) as inp:
                 ans = inp.readlines()[0]
             self.assertEqual(output.rstrip(), ans.rstrip())

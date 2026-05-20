@@ -21,14 +21,14 @@ from testbabel import run_exec, BaseTest
 def checkmatch(query, molecules):
     result = []
     for smi in molecules:
-        output, error = run_exec("obabel -:%s -s%s -osmi" % (smi, query))
+        output, error = run_exec(None, ["obabel", "-:%s" % smi, "-s%s" % query, "-osmi"])
         result.append(output.strip() != "")
     return result
 
 def fastcheckmatch(query, molecules):
     """May fail where Open Babel does not output the input query, e.g.
     [C@@]([H])(Br)(Cl)I is output as [C@@H](Br)(Cl)I"""
-    output, error = run_exec("\n".join(molecules), "obabel -ismi -s%s -osmi" % query)
+    output, error = run_exec("\n".join(molecules), ["obabel", "-ismi", "-s%s" % query, "-osmi"])
     converted = [x.rstrip() for x in output.split("\n")]
     results = [smi in converted for smi in molecules]
     return results
@@ -52,7 +52,7 @@ class TestSmartsSym(BaseTest):
                 '[C@H]1(Cl)NC1'
             ]
         for smi in data:
-            output, error = run_exec("obabel -:%s -s%s -osmi" % (smi, smi))
+            output, error = run_exec(None, ["obabel", "-:%s" % smi, "-s%s" % smi, "-osmi"])
             self.assertEqual(output.rstrip(), smi)
 
     def testTetStereo(self):

@@ -51,7 +51,7 @@ class TestKekuleAssignment(BaseTest):
             'Cn1ccn2c1nc1c2c(=O)n(C)c(=O)n1C'
             ]
         for i in range(0, len(self.smiles)):
-            output, error = run_exec(self.smiles[i], "obabel -ismi -osmi")
+            output, error = run_exec(self.smiles[i], ["obabel", "-ismi", "-osmi"])
             self.assertEqual(output.rstrip(), self.smiles[i])
 
 class TestKekuleIsotope(BaseTest):
@@ -82,7 +82,7 @@ class TestKekuleIsotope(BaseTest):
             '[14cH]1[14cH][14cH][14cH][14cH][14cH]1',
             ]
         for i in range(0, len(self.smiles)):
-            output, error = run_exec(self.smiles[i], "obabel -ismi -ocan")
+            output, error = run_exec(self.smiles[i], ["obabel", "-ismi", "-ocan"])
             self.assertEqual(output.rstrip(), self.cansmis[i])
 
 class TestKekuleCrashers(BaseTest):
@@ -135,7 +135,7 @@ H         -0.11977       -0.69915        5.13149
 H         -0.93979        0.86887        4.93917
 H          0.78936        0.80651        5.29109
 """
-        output, error = run_exec(self.xyz, "obabel -ixyz -oxyz")
+        output, error = run_exec(self.xyz, ["obabel", "-ixyz", "-oxyz"])
         self.assertConverted(error, 1)
 
 if __name__ == "__main__":
