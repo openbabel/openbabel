@@ -955,7 +955,7 @@ namespace OpenBabel
 
   // If this atom should be considered an RGroup Alias this function
   // returns 0 or a positive integer, but -1 otherwise
-  static int GetNumberedRGroup(OBMol* pmol, OBAtom* atom)
+  static int GetNumberedRGroup(OBMol* /*pmol*/, OBAtom* atom)
   {
     if (atom->GetAtomicNum() == 0) { // Must be a pseudoatom
       if(atom->HasData(AliasDataType)) {
@@ -1419,7 +1419,7 @@ namespace OpenBabel
 
 
   //////////////////////////////////////////////////////
-  bool MDLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv,bool DoMany)
+  bool MDLFormat::ReadV3000Block(istream& ifs, OBMol& mol, OBConversion* pConv, bool /*DoMany*/)
   {
     bool ret = true;
     do
@@ -1493,7 +1493,7 @@ namespace OpenBabel
   }
 
   //////////////////////////////////////////////////////
-  bool MDLFormat::ReadAtomBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::ReadAtomBlock(istream& ifs, OBMol& mol, OBConversion* /*pConv*/)
   {
     OBAtom atom;
     bool chiralWatch=false;
@@ -1571,7 +1571,7 @@ namespace OpenBabel
   }
 
   //////////////////////////////////////////////////////
-  bool MDLFormat::ReadBondBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::ReadBondBlock(istream& ifs, OBMol& mol, OBConversion* /*pConv*/)
   {
     for(;;)
       {
@@ -1613,7 +1613,7 @@ namespace OpenBabel
   }
 
 ////////////////////////////////////////////////////////////
-  bool MDLFormat::ReadUnimplementedBlock(istream& ifs,OBMol& mol, OBConversion* pConv, string& blockname)
+  bool MDLFormat::ReadUnimplementedBlock(istream& ifs, OBMol& /*mol*/, OBConversion* /*pConv*/, string& blockname)
   {
     //Not currently implemented
     obErrorLog.ThrowError(__FUNCTION__,
@@ -1629,7 +1629,7 @@ namespace OpenBabel
   }
 
 ////////////////////////////////////////////////////////////
-  bool MDLFormat::ReadRGroupBlock(istream& ifs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::ReadRGroupBlock(istream& ifs, OBMol& /*mol*/, OBConversion* /*pConv*/)
   {
     //Not currently implemented
     obErrorLog.ThrowError(__FUNCTION__,
@@ -1646,7 +1646,7 @@ namespace OpenBabel
   }
 
   //////////////////////////////////////////////////////////
-  bool MDLFormat::WriteV3000(ostream& ofs,OBMol& mol, OBConversion* pConv)
+  bool MDLFormat::WriteV3000(ostream& ofs, OBMol& mol, OBConversion* /*pConv*/)
   {
     bool chiralFlag = GetChiralFlagFromGenericData(mol);
 

@@ -64,7 +64,7 @@ public:
 OpNeutralize theOpNeutralize("neutralize"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpNeutralize::Do(OBBase* pOb, const char* OptionText, OpMap* pOptions, OBConversion* pConv)
+bool OpNeutralize::Do(OBBase* pOb, const char* OptionText, OpMap* /*pOptions*/, OBConversion* /*pConv*/)
 {
   OBMol* pmol = dynamic_cast<OBMol*>(pOb);
   if(!pmol)

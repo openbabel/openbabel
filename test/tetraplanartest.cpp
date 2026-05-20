@@ -13,7 +13,7 @@ using namespace OpenBabel;
 //           4
 
 
-int tetraplanartest(int argc, char* argv[])
+int tetraplanartest(int /*argc*/, char* /*argv*/[])
 {
   OBCisTransStereo::Config cfg;
 

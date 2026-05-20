@@ -75,7 +75,7 @@ private:
 OpUnique theOpUnique("unique"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpUnique::Do(OBBase* pOb, const char* OptionText, OpMap* /*pmap*/, OBConversion* pConv)
 {
   if (!OptionText)
     OptionText = "";

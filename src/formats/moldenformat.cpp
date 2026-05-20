@@ -88,7 +88,7 @@ public:
     }
 
     /// Skip to object: used for multi-object file formats.
-    int SkipObjects(int n, OpenBabel::OBConversion* pConv) override { return 0; }
+    int SkipObjects(int /*n*/, OpenBabel::OBConversion* /*pConv*/) override { return 0; }
 
     /// Read.
     bool ReadMolecule(OpenBabel::OBBase* pOb, OpenBabel::OBConversion* pConv) override;

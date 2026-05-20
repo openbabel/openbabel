@@ -133,7 +133,7 @@ public:
 OpExtraOut theOpExtraOut("0xout"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpExtraOut::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpExtraOut::Do(OBBase* /*pOb*/, const char* OptionText, OpMap* /*pmap*/, OBConversion* pConv)
 {
   /*
     OptionText contains an output filename with a format extension.

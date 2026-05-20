@@ -312,7 +312,7 @@ namespace OpenBabel {
       /**
        * The depth-first isomorphism algorithm.
        */
-      void MapNext(State &state, OBQueryAtom *queryAtom, OBAtom *queriedAtom)
+      void MapNext(State &state, OBQueryAtom * /*queryAtom*/, OBAtom * /*queriedAtom*/)
       {
         if (time(nullptr) - m_startTime > m_timeout)
           return;

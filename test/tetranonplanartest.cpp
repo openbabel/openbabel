@@ -24,7 +24,7 @@ bool hasSameWinding(const OBStereo::Refs &refs1, const OBStereo::Refs &refs2)
 //           4
 
 
-int tetranonplanartest(int argc, char* argv[])
+int tetranonplanartest(int /*argc*/, char* /*argv*/[])
 {
   OBTetrahedralStereo::Config cfg;
 

@@ -48,7 +48,7 @@ public:
 OpPartialCharge theOpPartialCharge("partialcharge"); //Global instance
 
 /////////////////////////////////////////////////////////////////
-bool OpPartialCharge::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* pConv)
+bool OpPartialCharge::Do(OBBase* pOb, const char* OptionText, OpMap* pmap, OBConversion* /*pConv*/)
 {
   char *arg = nullptr;
   const char *tok1= nullptr;

@@ -2968,7 +2968,7 @@ namespace OpenBabel {
 
   const char* OBMol2Cansmi::GetTetrahedralStereo(OBCanSmiNode *node,
                                           vector<OBAtom*> &chiral_neighbors,
-                                          vector<unsigned int> &symmetry_classes)
+                                          vector<unsigned int> & /*symmetry_classes*/)
   {
     // If not enough chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)
@@ -3020,7 +3020,7 @@ namespace OpenBabel {
 
   const char* OBMol2Cansmi::GetSquarePlanarStereo(OBCanSmiNode *node,
                                            vector<OBAtom*> &chiral_neighbors,
-                                           vector<unsigned int> &symmetry_classes)
+                                           vector<unsigned int> & /*symmetry_classes*/)
   {
     // If no chiral neighbors were passed in, we're done
     if (chiral_neighbors.size() < 4)

@@ -400,7 +400,7 @@ namespace OpenBabel {
       return bondTypes;
     }
 
-    bool IsPropagationValid(OBMol *mol, const std::vector<Type> &atomTypes, const std::vector<Type> &bondTypes, int depth)
+    bool IsPropagationValid(OBMol *mol, const std::vector<Type> &atomTypes, const std::vector<Type> &bondTypes, int /*depth*/)
     {
       FOR_ATOMS_OF_MOL (atom, mol) {
         // Count atom's bond types
@@ -747,7 +747,7 @@ namespace OpenBabel {
     }
 #endif
 
-    static void DecrementImplicitHCount(OBAtom* atom, int indent)
+    static void DecrementImplicitHCount(OBAtom* atom, int /*indent*/)
     {
       atom->SetImplicitHCount(atom->GetImplicitHCount() - 1);
 #ifdef DEBUG

@@ -176,7 +176,7 @@ private:
 
 
 /* Create descriptor connectivity string from connectivity table of fragments */
-  string MCDLFormat::constring(int conntab [MAXBONDS][4], char * tstr)
+  string MCDLFormat::constring(int conntab [MAXBONDS][4], char * /*tstr*/)
 {
     int  i,j,k,n,nn,icons[MAXBONDS],comma;
     char line[82],semis[100];
@@ -487,7 +487,7 @@ private:
 
 
 
-  string MCDLFormat::getMCDL(OBMol* pmol, bool includeCoordinates) {
+  string MCDLFormat::getMCDL(OBMol* pmol, bool /*includeCoordinates*/) {
     int  i=0;
     int  j=0;
     int  k=0;
@@ -956,7 +956,7 @@ private:
     return data;
   };
 
-  void MCDLFormat::restoreFullMCDL(string value, OBMol* pmol) {
+  void MCDLFormat::restoreFullMCDL(string /*value*/, OBMol* /*pmol*/) {
 
   };
 

@@ -31,7 +31,7 @@ namespace OpenBabel
       //@{
       void NewCanvas(double width, double height);
       bool IsGood() const;
-      void SetFontFamily(const std::string &fontFamily) {} // FIXME
+      void SetFontFamily(const std::string &/*fontFamily*/) {} // FIXME
       void SetFontSize(int pointSize);
       void SetFillColor(const OBColor &color);
       void SetFillRadial(const OBColor &start, const OBColor &end);
