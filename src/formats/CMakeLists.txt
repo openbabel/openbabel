@@ -52,20 +52,22 @@ endif(MSVC)
 
 if(NOT MINIMAL_BUILD)
 if(MSVC)
-  set(xmlsources "")
-  foreach(format ${formats_xml})
-    set(xmlsources ${xmlsources} xml/${format}.cpp)
-  endforeach(format)
-  add_library(formats_xml ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
-  target_link_libraries(formats_xml ${libs} ${LIBXML2_LIBRARIES} openbabel)
-  install(TARGETS formats_xml
-                  RUNTIME DESTINATION ${BIN_INSTALL_DIR}
-                  LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
-                  ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
-  set_target_properties(formats_xml PROPERTIES
-                  OUTPUT_NAME formats_xml
-                  PREFIX ""
-                  SUFFIX ${MODULE_EXTENSION})
+  if(formats_xml)
+    set(xmlsources "")
+    foreach(format ${formats_xml})
+      set(xmlsources ${xmlsources} xml/${format}.cpp)
+    endforeach(format)
+    add_library(formats_xml ${PLUGIN_TYPE} ${xmlsources} xml/xml.cpp)
+    target_link_libraries(formats_xml ${libs} ${LIBXML2_LIBRARIES} openbabel)
+    install(TARGETS formats_xml
+                    RUNTIME DESTINATION ${BIN_INSTALL_DIR}
+                    LIBRARY DESTINATION ${OB_PLUGIN_INSTALL_DIR}
+                    ARCHIVE DESTINATION ${OB_PLUGIN_INSTALL_DIR})
+    set_target_properties(formats_xml PROPERTIES
+                    OUTPUT_NAME formats_xml
+                    PREFIX ""
+                    SUFFIX ${MODULE_EXTENSION})
+  endif()
 
   if(WITH_JSON)
     set(jsonsources "")

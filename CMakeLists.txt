@@ -390,7 +390,25 @@ endif()
 
 # Some rpath handling for Linux and Mac
 if(UNIX AND BUILD_SHARED)
-  if(APPLE)
+  if(BUILD_BY_PIP)
+    # Wheels are installed under a relocatable package directory
+    # (openbabel/).  Avoid embedding the temporary scikit-build install
+    # prefix, otherwise auditwheel/delocate cannot find libraries after the
+    # wheel is unpacked for repair.  The different depths cover the Python
+    # extension (openbabel/), command-line tools (openbabel/bin), libraries
+    # (openbabel/lib), and plugins (openbabel/lib/openbabel/<version>).
+    if(APPLE)
+      set(CMAKE_INSTALL_NAME_DIR "@rpath")
+      set(CMAKE_INSTALL_RPATH
+        "@loader_path;@loader_path/lib;@loader_path/../lib;@loader_path/..;@loader_path/../..")
+    else()
+      set(CMAKE_INSTALL_RPATH
+        "$ORIGIN;$ORIGIN/lib;$ORIGIN/../lib;$ORIGIN/..;$ORIGIN/../..")
+    endif()
+    set(CMAKE_SKIP_BUILD_RPATH FALSE)
+    set(CMAKE_BUILD_WITH_INSTALL_RPATH FALSE)
+    set(CMAKE_INSTALL_RPATH_USE_LINK_PATH FALSE)
+  elseif(APPLE)
     set(CMAKE_INSTALL_NAME_DIR ${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR})
   else()
     set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${LIB_INSTALL_DIR}")
@@ -414,6 +432,22 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 file(GLOB_RECURSE headers include/openbabel/*.h)
+
+if(BUILD_BY_PIP)
+  find_package(Python COMPONENTS Interpreter)
+  if(Python_Interpreter_FOUND)
+    execute_process(
+      COMMAND ${Python_EXECUTABLE} -m cmeel cmake
+      OUTPUT_VARIABLE CMEEL_PREFIX_PATH
+      RESULT_VARIABLE CMEEL_RESULT
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+    if(CMEEL_RESULT EQUAL 0 AND NOT "${CMEEL_PREFIX_PATH}" STREQUAL "")
+      list(PREPEND CMAKE_PREFIX_PATH "${CMEEL_PREFIX_PATH}")
+    endif()
+  endif()
+endif()
 
 # Detect Eigen3 before configure_file so HAVE_EIGEN3 lands in babelconfig.h
 find_package(Eigen3 CONFIG)
@@ -606,7 +640,12 @@ if(WITH_JSON)
   endif()
 endif()
 
-find_package(Cairo)
+if(NOT BUILD_BY_PIP OR BUILD_WHEEL_CAIRO)
+  find_package(Cairo)
+else()
+  set(CAIRO_FOUND FALSE)
+  message(STATUS "Skipping Cairo for wheel builds. Set BUILD_WHEEL_CAIRO=ON to enable PNG output support.")
+endif()
 if(CAIRO_FOUND)
   message(STATUS "Cairo found. PNG output will be supported.")
 else(CAIRO_FOUND)
@@ -684,6 +723,12 @@ option(PHP_BINDINGS "Build PHP bindings" OFF)
 
 # Should Python bindings be built?
 option(PYTHON_BINDINGS "Build Python bindings" OFF)
+
+# Install Python bindings into the scikit-build wheel package directory when
+# building through pip/cibuildwheel. Normal CMake installs keep using the
+# interpreter platlib path.
+option(BUILD_BY_PIP "Install Python bindings relative to CMAKE_INSTALL_PREFIX for wheel builds" OFF)
+option(BUILD_WHEEL_CAIRO "Enable Cairo-backed PNG depiction support in wheel builds" OFF)
 
 # Should Ruby bindings be built?
 option(RUBY_BINDINGS "Build Ruby bindings" OFF)

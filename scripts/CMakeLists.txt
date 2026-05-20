@@ -32,19 +32,34 @@ endif()
 
 if (PYTHON_BINDINGS)
   if (EXISTS ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp OR RUN_SWIG)
-    find_package(Python COMPONENTS Interpreter Development)
+    if (BUILD_BY_PIP)
+      find_package(Python COMPONENTS Interpreter Development.Module)
+    else()
+      find_package(Python COMPONENTS Interpreter Development)
+    endif()
     if (NOT Python_Interpreter_FOUND)
       message(STATUS "Python interpreter NOT found")
     endif (NOT Python_Interpreter_FOUND)
 
-    if (NOT Python_Development_FOUND)
-      message(STATUS "Python libraries NOT found")
-    endif (NOT Python_Development_FOUND)
+    if (BUILD_BY_PIP)
+      if (NOT Python_Development.Module_FOUND)
+        message(STATUS "Python development module support NOT found")
+      endif (NOT Python_Development.Module_FOUND)
 
-    if(Python_Development_FOUND AND Python_Interpreter_FOUND)
-      set(DO_PYTHON_BINDINGS ON BOOL)
-      message(STATUS "Python bindings will be compiled")
-    endif(Python_Development_FOUND AND Python_Interpreter_FOUND)
+      if(Python_Development.Module_FOUND AND Python_Interpreter_FOUND)
+        set(DO_PYTHON_BINDINGS ON BOOL)
+        message(STATUS "Python bindings will be compiled")
+      endif(Python_Development.Module_FOUND AND Python_Interpreter_FOUND)
+    else()
+      if (NOT Python_Development_FOUND)
+        message(STATUS "Python libraries NOT found")
+      endif (NOT Python_Development_FOUND)
+
+      if(Python_Development_FOUND AND Python_Interpreter_FOUND)
+        set(DO_PYTHON_BINDINGS ON BOOL)
+        message(STATUS "Python bindings will be compiled")
+      endif(Python_Development_FOUND AND Python_Interpreter_FOUND)
+    endif()
 
   else ()
     message(STATUS "Warning: Python bindings NOT found. Generate using -DRUN_SWIG=ON.")
@@ -53,7 +68,11 @@ if (PYTHON_BINDINGS)
 endif (PYTHON_BINDINGS)
 
 if (DO_PYTHON_BINDINGS)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+    if(MSVC)
+      add_compile_options(/wd4996)
+    else()
+      set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-deprecated-declarations")
+    endif()
     include_directories(
         ${Python_INCLUDE_DIRS}
     )
@@ -78,8 +97,20 @@ if (DO_PYTHON_BINDINGS)
       else()
         target_link_libraries(bindings_python ${BABEL_LIBRARY})
       endif()
+    elseif(BUILD_BY_PIP AND NOT WIN32)
+      # Python extension modules for Unix-like wheels should resolve Python
+      # symbols from the running interpreter.  Linking libpython can leave a
+      # non-portable NEEDED entry for the build interpreter's libpython.
+      # Open Babel enables --no-undefined globally on Linux, so explicitly
+      # allow unresolved Python API symbols for this extension module.
+      set(PYTHON_EXTENSION_EXTRA_LINK_FLAGS "-Wl,--unresolved-symbols=ignore-all")
+      if(BINDINGS_ONLY)
+        target_link_libraries(bindings_python ${BABEL_SYSTEM_LIBRARY} ${PYTHON_EXTENSION_EXTRA_LINK_FLAGS})
+      else()
+        target_link_libraries(bindings_python ${BABEL_LIBRARY} ${PYTHON_EXTENSION_EXTRA_LINK_FLAGS})
+      endif()
     else()
-      # Link against Python library on Linux and Windows
+      # Link against Python library on non-wheel Linux and Windows
       if(BINDINGS_ONLY)
         target_link_libraries(bindings_python ${Python_LIBRARIES} ${BABEL_SYSTEM_LIBRARY})
       else()
@@ -93,58 +124,72 @@ if (DO_PYTHON_BINDINGS)
             PREFIX ""
             LIBRARY_OUTPUT_DIRECTORY "${openbabel_SOURCE_DIR}/scripts/python/openbabel/"
             SUFFIX .so )
-	if( "${PYTHON_INSTDIR}" STREQUAL "" )
-          execute_process(
-            COMMAND
-           ${Python_EXECUTABLE} -c "import sysconfig
-print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}', 'platbase': '${CMAKE_INSTALL_PREFIX}'}))"
-            OUTPUT_VARIABLE PYTHON_INSTDIR
-            OUTPUT_STRIP_TRAILING_WHITESPACE
-          )
+        if(BUILD_BY_PIP)
+          set(PYOBABEL_INSTDIR ".")
+        else()
+	  if( "${PYTHON_INSTDIR}" STREQUAL "" )
+            execute_process(
+              COMMAND
+             ${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+              OUTPUT_VARIABLE PYTHON_INSTDIR
+              OUTPUT_STRIP_TRAILING_WHITESPACE
+            )
+          endif()
+          set(PYOBABEL_INSTDIR ${PYTHON_INSTDIR}/openbabel)
         endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
+                LIBRARY DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
-                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                DESTINATION ${PYOBABEL_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/executable.py
+                DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
     else(NOT WIN32)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
             SUFFIX .pyd )
-        execute_process(
-          COMMAND
-	  ${Python_EXECUTABLE} -c "import sysconfig
-print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}', 'platbase': '${CMAKE_INSTALL_PREFIX}'}))"
-          OUTPUT_VARIABLE PYTHON_INSTDIR
-          OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
+        if(BUILD_BY_PIP)
+          set(PYOBABEL_INSTDIR ".")
+        else()
+          execute_process(
+            COMMAND
+	    ${Python_EXECUTABLE} -c "import sysconfig; print(sysconfig.get_path('platlib', vars={'base': '${CMAKE_INSTALL_PREFIX}'}))"
+            OUTPUT_VARIABLE PYTHON_INSTDIR
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+          )
+          set(PYOBABEL_INSTDIR ${PYTHON_INSTDIR}/openbabel)
+        endif()
         if(NOT BINDINGS_ONLY)
             add_dependencies(bindings_python openbabel)
         endif()
 
         install(TARGETS bindings_python
-                LIBRARY DESTINATION ${PYTHON_INSTDIR}/openbabel
+                LIBRARY DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
-                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
-                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
-                DESTINATION ${PYTHON_INSTDIR}/openbabel
+                DESTINATION ${PYOBABEL_INSTDIR}
+                COMPONENT bindings_python)
+        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/executable.py
+                DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
           COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
