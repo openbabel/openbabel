@@ -305,3 +305,83 @@ namespace std { class stringbuf {}; }
 %include <openbabel/obfunctions.h>
 
 %include "stereo.i"
+
+%{
+#include <openbabel/tautomer.h>
+using namespace OpenBabel;
+
+struct RubyCallbackArgs {
+    VALUE callback;
+    VALUE argument;
+};
+
+static VALUE call_ruby_callback(VALUE data) {
+    RubyCallbackArgs *args = reinterpret_cast<RubyCallbackArgs *>(data);
+    return rb_funcall(args->callback, rb_intern("call"), 1, args->argument);
+}
+
+static OBMol *unwrap_obmol(VALUE self) {
+    void *argp = 0;
+    int res = SWIG_ConvertPtr(self, &argp, SWIGTYPE_p_OpenBabel__OBMol, 0);
+    if (!SWIG_IsOK(res) || !argp) {
+        rb_raise(rb_eTypeError, "expected OpenBabel::OBMol");
+    }
+    return reinterpret_cast<OBMol *>(argp);
+}
+
+// A functor class that wraps the Ruby block as the callback
+class RubyTautomerFunctor : public UniqueTautomerFunctor {
+private:
+    VALUE ruby_callback;
+    int exception_state;
+
+public:
+    // Constructor that takes the Ruby callback block (Proc or lambda)
+    RubyTautomerFunctor(VALUE callback) : ruby_callback(callback), exception_state(0) {}
+
+    // Override the operator() to call the Ruby block
+    void operator()(OBMol *mol, const std::string &) override {
+        if (exception_state) {
+            return;
+        }
+
+        RubyCallbackArgs args = {
+            ruby_callback,
+            SWIG_NewPointerObj(new OBMol(*mol), SWIGTYPE_p_OpenBabel__OBMol, SWIG_POINTER_OWN)
+        };
+        rb_protect(call_ruby_callback, reinterpret_cast<VALUE>(&args), &exception_state);
+    }
+
+    int state() const {
+        return exception_state;
+    }
+};
+
+// The method to be defined on OpenBabel::OBMol in Ruby
+static VALUE enumerate_tautomers(VALUE self) {
+    // Return enumerator if no block provided
+    if (!rb_block_given_p()) {
+        return rb_enumeratorize(self, ID2SYM(rb_intern("tautomers")), 0, NULL);
+    }
+
+    RubyTautomerFunctor functor(rb_block_proc());
+    EnumerateTautomers(unwrap_obmol(self), functor);
+
+    if (functor.state()) {
+        rb_jump_tag(functor.state());
+    }
+
+    return Qnil;
+}
+
+static VALUE canonical_tautomer(VALUE self) {
+    OBMol *mol = new OBMol(*unwrap_obmol(self));
+    CanonicalTautomer(mol);
+    return SWIG_NewPointerObj(mol, SWIGTYPE_p_OpenBabel__OBMol, SWIG_POINTER_OWN);
+}
+%}
+
+%init %{
+    rb_define_method(SwigClassOBMol.klass, "tautomers", VALUEFUNC(enumerate_tautomers), 0);
+    rb_define_method(SwigClassOBMol.klass, "canonical_tautomer", VALUEFUNC(canonical_tautomer), 0);
+%}
