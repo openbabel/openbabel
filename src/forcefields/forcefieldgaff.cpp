@@ -29,6 +29,7 @@ GNU General Public License for more details.
 #include "forcefieldgaff.h"
 
 #include <cstdlib>
+#include <memory>
 
 using namespace std;
 
@@ -1216,10 +1217,8 @@ namespace OpenBabel
   bool OBForceFieldGaff::SetTypes()
   {
     vector<vector<int> > _mlist; //!< match list for atom typing
-    vector<pair<OBSmartsPattern*,string> > _vexttyp; //!< external atom type rules
+    vector<pair<std::unique_ptr<OBSmartsPattern>, string>> _vexttyp; //!< external atom type rules
     vector<vector<int> >::iterator j;
-    vector<pair<OBSmartsPattern*,string> >::iterator i;
-    OBSmartsPattern *sp;
     vector<string> vs;
     char buffer[150];
     OBAtom *atm, *a, *b;
@@ -1243,19 +1242,17 @@ namespace OpenBabel
       if (EQn(buffer, "atom", 4)) {
       	tokenize(vs, buffer);
 
-        sp = new OBSmartsPattern;
+        auto sp = std::unique_ptr<OBSmartsPattern>(new OBSmartsPattern);
         if (sp->Init(vs[1]))
-	    _vexttyp.push_back(pair<OBSmartsPattern*,string> (sp,vs[2]));
+	    _vexttyp.emplace_back(std::move(sp), vs[2]);
         else {
-          delete sp;
-          sp = nullptr;
           obErrorLog.ThrowError(__FUNCTION__, " Could not parse atom type table from gaff.prm", obInfo);
           return false;
         }
       }
     }
 
-    for (i = _vexttyp.begin();i != _vexttyp.end();++i) {
+    for (auto i = _vexttyp.begin(); i != _vexttyp.end(); ++i) {
       if (i->first->Match(_mol)) {
         _mlist = i->first->GetMapList();
         for (j = _mlist.begin();j != _mlist.end();++j) {
