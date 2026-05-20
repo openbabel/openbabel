@@ -280,7 +280,7 @@ namespace OpenBabel
         << atom->GetPartialCharge() << '\n';
     }
 
-    OBSetData *gmsset = (OBSetData *)pmol->GetData("gamess");
+    OBSetData *gmsset = dynamic_cast<OBSetData *>(pmol->GetData("gamess"));
     if(gmsset)
     {
       ofs << "!GAMESS" << endl;
@@ -288,13 +288,13 @@ namespace OpenBabel
 
       for(i = gmsset->GetBegin(); i != gmsset->GetEnd(); ++i)
       {
-        OBSetData *cset = (OBSetData *)(*i);
+        OBSetData *cset = dynamic_cast<OBSetData *>(*i);
         if(cset)
         {
           string section = cset->GetAttribute();
           for(j = cset->GetBegin(); j != cset->GetEnd(); ++j)
           {
-            OBPairData *pd = (OBPairData *) (*j);
+            OBPairData *pd = dynamic_cast<OBPairData *>(*j);
             if(pd)
             {
               ofs << section << " " << pd->GetAttribute() << " " << pd->GetValue() << endl;

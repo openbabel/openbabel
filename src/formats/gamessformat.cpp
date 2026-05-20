@@ -1016,18 +1016,18 @@ namespace OpenBabel {
       defaultKeywords = keywords;
 
     if (keywordsEnable) {
-      OBSetData* gmsset = (OBSetData*) pmol->GetData("gamess");
+      OBSetData* gmsset = dynamic_cast<OBSetData*>(pmol->GetData("gamess"));
 
       if (gmsset) {
         for (i=gmsset->GetBegin(); i != gmsset->GetEnd(); ++i) {
-          OBSetData* cset = (OBSetData*) (*i);
+          OBSetData* cset = dynamic_cast<OBSetData*>(*i);
 
           if (cset) {
             wrapped = false;
             a = 2 + cset->GetAttribute().length();
             ofs << " $" << cset->GetAttribute();
             for (j=cset->GetBegin(); j != cset->GetEnd(); ++j) {
-              OBPairData* pd = (OBPairData*) (*j);
+              OBPairData* pd = dynamic_cast<OBPairData*>(*j);
 
               if (pd) {
                 if (a + 2 + pd->GetAttribute().length() + pd->GetValue().length() > 72) {
