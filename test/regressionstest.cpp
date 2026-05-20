@@ -667,6 +667,26 @@ void test_github_issue_2677()
   OB_COMPARE(res_after->GetIdx(), res_before->GetIdx());
 }
 
+// Hypervalent SMILES with many equivalent neighbors on one ring atom
+// previously hung canonical SMILES output via n! permutation expansion
+// (capped in CanonicalLabelsRecursive).
+void test_hypervalent_canonical_smiles()
+{
+  const char *smiles[] = {
+    "FC(C(C(C(C([C](=O)(F)F)(F)F)(F)F)(F)F)(F)F)(F)F",
+    "F[O]1(F)(F)(F)(F)(F)(F)(F)(F)(F)(F)(F)OOOOO1",
+    "F[O]1(F)(F)(F)(F)(F)(F)(F)(F)(F)(F)(F)(F)OOOOO1",
+  };
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("smi", "can"));
+  for (const char *smi : smiles) {
+    OBMol mol;
+    OB_REQUIRE(conv.ReadString(&mol, smi));
+    std::string can = conv.WriteString(&mol, true);
+    OB_ASSERT(!can.empty());
+  }
+}
+
 void test_SegCopySubstructure()
 {
   // Invalid memory access (atom->GetIdx()) detected in valgrind and sometimes
@@ -777,6 +797,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2677:
     test_github_issue_2677();
+    break;
+  case 2678:
+    test_hypervalent_canonical_smiles();
     break;
   // case N:
   //   YOUR_TEST_HERE();

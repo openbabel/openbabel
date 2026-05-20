@@ -117,6 +117,9 @@ int gen3dtest(int argc, char* argv[])
                             "3", false) );
     //OB_ASSERT( doGen3DTest("C1=CC(=N)C=CC1=C(C2=CC=C(C=C2)N)C3=CC=C(C=C3)N.Cl",
     //                        "3", false) );
+    // Regression for issue #342: isotope-hydrogen fragment plus a bare
+    // metal atom previously crashed gen3D.
+    OB_ASSERT( doGen3DTest("[2HH].[Li]", "3", false) );
     break;
 
   case 3:
