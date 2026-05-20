@@ -22,6 +22,7 @@ GNU General Public License for more details.
 #include <openbabel/obmolecformat.h>
 
 #include "../inchi/inchi_api.h"
+#include "../inchi/bcf_s.h"  // for CURRENT_VER
 #ifdef HAVE_SSTREAM
 #include <sstream>
 #else
@@ -56,7 +57,7 @@ public:
   {
     return
     "InChI format\n"
-    "IUPAC/NIST molecular identifier\n\n"
+    "IUPAC/NIST molecular identifier (v " CURRENT_VER ")\n\n"
 
     "Write Options, e.g. -xa\n"
     "    Standard InChI is written unless certain InChI options are used\n \n"
