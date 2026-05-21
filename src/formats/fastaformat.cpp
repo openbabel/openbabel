@@ -454,6 +454,12 @@ namespace OpenBabel
 
     */
     std::string line, sequence;
+    bool sawHeader = false;
+    // Real FASTA files always begin with a ">" description line. We tolerate
+    // a short headerless sequence (pasted by hand, etc.) but bail past this
+    // cap so that fuzzed/garbage input cannot drive us into building a huge
+    // pseudo-polymer that then explodes gen2D / depiction.
+    const std::string::size_type kHeaderlessSequenceCap = 64;
 
     FASTAFormat::SequenceType sequence_type = (FASTAFormat::SequenceType)seq_type, sequence_na = FASTAFormat::UnknownSequence;
     while (!in->eof())
@@ -461,6 +467,7 @@ namespace OpenBabel
         getline( * in, line);
         if (line[0] == '>')
           { // comment data
+            sawHeader = true;
             if (pmol->GetTitle()[0] == 0)
               {
                 pmol->SetTitle( & (line.c_str()[1]) );
@@ -500,6 +507,13 @@ namespace OpenBabel
                           sequence_na = FASTAFormat::RNASequence;
                         else if (current == 'T')
                           sequence_na = FASTAFormat::DNASequence;
+                      }
+                    if (!sawHeader && sequence.size() > kHeaderlessSequenceCap)
+                      {
+                        obErrorLog.ThrowError(__FUNCTION__,
+                          "Refusing to parse: FASTA input has no '>' header line.",
+                          obError);
+                        return false;
                       }
                   }
               }
