@@ -249,6 +249,12 @@ namespace OpenBabel {
   void OBGridData::SetValues( const std::vector< double >& v )
   {
     d->floatGrid.SetVals(v);
+    if (v.empty())
+    {
+      d->_min = 0.0;
+      d->_max = 0.0;
+      return;
+    }
     d->_min = *std::min_element( v.begin(), v.end() );
     d->_max = *std::max_element( v.begin(), v.end() );
   }
