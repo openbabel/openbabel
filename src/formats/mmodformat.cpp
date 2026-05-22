@@ -84,7 +84,7 @@ namespace OpenBabel
 
     // Get Title
     char buffer[BUFF_SIZE];
-    int natoms;
+    int natoms = 0;
     vector<vector<pair<int,int> > > connections;
 
     if (ifs.getline(buffer,BUFF_SIZE))
@@ -95,7 +95,7 @@ namespace OpenBabel
         if ( !vs.empty() && vs.size() > 0)
           sscanf(buffer,"%i%*s",&natoms);
 
-        if (natoms == 0)
+        if (natoms <= 0 || natoms >= 100000000)
           return false;
 
         if ( !vs.empty() && vs.size() > 1)
