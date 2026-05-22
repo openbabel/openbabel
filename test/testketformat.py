@@ -246,7 +246,8 @@ class TestKetFormat(PybelWrapper):
                 },
             }
         )
-        atom = _readketstring(text).atoms[0].OBAtom
+        mol = _readketstring(text)
+        atom = mol.atoms[0].OBAtom
         data = atom.GetData(pybel.ob.AliasDataType)
         self.assertTrue(data)
         self.assertEqual(pybel.ob.toAliasData(data).GetAlias(), "COOH")
