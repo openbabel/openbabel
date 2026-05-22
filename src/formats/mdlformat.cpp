@@ -1443,6 +1443,9 @@ namespace OpenBabel
             mol.ReserveAtoms(natoms);
 
             ReadV3000Block(ifs,mol,pConv,true);//go for contained blocks
+            // The recursive call shares the member `vs` and may leave it
+            // with fewer than 4 tokens; bounds-check before comparing.
+            if(vs.size() < 4) return false;
             if(vs[2]!="END" && vs[3]!="CTAB") return false;
             ret= true;
           }
