@@ -19,6 +19,8 @@ import unittest
 
 from testbindings import pybel, PybelWrapper
 
+import faulthandler
+faulthandler.enable()
 
 filedir = os.path.join(os.path.dirname(__file__), "files", "ket")
 
