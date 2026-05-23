@@ -758,21 +758,28 @@ namespace OpenBabel
 
   void OBAromaticTyperMolState::PropagatePotentialAromatic(OBAtom *atom)
   {
-    int count = 0;
+    // Iterative peel: when count == 1 the recurse path collapses to a
+    // single neighbor, so a long chain produced unbounded recursion and
+    // could blow the stack on pathological fuzz inputs.
     OBAtom *nbr;
     vector<OBBond*>::iterator i;
 
-    for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-      if ((*i)->IsInRing() && _vpa[nbr->GetIdx()])
-        count++;
-
-    if (count < 2)
+    while (atom)
       {
+        int count = 0;
+        OBAtom *nextAtom = nullptr;
+        for (nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i))
+          if ((*i)->IsInRing() && _vpa[nbr->GetIdx()])
+            {
+              count++;
+              nextAtom = nbr;
+            }
+
+        if (count >= 2)
+          return;
+
         _vpa[atom->GetIdx()] = false;
-        if (count == 1)
-          for (nbr = atom->BeginNbrAtom(i);nbr;nbr = atom->NextNbrAtom(i))
-            if ((*i)->IsInRing() && _vpa[nbr->GetIdx()])
-              PropagatePotentialAromatic(nbr);
+        atom = (count == 1) ? nextAtom : nullptr;
       }
   }
 

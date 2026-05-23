@@ -1386,7 +1386,7 @@ namespace OpenBabel
   }
 
   Pattern *OBSmartsPattern::SMARTSParser( Pattern *pat, ParseState *stat,
-                                int prev, int part )
+                                int prev, int part, int depth )
   {
     int vb = 0;
     AtomExpr *aexpr;
@@ -1395,6 +1395,12 @@ namespace OpenBabel
 
     aexpr = nullptr;
     bexpr = nullptr;
+
+    // Branch nesting recurses through this function. Cap depth to avoid
+    // stack overflow on pathological inputs like "((((((..." with deeply
+    // nested parens. Legitimate SMARTS patterns nest only a few levels.
+    if (depth > 1000)
+      return ParseSMARTSError(pat, bexpr);
 
     while( *LexPtr )
       {
@@ -1422,7 +1428,7 @@ namespace OpenBabel
             if( prev == -1 )
               {
                 index = pat->acount;
-                pat = SMARTSParser(pat,stat,-1,part);
+                pat = SMARTSParser(pat,stat,-1,part,depth+1);
                 if( !pat )
                   return nullptr;
                 if( index == pat->acount )
@@ -1431,7 +1437,7 @@ namespace OpenBabel
               }
             else
               {
-                pat = SMARTSParser(pat,stat,prev,part);
+                pat = SMARTSParser(pat,stat,prev,part,depth+1);
                 if( !pat )
                   return nullptr;
               }

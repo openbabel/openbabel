@@ -188,9 +188,11 @@ namespace OpenBabel
     //Only multiline titles use the following to replace newlines by spaces
     static string title;
     title=_title;
-    string::size_type j;
-    for ( ; (j = title.find_first_of( "\n\r" )) != string::npos ; ) {
-      title.replace( j, 1, " ");
+    // Single pass; previous implementation was O(n^2) on titles with many
+    // newlines because find_first_of always restarted from position 0.
+    for (char& c : title) {
+      if (c == '\n' || c == '\r')
+        c = ' ';
     }
 
     return(title.c_str());

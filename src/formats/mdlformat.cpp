@@ -1953,7 +1953,10 @@ namespace OpenBabel
         dp->SetOrigin(fileformatInput);
         mol.SetData(dp);
 
-        if(!strcasecmp(attr.c_str(),"NAME") && *mol.GetTitle()=='\0')
+        // Pass false to skip the newline-replacement pass; we only need
+        // to know whether the title is empty. Avoids quadratic work in
+        // GetTitle when the title already contains newlines.
+        if(!strcasecmp(attr.c_str(),"NAME") && *mol.GetTitle(false)=='\0')
           mol.SetTitle(buff);
       }
       if (line.substr(0, 4) ==  "$$$$")

@@ -698,6 +698,9 @@ namespace OpenBabel {
                     --Index;
                     //ReadyToInput=false;
                     pOb1 = nullptr;
+                    // The newly-read object never gets stored on this
+                    // abort path; delete it so it does not leak.
+                    delete pOb;
                     return 0;
                   }
                 //Stop after writing with single object output files
@@ -722,6 +725,8 @@ namespace OpenBabel {
 
                     ReadyToInput = false;
                     pOb1 = nullptr;
+                    // Surplus newly-read object; never stored, must free.
+                    delete pOb;
                     return Count; // >0
                   }
               }
