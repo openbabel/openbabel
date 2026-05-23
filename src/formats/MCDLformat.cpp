@@ -568,7 +568,9 @@ private:
 //    return "started"; //passed
   naStore=pmol->NumAtoms();
   nbStore=pmol->NumBonds();
-  if (naStore > MAXFRAGS || nbStore > MAXBONDS)
+  // ia[] and z[] store both directions of every unique bond, so they need
+  // up to 2*nbStore entries; cap nbStore at MAXBONDS/2 to avoid overflow.
+  if (naStore > MAXFRAGS || nbStore > MAXBONDS / 2)
     return "";
 
   for (i=1; i<=naStore; i++) {
