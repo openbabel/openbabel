@@ -177,7 +177,7 @@ namespace OpenBabel
     Pattern *ParseSMARTSRecord( char *ptr );
     int GetVectorBinding();
     Pattern *SMARTSParser( Pattern *pat, ParseState *stat,
-                           int prev, int part );
+                           int prev, int part, int depth = 0 );
 
   public:
   OBSmartsPattern() : _pat(nullptr), _buffer(nullptr), LexPtr(nullptr), MainPtr(nullptr) { }
