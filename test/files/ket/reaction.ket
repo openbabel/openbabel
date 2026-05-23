@@ -1,0 +1,60 @@
+{
+    "root": {
+        "nodes": [
+            { "$ref": "mol0" },
+            { "$ref": "mol1" },
+            { "$ref": "mol2" },
+            {
+                "type": "arrow",
+                "data": {
+                    "mode": "open-angle",
+                    "pos": [
+                        { "x": 2.0, "y": 0.0, "z": 0 },
+                        { "x": 5.0, "y": 0.0, "z": 0 }
+                    ]
+                }
+            },
+            {
+                "type": "plus",
+                "location": [-2.0, 0.0, 0],
+                "prop": {}
+            }
+        ],
+        "connections": [],
+        "templates": []
+    },
+    "mol0": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "C", "location": [-5.0, 0.0, 0.0] },
+            { "label": "C", "location": [-4.0, 0.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 2, "atoms": [0, 1] }
+        ]
+    },
+    "mol1": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "Br", "location": [0.0, 0.0, 0.0] },
+            { "label": "Br", "location": [1.0, 0.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] }
+        ]
+    },
+    "mol2": {
+        "type": "molecule",
+        "atoms": [
+            { "label": "C", "location": [6.0, 0.0, 0.0] },
+            { "label": "C", "location": [7.0, 0.0, 0.0] },
+            { "label": "Br", "location": [5.5, 1.0, 0.0] },
+            { "label": "Br", "location": [7.5, 1.0, 0.0] }
+        ],
+        "bonds": [
+            { "type": 1, "atoms": [0, 1] },
+            { "type": 1, "atoms": [0, 2] },
+            { "type": 1, "atoms": [1, 3] }
+        ]
+    }
+}

@@ -25,7 +25,7 @@ endif()
 set(cpptests
   alias automorphism builder canonconsistent canonfragment canonstable carspacegroup cifspacegroup
   cistrans conversion fuzzregress graphsym gzip addh
-  implicitH lssr isomorphism multicml periodic regressions rotor shuffle smiles spectrophore
+  implicitH ketformat lssr isomorphism multicml periodic regressions rotor shuffle smiles spectrophore
   squareplanar stereo stereoperception tautomer tetrahedral
   tetranonplanar tetraplanar uniqueid
 )
@@ -44,6 +44,7 @@ set(graphsym_parts 1 2 3 4 5)
 set(gzip_parts 1)
 set(addh_parts 1)
 set(implicitH_parts 1)
+set(ketformat_parts 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18)
 set(lssr_parts 1 2 3 4 5)
 set(isomorphism_parts 1 2 3 4 5 6 7 8 9)
 set(multicml_parts 1)
@@ -289,6 +290,7 @@ if(PYTHON_BINDINGS)
     example
     obconv_writers
     cdjsonformat
+    ketformat
     pcjsonformat
     roundtrip
   )

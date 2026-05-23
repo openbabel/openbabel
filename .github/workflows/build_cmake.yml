@@ -21,7 +21,7 @@ jobs:
             name: "Ubuntu Latest GCC SWIG",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++",
-            cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON"
+            cmake_flags: "-DPYTHON_BINDINGS=ON -DRUN_SWIG=ON -DCMAKE_BUILD_TYPE=RelWithDebInfo"
           }
         - {
             name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
