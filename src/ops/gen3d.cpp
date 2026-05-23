@@ -173,7 +173,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* /*pOptions*/, OBCon
     pFF->LBFGS(iterations, 1.0e-4);
 
     if (speed == 4) {
-      pFF->UpdateCoordinates(molCopy);
+      pFF->GetCoordinates(molCopy);
       return true; // no conformer searching
     }
 
@@ -191,7 +191,7 @@ bool OpGen3D::Do(OBBase* pOb, const char* OptionText, OpMap* /*pOptions*/, OBCon
 
     // Final cleanup and copy the new coordinates back
     pFF->LBFGS(iterations, 1.0e-6);
-    pFF->UpdateCoordinates(molCopy);
+    pFF->GetCoordinates(molCopy);
 
     // Check stereochemistry
     success = stereoHelper.Check(&molCopy);

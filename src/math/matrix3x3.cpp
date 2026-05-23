@@ -270,9 +270,9 @@ namespace OpenBabel
   {
     vector3 vv;
 
-    vv.SetX(x()*m.Get(0,0) + y()*m.Get(0,1) + z()*m.Get(0,2));
-    vv.SetY(x()*m.Get(1,0) + y()*m.Get(1,1) + z()*m.Get(1,2));
-    vv.SetZ(x()*m.Get(2,0) + y()*m.Get(2,1) + z()*m.Get(2,2));
+    vv.SetX(x()*m(0,0) + y()*m(0,1) + z()*m(0,2));
+    vv.SetY(x()*m(1,0) + y()*m(1,1) + z()*m(1,2));
+    vv.SetZ(x()*m(2,0) + y()*m(2,1) + z()*m(2,2));
     x() = vv.x();
     y() = vv.y();
     z() = vv.z();

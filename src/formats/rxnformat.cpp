@@ -259,7 +259,7 @@ static void WriteMolFile(OBMol* pmol, OBConversion* pconv, OBFormat* pformat)
   ofs << "$MOL" << '\n';
   // Treat a dummy atom with "rxndummy" as the empty file
   if (pmol->NumAtoms() == 1) {
-    OBAtom *atm = pmol->GetFirstAtom();
+    OBAtom *atm = pmol->GetAtom(1);
     if (atm->GetAtomicNum() == 0 && atm->HasData("rxndummy"))
       pmol->DeleteAtom(atm);
   }

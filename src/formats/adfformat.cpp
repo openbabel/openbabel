@@ -792,7 +792,11 @@ OBGridData *OBT41Format::NewData(const T41GridData &gd)
 {
         OBGridData *t41Data = new OBGridData;
   t41Data->SetNumberOfPoints( gd.numPoints[ 0 ], gd.numPoints[ 1 ], gd.numPoints[ 2 ] );
-        t41Data->SetLimits( gd.startPoint, gd.xAxis, gd.yAxis, gd.zAxis );
+        t41Data->SetLimits(
+          vector3(gd.startPoint[0], gd.startPoint[1], gd.startPoint[2]),
+          vector3(gd.xAxis[0], gd.xAxis[1], gd.xAxis[2]),
+          vector3(gd.yAxis[0], gd.yAxis[1], gd.yAxis[2]),
+          vector3(gd.zAxis[0], gd.zAxis[1], gd.zAxis[2]) );
   t41Data->SetUnrestricted( gd.unrestricted );
   t41Data->SetNumSymmetries( gd.numSymmetries );
 

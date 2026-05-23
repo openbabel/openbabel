@@ -2815,7 +2815,7 @@ namespace OpenBabel
     vector<OBAtom*>::iterator i;
 
     for (atom = BeginAtom(i);atom;atom = NextAtom(i))
-      if (atom->GetVector() != VZero)
+      if (atom->GetVector().length_2() != 0.0)
         return(true);
 
     return(false);
@@ -3279,7 +3279,7 @@ namespace OpenBabel
     rlist = GetSSSR();
     for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
       {
-        if ((*ringit)->PathSize() == 5)
+        if ((*ringit)->Size() == 5)
           {
             path = (*ringit)->_path;
             torsions =
@@ -3301,7 +3301,7 @@ namespace OpenBabel
                   }
               }
           }
-        else if ((*ringit)->PathSize() == 6)
+        else if ((*ringit)->Size() == 6)
           {
             path = (*ringit)->_path;
             torsions =
@@ -3370,7 +3370,7 @@ namespace OpenBabel
     for (ringit = rlist.begin(); ringit != rlist.end(); ++ringit)
       {
         typed = false;
-        loopSize = (*ringit)->PathSize();
+        loopSize = (*ringit)->Size();
         if (loopSize == 5 || loopSize == 6 || loopSize == 7)
           {
             path = (*ringit)->_path;

@@ -269,10 +269,10 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
       ofs << "# Molecule Title: " << str << "\n";
 
     int nx, ny, nz;
-    double origin[3], xAxis[3], yAxis[3], zAxis[3];
+    double xAxis[3], yAxis[3], zAxis[3];
     gd->GetAxes(xAxis, yAxis, zAxis);
     gd->GetNumberOfPoints(nx, ny, nz);
-    gd->GetOriginVector(origin);
+    vector3 origin = gd->GetOriginVector();
 
     // data line 1: # of points in x, y, z (nx, ny, nz)
     snprintf(buffer, BUFF_SIZE, "object 1 class gridpositions counts %5d %5d %5d", nx, ny, nz);
@@ -280,7 +280,7 @@ bool OBOpenDXCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
 
     // data line 2: origin (x, y, z)
     snprintf(buffer, BUFF_SIZE,"origin %12.6f %12.6f %12.6f",
-        origin[0], origin[1], origin[2]);
+        origin.x(), origin.y(), origin.z());
     ofs << buffer << "\n";
 
     // data line 3: x-displacement
