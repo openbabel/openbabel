@@ -318,8 +318,8 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
                 else if (vs[k+1][0] == '1')
                     i[j++] = k;
             }
-            quadrupole.Set(i[0], i[1], value);
-            quadrupole.Set(i[1], i[0], value);
+            quadrupole(i[0], i[1]) = value;
+            quadrupole(i[1], i[0]) = value;
         }
         else
             return;

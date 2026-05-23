@@ -275,13 +275,13 @@ int main()
 
     if (EQn(commandline, "gen", 3)) {
       //pFF->GenerateCoordinates();
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
       continue;
     }
 
     if (EQn(commandline, "rs", 2)) {
       pFF->SystematicRotorSearch();
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
       continue;
     }
 
@@ -403,7 +403,7 @@ int main()
       }
 
       pFF->SteepestDescent(atoi(vs[1].c_str()), OBFF_ANALYTICAL_GRADIENT);
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
 
       continue;
     }
@@ -416,7 +416,7 @@ int main()
       }
 
       pFF->ConjugateGradients(atoi(vs[1].c_str()), OBFF_ANALYTICAL_GRADIENT);
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
 
       continue;
     }

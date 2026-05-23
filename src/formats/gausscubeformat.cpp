@@ -583,14 +583,14 @@ bool OBGaussianCubeFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
     }
 
     int nx, ny, nz;
-    double origin[3], xAxis[3], yAxis[3], zAxis[3];
+    double xAxis[3], yAxis[3], zAxis[3];
     gd->GetAxes(xAxis, yAxis, zAxis);
     gd->GetNumberOfPoints(nx, ny, nz);
-    gd->GetOriginVector(origin);
+    vector3 origin = gd->GetOriginVector();
 
     // line 3: number of atoms, origin x y z
     snprintf(buffer, BUFF_SIZE,"%5d%12.6f%12.6f%12.6f", - static_cast<signed int> (mol.NumAtoms()),
-        origin[0]*ANGSTROM_TO_BOHR, origin[1]*ANGSTROM_TO_BOHR, origin[2]*ANGSTROM_TO_BOHR);
+        origin.x()*ANGSTROM_TO_BOHR, origin.y()*ANGSTROM_TO_BOHR, origin.z()*ANGSTROM_TO_BOHR);
     ofs << buffer << endl;
 
     // line 4: number of points x direction, axis x direction x y z

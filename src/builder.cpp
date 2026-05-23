@@ -312,7 +312,7 @@ namespace OpenBabel
 
         bond1 = bond1.normalize();
         v1 = cross(bond1, bond2);
-        if (bond2 == VZero || v1 == VZero) {
+        if (bond2.length_2() == 0.0 || v1.length_2() == 0.0) {
           vector3 vrand;
           vrand.randomUnitVector();
           double angle = fabs(acos(dot(bond1, vrand)) * RAD_TO_DEG);
@@ -361,9 +361,9 @@ namespace OpenBabel
       //
       if (atom->GetExplicitDegree() == 2) {
         FOR_NBORS_OF_ATOM (nbr, atom) {
-          if (bond1 == VZero)
+          if (bond1.length_2() == 0.0)
             bond1 = atom->GetVector() - nbr->GetVector();
-          else if (bond2 == VZero)
+          else if (bond2.length_2() == 0.0)
             bond2 = atom->GetVector() - nbr->GetVector();
         }
 
@@ -432,11 +432,11 @@ namespace OpenBabel
       if (atom->GetExplicitDegree() == 3) {
         if (atom->GetHyb() == 3) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -452,11 +452,11 @@ namespace OpenBabel
 
         if (atom->GetHyb() == 4) { // OK, we want this at -bond3, since bond1 & bond2 are opposite
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -471,11 +471,11 @@ namespace OpenBabel
 
         if (atom->GetHyb() == 5) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -496,11 +496,11 @@ namespace OpenBabel
 
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -516,13 +516,13 @@ namespace OpenBabel
       if (atom->GetExplicitDegree() == 4) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
-            else if (bond4 == VZero)
+            else if (bond4.length_2() == 0.0)
               bond4 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -535,13 +535,13 @@ namespace OpenBabel
 
         if (atom->GetHyb() == 5) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
-            else if (bond4 == VZero)
+            else if (bond4.length_2() == 0.0)
               bond4 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -566,15 +566,15 @@ namespace OpenBabel
       if (atom->GetExplicitDegree() == 5) {
         if (atom->GetHyb() == 6) {
           FOR_NBORS_OF_ATOM (nbr, atom) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
-            else if (bond3 == VZero)
+            else if (bond3.length_2() == 0.0)
               bond3 = atom->GetVector() - nbr->GetVector();
-            else if (bond4 == VZero)
+            else if (bond4.length_2() == 0.0)
               bond4 = atom->GetVector() - nbr->GetVector();
-            else if (bond5 == VZero)
+            else if (bond5.length_2() == 0.0)
               bond5 = atom->GetVector() - nbr->GetVector();
           }
 
@@ -662,7 +662,7 @@ namespace OpenBabel
       //                          //
       if (atom->GetExplicitDegree() == 2) {
         for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
-          if (bond1 == VZero)
+          if (bond1.length_2() == 0.0)
             bond1 = atom->GetVector() - nbr->GetVector();
           else
             bond2 = atom->GetVector() - nbr->GetVector();
@@ -720,9 +720,9 @@ namespace OpenBabel
           }
         } else {
           for (OBAtom *nbr = atom->BeginNbrAtom(i); nbr; nbr = atom->NextNbrAtom(i)) {
-            if (bond1 == VZero)
+            if (bond1.length_2() == 0.0)
               bond1 = atom->GetVector() - nbr->GetVector();
-            else if (bond2 == VZero)
+            else if (bond2.length_2() == 0.0)
               bond2 = atom->GetVector() - nbr->GetVector();
             else
               bond3 = atom->GetVector() - nbr->GetVector();
@@ -1093,7 +1093,7 @@ namespace OpenBabel
     // Trigger hybridisation perception now so it will be copied to workMol
     if (mol.NumAtoms() == 0)
       return true;
-    mol.GetFirstAtom()->GetHyb();
+    mol.GetAtom(1)->GetHyb();
 
     // copy the molecule to private data
     OBMol workMol = mol;
@@ -1618,7 +1618,7 @@ namespace OpenBabel
     bond1 = VZero;
     OBAtom atom1, atom2;
     FOR_NBORS_OF_ATOM(nbr, p) {
-      if (bond1 == VZero) {
+      if (bond1.length_2() == 0.0) {
         atom1 = *nbr;
         bond1 = posp - atom1.GetVector();
       }

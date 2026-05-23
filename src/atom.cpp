@@ -825,7 +825,7 @@ namespace OpenBabel
 
     rlist = mol->GetSSSR();
     for (i = rlist.begin();i != rlist.end();++i)
-      if ((*i)->IsInRing(GetIdx()) && static_cast<int>((*i)->PathSize()) == size)
+      if ((*i)->IsInRing(GetIdx()) && static_cast<int>((*i)->Size()) == size)
         return(true);
 
     return(false);

@@ -111,7 +111,7 @@ namespace OpenBabel
       // check if the bond is "rotatable"
       if (bond->IsRotor(sampleRingBonds)) {
         // check if the bond is fixed (using deprecated fixed atoms or new fixed bonds)
-        if ((HasFixedAtoms() || HasFixedBonds()) && IsFixedBond(bond))
+        if ((!_fixedatoms.IsEmpty() || HasFixedBonds()) && IsFixedBond(bond))
           continue;
 
         if (bond->IsInRing()) {
@@ -135,7 +135,6 @@ namespace OpenBabel
       OBRotor *rotor = new OBRotor;
       rotor->SetBond((*j).first);
       rotor->SetIdx(count);
-      rotor->SetNumCoords(mol.NumAtoms()*3);
       _rotor.push_back(rotor);
     }
 
@@ -315,7 +314,7 @@ namespace OpenBabel
                 a1 = mol.GetAtom(j);
                 for (a2 = a1->BeginNbrAtom(k);a2;a2 = a1->NextNbrAtom(k))
                   if (!eval[a2->GetIdx()])
-                    if (!((OBBond*)*k)->IsRotor(_ringRotors)||((HasFixedAtoms()||HasFixedBonds())&&IsFixedBond((OBBond*)*k)))
+                    if (!((OBBond*)*k)->IsRotor(_ringRotors)||((!_fixedatoms.IsEmpty()||HasFixedBonds())&&IsFixedBond((OBBond*)*k)))
                       {
                         next.SetBitOn(a2->GetIdx());
                         eval.SetBitOn(a2->GetIdx());
@@ -352,7 +351,6 @@ namespace OpenBabel
       double delta;
       _rr.GetRotorIncrements(mol, bond, ref, angles, delta);
       rotor->SetTorsionValues(angles);
-      rotor->SetDelta(delta);
 
       // Find the smallest set of atoms to rotate. There are two candidate sets,
       // one on either side of the bond. If the first tried set size plus one is

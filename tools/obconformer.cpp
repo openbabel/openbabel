@@ -87,7 +87,7 @@ int main(int argc, char* argv[]) {
     if (pFF->Setup(mol)) {
       pFF->WeightedRotorSearch(weightSteps, geomSteps);
       pFF->ConjugateGradients(geomSteps);  // final cleanup
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
       conv.Write(&mol);
     } else {
       cerr << "Error! Cannot set up force field." << endl;
@@ -103,7 +103,7 @@ int main(int argc, char* argv[]) {
       }
       pFF->WeightedRotorSearch(weightSteps, geomSteps);
       pFF->ConjugateGradients(geomSteps);  // final cleanup
-      pFF->UpdateCoordinates(mol);
+      pFF->GetCoordinates(mol);
       conv.Write(&mol);
       pFF = OBForceField::FindForceField(forcefield);  // switch back to MMFF94
     }

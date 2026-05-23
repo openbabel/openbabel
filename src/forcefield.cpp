@@ -3308,7 +3308,7 @@ namespace OpenBabel
       memcpy(st.x.data(), coords, _ncoords * sizeof(double));
 
       // Convergence test (matches SD/CG semantics).
-      if (IsNear(fx, _e_n1, _econv) && (minGrad2 < _gconv)) {
+      if (fabs(fx - _e_n1) < _econv && (minGrad2 < _gconv)) {
         IF_OBFF_LOGLVL_LOW {
           snprintf(_logbuf, BUFF_SIZE, " %4d    %8.3f    %8.3f\n", _cstep, fx, _e_n1);
           OBFFLog(_logbuf);
