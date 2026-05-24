@@ -173,7 +173,7 @@ namespace OpenBabel
   bool CHEM3D1Format::ReadChem3d(istream &ifs,OBMol &mol,bool mmads,const char *type_key)
   {
     char buffer[BUFF_SIZE];
-    int natoms,i;
+    int natoms = 0, i;
     char tmp[16],tmp1[16];
     char atomic_type[16];
     double exponent = 0.0;
@@ -217,7 +217,7 @@ namespace OpenBabel
           }
       }
 
-    if (!natoms)
+    if (natoms < 1 || natoms >= 100000000)
       return(false);
     divisor = pow(10.0,exponent);
     mol.ReserveAtoms(natoms);

@@ -92,7 +92,7 @@ namespace OpenBabel
     char buffer[BUFF_SIZE];
 
     stringstream errorMsg;
-    unsigned int natoms;
+    unsigned int natoms = 0;
 
     if (!ifs)
       return false; // we're attempting to read past the end of the file
@@ -104,7 +104,7 @@ namespace OpenBabel
         return(false);
       }
 
-    if (sscanf(buffer, "%d", &natoms) == 0 || !natoms)
+    if (sscanf(buffer, "%u", &natoms) == 0 || !natoms || natoms >= 100000000)
       {
         obErrorLog.ThrowError(__FUNCTION__,
                               "Problems reading an XYZ file: The first line must contain the number of atoms.", obWarning);

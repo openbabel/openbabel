@@ -125,7 +125,7 @@ namespace OpenBabel
     bool unitCell,virtualAtoms;
 
 
-    unsigned int natoms;	// [ejk] assumed natoms could not be -ve
+    unsigned int natoms = 0;	// [ejk] assumed natoms could not be -ve
 
     if (!ifs)
       return false; // we're attempting to read past the end of the file
@@ -137,7 +137,7 @@ namespace OpenBabel
         return(false);
       }
 
-    if (sscanf(buffer, "%d", &natoms) == 0 || !natoms)
+    if (sscanf(buffer, "%u", &natoms) == 0 || !natoms || natoms >= 100000000)
       {
         obErrorLog.ThrowError(__FUNCTION__,
                               "Problems reading an E-XYZ file: The first line must contain the number of atoms.", obWarning);

@@ -93,6 +93,8 @@ namespace OpenBabel
         if (!natoms)
           return(false);
       }
+    if (natoms < 1 || natoms >= 100000000 || nbonds < 0 || nbonds >= 100000000)
+      return(false);
 
     mol.ReserveAtoms(natoms);
     mol.BeginModify();

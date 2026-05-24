@@ -127,7 +127,7 @@ namespace OpenBabel
 
     stringstream(vs[0]) >> natoms;
 
-    if (natoms < 1) {
+    if (natoms < 1 || natoms >= 100000000) {
       errorMsg << "Problems reading a Tinker file: "
                << "There are no atoms in the file or the first line is"
                << " incorrectly written.";

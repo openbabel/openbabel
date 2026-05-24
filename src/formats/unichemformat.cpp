@@ -78,13 +78,13 @@ bool UniChemFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     const char* title = pConv->GetTitle();
 
     int i;
-    int natoms;
+    int natoms = 0;
     char buffer[BUFF_SIZE];
 
     ifs.getline(buffer,BUFF_SIZE);
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%d", &natoms);
-    if (!natoms)
+    if (natoms < 1 || natoms >= 100000000)
         return(false);
 
     mol.ReserveAtoms(natoms);

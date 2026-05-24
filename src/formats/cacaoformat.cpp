@@ -83,7 +83,7 @@ namespace OpenBabel
     mol.SetTitle( pConv->GetTitle()); //default title is the filename
 
     char buffer[BUFF_SIZE];
-    int natoms;
+    int natoms = 0;
     double A,B,C,Alpha,Beta,Gamma;
     matrix3x3 m;
 
@@ -91,6 +91,8 @@ namespace OpenBabel
     mol.SetTitle(buffer);
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%d",&natoms);
+    if (natoms < 1 || natoms >= 100000000)
+      return(false);
 
     while (ifs.getline(buffer,BUFF_SIZE) &&!EQn(buffer,"CELL",4))
       ;

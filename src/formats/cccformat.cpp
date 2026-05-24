@@ -80,9 +80,11 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
         mol.SetTitle(&buffer[5]);
     mol.SetEnergy(0.0);
 
-    int natoms;
+    int natoms = 0;
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%*s%d",&natoms);
+    if (natoms < 1 || natoms >= 100000000)
+      return(false);
     mol.ReserveAtoms(natoms);
     mol.BeginModify();
 
