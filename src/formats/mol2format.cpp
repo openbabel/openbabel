@@ -259,7 +259,7 @@ namespace OpenBabel
         return(false);
       }
 
-    if (natoms < 1 || natoms >= 100000000 || nbonds < 0 || nbonds >= 100000000)
+    if (natoms < 0 || natoms >= 100000000 || nbonds < 0 || nbonds >= 100000000)
       {
         mol.EndModify();
         mol.Clear();
