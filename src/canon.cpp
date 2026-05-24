@@ -980,6 +980,10 @@ namespace OpenBabel {
           for (std::size_t l = 0; l < lcodes.size(); ++l) {
             if (lbl >= ligandSizes[lcodes[l].first])
               continue;
+            // Ligand recursion may have returned early (e.g., timeout) without
+            // populating labels; skip rather than dereferencing empty storage.
+            if (lcodes[l].second.labels.empty())
+              continue;
 
             OBAtom *atom = nullptr;
             for (std::size_t i = 0; i < mol->NumAtoms(); ++i)

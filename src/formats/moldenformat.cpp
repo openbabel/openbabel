@@ -171,13 +171,13 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               if( lineBuffer.find( "[" ) != string::npos ) break;
 
               // should give us a number of atoms (i.e., this is an XYZ-format file)
-              unsigned int natoms;
+              unsigned int natoms = 0;
               bool createAtoms = false;
 
-              if (sscanf(lineBuffer.c_str(), "%d", &natoms) == 0 || !natoms) {
+              if (sscanf(lineBuffer.c_str(), "%u", &natoms) == 0 || !natoms || natoms >= 100000000) {
                 obErrorLog.ThrowError(__FUNCTION__,
                                       "Problems reading an XYZ geometry: The first line must contain the number of atoms.", obWarning);
-//                return(false);
+                break;
               }
               if (pmol->NumAtoms() != 0 && pmol->NumAtoms() != natoms) {
                 obErrorLog.ThrowError(__FUNCTION__,

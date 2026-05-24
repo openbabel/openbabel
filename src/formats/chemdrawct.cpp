@@ -117,7 +117,7 @@ namespace OpenBabel
     const char* title = pConv->GetTitle();
 
     char buffer[BUFF_SIZE];
-    unsigned int natoms, nbonds;
+    unsigned int natoms = 0, nbonds = 0;
     unsigned int bgn, end, order;
     vector<string> vs;
     OBAtom *atom;
@@ -133,7 +133,9 @@ namespace OpenBabel
       mol.SetTitle(title);
 
     ifs.getline(buffer,BUFF_SIZE);
-    sscanf(buffer," %d %d", &natoms, &nbonds);
+    sscanf(buffer," %u %u", &natoms, &nbonds);
+    if (natoms < 1 || natoms >= 100000000 || nbonds >= 100000000)
+      return(false);
 
     for (unsigned int i = 1; i <= natoms; i ++)
       {

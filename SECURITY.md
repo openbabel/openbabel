@@ -40,6 +40,7 @@ are responsible for backports to their own stable releases.
 
 | Version | Supported          |
 | ------- | ------------------ |
+| 3.2.x   | :white_check_mark: |
 | 3.1.x   | :white_check_mark: |
 | < 3.1   | :x:                |
 
@@ -54,40 +55,40 @@ the GitHub Security Advisory once published.
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |
 | --- | --- | --- | --- | --- | --- | --- |
-| [CVE-2026-2704](https://nvd.nist.gov/vuln/detail/CVE-2026-2704) | CIF: `transform3d::DescribeAsString` | Out-of-bounds read | Pending merge (#2862) | — | — | — |
-| [CVE-2026-2705](https://nvd.nist.gov/vuln/detail/CVE-2026-2705) | MOL2: `OBAtom::SetFormalCharge` | NULL dereference | Pending merge (#2862) | — | — | — |
-| [CVE-2026-3408](https://nvd.nist.gov/vuln/detail/CVE-2026-3408) | CDXML: `OBAtom::GetExplicitValence` | NULL dereference | Pending merge (#2862) | — | — | — |
+| [CVE-2026-2704](https://nvd.nist.gov/vuln/detail/CVE-2026-2704) | CIF: `transform3d::DescribeAsString` | Out-of-bounds read | Fixed (e23a224b) ([#2862](https://github.com/openbabel/openbabel/pull/2862)) | 3.2.0 | e23a224b | — |
+| [CVE-2026-2705](https://nvd.nist.gov/vuln/detail/CVE-2026-2705) | MOL2: `OBAtom::SetFormalCharge` | NULL dereference | Fixed (e23a224b) ([#2862](https://github.com/openbabel/openbabel/pull/2862)) | 3.2.0 | e23a224b | — |
+| [CVE-2026-3408](https://nvd.nist.gov/vuln/detail/CVE-2026-3408) | CDXML: `OBAtom::GetExplicitValence` | NULL dereference | Fixed (e23a224b) ([#2862](https://github.com/openbabel/openbabel/pull/2862)) | 3.2.0 | e23a224b | — |
 
 ### 2025
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |
 | --- | --- | --- | --- | --- | --- | --- |
-| [CVE-2025-10994](https://nvd.nist.gov/vuln/detail/CVE-2025-10994) | GAMESS: `GAMESSOutputFormat::ReadMolecule` | Use-after-free | Pending merge ([#2834](https://github.com/openbabel/openbabel/issues/2834)) | — | — | — |
-| [CVE-2025-10995](https://nvd.nist.gov/vuln/detail/CVE-2025-10995) | zipstream: `basic_unzip_streambuf::underflow` | Overlapping memcpy | Pending merge ([#2832](https://github.com/openbabel/openbabel/issues/2832)) | — | — | — |
-| [CVE-2025-10996](https://nvd.nist.gov/vuln/detail/CVE-2025-10996) | SMILES: `OBSmilesParser::ParseSmiles` | Heap-buffer-overflow | Fixed (b34cd604) ([#2831](https://github.com/openbabel/openbabel/issues/2831)) | — | b34cd604 | — |
-| [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Fixed (af4a4212) ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | — | af4a4212 | — |
-| [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Fixed (af4a4212) ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | — | af4a4212 | — |
-| [CVE-2025-10999](https://nvd.nist.gov/vuln/detail/CVE-2025-10999) | CACAO: `CacaoFormat::SetHilderbrandt` | NULL dereference | Fixed (ecaed96f) ([#2827](https://github.com/openbabel/openbabel/issues/2827)) | — | ecaed96f | — |
-| [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `lowerit` pre-buffer read | Out-of-bounds read | Fixed (duplicate of OSS-Fuzz `lowerit` fix, `f4a5ebae`) | — | f4a5ebae | — |
+| [CVE-2025-10994](https://nvd.nist.gov/vuln/detail/CVE-2025-10994) | GAMESS: `GAMESSOutputFormat::ReadMolecule` | Use-after-free | Fixed (95033d27) ([#2834](https://github.com/openbabel/openbabel/issues/2834)) | 3.2.0 | 95033d27 | — |
+| [CVE-2025-10995](https://nvd.nist.gov/vuln/detail/CVE-2025-10995) | zipstream: `basic_unzip_streambuf::underflow` | Overlapping memcpy | Fixed (d4621d41) ([#2832](https://github.com/openbabel/openbabel/issues/2832)) | 3.2.0 | d4621d41 | — |
+| [CVE-2025-10996](https://nvd.nist.gov/vuln/detail/CVE-2025-10996) | SMILES: `OBSmilesParser::ParseSmiles` | Heap-buffer-overflow | Fixed (b34cd604) ([#2831](https://github.com/openbabel/openbabel/issues/2831)) | 3.2.0 | b34cd604 | — |
+| [CVE-2025-10997](https://nvd.nist.gov/vuln/detail/CVE-2025-10997) | ChemKin: `ChemKinFormat::CheckSpecies` | Heap-buffer-overflow | Fixed (af4a4212) ([#2830](https://github.com/openbabel/openbabel/issues/2830)) | 3.2.0 | af4a4212 | — |
+| [CVE-2025-10998](https://nvd.nist.gov/vuln/detail/CVE-2025-10998) | ChemKin: `ChemKinFormat::ReadReactionQualifierLines` | NULL dereference | Fixed (af4a4212) ([#2829](https://github.com/openbabel/openbabel/issues/2829)) | 3.2.0 | af4a4212 | — |
+| [CVE-2025-10999](https://nvd.nist.gov/vuln/detail/CVE-2025-10999) | CACAO: `CacaoFormat::SetHilderbrandt` | NULL dereference | Fixed (ecaed96f) ([#2827](https://github.com/openbabel/openbabel/issues/2827)) | 3.2.0 | ecaed96f | — |
+| [CVE-2025-11000](https://nvd.nist.gov/vuln/detail/CVE-2025-11000) | PQS: `lowerit` pre-buffer read | Out-of-bounds read | Fixed (duplicate of OSS-Fuzz `lowerit` fix, `f4a5ebae`) | 3.2.0 | f4a5ebae | — |
 
 ### 2022 (Cisco TALOS batch — see [#2650](https://github.com/openbabel/openbabel/issues/2650))
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |
 | --- | --- | --- | --- | --- | --- | --- |
-| [CVE-2022-37331](https://nvd.nist.gov/vuln/detail/CVE-2022-37331) | Gaussian: `coords_type` orientation | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: `PadString` title | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-42885](https://nvd.nist.gov/vuln/detail/CVE-2022-42885) | GRO: res | Uninitialized pointer | Pending merge | — | — | — |
-| [CVE-2022-43467](https://nvd.nist.gov/vuln/detail/CVE-2022-43467) | PQS: coord_file | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-43607](https://nvd.nist.gov/vuln/detail/CVE-2022-43607) | MOL2: attribute/value | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-44451](https://nvd.nist.gov/vuln/detail/CVE-2022-44451) | MSI: atom | Uninitialized pointer | Pending merge | — | — | — |
-| [CVE-2022-46280](https://nvd.nist.gov/vuln/detail/CVE-2022-46280) | PQS: pFormat | Uninitialized pointer | Pending merge | — | — | — |
-| [CVE-2022-46289](https://nvd.nist.gov/vuln/detail/CVE-2022-46289) | ORCA: nAtoms | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-46290](https://nvd.nist.gov/vuln/detail/CVE-2022-46290) | ORCA: nAtoms | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-46291](https://nvd.nist.gov/vuln/detail/CVE-2022-46291) | translationVectors (Gaussian) | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-46292](https://nvd.nist.gov/vuln/detail/CVE-2022-46292) | translationVectors (MOPAC: UNIT CELL TRANSLATION) | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-46293](https://nvd.nist.gov/vuln/detail/CVE-2022-46293) | translationVectors (MOPAC: FINAL POINT) | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-46294](https://nvd.nist.gov/vuln/detail/CVE-2022-46294) | translationVectors (MOPAC IN: Tv atom) | Out-of-bounds write | Pending merge | — | — | — |
-| [CVE-2022-46295](https://nvd.nist.gov/vuln/detail/CVE-2022-46295) | translationVectors (MSI) | Out-of-bounds write | Pending merge | — | — | — |
+| [CVE-2022-37331](https://nvd.nist.gov/vuln/detail/CVE-2022-37331) | Gaussian: `coords_type` orientation | Out-of-bounds write | Fixed (528c142f) | 3.2.0 | 528c142f | — |
+| [CVE-2022-41793](https://nvd.nist.gov/vuln/detail/CVE-2022-41793) | CSR: `PadString` title | Out-of-bounds write | Fixed (528c142f) | 3.2.0 | 528c142f | — |
+| [CVE-2022-42885](https://nvd.nist.gov/vuln/detail/CVE-2022-42885) | GRO: res | Uninitialized pointer | Fixed (fa9a2d9a) | 3.2.0 | fa9a2d9a | — |
+| [CVE-2022-43467](https://nvd.nist.gov/vuln/detail/CVE-2022-43467) | PQS: coord_file | Out-of-bounds write | Fixed (2a7d2cda) | 3.2.0 | 2a7d2cda | — |
+| [CVE-2022-43607](https://nvd.nist.gov/vuln/detail/CVE-2022-43607) | MOL2: attribute/value | Out-of-bounds write | Fixed (4110d59a) | 3.2.0 | 4110d59a | — |
+| [CVE-2022-44451](https://nvd.nist.gov/vuln/detail/CVE-2022-44451) | MSI: atom | Uninitialized pointer | Fixed (fa9a2d9a) | 3.2.0 | fa9a2d9a | — |
+| [CVE-2022-46280](https://nvd.nist.gov/vuln/detail/CVE-2022-46280) | PQS: pFormat | Uninitialized pointer | Fixed (2a7d2cda) | 3.2.0 | 2a7d2cda | — |
+| [CVE-2022-46289](https://nvd.nist.gov/vuln/detail/CVE-2022-46289) | ORCA: nAtoms | Out-of-bounds write | Fixed (b239d06e) | 3.2.0 | b239d06e | — |
+| [CVE-2022-46290](https://nvd.nist.gov/vuln/detail/CVE-2022-46290) | ORCA: nAtoms | Out-of-bounds write | Fixed (b239d06e) | 3.2.0 | b239d06e | — |
+| [CVE-2022-46291](https://nvd.nist.gov/vuln/detail/CVE-2022-46291) | translationVectors (Gaussian) | Out-of-bounds write | Fixed (40e85213) | 3.2.0 | 40e85213 | — |
+| [CVE-2022-46292](https://nvd.nist.gov/vuln/detail/CVE-2022-46292) | translationVectors (MOPAC: UNIT CELL TRANSLATION) | Out-of-bounds write | Fixed (40e85213) | 3.2.0 | 40e85213 | — |
+| [CVE-2022-46293](https://nvd.nist.gov/vuln/detail/CVE-2022-46293) | translationVectors (MOPAC: FINAL POINT) | Out-of-bounds write | Fixed (40e85213) | 3.2.0 | 40e85213 | — |
+| [CVE-2022-46294](https://nvd.nist.gov/vuln/detail/CVE-2022-46294) | translationVectors (MOPAC IN: Tv atom) | Out-of-bounds write | Fixed (40e85213) | 3.2.0 | 40e85213 | — |
+| [CVE-2022-46295](https://nvd.nist.gov/vuln/detail/CVE-2022-46295) | translationVectors (MSI) | Out-of-bounds write | Fixed (40e85213) | 3.2.0 | 40e85213 | — |
 
 ## Regression Tests
 

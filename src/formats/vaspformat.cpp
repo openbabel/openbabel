@@ -296,8 +296,16 @@ namespace OpenBabel {
     totalAtoms = 0;
     for (unsigned int i = 0; i < vs.size(); i++) {
       int currentCount = atoi(vs.at(i).c_str());
+      if (currentCount < 0 || currentCount >= 100000000) {
+        pmol->EndModify();
+        return false;
+      }
       numAtoms.push_back(currentCount);
       totalAtoms += currentCount;
+    }
+    if (totalAtoms < 1 || totalAtoms >= 100000000) {
+      pmol->EndModify();
+      return false;
     }
 
     // Do the number of atom types match the number of atom counts?

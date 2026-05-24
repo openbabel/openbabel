@@ -197,7 +197,7 @@ namespace OpenBabel
 
     // OK, just read MOLECULE line
     int lcount;
-    int natoms,nbonds;
+    int natoms = 0, nbonds = 0;
     bool hasPartialCharges = true;
     for (lcount=0;;lcount++)
       {
@@ -256,6 +256,14 @@ namespace OpenBabel
         mol.EndModify();
         mol.Clear();
         obErrorLog.ThrowError(__FUNCTION__, "Unable to read Mol2 format file. No atoms found.", obWarning);
+        return(false);
+      }
+
+    if (natoms < 0 || natoms >= 100000000 || nbonds < 0 || nbonds >= 100000000)
+      {
+        mol.EndModify();
+        mol.Clear();
+        obErrorLog.ThrowError(__FUNCTION__, "Unable to read Mol2 format file. Invalid atom or bond count.", obWarning);
         return(false);
       }
 

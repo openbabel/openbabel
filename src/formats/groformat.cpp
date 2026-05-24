@@ -118,6 +118,8 @@ public:
     istream& ifs = *pConv->GetInStream();
     getline(ifs, line);
     ifs >> natoms;
+    if (natoms <= 0 || natoms >= 100000000)
+      return -1;
     nlines = (natoms+3)*n;
     while (ifs && --nlines) {
       getline(ifs, line);
@@ -200,7 +202,7 @@ bool GROFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
 
   // Get the number of atoms
   stringstream(buffer) >> natoms;
-  if (natoms < 1) {
+  if (natoms < 1 || natoms >= 100000000) {
     errorMsg << "Problems reading a GRO file: "
              << "There are no atoms in the file or the second line is"
              << " incorrectly written.";

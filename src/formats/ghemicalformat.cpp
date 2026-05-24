@@ -82,7 +82,7 @@ namespace OpenBabel
     const char* title = pConv->GetTitle();
 
     int i;
-    int natoms, nbonds;
+    int natoms = 0, nbonds = 0;
     char buffer[BUFF_SIZE];
     string str,str1;
     double x,y,z;
@@ -110,7 +110,7 @@ namespace OpenBabel
     // Get !Atoms line with number
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%*s %d", &natoms);
-    if (!natoms)
+    if (natoms < 1 || natoms >= 100000000)
       return(false);
 
     for (i = 1; i <= natoms; i ++)
@@ -127,6 +127,8 @@ namespace OpenBabel
     // Get !Bonds line with number
     ifs.getline(buffer,BUFF_SIZE);
     sscanf(buffer,"%*s %d", &nbonds);
+    if (nbonds < 0 || nbonds >= 100000000)
+      return(false);
     if (nbonds != 0)
       for (i = 0; i < nbonds; i++)
       {
