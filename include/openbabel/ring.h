@@ -22,6 +22,7 @@ GNU General Public License for more details.
 
 #include <deque>
 #include <algorithm>
+#include <memory>
 
 // TODO: Make this work as a free-standing header
 // Currently only used in ring.cpp which imports mol.h beforehand
@@ -113,6 +114,8 @@ namespace OpenBabel
   OBAPI bool CompareRingSize(const OBRing *,const OBRing *);
 
 
+  struct OBRingSearchPrivate; //!< pimpl for OBRingSearch internal state
+
   /** \class OBRingSearch ring.h <openbabel/ring.h>
       \brief Internal class to facilitate OBMol::FindSSSR()
   **/
@@ -120,8 +123,9 @@ namespace OpenBabel
   {
     OB_DEPRECATED std::vector<OBBond*> _bonds; //!< the internal list of closure bonds (deprecated)
     std::vector<OBRing*> _rlist; //!< the internal list of rings
+    std::unique_ptr<OBRingSearchPrivate> _d; //!< opaque internal state (dedup index, etc.)
   public:
-    OBRingSearch()    {}
+    OBRingSearch();
     ~OBRingSearch();
 
     //! Sort ring sizes from smallest to largest
