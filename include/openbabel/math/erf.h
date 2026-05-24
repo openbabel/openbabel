@@ -3,14 +3,17 @@
 #ifndef OB_ERF_H
 #define OB_ERF_H
 
+#pragma message("this header is deprecated, please use std::erf and std::erfc instead")
+
 #include <math.h>
+#include <openbabel/babelconfig.h>
 
 /// @cond
 // Hide this from doxygen -- internal only code
 namespace temperf
 {
-double erf(double x);
-double erfc(double x);
+OB_DEPRECATED double erf(double x);
+OB_DEPRECATED double erfc(double x);
 
 static const double rel_error= 1E-12;        //calculate 12 significant figures
 //you can adjust rel_error to trade off between accuracy and speed
