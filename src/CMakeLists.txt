@@ -36,6 +36,7 @@ set(descriptors
   descriptors/filters.cpp
   descriptors/inchidescriptor.cpp
   descriptors/smartsdescriptors.cpp
+  descriptors/clogp.cpp
 )
 
 set(fingerprints
@@ -163,6 +164,7 @@ set(openbabel_srcs
   transform.cpp
   typer.cpp
   obmolecformat.cpp
+  aromaticity_resolver.cpp
 )
 if(TARGET Eigen3::Eigen)
   set(openbabel_srcs ${openbabel_srcs}
