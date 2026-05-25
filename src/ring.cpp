@@ -29,6 +29,8 @@ GNU General Public License for more details.
 #include <openbabel/oberror.h>
 #include <openbabel/elements.h>
 
+#include <set>
+
 using namespace std;
 
 namespace OpenBabel
@@ -318,15 +320,23 @@ namespace OpenBabel
   {
     int i,j;
 
-    //remove identical rings
-    for (i = _rlist.size()-1;i > 0;i--)
-      for (j = i-1;j >= 0;j--)
-        if ((_rlist[i])->_pathset == (_rlist[j])->_pathset)
-          {
-            delete _rlist[i];
-            _rlist.erase(_rlist.begin()+i);
-            break;
-          }
+    // Remove identical rings in O(R log R) via a fingerprint set instead of
+    // the previous O(R^2) bitvec scan (which blew the OSS-Fuzz 60s budget
+    // on densely-fused inputs). Two rings are identical iff their atom-index
+    // sets match; NextBit yields those indices in sorted order.
+    {
+      std::set<std::vector<int> > seen;
+      for (i = (int)_rlist.size() - 1; i >= 0; --i) {
+        std::vector<int> fp;
+        const OBBitVec &bv = _rlist[i]->_pathset;
+        for (int b = bv.NextBit(-1); b >= 0; b = bv.NextBit(b))
+          fp.push_back(b);
+        if (!seen.insert(fp).second) {
+          delete _rlist[i];
+          _rlist.erase(_rlist.begin() + i);
+        }
+      }
+    }
 
     if (_rlist.size() == 0)
       return; // nothing to do
@@ -344,8 +354,10 @@ namespace OpenBabel
       return;
     }
 
-    // exit if we already have frj rings
-    if (_rlist.size() == (unsigned)frj)
+    // Pruning can only remove rings, so once we're at or below frj there's
+    // nothing left to do. (Was '== frj', which let the size-< frj case fall
+    // into an O(R^2 * B/64) loop that found nothing.)
+    if (_rlist.size() <= (unsigned)frj)
       return;
 
     // create bondsets
@@ -461,6 +473,17 @@ namespace OpenBabel
       _rlist[j]->SetParent(&mol);
   }
 
+  struct OBRingSearchPrivate
+  {
+    //! Sorted atom-index fingerprints of every ring already in _rlist.
+    //! Lets SaveUniqueRing dedup in O(log R) instead of an O(R * W)
+    //! bitvec scan, which dominated wall time on densely-fused fuzz inputs.
+    std::set<std::vector<int> > ringfingerprints;
+  };
+
+  OBRingSearch::OBRingSearch() : _d(new OBRingSearchPrivate())
+  {}
+
   bool OBRingSearch::SaveUniqueRing(deque<int> &d1,deque<int> &d2)
   {
     vector<int> path;
@@ -479,10 +502,14 @@ namespace OpenBabel
         path.push_back(*i);
       }
 
-    vector<OBRing*>::iterator j;
-    for (j = _rlist.begin();j != _rlist.end();++j)
-      if (bv == (*j)->_pathset)
-        return(false);
+    // Build a canonical fingerprint from the bitvec's set bits (already
+    // sorted by NextBit) so two rings covering the same atoms hash to
+    // the same key, even when d1/d2 happen to share an atom.
+    std::vector<int> fp;
+    for (int b = bv.NextBit(-1); b >= 0; b = bv.NextBit(b))
+      fp.push_back(b);
+    if (!_d->ringfingerprints.insert(fp).second)
+      return false;
 
     OBRing *ring = new OBRing(path, bv);
     _rlist.push_back(ring);
