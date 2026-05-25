@@ -97,7 +97,7 @@ namespace OpenBabel
     OBDataIterator i;
 
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetAttribute() == s)
+      if (*i && (*i)->GetAttribute() == s)
         return(true);
 
     return(false);
@@ -119,7 +119,7 @@ namespace OpenBabel
     OBDataIterator i;
 
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetDataType() == dt)
+      if (*i && (*i)->GetDataType() == dt)
         return(true);
 
     return(false);
@@ -131,7 +131,7 @@ namespace OpenBabel
     OBDataIterator i;
 
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetAttribute() == s)
+      if (*i && (*i)->GetAttribute() == s)
         return *i;
 
     return nullptr;
@@ -143,7 +143,7 @@ namespace OpenBabel
     OBDataIterator i;
 
     for (i = _vdata.begin(); i != _vdata.end(); ++i)
-      if (strcmp((*i)->GetAttribute().c_str(), s)==0)
+      if (*i && strcmp((*i)->GetAttribute().c_str(), s)==0)
         return *i;
 
     return nullptr;
@@ -153,7 +153,7 @@ namespace OpenBabel
   {
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetDataType() == dt)
+      if (*i && (*i)->GetDataType() == dt)
         return(*i);
     return nullptr;
   }
@@ -165,7 +165,7 @@ namespace OpenBabel
     // return all values matching this type
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetDataType() == dt)
+      if (*i && (*i)->GetDataType() == dt)
         matches.push_back(*i);
 
     return(matches);
@@ -177,7 +177,7 @@ namespace OpenBabel
 
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetOrigin() == source)
+      if (*i && (*i)->GetOrigin() == source)
         filtered.push_back((*i));
 
     return filtered;
@@ -202,9 +202,9 @@ namespace OpenBabel
     vector<OBGenericData*> vdata;
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
-      if ((*i)->GetDataType() == dt)
+      if (*i && (*i)->GetDataType() == dt)
         delete *i;
-      else
+      else if (*i)
         vdata.push_back(*i);
     _vdata = vdata;
   }
@@ -249,7 +249,7 @@ namespace OpenBabel
     OBDataIterator i;
     for (i = _vdata.begin();i != _vdata.end();++i)
     {
-      if ((*i)->GetAttribute() == s)
+      if (*i && (*i)->GetAttribute() == s)
       {
         delete *i;
           _vdata.erase(i);
