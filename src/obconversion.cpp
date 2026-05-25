@@ -18,6 +18,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 // Definition of OBConversion routines
 #include <openbabel/babelconfig.h>
+#include <openbabel/base.h>
 
 #ifdef _WIN32
 	#pragma warning (disable : 4786)
