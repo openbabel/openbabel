@@ -354,8 +354,10 @@ namespace OpenBabel
       return;
     }
 
-    // exit if we already have frj rings
-    if (_rlist.size() == (unsigned)frj)
+    // Pruning can only remove rings, so once we're at or below frj there's
+    // nothing left to do. (Was '== frj', which let the size-< frj case fall
+    // into an O(R^2 * B/64) loop that found nothing.)
+    if (_rlist.size() <= (unsigned)frj)
       return;
 
     // create bondsets
