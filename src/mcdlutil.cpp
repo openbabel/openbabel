@@ -1636,12 +1636,16 @@ namespace OpenBabel {
     for (i=0; i<nBonds(); i++) {
       n1=getBond(i)->at[0]; n2=getBond(i)->at[1];
       sa=getAtom(n1);
-      sa->ac[sa->nb]=n2;
-      sa->nb++;
+      if (sa->nb < CONNMAX) {
+        sa->ac[sa->nb]=n2;
+        sa->nb++;
+      }
       sa->currvalence=sa->currvalence+getBond(i)->getValence();
       sa=getAtom(n2);
-      sa->ac[sa->nb]=n1;
-      sa->nb++;
+      if (sa->nb < CONNMAX) {
+        sa->ac[sa->nb]=n1;
+        sa->nb++;
+      }
       sa->currvalence=sa->currvalence+getBond(i)->getValence();
     };
   };
@@ -1653,10 +1657,14 @@ namespace OpenBabel {
     for (i=0; i<nAtoms(); i++) bondConnection[i].nb=0;
     for (i=0; i<nBonds(); i++) {
       n1=getBond(i)->at[0]; n2=getBond(i)->at[1];
-      bondConnection[n1].adjusted[bondConnection[n1].nb]=i;
-      bondConnection[n1].nb++;
-      bondConnection[n2].adjusted[bondConnection[n2].nb]=i;
-      bondConnection[n2].nb++;
+      if (bondConnection[n1].nb < CONNMAX) {
+        bondConnection[n1].adjusted[bondConnection[n1].nb]=i;
+        bondConnection[n1].nb++;
+      }
+      if (bondConnection[n2].nb < CONNMAX) {
+        bondConnection[n2].adjusted[bondConnection[n2].nb]=i;
+        bondConnection[n2].nb++;
+      }
     };
   };
 
