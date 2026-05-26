@@ -3,11 +3,11 @@ INSTALLATION
 
 This document gives a basic overview of the installation procedure. For full
 installation instructions, please see:
-   http://openbabel.org/docs/dev/Installation/install.html
+   https://openbabel.org/docs/Installation/install.html
 
 Requirements
 ============
- -- CMake 3.1 or later
+ -- CMake 3.12 or later
  -- Eigen 3.0 or later (optional)
  -- libxml2 (optional)
  -- zlib (optional)
@@ -69,7 +69,7 @@ components.
 
 For more information please consult the CMake documentation and the
 Open Babel website:
-   http://openbabel.org/docs/dev/Installation/install.html
+   https://openbabel.org/docs/Installation/install.html
 
 
 Environment Variables

@@ -41,8 +41,7 @@ are responsible for backports to their own stable releases.
 | Version | Supported          |
 | ------- | ------------------ |
 | 3.2.x   | :white_check_mark: |
-| 3.1.x   | :white_check_mark: |
-| < 3.1   | :x:                |
+| < 3.2   | :x:                |
 
 ## CVE Tracking
 
