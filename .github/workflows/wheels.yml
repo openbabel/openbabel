@@ -8,12 +8,21 @@ on:
     tags:
       - 'openbabel-*'
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'PEP 440 version to bake into artifacts (e.g. 3.2.0). Leave blank for dev build.'
+        required: false
+        default: ''
 
 env:
   # Build CPython 3.10 - 3.14, skip 32-bit and musllinux variants
   CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-* cp314-*"
   CIBW_SKIP: "*-manylinux_i686 *-win32 *-musllinux*"
   CIBW_BUILD_VERBOSITY: 1
+  # setuptools_scm doesn't recognize the 'openbabel-X-Y-Z' tag format, so
+  # explicit override is required to publish a real release.
+  SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL: ${{ inputs.version }}
+  CIBW_ENVIRONMENT: ${{ inputs.version && format('SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL={0}', inputs.version) || '' }}
 
 jobs:
   build_wheels:
@@ -70,7 +79,7 @@ jobs:
   upload_pypi:
     needs: [build_wheels, build_sdist]
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/openbabel-*')
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/openbabel-')
     permissions:
       id-token: write
     steps:
