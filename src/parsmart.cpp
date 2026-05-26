@@ -155,6 +155,12 @@ namespace OpenBabel
 
   const int SmartsImplicitRef = -9999; // Used as a placeholder when recording atom nbrs for chiral atoms
 
+  // Cap on SMARTS pattern length. Real-world patterns (PAINS, MACCS, reaction
+  // templates) top out in the low hundreds; this leaves a wide margin while
+  // bounding recursion depth in the parser and tree walkers, which would
+  // otherwise overflow the stack on pathological fuzzer inputs.
+  const size_t MaxSmartsLength = 8192;
+
 
   /*=============================*/
   /*  Standard Utility Routines  */
@@ -1766,6 +1772,9 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const char *buffer)
   {
+    if (strlen(buffer) > MaxSmartsLength)
+      return false;
+
       delete[] _buffer;
     _buffer = new char[strlen(buffer) + 1];
     strcpy(_buffer,buffer);
@@ -1780,6 +1789,9 @@ namespace OpenBabel
 
   bool OBSmartsPattern::Init(const std::string &s)
   {
+    if (s.length() > MaxSmartsLength)
+      return false;
+
     delete[] _buffer;
     _buffer = new char[s.length() + 1];
     strcpy(_buffer, s.c_str());
