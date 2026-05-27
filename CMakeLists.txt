@@ -175,15 +175,6 @@ if(ZLIB_FOUND)
   endif()
 endif()
 
-# wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
-#find_package(wxWidgets COMPONENTS base core REQUIRED)
-find_package(wxWidgets COMPONENTS base core adv)
-if(wxWidgets_FOUND)
-  include(${wxWidgets_USE_FILE})
-  add_definitions(-DHAVE_WXWIDGETS)
-  include_directories(${wxWidgets_INCLUDE_DIRS})
-endif()
-
 if(MSVC)
   # Ensure that CharacterSet="0" in the project files
   add_definitions(-D_SBCS) # Single-Byte Character Set (requires CMake 2.8.8)
@@ -687,7 +678,12 @@ endif()
 
 if(BUILD_GUI)
   message(STATUS "Attempting to build the GUI")
+  # wxWidgets instructions based on http://wiki.wxwidgets.org/CMake
+  find_package(wxWidgets COMPONENTS base core adv)
   if(wxWidgets_FOUND)
+    include(${wxWidgets_USE_FILE})
+    add_definitions(-DHAVE_WXWIDGETS)
+    include_directories(${wxWidgets_INCLUDE_DIRS})
     message(STATUS "   wxWidgets found => GUI will be built")
     add_subdirectory(src/GUI)
   else()
