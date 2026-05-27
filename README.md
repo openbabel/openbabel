@@ -2,7 +2,7 @@ Open Babel
 ----------
 
 [![GitHub release](https://img.shields.io/github/release/openbabel/openbabel.svg?maxAge=86400)](https://github.com/openbabel/openbabel/releases)
-[![Download Open Babel](https://img.shields.io/sourceforge/dt/openbabel.svg?maxAge=86400)](https://github.com/openbabel/openbabel/releases)
+[![Download Open Babel](https://img.shields.io/github/downloads/openbabel/openbabel/total?maxAge=86400)](https://github.com/openbabel/openbabel/releases)
 [![Google Scholar Citations](https://openbabel.org/citations.svg?maxAge=86400)](https://scholar.google.com/scholar?oi=bibs&hl=en&cites=13319995025871922899&as_sdt=5)
 
 Open Babel is a chemical toolbox designed to speak the many languages
