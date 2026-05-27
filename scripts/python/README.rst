@@ -29,7 +29,7 @@ on the Python bindings, see the `Python pages on the Open Babel website`_.
 Dependencies
 ------------
 
--  Python 2.4 or a more recent version.
+-  Python 3.9 or a more recent version.
 -  Open Babel 3 or a more recent version.
 
 Installation
@@ -45,8 +45,8 @@ Installation
 
 ::
 
-    tar -xzvf openbabel-3-1-0.tar.gz
-    cd openbabel-openbabel-3-1-0
+    tar -xzvf openbabel-3-2-0.tar.gz
+    cd openbabel-openbabel-3-2-0
     python setup.py install
     
 **Option 3**: While building Open Babel itself.
@@ -62,7 +62,7 @@ Installation
 Copyright and Licence
 ---------------------
 
--  Copyright (C) 2005-2007 Geoffrey R. Hutchison babel@geoffhutchison.net
+-  Copyright (C) 2005-2026 Geoffrey R. Hutchison babel@geoffhutchison.net
 -  Some portions Copyright (C) 2006-2010 Noel O'Boyle
 
 This Python module is part of the `Open Babel project`_.
@@ -78,5 +78,5 @@ distribution.
 .. _`openbabel`: http://openbabel.org/docs/dev/UseTheLibrary/PythonDoc.html
 .. _`pybel`: http://openbabel.org/docs/dev/UseTheLibrary/Python_Pybel.html
 .. _`Python pages on the Open Babel website`: http://openbabel.org/wiki/Python
-.. _`pip`: http://www.pip-installer.org
+.. _`pip`: https://pip.pypa.io/en/stable/
 .. _`Open Babel project`: http://openbabel.org

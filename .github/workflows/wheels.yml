@@ -19,15 +19,38 @@ env:
   CIBW_BUILD: "cp310-* cp311-* cp312-* cp313-* cp314-*"
   CIBW_SKIP: "*-manylinux_i686 *-win32 *-musllinux*"
   CIBW_BUILD_VERBOSITY: 1
-  # setuptools_scm doesn't recognize the 'openbabel-X-Y-Z' tag format, so
-  # explicit override is required to publish a real release.
-  SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL: ${{ inputs.version }}
-  CIBW_ENVIRONMENT: ${{ inputs.version && format('SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL={0}', inputs.version) || '' }}
 
 jobs:
+  # setuptools_scm doesn't recognize the 'openbabel-X-Y-Z' tag format, so
+  # this job derives the version from either an explicit dispatch input or
+  # the tag itself (e.g. openbabel-3-2-0 -> 3.2.0). Empty for PR/dev builds.
+  determine_version:
+    name: Determine project version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.compute.outputs.version }}
+    steps:
+      - id: compute
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            v="${{ inputs.version }}"
+          elif [[ "${GITHUB_REF}" == refs/tags/openbabel-* ]]; then
+            v="${GITHUB_REF#refs/tags/openbabel-}"
+            v="${v//-/.}"
+          else
+            v=""
+          fi
+          echo "Project version: '$v'"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
+
   build_wheels:
     name: Build wheels for ${{ matrix.os }}
+    needs: [determine_version]
     runs-on: ${{ matrix.runs-on }}
+    env:
+      SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL: ${{ needs.determine_version.outputs.version }}
+      CIBW_ENVIRONMENT: ${{ needs.determine_version.outputs.version && format('SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL={0}', needs.determine_version.outputs.version) || '' }}
     strategy:
       fail-fast: false
       matrix:
@@ -60,7 +83,10 @@ jobs:
 
   build_sdist:
     name: Build source distribution
+    needs: [determine_version]
     runs-on: ubuntu-latest
+    env:
+      SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL: ${{ needs.determine_version.outputs.version }}
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
