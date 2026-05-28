@@ -273,7 +273,7 @@ if(NOT MINGW AND NOT CYGWIN)
       ADD_TEST(NAME pytest_${pytest} COMMAND ${Python_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/test${pytest}.py")
       set_tests_properties(pytest_${pytest} PROPERTIES
         FAIL_REGULAR_EXPRESSION "ERROR;FAIL;Test failed"
-        ENVIRONMENT "PYTHONPATH=${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX};BABEL_LIBDIR=${FORMATDIR};BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
+        ENVIRONMENT "PYTHONPATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX};BABEL_LIBDIR=${FORMATDIR};BABEL_DATADIR=${CMAKE_SOURCE_DIR}/data;LD_LIBRARY_PATH=${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}:$ENV{LD_LIBRARY_PATH}"
       )
     endforeach(pytest ${pytests})
   endif(Python_EXECUTABLE)
@@ -297,7 +297,7 @@ if(PYTHON_BINDINGS)
 
   foreach(pybindtest ${pybindtests})
     if(NOT MSVC)
-      set(PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
+      set(PYTHONPATH "${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}/python:${CMAKE_BINARY_DIR}/lib${LIB_SUFFIX}")
     else()
       set(PYTHONPATH "${CMAKE_SOURCE_DIR}/scripts/python\;${CMAKE_BINARY_DIR}/bin/Release")
     endif()
