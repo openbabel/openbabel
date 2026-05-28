@@ -144,6 +144,7 @@ option(OPENBABEL_USE_SYSTEM_INCHI
   "Use the system inchi library." OFF)
 if(OPENBABEL_USE_SYSTEM_INCHI)
   find_package(Inchi REQUIRED)
+  add_definitions(-DHAVE_SYSTEM_INCHI)
   if (NOT INCHI_FOUND)
     message(FATAL_ERROR "Inchi library not found.")
   endif()
