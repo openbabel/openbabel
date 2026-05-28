@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12.0)
 set(SOVERSION 4)
 
 if (RUN_SWIG)
-  include(FindSWIG)
   # This module finds an installed SWIG. It sets the following variables:
   # SWIG_FOUND - set to true if SWIG is found
   # SWIG_DIR - the directory where swig is installed
