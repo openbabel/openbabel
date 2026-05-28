@@ -40,8 +40,6 @@ GNU General Public License for more details.
 
 
 
-#define MIN(x, y) (((x) < (y)) ? (x) : (y))
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define N_PROPERTIES 4
 
 
