@@ -34,9 +34,14 @@ set(descriptors
   descriptors/cmpdfilter.cpp
   descriptors/groupcontrib.cpp
   descriptors/filters.cpp
-  descriptors/inchidescriptor.cpp
   descriptors/smartsdescriptors.cpp
 )
+
+if(WITH_INCHI)
+  set(descriptors ${descriptors}
+    descriptors/inchidescriptor.cpp
+  )
+endif()
 
 set(fingerprints
   fingerprints/finger2.cpp
