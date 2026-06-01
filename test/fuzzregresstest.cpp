@@ -136,6 +136,39 @@ static bool RunReproWithInputFlag(const string &cveId, const string &inFormat,
   return true;
 }
 
+// Read a reproducer that contains a *truncated required record* and require
+// that the parser rejects it (ReadFile returns false) rather than silently
+// accepting it with fabricated field values copied from stale stack memory or
+// from the previous record. This is the observable behaviour of the fixed-
+// width / sscanf hardening: a sanitizer alone would not catch reuse of
+// already-initialized stack memory, so we assert on the rejection instead.
+// Skip silently if the corpus file or format is unavailable.
+static bool RunReproExpectReject(const string &caseId, const string &inFormat,
+                                 const string &filename)
+{
+  string path = GetFuzzFile(filename);
+  ifstream probe(path.c_str());
+  if (!probe.good()) {
+    cout << "# skip " << caseId << ": corpus file missing (" << path << ")\n";
+    return true;
+  }
+
+  OBConversion conv;
+  if (!conv.SetInFormat(inFormat.c_str())) {
+    cout << "# skip " << caseId << ": format " << inFormat
+         << " not registered in this build\n";
+    return true;
+  }
+
+  OBMol mol;
+  if (conv.ReadFile(&mol, path)) {
+    cout << "# FAIL " << caseId << ": truncated record was accepted ("
+         << mol.NumAtoms() << " atoms)\n";
+    return false;
+  }
+  return true;
+}
+
 // CVE-2026-2704: heap-buffer-overflow in transform3d::DescribeAsString
 // when parsing a CIF with an all-zero row in a space-group transform.
 // Fixed in PR #2862.
@@ -419,6 +452,54 @@ void caseHighZSmilesToAllFormats()
   writeHighZToAllFormats("[#129].[#250].C[#200]");
 }
 
+// Truncated-record hardening (no CVE id): each of the following formats used
+// to read atom/bond fields with sscanf (or fixed-column offsets) without
+// checking how many fields were actually parsed. A record with too few fields
+// left stack locals holding stale values -- from the previous record or from
+// uninitialized memory -- which were then copied into the OBMol and could be
+// written back out by any normal writer (an information-exposure bug). The
+// fix counts required conversions / bounds-checks offsets and rejects the
+// record. Each corpus file has one valid record followed by a truncated one.
+
+// MacroModel: atom line missing its x/y/z coordinates (only the type and one
+// connection pair are present).
+void caseTruncatedMmod()
+{
+  OB_ASSERT(RunReproExpectReject("truncated-mmod", "mmod",
+                                 "truncated-record.mmod"));
+}
+
+// Chem3D Cartesian: atom line with only the element symbol, missing the
+// atom number and x/y/z coordinates.
+void caseTruncatedChem3d()
+{
+  OB_ASSERT(RunReproExpectReject("truncated-chem3d", "c3d1",
+                                 "truncated-record.c3d"));
+}
+
+// CCC (fixed column): atom line shorter than the fixed coordinate column, so
+// the coordinate sscanf would otherwise read past the end of the line.
+void caseTruncatedCcc()
+{
+  OB_ASSERT(RunReproExpectReject("truncated-ccc", "ccc",
+                                 "truncated-record.ccc"));
+}
+
+// Ghemical: bond line with only the first atom index, missing the second
+// index (and the optional bond-order code).
+void caseTruncatedGhemical()
+{
+  OB_ASSERT(RunReproExpectReject("truncated-ghemical", "gpr",
+                                 "truncated-record.gpr"));
+}
+
+// Mol2: ATOM record missing the z coordinate and SYBYL atom type.
+void caseTruncatedMol2()
+{
+  OB_ASSERT(RunReproExpectReject("truncated-mol2", "mol2",
+                                 "truncated-record.mol2"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -521,6 +602,21 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 28:
     caseTrailOfBits_2026();
+    break;
+  case 29:
+    caseTruncatedMmod();
+    break;
+  case 30:
+    caseTruncatedChem3d();
+    break;
+  case 31:
+    caseTruncatedCcc();
+    break;
+  case 32:
+    caseTruncatedGhemical();
+    break;
+  case 33:
+    caseTruncatedMol2();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

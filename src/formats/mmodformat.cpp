@@ -117,11 +117,8 @@ namespace OpenBabel
 
     // Get Type Bonds, BondOrder, X, Y, Z
 
-    double x,y,z;
     vector3 v;
-    char temp_type[10];
     int i,j;
-    double charge;
     OBAtom atom;
 
     ttab.SetFromType("MMD");
@@ -130,12 +127,29 @@ namespace OpenBabel
         if (!ifs.getline(buffer,BUFF_SIZE))
           break;
 
-        int end[6], order[6];
+        // Initialize every field so that a short/malformed record cannot
+        // leave us reading stale stack contents (sscanf only assigns the
+        // fields it actually matches).
+        char temp_type[10] = {0};
+        int end[6] = {0, 0, 0, 0, 0, 0};
+        int order[6] = {0, 0, 0, 0, 0, 0};
+        double x = 0.0, y = 0.0, z = 0.0;
+        double charge = 0.0;
 
-        sscanf(buffer,"%9s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf",
-               temp_type,&end[0],&order[0],&end[1],&order[1],&end[2],&order[2],
-               &end[3], &order[3], &end[4], &order[4], &end[5], &order[5],
-               &x, &y, &z);
+        // The record must at least provide the atom type and x/y/z
+        // coordinates (1 string + 12 ints + 3 doubles = 16 fields).
+        int matched =
+          sscanf(buffer,"%9s%d%d%d%d%d%d%d%d%d%d%d%d%lf%lf%lf",
+                 temp_type,&end[0],&order[0],&end[1],&order[1],&end[2],&order[2],
+                 &end[3], &order[3], &end[4], &order[4], &end[5], &order[5],
+                 &x, &y, &z);
+        if (matched < 16)
+          {
+            obErrorLog.ThrowError(__FUNCTION__,
+                                  "Problems reading a MacroModel file: "
+                                  "truncated atom record.", obError);
+            return false;
+          }
 
         pair<int,int> tmp;
         for ( j = 0 ; j <=5 ; j++ )
@@ -161,10 +175,14 @@ namespace OpenBabel
         ttab.Translate(str1,str);
         atom.SetType(str1);
 
-        // stuff for optional fields
-
-        buffer[109]='\0';
-        sscanf(&buffer[101],"%lf", &charge);
+        // The partial charge is an optional field in columns 101-108.  Only
+        // parse it when the line actually reaches that column, otherwise leave
+        // charge at 0.0 rather than reading stale memory past the line end.
+        if (strlen(buffer) > 101)
+          {
+            buffer[109]='\0';
+            sscanf(&buffer[101],"%lf", &charge);
+          }
         atom.SetPartialCharge(charge);
         mol.AddAtom(atom);
       }

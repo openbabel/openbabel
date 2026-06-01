@@ -100,17 +100,40 @@ bool CCCFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     {
         if (!ifs.getline(buffer,BUFF_SIZE))
             return(false);
+        // This is a fixed-column format: the element symbol is in columns
+        // 0-1, the coordinates start at column 15, and the bond list starts
+        // at column 60.  Bounds-check the line length before indexing so we
+        // never parse past the end of the (terminated) line into stale memory.
+        size_t linelen = strlen(buffer);
+        if (linelen < 15)
+        {
+            obErrorLog.ThrowError(__FUNCTION__,
+                                  "Problems reading a CCC file: truncated atom "
+                                  "record (missing coordinates).", obError);
+            return(false);
+        }
         atom.Clear();
         element[0] = buffer[0];
         element[1] = (buffer[1] != ' ') ? buffer[1]:'\0';
         atom.SetAtomicNum(OBElements::GetAtomicNum(element));
-        sscanf(&buffer[15],"%lf%lf%lf",&x,&y,&z);
+        x = y = z = 0.0;
+        if (sscanf(&buffer[15],"%lf%lf%lf",&x,&y,&z) != 3)
+        {
+            obErrorLog.ThrowError(__FUNCTION__,
+                                  "Problems reading a CCC file: could not parse "
+                                  "atom coordinates.", obError);
+            return(false);
+        }
         v.Set(x,y,z);
         atom.SetVector(v);
 
         if (!mol.AddAtom(atom))
             return(false);
-        tokenize(vs,&buffer[60]);
+        // The bond list is optional; only parse it when the line is long
+        // enough, and clear vs otherwise so bonds do not leak across atoms.
+        vs.clear();
+        if (linelen > 60)
+            tokenize(vs,&buffer[60]);
         vector<string>::iterator j;
 
         for (j = vs.begin();j != vs.end();++j)
