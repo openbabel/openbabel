@@ -158,7 +158,9 @@ namespace OpenBabel
           if (!ifs.getline(buffer,BUFF_SIZE)) return(false);
           tokenize(vs,buffer);
           if (vs.size() != 4) return(false);
-          if (!sscanf(buffer,"%d%d%d%*d",&bgn,&end,&order)) return (false);
+          // Require all three of begin/end/order; a partial parse must not
+          // build a bond from stale begin/end/order values.
+          if (sscanf(buffer,"%d%d%d%*d",&bgn,&end,&order) < 3) return (false);
           mol.AddBond(bgn,end,order);
         }
 

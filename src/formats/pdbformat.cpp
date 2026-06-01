@@ -180,15 +180,23 @@ namespace OpenBabel
 
         // crystal cells
         if (EQn(buffer,"CRYST1",6)) {
-          float a, b, c, alpha, beta, gamma;
+          float a = 0, b = 0, c = 0, alpha = 0, beta = 0, gamma = 0;
           string group = "";
 
-          sscanf (&(buffer[6]), "%9f%9f%9f%7f%7f%7f", &a, &b, &c,
-                  &alpha, &beta, &gamma);
-          buffer[66] = '\0';
-          group += &(buffer[55]);
-          Trim (group);
-          fixRhombohedralSpaceGroupReader(group);
+          // The six cell parameters are required; skip a malformed/truncated
+          // CRYST1 record rather than build a unit cell from stale values.
+          if (sscanf (&(buffer[6]), "%9f%9f%9f%7f%7f%7f", &a, &b, &c,
+                      &alpha, &beta, &gamma) != 6)
+            continue;
+          // The space group occupies columns 56-66 and is optional; only read
+          // it when the line is long enough, otherwise we would index past the
+          // end of the record into stale buffer memory.
+          if (strlen(buffer) > 55) {
+            buffer[66] = '\0';
+            group += &(buffer[55]);
+            Trim (group);
+            fixRhombohedralSpaceGroupReader(group);
+          }
 
           OBUnitCell *pCell=new OBUnitCell;
           pCell->SetOrigin(fileformatInput);

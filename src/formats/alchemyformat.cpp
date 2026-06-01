@@ -136,7 +136,12 @@ namespace OpenBabel
       {
         if (!ifs.getline(buffer,BUFF_SIZE))
           return(false);
-        sscanf(buffer," %*d%d%d%99s",&bgn,&end,bobuf);
+        // The two atom indices are required; the bond-order keyword is
+        // optional (defaults to a single bond), so clear bobuf rather than
+        // reading a stale value left over from a previous bond.
+        bobuf[0] = '\0';
+        if (sscanf(buffer," %*d%d%d%99s",&bgn,&end,bobuf) < 2)
+          return(false);
         bostr = bobuf;
         order = 1;
         if      (bostr == "DOUBLE")
