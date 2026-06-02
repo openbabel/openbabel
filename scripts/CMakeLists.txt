@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.12.0)
 set(SOVERSION 4)
 
 if (RUN_SWIG)
-  include(FindSWIG)
   # This module finds an installed SWIG. It sets the following variables:
   # SWIG_FOUND - set to true if SWIG is found
   # SWIG_DIR - the directory where swig is installed
@@ -586,8 +585,8 @@ if (DO_PHP_BINDINGS)
     )
     if (RUN_SWIG)
       add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp
-          COMMAND ${SWIG_EXECUTABLE} -php -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp -outdir ${openbabel_SOURCE_DIR}/scripts/php ${openbabel_SOURCE_DIR}/scripts/openbabel-php.i
-          COMMAND sed -i -e's/abstract class OBForceField/class OBForceField/g' -e's/abstract class OBFingerprint/class OBFingerprint/g' -e's/abstract class OBOp/class OBOp/g' -e 's/static function FindType/function FindType/g' ${openbabel_SOURCE_DIR}/scripts/php/openbabel.php
+          COMMAND ${SWIG_EXECUTABLE} -php -c++ -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/php ${openbabel_SOURCE_DIR}/scripts/openbabel-php.i
+          COMMAND sed -i.bak -e's/abstract class OBForceField/class OBForceField/g' -e's/abstract class OBFingerprint/class OBFingerprint/g' -e's/abstract class OBOp/class OBOp/g' -e 's/static function FindType/function FindType/g' ${openbabel_SOURCE_DIR}/scripts/php/openbabel-php.cpp
           MAIN_DEPENDENCY openbabel-php.i
       )
     endif (RUN_SWIG)
