@@ -191,7 +191,7 @@ namespace OpenBabel
           // The space group occupies columns 56-66 and is optional; only read
           // it when the line is long enough, otherwise we would index past the
           // end of the record into stale buffer memory.
-          if (strlen(buffer) > 55) {
+          if (strlen(buffer) > 66) {
             buffer[66] = '\0';
             group += &(buffer[55]);
             Trim (group);
