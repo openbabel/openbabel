@@ -233,12 +233,25 @@ namespace OpenBabel
     for (i = 1; i <= natoms; i++)
       {
         ifs.getline(buffer,BUFF_SIZE);
-        sscanf(buffer,"%15s%*d%lf%lf%lf%15s",
+        // Required fields are the element type and the x/y/z coordinates; the
+        // trailing MM type token (tmp) and bond columns are optional, so tmp
+        // is defaulted to empty rather than read from stale stack memory.
+        atomic_type[0] = '\0';
+        tmp[0] = '\0';
+        x = y = z = 0.0;
+        int matched = sscanf(buffer,"%15s%*d%lf%lf%lf%15s",
                atomic_type,
                &x,
                &y,
                &z,
                tmp);
+        if (matched < 4)
+          {
+            obErrorLog.ThrowError(__FUNCTION__,
+                                  "Problems reading a Chem3D file: truncated "
+                                  "atom record (need type and x/y/z).", obError);
+            return false;
+          }
         v.Set(x,y,z);
         if (has_fractional)
           v *= m;

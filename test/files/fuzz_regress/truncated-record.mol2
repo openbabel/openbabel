@@ -1,0 +1,10 @@
+@<TRIPOS>MOLECULE
+truncated record test
+ 2 1 0 0 0
+SMALL
+NO_CHARGES
+@<TRIPOS>ATOM
+      1 C1          1.0000    2.0000    3.0000 C.3
+      2 O1          0.0000    0.0000
+@<TRIPOS>BOND
+     1    1    2 1

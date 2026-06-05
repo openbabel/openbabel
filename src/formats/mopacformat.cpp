@@ -83,7 +83,7 @@ namespace OpenBabel
     vector<string> vs;
     vector<double> charges;
     bool hasPartialCharges = false;
-    double energy;
+    double energy = 0.0;
     OBVectorData *dipoleMoment = nullptr;
     bool readingVibrations = false;
     vector< vector<vector3> > displacements; // vibrational displacements
@@ -297,8 +297,8 @@ namespace OpenBabel
           }
         else if (strstr(buffer, "FINAL HEAT") != nullptr)
           {
-            sscanf(buffer,"%*s%*s%*s%*s%*s%lf",&energy);
-            mol.SetEnergy(energy);
+            if (sscanf(buffer,"%*s%*s%*s%*s%*s%lf",&energy) == 1)
+              mol.SetEnergy(energy);
           }
         else if (strstr(buffer, "ELECTROSTATIC POTENTIAL CHARGES") != nullptr)
           {

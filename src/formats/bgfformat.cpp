@@ -115,11 +115,22 @@ namespace OpenBabel
           break;
         if (EQn(buffer,"FORMAT",6))
           break;
+        // Only ATOM/HETATM records describe atoms; skip anything else so a
+        // blank or stray line is not turned into an atom.
+        if (!EQn(buffer,"ATOM",4) && !EQn(buffer,"HETATM",6))
+          continue;
 
-        sscanf(buffer,"%*s %*s %*s %*s %*s %*s %lf %lf %lf %15s %*s %*s %lf",
+        // x/y/z and the atom type are required; the trailing charge is
+        // optional. Skip the record (rather than read stale stack values)
+        // if the required fields are not all present.
+        x = y = z = 0.0;
+        chrg = 0.0;
+        tmptyp[0] = '\0';
+        if (sscanf(buffer,"%*s %*s %*s %*s %*s %*s %lf %lf %lf %15s %*s %*s %lf",
                &x,&y,&z,
                tmptyp,
-               &chrg);
+               &chrg) < 4)
+          continue;
         atom = mol.NewAtom();
 
         ttab.Translate(tmp,tmptyp);

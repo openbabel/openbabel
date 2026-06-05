@@ -84,10 +84,12 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       return false;
   }while(ln[79]!='1');
 
-  char phase, nam[25], dum[7], elname[3];
+  char phase = ' ', nam[25] = {0}, dum[7] = {0}, elname[3];
   elname[2]=0;
   int elnum;
-  double Coeff[14];
+  // Initialize so a short coefficient/temperature line cannot leave any
+  // NASA-polynomial value holding uninitialized stack contents.
+  double Coeff[14] = {0};
 
   sscanf(ln,"%18s%6s",nam,dum);
   pmol->SetTitle(nam);
@@ -127,8 +129,10 @@ bool ThermoFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       }
     }
   }
-  double LoT, HiT, MidT=0;
-  /* int nc = */sscanf(p,"%c%10lf%10lf10%lf",&phase, &LoT, &HiT, &MidT);
+  double LoT = 0, HiT = 0, MidT = 0;
+  // phase char (col 45) followed by three 10-wide temperature fields:
+  // low, high and common/mid temperature.
+  sscanf(p,"%c%10lf%10lf%10lf",&phase, &LoT, &HiT, &MidT);
   pND->SetPhase(phase);
   pND->SetLoT(LoT);
   pND->SetHiT(HiT);
