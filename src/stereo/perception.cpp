@@ -2111,6 +2111,11 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = centers.begin(); i != centers.end(); ++i) {
       OBAtom *center = mol->GetAtomById(*i);
+      // The center id may originate from pre-existing stereo data that no
+      // longer corresponds to an atom in this molecule (e.g. after rebuilding
+      // a malformed structure), in which case GetAtomById returns null.
+      if (!center)
+        continue;
 
       // make sure we have at least 3 heavy atom neighbors
       // timvdm 28 Jun 2009: This is already checked in FindStereogenicUnits
