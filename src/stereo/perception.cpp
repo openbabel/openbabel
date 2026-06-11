@@ -2218,6 +2218,11 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
       OBBond *bond = mol->GetBondById(*i);
+      // The bond id may originate from pre-existing stereo data that no longer
+      // corresponds to a bond in this molecule (e.g. after rebuilding a
+      // malformed structure), in which case GetBondById returns null.
+      if (!bond)
+        continue;
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
 
@@ -2268,6 +2273,13 @@ namespace OpenBabel {
         else
           bondVecs.push_back(pos - end_vec);
       }
+
+      // A cis/trans bond needs two neighbor directions on each end (four in
+      // total, padded with implicit refs above). A malformed structure can
+      // leave one end with too few neighbors; skip it rather than indexing
+      // past the end of bondVecs.
+      if (bondVecs.size() != 4)
+        continue;
 
       double tor02, tor03, tor12, tor13;
       if (uc) {
@@ -2690,6 +2702,11 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
       OBBond *bond = mol->GetBondById(*i);
+      // The bond id may originate from pre-existing stereo data that no longer
+      // corresponds to a bond in this molecule (e.g. after rebuilding a
+      // malformed structure), in which case GetBondById returns null.
+      if (!bond)
+        continue;
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
 
@@ -2749,6 +2766,13 @@ namespace OpenBabel {
         if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir)
             config.specified = false;
       }
+
+      // A cis/trans bond needs two neighbor directions on each end (four in
+      // total, padded with implicit refs above). A malformed structure can
+      // leave one end with too few neighbors; skip it rather than indexing
+      // past the end of bondVecs.
+      if (config.specified==true && bondVecs.size() != 4)
+        continue;
 
       if (config.specified==true) { // Work out the stereochemistry
         // 0      3
