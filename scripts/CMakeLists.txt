@@ -77,15 +77,18 @@ if (DO_PYTHON_BINDINGS)
     )
 
     if(RUN_SWIG)
-      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
-      COMMAND ${SWIG_EXECUTABLE} -python -c++ ${doxygen_switch} -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_SOURCE_DIR}/scripts/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
+      file(MAKE_DIRECTORY ${openbabel_BINARY_DIR}/scripts/python/openbabel)
+      add_custom_command(OUTPUT ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/openbabel.py
+      COMMAND ${SWIG_EXECUTABLE} -python -c++ ${doxygen_switch} -small -O -templatereduce -naturalvar -I${openbabel_SOURCE_DIR}/include -I${openbabel_BINARY_DIR}/include -o ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp ${eigen_define} -outdir ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel ${openbabel_SOURCE_DIR}/scripts/openbabel-python.i
               MAIN_DEPENDENCY openbabel-python.i
               VERBATIM
               )
     endif(RUN_SWIG)
     
     configure_file(${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py.in
-                   ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py)
+                   ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/__init__.py)
+    configure_file(${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
+                   ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/pybel.py)
     add_library(bindings_python MODULE ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel-python.cpp)
 
     if(APPLE)
@@ -121,7 +124,7 @@ if (DO_PYTHON_BINDINGS)
         set_target_properties(bindings_python PROPERTIES
             OUTPUT_NAME _openbabel
             PREFIX ""
-            LIBRARY_OUTPUT_DIRECTORY "${openbabel_SOURCE_DIR}/scripts/python/openbabel/"
+            LIBRARY_OUTPUT_DIRECTORY "${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/"
             SUFFIX .so )
         if(BUILD_BY_PIP)
           set(PYOBABEL_INSTDIR ".")
@@ -143,10 +146,10 @@ if (DO_PYTHON_BINDINGS)
         install(TARGETS bindings_python
                 LIBRARY DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+        install(FILES ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/__init__.py
                 DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+        install(FILES ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/openbabel.py
                 DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
@@ -178,10 +181,10 @@ if (DO_PYTHON_BINDINGS)
         install(TARGETS bindings_python
                 LIBRARY DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/__init__.py
+        install(FILES ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/__init__.py
                 DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
-        install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py
+        install(FILES ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/openbabel.py
                 DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         install(FILES ${openbabel_SOURCE_DIR}/scripts/python/openbabel/pybel.py
@@ -191,7 +194,7 @@ if (DO_PYTHON_BINDINGS)
                 DESTINATION ${PYOBABEL_INSTDIR}
                 COMPONENT bindings_python)
         add_custom_command(TARGET bindings_python POST_BUILD
-          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_SOURCE_DIR}/scripts/python/openbabel/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
+          COMMAND ${CMAKE_COMMAND} -E copy ${openbabel_BINARY_DIR}/lib${LIB_SUFFIX}/python/openbabel/openbabel.py ${openbabel_BINARY_DIR}/bin/${CMAKE_CFG_INTDIR}
           )
     endif(NOT WIN32)
 endif (DO_PYTHON_BINDINGS)
