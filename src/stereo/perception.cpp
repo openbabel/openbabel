@@ -1988,6 +1988,10 @@ namespace OpenBabel {
 
       bool alreadyExists = (existingMap.find(*i) != existingMap.end());
       OBBond *bond = mol->GetBondById(*i);
+      // The bond id may not correspond to a bond in this molecule (e.g. for
+      // stale stereo data on a rebuilt structure); GetBondById returns null.
+      if (!bond)
+        continue;
 
       OBCisTransStereo *ct;
       OBCisTransStereo::Config config;

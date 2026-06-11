@@ -1698,9 +1698,15 @@ namespace OpenBabel
       if (((OBStereoBase*)*data)->GetType() == OBStereo::CisTrans) {
         OBCisTransStereo *ct = dynamic_cast<OBCisTransStereo*>(*data);
         if (ct->GetConfig().specified) {
+          OBAtom *bgn = mol.GetAtomById(ct->GetConfig().begin);
+          OBAtom *end = mol.GetAtomById(ct->GetConfig().end);
+          OBBond *bond = (bgn && end) ? mol.GetBond(bgn, end) : nullptr;
+          // Skip stereo data whose atoms/bond no longer exist (e.g. after
+          // rebuilding a malformed structure) rather than dereferencing null.
+          if (!bond)
+            continue;
           cistrans.push_back(ct);
-          bond_id = mol.GetBond(mol.GetAtomById(ct->GetConfig().begin),
-                                mol.GetAtomById(ct->GetConfig().end))->GetId();
+          bond_id = bond->GetId();
           sgunits.push_back(OBStereoUnit(OBStereo::CisTrans, bond_id));
         }
       }
@@ -1769,8 +1775,12 @@ namespace OpenBabel
 
   bool OBBuilder::IsSpiroAtom(unsigned long atomId, OBMol &mol)
   {
+    OBAtom* atom = mol.GetAtomById(atomId);
+    if (!atom) // no such atom; cannot be a spiro center
+      return false;
+
     OBMol workmol = mol; // Make a copy (this invalidates Ids, but not Idxs)
-    OBAtom* watom = workmol.GetAtom(mol.GetAtomById(atomId)->GetIdx());
+    OBAtom* watom = workmol.GetAtom(atom->GetIdx());
     if (watom->GetHvyDegree() != 4) // QUESTION: Do I need to restrict it further?
       return false;
 
