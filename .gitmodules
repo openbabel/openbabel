@@ -1,3 +1,6 @@
+[submodule "external/InChI"]
+	path = external/InChI
+	url = https://github.com/IUPAC-InChI/InChI.git
 [submodule "external/tree"]
 	path = external/tree
 	url = https://github.com/kpeeters/tree.hh.git

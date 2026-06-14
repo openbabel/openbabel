@@ -41,6 +41,9 @@ if(WITH_INCHI)
   set(descriptors ${descriptors}
     descriptors/inchidescriptor.cpp
   )
+  if(NOT OPENBABEL_USE_SYSTEM_INCHI)
+    include_directories("${PROJECT_SOURCE_DIR}/external/InChI/INCHI-1-SRC/INCHI_BASE/src")
+  endif()
 endif()
 
 set(fingerprints
@@ -206,7 +209,7 @@ else(BUILD_SHARED)
 
   if(WITH_STATIC_INCHI)
     if(NOT OPENBABEL_USE_SYSTEM_INCHI)
-      add_subdirectory(formats/libinchi)
+      include_directories("${PROJECT_SOURCE_DIR}/external/InChI/INCHI-1-SRC/INCHI_BASE/src")
     endif()
     set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
     set(libs ${libs} ${INCHI_LIBRARY})
