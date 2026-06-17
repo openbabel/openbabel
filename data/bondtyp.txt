@@ -97,7 +97,8 @@
 
 # if three N are present in R-N-guanidine-ish, prefer double bond to the
 #  non-terminal N (i.e. D2 if present)
-[#6D3^2;!R]([#7D2;!R])([#7D1;!R])~[#7D1;!R] 0 1 2 0 2 1 0 3 1
+[#6D3^2;!R]([#7D2;!R])([#7D1;!R])~[#7D1;!R;+0] 0 1 2 0 2 1 0 3 1
+[#6D3^2;!R]([#7D2;!R])([#7D1;!R])~[#7D1;!R;+] 0 1 1 0 2 1 0 3 2
 # guanidinium and amidine -C(=NH)NH2 without hydrogens
 [#6D3^2;!R]([#7D1H0;!R])([#7;!R])*	0 1 2 0 2 1 0 3 1
 # and also with hydrogens
