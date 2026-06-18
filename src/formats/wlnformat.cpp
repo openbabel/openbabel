@@ -20,7 +20,7 @@ GNU General Public License for more details.
 #include <openbabel/base.h>
 #include <openbabel/mol.h>
 
-bool NMReadWLN(const char *ptr, OpenBabel::OBMol* mol);
+bool ReadWLN(const char *ptr, OpenBabel::OBMol* mol);
 
 using namespace std;
 namespace OpenBabel
@@ -39,7 +39,7 @@ namespace OpenBabel
     {
       return
         "Wiswesser Line Notation\n"
-	"A chemical line notation developed by Wiswesser\n\n"
+	      "A chemical line notation developed by Wiswesser\n\n"
 
         "WLN was invented in 1949, by William J. Wiswesser, as one of the first attempts\n"
         "to codify chemical structure as a line notation, enabling collation on punched\n"
@@ -94,10 +94,49 @@ namespace OpenBabel
         "- T56 BMJ B D - DT6N CNJ BMR BO1 DN1 & 2N1 & 1 EMV1U1   (osimertinib)\n"
         "  Cn1cc(c2c1cccc2)c3ccnc(n3)Nc4cc(c(cc4OC)N(C)CCN(C)C)NC(=O)C=C\n\n"
 
-        "This reader was contributed by Roger Sayle (NextMove Software). The text of\n"
+        "The original reader was contributed by Roger Sayle (NextMove Software). The text of\n"
         "this description was taken from his Bio-IT World poster [3]. Note that not\n"
-        "all of WLN is currently supported; however, about 76% of the WLN strings\n"
-        "found in PubChem can be interpreted.\n\n"
+        "all of WLN is was supported at this time; however, about 76% of the WLN strings\n"
+        "found in PubChem were interpretable.\n\n"
+        
+        "Michael Blakey (University of Southampton) submitted a new reader to handle\n"
+        "nearly all rules contained in Elbert G. Smith's rule book, with only exceptions\n"
+        "being multipliers and WLN uncertainties, 98% of Pubchem WLN strings are now \n"
+        "successfully converted, with greater than 200 WLN rules accounted for\n\n" 
+        
+        
+        "Rules fully supported\n\n"
+      	"1. Unbranched and Branched Chains\n"
+      	"2. Systematic Contractions\n"
+      	"3. Organic Salts\n"
+        "4. Benzene Derivatives\n"
+        "5. Multisubstituted Benzene Rings\n"
+        "6. Benzene Rings in Branching Chains\n"
+        "7. Monocyclic Rings\n"
+        "8. Bicyclic Rings\n"
+        "9. Polycyclic Rings\n"
+        "10. Perifused Rings\n"
+        "11. Chains of Rings other than Benzene\n"
+        "12. Sprio Rings\n"
+        "13. Bicyclic Bridged Rings\n"
+        "14. Rings with Pseudo Bridges\n"
+        "15. Ring Structures with Crossed Bonds and Unbranched Bridges\n"
+        "16. Rings of Rings Contraction\n"
+        "17. Metallocenes and Catanenes\n" 
+        "18. Chelete Compounds\n"
+        "19. Ionic Charges, Free Radicals and Isotopes\n\n"
+
+
+        "Rules not supported\n\n"
+        "1. Multipliers\n"
+        "2. Ring Contractions and Multipliers\n"
+        "3. All Special Problems Rules\n\n\n"
+        
+        
+        "Writing to WLN is in early prototype stage, and can handle simple compounds, plus\n"
+        "some uncomplex ring systems. The challenge of the writer is locant pathdefinitions\n"
+        "where a NP-Complete algorithm is currently used to reform the notation\n"
+        "this is still development as part of Michaels PhD work\n\n"
 
         "1. Elbert G. Smith, \"The Wiswesser Line-Formula Chemical Notation\",\n"
         "   McGraw-Hill Book Company publishers, 1968.\n"
@@ -141,7 +180,8 @@ namespace OpenBabel
     if (!ifs.getline(buffer,BUFF_SIZE))
       return false;
 
-    NMReadWLN(buffer, pmol);
+    if(!ReadWLN(buffer, pmol))
+      return false;
 
     return true;
   }
