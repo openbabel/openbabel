@@ -294,12 +294,10 @@ namespace OpenBabel {
        }
        // Done with reading atoms
        natoms = mol.NumAtoms();
-       // Only record a conformer if we parsed a complete set of coordinates.
-       // A short or empty block must not create an undersized coordinate
-       // array that ConnectTheDots()/BeginModify() would later read out of
-       // bounds (a later block creates the atoms but this conformer can end
-       // up as the active one after the pop_back() below).
-       if (natoms > 0 && coordinates.size() == static_cast<size_t>(natoms) * 3) {
+
+        // Only store a conformer when we have a full set of coordinates;
+       // a malformed block may yield fewer (or no) atoms than expected.
+       if (natoms > 0 && coordinates.size() >= static_cast<size_t>(natoms) * 3) {
          // malloc / memcpy
          double* tmpCoords = new double [(natoms)*3];
          memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
@@ -313,6 +311,8 @@ namespace OpenBabel {
         /*This set of EFP coordinates belongs only to the
          * conformer directly above this (ATOMIC   COORDINATES (BOHR))
          */
+        if (vconf.empty()) // no preceding coordinate block to attach to
+          continue;
         double* tmpCoords = vconf.at(0);
         for (int i=0; i < natoms*3; i++)
           coordinates.push_back(tmpCoords[i]);
@@ -426,10 +426,10 @@ namespace OpenBabel {
 
         // Done with reading atoms
         natoms = mol.NumAtoms();
-        // Only record a conformer if we parsed a complete set of coordinates
-        // (see note above) -- a short/empty block would create an undersized
-        // coordinate array and read out of bounds later.
-        if (natoms > 0 && coordinates.size() == static_cast<size_t>(natoms) * 3) {
+
+        // Only store a conformer when we have a full set of coordinates;
+        // a malformed block may yield fewer (or no) atoms than expected.
+        if (natoms > 0 && coordinates.size() >= static_cast<size_t>(natoms) * 3) {
           // malloc / memcpy
           double* tmpCoords = new double [(natoms)*3];
           memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);

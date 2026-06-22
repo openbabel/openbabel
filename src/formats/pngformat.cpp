@@ -147,7 +147,9 @@ public:
     if(!CopyOfInput.empty() && bytesToIEND>0)
     {
       OBBase* pOb = pConv->GetChemObject();
-      return WriteMolecule(pOb, pConv);
+      bool ret = WriteMolecule(pOb, pConv);
+      delete pOb; // WriteMolecule does not take ownership; free it here
+      return ret;
     }
     else
     {
