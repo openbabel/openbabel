@@ -58,7 +58,21 @@ GNU General Public License for more details.
 // under ASAN. Either way the limit is far above what real structures reach --
 // even multi-thousand atom proteins only descend a couple hundred -- so it only
 // trips on degenerate input.
-#if defined(__SANITIZE_ADDRESS__) || (defined(__has_feature) && __has_feature(address_sanitizer))
+//
+// Detect AddressSanitizer: GCC defines __SANITIZE_ADDRESS__, Clang exposes it
+// through __has_feature. __has_feature must be probed in a *nested* #if -- GCC's
+// preprocessor still expands __has_feature(address_sanitizer) even when it is
+// guarded by defined(__has_feature) in the same expression, which is a syntax
+// error there.
+#if defined(__SANITIZE_ADDRESS__)
+#define OB_CANON_ASAN 1
+#elif defined(__has_feature)
+#if __has_feature(address_sanitizer)
+#define OB_CANON_ASAN 1
+#endif
+#endif
+
+#ifdef OB_CANON_ASAN
 #define MAX_CANON_RECURSION_DEPTH 500
 #else
 #define MAX_CANON_RECURSION_DEPTH 3000
