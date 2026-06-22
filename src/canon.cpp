@@ -43,6 +43,18 @@ GNU General Public License for more details.
 
 #define MAX_IDENTITY_NODES 50
 
+// Maximum CanonicalLabelsRecursive() depth. The labeling recurses roughly once
+// per atom along a path, and on pathological inputs (very long chains, large
+// contrived graphs) this can exhaust the call stack before the time-based
+// Timeout ever fires. Real structures stay far below this -- even multi-thousand
+// atom proteins only reach a few hundred to ~1600 -- so this only ever trips on
+// degenerate input, where it aborts gracefully (like a timeout) instead of
+// crashing. Each recursion level can consume two stack frames (this function
+// plus LabelFragments); on an 8 MB stack the deepest path overflows around
+// 5000-6000 under ASAN, so this is kept comfortably below that while clearing
+// any realistic structure.
+#define MAX_CANON_RECURSION_DEPTH 3000
+
 using namespace std;
 
 // debug function
@@ -755,6 +767,16 @@ namespace OpenBabel {
       }
       time_t startTime, maxTime;
       bool expired;
+      unsigned int depth = 0; //!< current CanonicalLabelsRecursive depth
+    };
+
+    // RAII counter for CanonicalLabelsRecursive() depth; see
+    // MAX_CANON_RECURSION_DEPTH for why the search bails out on deep recursion.
+    struct RecursionDepthGuard
+    {
+      RecursionDepthGuard(Timeout &timeout) : m_timeout(timeout) { ++m_timeout.depth; }
+      ~RecursionDepthGuard() { --m_timeout.depth; }
+      Timeout &m_timeout;
     };
 
 
@@ -1181,6 +1203,15 @@ namespace OpenBabel {
      */
     static void CanonicalLabelsRecursive(OBAtom *current, unsigned int label, Timeout &timeout, FullCode &bestCode, State &state)
     {
+      // Bail out before the call stack overflows on pathological inputs.
+      // Setting expired routes the unwind through the existing isExpired()
+      // checks (see MAX_CANON_RECURSION_DEPTH).
+      RecursionDepthGuard depthGuard(timeout);
+      if (timeout.depth > MAX_CANON_RECURSION_DEPTH) {
+        timeout.expired = true;
+        return;
+      }
+
       // Bail out early on timeout. Checked here, at the top, so the unwind
       // is fast even when most recursive frames hit the "full mapping"
       // path below (which can be expensive on pathological molecules).
@@ -1621,7 +1652,7 @@ namespace OpenBabel {
 
         // Throw an error if the timeout is exceeded.
         if (timeout.isExpired()) {
-          obErrorLog.ThrowError(__FUNCTION__, "maximum time exceeded...", obError);
+          obErrorLog.ThrowError(__FUNCTION__, "canonical labeling aborted (time or recursion-depth limit exceeded)...", obError);
         }
 
         // Store the canonical code for the fragment.

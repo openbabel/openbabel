@@ -550,6 +550,19 @@ void caseAbinitUnderfilledXcart()
                      "abinit-underfilled-xcart.abinit"));
 }
 
+// Canonical labeling recursion depth (no CVE id): stack-overflow in
+// CanonicalLabelsImpl::CanonicalLabelsRecursive on a pathological input (here a
+// long unbranched chain). The recursion descends roughly once per atom, so a
+// big enough molecule exhausts the call stack before the time-based Timeout can
+// fire. Fixed by capping the recursion depth and bailing out gracefully (like a
+// timeout). Read a long-chain SMILES and write canonical SMILES to drive the
+// labeler, as the fuzzer's "can" output target does.
+void caseCanonDeepRecursion()
+{
+  OB_ASSERT(RunReproConvert("canon-deep-recursion", "smi", "can",
+                            "canon-deep-recursion.smi"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -679,6 +692,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 37:
     caseAbinitUnderfilledXcart();
+    break;
+  case 38:
+    caseCanonDeepRecursion();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
