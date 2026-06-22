@@ -385,14 +385,14 @@ namespace OpenBabel
         for(ii=0; (ii<5); ii++)
         {
             // Add to molecule properties
-            sprintf(valbuf,"%f", result[ii]);
+            snprintf(valbuf, sizeof(valbuf), "%f", result[ii]);
             add_unique_pairdata_to_mol(mol, attr[ii], valbuf, 0);
         }
-        sprintf(valbuf, "%f", ezpe*eFactor);
+        snprintf(valbuf, sizeof(valbuf), "%f", ezpe*eFactor);
         add_unique_pairdata_to_mol(mol, "zpe", valbuf, 0);
-        sprintf(valbuf, "%f", CV);
+        snprintf(valbuf, sizeof(valbuf), "%f", CV);
         add_unique_pairdata_to_mol(mol, "cv", valbuf, 0);
-        sprintf(valbuf, "%f", CV+Rgas);
+        snprintf(valbuf, sizeof(valbuf), "%f", CV+Rgas);
         add_unique_pairdata_to_mol(mol, "cp", valbuf, 0);
         // Entropy components
         if (Scomponents.size() == 3)
@@ -400,7 +400,7 @@ namespace OpenBabel
             const char *comps[3] = { "Strans", "Srot", "Svib" };
             for(int i=0; (i<3); i++)
             {
-                sprintf(valbuf, "%f", Scomponents[i]);
+                snprintf(valbuf, sizeof(valbuf), "%f", Scomponents[i]);
                 add_unique_pairdata_to_mol(mol, comps[i], valbuf, 0);
             }
         }

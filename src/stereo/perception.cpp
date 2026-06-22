@@ -1988,6 +1988,10 @@ namespace OpenBabel {
 
       bool alreadyExists = (existingMap.find(*i) != existingMap.end());
       OBBond *bond = mol->GetBondById(*i);
+      // The bond id may not correspond to a bond in this molecule (e.g. for
+      // stale stereo data on a rebuilt structure); GetBondById returns null.
+      if (!bond)
+        continue;
 
       OBCisTransStereo *ct;
       OBCisTransStereo::Config config;
@@ -2111,6 +2115,11 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = centers.begin(); i != centers.end(); ++i) {
       OBAtom *center = mol->GetAtomById(*i);
+      // The center id may originate from pre-existing stereo data that no
+      // longer corresponds to an atom in this molecule (e.g. after rebuilding
+      // a malformed structure), in which case GetAtomById returns null.
+      if (!center)
+        continue;
 
       // the stereo unit may reference an id that is not a valid atom
       // (e.g. a center removed since the unit was created)
@@ -2276,6 +2285,10 @@ namespace OpenBabel {
           bondVecs.push_back(pos - end_vec);
       }
 
+      // A cis/trans bond needs two neighbor directions on each end (four in
+      // total, padded with implicit refs above). A malformed structure can
+      // leave one end with too few neighbors; skip it rather than indexing
+      // past the end of bondVecs.
       if (nBeginVecs != 2 || bondVecs.size() != 4) {
         obErrorLog.ThrowError(__FUNCTION__,
           "Cannot determine cis/trans: unexpected neighbor count", obInfo);
