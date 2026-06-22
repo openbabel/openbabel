@@ -46,14 +46,23 @@ GNU General Public License for more details.
 // Maximum CanonicalLabelsRecursive() depth. The labeling recurses roughly once
 // per atom along a path, and on pathological inputs (very long chains, large
 // contrived graphs) this can exhaust the call stack before the time-based
-// Timeout ever fires. Real structures stay far below this -- even multi-thousand
-// atom proteins only reach a few hundred to ~1600 -- so this only ever trips on
-// degenerate input, where it aborts gracefully (like a timeout) instead of
-// crashing. Each recursion level can consume two stack frames (this function
-// plus LabelFragments); on an 8 MB stack the deepest path overflows around
-// 5000-6000 under ASAN, so this is kept comfortably below that while clearing
-// any realistic structure.
+// Timeout ever fires. When exceeded the search aborts gracefully (like a
+// timeout) instead of crashing.
+//
+// This is really a call-stack budget, so it is sized to the stack frames. Each
+// recursion level consumes two frames (this function plus LabelFragments).
+// AddressSanitizer instruments every stack variable with redzones, inflating
+// those frames ~10x (a CanonicalLabelsRecursive frame measured ~3.9 KB under
+// ASAN vs a few hundred bytes otherwise), so an 8 MB stack overflows around
+// depth ~850 under ASAN but only ~8000 otherwise. We therefore cap much lower
+// under ASAN. Either way the limit is far above what real structures reach --
+// even multi-thousand atom proteins only descend a couple hundred -- so it only
+// trips on degenerate input.
+#if defined(__SANITIZE_ADDRESS__) || (defined(__has_feature) && __has_feature(address_sanitizer))
+#define MAX_CANON_RECURSION_DEPTH 500
+#else
 #define MAX_CANON_RECURSION_DEPTH 3000
+#endif
 
 using namespace std;
 
