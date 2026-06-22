@@ -294,14 +294,22 @@ namespace OpenBabel {
        }
        // Done with reading atoms
        natoms = mol.NumAtoms();
-       // malloc / memcpy
-       double* tmpCoords = new double [(natoms)*3];
-       memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-       vconf.push_back(tmpCoords);
+       // Only record a conformer if we parsed a complete set of coordinates.
+       // A short or empty block must not create an undersized coordinate
+       // array that ConnectTheDots()/BeginModify() would later read out of
+       // bounds (a later block creates the atoms but this conformer can end
+       // up as the active one after the pop_back() below).
+       if (natoms > 0 && coordinates.size() == static_cast<size_t>(natoms) * 3) {
+         // malloc / memcpy
+         double* tmpCoords = new double [(natoms)*3];
+         memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+         vconf.push_back(tmpCoords);
+         confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+       }
        coordinates.clear();
-       confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
 
-      } else if (strstr(buffer, "MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != nullptr) {
+      } else if (strstr(buffer, "MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != nullptr
+                 && !vconf.empty() && natoms > 0) {
         /*This set of EFP coordinates belongs only to the
          * conformer directly above this (ATOMIC   COORDINATES (BOHR))
          */
@@ -418,12 +426,17 @@ namespace OpenBabel {
 
         // Done with reading atoms
         natoms = mol.NumAtoms();
-        // malloc / memcpy
-        double* tmpCoords = new double [(natoms)*3];
-        memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-        vconf.push_back(tmpCoords);
+        // Only record a conformer if we parsed a complete set of coordinates
+        // (see note above) -- a short/empty block would create an undersized
+        // coordinate array and read out of bounds later.
+        if (natoms > 0 && coordinates.size() == static_cast<size_t>(natoms) * 3) {
+          // malloc / memcpy
+          double* tmpCoords = new double [(natoms)*3];
+          memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+          vconf.push_back(tmpCoords);
+          confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+        }
         coordinates.clear();
-        confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
 
       } else if (strstr(buffer, "NSERCH=") != nullptr && strstr(buffer, "ENERGY=") != nullptr) {
         char* tok = strtok(buffer, " ="); // my tokenize

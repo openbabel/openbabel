@@ -183,8 +183,13 @@ namespace OpenBabel
       }
       mol.AddConformer(coordinates);
     }
-    // Delete first conformer, created by EndModify, bunch of 0s
-    mol.DeleteConformer(0);
+    // Delete first conformer, created by EndModify, bunch of 0s -- but only
+    // if we actually added real conformers above. If no frame supplied a full
+    // set of positions (numConformers == 0), deleting the only conformer would
+    // leave the molecule's active coordinate pointer dangling and crash the
+    // ConnectTheDots() below.
+    if (mol.NumConformers() > 1)
+      mol.DeleteConformer(0);
     // Set geometry to last one
     mol.SetConformer(mol.NumConformers() - 1);
 

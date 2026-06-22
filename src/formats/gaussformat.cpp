@@ -635,12 +635,18 @@ namespace OpenBabel
               delete confData;
               return false;
             }
-            // malloc / memcpy
-            double *tmpCoords = new double [(natoms)*3];
-            memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
-            vconf.push_back(tmpCoords);
+            // Only record a conformer if this orientation block supplied a
+            // complete set of coordinates. A truncated later block (fewer atom
+            // rows than the first) would otherwise make the memcpy read past
+            // the end of the coordinates vector.
+            if (coordinates.size() == static_cast<size_t>(natoms) * 3) {
+              // malloc / memcpy
+              double *tmpCoords = new double [(natoms)*3];
+              memcpy(tmpCoords, &coordinates[0], sizeof(double)*natoms*3);
+              vconf.push_back(tmpCoords);
+              confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
+            }
             coordinates.clear();
-            confDimensions.push_back(3); // always 3D -- OBConformerData allows mixing 2D and 3D structures
           }
         else if(strstr(buffer, "Dipole moment") != nullptr)
             {

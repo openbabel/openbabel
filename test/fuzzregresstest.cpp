@@ -500,6 +500,56 @@ void caseTruncatedMol2()
                                  "truncated-record.mol2"));
 }
 
+// GAMESS undersized conformer (no CVE id): heap-buffer-overflow in
+// OBAtom::SetVector via ConnectTheDots()->BeginModify(). An empty/malformed
+// leading "ATOMIC ... COORDINATES (BOHR)" block created a zero-length
+// conformer while natoms was still 0; a later "COORDINATES OF ALL ATOMS"
+// block then created the real atoms. The "drop last geometry as duplicate"
+// pop_back() discarded the correctly-sized conformer, leaving the undersized
+// one active, so reading coordinates ran off the end of the array.  Fixed by
+// only recording a conformer when a full natoms*3 set of coordinates was
+// parsed. The reproducer must read cleanly (and bond the C=O, proving the
+// real, correctly-sized coordinates survived).
+void caseGamessEmptyFirstGeom()
+{
+  OB_ASSERT(RunRepro("gamess-empty-first-geom", "gamout",
+                     "gamess-empty-first-geom.gamout"));
+}
+
+// Gaussian truncated orientation block (no CVE id): same conformer-sizing class
+// as the GAMESS bug above. A later "Standard orientation:" block with fewer
+// atom rows than the first left the coordinates vector shorter than natoms*3,
+// so the memcpy that builds the conformer read past its end. Fixed by only
+// recording a conformer when coordinates.size() == natoms*3.
+void caseGaussTruncatedOrientation()
+{
+  OB_ASSERT(RunRepro("gauss-truncated-orientation", "g09",
+                     "gauss-truncated-orientation.g09"));
+}
+
+// Molden mismatched geometry frame (no CVE id): a [GEOMETRIES] (XYZ) frame
+// that declares more atoms than the first frame produced a coordinates list
+// longer than the molecule, and the conformer fill loop wrote past the
+// per-atom confCoord buffer (heap-buffer-overflow write). Fixed by clamping
+// the write to NumAtoms() and zero-filling any shortfall.
+void caseMoldenMismatchedFrame()
+{
+  OB_ASSERT(RunRepro("molden-mismatched-frame", "molden",
+                     "molden-mismatched-frame.molden"));
+}
+
+// abinit underfilled xcart (no CVE id): the file declared natom atoms but the
+// xcart block supplied fewer positions, so numConformers rounded to 0.
+// DeleteConformer(0) then freed the only (EndModify) conformer, leaving the
+// molecule's active coordinate pointer dangling for the following
+// ConnectTheDots() (heap-use-after-free). Fixed by only deleting the
+// placeholder conformer when real frames were added.
+void caseAbinitUnderfilledXcart()
+{
+  OB_ASSERT(RunRepro("abinit-underfilled-xcart", "abinit",
+                     "abinit-underfilled-xcart.abinit"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -617,6 +667,18 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 33:
     caseTruncatedMol2();
+    break;
+  case 34:
+    caseGamessEmptyFirstGeom();
+    break;
+  case 35:
+    caseGaussTruncatedOrientation();
+    break;
+  case 36:
+    caseMoldenMismatchedFrame();
+    break;
+  case 37:
+    caseAbinitUnderfilledXcart();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
