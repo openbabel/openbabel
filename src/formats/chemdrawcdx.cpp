@@ -607,11 +607,11 @@ bool ChemDrawBinaryXFormat::DoFragmentImpl(CDXReader& cdxr, OBMol* pmol,
             break;
           case 0x0040: // aromatic bond (0.5)
           case 0x0080: // aromatic bond (1.5)
-	  case 0x0100: // aromatic bond (2.5)
-	  case 0x0081: // single plus 1.5
-	  case 0x0082: // double plus 1.5
-	  case 0x0101: // single plus 2.5
-	  case 0x0102: // double plus 2.5
+          case 0x0100: // aromatic bond (2.5)
+          case 0x0081: // single plus 1.5
+          case 0x0082: // double plus 1.5
+          case 0x0101: // single plus 2.5
+          case 0x0102: // double plus 2.5
             order = 5;
             break;
           default: // other cases are just not supported, keep 1
