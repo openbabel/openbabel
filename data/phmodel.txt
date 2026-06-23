@@ -35,9 +35,8 @@ TRANSFORM [nD2:1]1c[nH]cc1 >> [n+:1]1c[nH]cc1				7.0
 TRANSFORM [ND3+0:1]=[#6] >> [ND3+:1]=[#6]				4.0 # pKa from conjugated acid (BH+)
 
 #tetrazole
-TRANSFORM [nD2:1]([#1:2])1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1	4.89 #pKa from acid (AH)
-TRANSFORM [nD2-0]1[nD2:1]([#1:2])[nD2-0][nD2-0]c1 >> n1[n-:1]nnc1	4.89 #pKa from acid (AH)
-TRANSFORM [nD2-0:1]1[nD2-0][nD2-0][nD2-0]c1 >> [n-:1]1nnnc1		4.89 #pKa from acid (AH)
+TRANSFORM c1[nH:1]nnn1 >> c1[n-:1]nnn1 4.89 # pKa from acid (AH)
+TRANSFORM c1n[nH:1]nn1 >> c1n[n-:1]nn1 4.89 # pKa from acid (AH)
 
 #azide (always apply these transformations)
 TRANSFORM [ND1:1]~[ND2:2]~[ND1:3] >> [N-:1]=[N+:2]=[N-:3] 1E+10	    # azide ion
