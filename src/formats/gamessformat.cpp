@@ -294,7 +294,8 @@ namespace OpenBabel {
        }
        // Done with reading atoms
        natoms = mol.NumAtoms();
-       // Only store a conformer when we have a full set of coordinates;
+
+        // Only store a conformer when we have a full set of coordinates;
        // a malformed block may yield fewer (or no) atoms than expected.
        if (natoms > 0 && coordinates.size() >= static_cast<size_t>(natoms) * 3) {
          // malloc / memcpy
@@ -305,7 +306,8 @@ namespace OpenBabel {
        }
        coordinates.clear();
 
-      } else if (strstr(buffer, "MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != nullptr) {
+      } else if (strstr(buffer, "MULTIPOLE COORDINATES, ELECTRONIC AND NUCLEAR CHARGES") != nullptr
+                 && !vconf.empty() && natoms > 0) {
         /*This set of EFP coordinates belongs only to the
          * conformer directly above this (ATOMIC   COORDINATES (BOHR))
          */
@@ -424,6 +426,7 @@ namespace OpenBabel {
 
         // Done with reading atoms
         natoms = mol.NumAtoms();
+
         // Only store a conformer when we have a full set of coordinates;
         // a malformed block may yield fewer (or no) atoms than expected.
         if (natoms > 0 && coordinates.size() >= static_cast<size_t>(natoms) * 3) {
