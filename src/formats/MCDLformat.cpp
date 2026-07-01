@@ -179,16 +179,15 @@ private:
   string MCDLFormat::constring(int conntab [MAXBONDS][4], char * /*tstr*/)
 {
     int  i,j,k,n,nn,icons[MAXBONDS],comma;
-    char line[82],semis[100];
     string result="";
+    string semis;
 
     result="[";
-    semis[0] = '\0';
 
     for (i=0; i<ntatoms; i++)
     {
         if (i > 0)
-            strcat(semis,";");
+            semis += ";";
 
         n = 0;
         // icons is a fixed 6-element stack array (the maximum bond
@@ -216,15 +215,13 @@ private:
         {
             if (icons[j] > (i+1) && comma == 0)
             {
-                sprintf(line,"%s%d",semis,icons[j]);
-                result=result+line;//strcat(sp,line);
+                result = result + semis + std::to_string(icons[j]);
                 comma = 1;
-                semis[0] = '\0';
+                semis.clear();
             }
             else if (icons[j] > (i+1) && comma == 1)
             {
-                sprintf(line,",%d",icons[j]);
-                result=result+line;//strcat(sp,line);
+                result = result + "," + std::to_string(icons[j]);
             }
 
         }
@@ -261,7 +258,7 @@ private:
         maxdepth = depth;
 
 	//stack overflow message-move data from stack to heap
-	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS,sizeof(char));
+	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS+1,sizeof(char));
     for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) calloc(MAXFRAGS,sizeof(int));
 
     for (i=0; i<nbonds; i++)
@@ -479,10 +476,7 @@ private:
 
 
   string MCDLFormat::intToStr(int k) {
-    char temp[16];
-    sprintf(temp,"%d",k);
-  string line=temp;
-  return line;
+  return std::to_string(k);
   };
 
 
