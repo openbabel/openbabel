@@ -261,6 +261,12 @@ private:
 	for (i=0; i<=MAXFRAGS; i++) strngs[i]=(char *)calloc(MAXFRAGS+1,sizeof(char));
     for (i=0; i<MAXBONDS; i++)  nsum[i]=(int *) calloc(MAXFRAGS,sizeof(int));
 
+    // mx[] is indexed by atom; atoms with no bonds at all (isolated ions,
+    // disconnected fragments) are never written by the loop below, so zero
+    // it first rather than reading uninitialized stack memory at line ~284.
+    for (i=0; i<ntatoms; i++)
+        mx[i] = 0;
+
     for (i=0; i<nbonds; i++)
     {
         for (j=0; j<4; j++)
@@ -492,7 +498,7 @@ private:
     int  charge=0;
     int  netcharge=0;
     int  netradical=0;
-    int  chgarray[60][2];
+    int  chgarray[MAXFRAGS][2];
     std::vector<int> ifragnum(MAXFRAGS);
     int  ltypes=0;
     int  ia0=0;
