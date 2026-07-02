@@ -688,9 +688,15 @@ struct WLNParser {
     }
 
     bool alkane() {
+        const unsigned int kMaxAlkaneLen = 100000;
         unsigned int len = (*ptr++ - '0');
-        while(*ptr>='0' && *ptr<='9')
+        while(*ptr>='0' && *ptr<='9') {
+            if (len > kMaxAlkaneLen)
+                return error();
             len = 10*len + (*ptr++ - '0');
+        }
+        if (len > kMaxAlkaneLen)
+            return error();
         for (unsigned int i=0; i<len; i++) {
             OpenBabel::OBAtom* temp = atom(6,4);
             if (order)
