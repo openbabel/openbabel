@@ -397,6 +397,19 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
   mob_invid(&id);
   atoms=uint32le(mob[MOB_ATOMS]);
   srcatom=mob_start(mob);
+  /* VALIDATE THE DECLARED ATOM COUNT AGAINST THE DATA ACTUALLY READ, SINCE A
+     MALFORMED FILE MAY DECLARE MORE ATOMS THAN THE BUFFER CAN HOLD, WHICH
+     WOULD OTHERWISE WALK THE ITERATOR PAST THE END OF THE mob ALLOCATION */
+  { char *mobend=(char*)mob+size;
+    struct mobatom *checkatom=srcatom;
+    unsigned int validatoms=0;
+    while (validatoms<atoms&&
+           (char*)checkatom>=(char*)mob&&
+           (char*)checkatom+4*(int)sizeof(mobdata)<=mobend&&
+           (char*)checkatom+mob_atomsize(checkatom)<=mobend)
+    { checkatom=mob_next(checkatom);
+      validatoms++; }
+    atoms=validatoms; }
   res=nullptr;
   charged=0;
   for (i=0;i<atoms;i++)
@@ -446,7 +459,7 @@ bool YOBFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
     else hetatom=false;
     res->SetHetAtom(dstatom,hetatom);
     /* NOW ADD THE BONDS */
-    links=srcatom->header[MOB_LINKS];
+    links=mob_links(srcatom);
     for (j=0;j<links;j++)
     { link=uint32le(srcatom->link[j]);
       linked=link&MOB_LINKATOMMASK;
