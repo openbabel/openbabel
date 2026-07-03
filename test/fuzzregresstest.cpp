@@ -563,6 +563,19 @@ void caseCanonDeepRecursion()
                             "canon-deep-recursion.smi"));
 }
 
+// WLN ring-size underflow (no CVE id): NULL/wild pointer dereference in
+// WLNParser::new_cycle. A crafted poly/peri ring descriptor drives the
+// unsigned ring-size arithmetic in parse_ring to wrap `size` to 0 (or ~4e9),
+// after which new_cycle's `for (i=0; i<size-1; ...)` loop indexes an empty
+// ring vector and NMOBMolNewBond dereferences the resulting NULL OBAtom*.
+// Fixed by bounding `size` to a real ring range before constructing it.
+// Reader must now return cleanly without a crash or hang.
+void caseWLNRingSizeUnderflow()
+{
+  OB_ASSERT(RunRepro("wln-ring-size-underflow", "wln",
+                     "wln-ring-size-underflow.wln"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -695,6 +708,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 38:
     caseCanonDeepRecursion();
+    break;
+  case 39:
+    caseWLNRingSizeUnderflow();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
