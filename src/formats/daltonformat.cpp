@@ -378,6 +378,12 @@ namespace OpenBabel
         ifs.getline(buffer,BUFF_SIZE); // whitespace
         ifs.getline(buffer,BUFF_SIZE); // number of coordinates
         tokenize(vs,buffer);
+        if (vs.size() < 5) {
+          obErrorLog.ThrowError(__FUNCTION__,
+            "Malformed Dalton file: missing atom count token", obError);
+          mol.EndModify();
+          return false;
+        }
         atomcount = atoi(vs[4].c_str()) / 3; // number of atoms to read
         while(atomcount > 0)
         {
