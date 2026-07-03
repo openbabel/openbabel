@@ -785,7 +785,7 @@ struct WLNParser {
     bool parse_ring() {
         unsigned int size = 0;
         unsigned int ptr_it=0;
-        unsigned int ring_positions=0;
+        int ring_positions=0;
         unsigned int ring_count = 0;
         unsigned int atom_sum = 0;
         unsigned int cyclic_set=0;
@@ -831,16 +831,17 @@ struct WLNParser {
                     ptr_it = i;}
             }
             if (peri_index!=0){
-                // Do this ring-descriptor arithmetic in signed int then store
-                // back: a crafted descriptor can drive these below zero, which
-                // is contained by the ring-size guard before new_cycle(). The
-                // signed math produces the identical wrapped value without
-                // tripping the sanitizer. (All operands are small counts.)
+                // Do this ring-descriptor arithmetic in signed int: a crafted
+                // descriptor can drive ring_positions (and thus size, below)
+                // negative, which the ring-size guard before new_cycle() then
+                // rejects. Signed avoids the unsigned-overflow the sanitizer
+                // flags while producing the same values. (All operands are
+                // small counts, so nothing overflows int.)
                 atom_sum = static_cast<unsigned int>(static_cast<int>(atom_sum) - static_cast<int>(peri_atoms));
                 ring_count = static_cast<unsigned int>(static_cast<int>(ring_count) - static_cast<int>(1 + peri_atoms));
                 int bond_alter = static_cast<int>(ring_count) - 2;
-                ring_positions = static_cast<unsigned int>(
-                    static_cast<int>(atom_sum) - (static_cast<int>(ring_count) + bond_alter) - 1 - static_cast<int>(peri_atoms*3));
+                ring_positions =
+                    static_cast<int>(atom_sum) - (static_cast<int>(ring_count) + bond_alter) - 1 - static_cast<int>(peri_atoms*3);
                 for (int i= peri_index; i < wln_string.size(); i++){
                     if (wln_string[i] == ' '){
                         ptr_it=i;
@@ -850,12 +851,12 @@ struct WLNParser {
                 }
             }
             else{
-                // See the peri branch above: signed arithmetic, stored back to
-                // the unsigned field, so an underflowing crafted descriptor
-                // yields the same value the ring-size guard rejects.
+                // See the peri branch above: signed arithmetic so an
+                // underflowing crafted descriptor yields a negative
+                // ring_positions that the ring-size guard rejects.
                 int bond_alter = static_cast<int>(ring_count) - 2;
-                ring_positions = static_cast<unsigned int>(
-                    static_cast<int>(atom_sum) - (static_cast<int>(ring_count) + bond_alter) - 1);}
+                ring_positions =
+                    static_cast<int>(atom_sum) - (static_cast<int>(ring_count) + bond_alter) - 1;}
 
             AtomCharVector(ptr_it,wln_string,atom_vector,char_vector);
             size = ring_positions+1;
