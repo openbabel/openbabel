@@ -1,0 +1,23 @@
+# Sanitizer ignorelist for Open Babel.
+#
+# Suppresses -fsanitize=unsigned-integer-overflow reports that originate in
+# third-party / vendored code Open Babel does not maintain. These are
+# deliberate modular-arithmetic idioms (RapidJSON's Grisu number formatter and
+# the bundled IUPAC InChI reference library), not Open Babel bugs. First-party
+# src/ and include/openbabel/ code is left fully checked.
+#
+# This is wired into the sanitizer CI jobs via -fsanitize-ignorelist in
+# .github/workflows/build_cmake.yml. Anyone running the sanitizers themselves
+# (OSS-Fuzz, downstream fuzzing/security work) can pass the same flag:
+#
+#     -fsanitize-ignorelist=/path/to/openbabel/.sanitizer-ignorelist
+#
+# Note: only the unsigned-integer-overflow check is scoped out for these files;
+# AddressSanitizer and the rest of UBSan still apply to them, so genuine memory
+# errors in third-party code reached from Open Babel are still reported.
+
+[unsigned-integer-overflow]
+# Bundled RapidJSON (external/rapidjson-*/): JSON number formatting (dtoa/itoa).
+src:*rapidjson*
+# Vendored IUPAC InChI reference library (src/formats/libinchi/).
+src:*/libinchi/*
