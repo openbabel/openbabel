@@ -350,6 +350,21 @@ bool InChIFormat::WriteMolecule(OBBase* pOb, OBConversion* pConv)
             (from_cit!=from.end() && from_cit->second != patom->GetId()) )
           continue;
 
+        // The inchi_Atom neighbor/bond_type/bond_stereo arrays are fixed at
+        // MAXVAL (20) entries. This writer, unlike the InChI library, does not
+        // otherwise cap valence, so an atom with more than MAXVAL bonds would
+        // write past the end of these arrays and corrupt the adjacent
+        // heap-allocated inchi_Atom. Reject the molecule rather than truncate
+        // it: InChI cannot represent such an atom (it rejects >MAXVAL valence
+        // on its own inputs), and a truncated structure would both yield a
+        // silently wrong InChI and feed the library a degenerate atom.
+        if (nbonds >= MAXVAL) {
+          obErrorLog.ThrowError("InChI code",
+            "Atom has more bonds than InChI supports (MAXVAL); "
+            "cannot generate InChI for this molecule", obError);
+          return false;
+        }
+
         iat.neighbor[nbonds]      = pbond->GetNbrAtomIdx(patom)-1;
         int bo = pbond->GetBondOrder();
         if(bo==5)

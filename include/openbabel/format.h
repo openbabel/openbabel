@@ -59,8 +59,7 @@ class OBCONV OBFormat : public OBPlugin
     /// Does not make a new object on the heap;
     /// can be used with a pointer to an chem object on the heap or the stack.
     virtual bool ReadMolecule(OBBase* /*pOb*/, OBConversion* /*pConv*/)
-      { std::cerr << "HIER" << std::endl;
-std::cerr << "Not a valid input format"; return false;}
+      { std::cerr << "Not a valid input format"; return false;}
 
     /// @brief The "Convert" interface Read function.
 
@@ -84,8 +83,13 @@ std::cerr << "Not a valid input format"; return false;}
     /// Writes a single object
     /// Deletes the object after writing
     /// \return false on error
-    virtual bool WriteChemObject(OBConversion* /*pConv*/)
-      { std::cerr << "Not a valid output format"; return false;}
+    ///
+    /// Defined out-of-line in format.cpp: it needs OBConversion::GetChemObject(),
+    /// which is only forward-declared here to avoid a header cycle with
+    /// obconversion.h. Formats that don't override this must still consume
+    /// and delete the pending object themselves, or it leaks (see
+    /// OBConversion::Convert()'s final flush and AddChemObject()).
+    virtual bool WriteChemObject(OBConversion* pConv);
 
     /// @brief Information on this format. Printed out in response to -Hxxx option where xxx id the id of the format.
 

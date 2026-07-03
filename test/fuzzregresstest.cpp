@@ -563,6 +563,50 @@ void caseCanonDeepRecursion()
                             "canon-deep-recursion.smi"));
 }
 
+// WLN ring-size underflow (no CVE id): NULL/wild pointer dereference in
+// WLNParser::new_cycle. A crafted poly/peri ring descriptor drives the
+// unsigned ring-size arithmetic in parse_ring to wrap `size` to 0 (or ~4e9),
+// after which new_cycle's `for (i=0; i<size-1; ...)` loop indexes an empty
+// ring vector and NMOBMolNewBond dereferences the resulting NULL OBAtom*.
+// Fixed by bounding `size` to a real ring range before constructing it.
+// Reader must now return cleanly without a crash or hang.
+void caseWLNRingSizeUnderflow()
+{
+  OB_ASSERT(RunRepro("wln-ring-size-underflow", "wln",
+                     "wln-ring-size-underflow.wln"));
+}
+
+// InChI MAXVAL overflow (no CVE id): heap buffer overflow in
+// InChIFormat::WriteMolecule. Each inchi_Atom has fixed neighbor/bond_type/
+// bond_stereo arrays of MAXVAL (20) entries; the bond-copy loop wrote
+// iat.neighbor[nbonds] etc. with no nbonds < MAXVAL bound, so an atom of
+// degree > 20 (here a star with a central atom bonded to 25 others) stored
+// past the end of the arrays and corrupted the adjacent heap-allocated
+// inchi_Atom. Fixed by bounding the loop at MAXVAL. Read the SDF reproducer
+// and exercise the InChI writer; it must not crash or trip a sanitizer.
+void caseInChIMaxvalOverflow()
+{
+  OB_ASSERT(RunReproConvert("inchi-maxval-overflow", "sdf", "inchi",
+                            "inchi-maxval-overflow.sdf"));
+}
+
+// graphsym integer overflow (no CVE id): the symmetry-class refinement in
+// OBGraphSymPrivate::CreateNewClassVector packs a base-100 sum of an atom's
+// neighbour classes (id + n0*100 + n1*100^2 + ...). Any atom of degree >= 4
+// (a quaternary carbon, sulfate, ferrocene's degree-10 iron, ...) overflows
+// the accumulator; the historical code did this in a signed int (undefined
+// behaviour) and, in the sibling overload, an unsigned int. Fixed by doing
+// the arithmetic in 64-bit intermediates truncated back to 32-bit -- bit-for-
+// bit identical output, no overflow. Canonicalise (smi -> can) a set of high
+// degree / high symmetry molecules so a sanitizer build aborts here if the
+// overflow is reintroduced. NB: catching the *unsigned* variant requires the
+// build to enable -fsanitize=unsigned-integer-overflow (see CONTRIBUTING/CI).
+void caseGraphSymHighDegree()
+{
+  OB_ASSERT(RunReproConvert("graphsym-highdegree", "smi", "can",
+                            "graphsym-highdegree.smi"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -695,6 +739,15 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 38:
     caseCanonDeepRecursion();
+    break;
+  case 39:
+    caseWLNRingSizeUnderflow();
+    break;
+  case 40:
+    caseInChIMaxvalOverflow();
+    break;
+  case 41:
+    caseGraphSymHighDegree();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

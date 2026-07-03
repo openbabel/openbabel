@@ -404,15 +404,37 @@ struct WLNParser {
         rings.push_back(ring);
     }
 
-    void new_cycle(std::vector<OpenBabel::OBAtom*> &ring, unsigned int size) {
-        new_ring(ring,size);
+    // Smallest and largest ring size we will ever construct. The lower bound
+    // is chemistry (a ring needs at least 3 atoms); the upper bound is a
+    // sanity cap that comfortably exceeds any real WLN ring system while
+    // rejecting values produced by unsigned underflow/overflow in the ring
+    // descriptor arithmetic (which can otherwise wrap `size` to 0 or ~4e9).
+    static const unsigned int MIN_RING_SIZE = 3;
+    static const unsigned int MAX_RING_SIZE = 1000;
 
+    void new_cycle(std::vector<OpenBabel::OBAtom*> &ring, unsigned int size) {
+        // A ring needs a sane number of atoms. The ring-size arithmetic in the
+        // callers is unsigned and unchecked, so a crafted descriptor can wrap
+        // `size` to 0 or a huge value; building a ring from that would read out
+        // of bounds and dereference a wild OBAtom*. Reject it up front.
+        if (size < MIN_RING_SIZE || size > MAX_RING_SIZE)
+            return;
+
+        new_ring(ring,size);
+        // new_ring appends exactly `size` atoms to the (empty) ring. If that
+        // invariant does not hold, bail rather than index past the end below;
+        // this also guarantees every ring[i] dereferenced here is a live atom.
+        if (ring.size() != size)
+            return;
+
+        // Use `i + 1 < size` (never `i < size - 1`, which underflows for
+        // size 0) as belt-and-suspenders against the guard above.
         if (perifuse){
-            for (unsigned int i=0; i<size-1; i++){
-                NMOBMolNewBond(mol,ring[i],ring[i+1],1,true);}
+            for (unsigned int i=0; i+1<size; i++)
+                NMOBMolNewBond(mol,ring[i],ring[i+1],1,true);
             ring[0]->SetImplicitHCount(0);}
         else{
-            for (unsigned int i=0; i<size-1; i++)
+            for (unsigned int i=0; i+1<size; i++)
                 // NMOBMolNewBond(mol,ring[i],ring[i+1],1+(i&1),true);
                 NMOBMolNewBond(mol,ring[i],ring[i+1],1,true);
             NMOBMolNewBond(mol,ring[size-1],ring[0],1,true);}
@@ -688,9 +710,15 @@ struct WLNParser {
     }
 
     bool alkane() {
+        const unsigned int kMaxAlkaneLen = 100000;
         unsigned int len = (*ptr++ - '0');
-        while(*ptr>='0' && *ptr<='9')
+        while(*ptr>='0' && *ptr<='9') {
+            if (len > kMaxAlkaneLen)
+                return error();
             len = 10*len + (*ptr++ - '0');
+        }
+        if (len > kMaxAlkaneLen)
+            return error();
         for (unsigned int i=0; i<len; i++) {
             OpenBabel::OBAtom* temp = atom(6,4);
             if (order)
@@ -979,8 +1007,15 @@ struct WLNParser {
                 break;
         }
 
-        if (!done)
+        if (!done) {
+            // The poly/peri ring-size math above is unsigned and unchecked, so
+            // a crafted descriptor can wrap `size` to 0 or a huge value. Reject
+            // anything outside the range of a real ring rather than feed it to
+            // new_cycle() (which would read out of bounds on the ring vector).
+            if (size < MIN_RING_SIZE || size > MAX_RING_SIZE)
+                return error();
             new_cycle(ring,size);
+        }
 
         if (debug_wln_read)
             printf("DEBUG: ring size=%u ptr=%s\n",size,ptr);
