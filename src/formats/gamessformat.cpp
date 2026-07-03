@@ -397,6 +397,8 @@ namespace OpenBabel {
               char delim[] = "=";
               tokenize(vs2, buffer, delim);
             } else {
+              if (vs.size() < 4)
+                break;
               /* For the included EFP1 potentials,
                * the atom name may start with "Z"
                */

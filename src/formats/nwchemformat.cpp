@@ -756,7 +756,9 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
         if (strstr(buffer, DFT_ENERGY_PATTERN) != nullptr || strstr(buffer, SCF_ENERGY_PATTERN) != nullptr)
         {
             tokenize(vs, buffer);
-            energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
+            if (vs.size() > 4) {
+                energy = atof(vs[4].c_str()) * HARTREE_TO_KCAL;
+            }
         }
         else if (strstr(buffer, ORBITAL_SECTION_PATTERN_2) != nullptr && strstr(buffer, ORBITAL_SECTION_PATTERN_1) != nullptr)
             ReadOrbitals(ifs, molecule);
