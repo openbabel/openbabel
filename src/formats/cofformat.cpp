@@ -232,7 +232,14 @@ namespace OpenBabel
         }
         int iAtom = atoi(vs[1].c_str());
         int iFormalCharge = atoi(vs[2].c_str());
-        pmol->GetAtom(iAtom+1)->SetFormalCharge(iFormalCharge);
+        OBAtom* chargedAtom = pmol->GetAtom(iAtom+1);
+        if (chargedAtom == nullptr)
+        {
+          errorMsg << "Unable to read Culgi Object File. Formal charge atom index " << vs[1] << " not found in atom list.\n";
+          obErrorLog.ThrowError(__FUNCTION__, errorMsg.str(), obWarning);
+          return false;
+        }
+        chargedAtom->SetFormalCharge(iFormalCharge);
       }
     }
     pmol->SetAromaticPerceived();
