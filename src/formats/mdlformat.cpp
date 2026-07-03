@@ -796,7 +796,10 @@ namespace OpenBabel
         // So, if the valence field was specified use that, otherwise
         // use the implicit valence adjusted by any M RAD.
         std::map<OBAtom*, int>::const_iterator mit = specified_valence.find(&*atom);
-        unsigned int impval;
+        // Signed: impval can legitimately drop below the explicit valence (a
+        // radical M RAD adjustment, or a specified valence lower than observed),
+        // and numH is then clamped to >= 0 below. Unsigned here would underflow.
+        int impval;
         if (mit != specified_valence.end()) {
           impval = mit->second;
           if (impval < expval) {
@@ -823,7 +826,7 @@ namespace OpenBabel
           }
           impval -= delta;
         }
-        int numH = impval - expval;
+        int numH = impval - static_cast<int>(expval);
         atom->SetImplicitHCount(numH > 0 ? numH : 0);
       }
     }

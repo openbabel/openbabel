@@ -355,7 +355,8 @@ namespace OpenBabel
               bond->SetBondOrder(j->second);
               for (int k = 0; k < 2; ++k) {
                 OBAtom* atom = k == 0 ? bond->GetBeginAtom() : bond->GetEndAtom();
-                int new_hcount = atom->GetImplicitHCount() - (j->second - old_bond_order);
+                int new_hcount = static_cast<int>(atom->GetImplicitHCount())
+                                 - (static_cast<int>(j->second) - static_cast<int>(old_bond_order));
                 if (new_hcount < 0)
                   new_hcount = 0;
                 atom->SetImplicitHCount(new_hcount);

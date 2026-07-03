@@ -2224,7 +2224,9 @@ namespace OpenBabel
     double rvdwSquared = SQUARE(_rvdw);
     double releSquared = SQUARE(_rele);
 
-    unsigned int pairIndex = -1;
+    // Signed so the "-1 then ++ to 0 on the first pair" idiom does not wrap
+    // through UINT_MAX; pairIndex is only ever used non-negative as a bit index.
+    int pairIndex = -1;
     FOR_PAIRS_OF_MOL(p, _mol) {
       ++pairIndex;
 

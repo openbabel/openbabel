@@ -909,8 +909,9 @@ namespace OpenBabel
     // the cursor: an atom may have been AddAtom'd more than once, and
     // every occurrence needs to go (otherwise ~OBResidue() later walks
     // a stale pointer to the now-destroyed atom).
-    for (size_t i = _atoms.size(); i-- > 0; )
+    for (size_t i = _atoms.size(); i > 0; )
       {
+        --i;
         if (_atoms[i] == atom)
           {
             atom->SetResidue(nullptr);
