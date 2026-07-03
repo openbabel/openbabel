@@ -745,7 +745,7 @@ namespace OpenBabel
   //! helper routine to GetGIDVector
   static void CreateNewClassVector(vector<pair<OBAtom*,unsigned int> > &vp1,vector<pair<OBAtom*,unsigned int> > &vp2)
   {
-    int m,id;
+    unsigned int m,id;
     OBAtom *nbr;
     vector<OBBond*>::iterator j;
     vector<unsigned int>::iterator k;
@@ -758,8 +758,16 @@ namespace OpenBabel
         for (nbr = i->first->BeginNbrAtom(j);nbr;nbr = i->first->NextNbrAtom(j))
           vtmp.push_back(vp1[nbr->GetIdx()-1].second);
         sort(vtmp.begin(),vtmp.end(),OBCompareUnsigned);
-        for (id=i->second,m=100,k = vtmp.begin();k != vtmp.end();++k,m*=100)
-          id += *k * m;
+        // Base-100 positional sum of the neighbour classes, computed modulo
+        // 2^32 (bit-identical to the previous int overflow, but done in 64-bit
+        // intermediates so it does not invoke overflow). See the matching
+        // routine in graphsym.cpp for details.
+        id = i->second;
+        for (m=100,k = vtmp.begin();k != vtmp.end();++k)
+          {
+            id = static_cast<unsigned int>(id + static_cast<unsigned long long>(*k) * m);
+            m  = static_cast<unsigned int>(static_cast<unsigned long long>(m) * 100);
+          }
 
         vp2.push_back(pair<OBAtom*,unsigned int> (i->first,id));
       }
