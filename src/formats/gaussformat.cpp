@@ -1164,16 +1164,19 @@ namespace OpenBabel
         else if (strstr(buffer, "Isotropic = ")) // NMR shifts
           {
             tokenize(vs, buffer);
-            if (vs.size() >= 4)
+            if (vs.size() >= 5)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
-                OBPairData *nmrShift = new OBPairData();
-                nmrShift->SetAttribute("NMR Isotropic Shift");
+                if (atom)
+                  {
+                    OBPairData *nmrShift = new OBPairData();
+                    nmrShift->SetAttribute("NMR Isotropic Shift");
 
-                string shift = vs[4].c_str();
-                nmrShift->SetValue(shift);
+                    string shift = vs[4].c_str();
+                    nmrShift->SetValue(shift);
 
-                atom->SetData(nmrShift);
+                    atom->SetData(nmrShift);
+                  }
               }
           }
         else if (strstr(buffer, "SCF Done:") != nullptr)
