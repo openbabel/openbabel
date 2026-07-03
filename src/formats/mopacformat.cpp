@@ -684,8 +684,10 @@ namespace OpenBabel
             atomLabel = vs[1];
             strcpy(buffer,vs[2].c_str());
           }
-        else //no label, reset buffer
+        else if (vs.size() == 1) //no label, reset buffer
           strcpy(buffer,vs[0].c_str());
+        else //blank line (e.g. only '(' or ')' characters): no more data
+          break;
 
         //Now parse the rest of the line
         //There should be three cases:
