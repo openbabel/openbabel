@@ -514,7 +514,9 @@ namespace OpenBabel
             i++;
             tokenize (vs, buffer);
             // gotta check what types of orientation are present
-            coords_type = vs[0] + " orientation:";
+            if (vs.size() > 0) {
+              coords_type = vs[0] + " orientation:";
+            }
           }
         if ((no_symmetry && i==1) || i==2)
            break;
@@ -889,7 +891,9 @@ namespace OpenBabel
                 tokenize(vs,buffer);
                 if (vs.size() >= 2)
                   {
-                    fgp->SetV(atof(vs[2].c_str()));
+                    if (vs.size() > 2) {
+                      fgp->SetV(atof(vs[2].c_str()));
+                    }
                     i++;
                   }
               }
@@ -1034,7 +1038,9 @@ namespace OpenBabel
              RotorType = OBRotationData::UNKNOWN;
           ifs.getline(buffer,BUFF_SIZE); //symmetry number
           tokenize(vs, buffer);
-          RotSymNum = atoi(vs[3].c_str());
+          if (vs.size() > 3) {
+            RotSymNum = atoi(vs[3].c_str());
+          }
         }
 
         else if(strstr(buffer, "Rotational constant"))
@@ -1164,22 +1170,27 @@ namespace OpenBabel
         else if (strstr(buffer, "Isotropic = ")) // NMR shifts
           {
             tokenize(vs, buffer);
-            if (vs.size() >= 4)
+            if (vs.size() >= 5)
               {
                 atom = mol.GetAtom(atoi(vs[0].c_str()));
-                OBPairData *nmrShift = new OBPairData();
-                nmrShift->SetAttribute("NMR Isotropic Shift");
+                if (atom)
+                  {
+                    OBPairData *nmrShift = new OBPairData();
+                    nmrShift->SetAttribute("NMR Isotropic Shift");
 
-                string shift = vs[4].c_str();
-                nmrShift->SetValue(shift);
+                    string shift = vs[4].c_str();
+                    nmrShift->SetValue(shift);
 
-                atom->SetData(nmrShift);
+                    atom->SetData(nmrShift);
+                  }
               }
           }
         else if (strstr(buffer, "SCF Done:") != nullptr)
           {
             tokenize(vs,buffer);
-            mol.SetEnergy(atof(vs[4].c_str()) * HARTEE_TO_KCALPERMOL);
+            if (vs.size() > 4) {
+              mol.SetEnergy(atof(vs[4].c_str()) * HARTEE_TO_KCALPERMOL);
+            }
             confEnergies.push_back(mol.GetEnergy());
           }
 /* Temporarily commented out until the handling of energy in OBMol is sorted out
@@ -1202,20 +1213,26 @@ namespace OpenBabel
         else if (strstr(buffer, "Zero-point correction=") != nullptr)
           {
             tokenize(vs,buffer);
-            ezpe = atof(vs[2].c_str());
-            ezpe_set = true;
+            if (vs.size() > 2) {
+              ezpe = atof(vs[2].c_str());
+              ezpe_set = true;
+            }
           }
         else if (strstr(buffer, "Thermal correction to Enthalpy=") != nullptr)
           {
             tokenize(vs,buffer);
-            Hcorr = atof(vs[4].c_str());
-            Hcorr_set = true;
+            if (vs.size() > 4) {
+              Hcorr = atof(vs[4].c_str());
+              Hcorr_set = true;
+            }
           }
         else if (strstr(buffer, "Thermal correction to Gibbs Free Energy=") != nullptr)
           {
             tokenize(vs,buffer);
-            Gcorr = atof(vs[6].c_str());
-            Gcorr_set = true;
+            if (vs.size() > 6) {
+              Gcorr = atof(vs[6].c_str());
+              Gcorr_set = true;
+            }
           }
         else if (strstr(buffer, "CV") != nullptr)
           {
@@ -1254,7 +1271,9 @@ namespace OpenBabel
                  strstr(buffer,"Pressure=") != nullptr)
           {
               tokenize(vs,buffer);
-              temperature = atof(vs[1].c_str());
+              if (vs.size() > 1) {
+                temperature = atof(vs[1].c_str());
+              }
           }
         else if (strstr(buffer, "(0 K)") != nullptr)
           {

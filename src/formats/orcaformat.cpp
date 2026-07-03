@@ -330,6 +330,8 @@ namespace OpenBabel
             { // atom number, atomic symbol,:,  charge
 
                 atom = mol.GetAtom(atoi(vs[0].c_str())+1);  // Numbering starts from 0 in Orca
+                if (!atom)
+                    break;
                 atom->SetPartialCharge(atof(vs[3].c_str()));
 
                 if (!ifs.getline(buffer,BUFF_SIZE))

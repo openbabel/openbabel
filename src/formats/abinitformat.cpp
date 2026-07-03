@@ -131,10 +131,12 @@ namespace OpenBabel
           tokenize(vs, buffer);
 
           // first line, rprim takes up a token
+          if (vs.size() > 3) {
           x = atof((char*)vs[1].c_str()) * unit;
           y = atof((char*)vs[2].c_str()) * unit;
 	  z = atof((char*)vs[3].c_str()) * unit;
 	  atomPositions.push_back(vector3(x, y, z));
+          }
 	  // get next line
 	  ifs.getline(buffer,BUFF_SIZE);
 	  tokenize(vs, buffer);
@@ -180,7 +182,9 @@ namespace OpenBabel
         else if (strstr(buffer, "Symmetries")) {
           tokenize(vs, buffer, "()");
           // Should be something like (#160)
-          symmetryCode = atoi(vs[1].substr(1).c_str());
+          if (vs.size() > 1 && vs[1].size() > 1) {
+            symmetryCode = atoi(vs[1].substr(1).c_str());
+          }
         }
         else if (strstr(buffer, "typat")) {
           atomTypes.clear();

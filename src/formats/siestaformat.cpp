@@ -384,7 +384,9 @@ namespace OpenBabel {
         // We may need to add more energies to record in the future...
         while (!strstr(buffer, "Total")) ifs.getline(buffer, BUFF_SIZE);
         tokenize(vs, buffer);
-        pmol->SetEnergy(atof(vs[3].c_str()) * EV_TO_KCAL_PER_MOL);
+        if (vs.size() > 3) {
+          pmol->SetEnergy(atof(vs[3].c_str()) * EV_TO_KCAL_PER_MOL);
+        }
       }
 
       // We've reached the end!

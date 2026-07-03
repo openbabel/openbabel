@@ -1507,6 +1507,7 @@ namespace OpenBabel
     for(obindex=1;;obindex++)
       {
         if(!ReadV3000Line(ifs,vs)) return false;
+        if(vs.size() < 3) return false;
         if(vs[2]=="END") break;
         if(vs.size() < 7) return false; // need index, type, x, y, z
 

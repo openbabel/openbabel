@@ -1027,9 +1027,12 @@ namespace OpenBabel
               {
                 vector<string> ids;
                 tokenize(ids, atrefsvalue);
-                int i;
-                for(i=0;i<4;++i)
-                  AtomRefIdx.push_back(AtomMap[ids[i]]);
+                if (ids.size() >= 4)
+                  {
+                    int i;
+                    for(i=0;i<4;++i)
+                      AtomRefIdx.push_back(AtomMap[ids[i]]);
+                  }
               }
 
             nextname = (++AttributeIter)->first;
@@ -1042,9 +1045,14 @@ namespace OpenBabel
                 OBAtom* patom = _pmol->GetAtom(Idx);
                 if(!patom)
                   return false;
+                if(AtomRefIdx.size() < 4)
+                  return false;
 
                 OBStereo::Ref center = patom->GetId();
-                OBStereo::Ref from = _pmol->GetAtom(AtomRefIdx[0])->GetId();
+                OBAtom* fromAtom = _pmol->GetAtom(AtomRefIdx[0]);
+                if (!fromAtom)
+                  return false;
+                OBStereo::Ref from = fromAtom->GetId();
                 if (from == center)
                   from = OBStereo::ImplicitRef;
 
@@ -1052,7 +1060,10 @@ namespace OpenBabel
                 vector<unsigned int>::const_iterator idx_cit=AtomRefIdx.begin();
                 ++idx_cit;
                 for (; idx_cit!=AtomRefIdx.end(); ++idx_cit) {
-                  OBStereo::Ref id = _pmol->GetAtom(*idx_cit)->GetId();
+                  OBAtom* refAtom = _pmol->GetAtom(*idx_cit);
+                  if (!refAtom)
+                    return false;
+                  OBStereo::Ref id = refAtom->GetId();
                   if (id == center)
                     id = OBStereo::ImplicitRef;
                   refs.push_back(id);

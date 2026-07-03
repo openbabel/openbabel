@@ -397,6 +397,8 @@ namespace OpenBabel {
               char delim[] = "=";
               tokenize(vs2, buffer, delim);
             } else {
+              if (vs.size() < 4)
+                break;
               /* For the included EFP1 potentials,
                * the atom name may start with "Z"
                */
@@ -481,6 +483,8 @@ namespace OpenBabel {
         tokenize(vs, buffer);
         while (vs.size() == 4) {
           atom = mol.GetAtom(atoi(vs[0].c_str()));
+          if (!atom)
+            break;
           atom->SetPartialCharge(atof(vs[2].c_str()));
 
           if (!ifs.getline(buffer, BUFF_SIZE))
@@ -499,6 +503,8 @@ namespace OpenBabel {
           if (!atomNb)
             break;
           atom = mol.GetAtom(atomNb);
+          if (!atom)
+            break;
           atom->SetPartialCharge(atof(vs[3].c_str()));
 
           if (!ifs.getline(buffer, BUFF_SIZE))
@@ -575,6 +581,8 @@ namespace OpenBabel {
         while (modeCount >= 1) {
           // 1/sqrt(atomic mass)
           atom = mol.GetAtom(atoi(vs[0].c_str()));
+          if (!atom)
+            break;
           massNormalization = 1 / sqrt( atom->GetAtomicMass() );
 
           x.clear();
