@@ -3,9 +3,11 @@
 Open Babel is a cheminformatics library, primarily used to read and write
 chemistry file formats. The vast majority of inputs come from trusted
 sources (a researcher's own files, output from a calculation they ran,
-reference databases). Even so, Open Babel is shipped by Linux
+reference databases) for local use. Even so, Open Babel is shipped by Linux
 distributions and embedded in services that may parse untrusted input,
-so we treat memory-safety bugs in format parsers as security issues.
+so we treat memory-safety bugs in format parsers as potential security
+issues and evaluate their impact based on *exploitability* and realistic
+usage scenarios.
 
 ## Reporting a Vulnerability
 
@@ -27,9 +29,13 @@ When reporting, please include:
 - Build configuration (compiler, sanitizers, OS)
 - Sanitizer output if available (ASAN/UBSAN/MSAN report)
 
-We aim to acknowledge reports within one week and to ship a fix in the
-next minor release. Coordinated disclosure timelines are negotiated
+We aim to acknowledge reports within one to two weeks and to ship a fix 
+in the next minor release. Coordinated disclosure timelines are negotiated
 case-by-case.
+
+Please note that not all reported issues will be classified as security
+vulnerabilities or assigned CVEs; classification is based on impact and
+exploitability.
 
 ## Supported Versions
 
@@ -102,15 +108,56 @@ are caught immediately.
 
 ## Threat Model and Scope
 
-- **In scope:** memory-safety bugs (heap/stack overflows, use-after-free,
-  uninitialized reads, NULL dereferences) reachable through the public
-  `OBConversion::ReadFile` / `WriteFile` API, the `obabel` command-line
-  tool, or the language bindings.
-- **Out of scope by default:** denial-of-service from very large or
+- **In scope:** High-impact memory-safety bugs (e.g., Remote Code Execution vectors, arbitrary heap/stack overflows, use-after-free) reachable through the public `OBConversion::ReadFile` / `WriteFile` API under realistic invocation.
+
+- **Out of scope by default:** 
+  - **Standard application crashes**, assertions, or unhandled exceptions resulting in a simple Denial of Service (DoS) for a local CLI run.
+  - **Memory leaks** or minor uninitialized reads that do not impact execution flow.
+  - **Individual NULL pointer dereferences** in legacy or rarely used file formats; these will be treated as standard application bugs rather than security vulnerabilities unless a clear exploit vector is demonstrated.
+  - *Denial-of-service** from very large or
   pathological inputs (we accept that parsing untrusted input may be
   slow); incorrect chemistry on malformed inputs that does not involve
   memory unsafety; bugs in third-party libraries that ship as
   dependencies (please report those upstream as well).
 
+Denial-of-service issues (e.g., excessive CPU or memory usage) are
+generally not considered security vulnerabilities unless they provably affect
+long-running services or network-exposed deployments.
+
 If you are unsure whether something qualifies, report it anyway and
 let us decide.
+
+## Impact Classification
+
+Not all bugs reachable via file parsing are treated as security
+vulnerabilities.
+
+In general:
+
+- **Security vulnerabilities** include memory corruption issues with a
+  plausible path to code execution, data corruption, or other impact
+  beyond a crash, especially when parsing untrusted input.
+
+- **Bug fixes (no CVE)** include:
+  - NULL dereferences leading only to crashes
+  - Out-of-bounds reads without control over program flow
+  - Errors requiring highly contrived or non-realistic inputs
+  - Issues unlikely to occur in real-world usage
+  - Bugs in bundled third-party code (please report upstream)
+
+Open Babel is primarily a local-use library and CLI tool. Many issues
+require a user to explicitly process a malicious file; absent a realistic
+exploitation scenario, these are typically treated as correctness bugs
+rather than security vulnerabilities.
+
+We may still fix and credit such reports, but they do not generally
+receive CVE assignments.
+
+If you believe a crash-class bug is actually a memory-corruption path, escalate it with a reproducer and an ASAN/UBSAN trace showing the out-of-bounds write or use-after-free. We take those seriously regardless of how unlikely exploitation seems.
+
+## Bulk Reports and CVE Consolidation Policy
+
+To prevent alert fatigue for downstream package maintainers, Open Babel enforces a strict consolidation policy for security advisories:
+1. **One Advisory per Batch:** If an automated tool or fuzzer discovers multiple edge-case parsing bugs (e.g., multiple NULL dereferences across different formats), they **must** be submitted as a single consolidated report, or they will be merged by the maintainers.
+2. **Consolidated CVEs:** Open Babel will issue at most **one CVE per minor release batch** for clusters of low-severity parser bugs. We will not issue individual CVEs for multiple distinct files fixed in the same patch lifecycle.
+3. **Credit:** Reporters will still receive full credit in the release notes and the consolidated GHSA/CVE for all discovered bugs.

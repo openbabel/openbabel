@@ -1232,7 +1232,7 @@ namespace OpenBabel
           {
             if (atom->GetSpinMultiplicity() > 1)
               unpaired_electrons += (atom->GetSpinMultiplicity() - 1);
-           chg += atom->GetAtomicNum();
+           chg += static_cast<int>(atom->GetAtomicNum());
           }
         if (chg % 2 != unpaired_electrons %2)
           return ((abs(chg) % 2) + 1);
