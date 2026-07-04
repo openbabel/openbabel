@@ -1128,7 +1128,7 @@ void OBGUIFrame::OnClickPlugin(wxCommandEvent& event)
   if(item)
   {
     //Find the name of the plugin type. It seems difficult to go up a menu hierarchy.
-    wxwxMenuItemListNode *node = listMenu->GetMenuItems().GetFirst();
+    wxMenuItemList::compatibility_iterator node = listMenu->GetMenuItems().GetFirst();
     while (node)
     {
       wxMenuItem* itemm = node->GetData();
