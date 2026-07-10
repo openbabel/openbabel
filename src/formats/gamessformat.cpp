@@ -567,7 +567,12 @@ namespace OpenBabel {
 
         // Now real work -- read displacements
         unsigned int prevModeCount = displacements.size();
-        unsigned int newModes = frequencies.size() - displacements.size();
+        // Guard against unsigned underflow on malformed input: if there are
+        // fewer frequencies than displacements already stored, the subtraction
+        // would wrap to a huge value and the loop below would exhaust memory.
+        unsigned int newModes = 0;
+        if (frequencies.size() > displacements.size())
+          newModes = frequencies.size() - displacements.size();
         vector<vector3> displacement;
         for (unsigned int i=0; i < newModes; ++i) {
           displacements.push_back(displacement);
@@ -915,8 +920,14 @@ namespace OpenBabel {
           tokenize(vs, buffer);
           if (vs.size() == 5) {
             atom = mol.NewAtom();
-            // Parse the current one
-            atom->SetAtomicNum(atoi(vs[1].c_str()));
+            // Parse the current one. Clamp to a valid element range: an
+            // out-of-range value would be truncated to a byte by SetAtomicNum
+            // and silently become the wrong element.
+            int atomicNum = atoi(vs[1].c_str());
+            if (atomicNum < 1 ||
+                atomicNum > static_cast<int>(OBElements::Oganesson))
+              atomicNum = 0;
+            atom->SetAtomicNum(atomicNum);
             x = atof((char*) vs[2].c_str());
             y = atof((char*) vs[3].c_str());
             z = atof((char*) vs[4].c_str());
@@ -933,7 +944,12 @@ namespace OpenBabel {
           tokenize(vs, buffer);
           if (vs.size() == 5) {
             atom = mol.NewAtom();
-            atom->SetAtomicNum(atoi(vs[1].c_str()));
+            // Clamp to a valid element range (see note above).
+            int atomicNum = atoi(vs[1].c_str());
+            if (atomicNum < 1 ||
+                atomicNum > static_cast<int>(OBElements::Oganesson))
+              atomicNum = 0;
+            atom->SetAtomicNum(atomicNum);
             x = atof((char*) vs[2].c_str());
             y = atof((char*) vs[3].c_str());
             z = atof((char*) vs[4].c_str());

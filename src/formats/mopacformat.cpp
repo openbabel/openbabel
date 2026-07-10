@@ -388,7 +388,13 @@ namespace OpenBabel
 
             // now real work
             unsigned int prevModeCount = displacements.size();
-            unsigned int newModes = frequencies.size() - displacements.size();
+            // Guard against unsigned underflow on malformed input: if there are
+            // fewer frequencies than displacements already stored, the
+            // subtraction would wrap to a huge value and the loop below would
+            // exhaust memory.
+            unsigned int newModes = 0;
+            if (frequencies.size() > displacements.size())
+              newModes = frequencies.size() - displacements.size();
             vector<vector3> displacement;
             for (unsigned int i = 0; i < newModes; ++i) {
               displacements.push_back(displacement);

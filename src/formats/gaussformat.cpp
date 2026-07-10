@@ -616,7 +616,12 @@ namespace OpenBabel
                   {
                     if (natoms == 0) { // first time reading the molecule, create each atom
                       atom = mol.NewAtom();
-                      atom->SetAtomicNum(atoi((char*)vs[1].c_str()));
+                      // Clamp out-of-range values: SetAtomicNum truncates to a
+                      // byte, so a bogus value would become the wrong element.
+                      atom->SetAtomicNum(
+                        atomicNum > static_cast<int>(OBElements::Oganesson)
+                          ? 0
+                          : atomicNum);
                     }
                     coordinates.push_back(x);
                     coordinates.push_back(y);
@@ -1407,7 +1412,10 @@ namespace OpenBabel
 
     // set some default coordinates
     // ConnectTheDots will remove conformers, so we add those later
-    mol.SetCoordinates(vconf[vconf.size() - 1]);
+    // (guard against an empty conformer list from malformed input:
+    // vconf[vconf.size() - 1] would otherwise underflow and read OOB)
+    if (!vconf.empty())
+      mol.SetCoordinates(vconf[vconf.size() - 1]);
 
     if (!pConv->IsOption("b",OBConversion::INOPTIONS))
       mol.ConnectTheDots();
