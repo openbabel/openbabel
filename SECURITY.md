@@ -60,6 +60,7 @@ the GitHub Security Advisory once published.
 
 | CVE | Component | Type | Status | Fixed in | Patch | GHSA |
 | --- | --- | --- | --- | --- | --- | --- |
+| [CVE-2026-54751] | MMD `MacroModFormat::ReadMolecule` | Uninitialized read | Fixed (a08065d) ([#2973](https://github.com/openbabel/openbabel/pull/2973)) | 3.2.1 | a08065d | [GHSA-gxqq-gwf6-3xmq](https://github.com/openbabel/openbabel/security/advisories/GHSA-gxqq-gwf6-3xmq) |
 | [CVE-2026-2704](https://nvd.nist.gov/vuln/detail/CVE-2026-2704) | CIF: `transform3d::DescribeAsString` | Out-of-bounds read | Fixed (e23a224b) ([#2862](https://github.com/openbabel/openbabel/pull/2862)) | 3.2.0 | e23a224b | [GHSA-6xw4-2g22-26h8](https://github.com/openbabel/openbabel/security/advisories/GHSA-6xw4-2g22-26h8) |
 | [CVE-2026-2705](https://nvd.nist.gov/vuln/detail/CVE-2026-2705) | MOL2: `OBAtom::SetFormalCharge` | NULL dereference | Fixed (e23a224b) ([#2862](https://github.com/openbabel/openbabel/pull/2862)) | 3.2.0 | e23a224b | [GHSA-4w5w-4fhm-q483](https://github.com/openbabel/openbabel/security/advisories/GHSA-4w5w-4fhm-q483) |
 | [CVE-2026-3408](https://nvd.nist.gov/vuln/detail/CVE-2026-3408) | CDXML: `OBAtom::GetExplicitValence` | NULL dereference | Fixed (e23a224b) ([#2862](https://github.com/openbabel/openbabel/pull/2862)) | 3.2.0 | e23a224b | [GHSA-rxpr-wq63-jr7p](https://github.com/openbabel/openbabel/security/advisories/GHSA-rxpr-wq63-jr7p) |
