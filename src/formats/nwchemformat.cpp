@@ -217,9 +217,15 @@ static const char* OPTIMIZATION_END_PATTERN = "  Optimization converged";
         z = atof((char*)vs[5].c_str());
         if (from_scratch)
         {
-            // set atomic number
+            // set atomic number. Clamp to a valid element range: an
+            // out-of-range value would be truncated to a byte by SetAtomicNum
+            // and silently become the wrong element.
             OBAtom* atom = molecule->NewAtom();
-            atom->SetAtomicNum(atoi(vs[2].c_str()));
+            int atomicNum = atoi(vs[2].c_str());
+            if (atomicNum < 1 ||
+                atomicNum > static_cast<int>(OBElements::Oganesson))
+              atomicNum = 0;
+            atom->SetAtomicNum(atomicNum);
             atom->SetVector(x,y,z);
         }
         else

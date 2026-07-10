@@ -150,11 +150,16 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
               atomicNumber = OBElements::GetAtomicNum(atomName.c_str());
               atom->SetAtomicNum( atomicNumber );
               atom->SetVector( x * factor, y * factor, z * factor );
-              if (atomicNumber-valenceCharge!=0){
+              // valenceCharge is read from the file and may be any int value,
+              // so compute the difference in a wider type to avoid signed
+              // integer overflow (e.g. atomicNumber - INT_MIN).
+              long long ecpDiff =
+                static_cast<long long>(atomicNumber) - valenceCharge;
+              if (ecpDiff != 0){
                 OBPairData* ecpData = new OBPairData();
                 ecpData->SetAttribute("ecp");
                 std::ostringstream os;
-                os << atomicNumber-valenceCharge;
+                os << ecpDiff;
                 ecpData->SetValue(os.str());
                 atom->SetData(ecpData);
                 ++ecpLines;
@@ -221,6 +226,12 @@ bool OBMoldenFormat::ReadMolecule( OBBase* pOb, OBConversion* pConv )
                     // i.e., the first column is the atomic number, not a symbol
                     // so we'll try to convert this to an element number
                     atomicNum = atoi(vs[0].c_str());
+                    // guard against garbage input: SetAtomicNum truncates to a
+                    // byte, so an out-of-range value would silently become the
+                    // wrong element. Treat anything outside 1..118 as unknown.
+                    if (atomicNum < 1 ||
+                        atomicNum > static_cast<int>(OBElements::Oganesson))
+                      atomicNum = 0;
                   }
 
                   OBAtom* atom = pmol->NewAtom();
