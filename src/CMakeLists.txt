@@ -35,6 +35,7 @@ set(descriptors
   descriptors/groupcontrib.cpp
   descriptors/filters.cpp
   descriptors/smartsdescriptors.cpp
+  descriptors/clogp.cpp
 )
 
 if(WITH_INCHI)
@@ -168,6 +169,7 @@ set(openbabel_srcs
   transform.cpp
   typer.cpp
   obmolecformat.cpp
+  aromaticity_resolver.cpp
 )
 if(TARGET Eigen3::Eigen)
   set(openbabel_srcs ${openbabel_srcs}
