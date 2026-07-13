@@ -1,5 +1,3 @@
-```yaml
----
 name: Build OpenBabel for Windows AMD64
 on:
   workflow_dispatch:
@@ -58,4 +56,3 @@ jobs:
           name: openbabel-windows-amd64-${{ github.event.inputs.build_type }}
           path: openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip
           retention-days: 30
-```
