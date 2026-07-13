@@ -52,6 +52,7 @@ using namespace OpenBabel;
 
 
 static const double BOHR_TO_ANGSTROM = 0.529177249;
+static const double HARTREE_TO_KCAL_PER_MOL = 627.5096080306;
 
 namespace OpenBabel {
 
@@ -642,6 +643,172 @@ namespace OpenBabel {
     return true;
   }
 
+  class ADFReaxFFFormat : public OBMoleculeFormat
+  {
+  public:
+    //Register this format type ID
+    ADFReaxFFFormat()
+    {
+      OBConversion::RegisterFormat("adfreaxff",this);
+    }
+
+    virtual const char* Description() //required
+    {
+      return "ADF REAXFF output format for ADF 2018\n";
+    };
+
+    virtual const char* SpecificationURL()
+    {return "https://www.scm.com/product/reaxff/";}; //optional
+
+    //Flags() can return be any the following combined by | or be omitted if none apply
+    // NOTREADABLE  READONEONLY  NOTWRITABLE  WRITEONEONLY
+    virtual unsigned int Flags()
+    {
+      return READONEONLY | NOTWRITABLE;
+    };
+
+    /// The "API" interface functions
+    virtual bool ReadMolecule(OBBase* pOb, OBConversion* pConv);
+  };
+  //***
+
+  //Make an instance of the format class
+  ADFReaxFFFormat theADFReaxFFFormat;
+
+  /////////////////////////////////////////////////////////////////
+  bool ADFReaxFFFormat::ReadMolecule(OBBase* pOb, OBConversion* pConv)
+  {
+    OBMol* pmol = pOb->CastAndClear<OBMol>();
+    if (!pmol)
+      return false;
+
+    //Define some references so we can use the old parameter names
+    istream &ifs = *pConv->GetInStream();
+    OBMol &mol = *pmol;
+    const char* title = pConv->GetTitle();
+
+    char buffer[BUFF_SIZE];
+    vector<string> vs;
+
+    mol.BeginModify();
+
+    while (ifs.getline(buffer, BUFF_SIZE)) {
+      if (strcmp(buffer, "Geometry") == 0) {
+        // We need to clear the atoms before proceeding. Since this comes
+        // before all the other data, we can just clear the whole molecule
+        mol.Clear();
+        mol.BeginModify();
+
+        ifs.getline(buffer, BUFF_SIZE); // ------------
+        ifs.getline(buffer, BUFF_SIZE); // Atoms
+        ifs.getline(buffer, BUFF_SIZE);
+
+        // Make sure it is the correct line
+        if (strstr(buffer, "Index") && strstr(buffer, "Symbol")) {
+          double lengthConversion = 1.0;
+          // Check the units
+          if (strstr(buffer, "bohr"))
+            lengthConversion = BOHR_TO_ANGSTROM;
+
+          while (ifs.getline(buffer, BUFF_SIZE)) {
+            tokenize(vs, buffer);
+            // Should be of size 5
+            if (vs.size() < 5)
+              break;
+
+            OBAtom* atom = mol.NewAtom();
+            atom->SetAtomicNum(OBElements::GetAtomicNum(vs[1].c_str()));
+            double x = atof(vs[2].c_str()) * lengthConversion;
+            double y = atof(vs[3].c_str()) * lengthConversion;
+            double z = atof(vs[4].c_str()) * lengthConversion;
+            atom->SetVector(x, y, z);
+          }
+        }
+
+        // Now read the lattice vectors
+        ifs.getline(buffer, BUFF_SIZE);
+        if (strstr(buffer, "Lattice vectors")) {
+          double lengthConversion = 1.0;
+          // Check the units
+          if (strstr(buffer, "bohr"))
+            lengthConversion = BOHR_TO_ANGSTROM;
+
+          std::vector<vector3> vectors;
+          for (short i = 0; i < 3; ++i) {
+            ifs.getline(buffer, BUFF_SIZE);
+            tokenize(vs, buffer);
+            if (vs.size() != 4)
+              break;
+
+            double x = atof(vs[1].c_str()) * lengthConversion;
+            double y = atof(vs[2].c_str()) * lengthConversion;
+            double z = atof(vs[3].c_str()) * lengthConversion;
+            vectors.push_back(vector3(x, y, z));
+          }
+
+          while (vectors.size() < 3)
+            vectors.push_back(vector3(0.0, 0.0, 0.0));
+
+          // Build unit cell
+          OBUnitCell* cell = new OBUnitCell;
+          cell->SetData(vectors[0], vectors[1], vectors[2]);
+          cell->SetSpaceGroup(1);
+          pmol->SetData(cell);
+        }
+      }
+      else if (strstr(buffer, "CALCULATION RESULTS")) {
+        // The final energy line (and the 5 lines before it) looks like this:
+        //
+        //     =====================
+        //     CALCULATION RESULTS
+        //     =====================
+        //
+        // Energy (hartree)           -10.03850942
+
+        // "======="...
+        ifs.getline(buffer, BUFF_SIZE);
+
+        // Blank line
+        ifs.getline(buffer, BUFF_SIZE);
+
+        // This should be the one
+        ifs.getline(buffer, BUFF_SIZE);
+
+        if (strstr(buffer, "Energy")) {
+          tokenize(vs, buffer);
+
+          // Line should be of size 3
+          if (vs.size() != 3)
+            break;
+
+          // Check the units. Do 1.0 if it is kcal/mol
+          double energyConversion = 1.0;
+
+          // I'm not sure what units are possible here.
+          // Add more units if needed.
+          if (strstr(vs[1].c_str(), "hartree"))
+            energyConversion = HARTREE_TO_KCAL_PER_MOL;
+          else if (strstr(vs[1].c_str(), "eV"))
+            energyConversion = EV_TO_KCAL_PER_MOL;
+
+          mol.SetEnergy(atof(vs[2].c_str()) * energyConversion);
+
+          // We should be done reading the file
+          break;
+        }
+      }
+    }
+
+    if (mol.NumAtoms() == 0) { // e.g., if we're at the end of a file
+      mol.EndModify();
+      return false;
+    }
+
+    mol.EndModify();
+
+    mol.SetTitle(title);
+    return true;
+  }
 
 class OBT41Format : public OBMoleculeFormat
 {
