@@ -1,8 +1,5 @@
+---
 name: Build OpenBabel for Windows AMD64
-# Except this comment, this file is written by AI.
-# Mistral Le Chat was tasked to write a workflow to provide an executable
-# of OpenBabel for Windows amd64 based on the instructions documented by
-# the project on https://openbabel.org/docs/Installation/install.html.
 on:
   workflow_dispatch:
     inputs:
@@ -19,53 +16,32 @@ jobs:
   build:
     name: Compile OpenBabel (Windows AMD64)
     runs-on: windows-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Install CMake via Chocolatey
-        run: |
-          choco install cmake --version 3.28.1 -y
-          echo "CMAKE:"
-          cmake --version
-
-#      - name: Install CMake
-#        uses: cmake/setup-cmake@v3
-#        with:
-#          cmake-version: '3.28.x'
-
-      - name: Setup MSVC environment
+      - name: Build with MSVC
         uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: amd64
-
-      - name: Configure CMake
-        run: |
-          mkdir build
-          cd build
-          cmake .. -G "Visual Studio 17 2022" -A x64 \
-            -DCMAKE_INSTALL_PREFIX=install \
-            -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build_type }} \
-            -DBUILD_GUI=OFF \
-            -DRUN_SWIG=OFF
-
-      - name: Build OpenBabel
-        run: |
-          cd build
-          cmake --build . --config ${{ github.event.inputs.build_type }} --parallel 4
-
-      - name: Install OpenBabel
-        run: |
-          cd build
-          cmake --install . --config ${{ github.event.inputs.build_type }}
-
-      - name: Package executables
-        run: |
-          cd install/bin
-          7z a ../../openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip *.exe *.dll
+          shell: pwsh
+          run: |
+            choco install cmake --version 3.28.1 -y
+            cmake --version
+            mkdir build
+            cd build
+            cmake .. -G "Visual Studio 17 2022" -A x64 `
+              -DCMAKE_INSTALL_PREFIX=install `
+              -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build_type }} `
+              -DBUILD_GUI=OFF `
+              -DRUN_SWIG=OFF
+            cmake --build . --config ${{ github.event.inputs.build_type }} --parallel 4
+            cmake --install . --config ${{ github.event.inputs.build_type }}
+            cd install/bin
+            7z a ../../openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip *.exe *.dll
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
