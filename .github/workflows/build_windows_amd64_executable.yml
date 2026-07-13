@@ -1,3 +1,4 @@
+```yaml
 ---
 name: Build OpenBabel for Windows AMD64
 on:
@@ -19,33 +20,42 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.1.1
         with:
           fetch-depth: 0
 
-      - name: Build with MSVC
-        uses: ilammy/msvc-dev-cmd@v1
-        with:
-          arch: amd64
-          shell: pwsh
-          run: |
-            choco install cmake --version 3.28.1 -y
-            cmake --version
-            mkdir build
-            cd build
-            cmake .. -G "Visual Studio 17 2022" -A x64 `
-              -DCMAKE_INSTALL_PREFIX=install `
-              -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build_type }} `
-              -DBUILD_GUI=OFF `
-              -DRUN_SWIG=OFF
-            cmake --build . --config ${{ github.event.inputs.build_type }} --parallel 4
-            cmake --install . --config ${{ github.event.inputs.build_type }}
-            cd install/bin
-            7z a ../../openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip *.exe *.dll
+      - name: Build OpenBabel
+        run: |
+          choco install cmake --version 3.28.1 -y
+          cmake --version
+
+          $vcvars = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          if (-not (Test-Path $vcvars)) {
+            $vcvars = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
+          }
+          cmd /c "$vcvars & set > $env:TEMP\vcvars.txt"
+          Get-Content $env:TEMP\vcvars.txt | ForEach-Object {
+            if ($_ -match '^([^=]+)=(.*)') {
+              [Environment]::SetEnvironmentVariable($matches[1], $matches[2])
+            }
+          }
+
+          mkdir build
+          cd build
+          cmake .. -G "Visual Studio 17 2022" -A x64 `
+            -DCMAKE_INSTALL_PREFIX=../install `
+            -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build_type }} `
+            -DBUILD_GUI=OFF `
+            -DRUN_SWIG=OFF
+          cmake --build . --config ${{ github.event.inputs.build_type }} --parallel 4
+          cmake --install . --config ${{ github.event.inputs.build_type }}
+          cd ../install/bin
+          7z a "${{ github.workspace }}/openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip" *.exe *.dll
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.3.0
         with:
           name: openbabel-windows-amd64-${{ github.event.inputs.build_type }}
           path: openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip
           retention-days: 30
+```
