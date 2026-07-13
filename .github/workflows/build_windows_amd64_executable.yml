@@ -26,10 +26,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install CMake
-        uses: cmake/setup-cmake@v3
-        with:
-          cmake-version: '3.28.x'
+      - name: Install CMake via Chocolatey
+        run: |
+          choco install cmake --version 3.28.1 -y
+          echo "CMAKE:"
+          cmake --version
+
+#      - name: Install CMake
+#        uses: cmake/setup-cmake@v3
+#        with:
+#          cmake-version: '3.28.x'
 
       - name: Setup MSVC environment
         uses: ilammy/msvc-dev-cmd@v1
