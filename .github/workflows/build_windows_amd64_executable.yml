@@ -10,16 +10,19 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    - name: Setup Visual Studio
-      uses: microsoft/setup-msvc@v1
-      with:
-        version: '16.x'
-        components: 'Microsoft.VisualStudio.Workload.NativeDesktop'
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
 
-    - name: Install dependencies
+    - name: Install Visual Studio Build Tools
       run: |
+        choco install visualstudio2019buildtools -y --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended"
         choco install vcpkg -y
         vcpkg install zlib eigen3
+
+    - name: Add MSBuild to PATH
+      uses: microsoft/setup-msbuild@v1
+      with:
+        vs-version: '[16.0,17.0)'
 
     - name: Build OpenBabel
       run: |
