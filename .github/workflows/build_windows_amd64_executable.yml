@@ -39,21 +39,19 @@ jobs:
         set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
         EOF
 
-    - name: Build OpenBabel with mingw
+    - name: Build OpenBabel with mingw (InChI deaktiviert)
       run: |
-        # Stelle sicher, dass wir im openbabel-Verzeichnis sind
         cd openbabel
         mkdir -p build
         cd build
-
-        # CMake mit korrektem Pfad aufrufen
         cmake .. \
           -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/mingw_toolchain.cmake \
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_GUI=OFF \
           -DRUN_SWIG=OFF \
           -DHAVE_EIGEN3=ON \
-          -DHAVE_ZLIB=ON
+          -DHAVE_ZLIB=ON \
+          -DOPENBABEL_USE_INCHI=OFF  # InChI-Unterstützung deaktivieren
         make -j$(nproc)
 
         # Kopiere die generierten .exe-Dateien in einen Ordner
