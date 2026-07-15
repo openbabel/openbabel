@@ -21,6 +21,12 @@ jobs:
       with:
         dotnet-version: '3.1.x'  # Use the appropriate version or remove this line if not needed
 
+    # Install Visual Studio with specified workloads and components
+    - name: Setup Visual Studio
+      uses: microsoft/setup-msvc@v1
+      with:
+        version: '16.x' # Use the appropriate version of Visual Studio
+
     # Install dependencies and build OpenBabel
     - name: Install dependencies and build OpenBabel
       run: |
