@@ -39,7 +39,13 @@ jobs:
         set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
         EOF
 
-    - name: Build OpenBabel with mingw (InChI deaktiviert)
+    - name: Disable InChI in OpenBabel
+      run: |
+        cd openbabel
+        # Benenne das InChI-Verzeichnis um, damit es nicht kompiliert wird
+        mv src/formats/libinchi src/formats/libinchi_disabled
+
+    - name: Build OpenBabel with mingw
       run: |
         cd openbabel
         mkdir -p build
@@ -51,7 +57,10 @@ jobs:
           -DRUN_SWIG=OFF \
           -DHAVE_EIGEN3=ON \
           -DHAVE_ZLIB=ON \
-          -DOPENBABEL_USE_INCHI=OFF  # InChI-Unterstützung deaktivieren
+          -DBUILD_SHARED_LIBS=OFF \
+          -DOPENBABEL_USE_INCHI=OFF \
+          -DINCHI_LIBRARY=OFF \
+          -DINCHI_INCLUDE_DIR=OFF
         make -j$(nproc)
 
         # Kopiere die generierten .exe-Dateien in einen Ordner
