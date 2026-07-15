@@ -10,7 +10,7 @@ jobs:
     - name: Install cross-compilation tools and dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 libboost-all-dev patch
+        sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 libboost-all-dev
         sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
@@ -39,29 +39,14 @@ jobs:
         set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
         EOF
 
-    - name: Remove InChI sources and patch CMakeLists.txt
+    - name: Remove InChI sources and disable InChI in CMakeLists.txt
       run: |
         cd openbabel
         # Lösche das libinchi-Verzeichnis
         rm -rf src/formats/libinchi
 
-        # Erstelle einen Patch mit relativen Pfaden (da wir uns im openbabel-Verzeichnis befinden)
-        cat <<EOF > disable_inchi.patch
-        --- src/formats/CMakeLists.txt
-        +++ src/formats/CMakeLists.txt
-        @@ -1,7 +1,7 @@
-         # Formate für OpenBabel
-         include(CheckCXXSourceCompiles)
-
-        -add_subdirectory(libinchi)
-        +# add_subdirectory(libinchi)  # InChI deaktiviert
-         add_subdirectory(carton)
-         add_subdirectory(cif)
-         add_subdirectory(fasta)
-        EOF
-
-        # Wende den Patch an (mit relativen Pfaden)
-        patch -p0 < disable_inchi.patch
+        # Deaktiviere die Zeile "add_subdirectory(libinchi)" in CMakeLists.txt
+        sed -i 's/add_subdirectory(libinchi)/# add_subdirectory(libinchi)  # InChI deaktiviert/' src/formats/CMakeLists.txt
 
     - name: Build OpenBabel with mingw
       run: |
