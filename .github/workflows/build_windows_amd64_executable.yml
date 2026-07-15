@@ -19,8 +19,8 @@ jobs:
         .\bootstrap-vcpkg.bat
         # vcpkg zur PATH-Variable hinzufügen
         $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") + ";C:\vcpkg"
-        # Installiere Abhängigkeiten (eigen3, zlib, libxml2)
-        .\vcpkg.exe install zlib eigen3 libxml2
+        # Installiere Abhängigkeiten (eigen3, zlib, libxml2, boost)
+        .\vcpkg.exe install zlib eigen3 libxml2 boost
 
     - name: Setup Visual Studio 2026 for CMake
       run: |
@@ -37,29 +37,58 @@ jobs:
 
     - name: Build OpenBabel
       run: |
+        # Klone OpenBabel
         git clone https://github.com/openbabel/openbabel.git
         cd openbabel
+
+        # Erstelle Build-Verzeichnis
         mkdir build
         cd build
+
         # CMake mit allen notwendigen Optionen aufrufen
         cmake .. -G "Visual Studio 18 2026" -A x64 `
                  -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
-                 -DLIBXML2_DIR="C:/vcpkg/installed/x64-windows/share/libxml2" `
+                 -DBOOST_ROOT="C:/vcpkg/installed/x64-windows" `
+                 -DBoost_DIR="C:/vcpkg/installed/x64-windows/share/boost" `
                  -DZLIB_DIR="C:/vcpkg/installed/x64-windows/share/zlib" `
-                 -DEIGEN3_DIR="C:/vcpkg/installed/x64-windows/share/eigen3"
+                 -DEIGEN3_DIR="C:/vcpkg/installed/x64-windows/share/eigen3" `
+                 -DLIBXML2_DIR="C:/vcpkg/installed/x64-windows/share/libxml2" `
+                 -DwxWidgets_DIR="C:/vcpkg/installed/x64-windows/share/wxwidgets" `
+                 -DBUILD_GUI=OFF  # GUI wird nicht gebaut, da wxWidgets fehlt
+
+        # Überprüfe, ob die .sln-Datei existiert
+        if (!(Test-Path "OpenBabel.sln")) {
+          Write-Error "OpenBabel.sln not found in $(Get-Location)"
+          Get-ChildItem -Recurse
+          exit 1
+        }
+
         # Build mit MSBuild
         msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64 /v:diag
+
         # Überprüfe, ob die Build-Dateien existieren
-        if (Test-Path .\Release) {
-          Write-Output "Release directory found. Copying files..."
-          Copy-Item .\Release\*.exe C:\openbabel\bin\amd64\ -Force
-        } elseif (Test-Path .\bin\Release) {
-          Write-Output "bin\Release directory found. Copying files..."
-          Copy-Item .\bin\Release\*.exe C:\openbabel\bin\amd64\ -Force
-        } elseif (Test-Path .\bin) {
-          Write-Output "bin directory found. Copying files..."
-          Copy-Item .\bin\*.exe C:\openbabel\bin\amd64\ -Force
-        } else {
+        $buildDirs = @(
+          ".\Release",
+          ".\bin\Release",
+          ".\bin"
+        )
+
+        $exeFound = $false
+        foreach ($dir in $buildDirs) {
+          if (Test-Path $dir) {
+            Write-Output "Found directory: $dir"
+            $exeFiles = Get-ChildItem -Path $dir -Filter "*.exe" -Recurse
+            if ($exeFiles) {
+              Write-Output "Copying .exe files from $dir to C:\openbabel\bin\amd64"
+              New-Item -ItemType Directory -Path "C:\openbabel\bin\amd64" -Force | Out-Null
+              Copy-Item $exeFiles -Destination "C:\openbabel\bin\amd64" -Force
+              $exeFound = $true
+              break
+            }
+          }
+        }
+
+        if (-not $exeFound) {
           Write-Error "Neither Release nor bin directory found!"
           Get-ChildItem -Recurse
           exit 1
