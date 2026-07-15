@@ -10,11 +10,17 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install vcpkg and dependencies
+    - name: Install vcpkg manually
       run: |
-        choco install vcpkg -y
-        vcpkg install zlib eigen3
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        # Klone vcpkg aus dem offiziellen Repository
+        git clone https://github.com/microsoft/vcpkg.git C:\vcpkg
+        # Bootstrap vcpkg
+        cd C:\vcpkg
+        .\bootstrap-vcpkg.bat
+        # vcpkg zur PATH-Variable hinzufügen
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") + ";C:\vcpkg"
+        # Installiere Abhängigkeiten (eigen3, zlib)
+        .\vcpkg.exe install zlib eigen3
 
     - name: Setup Visual Studio 2026 for CMake
       run: |
