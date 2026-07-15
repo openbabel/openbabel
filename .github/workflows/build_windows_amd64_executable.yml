@@ -14,9 +14,15 @@ jobs:
       run: |
         choco install vcpkg -y
         vcpkg install zlib eigen3
-        # Refresh environment variables
         $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-        Write-Output "Updated PATH: $env:Path"
+
+    - name: Setup Visual Studio 2022 for CMake
+      run: |
+        $vsPath = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+        Write-Output "Visual Studio path: $vsPath"
+        $env:VSINSTALLDIR = "$vsPath"
+        $env:VisualStudioVersion = "17.0"
+        $env:Path += ";$vsPath\MSBuild\Current\Bin"
 
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
@@ -29,10 +35,8 @@ jobs:
         cd openbabel
         mkdir build
         cd build
-        # Use the built-in Visual Studio 2022
         cmake .. -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
         msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64
-        # Check if bin directory exists
         if (Test-Path .\Release) {
           Copy-Item .\Release\*_d.exe C:\openbabel\bin\amd64\ -Force
         } elseif (Test-Path .\bin) {
