@@ -1,6 +1,6 @@
 name: misspell-fixer
 
-on: [push]
+# on: [push]
 jobs:
   spelling-check:
     name: Spelling Check
