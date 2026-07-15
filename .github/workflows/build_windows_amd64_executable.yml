@@ -17,11 +17,11 @@ jobs:
         sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
-    - name: Install vcpkg for cross-compilation
+    - name: Install vcpkg for cross-compilation (without msbuild)
       run: |
         git clone https://github.com/microsoft/vcpkg.git
-        ./vcpkg/bootstrap-vcpkg.sh
-        ./vcpkg/vcpkg install zlib eigen3 boost --triplet x64-windows
+        ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
+        ./vcpkg/vcpkg install zlib eigen3 boost --triplet x64-windows --allow-unsupported
 
     - name: Build OpenBabel
       run: |
