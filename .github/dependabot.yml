@@ -1,11 +1,25 @@
-# Set update schedule for GitHub Actions
-
 version: 2
 updates:
-
+  # Maintain dependencies for GitHub Actions
   - package-ecosystem: "github-actions"
-    directories:
-      - "/.github/**/*"
+    directory: "/"
     schedule:
-      # Check for updates to GitHub Actions every weekday
-      interval: "daily"
+      interval: "monthly"
+    groups:
+      actions:
+        patterns:
+          - "*"
+    cooldown:
+      default-days: 7
+
+  # Maintain Python dependencies
+  - package-ecosystem: "pip"  # i.e. updates only in `pyproject.toml`
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      pip:
+        patterns:
+          - "*"
+    cooldown:
+      default-days: 7
