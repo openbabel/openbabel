@@ -1,110 +1,53 @@
-name: Build OpenBabel for Windows AMD64
+name: Cross-Compile OpenBabel for Windows AMD64
 on:
   workflow_dispatch:
 
 jobs:
-  build-openbabel-windows:
-    runs-on: windows-latest
+  cross-compile-openbabel:
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install vcpkg manually
+    - name: Install cross-compilation tools and dependencies
       run: |
-        # Klone vcpkg aus dem offiziellen Repository
-        git clone https://github.com/microsoft/vcpkg.git C:\vcpkg
-        # Bootstrap vcpkg
-        cd C:\vcpkg
-        .\bootstrap-vcpkg.bat
-        # vcpkg zur PATH-Variable hinzufügen
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") + ";C:\vcpkg"
-        # Installiere Abhängigkeiten (eigen3, zlib, libxml2, boost)
-        .\vcpkg.exe install zlib eigen3 libxml2 boost
+        sudo apt-get update
+        sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64
+        sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
+        sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
-    - name: Setup Visual Studio 2026 for CMake
+    - name: Install vcpkg for cross-compilation
       run: |
-        $vsPath = & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
-        Write-Output "Visual Studio path: $vsPath"
-        $env:VSINSTALLDIR = "$vsPath"
-        $env:VisualStudioVersion = "18.0"
-        $env:Path += ";$vsPath\MSBuild\Current\Bin"
-
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v2
-      with:
-        vs-version: 18.0
+        git clone https://github.com/microsoft/vcpkg.git
+        ./vcpkg/bootstrap-vcpkg.sh
+        ./vcpkg/vcpkg install zlib eigen3 boost --triplet x64-windows
 
     - name: Build OpenBabel
       run: |
-        # Klone OpenBabel
         git clone https://github.com/openbabel/openbabel.git
         cd openbabel
-
-        # Erstelle Build-Verzeichnis
         mkdir build
         cd build
+        cmake .. \
+          -DCMAKE_TOOLCHAIN_FILE=../../vcpkg/scripts/buildsystems/vcpkg.cmake \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DBUILD_GUI=OFF \
+          -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
+          -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
+          -DCMAKE_SYSTEM_NAME=Windows \
+          -DCMAKE_SYSTEM_PROCESSOR=AMD64
+        make -j$(nproc)
 
-        # CMake mit allen notwendigen Optionen aufrufen
-        cmake .. -G "Visual Studio 18 2026" -A x64 `
-                 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
-                 -DBOOST_ROOT="C:/vcpkg/installed/x64-windows" `
-                 -DBoost_DIR="C:/vcpkg/installed/x64-windows/share/boost" `
-                 -DBUILD_GUI=OFF
-
-        # Überprüfe, ob die .sln-Datei im Wurzelverzeichnis des Repositorys existiert
-        if (Test-Path "../OpenBabel.sln") {
-          Write-Output "OpenBabel.sln found in the root directory. Using it."
-          $slnPath = "../OpenBabel.sln"
-        } elseif (Test-Path "OpenBabel.sln") {
-          Write-Output "OpenBabel.sln found in the build directory."
-          $slnPath = "OpenBabel.sln"
-        } else {
-          Write-Error "OpenBabel.sln not found in the repository or build directory!"
-          Get-ChildItem -Recurse
-          exit 1
-        }
-
-        # Build mit MSBuild
-        msbuild $slnPath /p:Configuration=Release /p:Platform=x64 /v:diag
-    
-        # Überprüfe, ob die Build-Dateien existieren
-        $buildDirs = @(
-          ".\Release",
-          ".\bin\Release",
-          ".\bin"
-        )
-
-        $exeFound = $false
-        foreach ($dir in $buildDirs) {
-          if (Test-Path $dir) {
-            Write-Output "Found directory: $dir"
-            $exeFiles = Get-ChildItem -Path $dir -Filter "*.exe" -Recurse
-            if ($exeFiles) {
-              Write-Output "Copying .exe files from $dir to C:\openbabel\bin\amd64"
-              New-Item -ItemType Directory -Path "C:\openbabel\bin\amd64" -Force | Out-Null
-              Copy-Item $exeFiles -Destination "C:\openbabel\bin\amd64" -Force
-              $exeFound = $true
-              break
-            }
-          }
-        }
-
-        if (-not $exeFound) {
-          Write-Error "Neither Release nor bin directory found!"
-          Get-ChildItem -Recurse
-          exit 1
-        }
-
+        # Kopiere die generierten .exe-Dateien in einen Ordner
+        mkdir -p /tmp/openbabel-bin
+        find . -name "*.exe" -exec cp {} /tmp/openbabel-bin/ \;
 
     - name: Compress binaries
       run: |
-        if (!(Test-Path C:\openbabel\bin\amd64)) { mkdir C:\openbabel\bin\amd64 -Force }
-        cd C:\openbabel\bin\amd64
-        tar -czvf openbabel-windows-amd64.tar.gz .
-        Move-Item .\openbabel-windows-amd64.tar.gz ..
+        tar -czvf openbabel-windows-amd64.tar.gz -C /tmp/openbabel-bin .
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        path: C:\openbabel\openbabel-windows-amd64.tar.gz
+        path: openbabel-windows-amd64.tar.gz
