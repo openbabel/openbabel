@@ -41,8 +41,12 @@ jobs:
 
     - name: Build OpenBabel with mingw
       run: |
+        # Stelle sicher, dass wir im openbabel-Verzeichnis sind
+        cd openbabel
         mkdir -p build
         cd build
+
+        # CMake mit korrektem Pfad aufrufen
         cmake .. \
           -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/mingw_toolchain.cmake \
           -DCMAKE_BUILD_TYPE=Release \
