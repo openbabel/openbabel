@@ -2,11 +2,6 @@ name: Build OpenBabel for Windows AMD64
 on:
   workflow_dispatch:
 
-#  push:
-#    branches: [ main ]
-#  pull_request:
-#    branches: [ main ]
-
 jobs:
   build-openbabel-windows:
     runs-on: windows-latest
@@ -15,37 +10,33 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
 
-    # Set up .NET SDK
-    - name: Setup .NET SDK
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '3.1.x'  # Use the appropriate version or remove this line if not needed
-
-    # Install Visual Studio with specified workloads and components
     - name: Setup Visual Studio
       uses: microsoft/setup-msvc@v1
       with:
-        version: '16.x' # Use the appropriate version of Visual Studio
+        version: '16.x'
+        components: 'Microsoft.VisualStudio.Workload.NativeDesktop'
 
-    # Install dependencies and build OpenBabel
-    - name: Install dependencies and build OpenBabel
+    - name: Install dependencies
+      run: |
+        choco install vcpkg -y
+        vcpkg install zlib eigen3
+
+    - name: Build OpenBabel
       run: |
         git clone https://github.com/openbabel/openbabel.git
         cd openbabel
         mkdir build
         cd build
-        cmake .. -G "Visual Studio 16 2019" -A x64
+        cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
         msbuild OpenBabel.sln /p:Configuration=Release
         powershell Copy-Item .\bin\*_d.exe C:\openbabel\bin\amd64\
 
-    # Package the output (optional)
     - name: Compress binaries
       run: |
         cd C:\openbabel\bin\amd64
         tar -czvf openbabel-windows-amd64.tar.gz .
         powershell Move-Item .\openbabel-windows-amd64.tar.gz ..
 
-    # Upload the artifact to GitHub Releases (optional)
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
