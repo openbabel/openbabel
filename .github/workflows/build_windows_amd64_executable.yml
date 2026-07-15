@@ -1,4 +1,4 @@
-name: Cross-Compile OpenBabel for Windows AMD64
+name: Cross-Compile OpenBabel for Windows AMD64 (mingw)
 on:
   workflow_dispatch:
 
@@ -7,37 +7,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
-
-    - name: Install cross-compilation tools and dependencies
+    - name: Install cross-compilation tools
       run: |
         sudo apt-get update
         sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64
         sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
-    - name: Install vcpkg for cross-compilation (Windows-only)
-      run: |
-        git clone https://github.com/microsoft/vcpkg.git
-        ./vcpkg/bootstrap-vcpkg.sh -disableMetrics
-        # Installiere nur die benötigten Windows-Pakete
-        ./vcpkg/vcpkg install zlib eigen3 boost --triplet x64-windows --allow-unsupported
-
-    - name: Build OpenBabel
+    - name: Checkout OpenBabel repository
       run: |
         git clone https://github.com/openbabel/openbabel.git
         cd openbabel
-        mkdir build
-        cd build
+
+    - name: Build OpenBabel with mingw
+      run: |
+        mkdir -p openbabel/build
+        cd openbabel/build
         cmake .. \
-          -DCMAKE_TOOLCHAIN_FILE=../../vcpkg/scripts/buildsystems/vcpkg.cmake \
+          -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/mingw_toolchain.cmake \
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_GUI=OFF \
-          -DCMAKE_C_COMPILER=x86_64-w64-mingw32-gcc \
-          -DCMAKE_CXX_COMPILER=x86_64-w64-mingw32-g++ \
-          -DCMAKE_SYSTEM_NAME=Windows \
-          -DCMAKE_SYSTEM_PROCESSOR=AMD64
+          -DRUN_SWIG=OFF
         make -j$(nproc)
 
         # Kopiere die generierten .exe-Dateien in einen Ordner
