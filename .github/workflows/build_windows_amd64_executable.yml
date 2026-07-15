@@ -7,10 +7,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install cross-compilation tools
+    - name: Install cross-compilation tools and dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64
+        sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 libboost-all-dev
         sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
         sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
 
@@ -39,13 +39,7 @@ jobs:
         set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
         EOF
 
-    - name: Disable InChI in OpenBabel
-      run: |
-        cd openbabel
-        # Benenne das InChI-Verzeichnis um, damit es nicht kompiliert wird
-        mv src/formats/libinchi src/formats/libinchi_disabled
-
-    - name: Build OpenBabel with mingw
+    - name: Build OpenBabel with mingw (InChI deaktiviert, Boost explizit angegeben)
       run: |
         cd openbabel
         mkdir -p build
@@ -59,8 +53,7 @@ jobs:
           -DHAVE_ZLIB=ON \
           -DBUILD_SHARED_LIBS=OFF \
           -DOPENBABEL_USE_INCHI=OFF \
-          -DINCHI_LIBRARY=OFF \
-          -DINCHI_INCLUDE_DIR=OFF
+          -DBoost_DIR=/usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0
         make -j$(nproc)
 
         # Kopiere die generierten .exe-Dateien in einen Ordner
