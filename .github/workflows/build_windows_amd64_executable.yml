@@ -19,8 +19,8 @@ jobs:
         .\bootstrap-vcpkg.bat
         # vcpkg zur PATH-Variable hinzufügen
         $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") + ";C:\vcpkg"
-        # Installiere Abhängigkeiten (eigen3, zlib)
-        .\vcpkg.exe install zlib eigen3
+        # Installiere Abhängigkeiten (eigen3, zlib, libxml2)
+        .\vcpkg.exe install zlib eigen3 libxml2
 
     - name: Setup Visual Studio 2026 for CMake
       run: |
@@ -41,15 +41,28 @@ jobs:
         cd openbabel
         mkdir build
         cd build
-        cmake .. -G "Visual Studio 18 2026" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
-        msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64
+        # CMake mit allen notwendigen Optionen aufrufen
+        cmake .. -G "Visual Studio 18 2026" -A x64 `
+                 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
+                 -DLIBXML2_DIR="C:/vcpkg/installed/x64-windows/share/libxml2" `
+                 -DZLIB_DIR="C:/vcpkg/installed/x64-windows/share/zlib" `
+                 -DEIGEN3_DIR="C:/vcpkg/installed/x64-windows/share/eigen3"
+        # Build mit MSBuild
+        msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64 /v:diag
+        # Überprüfe, ob die Build-Dateien existieren
         if (Test-Path .\Release) {
-          Copy-Item .\Release\*_d.exe C:\openbabel\bin\amd64\ -Force
+          Write-Output "Release directory found. Copying files..."
+          Copy-Item .\Release\*.exe C:\openbabel\bin\amd64\ -Force
+        } elseif (Test-Path .\bin\Release) {
+          Write-Output "bin\Release directory found. Copying files..."
+          Copy-Item .\bin\Release\*.exe C:\openbabel\bin\amd64\ -Force
         } elseif (Test-Path .\bin) {
-          Copy-Item .\bin\*_d.exe C:\openbabel\bin\amd64\ -Force
+          Write-Output "bin directory found. Copying files..."
+          Copy-Item .\bin\*.exe C:\openbabel\bin\amd64\ -Force
         } else {
           Write-Error "Neither Release nor bin directory found!"
           Get-ChildItem -Recurse
+          exit 1
         }
 
     - name: Compress binaries
