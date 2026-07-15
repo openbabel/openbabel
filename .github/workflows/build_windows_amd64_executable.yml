@@ -10,9 +10,8 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Install Visual Studio Build Tools and vcpkg
+    - name: Install vcpkg and dependencies
       run: |
-        choco install visualstudio2019buildtools -y --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended"
         choco install vcpkg -y
         vcpkg install zlib eigen3
         # Refresh environment variables
@@ -30,13 +29,17 @@ jobs:
         cd openbabel
         mkdir build
         cd build
+        # Use the built-in Visual Studio 2022
         cmake .. -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
         msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64
         # Check if bin directory exists
-        if (Test-Path .\bin) {
+        if (Test-Path .\Release) {
+          Copy-Item .\Release\*_d.exe C:\openbabel\bin\amd64\ -Force
+        } elseif (Test-Path .\bin) {
           Copy-Item .\bin\*_d.exe C:\openbabel\bin\amd64\ -Force
         } else {
-          Write-Error "bin directory not found!"
+          Write-Error "Neither Release nor bin directory found!"
+          Get-ChildItem -Recurse
         }
 
     - name: Compress binaries
