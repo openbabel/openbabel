@@ -41,6 +41,6 @@ jobs:
 
     # Upload the artifact to GitHub Releases (optional)
     - name: Upload Artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         path: C:\openbabel\bin\amd64\openbabel-windows-amd64.tar.gz
