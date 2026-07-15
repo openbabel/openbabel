@@ -1,78 +1,46 @@
-name: Cross-Compile OpenBabel for Windows AMD64 (Final Fix)
+name: Build OpenBabel for Linux AMD64 on os.rnnner ubuntu
+# because building an executable on os.runner Windows for Windows failed
+# and because cross-compilation on os.runner Ubuntu for Windows equally failed
 on:
   workflow_dispatch:
 
 jobs:
-  cross-compile-openbabel:
+  build-openbabel-linux:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install cross-compilation tools and dependencies
+    - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++-mingw-w64-x86-64 gcc-mingw-w64-x86-64 libboost-all-dev
-        sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix
-        sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix
+        sudo apt-get install -y cmake g++ git libboost-all-dev libeigen3-dev zlib1g-dev
 
     - name: Checkout OpenBabel repository
       run: |
         git clone https://github.com/openbabel/openbabel.git
         cd openbabel
 
-    - name: Create mingw toolchain file
-      run: |
-        mkdir -p cmake/toolchains
-        cat <<EOF > cmake/toolchains/mingw_toolchain.cmake
-        # Toolchain für die Kompilierung nach Windows mit mingw
-        set(CMAKE_SYSTEM_NAME Windows)
-        set(CMAKE_SYSTEM_PROCESSOR AMD64)
-
-        # Compiler für C und C++
-        set(CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
-        set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
-
-        # Pfade zu den mingw-Bibliotheken
-        set(CMAKE_FIND_ROOT_PATH /usr/x86_64-w64-mingw32)
-        set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
-        set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
-        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
-        set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
-        EOF
-
-    - name: Remove InChI sources and disable InChI in CMakeLists.txt
-      run: |
-        cd openbabel
-        # Lösche das libinchi-Verzeichnis
-        rm -rf src/formats/libinchi
-
-        # Deaktiviere die Zeile "add_subdirectory(libinchi)" in CMakeLists.txt
-        sed -i 's/add_subdirectory(libinchi)/# add_subdirectory(libinchi)  # InChI deaktiviert/' src/formats/CMakeLists.txt
-
-    - name: Build OpenBabel with mingw
+    - name: Build OpenBabel
       run: |
         cd openbabel
         mkdir -p build
         cd build
         cmake .. \
-          -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/mingw_toolchain.cmake \
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_GUI=OFF \
-          -DRUN_SWIG=OFF \
-          -DHAVE_EIGEN3=ON \
-          -DHAVE_ZLIB=ON \
-          -DBUILD_SHARED_LIBS=OFF \
-          -DBoost_DIR=/usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0
+          -DRUN_SWIG=OFF
         make -j$(nproc)
 
-        # Kopiere die generierten .exe-Dateien in einen Ordner
+        # Kopiere die generierten Binaries in einen Ordner
         mkdir -p /tmp/openbabel-bin
-        find . -name "*.exe" -exec cp {} /tmp/openbabel-bin/ \;
+        find . -name "obabel" -exec cp {} /tmp/openbabel-bin/ \;
+        find . -name "*.so" -exec cp {} /tmp/openbabel-bin/ \;
 
     - name: Compress binaries
       run: |
-        tar -czvf openbabel-windows-amd64.tar.gz -C /tmp/openbabel-bin .
+        tar -czvf openbabel-linux-amd64.tar.gz -C /tmp/openbabel-bin .
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        path: openbabel-windows-amd64.tar.gz
+        name: openbabel-linux-amd64
+        path: openbabel-linux-amd64.tar.gz
