@@ -1,58 +1,46 @@
 name: Build OpenBabel for Windows AMD64
 on:
   workflow_dispatch:
-    inputs:
-      build_type:
-        description: 'Build type (Release or Debug)'
-        required: true
-        default: 'Release'
-        type: choice
-        options:
-          - Release
-          - Debug
+
+#  push:
+#    branches: [ main ]
+#  pull_request:
+#    branches: [ main ]
 
 jobs:
-  build:
-    name: Compile OpenBabel (Windows AMD64)
+  build-openbabel-windows:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4.1.1
-        with:
-          fetch-depth: 0
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Build OpenBabel
-        run: |
-          choco install cmake --version 3.28.1 -y
-          cmake --version
+    # Set up .NET SDK
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.x'  # Use the appropriate version or remove this line if not needed
 
-          $vcvars = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
-          if (-not (Test-Path $vcvars)) {
-            $vcvars = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\2022\Community\VC\Auxiliary\Build\vcvars64.bat"
-          }
-          cmd /c "$vcvars & set > $env:TEMP\vcvars.txt"
-          Get-Content $env:TEMP\vcvars.txt | ForEach-Object {
-            if ($_ -match '^([^=]+)=(.*)') {
-              [Environment]::SetEnvironmentVariable($matches[1], $matches[2])
-            }
-          }
+    # Install dependencies and build OpenBabel
+    - name: Install dependencies and build OpenBabel
+      run: |
+        git clone https://github.com/openbabel/openbabel.git
+        cd openbabel
+        mkdir build
+        cd build
+        cmake .. -G "Visual Studio 16 2019" -A x64
+        msbuild OpenBabel.sln /p:Configuration=Release
+        powershell Copy-Item .\bin\*_d.exe C:\openbabel\bin\amd64\
 
-          mkdir build
-          cd build
-          cmake .. -G "Visual Studio 17 2022" -A x64 `
-            -DCMAKE_INSTALL_PREFIX=../install `
-            -DCMAKE_BUILD_TYPE=${{ github.event.inputs.build_type }} `
-            -DBUILD_GUI=OFF `
-            -DRUN_SWIG=OFF
-          cmake --build . --config ${{ github.event.inputs.build_type }} --parallel 4
-          cmake --install . --config ${{ github.event.inputs.build_type }}
-          cd ../install/bin
-          7z a "${{ github.workspace }}/openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip" *.exe *.dll
+    # Package the output (optional)
+    - name: Compress binaries
+      run: |
+        cd C:\openbabel\bin\amd64
+        tar -czvf openbabel-windows-amd64.tar.gz .
+        powershell Move-Item .\openbabel-windows-amd64.tar.gz ..
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4.3.0
-        with:
-          name: openbabel-windows-amd64-${{ github.event.inputs.build_type }}
-          path: openbabel-windows-amd64-${{ github.event.inputs.build_type }}.zip
-          retention-days: 30
+    # Upload the artifact to GitHub Releases (optional)
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        path: C:\openbabel\bin\amd64\openbabel-windows-amd64.tar.gz
