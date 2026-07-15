@@ -45,10 +45,10 @@ jobs:
         # Lösche das libinchi-Verzeichnis
         rm -rf src/formats/libinchi
 
-        # Erstelle einen Patch, um die Zeile "add_subdirectory(libinchi)" aus CMakeLists.txt zu entfernen
+        # Erstelle einen Patch mit relativen Pfaden (da wir uns im openbabel-Verzeichnis befinden)
         cat <<EOF > disable_inchi.patch
-        --- a/src/formats/CMakeLists.txt
-        +++ b/src/formats/CMakeLists.txt
+        --- src/formats/CMakeLists.txt
+        +++ src/formats/CMakeLists.txt
         @@ -1,7 +1,7 @@
          # Formate für OpenBabel
          include(CheckCXXSourceCompiles)
@@ -60,8 +60,8 @@ jobs:
          add_subdirectory(fasta)
         EOF
 
-        # Wende den Patch an
-        patch -p1 < disable_inchi.patch
+        # Wende den Patch an (mit relativen Pfaden)
+        patch -p0 < disable_inchi.patch
 
     - name: Build OpenBabel with mingw
       run: |
