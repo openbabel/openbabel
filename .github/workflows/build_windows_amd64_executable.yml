@@ -24,6 +24,11 @@ jobs:
         $env:VisualStudioVersion = "17.0"
         $env:Path += ";$vsPath\MSBuild\Current\Bin"
 
+    - name: Debug CMake and Visual Studio
+      run: |
+        cmake --help
+        & "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -latest
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v2
       with:
