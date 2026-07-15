@@ -1,4 +1,4 @@
-name: Cross-Compile OpenBabel for Windows AMD64 (mingw)
+name: Cross-Compile OpenBabel for Windows AMD64 (Direct)
 on:
   workflow_dispatch:
 
@@ -19,15 +19,37 @@ jobs:
         git clone https://github.com/openbabel/openbabel.git
         cd openbabel
 
+    - name: Create mingw toolchain file
+      run: |
+        mkdir -p cmake/toolchains
+        cat <<EOF > cmake/toolchains/mingw_toolchain.cmake
+        # Toolchain für die Kompilierung nach Windows mit mingw
+        set(CMAKE_SYSTEM_NAME Windows)
+        set(CMAKE_SYSTEM_PROCESSOR AMD64)
+
+        # Compiler für C und C++
+        set(CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
+        set(CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
+
+        # Pfade zu den mingw-Bibliotheken
+        set(CMAKE_FIND_ROOT_PATH /usr/x86_64-w64-mingw32)
+        set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
+        set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
+        set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)
+        set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+        EOF
+
     - name: Build OpenBabel with mingw
       run: |
-        mkdir -p openbabel/build
-        cd openbabel/build
+        mkdir -p build
+        cd build
         cmake .. \
           -DCMAKE_TOOLCHAIN_FILE=../cmake/toolchains/mingw_toolchain.cmake \
           -DCMAKE_BUILD_TYPE=Release \
           -DBUILD_GUI=OFF \
-          -DRUN_SWIG=OFF
+          -DRUN_SWIG=OFF \
+          -DHAVE_EIGEN3=ON \
+          -DHAVE_ZLIB=ON
         make -j$(nproc)
 
         # Kopiere die generierten .exe-Dateien in einen Ordner
