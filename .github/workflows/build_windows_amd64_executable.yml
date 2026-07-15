@@ -50,22 +50,24 @@ jobs:
                  -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake `
                  -DBOOST_ROOT="C:/vcpkg/installed/x64-windows" `
                  -DBoost_DIR="C:/vcpkg/installed/x64-windows/share/boost" `
-                 -DZLIB_DIR="C:/vcpkg/installed/x64-windows/share/zlib" `
-                 -DEIGEN3_DIR="C:/vcpkg/installed/x64-windows/share/eigen3" `
-                 -DLIBXML2_DIR="C:/vcpkg/installed/x64-windows/share/libxml2" `
-                 -DwxWidgets_DIR="C:/vcpkg/installed/x64-windows/share/wxwidgets" `
-                 -DBUILD_GUI=OFF  # GUI wird nicht gebaut, da wxWidgets fehlt
+                 -DBUILD_GUI=OFF
 
-        # Überprüfe, ob die .sln-Datei existiert
-        if (!(Test-Path "OpenBabel.sln")) {
-          Write-Error "OpenBabel.sln not found in $(Get-Location)"
+        # Überprüfe, ob die .sln-Datei im Wurzelverzeichnis des Repositorys existiert
+        if (Test-Path "../OpenBabel.sln") {
+          Write-Output "OpenBabel.sln found in the root directory. Using it."
+          $slnPath = "../OpenBabel.sln"
+        } elseif (Test-Path "OpenBabel.sln") {
+          Write-Output "OpenBabel.sln found in the build directory."
+          $slnPath = "OpenBabel.sln"
+        } else {
+          Write-Error "OpenBabel.sln not found in the repository or build directory!"
           Get-ChildItem -Recurse
           exit 1
         }
 
         # Build mit MSBuild
-        msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64 /v:diag
-
+        msbuild $slnPath /p:Configuration=Release /p:Platform=x64 /v:diag
+    
         # Überprüfe, ob die Build-Dateien existieren
         $buildDirs = @(
           ".\Release",
@@ -93,6 +95,7 @@ jobs:
           Get-ChildItem -Recurse
           exit 1
         }
+
 
     - name: Compress binaries
       run: |
