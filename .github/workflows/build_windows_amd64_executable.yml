@@ -8,21 +8,21 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
-    - name: Setup MSBuild
-      uses: microsoft/setup-msbuild@v1
-
-    - name: Install Visual Studio Build Tools
+    - name: Install Visual Studio Build Tools and vcpkg
       run: |
         choco install visualstudio2019buildtools -y --package-parameters "--add Microsoft.VisualStudio.Workload.NativeDesktop --includeRecommended"
         choco install vcpkg -y
         vcpkg install zlib eigen3
+        # Refresh environment variables
+        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+        Write-Output "Updated PATH: $env:Path"
 
-    - name: Add MSBuild to PATH
-      uses: microsoft/setup-msbuild@v1
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
       with:
-        vs-version: '[16.0,17.0)'
+        vs-version: 17.0
 
     - name: Build OpenBabel
       run: |
@@ -30,17 +30,23 @@ jobs:
         cd openbabel
         mkdir build
         cd build
-        cmake .. -G "Visual Studio 16 2019" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
-        msbuild OpenBabel.sln /p:Configuration=Release
-        powershell Copy-Item .\bin\*_d.exe C:\openbabel\bin\amd64\
+        cmake .. -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE=C:/vcpkg/scripts/buildsystems/vcpkg.cmake
+        msbuild OpenBabel.sln /p:Configuration=Release /p:Platform=x64
+        # Check if bin directory exists
+        if (Test-Path .\bin) {
+          Copy-Item .\bin\*_d.exe C:\openbabel\bin\amd64\ -Force
+        } else {
+          Write-Error "bin directory not found!"
+        }
 
     - name: Compress binaries
       run: |
+        if (!(Test-Path C:\openbabel\bin\amd64)) { mkdir C:\openbabel\bin\amd64 -Force }
         cd C:\openbabel\bin\amd64
         tar -czvf openbabel-windows-amd64.tar.gz .
-        powershell Move-Item .\openbabel-windows-amd64.tar.gz ..
+        Move-Item .\openbabel-windows-amd64.tar.gz ..
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
-        path: C:\openbabel\bin\amd64\openbabel-windows-amd64.tar.gz
+        path: C:\openbabel\openbabel-windows-amd64.tar.gz
