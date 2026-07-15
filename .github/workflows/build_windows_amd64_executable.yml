@@ -1,4 +1,4 @@
-name: Cross-Compile OpenBabel for Windows AMD64 (Direct)
+name: Cross-Compile OpenBabel for Windows AMD64 (Final)
 on:
   workflow_dispatch:
 
@@ -39,7 +39,13 @@ jobs:
         set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
         EOF
 
-    - name: Build OpenBabel with mingw (InChI deaktiviert, Boost explizit angegeben)
+    - name: Remove InChI sources to prevent compilation
+      run: |
+        cd openbabel
+        # Lösche das libinchi-Verzeichnis, damit es nicht kompiliert wird
+        rm -rf src/formats/libinchi
+
+    - name: Build OpenBabel with mingw
       run: |
         cd openbabel
         mkdir -p build
@@ -52,7 +58,6 @@ jobs:
           -DHAVE_EIGEN3=ON \
           -DHAVE_ZLIB=ON \
           -DBUILD_SHARED_LIBS=OFF \
-          -DOPENBABEL_USE_INCHI=OFF \
           -DBoost_DIR=/usr/lib/x86_64-linux-gnu/cmake/Boost-1.74.0
         make -j$(nproc)
 
