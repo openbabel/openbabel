@@ -18,7 +18,7 @@ jobs:
             name: "Linux SWIG All Bindings",
             os: ubuntu-latest,
             cc: "gcc", cxx: "g++",
-            csharp_compiler: "mcs",  # Added for C# support
+            csharp_compiler: "mcs",
             cmake_flags: "-DPYTHON_BINDINGS=ON -DPERL_BINDINGS=ON -DPHP_BINDINGS=ON -DRUBY_BINDINGS=ON -DJAVA_BINDINGS=ON -DCSHARP_BINDINGS=ON -DRUN_SWIG=ON "
           }
 
@@ -49,22 +49,28 @@ jobs:
           -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" \
           ${{matrix.config.cmake_flags}}
       shell: bash
-      working-directory: ${{ github.workspace }}  # Removed "/openbabel" as it doesn't exist
+      working-directory: ${{ github.workspace }}
 
     - name: Build
       run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build . --parallel $(nproc)
       shell: bash
       working-directory: ${{ runner.workspace }}/../build
 
+    - name: Create Packing Directory
+      run: mkdir -p ${{ runner.workspace }}/packed/openbabel
+
+    - name: Copy Files for Packing
+      run: |
+        cp -r ${{ runner.workspace }}/../build/* ${{ runner.workspace }}/packed/openbabel/
+      shell: bash
+
     - name: Packing
       run: |
-        tar --exclude-vcs --exclude-backups --exclude='.github*' -cvjf openbabel-latest.tar.bz2 .
+        tar --exclude-vcs --exclude-backups --exclude='.github*' -cvjf openbabel-latest.tar.bz2 -C ${{ runner.workspace }}/packed/openbabel .
       shell: bash
-      working-directory: ${{ runner.workspace }}/../build
 
     - name: Upload
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
       with:
-        path: ${{ runner.workspace }}/../build/openbabel-latest.tar.bz2
+        path: ${{ runner.workspace }}/packed/openbabel-latest.tar.bz2
         name: openbabel.tar.bz2
-
