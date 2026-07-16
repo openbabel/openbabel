@@ -37,6 +37,8 @@ jobs:
         echo "Runner Workspace: ${{ runner.workspace }}"
         ls -la ${{ github.workspace }}
         ls -la ${{ runner.workspace }}
+        ls -la ${{ runner.workspace }}/packed || echo "Packed directory does not exist"
+        ls -la ${{ runner.workspace }}/packed/openbabel || echo "Openbabel directory does not exist"
 
     - name: Configure
       run: |
@@ -66,8 +68,17 @@ jobs:
 
     - name: Packing
       run: |
-        tar --exclude-vcs --exclude-backups --exclude='.github*' -cvjf openbabel-latest.tar.bz2 -C ${{ runner.workspace }}/packed/openbabel .
+        tar --exclude-vcs --exclude-backups --exclude='.github*' -cvjf ${{ runner.workspace }}/packed/openbabel-latest.tar.bz2 -C ${{ runner.workspace }}/packed/openbabel .
       shell: bash
+
+    - name: Verify Artifact Exists
+      run: |
+        if [ -f "${{ runner.workspace }}/packed/openbabel-latest.tar.bz2" ]; then
+          echo "Artifact exists!"
+        else
+          echo "Artifact does not exist!"
+          exit 1
+        fi
 
     - name: Upload
       uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
