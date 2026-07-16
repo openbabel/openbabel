@@ -40,7 +40,7 @@ jobs:
         tar -czvf openbabel-linux-amd64.tar.gz -C /tmp/openbabel-bin .
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v7
       with:
         name: openbabel-linux-amd64
         path: openbabel-linux-amd64.tar.gz
