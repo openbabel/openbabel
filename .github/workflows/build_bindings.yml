@@ -29,13 +29,33 @@ jobs:
         sudo apt-get -qq update
         sudo apt-get -qq install ninja-build swig libeigen3-dev libboost-all-dev r-base-core r-base-dev mono-devel
 
+    - name: Debug Directory Structure
+      run: |
+        echo "GitHub Workspace: ${{ github.workspace }}"
+        echo "Runner Workspace: ${{ runner.workspace }}"
+        ls -la ${{ github.workspace }}
+        ls -la ${{ runner.workspace }}
+
     - name: Configure
       run: |
-        mkdir "${{ runner.workspace }}/../build"
+        mkdir -p "${{ runner.workspace }}/../build"
         cd "${{ runner.workspace }}/../build"
-        cmake $GITHUB_WORKSPACE -GNinja -DCSHARP_EXECUTABLE=mcs -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" ${{matrix.config.cmake_flags}}
-      shell: bash
-      working-directory: ${{ runner.workspace }}/openbabel
+        cmake $GITHUB_WORKSPACE -GNinja \
+          -DCSHARP_EXECUTABLE=${{matrix.config.csharp_compiler}} \
+          -DCMAKE_C_COMPILER=${{matrix.config.cc}} \
+          -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} \
+          -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" \
+          ${{matrix.config.cmake_flags}}
+          shell: bash
+      working-directory: ${{ github.workspace }}/openbabel  # Corrected working directory
+
+#    - name: Configure
+#      run: |
+#        mkdir "${{ runner.workspace }}/../build"
+#        cd "${{ runner.workspace }}/../build"
+#        cmake $GITHUB_WORKSPACE -GNinja -DCSHARP_EXECUTABLE=mcs -DCMAKE_C_COMPILER=${{matrix.config.cc}} -DCMAKE_CXX_COMPILER=${{matrix.config.cxx}} -DCMAKE_CXX_FLAGS="-Wno-error=deprecated-declarations" ${{matrix.config.cmake_flags}}
+#      shell: bash
+#      working-directory: ${{ runner.workspace }}/openbabel
 
     - name: Build
       run: CC=${{matrix.config.cc}} CXX=${{matrix.config.cxx}} cmake --build .
