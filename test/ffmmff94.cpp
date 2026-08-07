@@ -215,7 +215,7 @@ int ffmmff94(int argc, char* argv[])
     TestFile(testdatadir + "forcefield.sdf", testdatadir + "mmff94e4results.txt", "MMFF94", 4.0);
     break;
   case 6:
-    TestFile(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94e4sresults.txt", "MMFF94", 4.0);
+    TestFile(testdatadir + "more-mmff94.sdf", testdatadir + "more-mmff94e4results.txt", "MMFF94", 4.0);
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
