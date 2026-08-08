@@ -1,54 +1,38 @@
-version: '3.0'
+# Safety Security Configuration file
+# Consumed by `safety check` in .github/workflows/lint_python.yml.
+#
+# Format note: this is the schema for safety 2.x, which is what the lint
+# workflow pins ("safety<3"). Safety 3.x uses an incompatible schema with a
+# top-level `version: '3.0'` key -- if the pin is ever raised, this file has
+# to be rewritten, because 2.x and 3.x cannot read each other's policies.
+#
+# A note on Open Babel's own advisories: the lint job pip-installs this
+# project, so safety scans `openbabel` as though it were a dependency. Every
+# openbabel advisory in the database is "Affected spec: <3.2.0" and all are
+# fixed here, so none should match -- provided the installed package reports
+# its real version. setuptools_scm cannot parse the 'openbabel-X-Y-Z' tag
+# format and otherwise reports 0.1.dev1, which matches every advisory; the
+# workflow pins the version via SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL
+# to prevent that. These advisories are deliberately NOT ignored below, so a
+# future one affecting a released version will still fail the build.
 
-scanning-settings:
-  max-depth: 6
-  exclude: []
-  include-files: []
-  system:
-    targets: []
+security: # configuration for the `safety check` command
+    # Report vulnerabilities at every severity level.
+    ignore-cvss-severity-below: 0
 
+    # Advisories without a CVSS score are still worth seeing.
+    ignore-cvss-unknown-severity: False
 
-report:
-  dependency-vulnerabilities:
-    enabled: true
-    auto-ignore-in-report:
-      python:
-        environment-results: true
-        unpinned-requirements: true
-      cvss-severity: []
+    # Specific vulnerabilities to ignore, keyed by numeric advisory ID.
+    # Prefer fixing or upgrading; if an entry is genuinely not applicable,
+    # add it here with a `reason` and an `expires` date so it gets revisited.
+    #
+    # Nothing is ignored. Note that `safety check` handles an empty list
+    # correctly, but `safety validate policy_file` crashes on one with
+    # "KeyError: 'raw'" -- a bug in safety 2.3.5, which skips setting that
+    # key whenever this mapping is empty. Adding an entry here makes
+    # `validate` work again, if you ever need to run it.
+    ignore-vulnerabilities: {}
 
-
-fail-scan-with-exit-code:
-  dependency-vulnerabilities:
-    enabled: true
-    fail-on-any-of:
-      cvss-severity:
-        - high
-        - medium
-        - critical
-      exploitability:
-        - high
-        - medium
-        - critical
-
-security-updates:
-  dependency-vulnerabilities:
-    auto-security-updates-limit:
-      - patch
-
-installation:
-  default-action: allow
-  audit-logging:
-    enabled: true
-  allow:
-    packages: []
-    vulnerabilities: {}
-  deny:
-    packages: {}
-    vulnerabilities:
-      warning-on-any-of:
-        cvss-severity: []
-      block-on-any-of:
-        cvss-severity: []
-
-
+    # Do not mask vulnerabilities by exiting zero -- a finding fails the job.
+    continue-on-vulnerability-error: False

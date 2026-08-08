@@ -225,7 +225,7 @@ namespace OpenBabel
       else if (score == "minr" || score == "minrmsd")
         s.reset(new OBMinimizingRMSDConformerScore{});
       if (s)
-        cs.SetScore(s.get());
+        cs.SetScore(s.release()); // OBConformerSearch takes ownership
 
       iter = pmap->find("csfilter");
       if(iter!=pmap->end())
@@ -247,7 +247,7 @@ namespace OpenBabel
       if (filter == "steric")
         f.reset(new OBStericConformerFilter(cutoff, vdw_factor, check_hydrogens));
       if (f)
-        cs.SetFilter(f.get());
+        cs.SetFilter(f.release()); // OBConformerSearch takes ownership
 
       iter = pmap->find("printrot");
       if(iter!=pmap->end())
