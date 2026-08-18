@@ -1,0 +1,8 @@
+BIOGRF  332
+DESCRP atom1-only
+FORMAT ATOM   (a6,1x,i5,1x,a5,1x,a3,1x,a1,1x,a5,3f10.5,1x,a5,i3,i2,1x,f8.5)
+ATOM       1 C1   RES  A  444    0.00000   0.00000   0.00000 C_3    1 1  0.00000
+ATOM       2 C2   RES  A  444    1.50000   0.00000   0.00000 C_3    1 1  0.00000
+FORMAT CONECT (a6,12i6)
+CONECT     1     2
+END
