@@ -169,6 +169,44 @@ static bool RunReproExpectReject(const string &caseId, const string &inFormat,
   return true;
 }
 
+// Read a reproducer that is *well-formed* and require that it still parses
+// into the expected molecule. Used to pin the accept-side behaviour of a
+// hardening fix: bounds checks that are too aggressive would silently drop
+// good atoms/bonds, which no sanitizer and no "must not crash" test can see.
+// Skip silently if the corpus file or format is unavailable.
+static bool RunReproExpectMolecule(const string &caseId, const string &inFormat,
+                                   const string &filename,
+                                   unsigned int expectedAtoms,
+                                   unsigned int expectedBonds)
+{
+  string path = GetFuzzFile(filename);
+  ifstream probe(path.c_str());
+  if (!probe.good()) {
+    cout << "# skip " << caseId << ": corpus file missing (" << path << ")\n";
+    return true;
+  }
+
+  OBConversion conv;
+  if (!conv.SetInFormat(inFormat.c_str())) {
+    cout << "# skip " << caseId << ": format " << inFormat
+         << " not registered in this build\n";
+    return true;
+  }
+
+  OBMol mol;
+  if (!conv.ReadFile(&mol, path)) {
+    cout << "# FAIL " << caseId << ": valid file was rejected\n";
+    return false;
+  }
+  if (mol.NumAtoms() != expectedAtoms || mol.NumBonds() != expectedBonds) {
+    cout << "# FAIL " << caseId << ": expected " << expectedAtoms << " atoms / "
+         << expectedBonds << " bonds, got " << mol.NumAtoms() << " / "
+         << mol.NumBonds() << "\n";
+    return false;
+  }
+  return true;
+}
+
 // CVE-2026-2704: heap-buffer-overflow in transform3d::DescribeAsString
 // when parsing a CIF with an all-zero row in a space-group transform.
 // Fixed in PR #2862.
@@ -642,6 +680,52 @@ void caseMcdlTruncatedCycle()
                             "mcdl-truncated-cycle.smi"));
 }
 
+// PubChem out-of-range coordinate atom id (no CVE id): NULL dereference in
+// PubChemFormat::EndElement. <PC-Coordinates_aid_E> supplies the atom id that
+// each coordinate triple applies to, straight from the file. The id was passed
+// to OBMol::GetAtom() and the result dereferenced with no null check, so an id
+// past the end of the <PC-Atoms_element> list (here 77 with only 2 atoms)
+// SEGVed in OBAtom::SetVector. Fixed by skipping ids that do not resolve.
+void casePubChemBadAtomId()
+{
+  OB_ASSERT(RunRepro("pubchem-bad-atom-id", "pc", "pubchem-bad-atom-id.pc"));
+}
+
+// PubChem short coordinate block (no CVE id): heap-buffer-overflow in the same
+// loop as casePubChemBadAtomId, and reachable from the same file. The loop was
+// bounded by CoordIndx.size() (the atom-id list) but also indexed the parallel
+// Coordx/Coordy vectors, which are filled from separate <PC-Conformer_x_E> /
+// <PC-Conformer_y_E> elements and can be shorter. Note the pre-existing
+// Coordz.resize() only equalised z against x, so it did not cover this. Fixed
+// by clamping the loop to the shortest of the three vectors.
+void casePubChemShortCoords()
+{
+  OB_ASSERT(RunRepro("pubchem-short-coords", "pc", "pubchem-short-coords.pc"));
+}
+
+// PubChem uneven bond arrays (no CVE id): heap-buffer-overflow in the PC-Bonds
+// branch of PubChemFormat::EndElement, the same parallel-vector shape again.
+// The loop was bounded by BondBeginAtIndx.size() but also indexed
+// BondEndAtIndx and BondOrder, which come from separate <PC-Bonds_aid2_E> and
+// <PC-BondType> elements. OBMol::AddBond bounds-checks the atom indices, but
+// only after the caller has already read them out of range. Fixed by clamping
+// the loop to the shortest of the three vectors.
+void casePubChemUnevenBonds()
+{
+  OB_ASSERT(RunRepro("pubchem-uneven-bonds", "pc", "pubchem-uneven-bonds.pc"));
+}
+
+// PubChem accept-side pin for the three cases above. There was no PubChem
+// coverage in the suite at all, so nothing would have caught the bounds
+// clamps being set one element too tight (or a future rewrite dropping the
+// last atom or bond of every file). This is a well-formed 3-atom water
+// record; it must still read as 3 atoms and 2 bonds.
+void casePubChemValid()
+{
+  OB_ASSERT(RunReproExpectMolecule("pubchem-valid", "pc", "pubchem-valid.pc",
+                                   3, 2));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -789,6 +873,18 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 43:
     caseMcdlTruncatedCycle();
+    break;
+  case 44:
+    casePubChemBadAtomId();
+    break;
+  case 45:
+    casePubChemShortCoords();
+    break;
+  case 46:
+    casePubChemUnevenBonds();
+    break;
+  case 47:
+    casePubChemValid();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
