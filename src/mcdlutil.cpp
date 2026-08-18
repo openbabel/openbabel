@@ -2616,7 +2616,16 @@ namespace OpenBabel {
             cs=nb+2+add;
             cf=r/(2*sin(PI*(nb+1)/(double)cs));
             r=r/2.0;
-            cf=sqrt(cf*cf-r*r);
+            // cf is the circumradius of the ring being placed and r the half
+            // chord between the two anchor atoms, so this is the distance from
+            // the chord's midpoint to the ring centre. When the anchors sit
+            // opposite each other the chord is a diameter, cf == r exactly,
+            // and rounding can push the radicand just below zero -- sqrt()
+            // then returns NaN, which spreads into the atom coordinates and
+            // from there through the rest of the layout. Clamp that
+            // degenerate case to zero; every other case is unchanged.
+            cf=cf*cf-r*r;
+            cf=(cf>0.0) ? sqrt(cf) : 0.0;
           };
           ux=(getAtom(dsNA1[i])->rx+getAtom(dsNA2[i])->rx)/2.0+ux*cf;
           uy=(getAtom(dsNA1[i])->ry+getAtom(dsNA2[i])->ry)/2.0+uy*cf;
@@ -2627,6 +2636,12 @@ namespace OpenBabel {
           uy2=uy-ux1*sin((1.0+add)*fi)+uy1*cos((1.0+add)*fi);
           if ((abs(getAtom(dsNA2[i])->rx-ux2)<0.01) && (abs(getAtom(dsNA2[i])->ry-uy2)<0.01)) fi=-fi;
           //FAtom's coordinates calculation
+          // dsSC[i] is the size of the whole cycle fragment, but defC() stops
+          // filling the priority list once it has written atomClean entries,
+          // so a truncated fragment names more atoms than were actually
+          // stored. Clamp to what is there, as the dsTP==2 branch above does
+          // (see issue #1851).
+          if ((size_t)(nb + i) > dsATN.size()) nb=(int)dsATN.size()-i;
           for (j=0; j<nb; j++) {
             getAtom(dsATN[i+j-0])->rx=ux+ux1*cos((j+1)*fi)+uy1*sin((j+1)*fi);
             getAtom(dsATN[i+j-0])->ry=uy-ux1*sin((j+1)*fi)+uy1*cos((j+1)*fi);
