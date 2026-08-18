@@ -607,6 +607,23 @@ void caseGraphSymHighDegree()
                             "graphsym-highdegree.smi"));
 }
 
+// graphsym non-convergent refinement (no CVE id): stack exhaustion in
+// OBGraphSymPrivate::ExtendInvariants. The refinement is meant to split
+// symmetry classes until the class count settles, but CreateNewClassVector
+// packs the classes as base-100 digits, which collides once a fragment has
+// more than 99 classes -- and a collision *merges* two classes instead of
+// splitting them. The count can then oscillate forever rather than settle
+// (this 282-atom polysarcosine peptoid alternates between 268 and 266
+// classes), and the old code recursed into ExtendInvariants() on every
+// unsettled round until the call stack ran out. Fixed by bounding the
+// refinement to one round per atom instead of recursing. Reading the 2D
+// MDL file is enough to drive it, via stereo perception from 2D.
+void caseGraphSymNonConvergent()
+{
+  OB_ASSERT(RunRepro("graphsym-nonconvergent", "mol",
+                     "graphsym-nonconvergent.mol"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -748,6 +765,9 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 41:
     caseGraphSymHighDegree();
+    break;
+  case 42:
+    caseGraphSymNonConvergent();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
