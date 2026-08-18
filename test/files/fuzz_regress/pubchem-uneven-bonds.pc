@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<PC-Compounds xmlns="http://www.ncbi.nlm.nih.gov">
+ <PC-Compound>
+  <PC-Compound_atoms><PC-Atoms>
+   <PC-Atoms_element><PC-Element value="o">8</PC-Element><PC-Element value="h">1</PC-Element></PC-Atoms_element>
+  </PC-Atoms></PC-Compound_atoms>
+  <PC-Compound_bonds><PC-Bonds>
+   <PC-Bonds_aid1><PC-Bonds_aid1_E>1</PC-Bonds_aid1_E><PC-Bonds_aid1_E>2</PC-Bonds_aid1_E></PC-Bonds_aid1>
+   <PC-Bonds_aid2><PC-Bonds_aid2_E>2</PC-Bonds_aid2_E></PC-Bonds_aid2>
+   <PC-Bonds_order><PC-BondType value="single">1</PC-BondType></PC-Bonds_order>
+  </PC-Bonds></PC-Compound_bonds>
+ </PC-Compound>
+</PC-Compounds>
