@@ -726,6 +726,36 @@ void casePubChemValid()
                                    3, 2));
 }
 
+// BGF out-of-bounds CONECT/ORDER index (no CVE id): heap-buffer-overflow write
+// in BGFFormat::ReadMolecule. vcon/vord are sized to exactly NumAtoms entries,
+// but the CONECT handler converted the file's 1-based atom index to 0-based
+// (bgn = atoi(..) - 1) and then bounds-checked it with "bgn > mol.NumAtoms()".
+// An index of NumAtoms+1 yields bgn == NumAtoms, which that test accepts, so
+// vcon[bgn].push_back() ran a phantom std::vector control block read out of
+// adjacent heap memory and wrote through it. The ORDER branch repeated the
+// same guard and additionally did an arbitrary write, vord[bgn][i-2] = atoi().
+// Fixed by testing "bgn >= mol.NumAtoms()" at both sites; bgn is unsigned, so
+// zero/negative file indices wrap and are caught by the same bound.
+void caseBgfConectOob()
+{
+  OB_ASSERT(RunRepro("bgf-conect-oob", "bgf", "bgf-conect-oob.bgf"));
+}
+
+// BGF first-atom CONECT record (no CVE id): the same guard's lower half,
+// "bgn < 1", rejected bgn == 0 -- which is the *first* atom, not an invalid
+// index -- so every CONECT/ORDER record belonging to atom 1 was silently
+// discarded. BGF normally lists connectivity symmetrically, so the partner's
+// record usually re-added the bond and masked the loss; it only shows up when
+// a bond is listed solely on atom 1, as here. This is an accept-side pin for
+// the memory-safety fix above: the file must read as 2 atoms and 1 bond.
+// Before the fix it read as 2 atoms and 0 bonds.
+void caseBgfAtom1Conect()
+{
+  OB_ASSERT(RunReproExpectMolecule("bgf-atom1-conect", "bgf",
+                                   "bgf-atom1-conect.bgf", 2, 1));
+}
+
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -885,6 +915,12 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 47:
     casePubChemValid();
+    break;
+  case 48:
+    caseBgfConectOob();
+    break;
+  case 49:
+    caseBgfAtom1Conect();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";
