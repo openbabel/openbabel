@@ -607,6 +607,41 @@ void caseGraphSymHighDegree()
                             "graphsym-highdegree.smi"));
 }
 
+// graphsym non-convergent refinement (no CVE id): stack exhaustion in
+// OBGraphSymPrivate::ExtendInvariants. The refinement is meant to split
+// symmetry classes until the class count settles, but CreateNewClassVector
+// packs the classes as base-100 digits, which collides once a fragment has
+// more than 99 classes -- and a collision *merges* two classes instead of
+// splitting them. The count can then oscillate forever rather than settle
+// (this 282-atom polysarcosine peptoid alternates between 268 and 266
+// classes), and the old code recursed into ExtendInvariants() on every
+// unsettled round until the call stack ran out. Fixed by bounding the
+// refinement to one round per atom instead of recursing. Reading the 2D
+// MDL file is enough to drive it, via stereo perception from 2D.
+void caseGraphSymNonConvergent()
+{
+  OB_ASSERT(RunRepro("graphsym-nonconvergent", "mol",
+                     "graphsym-nonconvergent.mol"));
+}
+
+// mcdl truncated cycle fragment (no CVE id): heap-buffer-overflow in
+// TSimpleMolecule::redraw. defC() builds the layout priority list in groups,
+// one group per ring fragment, and records the group's size in dsSC for every
+// entry of that group. It stops writing at atomClean entries, so a fragment
+// that does not fit is truncated -- but its dsSC still names the full,
+// untruncated size. redraw()'s dsTP==3/4 branch then walked dsATN[i..i+dsSC-1]
+// and read past the end of the vector. The sibling dsTP==2 branch already
+// clamped this (issue #1851); the 3/4 branch did not. The same input also hit
+// a NaN: for a ring whose two anchor atoms are diametrically opposite, the
+// circumradius equals the half chord, so rounding drove sqrt(cf*cf-r*r)
+// negative and the resulting NaN spread through the coordinates. Writing SVG
+// runs gen2D, which is what drives redraw().
+void caseMcdlTruncatedCycle()
+{
+  OB_ASSERT(RunReproConvert("mcdl-truncated-cycle", "smi", "svg",
+                            "mcdl-truncated-cycle.smi"));
+}
+
 int fuzzregresstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -748,6 +783,12 @@ int fuzzregresstest(int argc, char *argv[])
     break;
   case 41:
     caseGraphSymHighDegree();
+    break;
+  case 42:
+    caseGraphSymNonConvergent();
+    break;
+  case 43:
+    caseMcdlTruncatedCycle();
     break;
   default:
     cout << "Test number " << choice << " does not exist!\n";

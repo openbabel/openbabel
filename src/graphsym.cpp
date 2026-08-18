@@ -529,31 +529,41 @@ namespace OpenBabel {
 
     unsigned int nfragatoms = _frag_atoms.CountBits();
 
+    // Every atom is already in a class of its own - there is nothing left to
+    // split, so don't spread the invariants at all.
+    if (nclasses1 >= nfragatoms)
+      return nclasses1;
+
     // LOOP: Do extended sum-of-invarients until no further changes are
     // noted.  (Note: This is inefficient, as it re-computes extended sums
     // and re-sorts the entire list each time.  You can save a lot of time by
     // only recomputing and resorting within regions where there is a tie
     // initially.  But it's a lot more code.)
+    //
+    // Each round either splits at least one class or is the stable round that
+    // ends the loop, so a run that is going to settle needs no more rounds
+    // than there are atoms.  Anything past that is not going to settle: the
+    // base-100 packing in CreateNewClassVector() collides once there are more
+    // than 99 classes (see the note there), and a collision can *merge* two
+    // classes rather than split them, which lets the class count oscillate
+    // forever.  This used to be a 100-iteration loop that recursed back into
+    // ExtendInvariants() whenever the count had not settled, so an
+    // oscillating molecule recursed until the stack overflowed - a 282-atom
+    // acyclic C/N/O tree, for example, alternates between 268 and 266 classes
+    // indefinitely.  Capping the iterations lets that case terminate with a
+    // deterministic (if imperfectly canonical) answer.  The floor of 100
+    // keeps the original iteration count for small fragments; larger ones now
+    // get the rounds they legitimately need, which the flat 100 did not
+    // always allow for long chains.
+    const unsigned int maxIterations = (nfragatoms > 100) ? nfragatoms + 2 : 100;
 
-    if (nclasses1 < nfragatoms) {
-      for (int i = 0; i < 100;i++) {  //sanity check - shouldn't ever hit this number
-        CreateNewClassVector(symmetry_classes, tmp_classes);
-        CountAndRenumberClasses(tmp_classes, nclasses2);
-        symmetry_classes = tmp_classes;
-        if (nclasses1 == nclasses2) break;
-        nclasses1 = nclasses2;
-      }
-    }
-
-    CreateNewClassVector(symmetry_classes, tmp_classes);
-    CountAndRenumberClasses(tmp_classes, nclasses2);
-
-
-    if (nclasses1 != nclasses2) {
+    for (unsigned int i = 0; i < maxIterations; ++i) {
+      CreateNewClassVector(symmetry_classes, tmp_classes);
+      CountAndRenumberClasses(tmp_classes, nclasses2);
       symmetry_classes = tmp_classes;
-      return ExtendInvariants(symmetry_classes);
+      if (nclasses1 == nclasses2) break;
+      nclasses1 = nclasses2;
     }
-
 
     return nclasses1;
   }
