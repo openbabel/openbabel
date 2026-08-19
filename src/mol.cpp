@@ -1047,7 +1047,24 @@ namespace OpenBabel
         if(UseImplicitH)
           {
             if (anum == 1 && !IsHiso && HasHvyAtoms)
-              continue; // skip explicit hydrogens except D,T
+              {
+                // Skip an explicit hydrogen only when it is bonded to a heavy
+                // atom, because such hydrogens are already tallied through that
+                // atom's ExplicitHydrogenCount() below. A hydrogen bonded to no
+                // heavy atom (isolated, or bonded only to other hydrogens) is
+                // counted by nobody, so let it fall through to be added once;
+                // otherwise it is dropped from the formula even though it stays
+                // in the atom list and molecular weight (issue #3008).
+                bool boundToHeavyAtom = false;
+                FOR_NBORS_OF_ATOM(nbr, &*a)
+                  if (nbr->GetAtomicNum() > 1)
+                    {
+                      boundToHeavyAtom = true;
+                      break;
+                    }
+                if (boundToHeavyAtom)
+                  continue; // skip explicit hydrogens except D,T
+              }
             if(anum==1)
               {
                 if (IsHiso && HasHvyAtoms)
