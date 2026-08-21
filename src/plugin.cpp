@@ -275,8 +275,10 @@ std::vector<std::string> EnableStaticPlugins()
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGAMESSInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianCubeFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianOutputFormat)->GetID());
-  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianInputFormat)->GetID());
+//  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianZMatrixInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGaussianGenericQMInputFormat)->GetID());
+  plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&thePSI4GenericQMInputFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGenBankFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGhemicalFormat)->GetID());
   plugin_ids.push_back(reinterpret_cast<OBPlugin*>(&theGROFormat)->GetID());
