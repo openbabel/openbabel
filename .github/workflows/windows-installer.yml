@@ -34,6 +34,7 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: '3.12'
+          check-latest: false
 
       - name: Install Windows packaging tools
         shell: pwsh
@@ -67,44 +68,11 @@ jobs:
 
       - name: Configure Open Babel
         shell: pwsh
-        run: |
-          $swig = (Get-Command swig.exe).Source
-
-          cmake -S "$env:GITHUB_WORKSPACE" -B "$env:BUILD_DIR" `
-            -G 'Visual Studio 17 2022' -A x64 `
-            -DCMAKE_INSTALL_PREFIX="$env:BUILD_DIR\install" `
-            -DOB_USE_PREBUILT_BINARIES=ON `
-            -DMINIMAL_BUILD=OFF `
-            -DBUILD_GUI=ON `
-            -DwxWidgets_ROOT_DIR="$env:WXWIN" `
-            -DwxWidgets_LIB_DIR="$env:WX_LIB_DIR" `
-            -DwxWidgets_CONFIGURATION=mswu `
-            -DwxWidgets_USE_STATIC=OFF `
-            -DLIBXML2_LIBRARIES="$env:DEPS_DIR\libs-common\x64\libxml2.lib" `
-            -DLIBXML2_INCLUDE_DIR="$env:DEPS_DIR\include" `
-            -DCAIRO_INCLUDE_DIRS="$env:DEPS_DIR\include\cairo" `
-            -DCAIRO_LIBRARIES="$env:DEPS_DIR\libs-common\x64\cairo.lib" `
-            -DZLIB_LIBRARY="$env:DEPS_DIR\libs-common\x64\zlib1.lib" `
-            -DZLIB_INCLUDE_DIR="$env:DEPS_DIR\include" `
-            -DXDR_LIBRARY="$env:DEPS_DIR\libs-common\x64\xdr.lib" `
-            -DXDR_INCLUDE_DIR="$env:DEPS_DIR\include" `
-            -DEIGEN3_INCLUDE_DIR="$env:DEPS_DIR\include" `
-            -DJSON_LIBRARY="$env:DEPS_DIR\libs-vs12\x64\jsoncpp.lib" `
-            -DRUN_SWIG=ON `
-            -DSWIG_EXECUTABLE="$swig" `
-            -DJAVA_BINDINGS=OFF `
-            -DCSHARP_BINDINGS=OFF `
-            -DWITH_INCHI=OFF `
-            -DOPENBABEL_USE_SYSTEM_INCHI=OFF `
-            -DENABLE_TESTS=OFF
+        run: ./packaging/windows/Configure-OpenBabel.ps1
 
       - name: Build Open Babel
         shell: pwsh
-        run: |
-          cmake --build "$env:BUILD_DIR" --config Release --parallel
-          $gui = Get-ChildItem "$env:BUILD_DIR" -Filter obgui.exe -Recurse | Select-Object -First 1
-          if ($null -eq $gui) { throw 'obgui.exe was not built.' }
-          Write-Host "Built GUI: $($gui.FullName)"
+        run: ./packaging/windows/Build-OpenBabel.ps1
 
       - name: Build Windows installer
         shell: pwsh
