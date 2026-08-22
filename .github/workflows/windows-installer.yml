@@ -8,6 +8,12 @@ on:
 permissions:
   contents: write
 
+env:
+  BUILD_DIR: ${{ runner.temp }}\openbabel-build
+  DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
+  MAINTENANCE_DIR: ${{ runner.temp }}\openbabel-maintenance
+  WXWIN: ${{ runner.temp }}\wxWidgets
+
 jobs:
   windows-installer:
     runs-on: windows-2022
@@ -19,7 +25,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Set up MSVC x64
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa439dc39ae48a89fd1d8cb592756 # v1.13.0
         with:
           arch: x64
 
@@ -41,91 +47,24 @@ jobs:
 
       - name: Fetch legacy Windows packaging assets
         shell: pwsh
-        env:
-          MAINTENANCE_COMMIT: aa42db57cf9bae8dacf44b99e958d9f2a6a578e3
-        run: |
-          git clone --depth 1 https://github.com/openbabel/maintenance.git "$env:RUNNER_TEMP\openbabel-maintenance"
-          git -C "$env:RUNNER_TEMP\openbabel-maintenance" fetch --depth 1 origin "$env:MAINTENANCE_COMMIT"
-          git -C "$env:RUNNER_TEMP\openbabel-maintenance" checkout "$env:MAINTENANCE_COMMIT"
+        run: ./packaging/windows/Fetch-Maintenance.ps1
 
       - name: Fetch MSVC dependencies
         shell: pwsh
-        env:
-          MSVC_DEPENDENCIES_COMMIT: 15f6b268d2a0c0e4605f15848e4050a1127fc0a2
-        run: |
-          git clone --depth 1 https://github.com/openbabel/msvc-dependencies.git "$env:RUNNER_TEMP\msvc-dependencies"
-          git -C "$env:RUNNER_TEMP\msvc-dependencies" fetch --depth 1 origin "$env:MSVC_DEPENDENCIES_COMMIT"
-          git -C "$env:RUNNER_TEMP\msvc-dependencies" checkout "$env:MSVC_DEPENDENCIES_COMMIT"
-          Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\stdint.h" -Force -ErrorAction SilentlyContinue
-          Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\inttypes.h" -Force -ErrorAction SilentlyContinue
-
-      - name: Restore legacy zlib binaries
-        shell: pwsh
-        env:
-          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
-          ZLIB_COMMIT: aeba12e73e82acf1ae94fbe275c35846e7ec4dfb
-        run: |
-          $zlibRepo = "$env:RUNNER_TEMP\msvc-dependencies-zlib"
-          git clone --depth 1 https://github.com/openbabel/msvc-dependencies.git $zlibRepo
-          git -C $zlibRepo fetch --depth 1 origin "$env:ZLIB_COMMIT"
-          git -C $zlibRepo checkout "$env:ZLIB_COMMIT"
-
-          $zlibLib = Join-Path $zlibRepo 'libs-common\x64\zlib1.lib'
-          $zlibDll = Join-Path $zlibRepo 'libs-common\x64\zlib1.dll'
-          $targetDir = Join-Path $env:DEPS_DIR 'libs-common\x64'
-
-          if (-not (Test-Path $zlibLib)) { throw "Legacy zlib1.lib not found at $zlibLib" }
-          if (-not (Test-Path $zlibDll)) { throw "Legacy zlib1.dll not found at $zlibDll" }
-
-          Copy-Item $zlibLib $targetDir -Force
-          Copy-Item $zlibDll $targetDir -Force
-
-          Write-Host "Using legacy zlib from commit $env:ZLIB_COMMIT"
-          Get-ChildItem $targetDir -Filter 'zlib1.*' | Select-Object Name, Length
-
-      - name: Fetch wxWidgets 3.0.5 source
-        shell: pwsh
-        run: |
-          $wxRepo = "$env:RUNNER_TEMP\wxWidgets"
-          git clone --depth 1 --branch v3.0.5 https://github.com/wxWidgets/wxWidgets.git $wxRepo
-          if (-not (Test-Path "$wxRepo\include\wx\wx.h")) { throw 'wxWidgets source checkout is incomplete.' }
-          Copy-Item "$wxRepo\include\wx\msw\setup0.h" "$wxRepo\include\wx\msw\setup.h" -Force
-          "WXWIN=$wxRepo" >> $env:GITHUB_ENV
+        run: ./packaging/windows/Fetch-Dependencies.ps1
 
       - name: Build wxWidgets 3.0.5 x64
-        shell: cmd
-        run: |
-          call "%VCINSTALLDIR%Auxiliary\Build\vcvarsall.bat" x64
-          cd /d "%RUNNER_TEMP%\wxWidgets\build\msw"
-          nmake /f makefile.vc BUILD=release SHARED=1 TARGET_CPU=X64
-
-      - name: Locate wxWidgets outputs
         shell: pwsh
-        run: |
-          $wxRoot = $env:WXWIN
-          $lib = Get-ChildItem "$wxRoot\lib" -Recurse -Filter 'wxmsw*.lib' -File |
-            Where-Object { $_.FullName -match 'vc.*x64.*dll|vc.*dll.*x64|x64.*dll' } |
-            Select-Object -First 1
-          if ($null -eq $lib) {
-            Write-Host 'wxWidgets library tree:'
-            Get-ChildItem "$wxRoot\lib" -Recurse -File | Select-Object FullName, Length
-            throw 'Could not locate the wxWidgets x64 release library.'
-          }
-          "WX_LIB_DIR=$($lib.Directory.FullName)" >> $env:GITHUB_ENV
-          Write-Host "wxWidgets include: $wxRoot\include"
-          Write-Host "wxWidgets library: $($lib.Directory.FullName)"
+        run: ./packaging/windows/Build-WxWidgets.ps1
 
       - name: Download VC++ runtime
         shell: pwsh
         run: |
-          $dist = "$env:RUNNER_TEMP\openbabel-maintenance\windows\for_dist"
+          $dist = "$env:MAINTENANCE_DIR\windows\for_dist"
           Invoke-WebRequest -Uri 'https://aka.ms/vc14/vc_redist.x64.exe' -OutFile "$dist\vc_redist.x64.exe"
 
       - name: Configure Open Babel
         shell: pwsh
-        env:
-          BUILD_DIR: ${{ runner.temp }}\openbabel-build
-          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
         run: |
           $swig = (Get-Command swig.exe).Source
 
@@ -157,110 +96,17 @@ jobs:
             -DOPENBABEL_USE_SYSTEM_INCHI=OFF `
             -DENABLE_TESTS=OFF
 
-          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX|ZLIB|INCHI|JAVA|CSHARP'
-
       - name: Build Open Babel
         shell: pwsh
-        env:
-          BUILD_DIR: ${{ runner.temp }}\openbabel-build
         run: |
           cmake --build "$env:BUILD_DIR" --config Release --parallel
-
           $gui = Get-ChildItem "$env:BUILD_DIR" -Filter obgui.exe -Recurse | Select-Object -First 1
           if ($null -eq $gui) { throw 'obgui.exe was not built.' }
           Write-Host "Built GUI: $($gui.FullName)"
 
-      - name: Prepare legacy NSIS installer
+      - name: Build Windows installer
         shell: pwsh
-        env:
-          BUILD_DIR: ${{ runner.temp }}\openbabel-build
-          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
-          MAINTENANCE_DIR: ${{ runner.temp }}\openbabel-maintenance
-          WXWIN: ${{ runner.temp }}\wxWidgets
-          WX_LIB_DIR: ${{ runner.temp }}\wxWidgets\lib\vc_x64_dll
-        run: |
-          $dist = "$env:MAINTENANCE_DIR\windows\for_dist"
-          $matches = Select-String -Path "$env:GITHUB_WORKSPACE\CMakeLists.txt" -Pattern 'set\(BABEL_(MAJ|MIN|PATCH)_VER\s+([0-9]+)\)' -AllMatches
-          $version = ($matches.Matches | ForEach-Object { $_.Groups[2].Value }) -join '.'
-          if ([string]::IsNullOrWhiteSpace($version)) { throw 'Could not determine Open Babel version.' }
-
-          # Keep the legacy installer script as the packaging contract, but patch
-          # only the parts that do not match this native-only CI build.
-          $nsi = Join-Path $dist 'NSISScriptToCreateInstaller.nsi'
-          $text = Get-Content $nsi -Raw
-          $text = $text -replace '!define OBVersion\s+[^\r\n]+', "!define OBVersion $version"
-
-          # JAVA_BINDINGS=OFF and CSHARP_BINDINGS=OFF mean these four legacy
-          # payloads are intentionally absent from the build output.
-          $text = $text -replace '(?m)^\s*File \$\{SourceDir\}\\scripts\\java\\openbabel\.jar\s*\r?\n', ''
-          $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\openbabel_java\.dll\s*\r?\n', ''
-          $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\openbabel_csharp\.dll\s*\r?\n', ''
-          $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\OBDotNet\.dll\s*\r?\n', ''
-
-          # This workflow produces x64 only. The legacy script parses an i386
-          # branch that references an x86 redistributable which is not shipped.
-          # Replace the whole architecture branch with the x64 payload only.
-          $archPayload = [Environment]::NewLine + '  File vc_redist.x64.exe'
-          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 archIs64\s*File vc_redist\.x86\.exe\s*Goto done\s*archIs64:\s*File vc_redist\.x64\.exe\s*done:', $archPayload
-
-          # The x64 installer also only needs to launch the x64 redistributable.
-          $vcredistPayload = [Environment]::NewLine + '  ExecWait ''"$INSTDIR/vc_redist.x64.exe" /quiet'''
-          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 vcredist_for_x64\s*ExecWait ''"\$INSTDIR/vc_redist\.x86\.exe" /quiet''\s*Goto vcredist_done\s*vcredist_for_x64:\s*ExecWait ''"\$INSTDIR/vc_redist\.x64\.exe" /quiet''\s*vcredist_done:', $vcredistPayload
-
-          Set-Content -Path $nsi -Value $text -NoNewline
-
-          # wxWidgets 3.0.5 is built dynamically (SHARED=1). The Open Babel GUI
-          # depends on both wxmsw* and wxbase* runtime DLLs. The legacy NSIS
-          # script already packages every DLL under DepsDir\libs-common\x64,
-          # so place the complete x64 wxWidgets runtime set there.
-          $wxDlls = Get-ChildItem $env:WX_LIB_DIR -Filter 'wx*.dll' -File
-          if ($wxDlls.Count -eq 0) {
-            Write-Host 'wxWidgets DLL tree:'
-            Get-ChildItem "$env:WXWIN\lib" -Recurse -File | Select-Object FullName, Length
-            throw 'Could not locate wxWidgets runtime DLLs.'
-          }
-          $requiredWxDlls = @('wxbase30u_vc_custom.dll', 'wxmsw30u_core_vc_custom.dll')
-          foreach ($requiredDll in $requiredWxDlls) {
-            if (-not ($wxDlls.Name -contains $requiredDll)) {
-              throw "Required wxWidgets runtime DLL is missing from $env:WX_LIB_DIR: $requiredDll"
-            }
-          }
-
-          $depsDllDir = Join-Path $env:DEPS_DIR 'libs-common\x64'
-          foreach ($dll in $wxDlls) {
-            Copy-Item $dll.FullName $depsDllDir -Force
-            Write-Host "Packaging wxWidgets runtime: $($dll.Name)"
-          }
-
-          # Fail early with a useful message if the native payload expected by
-          # the legacy script is missing.
-          $releaseDir = Join-Path $env:BUILD_DIR 'bin\Release'
-          foreach ($required in @('obgui.exe', 'openbabel-3.dll')) {
-            if (-not (Test-Path (Join-Path $releaseDir $required))) {
-              throw "Required installer payload is missing: $required"
-            }
-          }
-
-          Write-Host "Installer version: $version"
-          Write-Host "Installer build directory: $releaseDir"
-          Write-Host 'NSIS native-only payload patch applied.'
-
-          $out = "$env:GITHUB_WORKSPACE\OpenBabel-$version-x64.exe"
-          Push-Location $dist
-          makensis.exe `
-            "/DSourceDir=$env:GITHUB_WORKSPACE" `
-            "/DBuildDir=$env:BUILD_DIR" `
-            '/DArch=x64' `
-            "/DDepsDir=$env:DEPS_DIR" `
-            "/DmyOutFile=$out" `
-            'NSISScriptToCreateInstaller.nsi'
-          $nsisExitCode = $LASTEXITCODE
-          Pop-Location
-          if ($nsisExitCode -ne 0) { throw "makensis.exe failed with exit code $nsisExitCode" }
-
-          if (-not (Test-Path $out)) { throw "Installer was not created: $out" }
-          "INSTALLER=$out" >> $env:GITHUB_ENV
-          "VERSION=$version" >> $env:GITHUB_ENV
+        run: ./packaging/windows/Build-Installer.ps1
 
       - name: Upload installer artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
