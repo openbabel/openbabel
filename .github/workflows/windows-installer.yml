@@ -1,0 +1,183 @@
+name: Windows installer
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'openbabel-*'
+
+permissions:
+  contents: write
+
+jobs:
+  windows-installer:
+    runs-on: windows-2022
+
+    steps:
+      - name: Check out Open Babel
+        uses: actions/checkout@v4
+
+      - name: Set up Java 8
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '8'
+          architecture: x64
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.x'
+
+      - name: Install SWIG
+        shell: pwsh
+        run: choco install swig -y --no-progress
+
+      - name: Fetch legacy Windows packaging assets
+        shell: pwsh
+        env:
+          MAINTENANCE_COMMIT: aa42db57cf9bae8dacf44b99e958d9f2a6a578e3
+        run: |
+          git clone --depth 1 https://github.com/openbabel/maintenance.git "$env:RUNNER_TEMP\openbabel-maintenance"
+          git -C "$env:RUNNER_TEMP\openbabel-maintenance" fetch --depth 1 origin "$env:MAINTENANCE_COMMIT"
+          git -C "$env:RUNNER_TEMP\openbabel-maintenance" checkout "$env:MAINTENANCE_COMMIT"
+
+      - name: Fetch MSVC dependencies
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/openbabel/msvc-dependencies.git "$env:RUNNER_TEMP\msvc-dependencies"
+          Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\stdint.h" -Force -ErrorAction SilentlyContinue
+          Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\inttypes.h" -Force -ErrorAction SilentlyContinue
+
+      - name: Fetch InChI headers
+        shell: pwsh
+        run: |
+          git clone --depth 1 https://github.com/IUPAC-InChI/InChI.git "$env:RUNNER_TEMP\inchi"
+
+      - name: Install wxWidgets development files
+        shell: pwsh
+        run: |
+          $wx = "$env:RUNNER_TEMP\wxWidgets"
+          New-Item -ItemType Directory -Force -Path $wx | Out-Null
+
+          $headers = "$env:RUNNER_TEMP\wx-headers.7z"
+          $dev = "$env:RUNNER_TEMP\wx-dev.7z"
+
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxWidgets-3.2.8_Headers.7z' -OutFile $headers
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxMSW-3.2.8_vc14x_x64_Dev.7z' -OutFile $dev
+
+          7z x $headers "-o$wx" -y | Out-Null
+          7z x $dev "-o$wx" -y | Out-Null
+
+          "WXWIN=$wx" >> $env:GITHUB_ENV
+          "wxWidgets_ROOT_DIR=$wx" >> $env:GITHUB_ENV
+          "wxWidgets_LIB_DIR=$wx\lib\vc14x_x64_lib" >> $env:GITHUB_ENV
+
+      - name: Download VC++ runtime
+        shell: pwsh
+        run: |
+          $dist = "$env:RUNNER_TEMP\openbabel-maintenance\windows\for_dist"
+          Invoke-WebRequest -Uri 'https://aka.ms/vc14/vc_redist.x64.exe' -OutFile "$dist\vc_redist.x64.exe"
+
+      - name: Configure Open Babel
+        shell: pwsh
+        env:
+          BUILD_DIR: ${{ runner.temp }}\openbabel-build
+          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
+          INCHI_DIR: ${{ runner.temp }}\inchi
+        run: |
+          $swig = (Get-Command swig.exe).Source
+          $java = $env:JAVA_HOME
+          $csc = 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
+
+          cmake -S "$env:GITHUB_WORKSPACE" -B "$env:BUILD_DIR" `
+            -G 'Visual Studio 17 2022' -A x64 `
+            -DCMAKE_INSTALL_PREFIX="$env:BUILD_DIR\install" `
+            -DOB_USE_PREBUILT_LIBRARIES=ON `
+            -DMINIMAL_BUILD=OFF `
+            -DLIBXML2_LIBRARIES="$env:DEPS_DIR\libs-common\x64\libxml2.lib" `
+            -DLIBXML2_INCLUDE_DIR="$env:DEPS_DIR\include" `
+            -DCAIRO_INCLUDE_DIRS="$env:DEPS_DIR\include\cairo" `
+            -DCAIRO_LIBRARIES="$env:DEPS_DIR\libs-common\x64\cairo.lib" `
+            -DZLIB_LIBRARY="$env:DEPS_DIR\libs-common\x64\zlib1.lib" `
+            -DZLIB_INCLUDE_DIR="$env:DEPS_DIR\include" `
+            -DINCHI_LIBRARY="$env:DEPS_DIR\libs-common\x64\libinchi.lib" `
+            -DINCHI_INCLUDE_DIR="$env:INCHI_DIR\INCHI-1-SRC\INCHI_API\libinchi\src" `
+            -DXDR_LIBRARY="$env:DEPS_DIR\libs-common\x64\xdr.lib" `
+            -DXDR_INCLUDE_DIR="$env:DEPS_DIR\include" `
+            -DEIGEN3_INCLUDE_DIR="$env:DEPS_DIR\include" `
+            -DJSON_LIBRARY="$env:DEPS_DIR\libs-vs12\x64\jsoncpp.lib" `
+            -DRUN_SWIG=ON `
+            -DSWIG_EXECUTABLE="$swig" `
+            -DJAVA_BINDINGS=ON `
+            -DJAVA_INCLUDE_PATH="$java\include" `
+            -DJAVA_JVM_LIBRARY="$java\lib\jvm.lib" `
+            -DJAVA_AWT_LIBRARY="$java\lib\jawt.lib" `
+            -DCSHARP_BINDINGS=ON `
+            -DCSHARP_EXECUTABLE="$csc" `
+            -DBUILD_GUI=ON `
+            -DOPENBABEL_USE_SYSTEM_INCHI=TRUE `
+            -DwxWidgets_ROOT_DIR="$env:WXWIN" `
+            -DwxWidgets_LIB_DIR="$env:wxWidgets_LIB_DIR" `
+            -DwxWidgets_CONFIGURATION=mswu `
+            -DwxWidgets_USE_STATIC=ON `
+            -DENABLE_TESTS=OFF
+
+      - name: Build Open Babel
+        shell: pwsh
+        env:
+          BUILD_DIR: ${{ runner.temp }}\openbabel-build
+        run: cmake --build "$env:BUILD_DIR" --config Release --parallel
+
+      - name: Prepare legacy NSIS installer
+        shell: pwsh
+        env:
+          BUILD_DIR: ${{ runner.temp }}\openbabel-build
+          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
+          MAINTENANCE_DIR: ${{ runner.temp }}\openbabel-maintenance
+        run: |
+          $dist = "$env:MAINTENANCE_DIR\windows\for_dist"
+          $version = (Select-String -Path "$env:GITHUB_WORKSPACE\CMakeLists.txt" -Pattern 'set\(BABEL_(MAJ|MIN|PATCH)_VER\s+([0-9]+)\)' -AllMatches).Matches | ForEach-Object { $_.Groups[2].Value }
+          $version = $version -join '.'
+          if ([string]::IsNullOrWhiteSpace($version)) { throw 'Could not determine Open Babel version.' }
+
+          # Keep the existing NSIS script, but make its version match the source tree.
+          $nsi = Join-Path $dist 'NSISScriptToCreateInstaller.nsi'
+          $text = Get-Content $nsi -Raw
+          $text = $text -replace '!define OBVersion\s+[^\r\n]+', "!define OBVersion $version"
+          Set-Content -Path $nsi -Value $text -NoNewline
+
+          # The legacy installer expects these DLLs in the dependency directory.
+          # wxWidgets is distributed separately from the Open Babel MSVC dependencies.
+          $wxRuntime = "$env:RUNNER_TEMP\wx-runtime.7z"
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxMSW-3.2.8_vc14x_x64_ReleaseDLL.7z' -OutFile $wxRuntime
+          7z x $wxRuntime "-o$env:DEPS_DIR\libs-common\x64" -y | Out-Null
+
+          $out = "$env:GITHUB_WORKSPACE\OpenBabel-$version-x64.exe"
+          Push-Location $dist
+          makensis.exe `
+            "/DSourceDir=$env:GITHUB_WORKSPACE" `
+            "/DBuildDir=$env:BUILD_DIR" `
+            '/DArch=x64' `
+            "/DDepsDir=$env:DEPS_DIR" `
+            "/DmyOutFile=$out" `
+            'NSISScriptToCreateInstaller.nsi'
+          Pop-Location
+
+          if (-not (Test-Path $out)) { throw "Installer was not created: $out" }
+          "INSTALLER=$out" >> $env:GITHUB_ENV
+          "VERSION=$version" >> $env:GITHUB_ENV
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OpenBabel-${{ env.VERSION }}-x64-installer
+          path: ${{ env.INSTALLER }}
+          if-no-files-found: error
+
+      - name: Publish installer to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" "$env:INSTALLER" --generate-notes --title "Open Babel $env:VERSION"
