@@ -44,8 +44,12 @@ jobs:
 
       - name: Fetch MSVC dependencies
         shell: pwsh
+        env:
+          MSVC_DEPENDENCIES_COMMIT: 15f6b268d2a0c0e4605f15848e4050a1127fc0a2
         run: |
           git clone --depth 1 https://github.com/openbabel/msvc-dependencies.git "$env:RUNNER_TEMP\msvc-dependencies"
+          git -C "$env:RUNNER_TEMP\msvc-dependencies" fetch --depth 1 origin "$env:MSVC_DEPENDENCIES_COMMIT"
+          git -C "$env:RUNNER_TEMP\msvc-dependencies" checkout "$env:MSVC_DEPENDENCIES_COMMIT"
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\stdint.h" -Force -ErrorAction SilentlyContinue
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\inttypes.h" -Force -ErrorAction SilentlyContinue
 
