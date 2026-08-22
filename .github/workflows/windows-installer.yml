@@ -1,0 +1,70 @@
+name: Windows installer
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["**"]
+
+permissions:
+  contents: write
+
+jobs:
+  windows-installer:
+    runs-on: windows-2022
+
+    steps:
+      - name: Check out Open Babel
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Set up MSVC x64
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        with:
+          arch: x64
+
+      - name: Install Windows packaging tools
+        shell: pwsh
+        run: choco install nsis swig 7zip -y --no-progress
+
+      - name: Set Windows build paths
+        shell: pwsh
+        run: ./packaging/windows/Set-Paths.ps1
+
+      - name: Fetch MSVC dependencies
+        shell: pwsh
+        run: ./packaging/windows/Fetch-Dependencies.ps1
+
+      - name: Build wxWidgets 3.0.5 x64
+        shell: pwsh
+        run: ./packaging/windows/Build-WxWidgets.ps1
+
+      - name: Download VC++ runtime
+        shell: pwsh
+        run: ./packaging/windows/Download-VCRedist.ps1
+
+      - name: Configure Open Babel
+        shell: pwsh
+        run: ./packaging/windows/Configure-OpenBabel.ps1
+
+      - name: Build Open Babel
+        shell: pwsh
+        run: ./packaging/windows/Build-OpenBabel.ps1
+
+      - name: Build Windows installer
+        shell: pwsh
+        run: ./packaging/windows/Build-Installer.ps1
+
+      - name: Upload installer artifact
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: OpenBabel-${{ env.VERSION }}-x64-installer
+          path: ${{ env.INSTALLER }}
+          if-no-files-found: error
+
+      - name: Publish installer to GitHub Release
+        if: startsWith(github.ref, 'refs/tags/')
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ github.ref_name }}" "$env:INSTALLER" --generate-notes --title "Open Babel $env:VERSION"
