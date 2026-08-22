@@ -27,7 +27,7 @@ Name "OpenBabel ${OBVersion}"
 Caption "OpenBabel ${OBVersion} Setup"
 OutFile "${myOutFile}"
 InstallDir "$PROGRAMFILES64\OpenBabel-${OBVersion}"
-InstallDirRegKey HKCU "Software\OpenBabel ${OBVersion}" ""
+InstallDirRegKey HKCU "Software\OpenBabel ${OBVERSION}" ""
 RequestExecutionLevel admin
 
 Var STARTMENU_FOLDER
@@ -70,6 +70,12 @@ Section "Open Babel" SecOpenBabel
   WriteRegStr HKCU "Software\OpenBabel ${OBVERSION}" "" "$INSTDIR"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" "DisplayName" "OpenBabel-${OBVERSION}"
   WriteRegStr HKCU "Software\Microsoft\Windows\CurrentVersion\Uninstall\OpenBabel-${OBVERSION}" "UninstallString" '"$INSTDIR\Uninstall.exe"'
+
+  ; Add the Open Babel installation directory to the machine PATH.
+  ; WM_SETTINGCHANGE makes already-running applications aware that the
+  ; environment has changed; newly started processes inherit it normally.
+  EnVar::AddValue "PATH" "$INSTDIR"
+
   WriteUninstaller "$INSTDIR\Uninstall.exe"
 
   !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
@@ -83,6 +89,10 @@ Section "Open Babel" SecOpenBabel
 SectionEnd
 
 Section "Uninstall"
+  ; Remove only the value we added; preserve PATH entries belonging to other
+  ; applications.
+  EnVar::DeleteValue "PATH" "$INSTDIR"
+
   Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Open Babel GUI.lnk"
   Delete "$SMPROGRAMS\$STARTMENU_FOLDER\Uninstall.lnk"
   RMDir "$SMPROGRAMS\$STARTMENU_FOLDER"
