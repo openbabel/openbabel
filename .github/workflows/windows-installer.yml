@@ -59,41 +59,41 @@ jobs:
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\stdint.h" -Force -ErrorAction SilentlyContinue
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\inttypes.h" -Force -ErrorAction SilentlyContinue
 
+      - name: Install wxWidgets 3.0.5 x64
+        shell: pwsh
+        run: |
+          $wxRoot = "$env:RUNNER_TEMP\wxWidgets\3.0.5"
+          $headers = "$env:RUNNER_TEMP\wx-headers.7z"
+          $dev = "$env:RUNNER_TEMP\wx-dev.7z"
+
+          Remove-Item "$env:RUNNER_TEMP\wxWidgets" -Recurse -Force -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force -Path $wxRoot | Out-Null
+
+          # Match the legacy Open Babel 64env.bat configuration:
+          # wxWidgets 3.0.5 and vc142_x64_dll.
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5_headers.7z' -OutFile $headers
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z' -OutFile $dev
+          7z x $headers "-o$wxRoot" -y | Out-Null
+          7z x $dev "-o$wxRoot" -y | Out-Null
+
+          $lib = Join-Path $wxRoot 'lib\vc142_x64_dll'
+          if (-not (Test-Path $lib)) {
+            Write-Host 'Extracted wxWidgets tree:'
+            Get-ChildItem $wxRoot -Recurse -Depth 4 | Select-Object FullName, Length
+            throw "Expected wxWidgets library directory was not found: $lib"
+          }
+
+          $include = Get-ChildItem $wxRoot -Directory -Recurse | Where-Object {
+            Test-Path (Join-Path $_.FullName 'wx\wx.h')
+          } | Select-Object -First 1
+          if ($null -eq $include) { $include = Get-Item $wxRoot }
+
+          "WXWIN=$($include.FullName)" >> $env:GITHUB_ENV
+          "WX_LIB_DIR=$lib" >> $env:GITHUB_ENV
+
       - name: Fetch InChI headers
         shell: pwsh
         run: git clone --depth 1 https://github.com/IUPAC-InChI/InChI.git "$env:RUNNER_TEMP\inchi"
-
-      - name: Use wxWidgets from Open Babel MSVC dependencies
-        shell: pwsh
-        env:
-          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
-        run: |
-          $wxRoot = Join-Path $env:DEPS_DIR 'wx'
-          if (-not (Test-Path $wxRoot)) { throw "wxWidgets dependency directory not found: $wxRoot" }
-
-          Write-Host 'wxWidgets dependency tree:'
-          Get-ChildItem $wxRoot -Recurse -Depth 3 | Select-Object FullName, Length
-
-          $wxLib = Get-ChildItem $wxRoot -Directory -Recurse | Where-Object {
-            Get-ChildItem $_.FullName -Filter '*.lib' -File -ErrorAction SilentlyContinue | Where-Object {
-              $_.Name -match 'wxmsw|wxbase'
-            }
-          } | Select-Object -First 1
-
-          if ($null -eq $wxLib) {
-            throw 'Could not locate a prebuilt wxWidgets library directory in msvc-dependencies/wx.'
-          }
-
-          $wxIncludes = Get-ChildItem $wxRoot -Directory -Recurse | Where-Object {
-            Test-Path (Join-Path $_.FullName 'wx\wx.h')
-          } | Select-Object -First 1
-
-          if ($null -eq $wxIncludes) { $wxIncludes = Get-Item $wxRoot }
-
-          Write-Host "wxWidgets library directory: $($wxLib.DirectoryName)"
-          Write-Host "wxWidgets include root: $($wxIncludes.FullName)"
-          "WXWIN=$($wxIncludes.FullName)" >> $env:GITHUB_ENV
-          "WX_LIB_DIR=$($wxLib.DirectoryName)" >> $env:GITHUB_ENV
 
       - name: Download VC++ runtime
         shell: pwsh
@@ -121,7 +121,7 @@ jobs:
             -DwxWidgets_ROOT_DIR="$env:WXWIN" `
             -DwxWidgets_LIB_DIR="$env:WX_LIB_DIR" `
             -DwxWidgets_CONFIGURATION=mswu `
-            -DwxWidgets_USE_STATIC=ON `
+            -DwxWidgets_USE_STATIC=OFF `
             -DLIBXML2_LIBRARIES="$env:DEPS_DIR\libs-common\x64\libxml2.lib" `
             -DLIBXML2_INCLUDE_DIR="$env:DEPS_DIR\include" `
             -DCAIRO_INCLUDE_DIRS="$env:DEPS_DIR\include\cairo" `
