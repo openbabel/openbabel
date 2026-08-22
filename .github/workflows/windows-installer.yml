@@ -8,12 +8,6 @@ on:
 permissions:
   contents: write
 
-env:
-  BUILD_DIR: ${{ runner.temp }}\openbabel-build
-  DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
-  MAINTENANCE_DIR: ${{ runner.temp }}\openbabel-maintenance
-  WXWIN: ${{ runner.temp }}\wxWidgets
-
 jobs:
   windows-installer:
     runs-on: windows-2022
@@ -25,7 +19,7 @@ jobs:
           ref: ${{ github.ref }}
 
       - name: Set up MSVC x64
-        uses: ilammy/msvc-dev-cmd@0b201ec74fa439dc39ae48a89fd1d8cb592756 # v1.13.0
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
         with:
           arch: x64
 
@@ -44,6 +38,14 @@ jobs:
       - name: Install Windows packaging tools
         shell: pwsh
         run: choco install nsis swig 7zip -y --no-progress
+
+      - name: Set Windows build paths
+        shell: pwsh
+        run: |
+          "BUILD_DIR=$env:RUNNER_TEMP\openbabel-build" >> $env:GITHUB_ENV
+          "DEPS_DIR=$env:RUNNER_TEMP\msvc-dependencies" >> $env:GITHUB_ENV
+          "MAINTENANCE_DIR=$env:RUNNER_TEMP\openbabel-maintenance" >> $env:GITHUB_ENV
+          "WXWIN=$env:RUNNER_TEMP\wxWidgets" >> $env:GITHUB_ENV
 
       - name: Fetch legacy Windows packaging assets
         shell: pwsh
