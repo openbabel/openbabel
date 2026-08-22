@@ -176,16 +176,55 @@ jobs:
           BUILD_DIR: ${{ runner.temp }}\openbabel-build
           DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
           MAINTENANCE_DIR: ${{ runner.temp }}\openbabel-maintenance
+          WXWIN: ${{ runner.temp }}\wxWidgets
         run: |
           $dist = "$env:MAINTENANCE_DIR\windows\for_dist"
           $matches = Select-String -Path "$env:GITHUB_WORKSPACE\CMakeLists.txt" -Pattern 'set\(BABEL_(MAJ|MIN|PATCH)_VER\s+([0-9]+)\)' -AllMatches
           $version = ($matches.Matches | ForEach-Object { $_.Groups[2].Value }) -join '.'
           if ([string]::IsNullOrWhiteSpace($version)) { throw 'Could not determine Open Babel version.' }
 
+          # Keep the legacy installer script as the packaging contract, but patch
+          # only the parts that do not match this native-only CI build.
           $nsi = Join-Path $dist 'NSISScriptToCreateInstaller.nsi'
           $text = Get-Content $nsi -Raw
           $text = $text -replace '!define OBVersion\s+[^\r\n]+', "!define OBVersion $version"
+
+          # JAVA_BINDINGS=OFF and CSHARP_BINDINGS=OFF mean these four legacy
+          # payloads are intentionally absent from the build output.
+          $text = $text -replace '(?m)^\s*File \$\{SourceDir\}\\scripts\\java\\openbabel\.jar\s*\r?\n', ''
+          $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\openbabel_java\.dll\s*\r?\n', ''
+          $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\openbabel_csharp\.dll\s*\r?\n', ''
+          $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\OBDotNet\.dll\s*\r?\n', ''
           Set-Content -Path $nsi -Value $text -NoNewline
+
+          # wxWidgets is built dynamically (SHARED=1), so its runtime DLLs are
+          # not part of the Open Babel build tree. The legacy NSIS script already
+          # packages every DLL under DepsDir\libs-common\x64; put wxWidgets there
+          # so it follows the existing packaging mechanism.
+          $wxDlls = Get-ChildItem "$env:WXWIN\lib" -Recurse -Filter 'wxmsw*.dll' -File
+          if ($wxDlls.Count -eq 0) {
+            Write-Host 'wxWidgets DLL tree:'
+            Get-ChildItem "$env:WXWIN\lib" -Recurse -File | Select-Object FullName, Length
+            throw 'Could not locate wxWidgets runtime DLLs.'
+          }
+          $depsDllDir = Join-Path $env:DEPS_DIR 'libs-common\x64'
+          foreach ($dll in $wxDlls) {
+            Copy-Item $dll.FullName $depsDllDir -Force
+            Write-Host "Packaging wxWidgets runtime: $($dll.Name)"
+          }
+
+          # Fail early with a useful message if the native payload expected by
+          # the legacy script is missing.
+          $releaseDir = Join-Path $env:BUILD_DIR 'bin\Release'
+          foreach ($required in @('obgui.exe', 'openbabel-3.dll')) {
+            if (-not (Test-Path (Join-Path $releaseDir $required))) {
+              throw "Required installer payload is missing: $required"
+            }
+          }
+
+          Write-Host "Installer version: $version"
+          Write-Host "Installer build directory: $releaseDir"
+          Write-Host 'NSIS native-only payload patch applied.'
 
           $out = "$env:GITHUB_WORKSPACE\OpenBabel-$version-x64.exe"
           Push-Location $dist
@@ -196,7 +235,9 @@ jobs:
             "/DDepsDir=$env:DEPS_DIR" `
             "/DmyOutFile=$out" `
             'NSISScriptToCreateInstaller.nsi'
+          $nsisExitCode = $LASTEXITCODE
           Pop-Location
+          if ($nsisExitCode -ne 0) { throw "makensis.exe failed with exit code $nsisExitCode" }
 
           if (-not (Test-Path $out)) { throw "Installer was not created: $out" }
           "INSTALLER=$out" >> $env:GITHUB_ENV
