@@ -3,8 +3,7 @@ name: Windows installer
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'openbabel-*'
+    branches: ["**"]
 
 permissions:
   contents: write
