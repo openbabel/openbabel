@@ -24,24 +24,24 @@ Checkout-Repository 'https://github.com/openbabel/msvc-dependencies.git' $DepsDi
 Remove-Item (Join-Path $DepsDir 'include\stdint.h') -Force -ErrorAction SilentlyContinue
 Remove-Item (Join-Path $DepsDir 'include\inttypes.h') -Force -ErrorAction SilentlyContinue
 
-# The current dependency snapshot does not contain the zlib import library used
-# by this Open Babel Windows build. Restore it from the known-good legacy commit.
+# Restore only the import library needed by the Open Babel link step. Do not
+# restore the legacy DLL: libpng16.dll must use the matching current zlib DLL.
 Checkout-Repository 'https://github.com/openbabel/msvc-dependencies.git' $ZlibRepo $ZlibCommit
 
 $TargetDir = Join-Path $DepsDir 'libs-common\x64'
 $ZlibLib = Join-Path $ZlibRepo 'libs-common\x64\zlib1.lib'
-$ZlibDll = Join-Path $ZlibRepo 'libs-common\x64\zlib1.dll'
-
-foreach ($File in @($ZlibLib, $ZlibDll)) {
-    if (-not (Test-Path $File)) {
-        throw "Required zlib file is missing: $File"
-    }
-    Copy-Item $File $TargetDir -Force
+if (-not (Test-Path $ZlibLib)) {
+    throw "Required zlib import library is missing: $ZlibLib"
 }
-
+Copy-Item $ZlibLib $TargetDir -Force
 Remove-Item $ZlibRepo -Recurse -Force
+
+$ZlibRuntime = Join-Path $TargetDir 'zlib1.dll'
+if (-not (Test-Path $ZlibRuntime)) {
+    throw "Current dependency snapshot lacks zlib runtime: $ZlibRuntime"
+}
 
 "DEPS_DIR=$DepsDir" >> $env:GITHUB_ENV
 Write-Host "MSVC dependencies: $DepsDir"
-Write-Host "Using zlib from commit $ZlibCommit"
+Write-Host "Using zlib import library from commit $ZlibCommit"
 Get-ChildItem $TargetDir -Filter 'zlib1.*' | Select-Object Name, Length
