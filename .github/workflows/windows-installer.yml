@@ -59,37 +59,30 @@ jobs:
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\stdint.h" -Force -ErrorAction SilentlyContinue
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\inttypes.h" -Force -ErrorAction SilentlyContinue
 
-      - name: Install wxWidgets 3.0.5 x64
+      - name: Fetch wxWidgets 3.0.5 source
         shell: pwsh
         run: |
-          $wxRoot = "$env:RUNNER_TEMP\wxWidgets\3.0.5"
-          $headers = "$env:RUNNER_TEMP\wx-headers.7z"
-          $dev = "$env:RUNNER_TEMP\wx-dev.7z"
+          $wxRepo = "$env:RUNNER_TEMP\wxWidgets"
+          git clone --depth 1 --branch v3.0.5 https://github.com/wxWidgets/wxWidgets.git $wxRepo
+          if (-not (Test-Path "$wxRepo\include\wx\wx.h")) { throw 'wxWidgets source checkout is incomplete.' }
+          "WXWIN=$wxRepo" >> $env:GITHUB_ENV
 
-          Remove-Item "$env:RUNNER_TEMP\wxWidgets" -Recurse -Force -ErrorAction SilentlyContinue
-          New-Item -ItemType Directory -Force -Path $wxRoot | Out-Null
+      - name: Build wxWidgets 3.0.5 x64
+        shell: pwsh
+        run: |
+          $wxRoot = $env:WXWIN
+          $build = "$env:RUNNER_TEMP\wxWidgets-build"
+          cmake -S "$wxRoot" -B "$build" `
+            -G 'Visual Studio 17 2022' -A x64 `
+            -DwxBUILD_SHARED=ON `
+            -DwxBUILD_SAMPLES=OFF `
+            -DwxBUILD_TESTS=OFF
+          cmake --build "$build" --config Release --parallel
 
-          # Match the legacy Open Babel 64env.bat configuration:
-          # wxWidgets 3.0.5 and vc142_x64_dll.
-          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxWidgets-3.0.5_headers.7z' -OutFile $headers
-          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.0.5/wxMSW-3.0.5_vc142_x64_Dev.7z' -OutFile $dev
-          7z x $headers "-o$wxRoot" -y | Out-Null
-          7z x $dev "-o$wxRoot" -y | Out-Null
-
-          $lib = Join-Path $wxRoot 'lib\vc142_x64_dll'
-          if (-not (Test-Path $lib)) {
-            Write-Host 'Extracted wxWidgets tree:'
-            Get-ChildItem $wxRoot -Recurse -Depth 4 | Select-Object FullName, Length
-            throw "Expected wxWidgets library directory was not found: $lib"
-          }
-
-          $include = Get-ChildItem $wxRoot -Directory -Recurse | Where-Object {
-            Test-Path (Join-Path $_.FullName 'wx\wx.h')
-          } | Select-Object -First 1
-          if ($null -eq $include) { $include = Get-Item $wxRoot }
-
-          "WXWIN=$($include.FullName)" >> $env:GITHUB_ENV
-          "WX_LIB_DIR=$lib" >> $env:GITHUB_ENV
+          $lib = Get-ChildItem $build -Recurse -Filter 'wxmsw*.lib' -File | Where-Object { $_.FullName -match '\\Release\\' } | Select-Object -First 1
+          if ($null -eq $lib) { throw 'No wxWidgets release library was produced.' }
+          $libDir = $lib.Directory.FullName
+          "WX_LIB_DIR=$libDir" >> $env:GITHUB_ENV
 
       - name: Fetch InChI headers
         shell: pwsh
