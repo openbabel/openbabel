@@ -115,10 +115,6 @@ jobs:
           Write-Host "wxWidgets include: $wxRoot\include"
           Write-Host "wxWidgets library: $($lib.Directory.FullName)"
 
-      - name: Fetch InChI headers
-        shell: pwsh
-        run: git clone --depth 1 https://github.com/IUPAC-InChI/InChI.git "$env:RUNNER_TEMP\inchi"
-
       - name: Download VC++ runtime
         shell: pwsh
         run: |
@@ -130,7 +126,6 @@ jobs:
         env:
           BUILD_DIR: ${{ runner.temp }}\openbabel-build
           DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
-          INCHI_DIR: ${{ runner.temp }}\inchi
         run: |
           $swig = (Get-Command swig.exe).Source
 
@@ -150,8 +145,6 @@ jobs:
             -DCAIRO_LIBRARIES="$env:DEPS_DIR\libs-common\x64\cairo.lib" `
             -DZLIB_LIBRARY="$env:DEPS_DIR\libs-common\x64\zlib1.lib" `
             -DZLIB_INCLUDE_DIR="$env:DEPS_DIR\include" `
-            -DINCHI_LIBRARY="$env:DEPS_DIR\libs-common\x64\libinchi.lib" `
-            -DINCHI_INCLUDE_DIR="$env:INCHI_DIR\INCHI-1-SRC\INCHI_API\libinchi\src" `
             -DXDR_LIBRARY="$env:DEPS_DIR\libs-common\x64\xdr.lib" `
             -DXDR_INCLUDE_DIR="$env:DEPS_DIR\include" `
             -DEIGEN3_INCLUDE_DIR="$env:DEPS_DIR\include" `
@@ -160,10 +153,11 @@ jobs:
             -DSWIG_EXECUTABLE="$swig" `
             -DJAVA_BINDINGS=OFF `
             -DCSHARP_BINDINGS=OFF `
-            -DOPENBABEL_USE_SYSTEM_INCHI=TRUE `
+            -DWITH_INCHI=OFF `
+            -DOPENBABEL_USE_SYSTEM_INCHI=OFF `
             -DENABLE_TESTS=OFF
 
-          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX|ZLIB|JAVA|CSHARP'
+          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX|ZLIB|INCHI|JAVA|CSHARP'
 
       - name: Build Open Babel
         shell: pwsh
