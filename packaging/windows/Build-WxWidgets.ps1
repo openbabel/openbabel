@@ -15,16 +15,27 @@ if (-not (Test-Path "$WxRoot\include\wx\wx.h")) {
 
 Copy-Item "$WxRoot\include\wx\msw\setup0.h" "$WxRoot\include\wx\msw\setup.h" -Force
 
-# Keep the proven CI build path: initialize the MSVC environment in cmd.exe and
-# invoke nmake there. Calling vcvarsall from PowerShell can produce misleading
-# "network path was not found" errors because of command-line quoting/context.
 $VcVars = Join-Path $env:VCINSTALLDIR 'Auxiliary\Build\vcvarsall.bat'
 if (-not (Test-Path $VcVars)) {
     throw "vcvarsall.bat was not found: $VcVars"
 }
 
-$WxBuildDir = Join-Path $WxRoot 'build\msw'
-cmd.exe /d /s /c "call \"$VcVars\" x64 && cd /d \"$WxBuildDir\" && nmake /f makefile.vc BUILD=release SHARED=1 TARGET_CPU=X64"
+# Keep the proven build sequence in a standalone cmd script. This avoids
+# nesting cmd inside PowerShell and preserves the exact MSVC/nmake semantics
+# used by the workflow before the refactor.
+$BuildScript = Join-Path $RunnerTemp 'build-wxwidgets.cmd'
+$CmdLines = @(
+    '@echo off'
+    "call `"$VcVars`" x64"
+    'if errorlevel 1 exit /b %errorlevel%'
+    "cd /d `"$WxRoot\build\msw`""
+    'if errorlevel 1 exit /b %errorlevel%'
+    'nmake /f makefile.vc BUILD=release SHARED=1 TARGET_CPU=X64'
+    'exit /b %errorlevel%'
+)
+Set-Content -Path $BuildScript -Value $CmdLines -Encoding ASCII
+
+& $BuildScript
 if ($LASTEXITCODE -ne 0) {
     throw "wxWidgets build failed with exit code $LASTEXITCODE"
 }
