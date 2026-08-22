@@ -29,9 +29,9 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Install SWIG
+      - name: Install Windows packaging tools
         shell: pwsh
-        run: choco install swig -y --no-progress
+        run: choco install nsis swig -y --no-progress
 
       - name: Fetch legacy Windows packaging assets
         shell: pwsh
@@ -150,8 +150,12 @@ jobs:
           # The legacy installer expects these DLLs in the dependency directory.
           # wxWidgets is distributed separately from the Open Babel MSVC dependencies.
           $wxRuntime = "$env:RUNNER_TEMP\wx-runtime.7z"
+          $wxExtract = "$env:RUNNER_TEMP\wx-runtime"
           Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxMSW-3.2.8_vc14x_x64_ReleaseDLL.7z' -OutFile $wxRuntime
-          7z x $wxRuntime "-o$env:DEPS_DIR\libs-common\x64" -y | Out-Null
+          Remove-Item $wxExtract -Recurse -Force -ErrorAction SilentlyContinue
+          New-Item -ItemType Directory -Force -Path $wxExtract | Out-Null
+          7z x $wxRuntime "-o$wxExtract" -y | Out-Null
+          Get-ChildItem $wxExtract -Recurse -Filter '*.dll' | Copy-Item -Destination "$env:DEPS_DIR\libs-common\x64" -Force
 
           $out = "$env:GITHUB_WORKSPACE\OpenBabel-$version-x64.exe"
           Push-Location $dist
