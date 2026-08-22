@@ -133,8 +133,6 @@ jobs:
           INCHI_DIR: ${{ runner.temp }}\inchi
         run: |
           $swig = (Get-Command swig.exe).Source
-          $java = $env:JAVA_HOME
-          $csc = 'C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe'
 
           cmake -S "$env:GITHUB_WORKSPACE" -B "$env:BUILD_DIR" `
             -G 'Visual Studio 17 2022' -A x64 `
@@ -160,16 +158,12 @@ jobs:
             -DJSON_LIBRARY="$env:DEPS_DIR\libs-vs12\x64\jsoncpp.lib" `
             -DRUN_SWIG=ON `
             -DSWIG_EXECUTABLE="$swig" `
-            -DJAVA_BINDINGS=ON `
-            -DJAVA_INCLUDE_PATH="$java\include" `
-            -DJAVA_JVM_LIBRARY="$java\lib\jvm.lib" `
-            -DJAVA_AWT_LIBRARY="$java\lib\jawt.lib" `
-            -DCSHARP_BINDINGS=ON `
-            -DCSHARP_EXECUTABLE="$csc" `
+            -DJAVA_BINDINGS=OFF `
+            -DCSHARP_BINDINGS=OFF `
             -DOPENBABEL_USE_SYSTEM_INCHI=TRUE `
             -DENABLE_TESTS=OFF
 
-          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX|ZLIB'
+          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX|ZLIB|JAVA|CSHARP'
 
       - name: Build Open Babel
         shell: pwsh
