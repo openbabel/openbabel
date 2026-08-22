@@ -195,6 +195,15 @@ jobs:
           $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\openbabel_java\.dll\s*\r?\n', ''
           $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\openbabel_csharp\.dll\s*\r?\n', ''
           $text = $text -replace '(?m)^\s*File \$\{BuildDir\}\\bin\\Release\\OBDotNet\.dll\s*\r?\n', ''
+
+          # This workflow produces x64 only. The legacy script parses an i386
+          # branch that references an x86 redistributable which is not shipped.
+          # Replace the whole architecture branch with the x64 payload only.
+          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 archIs64\s*File vc_redist\.x86\.exe\s*Goto done\s*archIs64:\s*File vc_redist\.x64\.exe\s*done:', '\n  File vc_redist.x64.exe'
+
+          # The x64 installer also only needs to launch the x64 redistributable.
+          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 vcredist_for_x64\s*ExecWait ''\"\$INSTDIR/vc_redist\.x86\.exe\" /quiet''\s*Goto vcredist_done\s*vcredist_for_x64:\s*ExecWait ''\"\$INSTDIR/vc_redist\.x64\.exe\" /quiet''\s*vcredist_done:', '\n  ExecWait ''"$INSTDIR/vc_redist.x64.exe" /quiet'''
+
           Set-Content -Path $nsi -Value $text -NoNewline
 
           # wxWidgets is built dynamically (SHARED=1), so its runtime DLLs are
