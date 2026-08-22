@@ -41,11 +41,12 @@ Section "Open Babel" SecOpenBabel
   SectionIn RO
   SetOutPath "$INSTDIR"
 
-  ; Install the complete native Open Babel release tree. This deliberately
-  ; replaces the old hand-maintained list of executables and plugins.
-  File /r "${BuildDir}\bin\Release\*.*"
+  ; Native Open Babel executables, shared libraries and plugin modules.
+  File /nonfatal "${BuildDir}\bin\Release\*.exe"
+  File /nonfatal "${BuildDir}\bin\Release\*.dll"
+  File /nonfatal "${BuildDir}\bin\Release\*.obf"
 
-  ; Runtime DLLs supplied by the legacy MSVC dependency bundle and wxWidgets.
+  ; Runtime DLLs supplied by the MSVC dependency bundle, including wxWidgets.
   File /nonfatal "${DepsDir}\libs-common\x64\*.dll"
   File /nonfatal "${DepsDir}\libs-vs12\x64\*.dll"
 
