@@ -205,9 +205,6 @@ else(BUILD_SHARED)
   endforeach(plugingroup descriptors fingerprints forcefields ops charges)
 
   if(WITH_STATIC_INCHI)
-    if(NOT OPENBABEL_USE_SYSTEM_INCHI)
-      add_subdirectory(formats/libinchi)
-    endif()
     set(openbabel_srcs ${openbabel_srcs} formats/getinchi.cpp ops/unique.cpp)
     set(libs ${libs} ${INCHI_LIBRARY})
   endif(WITH_STATIC_INCHI)
@@ -307,6 +304,9 @@ if(BUILD_SHARED)
       OUTPUT_NAME plugin_${plugingroup}
       PREFIX ""
       SUFFIX ${MODULE_EXTENSION})
+    if(NOT OPENBABEL_USE_SYSTEM_INCHI)
+      add_dependencies(plugin_${plugingroup} InChI)
+    endif()
   endforeach(plugingroup)
 
   add_subdirectory(formats)

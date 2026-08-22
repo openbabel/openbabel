@@ -487,6 +487,8 @@ else()
   option(WITH_COORDGEN "Build Coordgen support" OFF)
 endif()
 
+add_subdirectory(external)
+
 if(WITH_MAEPARSER)
 
     find_package(maeparser MODULE QUIET)
