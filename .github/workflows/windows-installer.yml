@@ -199,10 +199,12 @@ jobs:
           # This workflow produces x64 only. The legacy script parses an i386
           # branch that references an x86 redistributable which is not shipped.
           # Replace the whole architecture branch with the x64 payload only.
-          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 archIs64\s*File vc_redist\.x86\.exe\s*Goto done\s*archIs64:\s*File vc_redist\.x64\.exe\s*done:', '\n  File vc_redist.x64.exe'
+          $archPayload = [Environment]::NewLine + '  File vc_redist.x64.exe'
+          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 archIs64\s*File vc_redist\.x86\.exe\s*Goto done\s*archIs64:\s*File vc_redist\.x64\.exe\s*done:', $archPayload
 
           # The x64 installer also only needs to launch the x64 redistributable.
-          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 vcredist_for_x64\s*ExecWait ''\"\$INSTDIR/vc_redist\.x86\.exe\" /quiet''\s*Goto vcredist_done\s*vcredist_for_x64:\s*ExecWait ''\"\$INSTDIR/vc_redist\.x64\.exe\" /quiet''\s*vcredist_done:', '\n  ExecWait ''"$INSTDIR/vc_redist.x64.exe" /quiet'''
+          $vcredistPayload = [Environment]::NewLine + '  ExecWait ''"$INSTDIR/vc_redist.x64.exe" /quiet'''
+          $text = $text -replace '(?s)\s*StrCmp \$\{Arch\} "i386" 0 vcredist_for_x64\s*ExecWait ''"\$INSTDIR/vc_redist\.x86\.exe" /quiet''\s*Goto vcredist_done\s*vcredist_for_x64:\s*ExecWait ''"\$INSTDIR/vc_redist\.x64\.exe" /quiet''\s*vcredist_done:', $vcredistPayload
 
           Set-Content -Path $nsi -Value $text -NoNewline
 
