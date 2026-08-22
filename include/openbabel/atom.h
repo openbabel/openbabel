@@ -209,7 +209,7 @@ namespace OpenBabel
       //! Set the coordinate vector for this atom based on @p x @p y & @p z
       void SetVector(const double x,const double y,const double z);
       //! Set the position of this atom from a pointer-driven array of coordinates
-      void SetCoordPtr(double **c)        { _c = c; _cidx = (GetIdx()-1)*3; }
+      void SetCoordPtr(double **c)        { _c = c; _cidx = GetIdx() ? (GetIdx()-1)*3 : 0; }
       //! Set the position of this atom based on the internal pointer array (i.e. from SetCoordPtr() )
       void SetVector();
       //! Attach an OBResidue @p res as containing this atom

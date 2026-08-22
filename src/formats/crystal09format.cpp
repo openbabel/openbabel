@@ -172,6 +172,7 @@ bool Crystal09Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       //First Line to Parse use SetX
       getline(ifs,line);
       tokenize(vs,line);
+      if (vs.size() < 3) { pmol->EndModify(); return false; }
       xvec.SetX(strtod((char*)vs[0].c_str(), nullptr));
       yvec.SetX(strtod((char*)vs[1].c_str(), nullptr));
       zvec.SetX(strtod((char*)vs[2].c_str(), nullptr));
@@ -179,6 +180,7 @@ bool Crystal09Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       //Second Line to Parse use SetY
       getline(ifs,line);
       tokenize(vs,line);
+      if (vs.size() < 3) { pmol->EndModify(); return false; }
       xvec.SetY(strtod((char*)vs[0].c_str(), nullptr));
       yvec.SetY(strtod((char*)vs[1].c_str(), nullptr));
       zvec.SetY(strtod((char*)vs[2].c_str(), nullptr));
@@ -186,6 +188,7 @@ bool Crystal09Format::ReadMolecule(OBBase* pOb, OBConversion* pConv)
       //Third Line to Parse use SetZ
       getline(ifs,line);
       tokenize(vs,line);
+      if (vs.size() < 3) { pmol->EndModify(); return false; }
       xvec.SetZ(strtod((char*)vs[0].c_str(), nullptr));
       yvec.SetZ(strtod((char*)vs[1].c_str(), nullptr));
       zvec.SetZ(strtod((char*)vs[2].c_str(), nullptr));

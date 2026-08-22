@@ -97,8 +97,10 @@ namespace OpenBabel
       //WriteChemObject() always deletes the object retrieved by GetChemObject
       OBBase* pOb = pConv->GetChemObject();
       OBReaction* pReact = dynamic_cast<OBReaction*>(pOb);
-      if (pReact == nullptr)
+      if (pReact == nullptr) {
+        delete pOb; // not a reaction, but we own it: free it rather than leak
         return false;
+      }
 
       bool ret=false;
       ret=WriteMolecule(pReact,pConv);

@@ -2755,7 +2755,12 @@ namespace OpenBabel {
         else {
           int bosum = atom->GetExplicitValence() - numExplicitHsToSuppress;
           unsigned int implicitValence = SmilesValence(element, bosum, false);
-          unsigned int defaultNumImplicitHs = implicitValence - bosum;
+          // Compute in signed then convert: for a hypervalent atom
+          // implicitValence is 0 and this underflows, but the result is unused
+          // (the implicitValence == 0 test below short-circuits). Same bits as
+          // the old unsigned wrap, without tripping the sanitizer.
+          unsigned int defaultNumImplicitHs =
+            static_cast<unsigned int>(static_cast<int>(implicitValence) - bosum);
           if (implicitValence == 0 // hypervalent
              ||  numImplicitHs != defaultNumImplicitHs // undervalent
              || (!options.kekulesmi && element != 6 && atom->IsAromatic() && numImplicitHs != 0) ) // aromatic nitrogen/phosphorus

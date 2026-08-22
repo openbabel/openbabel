@@ -332,6 +332,7 @@ namespace OpenBabel
       for (i = 0; i < atomLines.size(); ++i) {
         j = i+1;
         tokenize(vs, atomLines[i]);
+        if (vs.empty()) continue;
         atom = mol.NewAtom();
         atom->SetAtomicNum(OBElements::GetAtomicNum(vs[0].c_str()));
 

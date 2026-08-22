@@ -75,6 +75,10 @@ bool PNG2Format::WriteChemObject(OBConversion* pConv) // Taken from svgformat.cp
 
   if(pConv->GetOutputIndex()<=1)
   {
+    // Reclaim any molecules left over from a previous conversion that was
+    // abandoned before its final flush; clearing alone would leak them.
+    for(vector<OBBase*>::iterator iter=_objects.begin(); iter!=_objects.end(); ++iter)
+      delete *iter;
     _objects.clear();
     _nmax=0;
     //_ncols = _nrows = 1;

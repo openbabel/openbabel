@@ -18,6 +18,8 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/format.h>
+#include <openbabel/base.h>
+#include <openbabel/obconversion.h>
 #include <typeinfo>
 
 using namespace std;
@@ -27,6 +29,19 @@ namespace OpenBabel
   // macro to implement static OBPlugin::PluginMapType& Map()
   PLUGIN_CPP_FILE(OBFormat)
 #endif
+
+  // Default "not a valid output format" fallback. Per this function's
+  // contract (see format.h), it must still consume and delete whatever
+  // object OBConversion has queued for output, even though it can't write
+  // it -- otherwise that object (and everything it owns) leaks, since the
+  // caller (Convert()'s final flush, or AddChemObject()) assumes writing
+  // -- successful or not -- takes ownership of the pending object.
+  bool OBFormat::WriteChemObject(OBConversion* pConv)
+  {
+    std::cerr << "Not a valid output format";
+    delete pConv->GetChemObject();
+    return false;
+  }
 
 int OBFormat::RegisterFormat(const char* ID, const char* MIME)
 {

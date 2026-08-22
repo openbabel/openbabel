@@ -180,7 +180,9 @@ namespace OpenBabel
       if (strstr(buffer, "AtomTypes") != nullptr)
       {
         tokenize(vs,(strstr(buffer,"AtomTypes=")), " \t\n=");
-        atomtypes = atoi(vs[1].c_str());
+        if (vs.size() > 1) {
+          atomtypes = atoi(vs[1].c_str());
+        }
       }
       else
       {
@@ -198,7 +200,9 @@ namespace OpenBabel
       if (strstr(buffer, "Charge") != nullptr)
       {
         tokenize(vs,(strstr(buffer,"Charge=")), " \t\n=");
-        molcharge = atoi(vs[1].c_str());
+        if (vs.size() > 1) {
+          molcharge = atoi(vs[1].c_str());
+        }
       }
 
       // if input is in bohr, convert to angstrom
@@ -210,9 +214,13 @@ namespace OpenBabel
         if (strstr(buffer, "Atoms") != nullptr && strstr(buffer, "Charge") != nullptr)
         {
            tokenize(vs,(strstr(buffer,"Atoms=")), " \t\n=");
-           atomcount = atoi(vs[1].c_str());
+           if (vs.size() > 1) {
+             atomcount = atoi(vs[1].c_str());
+           }
            tokenize(vs,(strstr(buffer,"Charge=")), " \t\n=");
-           atomcharge = atoi(vs[1].c_str());
+           if (vs.size() > 1) {
+             atomcharge = atoi(vs[1].c_str());
+           }
            atomtypes--;
            continue;
         }
@@ -378,6 +386,12 @@ namespace OpenBabel
         ifs.getline(buffer,BUFF_SIZE); // whitespace
         ifs.getline(buffer,BUFF_SIZE); // number of coordinates
         tokenize(vs,buffer);
+        if (vs.size() < 5) {
+          obErrorLog.ThrowError(__FUNCTION__,
+            "Malformed Dalton file: missing atom count token", obError);
+          mol.EndModify();
+          return false;
+        }
         atomcount = atoi(vs[4].c_str()) / 3; // number of atoms to read
         while(atomcount > 0)
         {

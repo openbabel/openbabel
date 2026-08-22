@@ -258,6 +258,14 @@ namespace OpenBabel
     while (!atmid.empty() && atmid[atmid.size()-1] == ' ')
       atmid = atmid.substr(0,atmid.size()-1);
 
+    // A blank atom-name field leaves atmid empty. The element-guessing logic
+    // below indexes atmid[1] and calls atmid.substr(1, ...), which would read
+    // out of bounds or throw std::out_of_range on an empty string. An
+    // uncaught throw here unwinds past the caller and leaks the molecule, so
+    // skip the malformed record instead.
+    if (atmid.empty())
+      return(false);
+
     /* residue name */
 
     string resname = sbuf.substr(11,3);

@@ -1,7 +1,7 @@
 project(inchi)
 set(INCHI_MAJ_VER   1)
 set(INCHI_MIN_VER   07)
-set(INCHI_PATCH_VER 4)
+set(INCHI_PATCH_VER 5)
 
 file(GLOB inchi_srcs "*.c")
 

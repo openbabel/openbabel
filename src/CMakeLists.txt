@@ -311,3 +311,7 @@ if(BUILD_SHARED)
 
   add_subdirectory(formats)
 endif(BUILD_SHARED)
+
+if("${WITH_INCHI}" AND "${OPENBABEL_USE_SYSTEM_INCHI}")
+  target_include_directories(plugin_descriptors PRIVATE "${INCHI_INCLUDE_DIR}")
+endif()

@@ -408,8 +408,10 @@ bool CMLReactFormat::WriteChemObject(OBConversion* pConv)
     //and the rest of the text in _text. The content of _text is output at the end.
     {
       OBText* ptext = dynamic_cast<OBText*>(pOb);
-      if (ptext == nullptr)
+      if (ptext == nullptr) {
+        delete pOb; // not a reaction, molecule, or text: free what we own
         return false;
+      }
       string::size_type pos = 0;
       string frontText(ptext->GetText(pos));
       *_pOut << frontText;//Output(to orig outstream) text up to insertion point

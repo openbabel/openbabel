@@ -120,10 +120,12 @@ namespace OpenBabel
             ttab.SetToType("ATN");
             ttab.Translate(temp2, temp);
             atom->SetAtomicNum(atoi(temp2.c_str()));
-            x = atof(vs[3].c_str());
-            y = atof(vs[4].c_str());
-            z = atof(vs[5].c_str());
-            atom->SetVector(x,y,z); //set coordinates
+            if (vs.size() > 5) {
+              x = atof(vs[3].c_str());
+              y = atof(vs[4].c_str());
+              z = atof(vs[5].c_str());
+              atom->SetVector(x,y,z); //set coordinates
+            }
 
             token = 6;
             parsingBonds = false;

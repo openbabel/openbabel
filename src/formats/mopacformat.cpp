@@ -388,7 +388,13 @@ namespace OpenBabel
 
             // now real work
             unsigned int prevModeCount = displacements.size();
-            unsigned int newModes = frequencies.size() - displacements.size();
+            // Guard against unsigned underflow on malformed input: if there are
+            // fewer frequencies than displacements already stored, the
+            // subtraction would wrap to a huge value and the loop below would
+            // exhaust memory.
+            unsigned int newModes = 0;
+            if (frequencies.size() > displacements.size())
+              newModes = frequencies.size() - displacements.size();
             vector<vector3> displacement;
             for (unsigned int i = 0; i < newModes; ++i) {
               displacements.push_back(displacement);
@@ -684,8 +690,10 @@ namespace OpenBabel
             atomLabel = vs[1];
             strcpy(buffer,vs[2].c_str());
           }
-        else //no label, reset buffer
+        else if (vs.size() == 1) //no label, reset buffer
           strcpy(buffer,vs[0].c_str());
+        else //blank line (e.g. only '(' or ')' characters): no more data
+          break;
 
         //Now parse the rest of the line
         //There should be three cases:

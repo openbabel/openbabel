@@ -159,10 +159,12 @@ namespace OpenBabel
 
             	ifs.getline(buffer,BUFF_SIZE);
             	tokenize(vs,buffer);
+                if (vs.size() < 3) break;
                 y = atof((char*)vs[2].c_str());
 
 		ifs.getline(buffer,BUFF_SIZE);
 		tokenize(vs,buffer);
+                if (vs.size() < 3) break;
                 z = atof((char*)vs[2].c_str());
 
                 atom->SetVector(x,y,z); //set coordinates

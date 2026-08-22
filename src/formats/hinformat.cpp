@@ -115,7 +115,15 @@ namespace OpenBabel
         z = atof((char*)vs[9].c_str());
         atom->SetVector(x,y,z);
 
-        max = 11 + 2 * atoi((char *)vs[10].c_str());
+        // Bond count comes straight from the file; clamp it to what the
+        // line actually holds so a huge or negative value can't overflow
+        // "max" or send the loop below reading past the end of vs[].
+        int numbonds = atoi((char *)vs[10].c_str());
+        if (numbonds < 0)
+          numbonds = 0;
+        if (numbonds > ((int)vs.size() - 11) / 2)
+          numbonds = ((int)vs.size() - 11) / 2;
+        max = 11 + 2 * numbonds;
         for (i = 11; i < max; i+=2)
           {
             switch(((char*)vs[i+1].c_str())[0]) // First char in next token

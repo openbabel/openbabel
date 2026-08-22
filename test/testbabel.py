@@ -509,6 +509,27 @@ charge 1
         # mol2 displays element twice
         self.assertEqual(output.count('H'), 12)
 
+    def testTetrazolePhModel(self):
+        """Check tetrazole deprotonation at physiological pH (see https://github.com/openbabel/openbabel/issues/2284)"""
+        self.canFindExecutable("obabel")
+
+        tetrazoles = """c1[nH]nnn1
+c1nnn[nH]1
+c1n[nH]nn1
+c1nn[nH]n1
+"""
+        output, error = run_exec(tetrazoles, ["obabel", "-ismi", "-osmi", "-p", "7.4"])
+
+        self.assertConverted(error, 4)
+
+        smiles = [line.split()[0] for line in output.splitlines()]
+        self.assertEqual(len(smiles), 4)
+
+        for smi in smiles:
+            self.assertIn("[n-]", smi)
+            self.assertNotIn("[nH]", smi)
+            self.assertNotIn("[NH]", smi)
+            
     def testOBRMS(self):
         '''Sanity checks for obrms'''
         sdffile = self.getTestFile('testsym_2Dtests.sdf')

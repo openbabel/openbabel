@@ -12,6 +12,7 @@ GNU General Public License for more details.
 ***********************************************************************/
 #include <openbabel/babelconfig.h>
 #include <openbabel/obconversion.h>
+#include <openbabel/base.h>
 
 using namespace std;
 namespace OpenBabel
@@ -58,7 +59,10 @@ public:
   /////////////////////////////////////////////////////////////////
   bool WriteChemObject(OBConversion* pConv) override
   {
-    pConv->GetChemObject();//needed to increment pConv->Index
+    // GetChemObject() is needed to increment pConv->Index, but it also hands
+    // us ownership of the queued object; delete it so it does not leak (the
+    // copy below works directly from the input stream, not the object).
+    delete pConv->GetChemObject();
 
     istream& ifs = *pConv->GetInStream();
     ostream& ofs = *pConv->GetOutStream();

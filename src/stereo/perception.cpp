@@ -1988,6 +1988,10 @@ namespace OpenBabel {
 
       bool alreadyExists = (existingMap.find(*i) != existingMap.end());
       OBBond *bond = mol->GetBondById(*i);
+      // The bond id may not correspond to a bond in this molecule (e.g. for
+      // stale stereo data on a rebuilt structure); GetBondById returns null.
+      if (!bond)
+        continue;
 
       OBCisTransStereo *ct;
       OBCisTransStereo::Config config;
@@ -2111,6 +2115,16 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = centers.begin(); i != centers.end(); ++i) {
       OBAtom *center = mol->GetAtomById(*i);
+      // The center id may originate from pre-existing stereo data that no
+      // longer corresponds to an atom in this molecule (e.g. after rebuilding
+      // a malformed structure), in which case GetAtomById returns null.
+      if (!center)
+        continue;
+
+      // the stereo unit may reference an id that is not a valid atom
+      // (e.g. a center removed since the unit was created)
+      if (!center)
+        continue;
 
       // make sure we have at least 3 heavy atom neighbors
       // timvdm 28 Jun 2009: This is already checked in FindStereogenicUnits
@@ -2213,6 +2227,9 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
       OBBond *bond = mol->GetBondById(*i);
+      // the stereo unit may reference an id that is not a valid bond
+      if (!bond)
+        continue;
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
 
@@ -2240,6 +2257,10 @@ namespace OpenBabel {
         else
           bondVecs.push_back(pos - begin->GetVector());
       }
+      // the torsion code below indexes bondVecs[0..3], assuming exactly two
+      // reference vectors from begin (0,1) and two from end (2,3); a malformed
+      // cis/trans unit (sp atom, too many neighbors) breaks this assumption
+      size_t nBeginVecs = bondVecs.size();
       // end
       config.end = end->GetId();
       vector3 end_vec = end->GetVector();
@@ -2262,6 +2283,16 @@ namespace OpenBabel {
           bondVecs.push_back(uc->MinimumImageCartesian(pos - end_vec));
         else
           bondVecs.push_back(pos - end_vec);
+      }
+
+      // A cis/trans bond needs two neighbor directions on each end (four in
+      // total, padded with implicit refs above). A malformed structure can
+      // leave one end with too few neighbors; skip it rather than indexing
+      // past the end of bondVecs.
+      if (nBeginVecs != 2 || bondVecs.size() != 4) {
+        obErrorLog.ThrowError(__FUNCTION__,
+          "Cannot determine cis/trans: unexpected neighbor count", obInfo);
+        continue;
       }
 
       double tor02, tor03, tor12, tor13;
@@ -2685,6 +2716,9 @@ namespace OpenBabel {
     std::vector<unsigned long>::iterator i;
     for (i = bonds.begin(); i != bonds.end(); ++i) {
       OBBond *bond = mol->GetBondById(*i);
+      // the stereo unit may reference an id that is not a valid bond
+      if (!bond)
+        continue;
       OBAtom *begin = bond->GetBeginAtom();
       OBAtom *end = bond->GetEndAtom();
 
@@ -2715,6 +2749,9 @@ namespace OpenBabel {
         begin->GetNewBondVector(pos, 1.0);
         bondVecs.push_back(pos);
       }
+      // the stereochemistry code below indexes bondVecs[0..3], assuming exactly
+      // two reference vectors from begin (0,1) and two from end (2,3)
+      size_t nBeginVecs = bondVecs.size();
       // end
       config.end = end->GetId();
       FOR_NBORS_OF_ATOM (nbr, end) {
@@ -2744,6 +2781,11 @@ namespace OpenBabel {
         if (ud_cit!=updown->end() && ud_cit->second==OBStereo::UnknownDir)
             config.specified = false;
       }
+
+      // a malformed cis/trans unit (sp atom, too many neighbors) breaks the
+      // 2/2 split the stereochemistry code below relies on
+      if (nBeginVecs != 2 || bondVecs.size() != 4)
+        config.specified = false;
 
       if (config.specified==true) { // Work out the stereochemistry
         // 0      3

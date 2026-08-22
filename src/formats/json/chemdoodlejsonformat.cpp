@@ -278,7 +278,8 @@ class ChemDoodleJSONFormat : public OBMoleculeFormat
           obErrorLog.ThrowError("ChemDoodleJSONFormat", "Invalid bond order", obWarning);
           continue;
         }
-        if (begin == end || (unsigned) begin > pmol->NumAtoms() ||
+        if (begin == end || begin < 1 || end < 1 ||
+            (unsigned) begin > pmol->NumAtoms() ||
             (unsigned) end > pmol->NumAtoms() || pmol->GetBond(begin, end)) {
           obErrorLog.ThrowError("ChemDoodleJSONFormat", "Invalid bond", obWarning);
           continue;

@@ -162,21 +162,27 @@ namespace OpenBabel {
       if (strstr(buffer, "Final Enthalpy")) {
         hasEnthalpyData = true;
         tokenize(vs, buffer);
-        enthalpy = atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL;
+        if (vs.size() > 4) {
+          enthalpy = atof(vs[4].c_str()) * EV_TO_KCAL_PER_MOL;
+        }
       }
 
       // volume
       if (strstr(buffer, "Current cell volume =")) {
         hasVolumeData = true;
         tokenize(vs, buffer);
-        volume = atof(vs[4].c_str());
+        if (vs.size() > 4) {
+          volume = atof(vs[4].c_str());
+        }
       }
 
       // pressure
       if (strstr(buffer, " *  Pressure:")) {
         hasPressureData = true;
         tokenize(vs, buffer);
-        pressure = atof(vs[2].c_str());
+        if (vs.size() > 2) {
+          pressure = atof(vs[2].c_str());
+        }
       }
     }
 

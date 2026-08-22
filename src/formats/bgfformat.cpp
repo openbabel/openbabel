@@ -164,8 +164,12 @@ namespace OpenBabel
 
         if (EQn(buffer,"CONECT",6))
           {
+            // bgn is unsigned: a zero or negative index in the file wraps
+            // to a huge value and is caught by the same bound. The former
+            // "bgn < 1" test wrongly rejected bgn == 0, silently discarding
+            // the CONECT record of the *first* atom.
             bgn = atoi((char*)vs[1].c_str()) - 1;
-            if (bgn < 1 || bgn > mol.NumAtoms())
+            if (bgn >= mol.NumAtoms())
               continue;
             for (i = 2;i < vs.size();i++)
               {
@@ -176,8 +180,9 @@ namespace OpenBabel
         else
           if (EQn(buffer,"ORDER",5))
             {
+              // See the CONECT branch above regarding this bound.
               bgn = atoi((char*)vs[1].c_str()) - 1;
-              if (bgn < 1 || bgn > mol.NumAtoms())
+              if (bgn >= mol.NumAtoms())
                 continue;
               if (vs.size() > vord[bgn].size()+2)
                 continue;

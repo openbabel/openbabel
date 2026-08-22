@@ -5,14 +5,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
-          python-version: '3.10'
+          python-version: '3.12'
+          cache: 'pip' # caching pip dependencies
+
+      # setuptools_scm cannot parse the 'openbabel-X-Y-Z' tag format (see
+      # wheels.yml), so the editable install below reports itself as version
+      # 0.1.dev1 and `safety check` matches it against advisories that were
+      # fixed years ago -- every one of them is "Affected spec: <3.2.0".
+      # Report the version CMakeLists.txt declares instead.
+      - id: version
+        run: |
+          v=$(sed -n -E 's/^set\(BABEL_(MAJ|MIN|PATCH)_VER[[:space:]]+([0-9]+)\).*/\2/p' \
+              CMakeLists.txt | paste -sd. -)
+          echo "Project version: $v"
+          echo "version=$v" >> "$GITHUB_OUTPUT"
       - run: pip install --upgrade pip wheel
       - run: pip install --upgrade "setuptools<81"
       - run: pip install bandit "black>=26.3.1" codespell flake8 flake8-bugbear
                          flake8-comprehensions isort mypy "pytest>=9.0.3" pyupgrade "safety<3"
-      - run: safety generate policy_file --path .
       - run: bandit --recursive  --skip B101,B314,B404,B405,B602,B603,B607 .
       - run: black --check . || true
       - run: codespell --ignore-words-list="anumber,ba,nd,ser,te,tring" || true  # --skip="*.css,*.js,*.lock"
@@ -21,9 +33,14 @@ jobs:
                       --show-source --statistics
       - run: isort --check-only --profile black . || true
       - run: pip install -r requirements.txt || pip install --editable . || true
+        env:
+          SETUPTOOLS_SCM_PRETEND_VERSION_FOR_OPENBABEL: ${{ steps.version.outputs.version }}
       - run: mkdir --parents --verbose .mypy_cache
       - run: mypy --ignore-missing-imports --install-types --non-interactive . || true
       - run: pytest . || true
       - run: pytest --doctest-modules . || true
       - run: shopt -s globstar && pyupgrade --py36-plus **/*.py || true
-      - run: safety check
+      # Uses the .safety-policy.yml checked in at the repo root. Passed
+      # explicitly so a missing or unreadable policy fails loudly rather than
+      # silently falling back to safety's defaults.
+      - run: safety check --policy-file .safety-policy.yml

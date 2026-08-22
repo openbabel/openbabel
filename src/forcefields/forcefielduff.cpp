@@ -730,7 +730,7 @@ namespace OpenBabel {
     if (b->GetExplicitDegree() > 4) {
       coordination = b->GetExplicitDegree();
     } else {
-      int coordDifference = ipar - b->GetExplicitDegree();
+      int coordDifference = ipar - static_cast<int>(b->GetExplicitDegree());
       if (abs(coordDifference) > 2)
         // low valent, but very different than expected by ipar
         coordination = b->GetExplicitDegree() - 1; // 4 coordinate == sp3

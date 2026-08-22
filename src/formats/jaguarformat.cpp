@@ -165,7 +165,10 @@ namespace OpenBabel
                 for (vector<string>::size_type icount=1;icount<vs.size();++icount)
                   {
                     chgcount=chgcount+1;
-                    mol.GetAtom(chgcount)->SetPartialCharge(atof((char*)vs[icount].c_str()));
+                    OBAtom *atom = mol.GetAtom(chgcount);
+                    if (!atom)
+                      break;
+                    atom->SetPartialCharge(atof((char*)vs[icount].c_str()));
                   }
               }
           }
