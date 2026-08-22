@@ -23,7 +23,7 @@ jobs:
           arch: x64
 
       - name: Set up Java 8
-        uses: actions/setup-java@c88827cce09179ae2e2f9f6c9f1c3b1a7c6b2b5 # v5
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '8'
