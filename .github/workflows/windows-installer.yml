@@ -31,10 +31,6 @@ jobs:
         shell: pwsh
         run: ./packaging/windows/Set-Paths.ps1
 
-      - name: Fetch legacy Windows packaging assets
-        shell: pwsh
-        run: ./packaging/windows/Fetch-Maintenance.ps1
-
       - name: Fetch MSVC dependencies
         shell: pwsh
         run: ./packaging/windows/Fetch-Dependencies.ps1
