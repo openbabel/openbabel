@@ -59,6 +59,30 @@ jobs:
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\stdint.h" -Force -ErrorAction SilentlyContinue
           Remove-Item "$env:RUNNER_TEMP\msvc-dependencies\include\inttypes.h" -Force -ErrorAction SilentlyContinue
 
+      - name: Restore legacy zlib binaries
+        shell: pwsh
+        env:
+          DEPS_DIR: ${{ runner.temp }}\msvc-dependencies
+          ZLIB_COMMIT: aeba12e73e82acf1ae94fbe275c35846e7ec4dfb
+        run: |
+          $zlibRepo = "$env:RUNNER_TEMP\msvc-dependencies-zlib"
+          git clone --depth 1 https://github.com/openbabel/msvc-dependencies.git $zlibRepo
+          git -C $zlibRepo fetch --depth 1 origin "$env:ZLIB_COMMIT"
+          git -C $zlibRepo checkout "$env:ZLIB_COMMIT"
+
+          $zlibLib = Join-Path $zlibRepo 'libs-common\x64\zlib1.lib'
+          $zlibDll = Join-Path $zlibRepo 'libs-common\x64\zlib1.dll'
+          $targetDir = Join-Path $env:DEPS_DIR 'libs-common\x64'
+
+          if (-not (Test-Path $zlibLib)) { throw "Legacy zlib1.lib not found at $zlibLib" }
+          if (-not (Test-Path $zlibDll)) { throw "Legacy zlib1.dll not found at $zlibDll" }
+
+          Copy-Item $zlibLib $targetDir -Force
+          Copy-Item $zlibDll $targetDir -Force
+
+          Write-Host "Using legacy zlib from commit $env:ZLIB_COMMIT"
+          Get-ChildItem $targetDir -Filter 'zlib1.*' | Select-Object Name, Length
+
       - name: Fetch wxWidgets 3.0.5 source
         shell: pwsh
         run: |
@@ -145,7 +169,7 @@ jobs:
             -DOPENBABEL_USE_SYSTEM_INCHI=TRUE `
             -DENABLE_TESTS=OFF
 
-          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX'
+          Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX|ZLIB'
 
       - name: Build Open Babel
         shell: pwsh
