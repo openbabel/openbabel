@@ -11,14 +11,19 @@ permissions:
 
 jobs:
   windows-installer:
-    runs-on: windows-2022
+    runs-on: windows-latest
 
     steps:
       - name: Check out Open Babel
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      - name: Set up MSVC x64
+        uses: ilammy/msvc-dev-cmd@0b201ec74fa43914dc39ae48a89fd1d8cb592756 # v1.13.0
+        with:
+          arch: x64
 
       - name: Set up Java 8
-        uses: actions/setup-java@v5
+        uses: actions/setup-java@c88827cce09179ae2e2f9f6c9f1c3b1a7c6b2b5 # v5
         with:
           distribution: temurin
           java-version: '8'
@@ -55,27 +60,33 @@ jobs:
 
       - name: Fetch InChI headers
         shell: pwsh
-        run: |
-          git clone --depth 1 https://github.com/IUPAC-InChI/InChI.git "$env:RUNNER_TEMP\inchi"
+        run: git clone --depth 1 https://github.com/IUPAC-InChI/InChI.git "$env:RUNNER_TEMP\inchi"
 
       - name: Install wxWidgets development files
         shell: pwsh
         run: |
           $wx = "$env:RUNNER_TEMP\wxWidgets"
+          $headersArchive = "$env:RUNNER_TEMP\wx-headers.7z"
+          $devArchive = "$env:RUNNER_TEMP\wx-dev.7z"
+          $wxLib = "$wx\lib\vc14x_x64_lib"
+
+          Remove-Item $wx -Recurse -Force -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Force -Path $wx | Out-Null
 
-          $headers = "$env:RUNNER_TEMP\wx-headers.7z"
-          $dev = "$env:RUNNER_TEMP\wx-dev.7z"
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxWidgets-3.2.8_Headers.7z' -OutFile $headersArchive
+          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxMSW-3.2.8_vc14x_x64_Dev.7z' -OutFile $devArchive
 
-          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxWidgets-3.2.8_Headers.7z' -OutFile $headers
-          Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxMSW-3.2.8_vc14x_x64_Dev.7z' -OutFile $dev
+          7z x $headersArchive "-o$wx" -y | Out-Null
+          7z x $devArchive "-o$wx" -y | Out-Null
 
-          7z x $headers "-o$wx" -y | Out-Null
-          7z x $dev "-o$wx" -y | Out-Null
+          if (-not (Test-Path $wxLib)) {
+            $found = Get-ChildItem $wx -Directory -Recurse | Where-Object { $_.Name -eq 'vc14x_x64_lib' } | Select-Object -First 1
+            if ($null -eq $found) { throw "wxWidgets library directory was not found under $wx" }
+            $wxLib = $found.FullName
+          }
 
           "WXWIN=$wx" >> $env:GITHUB_ENV
-          "wxWidgets_ROOT_DIR=$wx" >> $env:GITHUB_ENV
-          "wxWidgets_LIB_DIR=$wx\lib\vc14x_x64_lib" >> $env:GITHUB_ENV
+          "WX_LIB_DIR=$wxLib" >> $env:GITHUB_ENV
 
       - name: Download VC++ runtime
         shell: pwsh
@@ -99,6 +110,11 @@ jobs:
             -DCMAKE_INSTALL_PREFIX="$env:BUILD_DIR\install" `
             -DOB_USE_PREBUILT_BINARIES=ON `
             -DMINIMAL_BUILD=OFF `
+            -DBUILD_GUI=ON `
+            -DwxWidgets_ROOT_DIR="$env:WXWIN" `
+            -DwxWidgets_LIB_DIR="$env:WX_LIB_DIR" `
+            -DwxWidgets_CONFIGURATION=mswu `
+            -DwxWidgets_USE_STATIC=ON `
             -DLIBXML2_LIBRARIES="$env:DEPS_DIR\libs-common\x64\libxml2.lib" `
             -DLIBXML2_INCLUDE_DIR="$env:DEPS_DIR\include" `
             -DCAIRO_INCLUDE_DIRS="$env:DEPS_DIR\include\cairo" `
@@ -119,19 +135,25 @@ jobs:
             -DJAVA_AWT_LIBRARY="$java\lib\jawt.lib" `
             -DCSHARP_BINDINGS=ON `
             -DCSHARP_EXECUTABLE="$csc" `
-            -DBUILD_GUI=ON `
             -DOPENBABEL_USE_SYSTEM_INCHI=TRUE `
-            -DwxWidgets_ROOT_DIR="$env:WXWIN" `
-            -DwxWidgets_LIB_DIR="$env:wxWidgets_LIB_DIR" `
-            -DwxWidgets_CONFIGURATION=mswu `
-            -DwxWidgets_USE_STATIC=ON `
             -DENABLE_TESTS=OFF
+
+          $cache = Get-Content "$env:BUILD_DIR\CMakeCache.txt" -Raw
+          if ($cache -notmatch 'wxWidgets_FOUND:INTERNAL=TRUE') {
+            Write-Host 'CMake did not record wxWidgets_FOUND=TRUE; printing wxWidgets cache entries:'
+            Get-Content "$env:BUILD_DIR\CMakeCache.txt" | Select-String 'wxWidgets|WX'
+          }
 
       - name: Build Open Babel
         shell: pwsh
         env:
           BUILD_DIR: ${{ runner.temp }}\openbabel-build
-        run: cmake --build "$env:BUILD_DIR" --config Release --parallel
+        run: |
+          cmake --build "$env:BUILD_DIR" --config Release --parallel
+
+          $gui = Get-ChildItem "$env:BUILD_DIR" -Filter obgui.exe -Recurse | Select-Object -First 1
+          if ($null -eq $gui) { throw 'obgui.exe was not built.' }
+          Write-Host "Built GUI: $($gui.FullName)"
 
       - name: Prepare legacy NSIS installer
         shell: pwsh
@@ -141,25 +163,27 @@ jobs:
           MAINTENANCE_DIR: ${{ runner.temp }}\openbabel-maintenance
         run: |
           $dist = "$env:MAINTENANCE_DIR\windows\for_dist"
-          $version = (Select-String -Path "$env:GITHUB_WORKSPACE\CMakeLists.txt" -Pattern 'set\(BABEL_(MAJ|MIN|PATCH)_VER\s+([0-9]+)\)' -AllMatches).Matches | ForEach-Object { $_.Groups[2].Value }
-          $version = $version -join '.'
+          $matches = Select-String -Path "$env:GITHUB_WORKSPACE\CMakeLists.txt" -Pattern 'set\(BABEL_(MAJ|MIN|PATCH)_VER\s+([0-9]+)\)' -AllMatches
+          $version = ($matches.Matches | ForEach-Object { $_.Groups[2].Value }) -join '.'
           if ([string]::IsNullOrWhiteSpace($version)) { throw 'Could not determine Open Babel version.' }
 
-          # Keep the existing NSIS script, but make its version match the source tree.
           $nsi = Join-Path $dist 'NSISScriptToCreateInstaller.nsi'
           $text = Get-Content $nsi -Raw
           $text = $text -replace '!define OBVersion\s+[^\r\n]+', "!define OBVersion $version"
           Set-Content -Path $nsi -Value $text -NoNewline
 
-          # The legacy installer expects these DLLs in the dependency directory.
-          # wxWidgets is distributed separately from the Open Babel MSVC dependencies.
+          # The legacy NSIS script expects GUI/runtime DLLs to be available
+          # through the dependency tree. Copy the wxWidgets release DLLs there.
           $wxRuntime = "$env:RUNNER_TEMP\wx-runtime.7z"
           $wxExtract = "$env:RUNNER_TEMP\wx-runtime"
           Invoke-WebRequest -Uri 'https://github.com/wxWidgets/wxWidgets/releases/download/v3.2.8/wxMSW-3.2.8_vc14x_x64_ReleaseDLL.7z' -OutFile $wxRuntime
           Remove-Item $wxExtract -Recurse -Force -ErrorAction SilentlyContinue
           New-Item -ItemType Directory -Force -Path $wxExtract | Out-Null
           7z x $wxRuntime "-o$wxExtract" -y | Out-Null
-          Get-ChildItem $wxExtract -Recurse -Filter '*.dll' | Copy-Item -Destination "$env:DEPS_DIR\libs-common\x64" -Force
+
+          $wxDlls = Get-ChildItem $wxExtract -Recurse -Filter '*.dll'
+          if ($wxDlls.Count -eq 0) { throw 'No wxWidgets runtime DLLs were found.' }
+          $wxDlls | Copy-Item -Destination "$env:DEPS_DIR\libs-common\x64" -Force
 
           $out = "$env:GITHUB_WORKSPACE\OpenBabel-$version-x64.exe"
           Push-Location $dist
@@ -177,7 +201,7 @@ jobs:
           "VERSION=$version" >> $env:GITHUB_ENV
 
       - name: Upload installer artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: OpenBabel-${{ env.VERSION }}-x64-installer
           path: ${{ env.INSTALLER }}
