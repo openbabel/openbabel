@@ -23,30 +23,13 @@ jobs:
         with:
           arch: x64
 
-      - name: Set up Java 8
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '8'
-          architecture: x64
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-          check-latest: false
-
       - name: Install Windows packaging tools
         shell: pwsh
         run: choco install nsis swig 7zip -y --no-progress
 
       - name: Set Windows build paths
         shell: pwsh
-        run: |
-          "BUILD_DIR=$env:RUNNER_TEMP\openbabel-build" >> $env:GITHUB_ENV
-          "DEPS_DIR=$env:RUNNER_TEMP\msvc-dependencies" >> $env:GITHUB_ENV
-          "MAINTENANCE_DIR=$env:RUNNER_TEMP\openbabel-maintenance" >> $env:GITHUB_ENV
-          "WXWIN=$env:RUNNER_TEMP\wxWidgets" >> $env:GITHUB_ENV
+        run: ./packaging/windows/Set-Paths.ps1
 
       - name: Fetch legacy Windows packaging assets
         shell: pwsh
@@ -62,9 +45,7 @@ jobs:
 
       - name: Download VC++ runtime
         shell: pwsh
-        run: |
-          $dist = "$env:MAINTENANCE_DIR\windows\for_dist"
-          Invoke-WebRequest -Uri 'https://aka.ms/vc14/vc_redist.x64.exe' -OutFile "$dist\vc_redist.x64.exe"
+        run: ./packaging/windows/Download-VCRedist.ps1
 
       - name: Configure Open Babel
         shell: pwsh
