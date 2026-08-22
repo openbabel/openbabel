@@ -65,24 +65,31 @@ jobs:
           $wxRepo = "$env:RUNNER_TEMP\wxWidgets"
           git clone --depth 1 --branch v3.0.5 https://github.com/wxWidgets/wxWidgets.git $wxRepo
           if (-not (Test-Path "$wxRepo\include\wx\wx.h")) { throw 'wxWidgets source checkout is incomplete.' }
+          Copy-Item "$wxRepo\include\wx\msw\setup0.h" "$wxRepo\include\wx\msw\setup.h" -Force
           "WXWIN=$wxRepo" >> $env:GITHUB_ENV
 
       - name: Build wxWidgets 3.0.5 x64
+        shell: cmd
+        run: |
+          call "%VCINSTALLDIR%Auxiliary\Build\vcvarsall.bat" x64
+          cd /d "%RUNNER_TEMP%\wxWidgets\build\msw"
+          nmake /f makefile.vc BUILD=release SHARED=1 TARGET_CPU=X64
+
+      - name: Locate wxWidgets outputs
         shell: pwsh
         run: |
           $wxRoot = $env:WXWIN
-          $build = "$env:RUNNER_TEMP\wxWidgets-build"
-          cmake -S "$wxRoot" -B "$build" `
-            -G 'Visual Studio 17 2022' -A x64 `
-            -DwxBUILD_SHARED=ON `
-            -DwxBUILD_SAMPLES=OFF `
-            -DwxBUILD_TESTS=OFF
-          cmake --build "$build" --config Release --parallel
-
-          $lib = Get-ChildItem $build -Recurse -Filter 'wxmsw*.lib' -File | Where-Object { $_.FullName -match '\\Release\\' } | Select-Object -First 1
-          if ($null -eq $lib) { throw 'No wxWidgets release library was produced.' }
-          $libDir = $lib.Directory.FullName
-          "WX_LIB_DIR=$libDir" >> $env:GITHUB_ENV
+          $lib = Get-ChildItem "$wxRoot\lib" -Recurse -Filter 'wxmsw*.lib' -File |
+            Where-Object { $_.FullName -match 'vc.*x64.*dll|vc.*dll.*x64|x64.*dll' } |
+            Select-Object -First 1
+          if ($null -eq $lib) {
+            Write-Host 'wxWidgets library tree:'
+            Get-ChildItem "$wxRoot\lib" -Recurse -File | Select-Object FullName, Length
+            throw 'Could not locate the wxWidgets x64 release library.'
+          }
+          "WX_LIB_DIR=$($lib.Directory.FullName)" >> $env:GITHUB_ENV
+          Write-Host "wxWidgets include: $wxRoot\include"
+          Write-Host "wxWidgets library: $($lib.Directory.FullName)"
 
       - name: Fetch InChI headers
         shell: pwsh
