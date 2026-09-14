@@ -25,8 +25,8 @@ GNU General Public License for more details.
 #include <inchi_api.h>
 #define CURRENT_VER "unknown" // bcf_s.h is not packaged
 #else
-#include "../inchi/inchi_api.h"
-#include "../inchi/bcf_s.h"  // for CURRENT_VER
+#include "inchi_api.h"
+#include "bcf_s.h"  // for CURRENT_VER
 #endif
 #ifdef HAVE_SSTREAM
 #include <sstream>
