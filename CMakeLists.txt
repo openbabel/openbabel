@@ -456,6 +456,13 @@ else()
   endif()
 endif()
 
+if(TARGET Eigen3::Eigen)
+  # src/confsearch.cpp requires tree.hh
+  if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/external/tree/src/tree.hh")
+    message(FATAL_ERROR "please run `git submodule update --init`")
+  endif()
+endif()
+
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
   ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h)
 install(FILES ${openbabel_BINARY_DIR}/include/openbabel/babelconfig.h

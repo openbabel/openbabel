@@ -25,10 +25,11 @@ GNU General Public License for more details.
 #include <openbabel/rotamer.h>
 #include <openbabel/rotor.h>
 #include <openbabel/math/align.h>
-#include <openbabel/tree/tree.hh>
-#include <openbabel/tree/tree_util.hh>
 #include <openbabel/math/vector3.h>
 #include <openbabel/elements.h>
+
+#include <tree.hh>
+#include <tree_util.hh>
 
 #include <cfloat> // For DBL_MAX
 #include <algorithm> // For min

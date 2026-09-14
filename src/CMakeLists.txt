@@ -263,6 +263,7 @@ if(Boost_FOUND)
 endif()
 if(TARGET Eigen3::Eigen)
     target_link_libraries(openbabel PUBLIC Eigen3::Eigen)
+    target_include_directories(openbabel SYSTEM PRIVATE "${PROJECT_SOURCE_DIR}/external/tree/src")
 endif()
 
 if(BUILD_SHARED OR BUILD_MIXED)

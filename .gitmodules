@@ -1,0 +1,3 @@
+[submodule "external/tree"]
+	path = external/tree
+	url = https://github.com/kpeeters/tree.hh.git
