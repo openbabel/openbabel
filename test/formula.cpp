@@ -204,6 +204,41 @@ int formula(int argc, char* argv[])
 
     }
 
+  // ---------------------------------------------------------------------------
+  // Regression test for issue #3008: molreport / GetFormula dropped an explicit
+  // hydrogen that is bonded to no heavy atom (isolated, or bonded only to other
+  // hydrogens). Such a hydrogen was counted by nobody, so it vanished from the
+  // formula even though it remained in the atom list and the molecular weight.
+  // ---------------------------------------------------------------------------
+  {
+    struct { const char *smiles; const char *formula; } issue3008[] = {
+      { "[N][H][H]",            "H2N"     }, // stray H must not be dropped
+      { "[H].[O][H]",           "H2O"     }, // isolated H plus an O-H fragment
+      { "[He].[H].[H].[Co][C]", "CH2CoHe" }, // isolated H with a bonded fragment
+      // Controls that must stay correct after the fix:
+      { "[H][O][H]",            "H2O"     }, // both H bonded to a heavy atom
+      { "[H].[O].[H]",          "H2O"     }, // no bonds: implicit-H path unused
+      { "[H][H]",               "H2"      }  // no heavy atoms present
+    };
+    OBConversion smiconv;
+    if (!smiconv.SetInFormat("smi"))
+      cout << "not ok " << ++currentTest << " # SMILES format not loaded\n";
+    else
+      for (size_t i = 0; i < sizeof(issue3008) / sizeof(issue3008[0]); ++i)
+        {
+          OBMol cmol;
+          smiconv.ReadString(&cmol, issue3008[i].smiles);
+          string got = cmol.GetFormula();
+          if (got != issue3008[i].formula)
+            cout << "not ok " << ++currentTest << " # formula \"" << got
+                 << "\" != \"" << issue3008[i].formula << "\" for "
+                 << issue3008[i].smiles << " (issue #3008)\n";
+          else
+            cout << "ok " << ++currentTest << " # formula \"" << got
+                 << "\" for " << issue3008[i].smiles << " (issue #3008)\n";
+        }
+  }
+
   // return number of tests run
   cout << "1.." << currentTest << endl;
 

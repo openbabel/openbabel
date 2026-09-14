@@ -67,3 +67,6 @@ n(=O)(=O)    NO2
 cccc     C4H6
 Cc(C)cCCc(C)cccc(C)cccc(C)ccccc(C)cccc(C)cccc(C)CCcc(C)C lycopene
 Os(=O)=O	radical HSO3
+[N][H][H]	H2N	stray H not dropped (issue #3008)
+[H].[O][H]	H2O	isolated H plus O-H (issue #3008)
+[He].[H].[H].[Co][C]	CH2CoHe	isolated H with a bonded fragment (issue #3008)
