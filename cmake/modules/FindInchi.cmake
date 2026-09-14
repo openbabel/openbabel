@@ -1,8 +1,8 @@
 # - Try to find Inchi lib
 # Once done this will define
 #
-#  INCHI_FOUND - system has eigen lib
-#  INCHI_INCLUDE_DIR - the eigen include directory
+#  INCHI_FOUND - system has inchi lib
+#  INCHI_INCLUDE_DIR - the inchi include directory
 #  INCHI_LIBRARIES - the inchi library
 
 # Copyright (c) 2010 Marcus D. Hanwell, <marcus@cryos.org>
@@ -13,8 +13,8 @@ if(INCHI_INCLUDE_DIR AND INCHI_LIBRARY)
   # in cache already
   set(INCHI_FOUND TRUE)
 else()
-  find_path(INCHI_INCLUDE_DIR NAMES inchi_api.h PATHS /usr/local/include/inchi /usr/include/inchi )
-  find_library(INCHI_LIBRARY NAMES inchi Inchi)
+  find_path(INCHI_INCLUDE_DIR NAMES inchi_api.h PATH_SUFFIXES inchi)
+  find_library(INCHI_LIBRARY NAMES inchi inchid Inchi)
   include(FindPackageHandleStandardArgs)
   find_package_handle_standard_args(INCHI DEFAULT_MSG INCHI_LIBRARY
     INCHI_INCLUDE_DIR)
