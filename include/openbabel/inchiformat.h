@@ -23,7 +23,14 @@ GNU General Public License for more details.
 
 #ifdef HAVE_SYSTEM_INCHI
 #include <inchi_api.h>
-#define CURRENT_VER "unknown" // bcf_s.h is not packaged
+#ifdef __has_include
+#if __has_include(<bcf_s.h>)
+#include <bcf_s.h>
+#endif
+#endif
+#ifndef CURRENT_VER
+#define CURRENT_VER "unknown"
+#endif
 #else
 #include "../inchi/inchi_api.h"
 #include "../inchi/bcf_s.h"  // for CURRENT_VER
