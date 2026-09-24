@@ -456,11 +456,19 @@ else()
   endif()
 endif()
 
-if(TARGET Eigen3::Eigen)
-  # src/confsearch.cpp requires tree.hh
-  if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/external/tree/src/tree.hh")
-    message(FATAL_ERROR "please run `git submodule update --init`")
-  endif()
+include(FetchContent)
+if(POLICY CMP0135)
+  cmake_policy(SET CMP0135 NEW)
+endif()
+
+FetchContent_Declare(tree
+  URL https://github.com/kpeeters/tree.hh/archive/refs/tags/3.18.tar.gz
+  URL_HASH SHA256=8de4318010259956cb25b3997c432e926015174af98cb51fc182c16d8fe1a2b7
+)
+FetchContent_MakeAvailable(tree)
+FetchContent_GetProperties(tree)
+if(NOT tree_POPULATED)
+  FetchContent_Populate(tree)
 endif()
 
 configure_file(${openbabel_SOURCE_DIR}/src/config.h.cmake
