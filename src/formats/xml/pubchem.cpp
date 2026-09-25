@@ -20,6 +20,9 @@ GNU General Public License for more details.
 #include <openbabel/bond.h>
 #include <openbabel/obiter.h>
 #include <openbabel/elements.h>
+#include <openbabel/oberror.h>
+
+#include <sstream>
 
 #ifdef WIN32
 #pragma warning (disable : 4800)
@@ -194,7 +197,20 @@ bool PubChemFormat::EndElement(const string& name)
 	}
 	else if(name=="PC-Bonds")
 	{
-		for(i=0;i<BondBeginAtIndx.size();++i)
+		//A truncated or malformed file can supply unequal numbers of begin
+		//atom ids, end atom ids and bond orders. Only use complete bonds.
+		size_t nbonds = BondBeginAtIndx.size();
+		if(nbonds > BondEndAtIndx.size())
+			nbonds = BondEndAtIndx.size();
+		if(nbonds > BondOrder.size())
+			nbonds = BondOrder.size();
+		if(nbonds < BondBeginAtIndx.size())
+			obErrorLog.ThrowError(__FUNCTION__,
+				"Incomplete PC-Bonds data: the numbers of aid1, aid2 and order "
+				"entries differ. The molecule is missing some of its bonds.",
+				obWarning);
+		//AddBond ignores atom indices which are out of range
+		for(i=0;i<nbonds;++i)
 			_pmol->AddBond(BondBeginAtIndx[i],BondEndAtIndx[i],BondOrder[i]);
 	}
 	else if(name=="PC-Conformer")
@@ -202,10 +218,38 @@ bool PubChemFormat::EndElement(const string& name)
 		++ConformerIndx;
 		if(Coordz.size()!=Coordx.size())
 			Coordz.resize(Coordx.size());
-		for(i=0;i<CoordIndx.size();++i)
+		//A truncated or malformed file can supply fewer coordinates than
+		//atom ids. Only use atom ids which have a complete set of them.
+		size_t ncoords = CoordIndx.size();
+		if(ncoords > Coordx.size())
+			ncoords = Coordx.size();
+		if(ncoords > Coordy.size())
+			ncoords = Coordy.size();
+		if(ncoords < CoordIndx.size())
+			obErrorLog.ThrowError(__FUNCTION__,
+				"Incomplete PC-Conformer data: fewer coordinates than atom ids. "
+				"Some atoms have been left at the origin.", obWarning);
+		size_t nunresolved = 0;
+		for(i=0;i<ncoords;++i)
 		{
+			//The atom id may not refer to an atom which was actually read
 			OBAtom* pAtom = _pmol->GetAtom(CoordIndx[i]);
+			if(!pAtom)
+			{
+				++nunresolved;
+				continue;
+			}
 			pAtom->SetVector(Coordx[i],Coordy[i],Coordz[i]);
+		}
+		//Report once for the whole conformer rather than per bad id, so a
+		//badly corrupted file cannot flood the error log.
+		if(nunresolved)
+		{
+			stringstream ss;
+			ss << "Ignored " << nunresolved << " PC-Coordinates_aid_E atom id(s) "
+			   << "which do not refer to an atom in this compound. The molecule "
+			   << "may be incomplete.";
+			obErrorLog.ThrowError(__FUNCTION__, ss.str(), obWarning);
 		}
 	}
 	else if(name=="PC-Compound") //this is the end of the molecule we are extracting

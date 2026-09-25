@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<PC-Compounds xmlns="http://www.ncbi.nlm.nih.gov">
+ <PC-Compound>
+  <PC-Compound_atoms><PC-Atoms>
+   <PC-Atoms_element><PC-Element value="o">8</PC-Element><PC-Element value="h">1</PC-Element></PC-Atoms_element>
+  </PC-Atoms></PC-Compound_atoms>
+  <PC-Compound_coords><PC-Coordinates>
+   <PC-Coordinates_type><PC-CoordinateType value="twod">1</PC-CoordinateType></PC-Coordinates_type>
+   <PC-Coordinates_aid><PC-Coordinates_aid_E>1</PC-Coordinates_aid_E><PC-Coordinates_aid_E>2</PC-Coordinates_aid_E></PC-Coordinates_aid>
+   <PC-Coordinates_conformers><PC-Conformer>
+    <PC-Conformer_x><PC-Conformer_x_E>0.0</PC-Conformer_x_E></PC-Conformer_x>
+    <PC-Conformer_y><PC-Conformer_y_E>0.0</PC-Conformer_y_E></PC-Conformer_y>
+   </PC-Conformer></PC-Coordinates_conformers>
+  </PC-Coordinates></PC-Compound_coords>
+ </PC-Compound>
+</PC-Compounds>

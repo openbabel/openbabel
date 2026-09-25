@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<PC-Compounds xmlns="http://www.ncbi.nlm.nih.gov">
+ <PC-Compound>
+  <PC-Compound_id><PC-CompoundType><PC-CompoundType_id><PC-CompoundType_id_cid>962</PC-CompoundType_id_cid></PC-CompoundType_id></PC-CompoundType></PC-Compound_id>
+  <PC-Compound_atoms><PC-Atoms>
+   <PC-Atoms_aid><PC-Atoms_aid_E>1</PC-Atoms_aid_E><PC-Atoms_aid_E>2</PC-Atoms_aid_E><PC-Atoms_aid_E>3</PC-Atoms_aid_E></PC-Atoms_aid>
+   <PC-Atoms_element><PC-Element value="o">8</PC-Element><PC-Element value="h">1</PC-Element><PC-Element value="h">1</PC-Element></PC-Atoms_element>
+  </PC-Atoms></PC-Compound_atoms>
+  <PC-Compound_bonds><PC-Bonds>
+   <PC-Bonds_aid1><PC-Bonds_aid1_E>1</PC-Bonds_aid1_E><PC-Bonds_aid1_E>1</PC-Bonds_aid1_E></PC-Bonds_aid1>
+   <PC-Bonds_aid2><PC-Bonds_aid2_E>2</PC-Bonds_aid2_E><PC-Bonds_aid2_E>3</PC-Bonds_aid2_E></PC-Bonds_aid2>
+   <PC-Bonds_order><PC-BondType value="single">1</PC-BondType><PC-BondType value="single">1</PC-BondType></PC-Bonds_order>
+  </PC-Bonds></PC-Compound_bonds>
+  <PC-Compound_coords><PC-Coordinates>
+   <PC-Coordinates_type><PC-CoordinateType value="twod">1</PC-CoordinateType></PC-Coordinates_type>
+   <PC-Coordinates_aid><PC-Coordinates_aid_E>1</PC-Coordinates_aid_E><PC-Coordinates_aid_E>2</PC-Coordinates_aid_E><PC-Coordinates_aid_E>3</PC-Coordinates_aid_E></PC-Coordinates_aid>
+   <PC-Coordinates_conformers><PC-Conformer>
+    <PC-Conformer_x><PC-Conformer_x_E>2.5</PC-Conformer_x_E><PC-Conformer_x_E>3.0</PC-Conformer_x_E><PC-Conformer_x_E>2.0</PC-Conformer_x_E></PC-Conformer_x>
+    <PC-Conformer_y><PC-Conformer_y_E>0.0</PC-Conformer_y_E><PC-Conformer_y_E>0.5</PC-Conformer_y_E><PC-Conformer_y_E>0.5</PC-Conformer_y_E></PC-Conformer_y>
+   </PC-Conformer></PC-Coordinates_conformers>
+  </PC-Coordinates></PC-Compound_coords>
+ </PC-Compound>
+</PC-Compounds>
