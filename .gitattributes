@@ -1,1 +1,4 @@
 * text=auto
+
+data/rigid-fragments.txt text eol=lf
+data/rigid-fragments-index.txt text eol=lf
