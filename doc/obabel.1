@@ -532,11 +532,11 @@ cpreprocessor flag (will be automatically enabled when version 4 is released).
 .El
 .Sh EXAMPLES
 Standard conversion:
-.Dl "obabel ethanol.xyz \-Oethanol.pdb"
+.Dl "obabel ethanol.xyz \-O ethanol.pdb"
 Conversion from a SMI file in STDIN to a Mol2 file written to STDOUT:
-.Dl "obabel \-ismi \-omol2"
+.Dl "obabel \-ismi \-o mol2"
 Split a multi\-molecule file into new1.smi, new2.smi, etc.:
-.Dl "obabel infile.mol -Onew.smi \-m"
+.Dl "obabel infile.mol -O new.smi \-m"
 .Sh "SEE ALSO"
 .Xr obenergy 1 ,
 .Xr obfit 1 ,
