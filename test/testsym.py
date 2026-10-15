@@ -304,6 +304,36 @@ class TestConversions(BaseTest):
             result, correct_answer = line.split()
             self.assertEqual(result, correct_answer)
 
+    def testV3000DownBond(self):
+        """Preserve down bonds and chirality when writing V3000."""
+        mol = """\
+halomethane
+  OpenBabel         2D
+
+  0  0  0     0  0            999 V3000
+M  V30 BEGIN CTAB
+M  V30 COUNTS 4 3 0 0 1
+M  V30 BEGIN ATOM
+M  V30 1 C 0.0000 0.0000 0.0000 0
+M  V30 2 F -1.0000 -1.0000 0.0000 0
+M  V30 3 Cl 1.0000 -1.0000 0.0000 0
+M  V30 4 Br 0.0000 1.0000 0.0000 0
+M  V30 END ATOM
+M  V30 BEGIN BOND
+M  V30 1 1 1 2 CFG=3
+M  V30 2 1 1 3
+M  V30 3 1 1 4
+M  V30 END BOND
+M  V30 END CTAB
+M  END
+"""
+        output, error = run_exec(mol, ["obabel", "-imol", "-omol", "-x3"])
+        self.assertConverted(error, 1)
+        self.assertIn("M  V30 1 1 1 2 CFG=3\n", output)
+        smiles, error = run_exec(output, ["obabel", "-imol", "-osmi", "-xn"])
+        self.assertConverted(error, 1)
+        self.assertEqual(smiles.rstrip(), "[C@H](F)(Cl)Br")
+
     def testSMILESto0DMDL(self):
         """Test interconversion between SMILES and 0D MDL"""
         data = [

@@ -1711,7 +1711,7 @@ namespace OpenBabel
                 //@todo do the following stereo chemistry properly
                 int cfg=0;
                 if(bond->IsWedge()) cfg=1;
-                if(bond->IsHash()) cfg=6;
+                if(bond->IsHash()) cfg=3;
                 if(bond->IsWedgeOrHash()) cfg=4;
                 if(cfg) ofs << " CFG=" << cfg;
                 ofs << endl;
