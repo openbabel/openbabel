@@ -1130,7 +1130,8 @@ namespace OpenBabel
       // Find which double bonds have unspecified chirality
       set<OBBond*> unspec_ctstereo = GetUnspecifiedCisTrans(mol);
 
-      // Calculate parity of atoms and up/down bond for chiral centers (see Appendix A of ctfile.pdf)
+      // Calculate parity of atoms and up/down bond for chiral centers (see
+      // BIOVIA CTfile Formats (August 2020), Stereo Notes).
       // For 2D, if pConv->IsOption("w", pConv->OUTOPTIONS)), then the IsWedge/IsHash bond
       // designations are used instead of calculating them. For 3D it is always calculated. For 0D never.
       map<OBBond*, OBStereo::BondDirection> updown;
@@ -1709,6 +1710,8 @@ namespace OpenBabel
                     << bond->GetBeginAtomIdx() << " "
                     << bond->GetEndAtomIdx();
                 //@todo do the following stereo chemistry properly
+                // BIOVIA CTfile Formats (August 2020), Connection Table (CTAB),
+                // Bond Block: CFG=1 is up and CFG=3 is down.
                 int cfg=0;
                 if(bond->IsWedge()) cfg=1;
                 if(bond->IsHash()) cfg=3;
