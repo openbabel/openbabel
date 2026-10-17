@@ -304,6 +304,35 @@ class TestConversions(BaseTest):
             result, correct_answer = line.split()
             self.assertEqual(result, correct_answer)
 
+    def testV3000DownBond(self):
+        """Preserve down bonds and chirality when writing V3000."""
+        for smiles, cfg in [("[C@H](F)(Cl)Br", 3), ("[C@@H](F)(Cl)Br", 1)]:
+            mol, error = run_exec(smiles, ["obabel", "-ismi", "--gen2d", "-omol"])
+            self.assertConverted(error, 1)
+            self.assertIn("V2000", mol)
+            output, error = run_exec(mol, ["obabel", "-imol", "-omol", "-x3"])
+            self.assertConverted(error, 1)
+            self.assertIn("M  V30 1 1 1 2 CFG=%d\n" % cfg, output)
+            result, error = run_exec(output, ["obabel", "-imol", "-osmi", "-xn"])
+            self.assertConverted(error, 1)
+            self.assertEqual(result.rstrip(), smiles)
+
+    def testV3000Enantiomers(self):
+        """Preserve both enantiomers when converting V2000 to V3000."""
+        # https://github.com/user-attachments/files/33578952/isomers.sdf.txt
+        filename = self.getTestFile("testsym_v3000_isomers.sdf")
+        expected = ["O[C@@H](CC)C", "O[C@H](CC)C"]
+        smiles, error = run_exec(None, ["obabel", "-isdf", filename, "-osmi", "-xn"])
+        self.assertConverted(error, 2)
+        self.assertEqual(smiles.splitlines(), expected)
+        output, error = run_exec(None, ["obabel", "-isdf", filename, "-osdf", "-x3"])
+        self.assertConverted(error, 2)
+        self.assertIn("M  V30 1 1 2 1 CFG=1\n", output)
+        self.assertIn("M  V30 1 1 2 1 CFG=3\n", output)
+        smiles, error = run_exec(output, ["obabel", "-isdf", "-osmi", "-xn"])
+        self.assertConverted(error, 2)
+        self.assertEqual(smiles.splitlines(), expected)
+
     def testSMILESto0DMDL(self):
         """Test interconversion between SMILES and 0D MDL"""
         data = [
