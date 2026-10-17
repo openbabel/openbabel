@@ -1711,7 +1711,7 @@ namespace OpenBabel
                     << bond->GetEndAtomIdx();
                 //@todo do the following stereo chemistry properly
                 // BIOVIA CTfile Formats (August 2020), Connection Table (CTAB),
-                // Bond Block: CFG=1 is up and CFG=3 is down.
+                // Bond Block (V3000 syntax): CFG=1 is up and CFG=3 is down.
                 int cfg=0;
                 if(bond->IsWedge()) cfg=1;
                 if(bond->IsHash()) cfg=3;
