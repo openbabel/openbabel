@@ -1497,6 +1497,8 @@ namespace OpenBabel
 
     _c = nullptr;
     _mod = 0;
+    // _title is OBMol state. OBBase::Clear only drops generic data.
+    _title.clear();
 
     // Clean up generic data via the base class
     return(OBBase::Clear());
