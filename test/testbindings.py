@@ -804,6 +804,20 @@ class NewReactionHandling(PythonBindings):
         nsmi = pybel.Molecule(nmol).write("smi").rstrip()
         self.assertEqual("S>>O", nsmi)
 
+    def testFacadeClearInternalStateDoesNotDuplicateComponents(self):
+        """Refreshing cached component metadata must preserve one entry per component."""
+        reaction = ob.OBMol()
+        facade = ob.OBReactionFacade(reaction)
+        component = pybel.readstring("smi", "CC").OBMol
+        facade.AddComponent(component, ob.REACTANT)
+        product = pybel.readstring("smi", "O").OBMol
+        facade.AddComponent(product, ob.PRODUCT)
+        self.assertEqual(1, facade.NumComponents(ob.REACTANT))
+        self.assertEqual(1, facade.NumComponents(ob.PRODUCT))
+        facade.ClearInternalState()
+        self.assertEqual(1, facade.NumComponents(ob.REACTANT))
+        self.assertEqual(1, facade.NumComponents(ob.PRODUCT))
+
     def testInvalidRxn(self):
         """IsValid() should flag up invalid reaction data"""
         mol = pybel.readstring("smi", "CC>>O").OBMol

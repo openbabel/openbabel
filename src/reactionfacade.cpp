@@ -109,6 +109,10 @@ namespace OpenBabel
   void OBReactionFacadePrivate::ClearInternalState()
   {
     _found_components = false;
+    _unassigned_components.clear();
+    _reactant_components.clear();
+    _product_components.clear();
+    _agent_components.clear();
   }
 
   void OBReactionFacadePrivate::FindComponents()
