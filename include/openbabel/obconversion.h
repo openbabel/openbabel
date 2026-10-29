@@ -404,6 +404,9 @@ protected:
 
       //unlike the z and zin options, these are not sticky - setting formats will reset them
       bool inFormatGzip;
+      // True only when gzip was explicitly requested. Auto-detected gzip is
+      // recomputed whenever a new input stream is installed.
+      bool inFormatGzipExplicit;
       bool outFormatGzip;
 
       OBBase*		  pOb1;

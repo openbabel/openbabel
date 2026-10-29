@@ -170,5 +170,27 @@ int gziptest(int argc, char* argv[])
   }
   checkResults(filepath, correctResults);
 
+  // Auto-detected gzip is scoped to the stream that was inspected. Reusing
+  // the conversion for a plain string must not keep the gzip filter enabled.
+  OBConversion gzipWriter;
+  if(!gzipWriter.SetInAndOutFormats("smi", "smi", false, true))
+    return -1;
+  OBMol source;
+  if(!gzipWriter.ReadString(&source, "CCO\n"))
+    return -1;
+  const string gzipped = gzipWriter.WriteString(&source);
+
+  OBConversion reused;
+  if(!reused.SetInFormat("smi"))
+    return -1;
+  istringstream gzippedStream(gzipped);
+  OBMol first;
+  if(!reused.Read(&first, &gzippedStream))
+    return -1;
+  OBMol second;
+  if(!reused.ReadString(&second, "C\n") || first.NumAtoms() != 3 ||
+     second.NumAtoms() != 1 || reused.GetInGzipped())
+    return -1;
+
   return(0);
 }
