@@ -1121,21 +1121,19 @@ namespace OpenBabel
     string attr = "Formula";
     OBPairData *dp = (OBPairData *) GetData(attr);
 
-    if (dp != nullptr) // we already set the formula (or it was read from a file)
+    if (dp != nullptr && dp->GetOrigin() != perceived) // caller/file supplied formula
       return dp->GetValue();
+
+    // Generated formulas depend on public atom setters. Compute them on demand
+    // instead of caching them or invalidating data on every molecule edit.
+    if (dp != nullptr)
+      DeleteData(dp);
 
     obErrorLog.ThrowError(__FUNCTION__,
                           "Ran OpenBabel::SetFormula -- Hill order formula",
                           obAuditMsg);
 
-    string sformula = GetSpacedFormula(1, "");
-
-    dp = new OBPairData;
-    dp->SetAttribute(attr);
-    dp->SetValue( sformula );
-    dp->SetOrigin( perceived ); // internal generation
-    SetData(dp);
-    return sformula;
+    return GetSpacedFormula(1, "");
   }
 
   void OBMol::SetFormula(string molFormula)

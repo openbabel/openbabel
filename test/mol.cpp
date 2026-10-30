@@ -190,10 +190,15 @@ int mol(int argc, char* argv[])
       else
         cout << "not ok 12 # failed empty InChI" << endl;
     }
+  else
+    cout << "ok 12 # SKIP InChI format is not available" << endl;
 
   OBMol testMolFormula;
   string formula("C6");
   testMolFormula.SetFormula(formula);
+  testMolFormula.BeginModify();
+  testMolFormula.NewAtom()->SetAtomicNum(8);
+  testMolFormula.EndModify();
   if ( testMolFormula.GetFormula() == formula ) {
      cout << "ok 13" << endl;
   } else {
@@ -201,6 +206,29 @@ int mol(int argc, char* argv[])
   }
   // Reset the formula to test for a double delete error
   testMolFormula.SetFormula(formula);
+
+  // Generated formulas are computed on demand, including during an edit batch.
+  OBMol editedFormula;
+  editedFormula.BeginModify();
+  OBAtom *carbon = editedFormula.NewAtom();
+  carbon->SetAtomicNum(6);
+  editedFormula.EndModify();
+  editedFormula.GetFormula();
+  editedFormula.BeginModify();
+  editedFormula.GetFormula();
+  OBAtom *oxygen = editedFormula.NewAtom();
+  oxygen->SetAtomicNum(8);
+  editedFormula.EndModify();
+  if (editedFormula.GetFormula() == "CO" && !editedFormula.GetData("Formula"))
+    cout << "ok 14" << endl;
+  else
+    cout << "not ok 14 # generated formula was stale after adding an atom" << endl;
+
+  carbon->SetAtomicNum(7);
+  if (editedFormula.GetFormula() == "NO" && !editedFormula.GetData("Formula"))
+    cout << "ok 15" << endl;
+  else
+    cout << "not ok 15 # generated formula was stale after changing an atom" << endl;
   
   // Test molecular formulas with large atomic numbers
   OBMol testLgAtNo;
@@ -215,9 +243,9 @@ int mol(int argc, char* argv[])
   lgAtom->SetIsotope(2);
   testLgAtNo.EndModify();
   if ( testLgAtNo.GetFormula() == "DOg" ) {
-    cout << "ok 14" << endl;
+    cout << "ok 16" << endl;
   } else {
-    cout << "not ok 14" << endl;
+    cout << "not ok 16" << endl;
   }
   
 
@@ -229,12 +257,12 @@ int mol(int argc, char* argv[])
   double dihedral_error = fabs(dihedral) - 180.0;
 
   if (fabs(dihedral_error) < 0.001) {
-      std::cout << "ok 15 " << dihedral_error << std::endl;
+      std::cout << "ok 17 " << dihedral_error << std::endl;
   } else {
 
-      std::cout << "not ok 15 # CalcTorsionAngle " << dihedral << "!= 180.0" << std::endl;
+      std::cout << "not ok 17 # CalcTorsionAngle " << dihedral << "!= 180.0" << std::endl;
   }
 
-  cout << "1..15\n"; // total number of tests for Perl's "prove" tool
+  cout << "1..17\n"; // total number of tests for Perl's "prove" tool
   return(0);
 }
