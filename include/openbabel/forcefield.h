@@ -569,6 +569,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     double 	_rvdw; //!< VDW cut-off distance
     double 	_rele; //!< Electrostatic cut-off distance
     double _epsilon; //!< Dielectric constant for electrostatics
+    double _setupEpsilon; //!< Dielectric constant used in last Setup()
     OBBitVec	_vdwpairs; //!< VDW pairs that should be calculated
     OBBitVec	_elepairs; //!< Electrostatic pairs that should be calculated
     int 	_pairfreq; //!< The frequence to update non-bonded pairs

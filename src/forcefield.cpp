@@ -904,6 +904,7 @@ namespace OpenBabel
       }
     }
 
+    _setupEpsilon = _epsilon;
     _validSetup = true;
     return true;
   }
@@ -967,6 +968,7 @@ namespace OpenBabel
       }
     }
 
+    _setupEpsilon = _epsilon;
     _validSetup = true;
     return true;
   }
@@ -982,6 +984,9 @@ namespace OpenBabel
   // avogadro's AutoOpt tool
   bool OBForceField::IsSetupNeeded(OBMol &mol)
   {
+    if (_epsilon != _setupEpsilon)
+      return true;
+
     if (_mol.NumAtoms() != mol.NumAtoms())
       return true;
 
