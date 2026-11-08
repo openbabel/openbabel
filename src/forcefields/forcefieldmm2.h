@@ -91,6 +91,8 @@ namespace OpenBabel
       explicit OBForceFieldMM2(const char* ID, bool IsDefault=true) : OBForceField(ID, IsDefault), _init(false)
       {
         // ParseParamFile only called when needed
+        _epsilon = 1.0; // prevent undefined comparison in OBForceField::IsSetupNeeded
+        _setupEpsilon = 1.0;
       }
 
       //!Clone the current instance. May be desirable in multithreaded environments

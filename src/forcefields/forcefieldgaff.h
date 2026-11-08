@@ -127,6 +127,7 @@ namespace OpenBabel
         _rvdw = 7.0;
         _rele = 15.0;
         _epsilon = 1.0;
+        _setupEpsilon = 1.0;
         _pairfreq = 10;
         _cutoff = false;
         _linesearch = LineSearchType::Newton2Num;
