@@ -128,7 +128,14 @@ namespace OpenBabel
     {
       // Get unit cell and calculate its Fourier transform + volume
       obuc = (OBUnitCell *) mol.GetData(OBGenericDataType::UnitCell);
-      unitcell = obuc->GetCellMatrix();
+      // 
+      // unitcell = obuc->GetCellMatrix();
+      // GetCellMatrix() returns the lattice vectors as its ROWS, but the
+      // periodic image offset u*a + v*b + w*c needs them as COLUMNS, because
+      // matrix3x3 * vector3 forms row-by-vector dot products. Transposing once
+      // here makes `unitcell * uvw` the image offset, and makes the reciprocal
+      // matrix built on the next line come out right too (2*PI * L^-1).
+      unitcell = obuc->GetCellMatrix().transpose();
       fourier = (2 * PI * unitcell.inverse()).transpose();
       cellVolume = obuc->GetCellVolume();
 
@@ -156,7 +163,7 @@ namespace OpenBabel
         {
           J_ij(i, j) = GetNonperiodicJij(J(i), J(j), atom->GetDistance(j + 1), (i == j));
         }
-        return false;
+        // return false; // deleted to lets both loops run to completion
       }
     }
 

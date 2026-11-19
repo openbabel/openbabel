@@ -64,9 +64,12 @@ set(tetraplanar_parts 1)
 set(uniqueid_parts 1 2)
 
 if(TARGET Eigen3::Eigen)
+  # add eqeq test
   set(cpptests
-    align distgeom gen3d ${cpptests})
+    align distgeom eqeq gen3d ${cpptests})
   set(align_parts 1 2 3 4 5)
+  set(eqeq_parts 1 2 3 4 5 6)
+  
   # Parts 1-5 are fast; parts 6-7 are large molecules (~10-60s)
   # Parts 8-19 are the pr2317 hard cases (new distgeom fallback tests).
   # Excluded (fused/bridged ring systems that exhaust L-BFGS on every trial):
