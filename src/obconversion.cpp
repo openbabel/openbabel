@@ -736,6 +736,8 @@ namespace OpenBabel {
             wInlen = rInlen;
           }
       }
+    else
+      delete pOb; // skipped by -f: never stored, never output
     return Count; // >0
   }
   //////////////////////////////////////////////////////
