@@ -478,8 +478,9 @@ namespace OpenBabel {
 
     int count = Convert();
 
-    if(savedIn.isSet()) savedIn.popInput(*this);
-    if(savedOut.isSet()) savedOut.popOutput(*this);
+    // restore what was there before, also when there was no stream (isSet() is false for a saved null pointer)
+    if(is) savedIn.popInput(*this);
+    if(os) savedOut.popOutput(*this);
 
     return count;
   }
@@ -951,9 +952,10 @@ namespace OpenBabel {
 
     assert(conv.ownedInStreams.size() == 0); //should be empty
 
-    for(unsigned i = 0, n = conv.ownedInStreams.size(); i < n; i++)
+    // restore the streams this object owned before the push (the loop ran over the emptied list of conv)
+    for(unsigned i = 0, n = ownedStreams.size(); i < n; i++)
     {
-      std::istream *s = dynamic_cast<std::istream*>(conv.ownedInStreams[i]);
+      std::istream *s = dynamic_cast<std::istream*>(ownedStreams[i]);
       assert(s);
       conv.ownedInStreams.push_back(s);
     }
@@ -982,9 +984,10 @@ namespace OpenBabel {
 
     assert(conv.ownedOutStreams.size() == 0); //should be empty
 
-    for(unsigned i = 0, n = conv.ownedOutStreams.size(); i < n; i++)
+    // restore the streams this object owned before the push (the loop ran over the emptied list of conv)
+    for(unsigned i = 0, n = ownedStreams.size(); i < n; i++)
     {
-      std::ostream *s = dynamic_cast<std::ostream*>(conv.ownedOutStreams[i]);
+      std::ostream *s = dynamic_cast<std::ostream*>(ownedStreams[i]);
       assert(s);
       conv.ownedOutStreams.push_back(s);
     }
