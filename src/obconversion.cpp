@@ -868,6 +868,9 @@ namespace OpenBabel {
     if (!SkippedMolecules) {
         Count = 0; // make sure it's 0
         if(!SetStartAndEnd()) {
+           // undo what was set above before giving up
+           obLocale.RestoreLocale();
+           pInput->imbue(originalLocale);
            return false;
         }
         SkippedMolecules = true;
