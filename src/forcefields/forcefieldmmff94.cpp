@@ -2695,6 +2695,15 @@ namespace OpenBabel
     IF_OBFF_LOGLVL_LOW
       OBFFLog("\nS E T T I N G   U P   C A L C U L A T I O N S\n\n");
 
+    // drop every calculation of the previous molecule first, so a failure below leaves none behind
+    _bondcalculations.clear();
+    _anglecalculations.clear();
+    _strbndcalculations.clear();
+    _torsioncalculations.clear();
+    _oopcalculations.clear();
+    _vdwcalculations.clear();
+    _electrostaticcalculations.clear();
+
     //
     // Bond Calculations
     //

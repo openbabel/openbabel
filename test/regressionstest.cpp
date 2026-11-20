@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cmath>
 
 using namespace std;
 using namespace OpenBabel;
@@ -715,6 +716,53 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// A force field that was set up for one molecule and is then set up for
+// another must end up as a force field that only ever saw the new molecule.
+void test_ForceFieldSetupNewMolecule()
+{
+  const char *water = "3\nwater\nO 0.000 0.000 0.000\nH 0.957 0.000 0.000\nH -0.240 0.927 0.000\n";
+  const char *benzene = "12\nbenzene\nC 1.39 0 0\nC 0.695 1.2037 0\nC -0.695 1.2037 0\nC -1.39 0 0\nC -0.695 -1.2037 0\nC 0.695 -1.2037 0\n"
+                        "H 2.47 0 0\nH 1.235 2.139 0\nH -1.235 2.139 0\nH -2.47 0 0\nH -1.235 -2.139 0\nH 1.235 -2.139 0\n";
+  const char *ethanol = "9\nethanol\nC -0.047 -0.001 0.000\nC 1.475 0.020 0.000\nO 1.947 1.358 0.000\nH -0.422 1.022 0.000\n"
+                        "H -0.422 -0.512 0.887\nH -0.422 -0.512 -0.887\nH 1.851 -0.493 0.887\nH 1.851 -0.493 -0.887\nH 2.903 1.320 0.000\n";
+  const char *xenon = "2\nxenon\nXe 0.0 0.0 0.0\nXe 4.0 0.0 0.0\n";
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInFormat("xyz"));
+  OBMol mWater, mBenzene, mEthanol, mXenon, mEmpty;
+  OB_REQUIRE(conv.ReadString(&mWater, water));
+  OB_REQUIRE(conv.ReadString(&mBenzene, benzene));
+  OB_REQUIRE(conv.ReadString(&mEthanol, ethanol));
+  OB_REQUIRE(conv.ReadString(&mXenon, xenon));
+  OBForceField *proto = OBForceField::FindForceField("MMFF94");
+  OB_REQUIRE(proto != nullptr);
+
+  // an empty molecule: a new force field refuses it, so must a used one
+  OBForceField *ff = proto->MakeNewInstance();
+  OB_ASSERT(!ff->Setup(mEmpty));
+  delete ff;
+  ff = proto->MakeNewInstance();
+  OB_REQUIRE(ff->Setup(mWater));
+  OB_ASSERT(!ff->Setup(mEmpty));
+  delete ff;
+
+  // Setup fails for the new molecule: no calculation of the previous one may survive
+  ff = proto->MakeNewInstance();
+  OB_REQUIRE(ff->Setup(mBenzene));
+  OB_ASSERT(!ff->Setup(mXenon));
+  OB_ASSERT(fabs(ff->Energy(false)) < 1.0e-9);
+  delete ff;
+
+  // cut-off pair lists belong to the molecule they were built for
+  ff = proto->MakeNewInstance();
+  ff->EnableCutOff(true);
+  OB_REQUIRE(ff->Setup(mBenzene));
+  ff->SteepestDescent(10);
+  OB_REQUIRE(ff->Setup(mEthanol));
+  OB_COMPARE(ff->GetNumElectrostaticPairs(), 0);
+  OB_COMPARE(ff->GetNumVDWPairs(), 0);
+  delete ff;
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +848,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 254:
+    test_ForceFieldSetupNewMolecule();
     break;
   // case N:
   //   YOUR_TEST_HERE();
