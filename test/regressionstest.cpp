@@ -13,6 +13,10 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cstdio>
+#include <iterator>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 using namespace OpenBabel;
@@ -715,6 +719,42 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// WriteString() and Convert(is, os) temporarily replace the streams of an
+// OBConversion and restore them afterwards. Streams the object owned before
+// (opened by WriteFile(), ReadFile(), ReadString()) must still be owned
+// afterwards, and an object that had no stream before must not be left
+// pointing at the caller's streams.
+void test_StreamStateRestore()
+{
+  const char *fname = "streamstate_restore.smi";
+  {
+    OBConversion conv;
+    OB_REQUIRE(conv.SetInAndOutFormats("smi", "smi"));
+    OBMol mol;
+    OB_REQUIRE(conv.ReadString(&mol, "CCO ethanol"));
+    OB_REQUIRE(conv.WriteFile(&mol, fname));
+    std::string str = conv.WriteString(&mol);
+    OB_ASSERT(str.find("CCO") != std::string::npos);
+    // closing the output must still close (and flush) the file opened by WriteFile()
+    conv.CloseOutFile();
+    std::ifstream ifs(fname);
+    std::string content((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+    OB_ASSERT(content.find("CCO") != std::string::npos);
+  }
+  remove(fname);
+
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("smi", "smi"));
+  {
+    std::istringstream is("CC ethane\n");
+    std::ostringstream os;
+    OB_COMPARE(conv.Convert(&is, &os), 1);
+  }
+  // is and os are gone; the object must not keep pointers to them
+  OB_ASSERT(conv.GetInStream() == nullptr);
+  OB_ASSERT(conv.GetOutStream() == nullptr);
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +840,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 250:
+    test_StreamStateRestore();
     break;
   // case N:
   //   YOUR_TEST_HERE();
