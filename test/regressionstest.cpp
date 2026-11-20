@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <clocale>
 
 using namespace std;
 using namespace OpenBabel;
@@ -715,6 +716,23 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// OBConversion::Read() switches LC_NUMERIC to "C" while reading. When -f asks
+// to skip more molecules than the input has, Read() fails and must still
+// restore the caller's locale.
+void test_StartOptionRestoresLocale()
+{
+  if (!setlocale(LC_NUMERIC, "C.UTF-8"))
+    return; // locale not available here
+  std::string before = setlocale(LC_NUMERIC, nullptr);
+  OBConversion conv;
+  OBMol mol;
+  OB_REQUIRE(conv.SetInFormat("smi"));
+  conv.AddOption("f", OBConversion::GENOPTIONS, "5");
+  OB_ASSERT(!conv.ReadString(&mol, "CC ethane\nCCC propane\n"));
+  OB_COMPARE(std::string(setlocale(LC_NUMERIC, nullptr)), before);
+  setlocale(LC_NUMERIC, "C");
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +818,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 258:
+    test_StartOptionRestoresLocale();
     break;
   // case N:
   //   YOUR_TEST_HERE();
