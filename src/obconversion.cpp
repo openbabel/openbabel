@@ -845,6 +845,8 @@ namespace OpenBabel {
       }
 #endif
       SetInStream(pin, false);
+      // the file name (the default title) belongs to the previous input, not to this stream
+      InFilename.clear();
     }
 
 
@@ -1081,6 +1083,8 @@ namespace OpenBabel {
   bool	OBConversion::ReadString(OBBase* pOb, std::string input)
   {
     SetInStream(new stringstream(input), true);
+    // the file name (the default title) belongs to the previous input, not to this string
+    InFilename.clear();
     return Read(pOb);
   }
 

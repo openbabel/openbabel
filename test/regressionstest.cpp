@@ -13,6 +13,9 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cstdio>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 using namespace OpenBabel;
@@ -715,6 +718,31 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// ReadString() and Read(pOb, pin) replace the input. The file name of an
+// earlier ReadFile() (the default title for PDB and other formats) must not
+// carry over to molecules read from the new input.
+void test_NewInputForgetsFilename()
+{
+  const char *fname = "newinput_filename.pdb";
+  const char *pdb = "HETATM    1  O   HOH A   1       0.000   0.000   0.000  1.00  0.00           O\nEND\n";
+  {
+    std::ofstream ofs(fname);
+    ofs << pdb;
+  }
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInFormat("pdb"));
+  OBMol mol;
+  OB_REQUIRE(conv.ReadFile(&mol, fname));
+  OBMol mol2;
+  OB_REQUIRE(conv.ReadString(&mol2, pdb));
+  OB_ASSERT(std::string(mol2.GetTitle()).empty());
+  OBMol mol3;
+  std::istringstream is(pdb);
+  OB_REQUIRE(conv.Read(&mol3, &is));
+  OB_ASSERT(std::string(mol3.GetTitle()).empty());
+  remove(fname);
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +828,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 251:
+    test_NewInputForgetsFilename();
     break;
   // case N:
   //   YOUR_TEST_HERE();
