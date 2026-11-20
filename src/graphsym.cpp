@@ -183,6 +183,12 @@ namespace OpenBabel {
     if (atom->GetAtomicNum() == 7 && atom->IsAromatic() && atom->GetTotalDegree() == 3) {
       count += 1.0f;         // [nH] - add another bond
     }
+    // Bond orders are read from the input (a molfile bond order of 200 is
+    // stored as a negative char and comes back as about 4.3e9), and
+    // converting a float outside the range of int is undefined. Only the
+    // low bits of the sum are used.
+    if (!(count < 2147483648.0f))
+      return 2147483647u;
     return(int(count + 0.5));     // round to nearest int
   }
 

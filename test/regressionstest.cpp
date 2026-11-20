@@ -715,6 +715,27 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// A molfile with an out-of-range bond order must not make symmetry perception
+// convert an out-of-range float to int (reported by UndefinedBehaviorSanitizer).
+void test_HugeBondOrderSymmetry()
+{
+  const char *molfile =
+    "\n  test\n\n"
+    "  3  2  0  0  0  0  0  0  0  0999 V2000\n"
+    "    0.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    "    1.5000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    "    3.0000    0.0000    0.0000 C   0  0  0  0  0  0  0  0  0  0  0  0\n"
+    "  1  2200  0\n"
+    "  2  3  1  0\n"
+    "M  END\n";
+  OBConversion conv;
+  OBMol mol;
+  OB_REQUIRE(conv.SetInAndOutFormats("mol", "can"));
+  OB_REQUIRE(conv.ReadString(&mol, molfile));
+  OB_COMPARE(mol.NumAtoms(), 3u);
+  conv.WriteString(&mol);
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +821,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 260:
+    test_HugeBondOrderSymmetry();
     break;
   // case N:
   //   YOUR_TEST_HERE();
