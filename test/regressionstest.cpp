@@ -715,6 +715,28 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// OBMol::Clear() must reset the dimension to that of a new molecule (3), so a
+// molecule read after SMILES from a format that does not set the dimension
+// itself (XYZ, MOL2, PDB) is not treated as 0D.
+void test_ClearResetsDimension()
+{
+  const char *xyz = "3\nwater\nO 0.000 0.000 0.000\nH 0.957 0.000 0.000\nH -0.240 0.927 0.000\n";
+  OBConversion conv;
+  OBMol mol;
+  OB_REQUIRE(conv.SetInFormat("smi"));
+  OB_REQUIRE(conv.ReadString(&mol, "CCO ethanol"));
+  OB_COMPARE(mol.GetDimension(), 0);
+  mol.Clear();
+  OB_COMPARE(mol.GetDimension(), 3);
+
+  // the same through a read into a molecule that was used before
+  OBMol mol2;
+  OB_REQUIRE(conv.ReadString(&mol2, "CCO ethanol"));
+  OB_REQUIRE(conv.SetInFormat("xyz"));
+  OB_REQUIRE(conv.ReadString(&mol2, xyz));
+  OB_COMPARE(mol2.GetDimension(), 3);
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +822,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 252:
+    test_ClearResetsDimension();
     break;
   // case N:
   //   YOUR_TEST_HERE();
