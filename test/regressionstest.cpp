@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <openbabel/parsmart.h>
 
 using namespace std;
 using namespace OpenBabel;
@@ -715,6 +716,25 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// After OBSmartsPattern::Init() with a new pattern, the matches of the previous
+// pattern must not be reported for the new one.
+void test_SmartsInitClearsMatches()
+{
+  OBConversion conv;
+  OBMol mol;
+  OB_REQUIRE(conv.SetInFormat("smi"));
+  OB_REQUIRE(conv.ReadString(&mol, "CCO"));
+  OBSmartsPattern sp;
+  OB_REQUIRE(sp.Init("[#6]"));
+  OB_REQUIRE(sp.Match(mol));
+  OB_COMPARE(sp.NumMatches(), 2u);
+  OB_REQUIRE(sp.Init("[OX2]"));
+  OB_COMPARE(sp.NumMatches(), 0u);
+  OB_ASSERT(sp.GetMapList().empty());
+  OB_REQUIRE(sp.Match(mol));
+  OB_COMPARE(sp.NumMatches(), 1u);
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +820,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 253:
+    test_SmartsInitClearsMatches();
     break;
   // case N:
   //   YOUR_TEST_HERE();
