@@ -528,7 +528,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     bool 	_init; //!< Used to make sure we only parse the parameter file once, when needed
     std::string	_parFile; //!< parameter file name
     bool 	_validSetup; //!< was the last call to Setup successful
-    double	*_gradientPtr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
+    double	*_gradientPtr = nullptr; //!< pointer to the gradients (used by AddGradient(), minimization functions, ...)
     // logging variables
     std::ostream* _logos; //!< Output for logfile
     char 	_logbuf[BUFF_SIZE+1]; //!< Temporary buffer for logfile output
@@ -540,7 +540,7 @@ const double GAS_CONSTANT = 8.31446261815324e-3 / KCAL_TO_KJ;  //!< kcal mol^-1 
     // minimization variables
     double 	_econv, _gconv, _e_n1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     int 	_cstep, _nsteps; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
-    double 	*_grad1; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
+    double 	*_grad1 = nullptr; //!< Used for conjugate gradients and steepest descent(Initialize and TakeNSteps)
     unsigned int _ncoords; //!< Number of coordinates for conjugate gradients
     int         _linesearch; //!< LineSearch type
     //! Hidden L-BFGS history. Forward-declared here (full definition lives
