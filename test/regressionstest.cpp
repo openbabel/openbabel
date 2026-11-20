@@ -715,6 +715,19 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// A force field instance that is never set up must be destructible.
+void test_ForceFieldInstanceWithoutSetup()
+{
+  const char *names[] = {"GAFF", "UFF", "Ghemical", "MMFF94"};
+  for (const char *name : names) {
+    OBForceField *proto = OBForceField::FindForceField(name);
+    OB_REQUIRE(proto != nullptr);
+    OBForceField *ff = proto->MakeNewInstance();
+    OB_REQUIRE(ff != nullptr);
+    delete ff;
+  }
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +813,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 256:
+    test_ForceFieldInstanceWithoutSetup();
     break;
   // case N:
   //   YOUR_TEST_HERE();
