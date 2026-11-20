@@ -1494,6 +1494,7 @@ namespace OpenBabel
 
     //Clear flags except OB_PATTERN_STRUCTURE which is left the same
     _flags &= OB_PATTERN_STRUCTURE;
+    _dimension = 3; // as constructed
 
     _c = nullptr;
     _mod = 0;
