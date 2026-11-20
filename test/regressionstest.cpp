@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <sstream>
 
 using namespace std;
 using namespace OpenBabel;
@@ -715,6 +716,21 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// With -f n and an input format without SkipObjects() (XYZ), the molecules
+// before n are read and passed to AddChemObject(), which must free them.
+// The leak is reported by LeakSanitizer.
+void test_StartOptionSkippedObjects()
+{
+  std::istringstream is("3\nwater\nO 0.000 0.000 0.000\nH 0.957 0.000 0.000\nH -0.240 0.927 0.000\n"
+                        "2\nhydrogen\nH 0.000 0.000 0.000\nH 0.740 0.000 0.000\n");
+  std::ostringstream os;
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInAndOutFormats("xyz", "smi"));
+  conv.AddOption("f", OBConversion::GENOPTIONS, "2");
+  OB_COMPARE(conv.Convert(&is, &os), 1);
+  OB_ASSERT(os.str().find("hydrogen") != std::string::npos);
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +816,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 257:
+    test_StartOptionSkippedObjects();
     break;
   // case N:
   //   YOUR_TEST_HERE();
