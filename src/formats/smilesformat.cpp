@@ -216,8 +216,13 @@ namespace OpenBabel {
     bool WriteMolecule(OBBase* pOb, OBConversion* pConv) override
     {
       //The "c" option sets us to use canonical ordering
+      // only for this write: the option is taken off again so that later writes in other formats are unaffected
+      if (pConv->IsOption("c", OBConversion::OUTOPTIONS))
+        return SMIBaseFormat::WriteMolecule(pOb, pConv);
       pConv->AddOption("c",OBConversion::OUTOPTIONS);
-      return SMIBaseFormat::WriteMolecule(pOb, pConv);
+      bool ok = SMIBaseFormat::WriteMolecule(pOb, pConv);
+      pConv->RemoveOption("c", OBConversion::OUTOPTIONS);
+      return ok;
     }
 
     ///////////////////////////////////////////////////////

@@ -715,6 +715,22 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// Writing canonical SMILES must not leave the "c" output option set on the
+// caller's OBConversion, where other formats give it another meaning.
+void test_CanSmiDoesNotKeepOption()
+{
+  OBConversion conv;
+  OBMol mol;
+  OB_REQUIRE(conv.SetInAndOutFormats("smi", "can"));
+  OB_REQUIRE(conv.ReadString(&mol, "OCC"));
+  std::string can = conv.WriteString(&mol, true);
+  OB_COMPARE(can, std::string("CCO"));
+  OB_ASSERT(conv.IsOption("c", OBConversion::OUTOPTIONS) == nullptr);
+  OB_REQUIRE(conv.SetOutFormat("smi"));
+  std::string smi = conv.WriteString(&mol, true);
+  OB_COMPARE(smi, std::string("OCC"));
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +816,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 255:
+    test_CanSmiDoesNotKeepOption();
     break;
   // case N:
   //   YOUR_TEST_HERE();
