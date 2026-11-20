@@ -1783,6 +1783,7 @@ namespace OpenBabel
       FreePattern(_pat);
     _pat = ParseSMARTSRecord(_buffer);
     _str = _buffer;
+    _mlist.clear(); // matches of the previous pattern do not belong to the new one
 
     return _pat != nullptr;
   }
@@ -1800,6 +1801,7 @@ namespace OpenBabel
       FreePattern(_pat);
     _pat = ParseSMARTSRecord(_buffer);
     _str = s;
+    _mlist.clear(); // matches of the previous pattern do not belong to the new one
 
     return _pat != nullptr;
   }
