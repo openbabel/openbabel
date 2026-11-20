@@ -166,10 +166,9 @@ namespace OpenBabel
     //Old code follows...
     bool foundAtomLine = false;
     char buffer[BUFF_SIZE];
-    char *comment = nullptr;
+    std::string comment;
     string str,str1;
     vector<string> vstr;
-    int len;
 
     // Prevent reperception
     mol.SetChainsPerceived();
@@ -240,13 +239,10 @@ namespace OpenBabel
           {
             if ( buffer[0] )
               {
-                len = (int) strlen(buffer)+1;
                 //! @todo allow better multi-line comments
                 // which don't allow ill-formed data to consume memory
                 // Thanks to Andrew Dalke for the pointer
-                delete [] comment;
-                comment = new char [len];
-                memcpy(comment,buffer,len);
+                comment = buffer;
               }
           }
       }
@@ -604,14 +600,12 @@ namespace OpenBabel
     }
 
     //must add generic data after end modify - otherwise it will be blown away
-    if (comment)
+    if (!comment.empty())
       {
         OBCommentData *cd = new OBCommentData;
         cd->SetData(comment);
         cd->SetOrigin(fileformatInput);
         mol.SetData(cd);
-        delete [] comment;
-        comment = nullptr;
       }
     if (hasPartialCharges)
       mol.SetPartialChargesPerceived();

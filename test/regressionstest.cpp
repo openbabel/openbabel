@@ -715,6 +715,27 @@ void test_SegCopySubstructure()
   OB_COMPARE(4, copy.NumBonds());
 }
 
+// A MOL2 record with a comment line that fails to read later (here: no ATOM
+// section) must not leak the comment. The leak is reported by LeakSanitizer.
+void test_Mol2FailedReadWithComment()
+{
+  const std::string head = "@<TRIPOS>MOLECULE\nwater\n3 2 1\nSMALL\nNO_CHARGES\n\na comment line\n";
+  const std::string atoms = "@<TRIPOS>ATOM\n"
+    "      1 O1        0.0000    0.0000    0.0000 O.3   1  RES1   0.0000\n"
+    "      2 H2        0.9600    0.0000    0.0000 H     1  RES1   0.0000\n"
+    "      3 H3       -0.2400    0.9300    0.0000 H     1  RES1   0.0000\n"
+    "@<TRIPOS>BOND\n     1     1     2    1\n     2     1     3    1\n";
+  OBConversion conv;
+  OB_REQUIRE(conv.SetInFormat("mol2"));
+  OBMol mol;
+  OB_ASSERT(!conv.ReadString(&mol, head));
+  OBMol mol2;
+  OB_REQUIRE(conv.ReadString(&mol2, head + atoms));
+  OBCommentData *cd = dynamic_cast<OBCommentData *>(mol2.GetData(OBGenericDataType::CommentData));
+  OB_REQUIRE(cd != nullptr);
+  OB_COMPARE(cd->GetData(), std::string("a comment line"));
+}
+
 int regressionstest(int argc, char *argv[])
 {
   int defaultchoice = 1;
@@ -800,6 +821,9 @@ int regressionstest(int argc, char *argv[])
     break;
   case 2678:
     test_hypervalent_canonical_smiles();
+    break;
+  case 259:
+    test_Mol2FailedReadWithComment();
     break;
   // case N:
   //   YOUR_TEST_HERE();
