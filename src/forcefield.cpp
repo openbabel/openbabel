@@ -866,6 +866,9 @@ namespace OpenBabel
     if (IsSetupNeeded(mol)) {
       _mol = mol;
       _ncoords = _mol.NumAtoms() * 3;
+      // the cut-off pair lists belong to the previous molecule
+      _vdwpairs.Clear();
+      _elepairs.Clear();
 
       delete [] _velocityPtr;
       _velocityPtr = nullptr;
@@ -888,6 +891,12 @@ namespace OpenBabel
       SetPartialCharges();
 
       if (!SetupCalculations()) {
+        _validSetup = false;
+        return false;
+      }
+
+      // nothing to set up: report it as a force field that never had a molecule does
+      if (_mol.NumAtoms() == 0) {
         _validSetup = false;
         return false;
       }
@@ -920,6 +929,9 @@ namespace OpenBabel
     if (IsSetupNeeded(mol)) {
       _mol = mol;
       _ncoords = _mol.NumAtoms() * 3;
+      // the cut-off pair lists belong to the previous molecule
+      _vdwpairs.Clear();
+      _elepairs.Clear();
 
       delete [] _velocityPtr;
       _velocityPtr = nullptr;
@@ -943,6 +955,12 @@ namespace OpenBabel
       SetPartialCharges();
 
       if (!SetupCalculations()) {
+        _validSetup = false;
+        return false;
+      }
+
+      // nothing to set up: report it as a force field that never had a molecule does
+      if (_mol.NumAtoms() == 0) {
         _validSetup = false;
         return false;
       }
